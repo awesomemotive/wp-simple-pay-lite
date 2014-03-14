@@ -1,4 +1,4 @@
-WP-Stripe-Checkout
+Stripe Checkout for WordPress
 ==================
 
-Add a beautiful Stripe checkout form to your WordPress site.
+Add beautiful Stripe checkout forms to your WordPress site.
