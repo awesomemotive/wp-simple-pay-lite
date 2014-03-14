@@ -1,4 +1,6 @@
 Stripe Checkout for WordPress
 ==================
 
-Add beautiful Stripe checkout forms to your WordPress site.
+The simplest and fastest way to add a beautiful Stripe checkout forms to your WordPress site.
+
+Uses the highly optimized web and mobile overlay checkout form from https://stripe.com/checkout.
