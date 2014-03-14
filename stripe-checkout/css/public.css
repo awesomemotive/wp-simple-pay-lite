@@ -1,0 +1,30 @@
+
+
+.sc-payment-status {
+	position: absolute;
+	top: 0px;
+	left: 0;
+	height: 50px;
+	width: 100%;
+	
+	padding-top: 30px;
+	
+}
+
+.sc-payment-status p {
+	font-weight: bold;
+	text-align: center;
+	line-height: 50px;
+	color: #fff;
+	height: 50px;
+}
+
+.sc-success {
+	background: #40BE40;
+	border-bottom: 3px solid #009400;
+}
+
+.sc-failed {
+	background: #FB8989;
+	border-bottom: 3px solid #920404;
+}
