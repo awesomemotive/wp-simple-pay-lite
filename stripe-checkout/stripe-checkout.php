@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Stripe Checkout
+ * Simple Stripe Checkout
  *
  * @package   sc
  * @author    Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
@@ -10,7 +10,7 @@
  * @copyright 2014 Phil Derksen
  *
  * @wordpress-plugin
- * Plugin Name: Stripe Checkout
+ * Plugin Name: Simple Stripe Checkout
  * Plugin URI: http://philderksen.com/
  * Description: Add a simple Stripe Checkout button and overlay to your site using a shortcode.
  * Version: 1.0.0

@@ -1,4 +1,4 @@
-=== Stripe Checkout ===
+=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: 
 Requires at least: 3.5.2

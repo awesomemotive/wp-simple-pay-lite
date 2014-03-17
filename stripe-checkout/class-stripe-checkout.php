@@ -204,7 +204,7 @@ class Stripe_Checkout {
 
 		$this->plugin_screen_hook_suffix = add_options_page(
 			$this->get_plugin_title() . __( ' Help', 'sc' ),
-			__( 'Sripe Checkout', 'sc' ),
+			$this->get_plugin_title(),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
@@ -248,7 +248,7 @@ class Stripe_Checkout {
 	 * @return    string
 	 */
 	public static function get_plugin_title() {
-		return __( 'Stripe Checkout', 'sc' );
+		return __( 'Simple Stripe Checkout', 'sc' );
 	}
 
 
