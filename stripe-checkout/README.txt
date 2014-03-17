@@ -65,6 +65,6 @@ See the official Stripe checkout [documentation](https://stripe.com/docs/checkou
 
 == Changelog ==
 
-= 0.0.9 =
+= 1.0.0 =
 
 * Initial release.
