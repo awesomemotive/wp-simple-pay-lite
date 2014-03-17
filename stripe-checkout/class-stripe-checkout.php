@@ -16,11 +16,11 @@ class Stripe_Checkout {
 	/**
 	 * Plugin version, used for cache-busting of style and script file references.
 	 *
-	 * @since   1.0.0
+	 * @since   0.0.9
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.0.0';
+	protected $version = '0.0.9';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -28,7 +28,7 @@ class Stripe_Checkout {
 	 * Use this value (not the variable name) as the text domain when internationalizing strings of text. It should
 	 * match the Text Domain file header in the main plugin file.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 *
 	 * @var      string
 	 */
@@ -37,7 +37,7 @@ class Stripe_Checkout {
 	/**
 	 * Instance of this class.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 *
 	 * @var      object
 	 */
@@ -46,7 +46,7 @@ class Stripe_Checkout {
 	/**
 	 * Slug of the plugin screen.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 *
 	 * @var      string
 	 */
@@ -55,7 +55,7 @@ class Stripe_Checkout {
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
-	 * @since     1.0.0
+	 * @since     0.0.9
 	 */
 	private function __construct() {
 		
@@ -90,7 +90,7 @@ class Stripe_Checkout {
 	/**
 	 * Load public facing CSS
 	 * 
-	 * @since 1.0.0
+	 * @since 0.0.9
 	 */
 	function enqueue_public_styles() {
 		// Only load after the user has clicked to pay
@@ -102,7 +102,7 @@ class Stripe_Checkout {
 	/**
 	 * Load public facing JS
 	 * 
-	 * @since 1.0.0
+	 * @since 0.0.9
 	 */
 	function enqueue_public_scripts() {
 		// Only load after the user has clicked to pay
@@ -115,7 +115,7 @@ class Stripe_Checkout {
 	/**
 	 * Make sure user has the minimum required version of WordPress installed to use the plugin
 	 * 
-	 * @since 1.0.0
+	 * @since 0.0.9
 	 */
 	public function check_wp_version() {
 		global $wp_version;
@@ -131,7 +131,7 @@ class Stripe_Checkout {
 	/**
 	 * Setup any plugin constants we need 
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 */
 	public function setup_constants() {
 		define( 'SC_PLUGIN_SLUG', $this->plugin_slug );
@@ -140,7 +140,7 @@ class Stripe_Checkout {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 */
 	public function plugin_textdomain() {
 		// Set filter for plugin's languages directory
@@ -169,7 +169,7 @@ class Stripe_Checkout {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0.0
+	 * @since     0.0.9
 	 *
 	 * @return    object    A single instance of this class.
 	 */
@@ -186,7 +186,7 @@ class Stripe_Checkout {
 	/**
 	 * Fired when the plugin is activated.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
@@ -198,7 +198,7 @@ class Stripe_Checkout {
 	/**
 	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 */
 	public function add_plugin_admin_menu() {
 
@@ -214,7 +214,7 @@ class Stripe_Checkout {
 	/**
 	 * Render the settings page for this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    0.0.9
 	 */
 	public function display_plugin_admin_page() {
 		include_once( 'views/admin.php' );
@@ -223,7 +223,7 @@ class Stripe_Checkout {
 	/**
 	 * Include required files (admin and frontend).
 	 *
-	 * @since     1.0.0
+	 * @since     0.0.9
 	 */
 	public function includes() {
 		
@@ -243,7 +243,7 @@ class Stripe_Checkout {
 	/**
 	 * Return localized base plugin title.
 	 *
-	 * @since     1.0.0
+	 * @since     0.0.9
 	 *
 	 * @return    string
 	 */
@@ -255,7 +255,7 @@ class Stripe_Checkout {
 	/**
 	 * Add Settings action link to left of existing action links on plugin listing page.
 	 *
-	 * @since   1.0.0
+	 * @since   0.0.9
 	 *
 	 * @param   array  $links  Default plugin action links
 	 * @return  array  $links  Amended plugin action links
@@ -271,7 +271,7 @@ class Stripe_Checkout {
 	/**
 	 * Check if viewing this plugin's admin page.
 	 *
-	 * @since   1.0.0
+	 * @since   0.0.9
 	 *
 	 * @return  bool
 	 */
@@ -291,7 +291,7 @@ class Stripe_Checkout {
 	 * Show notice after plugin install/activate in admin dashboard.
 	 * Hide after first viewing.
 	 *
-	 * @since   1.0.0
+	 * @since   0.0.9
 	 */
 	public function admin_install_notice() {
 		// Exit all of this is stored value is false/0 or not set.

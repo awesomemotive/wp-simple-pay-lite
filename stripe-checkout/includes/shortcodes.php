@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) )
 /**
  * Function to process the [stripe_checkout] shortcode
  * 
- * @since 1.0.0
+ * @since 0.0.9
  */
 function sc_stripe_shortcode( $attr ) {
 	

@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) )
 /**
  *  Main function to register all of the plugin settings
  *
- * @since 1.0.0
+ * @since 0.0.9
  */
 function sc_register_settings() {
 	$sc_settings = array(
@@ -92,7 +92,7 @@ add_action( 'admin_init', 'sc_register_settings' );
 /*
  * Return generic add_settings_field $args parameter array.
  *
- * @since     1.0.0
+ * @since     0.0.9
  *
  * @param   string  $option   Single settings option key.
  * @param   string  $section  Section of settings apge.
@@ -124,7 +124,7 @@ function sc_get_settings_field_args( $option, $section ) {
  * Valid built-in size CSS class values:
  * small-text, regular-text, large-text
  * 
- * @since 1.0.0
+ * @since 0.0.9
  * 
  */
 function sc_text_callback( $args ) {
@@ -148,7 +148,7 @@ function sc_text_callback( $args ) {
 /*
  * Single checkbox callback function
  * 
- * @since 1.0.0
+ * @since 0.0.9
  * 
  */
 function sc_checkbox_callback( $args ) {
@@ -167,7 +167,7 @@ function sc_checkbox_callback( $args ) {
 /*
  * Function we can use to sanitize the input data and return it when saving options
  * 
- * @since 1.0.0
+ * @since 0.0.9
  * 
  */
 function sc_settings_sanitize( $input ) {
@@ -178,7 +178,7 @@ function sc_settings_sanitize( $input ) {
 /*
  *  Default callback function if correct one does not exist
  * 
- * @since 1.0.0
+ * @since 0.0.9
  * 
  */
 function sc_missing_callback( $args ) {
@@ -188,7 +188,7 @@ function sc_missing_callback( $args ) {
 /*
  * Function used to return an array of all of the plugin settings
  * 
- * @since 1.0.0
+ * @since 0.0.9
  * 
  */
 function sc_get_settings() {

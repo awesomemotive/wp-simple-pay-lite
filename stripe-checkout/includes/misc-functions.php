@@ -3,14 +3,14 @@
 /**
  * Misc plugin functions
  * 
- * @since 1.0.0
+ * @since 0.0.9
  */
 
 
 /**
  * Function that will actually charge the customers credit card
  * 
- * @since 1.0.0
+ * @since 0.0.9
  */
 function sc_charge_card() {
 	if( isset( $_POST['stripeToken'] ) ) {
