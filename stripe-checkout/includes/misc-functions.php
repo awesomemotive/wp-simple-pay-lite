@@ -89,9 +89,9 @@ function sc_show_payment_details( $content ) {
 			$before_payment_details_html = '<div class="sc-payment-details-wrap">';
 			
 			$payment_details_html .= '<h3>Payment Details</h3>';
-			$payment_details_html .= '<p><strong>Name</strong> ' . $sc_payment_details['name'] . '</p>';
-			$payment_details_html .= '<p><strong>Description</strong> ' . $sc_payment_details['description'] . '</p>';
-			$payment_details_html .= '<p><strong>Amount Charged</strong> $' . sc_convert_amount( $sc_payment_details['amount'] ) . '</p>';
+			$payment_details_html .= ( ! empty( $sc_payment_details['name'] ) ? '<p><strong>Name</strong> ' . $sc_payment_details['name'] . '</p>' : '' );
+			$payment_details_html .= ( ! empty( $sc_payment_details['description'] ) ? '<p><strong>Description</strong> ' . $sc_payment_details['description'] . '</p>' : '' );
+			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<p><strong>Amount Charged</strong> $' . sc_convert_amount( $sc_payment_details['amount'] ) . '</p>' : '' );
 			
 			$after_payment_details_html = '</div>';
 			
