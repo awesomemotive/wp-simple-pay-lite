@@ -28,3 +28,20 @@
 	background: #FB8989;
 	border-bottom: 3px solid #920404;
 }
+
+/* Payment details at the top of the post */
+.sc-payment-details-wrap { 
+	background: #ffff99;
+	border: 2px solid #000;
+	border-radius: 7px;
+	padding: 10px;
+	margin-bottom: 15px;
+}
+
+.sc-payment-details-wrap h3, .sc-payment-details-wrap p {
+	margin: 0;
+}
+
+.sc-payment-details-wrap h3 { 
+	text-align: center;
+}

@@ -46,8 +46,9 @@ function sc_stripe_shortcode( $attr ) {
 				  data-name="' . $name . '"
 				 >
 				</script>
-				<input type="hidden" name="sc-amount" value="' . $amount . '" />
+				<input type="hidden" name="sc-name" value="' . $name . '" />
 				<input type="hidden" name="sc-description" value="' . $description . '" />
+				<input type="hidden" name="sc-amount" value="' . $amount . '" />
 				<input type="hidden" name="sc-redirect" value="' . get_permalink() . '" />
 			  </form>';
 	
