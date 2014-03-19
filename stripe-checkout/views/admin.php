@@ -56,18 +56,18 @@ if ( ! defined( 'ABSPATH' ) )
 				<tbody>
 				<tr>
 					<td>name</td>
-					<td><?php _e( 'The heading text for the Stripe Checkout popup.', 'sc' ) ?></td>
-					<td>Title of your website</td>
+					<td><?php _e( 'The name of your company or website.', 'sc' ) ?></td>
+					<td>Site Title</td>
 				</tr>
 				<tr>
 					<td>description</td>
-					<td><?php _e( 'Text below the heading on the Stripe Checkout popup.', 'sc' ); ?></td>
+					<td><?php _e( 'A description of the product or service being purchased.', 'sc' ); ?></td>
 					<td><?php _e( 'n/a', 'sc' ); ?></td>
 				</tr>
 				<tr>
 					<td>amount</td>
-					<td><?php _e( 'The amount (in cents) to charge for the item.', 'sc' ); ?></td>
-					<td>100 ($1.00)</td>
+					<td><?php _e( 'The amount (in U.S. cents) that\'s shown to the user.', 'sc' ); ?></td>
+					<td>100 (equals $1.00 US)</td>
 				</tr>
 				</tbody>
 			</table>
@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) )
 			<h4><?php _e( 'Examples', 'sc' ); ?></h4>
 
 			<ul class="ul-disc">
-				<li><code>[stripe name="Guitar" description="A hand crafted Flying V" amount="2000"]</code></li>
+				<li><code>[stripe name="The Awesome Store" description="The Awesome Blueprint Book" amount="1999"]</code></li>
 			</ul>
 
 		</div><!-- #sc-settings-content -->
