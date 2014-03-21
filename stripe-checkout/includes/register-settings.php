@@ -22,39 +22,39 @@ function sc_register_settings() {
 
 		/* General Settings */
 		'general' => array(
+			'disable_test_key' => array(
+				'id'   => 'disable_test_key',
+				'name' => __( 'Enable Test Mode', 'sc' ),
+				'desc' => __( 'Place Stripe in Test mode using your test API keys.', 'sc' ),
+				'type' => 'checkbox'
+			),
 			'test_secret_key' => array(
 				'id'   => 'test_secret_key',
 				'name' => __( 'Test Secret Key', 'sc' ),
-				'desc' => __( '' , '' ),
+				'desc' => __( 'Enter your test secret key, found in your Stripe account settings.' , 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'test_publish_key' => array(
 				'id'   => 'test_publish_key',
 				'name' => __( 'Test Publishable Key', 'sc' ),
-				'desc' => __( '' , '' ),
+				'desc' => __( 'Enter your test publishable key, found in your Stripe account settings.' , 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'live_secret_key' => array(
 				'id'   => 'live_secret_key',
 				'name' => __( 'Live Secret Key', 'sc' ),
-				'desc' => __( '' , '' ),
+				'desc' => __( 'Enter your live secret key, found in your Stripe account settings.' , 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'live_publish_key' => array(
 				'id'   => 'live_publish_key',
 				'name' => __( 'Live Publishable Key', 'sc' ),
-				'desc' => __( '' , '' ),
+				'desc' => __( 'Enter your live publishable key, found in your Stripe account settings.' , 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
-			),
-			'disable_test_key' => array(
-				'id'   => 'disable_test_key',
-				'name' => __( 'Enable Live Key', 'sc' ),
-				'desc' => __( 'Enable this option to change from using the test key to using the live key. This will take you out of test mode.', 'sc' ),
-				'type' => 'checkbox'
 			)
 		),
 	);
