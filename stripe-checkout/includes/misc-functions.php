@@ -24,7 +24,7 @@ function sc_charge_card() {
 		$description = $_POST['sc-description'];
 		$name        = $_POST['sc-name'];
 	
-		if( ! empty( $sc_options['disable_test_key'] ) ) {
+		if( empty( $sc_options['enable_test_key'] ) ) {
 			$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
 		} else {
 			$key = ( ! empty( $sc_options['test_secret_key'] ) ? $sc_options['test_secret_key'] : '' );

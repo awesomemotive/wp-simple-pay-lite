@@ -22,8 +22,8 @@ function sc_register_settings() {
 
 		/* General Settings */
 		'general' => array(
-			'disable_test_key' => array(
-				'id'   => 'disable_test_key',
+			'enable_test_key' => array(
+				'id'   => 'enable_test_key',
 				'name' => __( 'Enable Test Mode', 'sc' ),
 				'desc' => __( 'Place Stripe in Test mode using your test API keys.', 'sc' ),
 				'type' => 'checkbox'

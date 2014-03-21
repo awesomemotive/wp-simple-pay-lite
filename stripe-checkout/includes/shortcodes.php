@@ -31,7 +31,7 @@ function sc_stripe_shortcode( $attr ) {
 		$amount = 100;
 	
 	
-	if( ! empty( $sc_options['disable_test_key'] ) ) {
+	if( empty( $sc_options['enable_test_key'] ) ) {
 		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );
 	} else {
 		$data_key = ( ! empty( $sc_options['test_publish_key'] ) ? $sc_options['test_publish_key'] : '' );
