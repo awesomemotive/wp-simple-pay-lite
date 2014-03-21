@@ -23,12 +23,12 @@ function sc_stripe_shortcode( $attr ) {
 	extract( shortcode_atts( array(
 					'name'         => get_bloginfo( 'title' ),
 					'description'  => '',
-					'amount'       => 100
+					'amount'       => ''
 				), $attr ) );
 	
 	
 	if( empty( $amount ) )
-		$amount = 100;
+		return;
 	
 	
 	if( empty( $sc_options['enable_test_key'] ) ) {
