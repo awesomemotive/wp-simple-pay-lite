@@ -6,7 +6,6 @@
  * @since 1.0.0
  */
 
-
 /**
  * Function that will actually charge the customers credit card
  * 
@@ -78,7 +77,6 @@ if( isset( $_POST['stripeToken'] ) ) {
 	add_action( 'init', 'sc_charge_card' );
 }
 
-
 function sc_show_payment_details( $content ) {
 	
 	$sc_payment_details = get_option( 'sc_payment_details' );
@@ -86,14 +84,15 @@ function sc_show_payment_details( $content ) {
 	
 	if( ! empty( $sc_payment_details ) ) {
 		if( $sc_payment_details['show'] == 1 ) {
-			$before_payment_details_html = '<div class="sc-payment-details-wrap">';
+			$before_payment_details_html = '<div class="sc-payment-details-wrap">' . "\n";
+
+			$payment_details_html .= '<p>Congratulations. Your payment went through!</p>' . "\n";
+			$payment_details_html .= '<p>Here\'s what you bought:</p>' . "\n";
+			$payment_details_html .= ( ! empty( $sc_payment_details['description'] ) ? $sc_payment_details['description'] . '<br/>' . "\n" : '' );
+			$payment_details_html .= ( ! empty( $sc_payment_details['name'] ) ? 'From: ' . $sc_payment_details['name'] . '<br/>' . "\n" : '' );
+			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<br/><strong>Total Paid: $' . sc_convert_amount( $sc_payment_details['amount'] ) . '</strong>' . "\n" : '' );
 			
-			$payment_details_html .= '<h3>Payment Details</h3>';
-			$payment_details_html .= ( ! empty( $sc_payment_details['name'] ) ? '<p><strong>Name</strong> ' . $sc_payment_details['name'] . '</p>' : '' );
-			$payment_details_html .= ( ! empty( $sc_payment_details['description'] ) ? '<p><strong>Description</strong> ' . $sc_payment_details['description'] . '</p>' : '' );
-			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<p><strong>Amount Charged</strong> $' . sc_convert_amount( $sc_payment_details['amount'] ) . '</p>' : '' );
-			
-			$after_payment_details_html = '</div>';
+			$after_payment_details_html = '</div>' . "\n";
 			
 			$before_payment_details_html = apply_filters( 'sc_before_payment_details_html', $before_payment_details_html );
 			$payment_details_html        = apply_filters( 'sc_payment_details_html', $payment_details_html );
@@ -109,8 +108,6 @@ function sc_show_payment_details( $content ) {
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
 
-
 function sc_convert_amount( $amount ) {
 	return number_format( ( $amount / 100 ), 2 );
 }
-
