@@ -28,7 +28,7 @@ function sc_stripe_shortcode( $attr ) {
 	
 	
 	if( empty( $amount ) )
-		return;
+		return '';
 	
 	
 	if( empty( $sc_options['enable_test_key'] ) ) {
@@ -37,22 +37,27 @@ function sc_stripe_shortcode( $attr ) {
 		$data_key = ( ! empty( $sc_options['test_publish_key'] ) ? $sc_options['test_publish_key'] : '' );
 	}
 	
-	$html = '<form action="" method="POST">
-				<script
-				  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-				  data-key="' . $data_key . '"
-				  data-amount="' . $amount . '"
-				  data-description="' . $description . '"
-				  data-name="' . $name . '"
-				 >
-				</script>
-				<input type="hidden" name="sc-name" value="' . $name . '" />
-				<input type="hidden" name="sc-description" value="' . $description . '" />
-				<input type="hidden" name="sc-amount" value="' . $amount . '" />
-				<input type="hidden" name="sc-redirect" value="' . get_permalink() . '" />
-			  </form>';
+	if( ! isset( $_GET['payment'] ) ) { 
+		$html = '<form action="" method="POST">
+					<script
+					  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+					  data-key="' . $data_key . '"
+					  data-amount="' . $amount . '"
+					  data-description="' . $description . '"
+					  data-name="' . $name . '"
+					 >
+					</script>
+					<input type="hidden" name="sc-name" value="' . $name . '" />
+					<input type="hidden" name="sc-description" value="' . $description . '" />
+					<input type="hidden" name="sc-amount" value="' . $amount . '" />
+					<input type="hidden" name="sc-redirect" value="' . get_permalink() . '" />
+				  </form>';
+		
+		return $html;
+	}
 	
-	return $html;
+	return '';
+	
 }
 add_shortcode( 'stripe', 'sc_stripe_shortcode' );
 
