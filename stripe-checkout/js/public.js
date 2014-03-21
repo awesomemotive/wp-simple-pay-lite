@@ -1,7 +1,7 @@
 (function ($) {
 	"use strict";
 	$(function () {
-		
+		/*
 		var html = '<div class="sc-payment-status">';
 		
 		if( getQueryArg('payment') == 'success' ) {
@@ -10,18 +10,16 @@
 			
 			amount = new Number( amount / 100 ).toFixed(2);
 			
-			html += '<p class="sc-success">$' + amount + ' was successfully paid.</p>';
+			html += '<p class="sc-success">Your payment of $' + amount + ' was successfully submitted.</p>';
 		} else {
-			html += '<p class="sc-failed">There was an error with your payment. Please try again.</p>';
+			html += '<p class="sc-failed">There was an error submitting your payment.</p>';
 		}
 		
 		html += '</div>';
 		
 		$('body').append(html);
-		
-		
-		$('.sc-payment-status').delay( 3000).fadeOut( 1500 );
-		
+
+		//TODO $('.sc-payment-status').delay( 10000 ).fadeOut( 1500 );
 		
 		function getQueryArg(variable)
 		{
@@ -33,5 +31,19 @@
 			   }
 			   return(false);
 		}
+		*/
+
+		/*
+		$('button.stripe-button-el').on('click', function() {
+			$(this).append('testing...');
+		});
+		*/
+
+		// TODO UI feedback on submit of parent form of stripe button script.
+		// Not working. Form not submitting normally?
+		$('.stripe-button').closest('form').on('submit', function() {
+			$(this).after('testing...');
+		});
+
 	});
 }(jQuery));

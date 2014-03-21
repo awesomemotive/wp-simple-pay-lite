@@ -105,10 +105,15 @@ class Stripe_Checkout {
 	 * @since 1.0.0
 	 */
 	function enqueue_public_scripts() {
+		// Load custom jQuery
+		wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), $this->version );
+
+		/*
 		// Only load after the user has clicked to pay
 		if( isset( $_GET['payment'] ) ) {
 			wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), $this->version );
 		}
+		*/
 	}
 	
 	
