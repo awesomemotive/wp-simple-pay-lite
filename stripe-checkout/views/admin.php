@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) )
 			<h4><?php _e( 'Examples', 'sc' ); ?></h4>
 
 			<ul class="ul-disc">
-				<li><code>[stripe name="The Awesome Store" description="The Awesome Blueprint Book" amount="1999"]</code></li>
+				<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code></li>
 			</ul>
 
 		</div><!-- #sc-settings-content -->
