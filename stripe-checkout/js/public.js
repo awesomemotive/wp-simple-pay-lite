@@ -33,17 +33,31 @@
 		}
 		*/
 
+		// TODO UI feedback on submit of parent form of stripe button script.
+		/*
+		console.log($('.stripe-button').closest('form'));
+
+		// Not working. Form not submitting normally?
+		//$('.stripe-button').closest('form').on('submit', function() {
+		$('.stripe-button').closest('form').submit(function() {
+			$(this).after('testing...');
+		});
+		*/
 		/*
 		$('button.stripe-button-el').on('click', function() {
 			$(this).append('testing...');
 		});
 		*/
-
-		// TODO UI feedback on submit of parent form of stripe button script.
-		// Not working. Form not submitting normally?
-		$('.stripe-button').closest('form').on('submit', function() {
-			$(this).after('testing...');
+		/*
+		$('.stripe_checkout_app').find('form.checkoutView').on('submit', function() {
+			console.log('submitting...');
 		});
+		*/
+		/*
+		$('iframe.stripe_checkout_app').find('iframe').find('form.checkoutView').on('submit', function() {
+			console.log('submitting...');
+		});
+		*/
 
 	});
 }(jQuery));
