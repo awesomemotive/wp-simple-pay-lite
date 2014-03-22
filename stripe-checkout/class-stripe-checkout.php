@@ -124,7 +124,7 @@ class Stripe_Checkout {
 	 */
 	public function check_wp_version() {
 		global $wp_version;
-		$required_wp_version = '3.7.1';
+		$required_wp_version = '3.6.1';
 		
 		if ( version_compare( $wp_version, $required_wp_version, '<' ) ) {
 			deactivate_plugins( SC_MAIN_FILE ); 
