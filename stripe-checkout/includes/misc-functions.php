@@ -16,7 +16,6 @@ function sc_charge_card() {
 
 		//var_dump(SC_PLUGIN_URL . 'stripe-php/Stripe.php');
 
-		require_once( SC_PLUGIN_URL . 'stripe-php/Stripe.php' );
 		
 		global $sc_options;
 		
