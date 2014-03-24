@@ -71,12 +71,12 @@ if ( ! defined( 'ABSPATH' ) )
 				</tr>
 				</tbody>
 			</table>
-			
-			<h4><?php _e( 'Examples', 'sc' ); ?></h4>
 
-			<ul class="ul-disc">
-				<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code></li>
-			</ul>
+			<p style="color: red;"><strong><?php _e( 'Note that the amount is in U.S. cents. Do not enter a decimal separator.', 'sc' ); ?></strong></p>
+			
+			<h4><?php _e( 'Sample Shortcode', 'sc' ); ?></h4>
+
+			<code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code>
 
 		</div><!-- #sc-settings-content -->
 	</div>
