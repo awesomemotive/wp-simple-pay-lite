@@ -154,7 +154,7 @@ class Stripe_Checkout {
 		
 		// Plugin directory
 		if ( ! defined( 'SC_PLUGIN_DIR' ) ) {
-			define( 'SC_PLUGIN_DIR', dirname( __FILE__ ) );
+			define( 'SC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		}
 	}
 	
