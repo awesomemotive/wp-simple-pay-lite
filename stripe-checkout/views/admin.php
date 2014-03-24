@@ -72,7 +72,9 @@ if ( ! defined( 'ABSPATH' ) )
 				</tbody>
 			</table>
 
-			<p style="color: red;"><strong><?php _e( 'Note that the amount is in U.S. cents. Do not enter a decimal separator.', 'sc' ); ?></strong></p>
+			<p style="color: red;"><strong><?php _e( 'Amount must be in U.S. cents. Do not enter a decimal separator.', 'sc' ); ?></strong></p>
+
+			<p><strong><?php _e( 'Live transactions less than 50 cents are not allowed by Stripe.', 'sc' ); ?></strong></p>
 			
 			<h4><?php _e( 'Sample Shortcode', 'sc' ); ?></h4>
 
