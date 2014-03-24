@@ -14,7 +14,7 @@
 function sc_charge_card() {
 	if( isset( $_POST['stripeToken'] ) ) {
 		
-		require_once( dirname( dirname( __FILE__ ) ) . '/stripe-php/Stripe.php' );
+		require_once( SC_DIR . '/stripe-php/Stripe.php' );
 		
 		global $sc_options;
 		
