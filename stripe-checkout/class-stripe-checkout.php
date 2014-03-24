@@ -143,12 +143,14 @@ class Stripe_Checkout {
 	 */
 	public function setup_constants() {
 		// Plugin slug.
-		if ( ! defined( 'SC_PLUGIN_SLUG' ) )
+		if ( ! defined( 'SC_PLUGIN_SLUG' ) ) {
 			define( 'SC_PLUGIN_SLUG', $this->plugin_slug );
+		}
 
 		// Plugin folder URL.
-		if ( ! defined( 'SC_PLUGIN_URL' ) )
+		if ( ! defined( 'SC_PLUGIN_URL' ) ) {
 			define( 'SC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+		}
 	}
 	
 	/**
