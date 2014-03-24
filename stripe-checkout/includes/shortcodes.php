@@ -27,7 +27,7 @@ function sc_stripe_shortcode( $attr ) {
 				), $attr ) );
 	
 	
-	if( empty( $amount ) )
+	if( empty( $amount ) || $amount < 50 )
 		return '';
 	
 	
