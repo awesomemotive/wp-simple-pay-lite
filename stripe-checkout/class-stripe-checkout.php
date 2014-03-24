@@ -243,8 +243,6 @@ class Stripe_Checkout {
 		
 		global $sc_options;
 		
-		require_once( 'stripe-php/Stripe.php' );
-		
 		include_once( 'includes/register-settings.php' );
 		
 		$sc_options = sc_get_settings();

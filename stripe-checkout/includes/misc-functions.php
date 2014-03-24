@@ -13,9 +13,8 @@
  */
 function sc_charge_card() {
 	if( isset( $_POST['stripeToken'] ) ) {
-
-		//var_dump(SC_PLUGIN_URL . 'stripe-php/Stripe.php');
-
+		
+		require_once( dirname( dirname( __FILE__ ) ) . '/stripe-php/Stripe.php' );
 		
 		global $sc_options;
 		
