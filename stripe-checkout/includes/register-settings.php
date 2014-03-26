@@ -9,8 +9,9 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) )
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
 
 /**
  *  Main function to register all of the plugin settings

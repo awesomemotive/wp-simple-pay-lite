@@ -8,8 +8,9 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) )
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
 
 class Stripe_Checkout {
 

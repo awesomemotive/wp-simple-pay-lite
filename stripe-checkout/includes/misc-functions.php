@@ -6,6 +6,11 @@
  * @since 1.0.0
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Function that will actually charge the customers credit card
  * 

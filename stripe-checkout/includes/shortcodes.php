@@ -7,9 +7,9 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) )
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-
+}
 
 /**
  * Function to process the [stripe_checkout] shortcode
