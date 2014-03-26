@@ -1,34 +1,3 @@
-/* Use basic styles and colors from Bootstrap 3 for now. http://getbootstrap.com/css/ */
-
-.sc-payment-status {
-	position: absolute;
-	top: 0px;
-	left: 0;
-	height: 50px;
-	width: 100%;
-	
-	padding-top: 30px;
-	
-}
-
-.sc-payment-status p {
-	font-weight: bold;
-	text-align: center;
-	line-height: 50px;
-	color: #fff;
-	height: 50px;
-}
-
-.sc-success {
-	background: #5cb85c;
-	border-bottom: 2px solid #009400;
-}
-
-.sc-failed {
-	background: #d9534f;
-	border-bottom: 2px solid #920404;
-}
-
 /* Payment details at the top of the post */
 .sc-payment-details-wrap { 
 	background: #dff0d8;
