@@ -15,10 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="sidebar-container">
-	<h3>To Do</h3>
+	<h4 class="sidebar-title-medium"><?php _e( 'Test', 'sc' ); ?></h4>
 
 	<div class="sidebar-content">
-		To Do
+		<p>
+			To Do...
+		</p>
 	</div>
 </div>
 
