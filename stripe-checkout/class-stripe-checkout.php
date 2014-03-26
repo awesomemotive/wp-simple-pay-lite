@@ -69,6 +69,9 @@ class Stripe_Checkout {
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 
+		// Enqueue admin styles.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+
 		// Add admin notice after plugin activation. Also check if should be hidden.
 		add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
 
@@ -119,7 +122,22 @@ class Stripe_Checkout {
 		}
 		*/
 	}
-	
+
+	/**
+	 * Enqueue admin-specific style sheets for this plugin's admin pages only.
+	 *
+	 * @since     1.0.0
+	 */
+	public function enqueue_admin_styles() {
+		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ), array(), $this->version );
+		}
+	}
 	
 	/**
 	 * Make sure user has the minimum required version of WordPress installed to use the plugin

@@ -1,0 +1,22 @@
+a.sc-external-link {
+	background: transparent url('../assets/icon-external-link.gif') center right no-repeat;
+	padding-right: 17px;
+}
+
+/* Layout the page similar to the built-in post edit screen. */
+
+#sc-settings {
+	margin-right: 310px;
+}
+
+#sc-settings-content {
+	width: 100%;
+	float: left;
+}
+
+#sc-settings-sidebar {
+	float: right;
+	margin-top: 9px;
+	margin-right: -310px;
+	width: 290px;
+}

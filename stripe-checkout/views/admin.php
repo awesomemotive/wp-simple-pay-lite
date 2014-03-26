@@ -18,7 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="wrap">
-
 	<div id="sc-settings">
 		<div id="sc-settings-content">
 
@@ -82,6 +81,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code>
 
 		</div><!-- #sc-settings-content -->
-	</div>
 
+		<div id="sc-settings-sidebar">
+			<?php include( 'admin-sidebar.php' ); ?>
+		</div>
+
+	</div>
 </div><!-- .wrap -->
