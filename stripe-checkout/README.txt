@@ -55,9 +55,11 @@ Easily toggle between test and live mode until your ready.
 
 If you want your customers to receive email receipts, make sure you have this enabled in your Stripe dashboard.
 
-###Need More Features?###
+###Feature Requests and Updates###
 
-TODO: Click here to request features and get update notifications.
+[Submit feature requests in our support forums.](https://wordpress.org/support/plugin/stripe)
+
+[Get notified of major updates.](http://eepurl.com/Q_ET9)
 
 [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout).
 
@@ -123,7 +125,9 @@ Try using [Zapier](https://zapier.com/app/explore?services=stripe) to connect St
 
 = Feature Requests & Announcements =
 
-TODO: Click here to request features and get update notifications.
+[Submit feature requests in our support forums.](https://wordpress.org/support/plugin/stripe)
+
+[Get notified of major updates.](http://eepurl.com/Q_ET9)
 
 = General Troubleshooting =
 
