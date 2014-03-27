@@ -137,7 +137,9 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 == Screenshots ==
 
-TODO: Screenshots
+1. Desktop checkout overlay
+2. Mobile checkout overlay
+3. Admin settings page
 
 == Changelog ==
 
