@@ -37,14 +37,31 @@ function sc_charge_card() {
 
 		// Set your secret key: remember to change this to your live secret key in production
 		Stripe::setApiKey( $key );
+		
+		//echo '<pre>' . print_r( Stripe_Customer::all(), true ) . '</pre>';
 
-
+		
+		// Create new customer 
+		$new_customer = Stripe_Customer::create( array( 
+				'email' => $_POST['stripeEmail'],
+				'card'  => $token,
+				'description' => 'Created from Stripe testing page at: ' . get_bloginfo( 'title' )
+			));
+			
+		// Get the new customer default card
+		//$customer = Stripe_Customer::retrieve( $new_customer['id'] );
+		
+		
+		//$default_card = $customer['default_card'];
+			
+			
 		// Create the charge on Stripe's servers - this will charge the user's card
 		try {
 			$charge = Stripe_Charge::create( array(
 					'amount'      => $amount, // amount in cents, again
 					'currency'    => 'usd',
-					'card'        => $token,
+					//'card'        => $default_card,
+					'customer'    => $new_customer['id'],
 					'description' => $description
 				)
 			);
@@ -52,6 +69,8 @@ function sc_charge_card() {
 			$redirect = add_query_arg( array( 'payment' => 'success', 'amount' => $amount ), $_POST['sc-redirect'] );
 			
 			$failed = false;
+			
+			
 		} catch(Stripe_CardError $e) {
 		  
 			$redirect = add_query_arg( 'payment', 'failed', $_POST['sc-redirect'] );
@@ -63,6 +82,9 @@ function sc_charge_card() {
 		
 		
 		if( ! $failed ) {
+			
+			
+			
 			// Update our payment details option so we can show it at the top of the content
 			$sc_payment_details['show']        = 1;
 			$sc_payment_details['amount']      = $amount;
@@ -72,7 +94,7 @@ function sc_charge_card() {
 			update_option( 'sc_payment_details', $sc_payment_details );
 		}
 		
-		wp_redirect( $redirect );
+		//wp_redirect( $redirect );
 		
 		exit;
 	}
