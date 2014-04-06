@@ -144,6 +144,10 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 == Changelog ==
 
+= 1.0.1 =
+
+* Fixed bug where customers would not receive an email receipt after purchase.
+
 = 1.0.0 =
 
 * Initial release.

@@ -13,7 +13,7 @@
  * Plugin Name: Simple Stripe Checkout
  * Plugin URI: http://philderksen.com/stripe-checkout-wordpress/
  * Description: Add a simple Stripe Checkout button and overlay to your site using a shortcode.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Phil Derksen
  * Author URI: http://philderksen.com
  * License: GPL-2.0+

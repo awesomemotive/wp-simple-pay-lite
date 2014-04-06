@@ -38,9 +38,6 @@ function sc_charge_card() {
 		// Set your secret key: remember to change this to your live secret key in production
 		Stripe::setApiKey( $key );
 		
-		//echo '<pre>' . print_r( Stripe_Customer::all(), true ) . '</pre>';
-
-		
 		// Create new customer 
 		$new_customer = Stripe_Customer::create( array( 
 				'email' => $_POST['stripeEmail'],
@@ -48,19 +45,11 @@ function sc_charge_card() {
 				'description' => 'Created from Stripe testing page at: ' . get_bloginfo( 'title' )
 			));
 			
-		// Get the new customer default card
-		//$customer = Stripe_Customer::retrieve( $new_customer['id'] );
-		
-		
-		//$default_card = $customer['default_card'];
-			
-			
-		// Create the charge on Stripe's servers - this will charge the user's card
+		// Create the charge on Stripe's servers - this will charge the user's default card
 		try {
 			$charge = Stripe_Charge::create( array(
 					'amount'      => $amount, // amount in cents, again
 					'currency'    => 'usd',
-					//'card'        => $default_card,
 					'customer'    => $new_customer['id'],
 					'description' => $description
 				)
@@ -82,9 +71,7 @@ function sc_charge_card() {
 		
 		
 		if( ! $failed ) {
-			
-			
-			
+
 			// Update our payment details option so we can show it at the top of the content
 			$sc_payment_details['show']        = 1;
 			$sc_payment_details['amount']      = $amount;
