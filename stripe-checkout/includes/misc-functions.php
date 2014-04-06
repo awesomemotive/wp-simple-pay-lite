@@ -94,7 +94,7 @@ function sc_charge_card() {
 			update_option( 'sc_payment_details', $sc_payment_details );
 		}
 		
-		//wp_redirect( $redirect );
+		wp_redirect( $redirect );
 		
 		exit;
 	}
