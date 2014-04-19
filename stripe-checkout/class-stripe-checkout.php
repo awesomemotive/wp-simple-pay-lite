@@ -288,7 +288,7 @@ class Stripe_Checkout {
 	 * @return    string
 	 */
 	public static function get_plugin_title() {
-		return __( 'Simple Stripe Checkout', 'sc' );
+		return __( 'Stripe Checkout', 'sc' );
 	}
 
 
