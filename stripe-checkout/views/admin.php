@@ -77,7 +77,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</tr>
 					<tr>
 						<td>currency</td>
-						<td><?php _e( 'Specify a specific currency by using it\'s 3-letter ISO code.', 'sc' ); ?></td>
+						<td><?php echo __( 'Specify a specific currency by using it\'s ', 'sc' ) . 
+							'<a href="https://support.stripe.com/questions/which-currencies-does-stripe-support" target="_blank">' . 
+							__( '3-letter ISO code.', 'sc' ) . '</a>'; ?></td>
 						<td><?php _e( 'USD', 'sc' ); ?></td>
 					</tr>
 					<tr>
@@ -87,18 +89,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</tr>
 					<tr>
 						<td>billing</td>
-						<td><?php _e( 'Used to gather the billing address during the checkout process.', 'sc' ); ?></td>
+						<td><?php _e( 'Used to gather the billing address during the checkout process. (true or false)', 'sc' ); ?></td>
 						<td><?php _e( 'false', 'sc' ); ?></td>
 					</tr>
 					<tr>
 						<td>shipping</td>
-						<td><?php _e( 'Used to gather the shipping address during the checkout process.', 'sc' ); ?></td>
+						<td><?php _e( 'Used to gather the shipping address during the checkout process. (true or false)', 'sc' ); ?></td>
 						<td><?php _e( 'false', 'sc' ); ?></td>
 					</tr>
 					<tr>
 						<td>enable_remember</td>
-						<td><?php _e( 'Adds a "remember me" checkbox to the checkout form.', 'sc' ); ?></td>
+						<td><?php _e( 'Adds a "remember me" checkbox to the checkout form. (true or false)', 'sc' ); ?></td>
 						<td><?php _e( 'true', 'sc' ); ?></td>
+					</tr>
+					<tr>
+						<td>payment_button_label</td>
+						<td><?php _e( 'Changes text on the default blue button that users click to initiate a checkout process.', 'sc' ); ?></td>
+						<td><?php _e( 'Pay with Card', 'sc' ); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -107,9 +114,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<p><strong><?php _e( 'Live transactions less than 50 cents are not allowed by Stripe.', 'sc' ); ?></strong></p>
 			
-			<h4><?php _e( 'Sample Shortcode', 'sc' ); ?></h4>
-
-			<code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code>
+			<h4><?php _e( 'Sample Shortcodes', 'sc' ); ?></h4>
+			<ul class="ul-disc">
+				<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code></li>
+				<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" shipping="true" billing="true"]</code></li>
+				<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" image_url="http://www.example.com/book_image.jpg"]</code></li>
+				<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" checkout_button_label="Now only {{amount}}!" enable_remember="false"]</code></li>
+			</ul>
 
 		</div><!-- #sc-settings-content -->
 
