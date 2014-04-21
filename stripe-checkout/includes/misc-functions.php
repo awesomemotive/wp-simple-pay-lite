@@ -111,7 +111,7 @@ function sc_show_payment_details( $content ) {
 			$after_payment_details_html = '</div>' . "\n";
 			
 			$before_payment_details_html = apply_filters( 'sc_before_payment_details_html', $before_payment_details_html );
-			$payment_details_html        = apply_filters( 'sc_payment_details_html', $payment_details_html );
+			$payment_details_html        = apply_filters( 'sc_payment_details_html', $payment_details_html, $sc_payment_details );
 			$after_payment_details_html  = apply_filters( 'sc_after_payment_details_html', $after_payment_details_html );
 			
 			$content = $before_payment_details_html . $payment_details_html . $after_payment_details_html . $content;

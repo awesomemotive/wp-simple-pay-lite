@@ -278,6 +278,9 @@ class Stripe_Checkout {
 		
 		// Include shortcode functions
 		include_once( 'includes/shortcodes.php' );
+		
+		// Hooks examples
+		//include_once( 'includes/hooks-examples.php' );
 	}
 
 	/**
