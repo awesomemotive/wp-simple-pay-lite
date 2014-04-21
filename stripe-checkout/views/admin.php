@@ -110,7 +110,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</tbody>
 			</table>
 
-			<p style="color: red;"><strong><?php _e( 'Amount must be in U.S. cents. Do not enter a decimal separator.', 'sc' ); ?></strong></p>
+			<p style="color: red;"><strong><?php printf( __( 'Amount in desired currency. Use smallest common currency unit (%s). U.S. amounts are in cents.', 'sc' ), 
+					'<a href="https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support" target="_blank">read more</a>' ); ?></strong></p>
 
 			<p><strong><?php _e( 'Live transactions less than 50 cents are not allowed by Stripe.', 'sc' ); ?></strong></p>
 			
