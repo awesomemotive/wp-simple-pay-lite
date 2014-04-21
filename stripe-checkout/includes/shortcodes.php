@@ -27,10 +27,10 @@ function sc_stripe_shortcode( $attr ) {
 					'image_url'             => '',
 					'currency'              => 'USD',
 					'checkout_button_label' => '',
-					'billing'               => '',
-					'shipping'              => '',
+					'billing'               => '',    // true or false
+					'shipping'              => '',    // true or false
 					'payment_button_label'  => '',
-					'enable_remember'       => ''
+					'enable_remember'       => ''     // true or false
 				), $attr ) );
 	
 	
@@ -60,8 +60,8 @@ function sc_stripe_shortcode( $attr ) {
 	// Optional
 	$script_options .= 'data-currency="' . esc_attr( $currency ) . '" ';
 	$script_options .= ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . esc_attr( $checkout_button_label ) . '" ' : '' );
-	$script_options .= ( ! empty( $billing ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : '' );
-	$script_options .= ( ! empty( $shipping ) ? 'data-shipping-address="' . esc_attr( $shipping ) . '" ' : '' );
+	$script_options .= ( ( ! empty( $billing ) && $billing != 'false' ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : '' );
+	$script_options .= ( ( ! empty( $shipping ) && $shipping != 'false' ) ? 'data-shipping-address="' . esc_attr( $shipping ) . '" ' : '' );
 	$script_options .= ( ! empty( $payment_button_label ) ? 'data-label="' . esc_attr( $payment_button_label ) . '" ' : '' );
 	$script_options .= ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . esc_attr( $enable_remember ) . '" ' : '' );
 	
