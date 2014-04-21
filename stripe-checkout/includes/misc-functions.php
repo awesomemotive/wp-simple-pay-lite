@@ -100,11 +100,11 @@ function sc_show_payment_details( $content ) {
 		if( $sc_payment_details['show'] == 1 ) {
 			$before_payment_details_html = '<div class="sc-payment-details-wrap">' . "\n";
 
-			$payment_details_html .= '<p>Congratulations. Your payment went through!</p>' . "\n";
-			$payment_details_html .= '<p>Here\'s what you bought:</p>' . "\n";
+			$payment_details_html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
+			$payment_details_html .= '<p>' . __( 'Here\'s what you bought:', 'sc' ) . '</p>' . "\n";
 			$payment_details_html .= ( ! empty( $sc_payment_details['description'] ) ? $sc_payment_details['description'] . '<br/>' . "\n" : '' );
 			$payment_details_html .= ( ! empty( $sc_payment_details['name'] ) ? 'From: ' . $sc_payment_details['name'] . '<br/>' . "\n" : '' );
-			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<br/><strong>Total Paid: $' . sc_convert_amount( $sc_payment_details['amount'] ) . '</strong>' . "\n" : '' );
+			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<br/><strong>' . __( 'Total Paid: $', 'sc' ) . sc_convert_amount( $sc_payment_details['amount'] ) . '</strong>' . "\n" : '' );
 			
 			$after_payment_details_html = '</div>' . "\n";
 			
