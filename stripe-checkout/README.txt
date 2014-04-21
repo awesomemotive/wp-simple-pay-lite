@@ -149,6 +149,7 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * Added image_url shortcode attribute.
 * Added currency shortcode attribute.
 * Added checkout_button_label shortcode attribute.
+* Added payment_button_label shortcode attribute (thanks @enollo).
 * Added billing shortcode attribute.
 * Added shipping shortcode attribute.
 * Added enable_remember shortcode attribute.
