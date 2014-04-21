@@ -19,7 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sc_charge_card() {
 	if( isset( $_POST['stripeToken'] ) ) {
 		
-		require_once( SC_PLUGIN_DIR . 'stripe-php/Stripe.php' );
+		if( ! class_exists( 'Stripe' ) ) {
+			require_once( SC_PLUGIN_DIR . 'stripe-php/Stripe.php' );
+		}
 		
 		global $sc_options;
 		
