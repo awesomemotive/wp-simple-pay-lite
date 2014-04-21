@@ -66,7 +66,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</tr>
 					<tr>
 						<td>amount</td>
-						<td><?php _e( 'The amount (in U.S. cents) that\'s shown to the user.', 'sc' ); ?></td>
+						<td><?php printf( __( 'Amount in desired currency. Use smallest common currency unit (%s). U.S. amounts are in cents.', 'sc' ), 
+					'<a href="https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support" target="_blank">read more</a>' ); ?></td>
 						<td>100 (equals $1.00 US)</td>
 					</tr>
 					
@@ -109,9 +110,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</tr>
 				</tbody>
 			</table>
-
-			<p style="color: red;"><strong><?php printf( __( 'Amount in desired currency. Use smallest common currency unit (%s). U.S. amounts are in cents.', 'sc' ), 
-					'<a href="https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support" target="_blank">read more</a>' ); ?></strong></p>
 
 			<p><strong><?php _e( 'Live transactions less than 50 cents are not allowed by Stripe.', 'sc' ); ?></strong></p>
 			
