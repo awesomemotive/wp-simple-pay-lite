@@ -144,6 +144,16 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 == Changelog ==
 
+= 1.1.0 =
+
+* Added image_url shortcode attribute.
+* Added currency shortcode attribute.
+* Added checkout_button_label shortcode attribute.
+* Added billing shortcode attribute.
+* Added shipping shortcode attribute.
+* Added enable_remember shortcode attribute.
+* Fixed bug where other instances of Stripe class were causing errors.
+
 = 1.0.1 =
 
 * Fixed bug where customers would not receive an email receipt after purchase.
