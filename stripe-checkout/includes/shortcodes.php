@@ -24,7 +24,7 @@ function sc_stripe_shortcode( $attr ) {
 					'name'                  => get_bloginfo( 'title' ),
 					'description'           => '',
 					'amount'                => '',
-					'image'                 => '',
+					'image_url'             => '',
 					'currency'              => 'USD',
 					'checkout_button_label' => '',
 					'billing'               => '',
@@ -55,7 +55,7 @@ function sc_stripe_shortcode( $attr ) {
 	$script_options .= 'data-name="' . esc_attr( $name ) . '" ';
 	$script_options .= 'data-description="' . esc_attr( $description ) . '" ';
 	$script_options .= 'data-amount="' . esc_attr( $amount ) . '" ';
-	$script_options .= ( ! empty( $image ) ? 'data-image="' . esc_url( $image ) . '" ' : '' );
+	$script_options .= ( ! empty( $image_url ) ? 'data-image="' . esc_url( $image_url ) . '" ' : '' );
 	
 	// Optional
 	$script_options .= 'data-currency="' . esc_attr( $currency ) . '" ';

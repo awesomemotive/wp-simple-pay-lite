@@ -71,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</tr>
 					
 					<tr>
-						<td>image</td>
+						<td>image_url</td>
 						<td><?php _e( 'A URL pointing to a square image of your brand or product. The recommended minimum size is 128x128px.', 'sc' ); ?></td>
 						<td><?php _e( 'n/a', 'sc' ); ?></td>
 					</tr>
