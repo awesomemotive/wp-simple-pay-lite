@@ -86,7 +86,11 @@ function sc_charge_card() {
 			update_option( 'sc_payment_details', $sc_payment_details );
 		}
 		
+		do_action( 'sc_redirect_before' );
+		
 		wp_redirect( $redirect );
+		
+		do_action( 'sc_redirect_after' );
 		
 		exit;
 	}

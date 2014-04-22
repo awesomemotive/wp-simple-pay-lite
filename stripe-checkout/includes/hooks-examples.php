@@ -31,3 +31,32 @@ function test_sc_redirect( $redirect ) {
 	return 'http://nickyoungweb.com/zip/?page_id=1018';
 }
 //add_filter( 'sc_redirect', 'test_sc_redirect' );
+
+
+/*
+ * Add functionality before the redirect takes place
+ * 
+ * @since 1.1.0
+ * 
+ * Can't echo here as it will cause errors
+ * This should mostly be used for backend processing (e.g. Adding New User to WP user list or something similar)
+ */
+function test_sc_redirect_before() {
+	
+}
+//add_action( 'sc_redirect_before', 'test_sc_redirect_before' );
+
+
+/*
+ * Add functionality after the redirect takes place
+ * 
+ * @since 1.1.0
+ * 
+ * Can echo here but it will not be shown to screen, this happens befor page load on redirect
+ * Not sure of a great use for this at this time
+ */
+function test_sc_redirect_after() {
+	
+}
+//add_action( 'sc_redirect_after', 'test_sc_redirect_after' );
+
