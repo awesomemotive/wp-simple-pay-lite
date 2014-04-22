@@ -111,7 +111,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</tbody>
 			</table>
 
-			<p><strong><?php _e( 'Live transactions less than 50 cents are not allowed by Stripe.', 'sc' ); ?></strong></p>
+			<p><strong><?php _e( 'Live transactions less than 50 cents (U.S.) are not allowed by Stripe.', 'sc' ); ?></strong></p>
 			
 			<h4><?php _e( 'Sample Shortcodes', 'sc' ); ?></h4>
 			<ul class="ul-disc">
