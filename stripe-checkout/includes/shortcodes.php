@@ -75,6 +75,7 @@ function sc_stripe_shortcode( $attr ) {
 					<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
 					<input type="hidden" name="sc-amount" value="' . esc_attr( $amount ) . '" />
 					<input type="hidden" name="sc-redirect" value="' . get_permalink() . '" />
+					<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />
 				  </form>';
 		
 		return $html;

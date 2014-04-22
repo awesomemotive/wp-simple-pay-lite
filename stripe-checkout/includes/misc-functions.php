@@ -33,6 +33,7 @@ function sc_charge_card() {
 		$amount      = $_POST['sc-amount'];
 		$description = $_POST['sc-description'];
 		$name        = $_POST['sc-name'];
+		$currency    = $_POST['sc-currency'];
 	
 		if( empty( $sc_options['enable_test_key'] ) ) {
 			$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
@@ -54,7 +55,7 @@ function sc_charge_card() {
 		try {
 			$charge = Stripe_Charge::create( array(
 					'amount'      => $amount, // amount in cents, again
-					'currency'    => 'usd',
+					'currency'    => $currency,
 					'customer'    => $new_customer['id'],
 					'description' => $description
 				)
