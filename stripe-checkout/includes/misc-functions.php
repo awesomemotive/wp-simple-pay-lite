@@ -25,6 +25,9 @@ function sc_charge_card() {
 		
 		global $sc_options;
 		
+		// Set redirect
+		$redirect = $_POST['sc-redirect'];
+		
 		// Get the credit card details submitted by the form
 		$token       = $_POST['stripeToken'];
 		$amount      = $_POST['sc-amount'];
@@ -57,14 +60,14 @@ function sc_charge_card() {
 				)
 			);
 			
-			$redirect = add_query_arg( array( 'payment' => 'success', 'amount' => $amount ), $_POST['sc-redirect'] );
+			$redirect = add_query_arg( array( 'payment' => 'success', 'amount' => $amount ), apply_filters( 'sc_redirect', $redirect ) );
 			
 			$failed = false;
 			
 			
 		} catch(Stripe_CardError $e) {
 		  
-			$redirect = add_query_arg( 'payment', 'failed', $_POST['sc-redirect'] );
+			$redirect = add_query_arg( 'payment', 'failed', apply_filters( 'sc_redirect', $redirect ) );
 			
 			$failed = true;
 		}
