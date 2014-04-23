@@ -83,6 +83,7 @@ function sc_charge_card() {
 			$sc_payment_details['amount']      = $amount;
 			$sc_payment_details['name']        = $name;
 			$sc_payment_details['description'] = $description;
+			$sc_payment_details['currency']    = $currency;
 
 			update_option( 'sc_payment_details', $sc_payment_details );
 		}
@@ -114,7 +115,7 @@ function sc_show_payment_details( $content ) {
 			$payment_details_html .= '<p>' . __( 'Here\'s what you bought:', 'sc' ) . '</p>' . "\n";
 			$payment_details_html .= ( ! empty( $sc_payment_details['description'] ) ? $sc_payment_details['description'] . '<br/>' . "\n" : '' );
 			$payment_details_html .= ( ! empty( $sc_payment_details['name'] ) ? 'From: ' . $sc_payment_details['name'] . '<br/>' . "\n" : '' );
-			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<br/><strong>' . __( 'Total Paid: $', 'sc' ) . sc_convert_amount( $sc_payment_details['amount'] ) . '</strong>' . "\n" : '' );
+			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<br/><strong>' . __( 'Total Paid: ', 'sc' ) . sc_convert_amount( $sc_payment_details['amount'], $sc_payment_details['currency'] ) . $sc_payment_details['currency'] . '</strong>' . "\n" : '' );
 			
 			$after_payment_details_html = '</div>' . "\n";
 			
@@ -132,6 +133,14 @@ function sc_show_payment_details( $content ) {
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
 
-function sc_convert_amount( $amount ) {
+function sc_convert_amount( $amount, $currency ) {
+	
+	$zero_based = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
+	
+	
+	if( in_array( $currency, $zero_based ) ) {
+		return $amount;
+	}
+	
 	return number_format( ( $amount / 100 ), 2 );
 }

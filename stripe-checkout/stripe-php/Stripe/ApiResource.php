@@ -9,16 +9,29 @@ abstract class Stripe_ApiResource extends Stripe_Object
     return $instance;
   }
 
+  /**
+   * @returns Stripe_ApiResource The refreshed resource.
+   */
   public function refresh()
   {
     $requestor = new Stripe_ApiRequestor($this->_apiKey);
     $url = $this->instanceUrl();
 
-    list($response, $apiKey) = $requestor->request('get', $url, $this->_retrieveOptions);
+    list($response, $apiKey) = $requestor->request(
+        'get',
+        $url,
+        $this->_retrieveOptions
+    );
     $this->refreshFrom($response, $apiKey);
     return $this;
-   }
+  }
 
+  /**
+   * @param string $class
+   *
+   * @returns string The name of the class, with namespacing and underscores
+   *    stripped.
+   */
   public static function className($class)
   {
     // Useful for namespaces: Foo\Stripe_Charge
@@ -32,18 +45,28 @@ abstract class Stripe_ApiResource extends Stripe_Object
     return $name;
   }
 
+  /**
+   * @param string $class
+   *
+   * @returns string The endpoint URL for the given class.
+   */
   public static function classUrl($class)
   {
     $base = self::_scopedLsb($class, 'className', $class);
     return "/v1/${base}s";
   }
 
+  /**
+   * @returns string The full API URL for this API resource.
+   */
   public function instanceUrl()
   {
     $id = $this['id'];
     $class = get_class($this);
     if (!$id) {
-      throw new Stripe_InvalidRequestError("Could not determine which URL to request: $class instance has invalid ID: $id", null);
+      $message = "Could not determine which URL to request: "
+               . "$class instance has invalid ID: $id";
+      throw new Stripe_InvalidRequestError($message, null);
     }
     $id = Stripe_ApiRequestor::utf8($id);
     $base = $this->_lsb('classUrl', $class);
@@ -53,10 +76,22 @@ abstract class Stripe_ApiResource extends Stripe_Object
 
   private static function _validateCall($method, $params=null, $apiKey=null)
   {
-    if ($params && !is_array($params))
-      throw new Stripe_Error("You must pass an array as the first argument to Stripe API method calls.  (HINT: an example call to create a charge would be: \"StripeCharge::create(array('amount' => 100, 'currency' => 'usd', 'card' => array('number' => 4242424242424242, 'exp_month' => 5, 'exp_year' => 2015)))\")");
-    if ($apiKey && !is_string($apiKey))
-      throw new Stripe_Error('The second argument to Stripe API method calls is an optional per-request apiKey, which must be a string.  (HINT: you can set a global apiKey by "Stripe::setApiKey(<apiKey>)")');
+    if ($params && !is_array($params)) {
+      $message = "You must pass an array as the first argument to Stripe API "
+               . "method calls.  (HINT: an example call to create a charge "
+               . "would be: \"StripeCharge::create(array('amount' => 100, "
+               . "'currency' => 'usd', 'card' => array('number' => "
+               . "4242424242424242, 'exp_month' => 5, 'exp_year' => 2015)))\")";
+      throw new Stripe_Error($message);
+    }
+
+    if ($apiKey && !is_string($apiKey)) {
+      $message = 'The second argument to Stripe API method calls is an '
+               . 'optional per-request apiKey, which must be a string.  '
+               . '(HINT: you can set a global apiKey by '
+               . '"Stripe::setApiKey(<apiKey>)")';
+      throw new Stripe_Error($message);
+    }
   }
 
   protected static function _scopedAll($class, $params=null, $apiKey=null)
@@ -77,10 +112,10 @@ abstract class Stripe_ApiResource extends Stripe_Object
     return Stripe_Util::convertToStripeObject($response, $apiKey);
   }
 
-  protected function _scopedSave($class)
+  protected function _scopedSave($class, $apiKey=null)
   {
     self::_validateCall('save');
-    $requestor = new Stripe_ApiRequestor($this->_apiKey);
+    $requestor = new Stripe_ApiRequestor($apiKey);
     $params = $this->serializeParameters();
 
     if (count($params) > 0) {
