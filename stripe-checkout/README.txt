@@ -153,6 +153,9 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * Added billing shortcode attribute.
 * Added shipping shortcode attribute.
 * Added enable_remember shortcode attribute.
+* Added success_redirect_url shortcode attribute.
+* Updated to most recent Stripe library.
+* Added a couple of action and filter hooks.
 * Fixed bug where other instances of Stripe class were causing errors.
 
 = 1.0.1 =
