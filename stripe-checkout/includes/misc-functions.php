@@ -68,7 +68,7 @@ function sc_charge_card() {
 			
 		} catch(Stripe_CardError $e) {
 		  
-			$redirect = add_query_arg( 'payment', 'failed', apply_filters( 'sc_redirect', $redirect ) );
+			$redirect = add_query_arg( 'payment', 'failed', get_permalink() );
 			
 			$failed = true;
 		}
