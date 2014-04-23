@@ -108,6 +108,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td><?php _e( 'Changes text on the default blue button that users click to initiate a checkout process.', 'sc' ); ?></td>
 						<td><?php _e( 'Pay with Card', 'sc' ); ?></td>
 					</tr>
+					<tr>
+						<td>success_redirect_url</td>
+						<td><?php _e( 'The URL that the user should be redirected to after a successful payment.', 'sc' ); ?></td>
+						<td><?php _e( 'Page URL that the purchase was initiated from', 'sc' ); ?></td>
+					</tr>
 				</tbody>
 			</table>
 
