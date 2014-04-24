@@ -25,8 +25,17 @@ function sc_charge_card() {
 		
 		global $sc_options;
 		
-		// Set redirect
-		$redirect = $_POST['sc-redirect'];
+		// Set redirect and variable to determine if we show details after or not
+		$redirect     = $_POST['sc-redirect'];
+		$show_details = false;
+		
+		// We have no default redirect from the shortcode
+		// This is so that if it is not empty here then we can hide the payment details
+		// Since the user has provided their own page to show info on afterwards
+		if( empty( $redirect ) ) {
+			$redirect = get_permalink();
+			$show_details = true;
+		}
 		
 		// Get the credit card details submitted by the form
 		$token       = $_POST['stripeToken'];
@@ -79,7 +88,7 @@ function sc_charge_card() {
 		if( ! $failed ) {
 
 			// Update our payment details option so we can show it at the top of the content
-			$sc_payment_details['show']        = 1;
+			$sc_payment_details['show']        = ( $show_details == true ? 1 : 0 );
 			$sc_payment_details['amount']      = $amount;
 			$sc_payment_details['name']        = $name;
 			$sc_payment_details['description'] = $description;
