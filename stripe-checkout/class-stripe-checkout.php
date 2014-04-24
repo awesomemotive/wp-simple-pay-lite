@@ -341,11 +341,16 @@ class Stripe_Checkout {
 		if ( false == get_option( 'sc_show_admin_install_notice' ) )
 			return;
 
-		// At this point show install notice.
-		include_once( 'views/admin-install-notice.php' );
+		// Delete stored value if "hide" button click detected (custom querystring value set to 1).
+		// or if on a PIB admin page. Then exit.
+		if ( ! empty( $_REQUEST['sc-dismiss-install-nag'] ) || $this->viewing_this_plugin() ) {
+			delete_option( 'sc_show_admin_install_notice' );
+			return;
+		}
 
-		// Delete stored value to hide since we only want them to view it once.
-		delete_option( 'sc_show_admin_install_notice' );
-		return;
+		// At this point show install notice. Show it only on the plugin screen.
+		if( get_current_screen()->id == 'plugins' ) {
+			include_once( 'views/admin-install-notice.php' );
+		}
 	}
 }
