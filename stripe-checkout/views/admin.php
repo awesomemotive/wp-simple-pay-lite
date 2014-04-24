@@ -111,7 +111,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<tr>
 						<td>success_redirect_url</td>
 						<td><?php _e( 'The URL that the user should be redirected to after a successful payment.', 'sc' ); ?></td>
-						<td><?php _e( 'Page URL that the purchase was initiated from', 'sc' ); ?></td>
+						<td><?php _e( 'Page payment made from', 'sc' ); ?></td>
 					</tr>
 				</tbody>
 			</table>
