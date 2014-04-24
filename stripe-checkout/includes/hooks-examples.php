@@ -20,6 +20,13 @@ function test_sc_payment_details_html( $sc_payment_details_html, $sc_payment_det
 //add_filter( 'sc_payment_details_html', 'test_sc_payment_details_html', 10, 2 );
 
 
+function remove_payment_details( $payment_details ) {
+	$payment_details['show'] = false;
+	
+	return $payment_details;
+}
+//add_filter( 'sc_payment_details', 'remove_payment_details' );
+
 /*
  * Changes the redirect destination
  * 

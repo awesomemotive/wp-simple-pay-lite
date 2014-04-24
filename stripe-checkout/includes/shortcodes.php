@@ -31,7 +31,7 @@ function sc_stripe_shortcode( $attr ) {
 					'shipping'              => '',    // true or false
 					'payment_button_label'  => '',
 					'enable_remember'       => '',    // true or false
-					'success_redirect_url'  => ''
+					'success_redirect_url'  => get_permalink()
 				), $attr ) );
 	
 	
@@ -75,7 +75,7 @@ function sc_stripe_shortcode( $attr ) {
 					<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
 					<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
 					<input type="hidden" name="sc-amount" value="' . esc_attr( $amount ) . '" />
-					<input type="hidden" name="sc-redirect" value="' . esc_attr( $success_redirect_url ) . '" />
+					<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />
 					<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />
 				  </form>';
 		

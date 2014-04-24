@@ -25,17 +25,8 @@ function sc_charge_card() {
 		
 		global $sc_options;
 		
-		// Set redirect and variable to determine if we show details after or not
+		// Set redirect
 		$redirect     = $_POST['sc-redirect'];
-		$show_details = false;
-		
-		// We have no default redirect from the shortcode
-		// This is so that if it is not empty here then we can hide the payment details
-		// Since the user has provided their own page to show info on afterwards
-		if( empty( $redirect ) ) {
-			$redirect = get_permalink();
-			$show_details = true;
-		}
 		
 		// Get the credit card details submitted by the form
 		$token       = $_POST['stripeToken'];
@@ -88,13 +79,13 @@ function sc_charge_card() {
 		if( ! $failed ) {
 
 			// Update our payment details option so we can show it at the top of the content
-			$sc_payment_details['show']        = ( $show_details == true ? 1 : 0 );
+			$sc_payment_details['show']        = 1;
 			$sc_payment_details['amount']      = $amount;
 			$sc_payment_details['name']        = $name;
 			$sc_payment_details['description'] = $description;
 			$sc_payment_details['currency']    = $currency;
 
-			update_option( 'sc_payment_details', $sc_payment_details );
+			update_option( 'sc_payment_details', apply_filters( 'sc_payment_details', $sc_payment_details ) );
 		}
 		
 		do_action( 'sc_redirect_before' );
@@ -117,7 +108,7 @@ function sc_show_payment_details( $content ) {
 	$payment_details_html = '';
 	
 	if( ! empty( $sc_payment_details ) ) {
-		if( $sc_payment_details['show'] == 1 ) {
+		if( $sc_payment_details['show'] != false ) {
 			$before_payment_details_html = '<div class="sc-payment-details-wrap">' . "\n";
 
 			$payment_details_html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
