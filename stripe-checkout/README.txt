@@ -11,7 +11,7 @@ The easiest way to add a high conversion Stripe Checkout form to your site and s
 
 == Description ==
 
-Add the highly optimized Stripe Checkout form to your site in a few simple steps.
+Add a highly optimized Stripe Checkout form overlay to your site in a few simple steps.
 
 Instead of spending time building your own checkout forms you can use Stripe's, which is continually tested for high conversion.
 
