@@ -9,9 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Changes the HTML output of the payment details
  * 
+ * Passes in the $sc_payment_details so they can be used to completely reformat the HTML
+ * however you may want
  * 
- * @since 
+ * @since 1.1.0
  */
 function test_sc_payment_details_html( $sc_payment_details_html, $sc_payment_details ) {
 	
@@ -26,6 +29,7 @@ function remove_payment_details( $payment_details ) {
 	return $payment_details;
 }
 //add_filter( 'sc_payment_details', 'remove_payment_details' );
+
 
 /*
  * Changes the redirect destination
