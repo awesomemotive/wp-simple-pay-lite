@@ -49,7 +49,11 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 `[stripe name="The Awesome Store" amount="1999" description="The Awesome Blueprint Book"]`
 
-`[stripe name="The Awesome Store" amount="50000" description="Five Awesome Coaching Calls"]`
+`[stripe name="The Awesome Store" amount="1999" description="Five Awesome Coaching Calls"]`
+
+`[stripe name="The Awesome Store" amount="1999" description="The Book of Awesomeness" image_url="http://www.example.com/book_image.jpg"]`
+
+`[stripe name="The Awesome Store" amount="1999" description="The Book of Awesomeness" checkout_button_label="Now only {{amount}}!" enable_remember="false"]`
 
 Easily toggle between test and live mode until you're ready.
 
