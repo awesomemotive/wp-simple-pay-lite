@@ -157,6 +157,7 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * Updated to most recent Stripe library.
 * Added a couple of action and filter hooks.
 * Fixed bug where other instances of Stripe class were causing errors.
+* Removed a default string being added to customer description in Stripe dashboard.
 
 = 1.0.1 =
 
