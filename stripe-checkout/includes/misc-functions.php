@@ -47,8 +47,7 @@ function sc_charge_card() {
 		// Create new customer 
 		$new_customer = Stripe_Customer::create( array( 
 				'email' => $_POST['stripeEmail'],
-				'card'  => $token,
-				'description' => 'Created from Stripe testing page at: ' . get_bloginfo( 'title' )
+				'card'  => $token
 			));
 			
 		// Create the charge on Stripe's servers - this will charge the user's default card
