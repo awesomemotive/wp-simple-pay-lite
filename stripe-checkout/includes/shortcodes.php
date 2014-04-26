@@ -34,9 +34,7 @@ function sc_stripe_shortcode( $attr ) {
 					'success_redirect_url'  => get_permalink()
 				), $attr, 'stripe' ) );
 	
-	
-	if( empty( $amount ) || $amount < 50 )
-		return '';
+	$attr = apply_filters( 'shortcode_atts_stripe', $attr );
 	
 	
 	if( empty( $sc_options['enable_test_key'] ) ) {
@@ -53,7 +51,7 @@ function sc_stripe_shortcode( $attr ) {
 	$script_options .= 'data-key="' . $data_key . '" ';
 	
 	// Highly recommended
-	// TODO change these to key => value pairs as an array to pass
+	// TODO change these to key => value pairs as an array to pass?
 	$script_options .= 'data-name="' . esc_attr( $name ) . '" ';
 	$script_options .= 'data-description="' . esc_attr( $description ) . '" ';
 	$script_options .= 'data-amount="' . esc_attr( $amount ) . '" ';
@@ -72,11 +70,22 @@ function sc_stripe_shortcode( $attr ) {
 	
 	$form_attr = apply_filters( 'sc_form_attr', $attr );
 	
+	if( ( empty( $amount ) || $amount < 50 ) && ! isset( $form_attr['amount'] ) )
+		return '';
+	
 	if( ! isset( $_GET['payment'] ) ) { 
 		
-		$form = '';
+		$form        = '';
+		$form_open   = '';
+		$form_script = '';
+		$form_fields = '';
+		$form_close  = '';
 		
-		$form = apply_filters( 'sc_form', $form );
+		$form .= apply_filters( 'sc_form_open', $form_open );
+		$form .= apply_filters( 'sc_form_script', $form_script );
+		$form .= apply_filters( 'sc_form_fields', $form_fields );
+		$form .= apply_filters( 'sc_form_close', $form_close );
+		
 		
 		return $form;
 	}

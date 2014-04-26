@@ -144,7 +144,10 @@ function sc_convert_amount( $amount, $currency ) {
 	return number_format( ( $amount / 100 ), 2 );
 }
 
-function sc_form_open() {
+
+/***** FILTERS FOR THE FORM ******/
+
+function sc_form_open( $form_open ) {
 	
 	$form_open = '<form action="" method="POST">';
 	
@@ -152,7 +155,7 @@ function sc_form_open() {
 }
 add_filter( 'sc_form_open', 'sc_form_open' );
 
-function sc_form_script() {
+function sc_form_script( $form_script ) {
 	global $sc_form_attr;
 	
 	$script_options = $sc_form_attr['script_options'];
@@ -163,7 +166,7 @@ function sc_form_script() {
 }
 add_filter( 'sc_form_script', 'sc_form_script' );
 
-function sc_form_fields() {
+function sc_form_fields( $form_fields ) {
 	global $sc_form_attr;
 	
 	$name                 = $sc_form_attr['name'];
@@ -182,7 +185,7 @@ function sc_form_fields() {
 }
 add_filter( 'sc_form_fields', 'sc_form_fields' );
 
-function sc_form_close() {
+function sc_form_close( $form_close ) {
 	
 	$form_close = '</form>';
 	
@@ -191,16 +194,18 @@ function sc_form_close() {
 add_filter( 'sc_form_close', 'sc_form_close' );
 
 
-function sc_form( $form ) {
+/*function sc_form( $form ) {
+	
+	$form_fields = '';
 	
 	$form  = apply_filters( 'sc_form_open', '' );
 	$form .= apply_filters( 'sc_form_script', '' );
-	$form .= apply_filters( 'sc_form_fields', '' );
+	$form .= apply_filters( 'sc_form_fields', $form_fields );
 	$form .= apply_filters( 'sc_form_close', '' );
 	
 	return $form;
 }
-add_filter( 'sc_form', 'sc_form' );
+add_filter( 'sc_form', 'sc_form' );*/
 
 function sc_form_attr( $form_attr ) {
 	global $sc_form_attr;
