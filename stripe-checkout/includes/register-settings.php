@@ -23,42 +23,6 @@ function sc_register_settings() {
 
 		/* General Settings */
 		'general' => array(
-			'enable_test_key' => array(
-				'id'   => 'enable_test_key',
-				'name' => __( 'Enable Test Mode', 'sc' ),
-				'desc' => __( 'Place Stripe in Test mode using your test API keys.', 'sc' ),
-				'type' => 'checkbox'
-			),
-			'test_secret_key' => array(
-				'id'   => 'test_secret_key',
-				'name' => __( 'Test Secret Key', 'sc' ),
-				'desc' => __( 'Enter your test secret key, found in your Stripe account settings.' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			),
-			'test_publish_key' => array(
-				'id'   => 'test_publish_key',
-				'name' => __( 'Test Publishable Key', 'sc' ),
-				'desc' => __( 'Enter your test publishable key, found in your Stripe account settings.' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			),
-			'live_secret_key' => array(
-				'id'   => 'live_secret_key',
-				'name' => __( 'Live Secret Key', 'sc' ),
-				'desc' => __( 'Enter your live secret key, found in your Stripe account settings.' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			),
-			'live_publish_key' => array(
-				'id'   => 'live_publish_key',
-				'name' => __( 'Live Publishable Key', 'sc' ),
-				'desc' => __( 'Enter your live publishable key, found in your Stripe account settings.' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			)
-		),
-		'default' => array(
 			'name' => array(
 				'id'   => 'name',
 				'name' => __( 'Name', 'sc' ),
@@ -133,6 +97,44 @@ function sc_register_settings() {
 				'desc' => __( 'Adds a "Remember Me" checkbox to the checkout form.', 'sc' ),
 				'type' => 'checkbox'
 			)
+		),
+		
+		/* Keys settings */
+		'keys' => array(
+			'enable_test_key' => array(
+				'id'   => 'enable_test_key',
+				'name' => __( 'Enable Test Mode', 'sc' ),
+				'desc' => __( 'Place Stripe in Test mode using your test API keys.', 'sc' ),
+				'type' => 'checkbox'
+			),
+			'test_secret_key' => array(
+				'id'   => 'test_secret_key',
+				'name' => __( 'Test Secret Key', 'sc' ),
+				'desc' => __( 'Enter your test secret key, found in your Stripe account settings.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'test_publish_key' => array(
+				'id'   => 'test_publish_key',
+				'name' => __( 'Test Publishable Key', 'sc' ),
+				'desc' => __( 'Enter your test publishable key, found in your Stripe account settings.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'live_secret_key' => array(
+				'id'   => 'live_secret_key',
+				'name' => __( 'Live Secret Key', 'sc' ),
+				'desc' => __( 'Enter your live secret key, found in your Stripe account settings.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'live_publish_key' => array(
+				'id'   => 'live_publish_key',
+				'name' => __( 'Live Publishable Key', 'sc' ),
+				'desc' => __( 'Enter your live publishable key, found in your Stripe account settings.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			)
 		)
 	);
 
@@ -141,14 +143,14 @@ function sc_register_settings() {
 		add_option( 'sc_settings_general' );
 	}
 	
-	if( false == get_option( 'sc_settings_default') ) {
-		add_option( 'sc_settings_default' );
+	if( false == get_option( 'sc_settings_keys') ) {
+		add_option( 'sc_settings_keys' );
 	}
 
 	/* Add the General Settings section */
 	add_settings_section(
 		'sc_settings_general',
-		__( 'Keys', 'sc' ),
+		__( 'General Settings', 'sc' ),
 		'__return_false',
 		'sc_settings_general'
 	);
@@ -166,26 +168,26 @@ function sc_register_settings() {
 	
 	/* Add the Default Settings section */
 	add_settings_section(
-		'sc_settings_default',
-		__( 'Default Settings', 'sc' ),
+		'sc_settings_keys',
+		__( 'Keys', 'sc' ),
 		'__return_false',
-		'sc_settings_default'
+		'sc_settings_keys'
 	);
 
-	foreach ( $sc_settings['default'] as $option ) {
+	foreach ( $sc_settings['keys'] as $option ) {
 		add_settings_field(
-			'sc_settings_default[' . $option['id'] . ']',
+			'sc_settings_keys[' . $option['id'] . ']',
 			$option['name'],
 			function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
-			'sc_settings_default',
-			'sc_settings_default',
-			sc_get_settings_field_args( $option, 'default' )
+			'sc_settings_keys',
+			'sc_settings_keys',
+			sc_get_settings_field_args( $option, 'keys' )
 		);
 	}
 
 	/* Register all settings or we will get an error when trying to save */
 	register_setting( 'sc_settings_general', 'sc_settings_general', 'sc_settings_sanitize' );
-	register_setting( 'sc_settings_default', 'sc_settings_default', 'sc_settings_sanitize' );
+	register_setting( 'sc_settings_keys', 'sc_settings_keys', 'sc_settings_sanitize' );
 
 }
 add_action( 'admin_init', 'sc_register_settings' );
@@ -295,7 +297,7 @@ function sc_missing_callback( $args ) {
 function sc_get_settings() {
 
 	$general_settings = is_array( get_option( 'sc_settings_general' ) ) ? get_option( 'sc_settings_general' ) : array();
-	$default_settings = is_array( get_option( 'sc_settings_default' ) ) ? get_option( 'sc_settings_default' ) : array();
+	$keys_settings = is_array( get_option( 'sc_settings_keys' ) ) ? get_option( 'sc_settings_keys' ) : array();
 
-	return $general_settings;
+	return array_merge( $general_settings, $keys_settings );
 }
