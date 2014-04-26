@@ -294,7 +294,8 @@ function sc_missing_callback( $args ) {
  */
 function sc_get_settings() {
 
-	$general_settings = is_array( get_option( 'sc_settings_general' ) ) ? get_option( 'sc_settings_general' )  : array();
+	$general_settings = is_array( get_option( 'sc_settings_general' ) ) ? get_option( 'sc_settings_general' ) : array();
+	$default_settings = is_array( get_option( 'sc_settings_default' ) ) ? get_option( 'sc_settings_default' ) : array();
 
 	return $general_settings;
 }
