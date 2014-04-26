@@ -58,11 +58,91 @@ function sc_register_settings() {
 				'size' => 'regular-text'
 			)
 		),
+		'default' => array(
+			'name' => array(
+				'id'   => 'name',
+				'name' => __( 'Name', 'sc' ),
+				'desc' => __( 'The name of your company or website.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'description' => array(
+				'id'   => 'description',
+				'name' => __( 'Description', 'sc' ),
+				'desc' => __( 'A description of the product or service being offered.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'amount' => array(
+				'id'   => 'amount',
+				'name' => __( 'Amount', 'sc' ),
+				'desc' => __( 'The amount to charge.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'currency' => array(
+				'id'   => 'currency',
+				'name' => __( 'Currency', 'sc' ),
+				'desc' => __( 'Specify a specific currency by using it\'s 3-letter ISO Code', 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'image_url' => array(
+				'id'   => 'image_url',
+				'name' => __( 'Image URL', 'sc' ),
+				'desc' => __( 'A URL pointing to a square image of your brand or product. The recommended minimum size is 128x128px.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'checkout_button_label' => array(
+				'id'   => 'checkout_button_label',
+				'name' => __( 'Checkout Button Label', 'sc' ),
+				'desc' => __( 'The label of the payment button in the checkout form. You can use {{amount}} to display the amount.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'payment_button_label' => array(
+				'id'   => 'payment_button_label',
+				'name' => __( 'Payment Button Label', 'sc' ),
+				'desc' => __( 'Text to display on the default blue button that users click to initiate a checkout process.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'success_redirect_url' => array(
+				'id'   => 'success_redirect_url',
+				'name' => __( 'Redirect URL', 'sc' ),
+				'desc' => __( 'The URL that the user should be redirected to after a successful payment.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
+			'billing' => array(
+				'id'   => 'billing',
+				'name' => __( 'Enable Billing', 'sc' ),
+				'desc' => __( 'Used to gather the billing information during the checkout process.', 'sc' ),
+				'type' => 'checkbox'
+			),
+			'shipping' => array(
+				'id'   => 'shipping',
+				'name' => __( 'Enable Shipping', 'sc' ),
+				'desc' => __( 'Used to gather the shipping information during the checkout process.', 'sc' ),
+				'type' => 'checkbox'
+			),
+			'enable_remember' => array(
+				'id'   => 'enable_remember',
+				'name' => __( 'Enable "Remember Me"', 'sc' ),
+				'desc' => __( 'Adds a "Remember Me" checkbox to the checkout form.', 'sc' ),
+				'type' => 'checkbox'
+			)
+		)
 	);
 
 	/* If the options do not exist then create them for each section */
 	if ( false == get_option( 'sc_settings_general' ) ) {
 		add_option( 'sc_settings_general' );
+	}
+	
+	if( false == get_option( 'sc_settings_default') ) {
+		add_option( 'sc_settings_default' );
 	}
 
 	/* Add the General Settings section */
@@ -83,9 +163,29 @@ function sc_register_settings() {
 			sc_get_settings_field_args( $option, 'general' )
 		);
 	}
+	
+	/* Add the Default Settings section */
+	add_settings_section(
+		'sc_settings_default',
+		__( 'Default Settings', 'sc' ),
+		'__return_false',
+		'sc_settings_default'
+	);
+
+	foreach ( $sc_settings['default'] as $option ) {
+		add_settings_field(
+			'sc_settings_default[' . $option['id'] . ']',
+			$option['name'],
+			function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
+			'sc_settings_default',
+			'sc_settings_default',
+			sc_get_settings_field_args( $option, 'default' )
+		);
+	}
 
 	/* Register all settings or we will get an error when trying to save */
-	register_setting( 'sc_settings_general',         'sc_settings_general',         'sc_settings_sanitize' );
+	register_setting( 'sc_settings_general', 'sc_settings_general', 'sc_settings_sanitize' );
+	register_setting( 'sc_settings_default', 'sc_settings_default', 'sc_settings_sanitize' );
 
 }
 add_action( 'admin_init', 'sc_register_settings' );

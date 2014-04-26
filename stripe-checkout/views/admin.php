@@ -28,6 +28,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					
 						settings_fields( 'sc_settings_general' );
 						do_settings_sections( 'sc_settings_general' );
+						
+						settings_fields( 'sc_settings_default' );
+						do_settings_sections( 'sc_settings_default' );
 	
 						submit_button();
 					?>
