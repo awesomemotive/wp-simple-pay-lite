@@ -143,3 +143,71 @@ function sc_convert_amount( $amount, $currency ) {
 	
 	return number_format( ( $amount / 100 ), 2 );
 }
+
+function sc_form_open() {
+	
+	$form_open = '<form action="" method="POST">';
+	
+	return $form_open;
+}
+add_filter( 'sc_form_open', 'sc_form_open' );
+
+function sc_form_script() {
+	global $sc_form_attr;
+	
+	$script_options = $sc_form_attr['script_options'];
+	
+	$form_script = '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" ' . $script_options . '></script>';
+	
+	return $form_script;
+}
+add_filter( 'sc_form_script', 'sc_form_script' );
+
+function sc_form_fields() {
+	global $sc_form_attr;
+	
+	$name                 = $sc_form_attr['name'];
+	$description          = $sc_form_attr['description'];
+	$amount               = $sc_form_attr['amount'];
+	$success_redirect_url = $sc_form_attr['success_redirect_url'];
+	$currency             = $sc_form_attr['currency'];
+	
+	$form_fields = '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
+					<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
+					<input type="hidden" name="sc-amount" value="' . esc_attr( $amount ) . '" />
+					<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />
+					<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
+	
+	return $form_fields;
+}
+add_filter( 'sc_form_fields', 'sc_form_fields' );
+
+function sc_form_close() {
+	
+	$form_close = '</form>';
+	
+	return $form_close;
+}
+add_filter( 'sc_form_close', 'sc_form_close' );
+
+
+function sc_form( $form ) {
+	
+	$form  = apply_filters( 'sc_form_open', '' );
+	$form .= apply_filters( 'sc_form_script', '' );
+	$form .= apply_filters( 'sc_form_fields', '' );
+	$form .= apply_filters( 'sc_form_close', '' );
+	
+	return $form;
+}
+add_filter( 'sc_form', 'sc_form' );
+
+function sc_form_attr( $form_attr ) {
+	global $sc_form_attr;
+	
+	$sc_form_attr = $form_attr;
+	
+	return $form_attr;
+}
+add_filter( 'sc_form_attr', 'sc_form_attr' );
+

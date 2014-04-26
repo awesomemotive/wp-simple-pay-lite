@@ -32,7 +32,7 @@ function sc_stripe_shortcode( $attr ) {
 					'payment_button_label'  => '',
 					'enable_remember'       => '',    // true or false
 					'success_redirect_url'  => get_permalink()
-				), $attr ) );
+				), $attr, 'stripe' ) );
 	
 	
 	if( empty( $amount ) || $amount < 50 )
@@ -53,6 +53,7 @@ function sc_stripe_shortcode( $attr ) {
 	$script_options .= 'data-key="' . $data_key . '" ';
 	
 	// Highly recommended
+	// TODO change these to key => value pairs as an array to pass
 	$script_options .= 'data-name="' . esc_attr( $name ) . '" ';
 	$script_options .= 'data-description="' . esc_attr( $description ) . '" ';
 	$script_options .= 'data-amount="' . esc_attr( $amount ) . '" ';
@@ -66,20 +67,18 @@ function sc_stripe_shortcode( $attr ) {
 	$script_options .= ( ! empty( $payment_button_label ) ? 'data-label="' . esc_attr( $payment_button_label ) . '" ' : '' );
 	$script_options .= ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . esc_attr( $enable_remember ) . '" ' : '' );
 	
+	// Add in the script options as an argument to pass to our filter
+	$attr['script_options'] = $script_options;
 	
+	$form_attr = apply_filters( 'sc_form_attr', $attr );
 	
 	if( ! isset( $_GET['payment'] ) ) { 
-		$html = '<form action="" method="POST">
-					<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" ' . $script_options . '>
-					</script>
-					<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
-					<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
-					<input type="hidden" name="sc-amount" value="' . esc_attr( $amount ) . '" />
-					<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />
-					<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />
-				  </form>';
 		
-		return $html;
+		$form = '';
+		
+		$form = apply_filters( 'sc_form', $form );
+		
+		return $form;
 	}
 	
 	return '';
