@@ -24,18 +24,17 @@ function sc_stripe_shortcode( $attr ) {
 					'name'                  => ( ! empty( $sc_options['name'] )                  ? $sc_options['name']                  : get_bloginfo( 'title' ) ),
 					'description'           => '',
 					'amount'                => '',
-					'image_url'             => ( ! empty( $sc_options['image_url'] )             ? $sc_options['image_url']             : '' ),
-					'currency'              => ( ! empty( $sc_options['currency'] )              ? $sc_options['currency']              : 'USD' ),
-					'checkout_button_label' => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),
-					'billing'               => ( ! empty( $sc_options['billing'] )               ? $sc_options['billing']               : '' ),    // true or false
-					'shipping'              => ( ! empty( $sc_options['shipping'] )              ? $sc_options['shipping']              : '' ),    // true or false
-					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] )  ? $sc_options['payment_button_label']  : '' ),
-					'enable_remember'       => ( ! empty( $sc_options['enable_remember'] )       ? $sc_options['enable_remember']       : 0 ),    // true or false
-					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] )  ? $sc_options['success_redirect_url']  : get_permalink() )
-				), $attr ) );
+					'image_url'             => '',
+					'currency'              => 'USD',
+					'checkout_button_label' => '',
+					'billing'               => '',    // true or false
+					'shipping'              => '',    // true or false
+					'payment_button_label'  => '',
+					'enable_remember'       => '',    // true or false
+					'success_redirect_url'  => get_permalink()
+				), $attr, 'stripe' ) );
 	
-	if( empty( $amount ) || $amount < 50 )
-		return '';
+	$attr = apply_filters( 'shortcode_atts_stripe', $attr );
 	
 	
 	if( empty( $sc_options['enable_test_key'] ) ) {
@@ -52,6 +51,7 @@ function sc_stripe_shortcode( $attr ) {
 	$script_options .= 'data-key="' . $data_key . '" ';
 	
 	// Highly recommended
+	// TODO change these to key => value pairs as an array to pass?
 	$script_options .= 'data-name="' . esc_attr( $name ) . '" ';
 	$script_options .= 'data-description="' . esc_attr( $description ) . '" ';
 	$script_options .= 'data-amount="' . esc_attr( $amount ) . '" ';
@@ -64,20 +64,30 @@ function sc_stripe_shortcode( $attr ) {
 	$script_options .= ( ( ! empty( $shipping ) && $shipping != 'false' ) ? 'data-shipping-address="' . esc_attr( $shipping ) . '" ' : '' );
 	$script_options .= ( ! empty( $payment_button_label ) ? 'data-label="' . esc_attr( $payment_button_label ) . '" ' : '' );
 	$script_options .= ( $enable_remember != 1 ? 'data-allow-remember-me="false" ' : '' );
+
+	// Add in the script options as an argument to pass to our filter
+	$attr['script_options'] = $script_options;
 	
+	$form_attr = apply_filters( 'sc_form_attr', $attr );
+	
+	if( ( empty( $amount ) || $amount < 50 ) && ! isset( $form_attr['amount'] ) )
+		return '';
 	
 	if( ! isset( $_GET['payment'] ) ) { 
-		$html = '<form action="" method="POST">
-					<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" ' . $script_options . '>
-					</script>
-					<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
-					<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
-					<input type="hidden" name="sc-amount" value="' . esc_attr( $amount ) . '" />
-					<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />
-					<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />
-				  </form>';
 		
-		return $html;
+		$form        = '';
+		$form_open   = '';
+		$form_script = '';
+		$form_fields = '';
+		$form_close  = '';
+		
+		$form .= apply_filters( 'sc_form_open', $form_open );
+		$form .= apply_filters( 'sc_form_script', $form_script );
+		$form .= apply_filters( 'sc_form_fields', $form_fields );
+		$form .= apply_filters( 'sc_form_close', $form_close );
+		
+		
+		return $form;
 	}
 	
 	return '';
