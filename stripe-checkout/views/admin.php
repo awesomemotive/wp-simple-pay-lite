@@ -31,8 +31,8 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 			<h2 class="nav-tab-wrapper">
 				<a href="<?php echo add_query_arg( 'tab', 'keys', remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
 					<?php echo $active_tab == 'keys' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Stripe Keys', 'sc' ); ?></a>
-				<a href="<?php echo add_query_arg( 'tab', 'general', remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
-					<?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Default Settings', 'sc' ); ?></a>
+				<a href="<?php echo add_query_arg( 'tab', 'default-settings', remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
+					<?php echo $active_tab == 'default-settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Default Settings', 'sc' ); ?></a>
 				<a href="<?php echo add_query_arg( 'tab', 'help', remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
 					<?php echo $active_tab == 'help' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Shortcode Help', 'sc' ); ?></a>
 			</h2>
@@ -44,9 +44,9 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 					if ( $active_tab == 'keys' ) {
 						settings_fields( 'sc_settings_keys' );
 						do_settings_sections( 'sc_settings_keys' );
-					} elseif ( $active_tab == 'general' ) {
-						settings_fields( 'sc_settings_general' );
-						do_settings_sections( 'sc_settings_general' );
+					} elseif ( $active_tab == 'default-settings' ) {
+						settings_fields( 'sc_settings_default' );
+						do_settings_sections( 'sc_settings_default' );
 					} elseif ( $active_tab == 'help' ) {
 						include_once( 'admin-help.php' );
 					} else {
