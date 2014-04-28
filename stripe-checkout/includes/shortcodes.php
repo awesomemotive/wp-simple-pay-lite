@@ -22,8 +22,8 @@ function sc_stripe_shortcode( $attr ) {
 	
 	extract( shortcode_atts( array(
 					'name'                  => ( ! empty( $sc_options['name'] )                  ? $sc_options['name']                  : get_bloginfo( 'title' ) ),
-					'description'           => ( ! empty( $sc_options['description'] )           ? $sc_options['description']           : '' ),
-					'amount'                => ( ! empty( $sc_options['amount'] )                ? $sc_options['amount']                : '' ),
+					'description'           => '',
+					'amount'                => '',
 					'image_url'             => ( ! empty( $sc_options['image_url'] )             ? $sc_options['image_url']             : '' ),
 					'currency'              => ( ! empty( $sc_options['currency'] )              ? $sc_options['currency']              : 'USD' ),
 					'checkout_button_label' => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),

@@ -1,5 +1,5 @@
 
-<h2><?php _e( 'Shortcode Help', 'sc' ); ?></h2>
+<h3><?php _e( 'Shortcode Help', 'sc' ); ?></h3>
 			
 <p>
 	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe]</code> <?php _e( 'to display the Stripe Checkout button within your content.', 'sc' ); ?>

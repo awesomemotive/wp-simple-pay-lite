@@ -30,24 +30,11 @@ function sc_register_settings() {
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
-			'description' => array(
-				'id'   => 'description',
-				'name' => __( 'Description', 'sc' ),
-				'desc' => __( 'A description of the product or service being offered.' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			),
-			'amount' => array(
-				'id'   => 'amount',
-				'name' => __( 'Amount', 'sc' ),
-				'desc' => __( 'The amount to charge.' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			),
 			'currency' => array(
 				'id'   => 'currency',
 				'name' => __( 'Currency', 'sc' ),
-				'desc' => __( 'Specify a specific currency by using it\'s 3-letter ISO Code', 'sc' ),
+				'desc' => __( "Specify a specific currency by using it's ", 'sc' ) . 
+							sprintf( '<a href="%s" target="_blank">%s</a>', 'https://support.stripe.com/questions/which-currencies-does-stripe-support', __('3-letter ISO Code', 'sc' ) ),
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
@@ -74,20 +61,20 @@ function sc_register_settings() {
 			),
 			'success_redirect_url' => array(
 				'id'   => 'success_redirect_url',
-				'name' => __( 'Redirect URL', 'sc' ),
+				'name' => __( 'Success Redirect URL', 'sc' ),
 				'desc' => __( 'The URL that the user should be redirected to after a successful payment.' , 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'billing' => array(
 				'id'   => 'billing',
-				'name' => __( 'Enable Billing', 'sc' ),
+				'name' => __( 'Enable Billing Address', 'sc' ),
 				'desc' => __( 'Used to gather the billing information during the checkout process.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'shipping' => array(
 				'id'   => 'shipping',
-				'name' => __( 'Enable Shipping', 'sc' ),
+				'name' => __( 'Enable Shipping Address', 'sc' ),
 				'desc' => __( 'Used to gather the shipping information during the checkout process.', 'sc' ),
 				'type' => 'checkbox'
 			),
@@ -150,7 +137,7 @@ function sc_register_settings() {
 	/* Add the General Settings section */
 	add_settings_section(
 		'sc_settings_general',
-		__( 'General Settings', 'sc' ),
+		__( 'Default Settings', 'sc' ),
 		'__return_false',
 		'sc_settings_general'
 	);
@@ -169,7 +156,7 @@ function sc_register_settings() {
 	/* Add the Default Settings section */
 	add_settings_section(
 		'sc_settings_keys',
-		__( 'Keys', 'sc' ),
+		__( 'Stripe Keys', 'sc' ),
 		'__return_false',
 		'sc_settings_keys'
 	);
