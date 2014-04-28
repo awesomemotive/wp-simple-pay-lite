@@ -16,6 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+include_once( 'admin-helper-functions.php' );
+
+
 global $sc_options;
 $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 
@@ -29,31 +33,36 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			
 			<h2 class="nav-tab-wrapper">
-				<a href="<?php echo add_query_arg( 'tab', 'keys', remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
-					<?php echo $active_tab == 'keys' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Stripe Keys', 'sc' ); ?></a>
-				<a href="<?php echo add_query_arg( 'tab', 'default-settings', remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
-					<?php echo $active_tab == 'default-settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Default Settings', 'sc' ); ?></a>
-				<a href="<?php echo add_query_arg( 'tab', 'help', remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
-					<?php echo $active_tab == 'help' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Shortcode Help', 'sc' ); ?></a>
+				<?php
+					
+					$sc_tabs = sc_get_admin_tabs();
+					
+					foreach( $sc_tabs as $key => $value ) {
+				?>
+						<a href="<?php echo add_query_arg( 'tab', $key, remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
+							<?php echo $active_tab == $key ? 'nav-tab-active' : ''; ?>"><?php echo $value ?></a>
+				<?php
+					}
+				?>
 			</h2>
 
 			<div id="tab_container">
 
 				<form method="post" action="options.php">
 					<?php
-					if ( $active_tab == 'keys' ) {
-						settings_fields( 'sc_settings_keys' );
-						do_settings_sections( 'sc_settings_keys' );
-					} elseif ( $active_tab == 'default-settings' ) {
-						settings_fields( 'sc_settings_default' );
-						do_settings_sections( 'sc_settings_default' );
-					} elseif ( $active_tab == 'help' ) {
-						include_once( 'admin-help.php' );
-					} else {
-						// Do nothing
-					}
+					
+						$sc_tabs = sc_get_admin_tabs();
+						
+						foreach( $sc_tabs as $key => $value ) {
+							if ( $active_tab == $key ) {
+								settings_fields( 'sc_settings_' . $key );
+								do_settings_sections( 'sc_settings_' . $key );
+							} else {
+								// Do nothing
+							}
+						}
 
-					submit_button();
+						submit_button();
 					?>
 				</form>
 			</div><!-- #tab_container-->
