@@ -25,16 +25,17 @@ function sc_register_settings() {
 		'general' => array(
 			'name' => array(
 				'id'   => 'name',
-				'name' => __( 'Name', 'sc' ),
-				'desc' => __( 'The name of your company or website.' , 'sc' ),
+				'name' => __( 'Site Name', 'sc' ),
+				'desc' => __( 'The name of your store or website. Defaults to Site Name.' , 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'currency' => array(
 				'id'   => 'currency',
-				'name' => __( 'Currency', 'sc' ),
-				'desc' => __( "Specify a specific currency by using it's ", 'sc' ) . 
-							sprintf( '<a href="%s" target="_blank">%s</a>', 'https://support.stripe.com/questions/which-currencies-does-stripe-support', __('3-letter ISO Code', 'sc' ) ),
+				'name' => __( 'Currency Code', 'sc' ),
+				'desc' => __( 'Specify a currency using it\'s ', 'sc' ) .
+							sprintf( '<a href="%s" target="_blank">%s</a>', 'https://support.stripe.com/questions/which-currencies-does-stripe-support', __('3-letter ISO Code', 'sc' ) ) . '. ' .
+							__( 'Defaults to USD.', 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
