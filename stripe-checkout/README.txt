@@ -148,6 +148,11 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 == Changelog ==
 
+= 1.1.1 =
+
+* Updated Admin UI to use tabs.
+* Added default settings options.
+
 = 1.1.0 =
 
 * Added image_url shortcode attribute.
