@@ -21,8 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sc_register_settings() {
 	$sc_settings = array(
 
-		/* General Settings */
-		'general' => array(
+		/* Default Settings */
+		'default' => array(
 			'name' => array(
 				'id'   => 'name',
 				'name' => __( 'Site Name', 'sc' ),
@@ -127,30 +127,30 @@ function sc_register_settings() {
 	);
 
 	/* If the options do not exist then create them for each section */
-	if ( false == get_option( 'sc_settings_general' ) ) {
-		add_option( 'sc_settings_general' );
+	if ( false == get_option( 'sc_settings_default' ) ) {
+		add_option( 'sc_settings_default' );
 	}
 	
 	if( false == get_option( 'sc_settings_keys') ) {
 		add_option( 'sc_settings_keys' );
 	}
 
-	/* Add the General Settings section */
+	/* Add the Default Settings section */
 	add_settings_section(
-		'sc_settings_general',
+		'sc_settings_default',
 		__( 'Default Settings', 'sc' ),
 		'__return_false',
-		'sc_settings_general'
+		'sc_settings_default'
 	);
 
-	foreach ( $sc_settings['general'] as $option ) {
+	foreach ( $sc_settings['default'] as $option ) {
 		add_settings_field(
-			'sc_settings_general[' . $option['id'] . ']',
+			'sc_settings_defaultl[' . $option['id'] . ']',
 			$option['name'],
 			function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
-			'sc_settings_general',
-			'sc_settings_general',
-			sc_get_settings_field_args( $option, 'general' )
+			'sc_settings_default',
+			'sc_settings_default',
+			sc_get_settings_field_args( $option, 'default' )
 		);
 	}
 	
@@ -174,7 +174,7 @@ function sc_register_settings() {
 	}
 
 	/* Register all settings or we will get an error when trying to save */
-	register_setting( 'sc_settings_general', 'sc_settings_general', 'sc_settings_sanitize' );
+	register_setting( 'sc_settings_default', 'sc_settings_default', 'sc_settings_sanitize' );
 	register_setting( 'sc_settings_keys', 'sc_settings_keys', 'sc_settings_sanitize' );
 
 }
@@ -286,15 +286,15 @@ function sc_get_settings() {
 	
 	// Set defaults
 	if( ! get_option( 'sc_has_run' ) ) {
-		$defaults = get_option( 'sc_settings_general' );
+		$defaults = get_option( 'sc_settings_default' );
 		$defaults['enable_remember'] = 1;
-		update_option( 'sc_settings_general', $defaults );
+		update_option( 'sc_settings_default', $defaults );
 		
 		add_option( 'sc_has_run', 1 );
 	}
 	
-	$general_settings = is_array( get_option( 'sc_settings_general' ) ) ? get_option( 'sc_settings_general' ) : array();
+	$default_settings = is_array( get_option( 'sc_settings_default' ) ) ? get_option( 'sc_settings_default' ) : array();
 	$keys_settings = is_array( get_option( 'sc_settings_keys' ) ) ? get_option( 'sc_settings_keys' ) : array();
 
-	return array_merge( $general_settings, $keys_settings );
+	return array_merge( $default_settings, $keys_settings );
 }
