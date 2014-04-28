@@ -13,4 +13,5 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 delete_option( 'sc_settings_general' );
+delete_option( 'sc_settings_keys' );
 delete_option( 'sc_show_admin_install_notice' );
