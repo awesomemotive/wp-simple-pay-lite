@@ -283,7 +283,16 @@ function sc_missing_callback( $args ) {
  * 
  */
 function sc_get_settings() {
-
+	
+	// Set defaults
+	if( ! get_option( 'sc_has_run' ) ) {
+		$defaults = get_option( 'sc_settings_general' );
+		$defaults['enable_remember'] = 1;
+		update_option( 'sc_settings_general', $defaults );
+		
+		add_option( 'sc_has_run', 1 );
+	}
+	
 	$general_settings = is_array( get_option( 'sc_settings_general' ) ) ? get_option( 'sc_settings_general' ) : array();
 	$keys_settings = is_array( get_option( 'sc_settings_keys' ) ) ? get_option( 'sc_settings_keys' ) : array();
 
