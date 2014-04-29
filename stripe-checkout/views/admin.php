@@ -23,8 +23,6 @@ include_once( 'admin-helper-functions.php' );
 global $sc_options;
 $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 
-echo '<pre>' . print_r( $sc_options, true ) . '</pre>';
-
 
 ?>
 
@@ -59,6 +57,7 @@ echo '<pre>' . print_r( $sc_options, true ) . '</pre>';
 							if ( $active_tab == $key ) {
 								settings_fields( 'sc_settings_' . $key );
 								do_settings_sections( 'sc_settings_' . $key );
+								do_action( 'sc_settings_' . $key );
 							}
 						}
 

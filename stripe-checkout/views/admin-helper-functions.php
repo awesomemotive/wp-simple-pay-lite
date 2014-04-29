@@ -35,4 +35,8 @@ function add_more_tabs( $tabs ) {
 add_filter( 'sc_admin_tabs', 'add_more_tabs' );
 
 
+function sc_add_help_page() {
+	include( 'admin-help.php' );
+}
+add_action( 'sc_settings_help', 'sc_add_help_page' );
 
