@@ -19,6 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 function sc_register_settings() {
+	
+	global $sc_options;
+	
+	if( ! is_array( $sc_options ) ) {
+		$sc_options = array();
+	}
+	
 	$sc_settings = array(
 
 		/* Default Settings */
@@ -125,60 +132,48 @@ function sc_register_settings() {
 			)
 		)
 	);
-
-	/* If the options do not exist then create them for each section */
-	if ( false == get_option( 'sc_settings_default' ) ) {
-		add_option( 'sc_settings_default' );
+	
+	$sc_settings = apply_filters( 'sc_settings', $sc_settings );
+	
+	$sc_settings_title = '';
+	
+	foreach( $sc_settings as $setting => $option ) {
+		//echo '<h1>Setting: ' . $setting . '</h1>'; // $setting = the main key 
+		
+		if( false == get_option( 'sc_settings_' . $setting ) ) {
+			add_option( 'sc_settings_' . $setting );
+		}
+		
+		add_settings_section(
+			'sc_settings_' . $setting,
+			apply_filters( 'sc_settings_' . $setting . '_title', $sc_settings_title ),
+			'__return_false',
+			'sc_settings_' . $setting
+		);
+		
+		//foreach( $option as $k => $v ) {
+			//echo '<h3>' . $k . '</h3>'; // $k = the setting option name
+			
+			foreach ( $sc_settings[$setting] as $option ) {
+				add_settings_field(
+					'sc_settings_' . $setting . '[' . $option['id'] . ']',
+					$option['name'],
+					function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
+					'sc_settings_' . $setting,
+					'sc_settings_' . $setting,
+					sc_get_settings_field_args( $option, $setting )
+				);
+			}
+		//}
+		
+		register_setting( 'sc_settings_' . $setting, 'sc_settings_' . $setting, 'sc_settings_sanitize' );
+		
+		$sc_options = array_merge( $sc_options, is_array( get_option( 'sc_settings_' . $setting ) ) ? get_option( 'sc_settings_' . $setting ) : array() );
 	}
 	
-	if( false == get_option( 'sc_settings_keys') ) {
-		add_option( 'sc_settings_keys' );
-	}
-
-	/* Add the Default Settings section */
-	add_settings_section(
-		'sc_settings_default',
-		__( 'Default Settings', 'sc' ),
-		'__return_false',
-		'sc_settings_default'
-	);
-
-	foreach ( $sc_settings['default'] as $option ) {
-		add_settings_field(
-			'sc_settings_defaultl[' . $option['id'] . ']',
-			$option['name'],
-			function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
-			'sc_settings_default',
-			'sc_settings_default',
-			sc_get_settings_field_args( $option, 'default' )
-		);
-	}
-	
-	/* Add the Default Settings section */
-	add_settings_section(
-		'sc_settings_keys',
-		__( 'Stripe Keys', 'sc' ),
-		'__return_false',
-		'sc_settings_keys'
-	);
-
-	foreach ( $sc_settings['keys'] as $option ) {
-		add_settings_field(
-			'sc_settings_keys[' . $option['id'] . ']',
-			$option['name'],
-			function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
-			'sc_settings_keys',
-			'sc_settings_keys',
-			sc_get_settings_field_args( $option, 'keys' )
-		);
-	}
-
-	/* Register all settings or we will get an error when trying to save */
-	register_setting( 'sc_settings_default', 'sc_settings_default', 'sc_settings_sanitize' );
-	register_setting( 'sc_settings_keys', 'sc_settings_keys', 'sc_settings_sanitize' );
-
 }
 add_action( 'admin_init', 'sc_register_settings' );
+
 
 /*
  * Return generic add_settings_field $args parameter array.
@@ -282,7 +277,8 @@ function sc_missing_callback( $args ) {
  * @since 1.0.0
  * 
  */
-function sc_get_settings() {
+function sc_set_defaults() {
+	//global $sc_options;
 	
 	// Set defaults
 	if( ! get_option( 'sc_has_run' ) ) {
@@ -292,9 +288,6 @@ function sc_get_settings() {
 		
 		add_option( 'sc_has_run', 1 );
 	}
-	
-	$default_settings = is_array( get_option( 'sc_settings_default' ) ) ? get_option( 'sc_settings_default' ) : array();
-	$keys_settings = is_array( get_option( 'sc_settings_keys' ) ) ? get_option( 'sc_settings_keys' ) : array();
 
-	return array_merge( $default_settings, $keys_settings );
+	//$sc_options = array_me
 }

@@ -26,11 +26,13 @@ function sc_get_admin_tabs() {
 	
 }
 
-/*function add_more_tabs( $tabs ) {
+function add_more_tabs( $tabs ) {
 	
-	$tabs['test_1'] = __( 'Test Tab #1', 'sc' );
-	$tabs['test_2'] = __( 'Test Tab #2', 'sc' );
+	$tabs['test'] = __( 'Test Tab', 'sc' );
 	
 	return $tabs;
 }
-add_filter( 'sc_admin_tabs', 'add_more_tabs' );*/
+add_filter( 'sc_admin_tabs', 'add_more_tabs' );
+
+
+

@@ -216,3 +216,26 @@ function sc_form_attr( $form_attr ) {
 }
 add_filter( 'sc_form_attr', 'sc_form_attr' );
 
+
+function sc_settings_test( $settings ) {
+	$settings['test'] = array( 
+		'test_option_1' => array(
+				'id'   => 'test_option_1',
+				'name' => __( 'Test Option', 'sc' ),
+				'desc' => __( 'Test option description.', 'sc' ),
+				'type' => 'checkbox'
+			),
+			'test_option_2' => array(
+				'id'   => 'test_option_2',
+				'name' => __( 'Test Option 2', 'sc' ),
+				'desc' => __( 'Test Option 2 Description' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			)
+	);
+	
+	
+	return $settings;
+}
+add_filter( 'sc_settings', 'sc_settings_test' );
+

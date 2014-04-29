@@ -269,9 +269,7 @@ class Stripe_Checkout {
 		
 		global $sc_options;
 		
-		include_once( 'includes/register-settings.php' );
 		
-		$sc_options = sc_get_settings();
 		
 		// Include any necessary functions
 		include_once( 'includes/misc-functions.php' );
@@ -281,6 +279,12 @@ class Stripe_Checkout {
 		
 		// Hooks examples
 		//include_once( 'includes/hooks-examples.php' );
+		//
+		
+		include_once( 'includes/register-settings.php' );
+		
+		//$sc_options = sc_get_settings();
+		sc_set_defaults();
 	}
 
 	/**
