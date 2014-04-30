@@ -151,25 +151,23 @@ function sc_register_settings() {
 			'sc_settings_' . $setting
 		);
 		
-		//foreach( $option as $k => $v ) {
-			//echo '<h3>' . $k . '</h3>'; // $k = the setting option name
-			
-			foreach ( $sc_settings[$setting] as $option ) {
-				add_settings_field(
-					'sc_settings_' . $setting . '[' . $option['id'] . ']',
-					$option['name'],
-					function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
-					'sc_settings_' . $setting,
-					'sc_settings_' . $setting,
-					sc_get_settings_field_args( $option, $setting )
-				);
-			}
-		//}
+		foreach ( $sc_settings[$setting] as $option ) {
+			add_settings_field(
+				'sc_settings_' . $setting . '[' . $option['id'] . ']',
+				$option['name'],
+				function_exists( 'sc_' . $option['type'] . '_callback' ) ? 'sc_' . $option['type'] . '_callback' : 'sc_missing_callback',
+				'sc_settings_' . $setting,
+				'sc_settings_' . $setting,
+				sc_get_settings_field_args( $option, $setting )
+			);
+		}
 		
 		register_setting( 'sc_settings_' . $setting, 'sc_settings_' . $setting, 'sc_settings_sanitize' );
 		
 		$sc_options = array_merge( $sc_options, is_array( get_option( 'sc_settings_' . $setting ) ) ? get_option( 'sc_settings_' . $setting ) : array() );
 	}
+	
+	update_option( 'sc_settings_master', $sc_options );
 	
 }
 add_action( 'admin_init', 'sc_register_settings' );
@@ -272,15 +270,12 @@ function sc_missing_callback( $args ) {
 }
 
 /*
- * Function used to return an array of all of the plugin settings
+ *
  * 
  * @since 1.0.0
  * 
  */
 function sc_set_defaults() {
-	//global $sc_options;
-	
-	// Set defaults
 	if( ! get_option( 'sc_has_run' ) ) {
 		$defaults = get_option( 'sc_settings_default' );
 		$defaults['enable_remember'] = 1;
@@ -288,6 +283,12 @@ function sc_set_defaults() {
 		
 		add_option( 'sc_has_run', 1 );
 	}
+}
 
-	//$sc_options = array_me
+
+function sc_get_settings() {
+	
+	$sc_options = get_option( 'sc_settings_master' );
+	
+	return $sc_options;
 }

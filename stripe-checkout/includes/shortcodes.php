@@ -34,8 +34,6 @@ function sc_stripe_shortcode( $attr ) {
 					'success_redirect_url'  => get_permalink()
 				), $attr, 'stripe' ) );
 	
-	$attr = apply_filters( 'shortcode_atts_stripe', $attr );
-	
 	
 	if( empty( $sc_options['enable_test_key'] ) ) {
 		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );
@@ -43,35 +41,32 @@ function sc_stripe_shortcode( $attr ) {
 		$data_key = ( ! empty( $sc_options['test_publish_key'] ) ? $sc_options['test_publish_key'] : '' );
 	}
 	
-	// We will set all of our Script options here now
-	// Need to make sure to add a {space} at the end of each string so they don't all become one line of continuous text
-	$script_options = '';
+	$options = array( 
+		'script' => array(
+			'key'                  => $data_key,
+			'name'                 => $name,
+			'description'          => $description,
+			'amount'               => $amount,
+			'image'                => $image_url,
+			'currency'             => $currency,
+			'panel-label'          => $checkout_button_label,
+			'billing-address'      => $billing,
+			'shipping-address'     => $shipping,
+			'label'                => $payment_button_label,
+			'allow-remember-me'    => $enable_remember
+		),
+		'other' => array(
+			'success-redirect-url' => $success_redirect_url
+		)
+	);
 	
-	// Required
-	$script_options .= 'data-key="' . $data_key . '" ';
+	$options = apply_filters( 'sc_modify_script_options', $options );
 	
-	// Highly recommended
-	// TODO change these to key => value pairs as an array to pass?
-	$script_options .= 'data-name="' . esc_attr( $name ) . '" ';
-	$script_options .= 'data-description="' . esc_attr( $description ) . '" ';
-	$script_options .= 'data-amount="' . esc_attr( $amount ) . '" ';
-	$script_options .= ( ! empty( $image_url ) ? 'data-image="' . esc_url( $image_url ) . '" ' : '' );
+	$script = sc_get_script_options_string( $options );
 	
-	// Optional
-	$script_options .= 'data-currency="' . esc_attr( $currency ) . '" ';
-	$script_options .= ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . esc_attr( $checkout_button_label ) . '" ' : '' );
-	$script_options .= ( ( ! empty( $billing ) && $billing != 'false' ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : '' );
-	$script_options .= ( ( ! empty( $shipping ) && $shipping != 'false' ) ? 'data-shipping-address="' . esc_attr( $shipping ) . '" ' : '' );
-	$script_options .= ( ! empty( $payment_button_label ) ? 'data-label="' . esc_attr( $payment_button_label ) . '" ' : '' );
-	$script_options .= ( $enable_remember != 1 ? 'data-allow-remember-me="false" ' : '' );
-
-	// Add in the script options as an argument to pass to our filter
-	$attr['script_options'] = $script_options;
-	
-	$form_attr = apply_filters( 'sc_form_attr', $attr );
-	
-	if( ( empty( $amount ) || $amount < 50 ) && ! isset( $form_attr['amount'] ) )
+	if( ( empty( $options['script']['amount'] ) || $options['script']['amount'] < 50 ) && ! isset( $options['script']['amount'] ) ) {
 		return '';
+	}
 	
 	if( ! isset( $_GET['payment'] ) ) { 
 		
@@ -82,8 +77,8 @@ function sc_stripe_shortcode( $attr ) {
 		$form_close  = '';
 		
 		$form .= apply_filters( 'sc_form_open', $form_open );
-		$form .= apply_filters( 'sc_form_script', $form_script );
-		$form .= apply_filters( 'sc_form_fields', $form_fields );
+		$form .= apply_filters( 'sc_form_script', $form_script, $options );
+		$form .= apply_filters( 'sc_form_fields', $form_fields, $options );
 		$form .= apply_filters( 'sc_form_close', $form_close );
 		
 		
@@ -94,4 +89,18 @@ function sc_stripe_shortcode( $attr ) {
 	
 }
 add_shortcode( 'stripe', 'sc_stripe_shortcode' );
+
+
+function sc_get_script_options_string( $script_options ) {
+	
+	$string = '';
+	
+	foreach( $script_options['script'] as $k => $v ) {
+		if( ! empty( $v ) ) {
+			$string .= 'data-' . $k . '="' . $v . '" ';
+		}
+	}
+	
+	return $string;
+}
 

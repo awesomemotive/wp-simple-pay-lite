@@ -285,6 +285,8 @@ class Stripe_Checkout {
 		
 		//$sc_options = sc_get_settings();
 		sc_set_defaults();
+		
+		$sc_options = sc_get_settings();
 	}
 
 	/**
