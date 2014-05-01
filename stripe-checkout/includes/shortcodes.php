@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function sc_stripe_shortcode( $attr ) {
 	
-	global $sc_options;
+	global $sc_options, $sc_script_options;
 	
 	extract( shortcode_atts( array(
 					'name'                  => ( ! empty( $sc_options['name'] )                  ? $sc_options['name']                  : get_bloginfo( 'title' ) ),
@@ -43,7 +43,7 @@ function sc_stripe_shortcode( $attr ) {
 	}
 	
 	// Save all of our options to an array so others can run them through a filter if they need to
-	$options = array( 
+	$sc_script_options = array( 
 		'script' => array(
 			'key'                  => $data_key,
 			'name'                 => $name,
@@ -62,11 +62,11 @@ function sc_stripe_shortcode( $attr ) {
 		)
 	);
 	
-	$options = apply_filters( 'sc_modify_script_options', $options );
+	$sc_script_options = apply_filters( 'sc_modify_script_options', $sc_script_options );
 	
-	$script = sc_get_script_options_string( $options );
+	$script = sc_get_script_options_string( $sc_script_options );
 	
-	if( ( empty( $options['script']['amount'] ) || $options['script']['amount'] < 50 ) && ! isset( $options['script']['amount'] ) ) {
+	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) && ! isset( $sc_script_options['script']['amount'] ) ) {
 		return '';
 	}
 	
@@ -80,8 +80,8 @@ function sc_stripe_shortcode( $attr ) {
 		
 		// We run these all through filters so anyone can easily modify any part of the form
 		$form .= apply_filters( 'sc_form_open', $form_open );
-		$form .= apply_filters( 'sc_form_script', $form_script, $options );
-		$form .= apply_filters( 'sc_form_fields', $form_fields, $options );
+		$form .= apply_filters( 'sc_form_script', $form_script, $sc_script_options );
+		$form .= apply_filters( 'sc_form_fields', $form_fields, $sc_script_options );
 		$form .= apply_filters( 'sc_form_close', $form_close );
 		
 		
@@ -110,4 +110,3 @@ function sc_get_script_options_string( $script_options ) {
 	
 	return $string;
 }
-
