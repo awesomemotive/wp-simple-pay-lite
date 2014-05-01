@@ -193,6 +193,10 @@ add_filter( 'sc_form_script', 'sc_form_script', 10, 2 );
  */
 function sc_form_fields( $form_fields, $script_options ) {
 	
+	/* Thinking of making this chunk of code into its own function
+	 * something like get_default_form_fields()
+	 * just so it isn't redundant if you want to make your own filter but also include these
+	 */
 	$name                 = $script_options['script']['name'];
 	$description          = $script_options['script']['description'];
 	$amount               = $script_options['script']['amount'];
