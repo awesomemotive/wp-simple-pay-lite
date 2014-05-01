@@ -101,6 +101,11 @@ if( isset( $_POST['stripeToken'] ) ) {
 	add_action( 'init', 'sc_charge_card' );
 }
 
+/*
+ * Function to show the payment details after the purchase
+ * 
+ * @since 1.0.0
+ */
 function sc_show_payment_details( $content ) {
 	
 	$sc_payment_details = get_option( 'sc_payment_details' );
@@ -132,6 +137,11 @@ function sc_show_payment_details( $content ) {
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
 
+/*
+ * Function to convert the amount passed from cents to dollars
+ * 
+ * @since 1.1.0
+ */
 function sc_convert_amount( $amount, $currency ) {
 	
 	$zero_based = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
@@ -147,6 +157,11 @@ function sc_convert_amount( $amount, $currency ) {
 
 /***** FILTERS FOR THE FORM ******/
 
+/*
+ * Adds the opening tag for the form
+ * 
+ * @since 1.1.1
+ */
 function sc_form_open( $form_open ) {
 	
 	$form_open = '<form action="" method="POST">';
@@ -155,6 +170,11 @@ function sc_form_open( $form_open ) {
 }
 add_filter( 'sc_form_open', 'sc_form_open' );
 
+/*
+ * Adds the necessary script tag for the Simple checkout version
+ * 
+ * @since 1.1.1
+ */
 function sc_form_script( $form_script, $script_options ) {
 	
 	$script_options = sc_get_script_options_string( $script_options );
@@ -165,6 +185,12 @@ function sc_form_script( $form_script, $script_options ) {
 }
 add_filter( 'sc_form_script', 'sc_form_script', 10, 2 );
 
+
+/*
+ * Adds code for the hidden input fields
+ * 
+ * @since 1.1.1
+ */
 function sc_form_fields( $form_fields, $script_options ) {
 	
 	$name                 = $script_options['script']['name'];
@@ -183,6 +209,11 @@ function sc_form_fields( $form_fields, $script_options ) {
 }
 add_filter( 'sc_form_fields', 'sc_form_fields', 10, 2 );
 
+/*
+ * Adds code for closing the form
+ * 
+ * @since 1.1.1
+ */
 function sc_form_close( $form_close ) {
 	
 	$form_close = '</form>';
@@ -190,6 +221,9 @@ function sc_form_close( $form_close ) {
 	return $form_close;
 }
 add_filter( 'sc_form_close', 'sc_form_close' );
+
+/*
+ * Commenting out for now as I may need it for reference later
 
 function sc_settings_test( $settings ) {
 	$settings['test'] = array( 
@@ -212,4 +246,6 @@ function sc_settings_test( $settings ) {
 	return $settings;
 }
 add_filter( 'sc_settings', 'sc_settings_test' );
+*/
+
 

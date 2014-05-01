@@ -35,12 +35,14 @@ function sc_stripe_shortcode( $attr ) {
 				), $attr, 'stripe' ) );
 	
 	
+	// Check if in test mode or live mode
 	if( empty( $sc_options['enable_test_key'] ) ) {
 		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );
 	} else {
 		$data_key = ( ! empty( $sc_options['test_publish_key'] ) ? $sc_options['test_publish_key'] : '' );
 	}
 	
+	// Save all of our options to an array so others can run them through a filter if they need to
 	$options = array( 
 		'script' => array(
 			'key'                  => $data_key,
@@ -76,6 +78,7 @@ function sc_stripe_shortcode( $attr ) {
 		$form_fields = '';
 		$form_close  = '';
 		
+		// We run these all through filters so anyone can easily modify any part of the form
 		$form .= apply_filters( 'sc_form_open', $form_open );
 		$form .= apply_filters( 'sc_form_script', $form_script, $options );
 		$form .= apply_filters( 'sc_form_fields', $form_fields, $options );
@@ -90,7 +93,11 @@ function sc_stripe_shortcode( $attr ) {
 }
 add_shortcode( 'stripe', 'sc_stripe_shortcode' );
 
-
+/*
+ * Function to return the script options as a string to attach to the <script> tag if we need to
+ * 
+ * @since 1.1.1
+ */
 function sc_get_script_options_string( $script_options ) {
 	
 	$string = '';
