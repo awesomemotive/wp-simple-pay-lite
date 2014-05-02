@@ -21,7 +21,7 @@ function sc_stripe_shortcode( $attr ) {
 	global $sc_options, $sc_script_options;
 	
 	extract( shortcode_atts( array(
-					'name'                  => ( ! empty( $sc_options['name'] )                  ? $sc_options['name']                  : get_bloginfo( 'title' ) ),
+					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
 					'description'           => '',
 					'amount'                => '',
 					'image_url'             => '',
@@ -31,7 +31,7 @@ function sc_stripe_shortcode( $attr ) {
 					'shipping'              => '',    // true or false
 					'payment_button_label'  => '',
 					'enable_remember'       => '',    // true or false
-					'success_redirect_url'  => get_permalink()
+					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() )
 				), $attr, 'stripe' ) );
 	
 	
