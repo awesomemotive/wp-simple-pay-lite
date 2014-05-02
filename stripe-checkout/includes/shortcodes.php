@@ -66,7 +66,7 @@ function sc_stripe_shortcode( $attr ) {
 	
 	$script = sc_get_script_options_string( $sc_script_options );
 	
-	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) && ! isset( $sc_script_options['script']['amount'] ) ) {
+	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) || ! isset( $sc_script_options['script']['amount'] ) ) {
 		return '';
 	}
 	
