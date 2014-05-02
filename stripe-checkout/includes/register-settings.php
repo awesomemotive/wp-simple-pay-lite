@@ -30,6 +30,12 @@ function sc_register_settings() {
 
 		/* Default Settings */
 		'default' => array(
+			'note' => array(
+				'id'   => 'settings_note',
+				'name' => '', //__( 'Settings Note', 'sc' ),
+				'desc' => '<p class="description">' . __( 'Shortcode attributes take precedence and will always be used over default settings.', 'sc' ) . '</p>',
+				'type' => 'section'
+			),
 			'name' => array(
 				'id'   => 'name',
 				'name' => __( 'Site Name', 'sc' ),
@@ -257,9 +263,10 @@ function sc_checkbox_callback( $args ) {
  * 
  */
 function sc_section_callback( $args ) {
+	$html = '';
 	
 	if ( ! empty( $args['desc'] ) ) {
-		$html = $args['desc'];
+		$html .= $args['desc'];
 	}
 
 	echo $html;
