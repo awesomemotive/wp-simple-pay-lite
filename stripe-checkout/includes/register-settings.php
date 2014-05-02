@@ -258,7 +258,9 @@ function sc_checkbox_callback( $args ) {
  */
 function sc_section_callback( $args ) {
 	
-	$html = '<hr>';
+	if ( ! empty( $args['desc'] ) ) {
+		$html = $args['desc'];
+	}
 
 	echo $html;
 }
