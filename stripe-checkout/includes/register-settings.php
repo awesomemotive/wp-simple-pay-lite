@@ -22,9 +22,9 @@ function sc_register_settings() {
 	
 	global $sc_options;
 	
-	if( ! is_array( $sc_options ) ) {
+	//if( ! is_array( $sc_options ) ) {
 		$sc_options = array();
-	}
+	//}
 	
 	$sc_settings = array(
 
@@ -174,6 +174,9 @@ function sc_register_settings() {
 		$sc_options = array_merge( $sc_options, is_array( get_option( 'sc_settings_' . $setting ) ) ? get_option( 'sc_settings_' . $setting ) : array() );
 	}
 	
+	//echo '<pre>Master Settings<br>' . print_r( $sc_options, true ) . '</pre>';
+	
+	//delete_option( 'sc_settings_master' );
 	update_option( 'sc_settings_master', $sc_options );
 	
 }
@@ -244,8 +247,10 @@ function sc_text_callback( $args ) {
  */
 function sc_checkbox_callback( $args ) {
 	global $sc_options;
+	
 
-	$checked = isset( $sc_options[$args['id']] ) ? checked( 1, $sc_options[$args['id']], false ) : '';
+	$checked = ( isset( $sc_options[$args['id']] ) ? checked( 1, $sc_options[$args['id']], false ) : '' );
+
 	$html = "\n" . '<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>' . "\n";
 
 	// Render description text directly to the right in a label if it exists.
