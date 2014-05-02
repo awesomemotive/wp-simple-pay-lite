@@ -89,6 +89,18 @@ class Stripe_Checkout {
 		
 		// Add public CSS
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_styles' ) );
+		
+		// Filters to add the settings page titles
+		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
+		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
+	}
+	
+	function sc_settings_keys_title( $title ) {
+		return __( 'Stripe Keys', 'sc' );
+	}
+	
+	function sc_settings_default_title( $title ) {
+		return __( 'Default Settings', 'sc' );
 	}
 	
 	/**
