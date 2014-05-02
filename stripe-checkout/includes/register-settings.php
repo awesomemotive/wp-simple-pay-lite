@@ -77,19 +77,20 @@ function sc_register_settings() {
 			'billing' => array(
 				'id'   => 'billing',
 				'name' => __( 'Enable Billing Address', 'sc' ),
-				'desc' => __( 'Used to gather the billing information during the checkout process.', 'sc' ),
+				'desc' => __( 'Require the user to enter their billing address during checkout.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'shipping' => array(
 				'id'   => 'shipping',
 				'name' => __( 'Enable Shipping Address', 'sc' ),
-				'desc' => __( 'Used to gather the shipping information during the checkout process.', 'sc' ),
+				'desc' => __( 'Require the user to enter their shipping address during checkout.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'enable_remember' => array(
 				'id'   => 'enable_remember',
 				'name' => __( 'Enable "Remember Me"', 'sc' ),
-				'desc' => __( 'Adds a "Remember Me" checkbox to the checkout form.', 'sc' ),
+				'desc' => __( 'Adds a "Remember Me" option to the checkout form to allow the user to store their credit card for future use with other sites using Stripe. ', 'sc' ) .
+					sprintf( '<a href="%s" target="_blank">%s</a>', 'https://stripe.com/checkout/info', __('See how it works', 'sc' ) ) . '.',
 				'type' => 'checkbox'
 			)
 		),
