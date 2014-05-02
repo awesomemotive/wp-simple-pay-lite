@@ -66,11 +66,9 @@ function sc_stripe_shortcode( $attr ) {
 	
 	$script = sc_get_script_options_string( $sc_script_options );
 	
-	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) || ! isset( $sc_script_options['script']['amount'] ) ) {
-		return '';
-	}
 	
-	if( ! isset( $_GET['payment'] ) ) { 
+	
+	//if( ! isset( $_GET['payment'] ) ) { 
 		
 		$form        = '';
 		$form_open   = '';
@@ -84,7 +82,12 @@ function sc_stripe_shortcode( $attr ) {
 		$form .= apply_filters( 'sc_form_fields', $form_fields, $sc_script_options );
 		$form .= apply_filters( 'sc_form_close', $form_close );
 		
-		
+		//return $form;
+	//}
+	
+	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) || ! isset( $sc_script_options['script']['amount'] ) ) {
+		return '';
+	} else if( ! isset( $_GET['payment'] ) ) {
 		return $form;
 	}
 	
