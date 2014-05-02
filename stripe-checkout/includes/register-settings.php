@@ -248,6 +248,20 @@ function sc_checkbox_callback( $args ) {
 	echo $html;
 }
 
+
+/*
+ * Section callback function
+ * 
+ * @since 1.0.0
+ * 
+ */
+function sc_section_callback( $args ) {
+	
+	$html = '<hr>';
+
+	echo $html;
+}
+
 /*
  * Function we can use to sanitize the input data and return it when saving options
  * 
