@@ -25,7 +25,7 @@ function sc_stripe_shortcode( $attr ) {
 					'description'           => '',
 					'amount'                => '',
 					'image_url'             => '',
-					'currency'              => 'USD',
+					'currency'              => ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : 'USD' ),
 					'checkout_button_label' => '',
 					'billing'               => '',    // true or false
 					'shipping'              => '',    // true or false
