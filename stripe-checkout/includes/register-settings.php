@@ -319,5 +319,11 @@ function sc_get_settings() {
 	
 	$sc_options = get_option( 'sc_settings_master' );
 	
+	if( isset( $sc_options['currency'] ) ) {
+		$sc_options['currency'] = strtoupper( $sc_options['currency'] );
+		
+		//update_option( 'sc_settings_master', $sc_options );
+	}
+	
 	return $sc_options;
 }
