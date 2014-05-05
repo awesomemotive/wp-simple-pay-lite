@@ -46,3 +46,18 @@ function sc_submit_button_help( $submit_button ) {
 }
 add_filter( 'sc_submit_button_help', 'sc_submit_button_help' );
 
+
+/*
+ * Return the Admin Help tabs
+ * 
+ * @since 1.0.0
+ */
+function get_admin_help_tabs() {
+	$tabs = array();
+	
+	$tabs = array( 
+		'base' => __( 'Base Shortcodes', 'sc' )
+	);
+	
+	return apply_filters( 'sc_help_tabs', $tabs );
+}
