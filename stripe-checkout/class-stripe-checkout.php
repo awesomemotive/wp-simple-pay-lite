@@ -141,12 +141,8 @@ class Stripe_Checkout {
 	 * @since     1.0.0
 	 */
 	public function enqueue_admin_styles() {
-		if ( ! isset( $this->plugin_screen_hook_suffix ) ) {
-			return;
-		}
 
-		$screen = get_current_screen();
-		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
+		if ( $this->viewing_this_plugin() ) {
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ), array(), $this->version );
 		}
 	}
@@ -254,13 +250,50 @@ class Stripe_Checkout {
 	 */
 	public function add_plugin_admin_menu() {
 
-		$this->plugin_screen_hook_suffix = add_options_page(
+		$this->plugin_screen_hook_suffix[] = add_menu_page(
 			$this->get_plugin_title() . __( ' Settings', 'sc' ),
 			$this->get_plugin_title(),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
 		);
+		
+		$this->plugin_screen_hook_suffix[] = add_submenu_page(
+			$this->plugin_slug,
+			$this->get_plugin_title() . __( 'Settings', 'sc' ),
+			__( 'Settings', 'sc' ),
+			'manage_options',
+			$this->plugin_slug,
+			array( $this, 'display_plugin_admin_page' )
+		);
+		
+		// Add Help submenu page
+		$this->plugin_screen_hook_suffix[] = add_submenu_page(
+			$this->plugin_slug,
+			__( 'Help', 'sc' ),
+			__( 'Help', 'sc' ),
+			'manage_options',
+			$this->plugin_slug . '_help',
+			array( $this, 'display_admin_help_page' )
+		);
+		
+		// Add Add-Ons submenu page
+		$this->plugin_screen_hook_suffix[] = add_submenu_page(
+			$this->plugin_slug,
+			__( 'Add-ons', 'sc' ),
+			__( 'Add-ons', 'sc' ),
+			'manage_options',
+			$this->plugin_slug . '_addons',
+			array( $this, 'display_admin_addons_page' )
+		);
+	}
+	
+	function display_admin_addons_page() {
+		echo 'hello world';
+	}
+	
+	function display_admin_help_page() {
+		include_once( 'views/admin-help.php' );
 	}
 
 	/**
@@ -337,15 +370,22 @@ class Stripe_Checkout {
 	 * @return  bool
 	 */
 	private function viewing_this_plugin() {
-		if ( ! isset( $this->plugin_screen_hook_suffix ) )
-			return false;
+		/*if ( ! isset( $this->plugin_screen_hook_suffix ) )
+			return false;*/
 
 		$screen = get_current_screen();
 
-		if ( $screen->id == $this->plugin_screen_hook_suffix )
+		/*if ( $screen->id == $this->plugin_screen_hook_suffix )
 			return true;
 		else
-			return false;
+			return false;*/
+		
+		if( in_array( $screen->id, $this->plugin_screen_hook_suffix ) ) {
+			return true;
+		}
+		
+		
+		return false;
 	}
 
 	/**
