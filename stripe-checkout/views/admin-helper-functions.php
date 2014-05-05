@@ -18,8 +18,7 @@ function sc_get_admin_tabs() {
 	
 	$tabs = array( 
 		'keys'    => __( 'Stripe Keys' , 'sc' ),
-		'default' => __( 'Default Settings', 'sc' ),
-		'help'    => __( 'Help', 'sc' )
+		'default' => __( 'Default Settings', 'sc' )
 	);
 	
 	return apply_filters( 'sc_admin_tabs', $tabs );
@@ -27,32 +26,11 @@ function sc_get_admin_tabs() {
 }
 
 /*
- * Function to include the admin help page as tab content
- * 
- * @since 1.1.1
- */
-function sc_add_help_page() {
-	include( 'admin-help.php' );
-}
-add_action( 'sc_settings_help', 'sc_add_help_page' );
-
-/*
- * Function to remove the save button from the help tab
- * 
- * @since 1.1.1
- */
-function sc_submit_button_help( $submit_button ) {
-	return '';
-}
-add_filter( 'sc_submit_button_help', 'sc_submit_button_help' );
-
-
-/*
  * Return the Admin Help tabs
  * 
- * @since 1.0.0
+ * @since 1.1.1
  */
-function get_admin_help_tabs() {
+function sc_get_admin_help_tabs() {
 	$tabs = array();
 	
 	$tabs = array( 
@@ -61,3 +39,14 @@ function get_admin_help_tabs() {
 	
 	return apply_filters( 'sc_help_tabs', $tabs );
 }
+
+/**
+ * Use action to load base help file
+ * 
+ * @since 1.1.1
+ */
+function sc_load_help() {
+	include_once( 'admin-help-stripe-checkout.php' );
+}
+add_action( 'sc_help_display_base', 'sc_load_help' );
+
