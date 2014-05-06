@@ -109,6 +109,10 @@ class Stripe_Checkout {
 	 * @since 1.0.0
 	 */
 	function enqueue_public_styles() {
+		
+		// Load Stripe CSS for button
+		wp_enqueue_style( 'stripe-checkout-css', 'https://checkout.stripe.com/v3/checkout/button.css', array(), null );
+		
 		// Only load after the user has clicked to pay
 		if( isset( $_GET['payment'] ) ) {
 			wp_enqueue_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array(), $this->version );
