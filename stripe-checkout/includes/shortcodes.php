@@ -50,7 +50,7 @@ function sc_stripe_shortcode( $attr ) {
 			'description'          => $description,
 			'amount'               => $amount,
 			'image'                => $image_url,
-			'currency'             => $currency,
+			'currency'             => strtoupper( $currency ),
 			'panel-label'          => $checkout_button_label,
 			'billing-address'      => $billing,
 			'shipping-address'     => $shipping,
