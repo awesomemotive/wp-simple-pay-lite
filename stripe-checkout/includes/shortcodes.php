@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Function to process the [stripe_checkout] shortcode
+ * Function to process the [stripe] shortcode
  * 
  * @since 1.0.0
  */
@@ -113,21 +113,3 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 }
 add_shortcode( 'stripe', 'sc_stripe_shortcode' );
-
-/*
- * Function to return the script options as a string to attach to the <script> tag if we need to
- * 
- * @since 1.1.1
- */
-function sc_get_script_options_string( $script_options ) {
-	
-	$string = '';
-	
-	foreach( $script_options['script'] as $k => $v ) {
-		if( ! empty( $v ) ) {
-			$string .= 'data-' . $k . '="' . $v . '" ';
-		}
-	}
-	
-	return $string;
-}
