@@ -226,30 +226,29 @@ function sc_form_close( $form_close ) {
 }
 add_filter( 'sc_form_close', 'sc_form_close' );
 
-/*
- * Commenting out for now as I may need it for reference later
 
-function sc_settings_test( $settings ) {
-	$settings['test'] = array( 
-		'test_option_1' => array(
-				'id'   => 'test_option_1',
-				'name' => __( 'Test Option', 'sc' ),
-				'desc' => __( 'Test option description.', 'sc' ),
-				'type' => 'checkbox'
-			),
-			'test_option_2' => array(
-				'id'   => 'test_option_2',
-				'name' => __( 'Test Option 2', 'sc' ),
-				'desc' => __( 'Test Option 2 Description' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			)
+/**
+ * Return the admin help page URL
+ * 
+ * @since 1.1.1
+ */
+function sc_help_url( $tab = '', $string = '' ) {
+	
+	if( empty( $tab ) ) {
+		$tab = 'base';
+	}
+	
+	$args = array(
+		'page' => 'stripe-checkout_help',
+		'tab'  => $tab
 	);
 	
+	if( empty( $string ) ) {
+		$string = __( 'Help', 'sc' );
+	}
 	
-	return $settings;
+	//$args = apply_filters( 'sc_admin_help_query_args', $args );
+	
+	return '<a href="' . add_query_arg( $args, admin_url( 'admin.php' ) ) . '">' . $string . '</a>';
 }
-add_filter( 'sc_settings', 'sc_settings_test' );
-*/
-
 
