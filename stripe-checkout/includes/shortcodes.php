@@ -29,7 +29,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'checkout_button_label' => '',
 					'billing'               => '',    // true or false
 					'shipping'              => '',    // true or false
-					'payment_button_label'  => '',
+					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
 					'enable_remember'       => '',    // true or false
 					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() )
 				), $attr, 'stripe' ) );
@@ -63,6 +63,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	);
 	
 	$sc_script_options = apply_filters( 'sc_modify_script_options', $sc_script_options );
+	
+	echo '<pre>' . print_r( $sc_options, true ) . '</pre>';
 	
 	// We run everything with a -1 if it is empty for easy checking later
 	wp_localize_script( SC_PLUGIN_SLUG . '-public', 'sc_script', array( 
@@ -99,7 +101,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	// Add filter HERE to allow for custom hidden fields to be added
 	
 	$html .= '<br><button class="sc_checkout stripe-button-el"><span>';
-	$html .= ( ! empty( $sc_script_options['script']['label'] ) ? $sc_script_options['script']['label'] : __( 'Pay with Card', 'sc_uea' ) );
+	$html .= $payment_button_label;
 	$html .= '</span></button>';
 	$html .= '</form>';
 	
