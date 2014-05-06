@@ -121,18 +121,11 @@ class Stripe_Checkout {
 	 * @since 1.0.0
 	 */
 	function enqueue_public_scripts() {
-
-		// TODO Removed references to custom JS for now. Might introduce again later.
-
-		// Load custom jQuery
-		//wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), $this->version );
-
-		/*
-		// Only load after the user has clicked to pay
-		if( isset( $_GET['payment'] ) ) {
-			wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), $this->version );
-		}
-		*/
+		wp_enqueue_script( 'jquery' );
+		
+		wp_enqueue_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true );
+		
+		wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array(), $this->version, true );
 	}
 
 	/**
