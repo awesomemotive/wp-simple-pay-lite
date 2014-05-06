@@ -39,7 +39,7 @@
 				 handler.open({
 					 name: ( sc_script.name != -1 ? sc_script.name : '' ),
 					 description: ( sc_script.description != -1 ? sc_script.description : '' ),
-					 amount: finalAmount,
+					 amount: sc_script.amount,
 					 currency: ( sc_script.currency != -1 ? sc_script.currency : 'USD' ),
 					 panelLabel: ( sc_script.panelLabel != -1 ? sc_script.panelLabel : 'Pay {{amount}}' ),
 					 billingAddress: ( sc_script.billingAddress == 'true' || sc_script.billingAddress == 1 ? true : false ),

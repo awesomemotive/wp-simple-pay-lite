@@ -162,20 +162,20 @@ function sc_convert_amount( $amount, $currency ) {
  * 
  * @since 1.1.1
  */
-function sc_form_open( $form_open ) {
+/*function sc_form_open( $form_open ) {
 	
 	$form_open = '<form action="" method="POST">';
 	
 	return $form_open;
 }
-add_filter( 'sc_form_open', 'sc_form_open' );
+add_filter( 'sc_form_open', 'sc_form_open' );*/
 
 /*
  * Adds the necessary script tag for the Simple checkout version
  * 
  * @since 1.1.1
  */
-function sc_form_script( $form_script, $script_options ) {
+/*function sc_form_script( $form_script, $script_options ) {
 	
 	$script_options = sc_get_script_options_string( $script_options );
 	
@@ -183,7 +183,7 @@ function sc_form_script( $form_script, $script_options ) {
 	
 	return $form_script;
 }
-add_filter( 'sc_form_script', 'sc_form_script', 10, 2 );
+add_filter( 'sc_form_script', 'sc_form_script', 10, 2 );*/
 
 
 /*
@@ -191,12 +191,8 @@ add_filter( 'sc_form_script', 'sc_form_script', 10, 2 );
  * 
  * @since 1.1.1
  */
-function sc_form_fields( $form_fields, $script_options ) {
+/*function sc_form_fields( $form_fields, $script_options ) {
 	
-	/* Thinking of making this chunk of code into its own function
-	 * something like get_default_form_fields()
-	 * just so it isn't redundant if you want to make your own filter but also include these
-	 */
 	$name                 = $script_options['script']['name'];
 	$description          = $script_options['script']['description'];
 	$amount               = $script_options['script']['amount'];
@@ -211,20 +207,20 @@ function sc_form_fields( $form_fields, $script_options ) {
 	
 	return $form_fields;
 }
-add_filter( 'sc_form_fields', 'sc_form_fields', 10, 2 );
+add_filter( 'sc_form_fields', 'sc_form_fields', 10, 2 );*/
 
 /*
  * Adds code for closing the form
  * 
  * @since 1.1.1
  */
-function sc_form_close( $form_close ) {
+/*function sc_form_close( $form_close ) {
 	
 	$form_close = '</form>';
 	
 	return $form_close;
 }
-add_filter( 'sc_form_close', 'sc_form_close' );
+add_filter( 'sc_form_close', 'sc_form_close' );*/
 
 
 /**

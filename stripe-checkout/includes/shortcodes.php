@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 
  * @since 1.0.0
  */
-function sc_stripe_shortcode( $attr ) {
+function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	global $sc_options, $sc_script_options;
 	
@@ -64,31 +64,49 @@ function sc_stripe_shortcode( $attr ) {
 	
 	$sc_script_options = apply_filters( 'sc_modify_script_options', $sc_script_options );
 	
-	$script = sc_get_script_options_string( $sc_script_options );
+	// We run everything with a -1 if it is empty for easy checking later
+	wp_localize_script( SC_PLUGIN_SLUG . '-public', 'sc_script', array( 
+			'key'             => ( ! empty( $sc_script_options['script']['key'] ) ? $sc_script_options['script']['key'] : ( ! empty( $sc_options['key'] ) ? $sc_options['key'] : -1 ) ),
+			'name'            => ( ! empty( $sc_script_options['script']['name'] ) ? $sc_script_options['script']['name'] : ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : -1 ) ),
+			'description'     => ( ! empty( $sc_script_options['script']['description'] ) ? $sc_script_options['script']['description'] : ( ! empty( $sc_options['description'] ) ? $sc_options['description'] : -1 ) ),
+			'amount'          => ( ! empty( $sc_script_options['script']['amount'] ) ? $sc_script_options['script']['amount'] : ( ! empty( $sc_options['amount'] ) ? $sc_options['amount'] : -1 ) ),
+			'image'           => ( ! empty( $sc_script_options['script']['image'] ) ? $sc_script_options['script']['image'] : ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : -1 ) ),
+			'currency'        => ( ! empty( $sc_script_options['script']['currency'] ) ? $sc_script_options['script']['currency'] : ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : -1 ) ),
+			'panelLabel'      => ( ! empty( $sc_script_options['script']['panel-label'] ) ? $sc_script_options['script']['panel-label'] : ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : -1 ) ),
+			'billingAddress'  => ( ! empty( $sc_script_options['script']['billing-address'] ) ? $sc_script_options['script']['billing-address'] : ( ! empty( $sc_options['billing'] ) ? $sc_options['billing'] : -1 ) ),
+			'shippingAddress' => ( ! empty( $sc_script_options['script']['shipping-address'] ) ? $sc_script_options['script']['shipping-address'] : ( ! empty( $sc_options['shipping'] ) ? $sc_options['shipping'] : -1 ) ),
+			'allowRememberMe' => ( ! empty( $sc_script_options['script']['allow-remember-me'] ) ? $sc_script_options['script']['allow-remember-me'] : ( ! empty( $sc_options['enable_remember'] ) ? $sc_options['enable_remember'] : -1 ) )
+	));
+	
+	$name                 = $sc_script_options['script']['name'];
+	$description          = $sc_script_options['script']['description'];
+	$amount               = $sc_script_options['script']['amount'];
+	$success_redirect_url = $sc_script_options['other']['success-redirect-url'];
+	$currency             = $sc_script_options['script']['currency'];
 	
 	
+	$html  = '<form id="sc_checkout_form" method="POST" action="">';
+	// filter out HTML from $content?
+	$html .= do_shortcode( $content );
+	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
+			  <input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
+			  <input type="hidden" name="sc-amount" id="sc_amount" value="" />
+			  <input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />
+			  <input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />
+			  <input type="hidden" name="stripeToken" value="" id="sc_stripeToken" />
+			  <input type="hidden" name="stripeEmail" value="" id="sc_stripeEmail" />';
 	
-	//if( ! isset( $_GET['payment'] ) ) { 
-		
-		$form        = '';
-		$form_open   = '';
-		$form_script = '';
-		$form_fields = '';
-		$form_close  = '';
-		
-		// We run these all through filters so anyone can easily modify any part of the form
-		$form .= apply_filters( 'sc_form_open', $form_open );
-		$form .= apply_filters( 'sc_form_script', $form_script, $sc_script_options );
-		$form .= apply_filters( 'sc_form_fields', $form_fields, $sc_script_options );
-		$form .= apply_filters( 'sc_form_close', $form_close );
-		
-		//return $form;
-	//}
+	// Add filter HERE to allow for custom hidden fields to be added
+	
+	$html .= '<br><button class="sc_checkout stripe-button-el"><span>';
+	$html .= ( ! empty( $sc_script_options['script']['label'] ) ? $sc_script_options['script']['label'] : __( 'Pay with Card', 'sc_uea' ) );
+	$html .= '</span></button>';
+	$html .= '</form>';
 	
 	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) || ! isset( $sc_script_options['script']['amount'] ) ) {
 		return '';
 	} else if( ! isset( $_GET['payment'] ) ) {
-		return $form;
+		return $html;
 	}
 	
 	return '';
