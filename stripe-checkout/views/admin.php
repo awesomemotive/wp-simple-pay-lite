@@ -27,6 +27,8 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 ?>
 
 <div class="wrap">
+	<?php settings_errors(); ?>
+	
 	<div id="sc-settings">
 		<div id="sc-settings-content">
 

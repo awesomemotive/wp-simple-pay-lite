@@ -64,8 +64,6 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	$sc_script_options = apply_filters( 'sc_modify_script_options', $sc_script_options );
 	
-	echo '<pre>' . print_r( $sc_options, true ) . '</pre>';
-	
 	// We run everything with a -1 if it is empty for easy checking later
 	wp_localize_script( SC_PLUGIN_SLUG . '-public', 'sc_script', array( 
 			'key'             => ( ! empty( $sc_script_options['script']['key'] ) ? $sc_script_options['script']['key'] : ( ! empty( $sc_options['key'] ) ? $sc_options['key'] : -1 ) ),
