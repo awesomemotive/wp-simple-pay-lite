@@ -278,6 +278,30 @@ function sc_section_callback( $args ) {
 }
 
 /*
+ * License Keys callback function
+ * 
+ * @since 1.1.1
+ */
+function sc_license_callback( $args ) {
+	global $sc_options;
+
+	if ( isset( $sc_options[ $args['id'] ] ) ) {
+		$value = $sc_options[ $args['id'] ];
+	} else {
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
+	$html = "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
+
+	// Render and style description text underneath if it exists.
+	if ( ! empty( $args['desc'] ) )
+		$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+
+	echo $html;
+}
+
+/*
  * Function we can use to sanitize the input data and return it when saving options
  * 
  * @since 1.0.0
