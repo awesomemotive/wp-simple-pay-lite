@@ -98,7 +98,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	// Add filter HERE to allow for custom hidden fields to be added
 	
-	$html .= '<br><button class="sc_checkout stripe-button-el"><span>';
+	$html .= '<button class="sc_checkout stripe-button-el"><span>';
 	$html .= $payment_button_label;
 	$html .= '</span></button>';
 	$html .= '</form>';

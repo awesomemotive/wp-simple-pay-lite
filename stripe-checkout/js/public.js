@@ -4,7 +4,7 @@
 			/*
 			 * Call on click handler when button is clicked then use amount (need to sanitize first) and pass to the 
 			 * Stripe Checkout handler
-			 */
+			 */	
 			$( 'button.sc_checkout' ).on( 'click', function( event ) {
 				
 				// Show options passed
