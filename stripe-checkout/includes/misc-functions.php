@@ -34,13 +34,17 @@ function sc_charge_card() {
 		$description = $_POST['sc-description'];
 		$name        = $_POST['sc-name'];
 		$currency    = $_POST['sc-currency'];
-	
+		
 		if( empty( $sc_options['enable_test_key'] ) ) {
 			$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
 		} else {
 			$key = ( ! empty( $sc_options['test_secret_key'] ) ? $sc_options['test_secret_key'] : '' );
 		}
-
+		
+		$meta = array();
+		
+		$meta = apply_filters( 'sc_meta_values', $meta );
+		
 		// Set your secret key: remember to change this to your live secret key in production
 		Stripe::setApiKey( $key );
 		
@@ -56,7 +60,8 @@ function sc_charge_card() {
 					'amount'      => $amount, // amount in cents, again
 					'currency'    => $currency,
 					'customer'    => $new_customer['id'],
-					'description' => $description
+					'description' => $description,
+					'metadata'  => $meta
 				)
 			);
 			

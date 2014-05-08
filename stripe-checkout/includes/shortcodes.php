@@ -87,7 +87,11 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	$html  = '<form id="sc_checkout_form" method="POST" action="">';
 	// filter out HTML from $content?
-	$html .= do_shortcode( $content );
+	
+	$content = do_shortcode( $content );
+	
+	$html .= apply_filters( 'sc_shortcode_content', $content );
+	
 	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
 			  <input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
 			  <input type="hidden" name="sc-amount" id="sc_amount" value="" />
