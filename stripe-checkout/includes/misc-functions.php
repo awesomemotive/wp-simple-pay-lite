@@ -53,7 +53,9 @@ function sc_charge_card() {
 				'email' => $_POST['stripeEmail'],
 				'card'  => $token
 			));
-			
+		
+		$amount = apply_filters( 'sc_charge_amount', $amount );
+		
 		// Create the charge on Stripe's servers - this will charge the user's default card
 		try {
 			$charge = Stripe_Charge::create( array(
