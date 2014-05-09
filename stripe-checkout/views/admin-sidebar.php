@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container">
 	<div class="sidebar-content">
 		<p>
-			<?php _e( 'Help us get noticed (and boost our egos) with a rating and short review.', 'sc' ); ?>
+			<?php _e( 'We\'d sure love it if you could leave us a 1-sentence review.', 'sc' ); ?>
 		</p>
 
 		<a href="https://wordpress.org/support/view/plugin-reviews/stripe" class="button-primary" target="_blank">
