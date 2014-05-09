@@ -248,7 +248,7 @@ class Stripe_Checkout {
 	public function add_plugin_admin_menu() {
 
 		$this->plugin_screen_hook_suffix[] = add_menu_page(
-			$this->get_plugin_title() . __( ' Settings', 'sc' ),
+			$this->get_plugin_title() . ' ' . __( 'Settings', 'sc' ),
 			$this->get_plugin_title(),
 			'manage_options',
 			$this->plugin_slug,
@@ -258,7 +258,7 @@ class Stripe_Checkout {
 		// Change the first option to text "Settings" instead of "Stripe Checkout"
 		$this->plugin_screen_hook_suffix[] = add_submenu_page(
 			$this->plugin_slug,
-			$this->get_plugin_title() . __( 'Settings', 'sc' ),
+			$this->get_plugin_title() . ' ' . __( 'Settings', 'sc' ),
 			__( 'Settings', 'sc' ),
 			'manage_options',
 			$this->plugin_slug,
