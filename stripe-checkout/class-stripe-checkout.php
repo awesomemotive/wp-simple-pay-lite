@@ -94,6 +94,7 @@ class Stripe_Checkout {
 		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
 		
+		// Hook into wp_footer so we can localize our script AFTER all the shortcodes have been processed
 		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
 	}
 	
@@ -143,6 +144,11 @@ class Stripe_Checkout {
 		
 	}
 	
+	/*
+	 * Function to localize the script variables being sent from the shortcodes
+	 * 
+	 * @since 1.1.1
+	 */
 	function localize_shortcode_script() {
 		
 		global $script_vars;
