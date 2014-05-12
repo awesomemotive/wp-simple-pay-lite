@@ -148,6 +148,9 @@ class Stripe_Checkout {
 		global $script_vars;
 		
 		wp_localize_script( SC_PLUGIN_SLUG . '-public', 'sc_script', $script_vars );
+		
+		// clear it out after we use it
+		$script_vars = array();
 	}
 
 	/**
