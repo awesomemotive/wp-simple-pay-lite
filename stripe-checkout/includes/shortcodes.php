@@ -35,6 +35,10 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 				), $attr, 'stripe' ) );
 	
 	
+	// Generate a Unique ID for this shortcode
+	$uid = sc_get_uid();
+	
+	
 	// Check if in test mode or live mode
 	if( empty( $sc_options['enable_test_key'] ) ) {
 		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );
@@ -78,7 +82,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			'allowRememberMe' => ( ! empty( $sc_script_options['script']['allow-remember-me'] ) ? $sc_script_options['script']['allow-remember-me'] : ( ! empty( $sc_options['enable_remember'] ) ? $sc_options['enable_remember'] : -1 ) )
 	));*/
 	
-	$script_vars['test'] = array(
+	$script_vars[$uid] = array(
 			'key'             => ( ! empty( $sc_script_options['script']['key'] ) ? $sc_script_options['script']['key'] : ( ! empty( $sc_options['key'] ) ? $sc_options['key'] : -1 ) ),
 			'name'            => ( ! empty( $sc_script_options['script']['name'] ) ? $sc_script_options['script']['name'] : ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : -1 ) ),
 			'description'     => ( ! empty( $sc_script_options['script']['description'] ) ? $sc_script_options['script']['description'] : ( ! empty( $sc_options['description'] ) ? $sc_options['description'] : -1 ) ),
@@ -98,7 +102,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$currency             = $sc_script_options['script']['currency'];
 	
 	
-	$html  = '<form id="sc_checkout_form" method="POST" action="">';
+	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="">';
 	// filter out HTML from $content?
 	
 	$content = do_shortcode( $content );
@@ -115,7 +119,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	// Add filter HERE to allow for custom hidden fields to be added
 	
-	$html .= '<button class="sc_checkout stripe-button-el" data-sc-id="test"><span>';
+	$html .= '<button class="sc_checkout stripe-button-el" data-sc-id="' . $uid . '"><span>';
 	$html .= $payment_button_label;
 	$html .= '</span></button>';
 	$html .= '</form>';
@@ -130,3 +134,18 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 }
 add_shortcode( 'stripe', 'sc_stripe_shortcode' );
+
+
+function sc_get_uid() {
+	// random number
+	$r_num = rand();
+	
+	// Get string length
+	$length = strlen( $r_num );
+	
+	// md5 it, but based on random number and substr location to make it even more random
+	$r_num = md5( substr( $r_num, rand( 0, $length - 1 ), rand( 0, $length - 1 ) ) );
+	
+	return $r_num;
+	
+}
