@@ -93,6 +93,8 @@ class Stripe_Checkout {
 		// Filters to add the settings page titles
 		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
+		
+		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
 	}
 	
 	function sc_settings_keys_title( $title ) {
@@ -125,11 +127,27 @@ class Stripe_Checkout {
 	 * @since 1.0.0
 	 */
 	function enqueue_public_scripts() {
+		//global $script_vars;
+		
 		wp_enqueue_script( 'jquery' );
 		
 		wp_enqueue_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true );
 		
 		wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array(), $this->version, true );
+		
+		
+		/*$data = array(
+			'l10n_print_after' => 'sc_script = ' . $script_vars . ';'
+		);*/
+		
+		
+	}
+	
+	function localize_shortcode_script() {
+		
+		global $script_vars;
+		
+		wp_localize_script( SC_PLUGIN_SLUG . '-public', 'sc_script', $script_vars );
 	}
 
 	/**

@@ -7,19 +7,25 @@
 			 */	
 			$( 'button.sc_checkout' ).on( 'click', function( event ) {
 				
-				// Show options passed
-				console.log( 'key: ', sc_script.key );
-				console.log( 'image: ', sc_script.image );
-				console.log( 'name: ', sc_script.name );
-				console.log( 'description: ', sc_script.description );
-				console.log( 'amount: ', sc_script.amount );
-				console.log( 'currency: ', sc_script.currency );
-				console.log( 'panelLabel: ', sc_script.panelLabel );
-				console.log( 'billingAddress: ', sc_script.billingAddress );
-				console.log( 'shippingAddress: ', sc_script.shippingAddress );
-				console.log( 'allowRememberMe: ', sc_script.allowRememberMe );
+				event.preventDefault();
 				
-				var handler = StripeCheckout.configure({
+				var dataAttr = $(this).attr( 'data-sc-id' );
+				
+				console.log( 'Data: ', dataAttr );
+				
+				// Show options passed
+				console.log( 'key: ', sc_script[dataAttr].key );
+				console.log( 'image: ', sc_script[dataAttr].image );
+				console.log( 'name: ', sc_script[dataAttr].name );
+				console.log( 'description: ', sc_script[dataAttr].description );
+				console.log( 'amount: ', sc_script[dataAttr].amount );
+				console.log( 'currency: ', sc_script[dataAttr].currency );
+				console.log( 'panelLabel: ', sc_script[dataAttr].panelLabel );
+				console.log( 'billingAddress: ', sc_script[dataAttr].billingAddress );
+				console.log( 'shippingAddress: ', sc_script[dataAttr].shippingAddress );
+				console.log( 'allowRememberMe: ', sc_script[dataAttr].allowRememberMe );
+				
+				/*var handler = StripeCheckout.configure({
 					key: sc_script.key,
 					image: ( sc_script.image != -1 ? sc_script.image : '' ),
 					token: function(token, args) {
@@ -60,7 +66,8 @@
 				}
 
 				return amount * 100;
-			}
-			
+			}*/
+				
+		});	
 	});
 }(jQuery));
