@@ -17,3 +17,5 @@ delete_option( 'sc_settings_default' );
 delete_option( 'sc_settings_keys' );
 delete_option( 'sc_show_admin_install_notice' );
 delete_option( 'sc_has_run' );
+delete_option( 'sc_version' );
+delete_option( 'sc_upgrade_has_run' );

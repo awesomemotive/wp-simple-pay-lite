@@ -63,10 +63,13 @@ class Stripe_Checkout {
 		// Load plugin text domain
 		add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 		
+		if( ! get_option( 'sc_upgrade_has_run' ) ) {
+			add_action( 'init', array( $this, 'upgrade_plugin' ), 0 );
+		}
+		
 		// Include required files.
-		//add_action( 'init', array( $this, 'includes' ), 1 );
-		$this->includes();
-
+		add_action( 'init', array( $this, 'includes' ), 1 );
+		
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 
@@ -101,6 +104,37 @@ class Stripe_Checkout {
 		// Hook into wp_footer so we can localize our script AFTER all the shortcodes have been processed
 		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
 	}
+	
+	
+	function upgrade_plugin() {
+
+		//require_once( 'includes/upgrade.php' );
+		
+		$keys_options = get_option( 'sc_settings_general' );
+	
+		// Check if test mode was enabled
+		if( isset( $keys_options['enable_test_key'] ) && $keys_options['enable_test_key'] == 1 ) {
+			// if it was then we remove it because we are now checking if live is enabled, not test
+			unset( $keys_options['enable_test_key'] );
+		} else {
+
+			// If was not in test mode then we need to set our new value to true
+			$keys_options['enable_live_key'] = 1;
+		}
+		
+		// Delete old option settings from old version of SC
+		delete_option( 'sc_settings_general' );
+		
+		// Update our new settings options
+		update_option( 'sc_settings_keys', $keys_options );
+		
+		// Update version number option for future upgrades
+		update_option( 'sc_version', $this->version );
+		
+		// Let us know that we ran the upgrade
+		add_option( 'sc_upgrade_has_run', 1 );
+	}
+	
 	
 	function sc_settings_keys_title( $title ) {
 		return __( 'Stripe Keys', 'sc' );
@@ -373,10 +407,7 @@ class Stripe_Checkout {
 		$sc_options = sc_get_settings();
 
 		// Upgrade
-		if( ! get_option( 'sc_upgrade_has_run' ) ) {
-			echo 'hello';
-			include_once( 'includes/upgrade.php' );
-		}
+		
 	}
 
 	/**
