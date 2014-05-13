@@ -64,13 +64,17 @@ class Stripe_Checkout {
 		add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 		
 		// Include required files.
-		add_action( 'init', array( $this, 'includes' ), 1 );
+		//add_action( 'init', array( $this, 'includes' ), 1 );
+		$this->includes();
 
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 
 		// Enqueue admin styles.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+		
+		// Enqueue admin scripts
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
 		// Add admin notice after plugin activation. Also check if should be hidden.
 		add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
@@ -158,6 +162,14 @@ class Stripe_Checkout {
 		// clear it out after we use it
 		$script_vars = array();
 	}
+	
+	public function enqueue_admin_scripts() {
+		
+		//if( $this->viewing_this_plugin() ) {
+			wp_enqueue_script( $this->plugin_slug . '-bootstrap-switch', plugins_url( 'js/bootstrap-switch.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( $this->plugin_slug . '-admin', plugins_url( 'js/admin.js', __FILE__ ), array(), $this->version, true );
+		//}
+	}
 
 	/**
 	 * Enqueue admin-specific style sheets for this plugin's admin pages only.
@@ -168,6 +180,8 @@ class Stripe_Checkout {
 
 		if ( $this->viewing_this_plugin() ) {
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ), array(), $this->version );
+			//wp_enqueue_style( $this->plugin_slug .'-bootstrap', plugins_url( 'css/bootstrap.css', __FILE__ ), array(), $this->version );
+			wp_enqueue_style( $this->plugin_slug .'-bootstrap-switch', plugins_url( 'css/bootstrap-switch.min.css', __FILE__ ), array(), $this->version );
 		}
 	}
 	
@@ -357,6 +371,12 @@ class Stripe_Checkout {
 		sc_set_defaults();
 		
 		$sc_options = sc_get_settings();
+
+		// Upgrade
+		if( ! get_option( 'sc_upgrade_has_run' ) ) {
+			echo 'hello';
+			include_once( 'includes/upgrade.php' );
+		}
 	}
 
 	/**

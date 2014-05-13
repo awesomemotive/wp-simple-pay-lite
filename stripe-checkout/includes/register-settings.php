@@ -103,10 +103,10 @@ function sc_register_settings() {
 		
 		/* Keys settings */
 		'keys' => array(
-			'enable_test_key' => array(
-				'id'   => 'enable_test_key',
-				'name' => __( 'Enable Test Mode', 'sc' ),
-				'desc' => __( 'Place Stripe in Test mode using your test API keys.', 'sc' ),
+			'enable_live_key' => array(
+				'id'   => 'enable_live_key',
+				'name' => __( 'Test or Live Mode', 'sc' ),
+				'desc' => __( '<br><em>Place Stripe in Test mode using your test API keys.</em>', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'test_secret_key' => array(
