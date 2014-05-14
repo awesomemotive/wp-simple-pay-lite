@@ -35,7 +35,7 @@ function sc_charge_card() {
 		$name        = $_POST['sc-name'];
 		$currency    = $_POST['sc-currency'];
 		
-		if( ! empty( $sc_options['enable_live_key'] ) ) {
+		if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 ) {
 			$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
 		} else {
 			$key = ( ! empty( $sc_options['test_secret_key'] ) ? $sc_options['test_secret_key'] : '' );
