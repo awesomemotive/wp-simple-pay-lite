@@ -1,12 +1,8 @@
 
 <h3><?php _e( 'Stripe Checkout Shortcode Help', 'sc' ); ?></h3>
-			
+		
 <p>
 	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe]</code> <?php _e( 'to display the Stripe Checkout button within your content.', 'sc' ); ?>
-</p>
-<p>
-	<?php _e( 'Use the function', 'sc' ); ?> <code><?php echo htmlentities( '<?php echo do_shortcode(\'[stripe]\'); ?>' ); ?></code>
-	<?php _e( 'to display within template or theme files.', 'sc' ); ?>
 </p>
 
 <h4><?php _e( 'Available Attributes', 'sc' ); ?></h4>
@@ -90,7 +86,7 @@
 <p><strong><?php _e( 'Live transactions less than 50 cents (U.S.) are not allowed by Stripe.', 'sc' ); ?></strong></p>
 
 <h4><?php _e( 'Sample Shortcodes', 'sc' ); ?></h4>
-<ul class="ul-disc">
+<ul>
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code></li>
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" shipping="true" billing="true"]</code></li>
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" image_url="http://www.example.com/book_image.jpg"]</code></li>
