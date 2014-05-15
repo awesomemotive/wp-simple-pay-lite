@@ -151,8 +151,10 @@ class Stripe_Checkout {
 	 */
 	function enqueue_public_styles() {
 		
-		// Load Stripe CSS for button
-		wp_enqueue_style( 'stripe-checkout-css', 'https://checkout.stripe.com/v3/checkout/button.css', array(), null );
+		if( sc_has_shortcode() ) {
+			// Load Stripe CSS for button
+			wp_enqueue_style( 'stripe-checkout-css', 'https://checkout.stripe.com/v3/checkout/button.css', array(), null );
+		}
 		
 		// Only load after the user has clicked to pay
 		if( isset( $_GET['payment'] ) ) {
@@ -166,19 +168,14 @@ class Stripe_Checkout {
 	 * @since 1.0.0
 	 */
 	function enqueue_public_scripts() {
-		//global $script_vars;
+
+		if( sc_has_shortcode() ) {
+			wp_enqueue_script( 'jquery' );
 		
-		wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true );
 		
-		wp_enqueue_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true );
-		
-		wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array(), $this->version, true );
-		
-		
-		/*$data = array(
-			'l10n_print_after' => 'sc_script = ' . $script_vars . ';'
-		);*/
-		
+			wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array(), $this->version, true );
+		}
 		
 	}
 	
@@ -199,10 +196,10 @@ class Stripe_Checkout {
 	
 	public function enqueue_admin_scripts() {
 		
-		//if( $this->viewing_this_plugin() ) {
+		if( $this->viewing_this_plugin() ) {
 			wp_enqueue_script( $this->plugin_slug . '-bootstrap-switch', plugins_url( 'js/bootstrap-switch.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
 			wp_enqueue_script( $this->plugin_slug . '-admin', plugins_url( 'js/admin.js', __FILE__ ), array(), $this->version, true );
-		//}
+		}
 	}
 
 	/**

@@ -186,3 +186,21 @@ function sc_help_url( $tab = '', $string = '' ) {
 	return '<a href="' . add_query_arg( $args, admin_url( 'admin.php' ) ) . '">' . $string . '</a>';
 }
 
+
+/**
+ * Check if the [stripe] shortcode exists on this page
+ * 
+ * @since 1.0.0
+ */
+function sc_has_shortcode() {
+	global $post;
+	
+	// Currently ( 5/8/2014 ) the has_shortcode() function will not find a 
+	// nested shortcode. This seems to do the trick currently, will switch if 
+	// has_shortcode() gets updated. -NY
+	if ( strpos( $post->post_content, '[stripe' ) ) {
+		return true;
+	}
+	
+	return false;
+}
