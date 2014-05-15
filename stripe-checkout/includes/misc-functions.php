@@ -198,7 +198,7 @@ function sc_has_shortcode() {
 	// Currently ( 5/8/2014 ) the has_shortcode() function will not find a 
 	// nested shortcode. This seems to do the trick currently, will switch if 
 	// has_shortcode() gets updated. -NY
-	if ( strpos( $post->post_content, '[stripe' ) ) {
+	if ( strpos( $post->post_content, '[stripe' ) !== false ) {
 		return true;
 	}
 	
