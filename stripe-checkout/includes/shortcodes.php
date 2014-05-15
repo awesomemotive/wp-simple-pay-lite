@@ -20,6 +20,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	global $sc_options, $sc_script_options, $script_vars;
 	
+	STATIC $uid = 1;
+	
 	extract( shortcode_atts( array(
 					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
 					'description'           => '',
@@ -33,10 +35,6 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'enable_remember'       => '',    // true or false
 					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() )
 				), $attr, 'stripe' ) );
-	
-	
-	// Generate a Unique ID for this shortcode
-	$uid = sc_get_uid();
 	
 	
 	// Check if in test mode or live mode
@@ -111,6 +109,9 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$html .= '</span></button>';
 	$html .= '</form>';
 	
+	// Increment static uid counter
+	$uid++;
+	
 	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) || ! isset( $sc_script_options['script']['amount'] ) ) {
 		return '';
 	} else if( ! isset( $_GET['payment'] ) ) {
@@ -121,23 +122,3 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 }
 add_shortcode( 'stripe', 'sc_stripe_shortcode' );
-
-
-/**
- * Function that will return a random Unique ID
- * 
- * @since 1.1.1
- */
-function sc_get_uid() {
-	// random number
-	$r_num = rand();
-	
-	// Get string length
-	$length = strlen( $r_num );
-	
-	// md5 it, but based on random number and substr location to make it even more random
-	$r_num = md5( substr( $r_num, rand( 0, $length - 1 ), rand( 0, $length - 1 ) ) );
-	
-	return $r_num;
-	
-}
