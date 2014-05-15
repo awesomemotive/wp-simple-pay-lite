@@ -24,6 +24,7 @@
 				console.log( 'billingAddress: ', sc_script[dataAttr].billingAddress );
 				console.log( 'shippingAddress: ', sc_script[dataAttr].shippingAddress );
 				console.log( 'allowRememberMe: ', sc_script[dataAttr].allowRememberMe );
+				console.log( 'email', sc_script[dataAttr].email );
 				
 				var handler = StripeCheckout.configure({
 					key: sc_script[dataAttr].key,
@@ -50,7 +51,8 @@
 					 panelLabel: ( sc_script[dataAttr].panelLabel != -1 ? sc_script[dataAttr].panelLabel : 'Pay {{amount}}' ),
 					 billingAddress: ( sc_script[dataAttr].billingAddress == 'true' || sc_script[dataAttr].billingAddress == 1 ? true : false ),
 					 shippingAddress: ( sc_script[dataAttr].shippingAddress == 'true' || sc_script[dataAttr].shippingAddress == 1 ? true : false ),
-					 allowRememberMe: ( sc_script[dataAttr].allowRememberMe == 1 || sc_script[dataAttr].allowRememberMe == 'true' ?  true : false )
+					 allowRememberMe: ( sc_script[dataAttr].allowRememberMe == 1 || sc_script[dataAttr].allowRememberMe == 'true' ?  true : false ),
+					 email: ( sc_script[dataAttr].email != -1 ?  sc_script[dataAttr].email : '' )
 				 });
 				 
 				 event.preventDefault();

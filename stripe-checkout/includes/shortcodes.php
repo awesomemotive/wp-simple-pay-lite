@@ -33,7 +33,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'shipping'              => '',    // true or false
 					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
 					'enable_remember'       => '',    // true or false
-					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() )
+					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
+					'prefill_email'         => 'false'
 				), $attr, 'stripe' ) );
 	
 	
@@ -42,6 +43,15 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );
 	} else {
 		$data_key = ( ! empty( $sc_options['test_publish_key'] ) ? $sc_options['test_publish_key'] : '' );
+	}
+	
+	if( ! empty( $prefill_email ) && $prefill_email !== 'false' ) {
+		// Get current logged in user email
+		if( is_user_logged_in() ) {
+			$prefill_email = get_userdata( get_current_user_id() )->user_email;
+		} else { 
+			$prefill_email = 'false';
+		}
 	}
 	
 	// Save all of our options to an array so others can run them through a filter if they need to
@@ -57,7 +67,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			'billing-address'      => $billing,
 			'shipping-address'     => $shipping,
 			'label'                => $payment_button_label,
-			'allow-remember-me'    => $enable_remember
+			'allow-remember-me'    => $enable_remember,
+			'email'                => $prefill_email
 		),
 		'other' => array(
 			'success-redirect-url' => $success_redirect_url
@@ -77,7 +88,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			'panelLabel'      => ( ! empty( $sc_script_options['script']['panel-label'] ) ? $sc_script_options['script']['panel-label'] : ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : -1 ) ),
 			'billingAddress'  => ( ! empty( $sc_script_options['script']['billing-address'] ) ? $sc_script_options['script']['billing-address'] : ( ! empty( $sc_options['billing'] ) ? $sc_options['billing'] : -1 ) ),
 			'shippingAddress' => ( ! empty( $sc_script_options['script']['shipping-address'] ) ? $sc_script_options['script']['shipping-address'] : ( ! empty( $sc_options['shipping'] ) ? $sc_options['shipping'] : -1 ) ),
-			'allowRememberMe' => ( ! empty( $sc_script_options['script']['allow-remember-me'] ) ? $sc_script_options['script']['allow-remember-me'] : ( ! empty( $sc_options['enable_remember'] ) ? $sc_options['enable_remember'] : -1 ) )
+			'allowRememberMe' => ( ! empty( $sc_script_options['script']['allow-remember-me'] ) ? $sc_script_options['script']['allow-remember-me'] : ( ! empty( $sc_options['enable_remember'] ) ? $sc_options['enable_remember'] : -1 ) ),
+			'email'           => ( ! empty( $sc_script_options['script']['email'] ) && ! ( $sc_script_options['script']['email'] === 'false' ) ? $sc_script_options['script']['email'] : -1 )
 	);
 	
 	$name                 = $sc_script_options['script']['name'];
