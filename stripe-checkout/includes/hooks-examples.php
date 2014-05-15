@@ -71,3 +71,15 @@ function test_sc_redirect_after() {
 }
 //add_action( 'sc_redirect_after', 'test_sc_redirect_after' );
 
+
+/**
+ * Change prefilled email
+ * 
+ * @since 1.1.1
+ */
+function test_sc_modify_script_options( $options ) {
+	$options['script']['email'] = 'test@test.com';
+	
+	return $options;
+}
+//add_filter( 'sc_modify_script_options', 'test_sc_modify_script_options' );
