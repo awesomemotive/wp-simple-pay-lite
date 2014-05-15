@@ -79,6 +79,11 @@
 			<td><?php _e( 'The URL that the user should be redirected to after a successful payment.', 'sc' ); ?></td>
 			<td><?php _e( 'Page payment made from', 'sc' ); ?></td>
 		</tr>
+		<tr>
+			<td>prefill_email</td>
+			<td><?php _e( 'Prefill the email address box with the email address of the current logged in user.', 'sc' ); ?></td>
+			<td><?php _e( 'false', 'sc' ); ?></td>
+		</tr>
 	</tbody>
 </table>
 
@@ -90,4 +95,5 @@
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" shipping="true" billing="true"]</code></li>
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" image_url="http://www.example.com/book_image.jpg"]</code></li>
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" checkout_button_label="Now only {{amount}}!" enable_remember="false"]</code></li>
+	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" prefill_email="true"]</code></li>
 </ul>
