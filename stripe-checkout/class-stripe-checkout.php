@@ -210,6 +210,7 @@ class Stripe_Checkout {
 	public function enqueue_admin_styles() {
 
 		if ( $this->viewing_this_plugin() ) {
+			wp_enqueue_style( $this->plugin_slug .'-bootstrap-switch', plugins_url( 'css/bootstrap-switch.min.css', __FILE__ ), array(), $this->version );
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ), array(), $this->version );
 		}
 	}
