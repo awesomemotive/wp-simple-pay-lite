@@ -150,8 +150,18 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 = 1.1.1 =
 
+* Moved admin settings from a submenu item to a main menu item.
 * Updated Admin UI to use tabs.
+* Admin help moved to it's own section.
 * Added default settings options.
+* Added a lot of filters and hooks.
+* New UI switch for changing between Live and Test modes.
+* Added prefill_email shortcode attribute.
+* CSS ad JS no longer load on pages unless a button is added to it.
+* Moved from using the simple checkout to using the customized version from Stripe to allow for more flexibility.
+* Updated to current version of Stripe library.
+* Various bug fixes.
+
 
 = 1.1.0 =
 
