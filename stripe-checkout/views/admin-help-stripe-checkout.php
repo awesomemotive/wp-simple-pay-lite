@@ -18,25 +18,27 @@
 	<tbody>
 		<tr>
 			<td>name</td>
-			<td><?php _e( 'The name of your company or website.', 'sc' ) ?></td>
+			<td><?php _e( 'The name of your company or website.', 'sc' ); ?></td>
 			<td>Site Title</td>
 		</tr>
 		<tr>
 			<td>description</td>
-			<td><?php _e( 'A description of the product or service being purchased.', 'sc' ); ?></td>
-			<td><?php _e( 'n/a', 'sc' ); ?></td>
+			<td><?php _e( 'A description of the product or service being purchased (optional).', 'sc' ); ?></td>
+			<td></td>
 		</tr>
 		<tr>
 			<td>amount</td>
 			<td><?php printf( __( 'Amount in desired currency. Use smallest common currency unit (%s). U.S. amounts are in cents.', 'sc' ), 
-		'<a href="https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support" target="_blank">read more</a>' ); ?></td>
-			<td>100 (equals $1.00 US)</td>
+					'<a href="https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support" target="_blank">read more</a>' ); ?>
+				<strong><?php _e( 'Amount is required.', 'sc' ); ?></strong>
+			</td>
+			<td></td>
 		</tr>
 
 		<tr>
 			<td>image_url</td>
 			<td><?php _e( 'A URL pointing to a square image of your brand or product. The recommended minimum size is 128x128px.', 'sc' ); ?></td>
-			<td><?php _e( 'n/a', 'sc' ); ?></td>
+			<td></td>
 		</tr>
 		<tr>
 			<td>currency</td>
