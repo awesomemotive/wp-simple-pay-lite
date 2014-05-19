@@ -251,6 +251,11 @@ class Stripe_Checkout {
 		if ( ! defined( 'SC_PLUGIN_DIR' ) ) {
 			define( 'SC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		}
+		
+		// Plugin version
+		if ( ! defined( 'SC_PLUGIN_VERSION' ) ) {
+			define( 'SC_PLUGIN_VERSION', $this->version );
+		}
 	}
 	
 	/**
