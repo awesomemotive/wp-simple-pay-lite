@@ -159,7 +159,7 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * Added prefill_email shortcode attribute.
 * CSS ad JS no longer load on pages unless a button is added to it.
 * Moved from using the simple checkout to using the customized version from Stripe to allow for more flexibility.
-* Updated to current version of Stripe library.
+* Updated to current version of Stripe library. (v1.13.1)
 * Various bug fixes.
 
 
