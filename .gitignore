@@ -47,4 +47,4 @@ SyncToy*.dat
 
 # Netbeans IDE *
 ################
-/stripe/nbproject/*
+/stripe-checkout/nbproject/*
