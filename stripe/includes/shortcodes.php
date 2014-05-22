@@ -99,7 +99,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$currency             = $sc_script_options['script']['currency'];
 	
 	
-	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="">';
+	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '">';
 	// filter out HTML from $content?
 	
 	$content = do_shortcode( $content );
@@ -116,7 +116,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	// Add filter HERE to allow for custom hidden fields to be added
 	
-	$html .= '<button class="sc_checkout stripe-button-el" data-sc-id="' . $uid . '"><span>';
+	$html .= '<button class="sc_checkout stripe-button-el"><span>';
 	$html .= $payment_button_label;
 	$html .= '</span></button>';
 	$html .= '</form>';
