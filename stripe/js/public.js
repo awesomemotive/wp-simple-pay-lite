@@ -44,12 +44,18 @@
 					token: function(token, args) {
 					  
 					  // Set the values on our hidden elements to pass when submitting the form for payment
-					  $(currentForm + ' #sc_stripeToken').val( token.id );
+					 /* $(currentForm + ' #sc_stripeToken').val( token.id );
 					  $(currentForm + ' #sc_amount').val( sc_script[dataAttr].amount );
-					  $(currentForm + ' #sc_stripeEmail').val( token.email );
+					  $(currentForm + ' #sc_stripeEmail').val( token.email );*/
+						
+					currentForm.find('#sc_stripeToken').val( token.id );
+					currentForm.find('#sc_amount').val( sc_script[dataAttr].amount );
+					currentForm.find('#sc_stripeEmail').val( token.email );
 					  
 					  
 					 // console.log( 'Token Email: ', token.email );
+					 
+					 currentForm.unbind('submit');
 					  
 					  currentForm.submit();
 					}
