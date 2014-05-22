@@ -2,10 +2,6 @@
 <h3><?php _e( 'Stripe Checkout Shortcode Help', 'sc' ); ?></h3>
 
 <p>
-	<?php _e( 'Plugin version:', 'sc' ); ?> <strong><?php echo SC_PLUGIN_VERSION; ?></strong>
-</p>
-		
-<p>
 	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe]</code> <?php _e( 'to display the Stripe Checkout button within your content.', 'sc' ); ?>
 </p>
 
