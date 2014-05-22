@@ -134,3 +134,38 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 }
 add_shortcode( 'stripe', 'sc_stripe_shortcode' );
+
+
+/**
+ * Function to process [stripe_total] shortcode
+ * 
+ * 
+ * @since 1.1.1
+ */
+function sc_stripe_total( $attr ) {
+	
+	global $sc_script_options;
+	
+	$html = '';
+	
+	extract( shortcode_atts( array(
+					'label' => 'Total Amount: '
+				), $attr, 'stripe_total' ) );
+	
+	if( $sc_script_options['script']['currency'] == 'USD' ) {
+		
+		$html  = '<div class="sc-form-group">';
+		$html .= '<p>' . $label . '$<span id="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span></p>';
+		$html .= '</div>';
+	
+		//return $label . '$' . $sc_script_options['script']['amount'] . '<br>';
+	} else {
+		
+		$html  = '<div class="sc-form-group">';
+		$html .= '<p>' . $label . '<span id="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'] . '</p>';
+		$html .= '</div>';
+	}
+	
+	return $html;
+}
+add_shortcode( 'stripe_total', 'sc_stripe_total' );
