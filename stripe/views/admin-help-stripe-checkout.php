@@ -99,3 +99,42 @@
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" checkout_button_label="Now only {{amount}}!" enable_remember="false"]</code></li>
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" prefill_email="true"]</code></li>
 </ul>
+
+
+<h3><?php _e( 'Stripe Checkout "Total Shortcode" Help', 'sc' ); ?></h3>
+		
+<p>
+	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe_total]</code> <?php _e( 'to display the total amount for the current form.', 'sc' ); ?>
+</p>
+
+<p>
+	<?php _e( 'This shortcode is not required to make the checkout functional. If you do use it then you need to make sure you wrap it within the base shortcode. See example below.', 'sc' ); ?>
+</p>
+
+<h4><?php _e( 'Available Attributes', 'sc' ); ?></h4>
+
+<table class="widefat importers" cellspacing="0">
+	<thead>
+		<tr>
+			<th><?php _e( 'Attribute', 'sc' ); ?></th>
+			<th><?php _e( 'Description', 'sc' ); ?></th>
+			<th><?php _e( 'Default', 'sc' ); ?></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>label</td>
+			<td><?php _e( 'Text to show before the amount due.', 'sc' ); ?></td>
+			<td><?php _e( 'Total Amount:', 'sc' ); ?></td>
+		</tr>
+	</tbody>
+</table>
+
+<h4><?php _e( 'Sample Shortcode Usage', 'sc' ); ?></h4>
+<ul>
+	<li>
+		<code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999"]</code><br/>
+		<code>[stripe_total label="Your Total:"]</code><br/>
+		<code>[/stripe]</code>
+	</li>
+</ul>

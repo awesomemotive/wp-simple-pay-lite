@@ -149,7 +149,7 @@ function sc_stripe_total( $attr ) {
 	$html = '';
 	
 	extract( shortcode_atts( array(
-					'label' => 'Total Amount: '
+					'label' => __( 'Total Amount:', 'sc' )
 				), $attr, 'stripe_total' ) );
 	
 	if( $sc_script_options['script']['currency'] == 'USD' ) {
@@ -162,7 +162,7 @@ function sc_stripe_total( $attr ) {
 	} else {
 		
 		$html  = '<div class="sc-form-group">';
-		$html .= '<p>' . $label . '<span id="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'] . '</p>';
+		$html .= '<p>' . $label . ' <span id="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'] . '</p>';
 		$html .= '</div>';
 	}
 	
