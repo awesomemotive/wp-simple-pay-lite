@@ -5,6 +5,13 @@
 	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe]</code> <?php _e( 'to display the Stripe Checkout button within your content.', 'sc' ); ?>
 </p>
 
+<p>
+	<?php 
+		printf( __( 'Use the function %s to display within template or theme files.', 'sc' ), 
+				'<code>' . htmlentities( '<?php echo do_shortcode(\'[stripe]\'); ?>' ) . '</code>' ); 
+	?> 
+</p>
+
 <h4><?php _e( 'Available Attributes', 'sc' ); ?></h4>
 
 <table class="widefat importers" cellspacing="0">
