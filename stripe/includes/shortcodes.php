@@ -154,12 +154,12 @@ add_shortcode( 'stripe', 'sc_stripe_shortcode' );
  */
 function sc_stripe_total( $attr ) {
 	
-	global $sc_script_options;
+	global $sc_options, $sc_script_options;
 	
 	$html = '';
 	
 	extract( shortcode_atts( array(
-					'label' => __( 'Total Amount:', 'sc' )
+					'label' => ( ! empty( $sc_options['stripe_total_label'] ) ? $sc_options['stripe_total_label'] : __( 'Total Amount:', 'sc' ) )
 				), $attr, 'stripe_total' ) );
 	
 	if( $sc_script_options['script']['currency'] == 'USD' ) {
