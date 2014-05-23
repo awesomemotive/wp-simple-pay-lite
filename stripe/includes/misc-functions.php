@@ -204,3 +204,23 @@ function sc_has_shortcode() {
 	
 	return false;
 }
+
+
+/**
+ * Since Stripe does not deal with Shipping information we will add it as meta to pass to the Dashboard
+ * 
+ * @since 1.1.1
+ */
+function sc_add_shipping_meta( $meta ) {
+	if( isset( $_POST['sc-shipping-name'] ) ) {
+		$meta['Shipping Name']    = $_POST['sc-shipping-name'];
+		$meta['Shipping Address'] = $_POST['sc-shipping-address'];
+		$meta['Shipping City']    = $_POST['sc-shipping-city'];
+		$meta['Shipping State']   = $_POST['sc-shipping-state'];
+		$meta['Shipping Zip']     = $_POST['sc-shipping-zip'];
+		$meta['Shipping Country'] = $_POST['sc-shipping-country'];
+	}
+	
+	return $meta;
+}
+add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );

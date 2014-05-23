@@ -114,6 +114,16 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			  <input type="hidden" name="stripeToken" value="" id="sc_stripeToken" />
 			  <input type="hidden" name="stripeEmail" value="" id="sc_stripeEmail" />';
 	
+	// Add shipping information fields if it is enabled
+	if( $shipping === 'true' ) {
+		$html .= '<input type="hidden" name="sc-shipping-name" id="sc-shipping-name" value="" />
+			      <input type="hidden" name="sc-shipping-country" id="sc-shipping-country" value="" />
+			      <input type="hidden" name="sc-shipping-zip" id="sc-shipping-zip" value="" />
+			      <input type="hidden" name="sc-shipping-state" id="sc-shipping-state" value="" />
+			      <input type="hidden" name="sc-shipping-address" id="sc-shipping-address" value="" />
+				  <input type="hidden" name="sc-shipping-city" id="sc-shipping-city" value="" />';
+	}
+	
 	// Add filter HERE to allow for custom hidden fields to be added
 	
 	$html .= '<button class="sc_checkout stripe-button-el"><span>';
