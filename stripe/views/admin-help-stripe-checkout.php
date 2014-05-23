@@ -55,9 +55,9 @@
 			<td><?php _e( 'USD', 'sc' ); ?></td>
 		</tr>
 		<tr>
-			<td>checkout_button_label</td>
-			<td><?php _e( 'The label of the payment button in the Checkout form. You can use {{amount}} to display the amount.', 'sc' ); ?></td>
-			<td><?php _e( 'Pay {{amount}}', 'sc' ); ?></td>
+			<td>payment_button_label</td>
+			<td><?php _e( 'Changes text on the default blue button that users click to initiate a checkout process.', 'sc' ); ?></td>
+			<td><?php _e( 'Pay with Card', 'sc' ); ?></td>
 		</tr>
 		<tr>
 			<td>billing</td>
@@ -75,9 +75,9 @@
 			<td><?php _e( 'true', 'sc' ); ?></td>
 		</tr>
 		<tr>
-			<td>payment_button_label</td>
-			<td><?php _e( 'Changes text on the default blue button that users click to initiate a checkout process.', 'sc' ); ?></td>
-			<td><?php _e( 'Pay with Card', 'sc' ); ?></td>
+			<td>checkout_button_label</td>
+			<td><?php _e( 'The label of the payment button in the Checkout form. You can use {{amount}} to display the amount.', 'sc' ); ?></td>
+			<td><?php _e( 'Pay {{amount}}', 'sc' ); ?></td>
 		</tr>
 		<tr>
 			<td>success_redirect_url</td>
