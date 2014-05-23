@@ -161,6 +161,7 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * Moved from using the simple checkout to using the customized version from Stripe to allow for more flexibility.
 * Updated to current version of Stripe library.
 * Various bug fixes.
+* If shipping address is enabled, shipping fields are now stored in payment meta data.
 
 
 = 1.1.0 =
