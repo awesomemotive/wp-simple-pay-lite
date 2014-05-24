@@ -5,13 +5,6 @@
 	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe]</code> <?php _e( 'to display the Stripe Checkout button within your content.', 'sc' ); ?>
 </p>
 
-<p>
-	<?php 
-		printf( __( 'Use the function %s to display within template or theme files.', 'sc' ), 
-				'<code>' . htmlentities( '<?php echo do_shortcode(\'[stripe]\'); ?>' ) . '</code>' ); 
-	?> 
-</p>
-
 <h4><?php _e( 'Available Attributes', 'sc' ); ?></h4>
 
 <table class="widefat importers" cellspacing="0">
@@ -103,8 +96,14 @@
 	<li><code>[stripe name="The Awesome Store" description="The Book of Awesomeness" amount="1999" prefill_email="true"]</code></li>
 </ul>
 
+<p>
+	<?php
+	printf( __( 'Use the function %s to display within template or theme files.', 'sc' ),
+		'<code>' . htmlentities( '<?php echo do_shortcode(\'[stripe]\'); ?>' ) . '</code>' );
+	?>
+</p>
 
-<h3><?php _e( 'Stripe Checkout "Total Shortcode" Help', 'sc' ); ?></h3>
+<h3><?php _e( 'Total Amount Shortcode', 'sc' ); ?></h3>
 		
 <p>
 	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe_total]</code> <?php _e( 'to display the total amount for the current form.', 'sc' ); ?>
