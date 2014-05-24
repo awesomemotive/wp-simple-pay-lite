@@ -99,7 +99,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$currency             = $sc_script_options['script']['currency'];
 	
 	
-	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '">';
+	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc_checkout_form">';
 	// filter out HTML from $content?
 	
 	$content = do_shortcode( $content );
@@ -108,20 +108,20 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
 			  <input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
-			  <input type="hidden" name="sc-amount" id="sc_amount" value="" />
+			  <input type="hidden" name="sc-amount" class="sc_amount" value="" />
 			  <input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />
 			  <input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />
-			  <input type="hidden" name="stripeToken" value="" id="sc_stripeToken" />
-			  <input type="hidden" name="stripeEmail" value="" id="sc_stripeEmail" />';
+			  <input type="hidden" name="stripeToken" value="" class="sc_stripeToken" />
+			  <input type="hidden" name="stripeEmail" value="" class="sc_stripeEmail" />';
 	
 	// Add shipping information fields if it is enabled
 	if( $shipping === 'true' ) {
-		$html .= '<input type="hidden" name="sc-shipping-name" id="sc-shipping-name" value="" />
-			      <input type="hidden" name="sc-shipping-country" id="sc-shipping-country" value="" />
-			      <input type="hidden" name="sc-shipping-zip" id="sc-shipping-zip" value="" />
-			      <input type="hidden" name="sc-shipping-state" id="sc-shipping-state" value="" />
-			      <input type="hidden" name="sc-shipping-address" id="sc-shipping-address" value="" />
-				  <input type="hidden" name="sc-shipping-city" id="sc-shipping-city" value="" />';
+		$html .= '<input type="hidden" name="sc-shipping-name" class="sc-shipping-name" value="" />
+			      <input type="hidden" name="sc-shipping-country" class="sc-shipping-country" value="" />
+			      <input type="hidden" name="sc-shipping-zip" class="sc-shipping-zip" value="" />
+			      <input type="hidden" name="sc-shipping-state" class="sc-shipping-state" value="" />
+			      <input type="hidden" name="sc-shipping-address" class="sc-shipping-address" value="" />
+				  <input type="hidden" name="sc-shipping-city" class="sc-shipping-city" value="" />';
 	}
 	
 	// Add filter HERE to allow for custom hidden fields to be added
@@ -165,14 +165,14 @@ function sc_stripe_total( $attr ) {
 	if( $sc_script_options['script']['currency'] == 'USD' ) {
 		
 		$html  = '<div class="sc-form-group">';
-		$html .= '<p>' . $label . '$<span id="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span></p>';
+		$html .= '<p>' . $label . '$<span class="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span></p>';
 		$html .= '</div>';
 	
 		//return $label . '$' . $sc_script_options['script']['amount'] . '<br>';
 	} else {
 		
 		$html  = '<div class="sc-form-group">';
-		$html .= '<p>' . $label . ' <span id="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'] . '</p>';
+		$html .= '<p>' . $label . ' <span class="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'] . '</p>';
 		$html .= '</div>';
 	}
 	

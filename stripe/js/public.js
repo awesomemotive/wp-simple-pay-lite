@@ -48,9 +48,9 @@
 					  $(currentForm + ' #sc_amount').val( sc_script[dataAttr].amount );
 					  $(currentForm + ' #sc_stripeEmail').val( token.email );*/
 						
-						currentForm.find('#sc_stripeToken').val( token.id );
-						currentForm.find('#sc_amount').val( sc_script[dataAttr].amount );
-						currentForm.find('#sc_stripeEmail').val( token.email );
+						currentForm.find('.sc_stripeToken').val( token.id );
+						currentForm.find('.sc_amount').val( sc_script[dataAttr].amount );
+						currentForm.find('.sc_stripeEmail').val( token.email );
 
 						//console.log( args );
 						//console.log( $.isEmptyObject( args ) );
@@ -58,12 +58,12 @@
 					
 						// Add shipping fields values if the shipping information is filled
 						if( ! $.isEmptyObject( args ) ) {
-							currentForm.find('#sc-shipping-name').val(args.shipping_name);
-							currentForm.find('#sc-shipping-country').val(args.shipping_address_country);
-							currentForm.find('#sc-shipping-zip').val(args.shipping_address_zip);
-							currentForm.find('#sc-shipping-state').val(args.shipping_address_state);
-							currentForm.find('#sc-shipping-address').val(args.shipping_address_line1);
-							currentForm.find('#sc-shipping-city').val(args.shipping_address_city);
+							currentForm.find('.sc-shipping-name').val(args.shipping_name);
+							currentForm.find('.sc-shipping-country').val(args.shipping_address_country);
+							currentForm.find('.sc-shipping-zip').val(args.shipping_address_zip);
+							currentForm.find('.sc-shipping-state').val(args.shipping_address_state);
+							currentForm.find('.sc-shipping-address').val(args.shipping_address_line1);
+							currentForm.find('.sc-shipping-city').val(args.shipping_address_city);
 						}
 					
 					 
