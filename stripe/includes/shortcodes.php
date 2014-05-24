@@ -159,20 +159,20 @@ function sc_stripe_total( $attr ) {
 	$html = '';
 	
 	extract( shortcode_atts( array(
-					'label' => ( ! empty( $sc_options['stripe_total_label'] ) ? $sc_options['stripe_total_label'] : __( 'Total Amount:', 'sc' ) )
+					'label' => ( ! empty( $sc_options['stripe_total_label'] ) ? $sc_options['stripe_total_label'] : __( 'Total Amount: ', 'sc' ) )
 				), $attr, 'stripe_total' ) );
 	
 	if( $sc_script_options['script']['currency'] == 'USD' ) {
 		
 		$html  = '<div class="sc-form-group">';
-		$html .= '<p>' . $label . '$<span class="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span></p>';
+		$html .= $label . '$<span class="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span>';
 		$html .= '</div>';
 	
 		//return $label . '$' . $sc_script_options['script']['amount'] . '<br>';
 	} else {
 		
 		$html  = '<div class="sc-form-group">';
-		$html .= '<p>' . $label . ' <span class="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'] . '</p>';
+		$html .= $label . ' <span class="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'];
 		$html .= '</div>';
 	}
 	
