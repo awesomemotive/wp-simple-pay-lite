@@ -164,7 +164,7 @@ class Stripe_Checkout {
 		}
 		
 		// Only load after the user has clicked to pay
-		if( isset( $_GET['payment'] ) ) {
+		if( sc_has_shortcode() || isset( $_GET['payment'] ) ) {
 			wp_enqueue_style( $this->plugin_slug . '-public' );
 		}
 	}
