@@ -49,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>payment_button_label</td>
-			<td><?php _e( 'Changes text on the default blue button that users click to initiate a checkout process.', 'sc' ); ?></td>
+			<td><?php _e( 'Text to display on the default payment button that launches the checkout overlay.', 'sc' ); ?></td>
 			<td><?php _e( 'Pay with Card', 'sc' ); ?></td>
 		</tr>
 		<tr>
@@ -69,7 +69,8 @@
 		</tr>
 		<tr>
 			<td>checkout_button_label</td>
-			<td><?php _e( 'The label of the payment button in the Checkout form. You can use {{amount}} to display the amount.', 'sc' ); ?></td>
+			<td><?php _e( 'Text to display on the final checkout button within the checkout overlay form. Insert {{amount}} where you\'d like to display the amount. ' .
+					'If {{amount}} is omitted, it will be appended at the end of the button label.', 'sc' ); ?></td>
 			<td><?php _e( 'Pay {{amount}}', 'sc' ); ?></td>
 		</tr>
 		<tr>
