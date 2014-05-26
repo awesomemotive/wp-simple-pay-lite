@@ -213,12 +213,17 @@ function sc_has_shortcode() {
  */
 function sc_add_shipping_meta( $meta ) {
 	if( isset( $_POST['sc-shipping-name'] ) ) {
+		
+		// Add Shipping Name as an item
 		$meta['Shipping Name']    = $_POST['sc-shipping-name'];
-		$meta['Shipping Address'] = $_POST['sc-shipping-address'];
-		$meta['Shipping City']    = $_POST['sc-shipping-city'];
-		$meta['Shipping State']   = $_POST['sc-shipping-state'];
-		$meta['Shipping Zip']     = $_POST['sc-shipping-zip'];
-		$meta['Shipping Country'] = $_POST['sc-shipping-country'];
+		
+		// Combine Address into one item to display
+		$meta['Shipping Address'] = $_POST['sc-shipping-address'] . "\n" . $_POST['sc-shipping-zip'] . ', ' . $_POST['sc-shipping-city'] . ', ' .
+			$_POST['sc-shipping-state'] . ', ' . $_POST['sc-shipping-country'];
+		//$meta['Shipping City']    = $_POST['sc-shipping-city'];
+		//$meta['Shipping State']   = $_POST['sc-shipping-state'];
+		//$meta['Shipping Zip']     = $_POST['sc-shipping-zip'];
+		//$meta['Shipping Country'] = $_POST['sc-shipping-country'];
 	}
 	
 	return $meta;
