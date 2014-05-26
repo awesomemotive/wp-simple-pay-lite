@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container">
 	<div class="sidebar-content">
 		<p>
-			<?php _e( 'Be the first to know when major new features are released.', 'sc' ); ?>
+			<?php _e( 'Want to know when we add major features to Stripe Checkout?', 'sc' ); ?>
 		</p>
 
 		<form action="http://philderksen.us1.list-manage1.com/subscribe/post?u=7a94395392f63c258fe90f941&amp;id=e8bf1dff87" method="post" target="_blank" novalidate>
@@ -34,22 +34,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container">
 	<div class="sidebar-content">
 		<p>
-			<?php _e( 'We\'d sure love it if you could leave us a 1-sentence review.', 'sc' ); ?>
+			<?php _e( 'We\'d love a super short review. Seriously, it means a lot.', 'sc' ); ?>
 		</p>
 
 		<a href="https://wordpress.org/support/view/plugin-reviews/stripe" class="button-primary" target="_blank">
-			<?php _e( 'Rate this plugin on WordPress.org', 'sc' ); ?></a>
+			<?php _e( 'Submit a review', 'sc' ); ?></a>
 	</div>
 </div>
 
 <div class="sidebar-container">
 	<div class="sidebar-content">
 		<p>
-			<?php _e( 'Have a feature request or need help from others?', 'sc' ); ?>
+			<?php _e( 'Need some help with something? Have a feature request?', 'sc' ); ?>
 		</p>
 		<p>
 			<a href="https://wordpress.org/support/plugin/stripe" target="_blank">
 				<?php _e( 'Visit our Community Support Forums', 'sc' ); ?></a>
 		</p>
+	</div>
+</div>
+
+<div class="sidebar-container-nobg">
+	<div class="sidebar-content centered">
+		<a href="https://stripe.com/" target="_blank">
+			<img src="<?php echo SC_PLUGIN_URL; ?>assets/powered-by-stripe.png" />
+		</a>
 	</div>
 </div>
