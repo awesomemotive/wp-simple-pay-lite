@@ -53,3 +53,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</p>
 	</div>
 </div>
+
+<div class="sidebar-container-nobg">
+	<div class="sidebar-content centered">
+		<a href="https://stripe.com/" target="_blank">
+			<img src="<?php echo SC_PLUGIN_URL; ?>assets/powered-by-stripe.png" />
+		</a>
+	</div>
+</div>

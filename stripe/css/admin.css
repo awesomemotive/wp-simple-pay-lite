@@ -16,15 +16,19 @@
 	width: 290px;
 }
 
-#sc-settings-sidebar .sidebar-container {
-	background-color: #fff;
-	border: 1px solid #e5e5e5;
+#sc-settings-sidebar .sidebar-container,
+#sc-settings-sidebar .sidebar-container-nobg {
 	border-radius: 0;
 	font-size: 15px;
 	margin-bottom: 18px;
 	padding: 0;
 	position: relative;
 	text-align: left;
+}
+
+#sc-settings-sidebar .sidebar-container {
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
 }
 
 #sc-settings-sidebar .sidebar-title-large,
