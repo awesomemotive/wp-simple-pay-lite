@@ -102,7 +102,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc_checkout_form">';
 	// filter out HTML from $content?
 	
-	$content = do_shortcode( $content );
+	$content = parse_shortcode_content( $content );
 	
 	$html .= apply_filters( 'sc_shortcode_content', $content );
 	
@@ -179,3 +179,29 @@ function sc_stripe_total( $attr ) {
 	return $html;
 }
 add_shortcode( 'stripe_total', 'sc_stripe_total' );
+
+/**
+ * Function to remove the annoying <br> and <p> tags from wpautop inside the shortcode
+ * 
+ * Found this function here: http://charlesforster.com/shortcodes-and-line-breaks-in-wordpress/
+ * 
+ * @since 1.1.1
+ */
+function parse_shortcode_content( $content ) { 
+ 
+    /* Parse nested shortcodes and add formatting. */ 
+    $content = trim( wpautop( do_shortcode( $content ) ) ); 
+ 
+    /* Remove '</p>' from the start of the string. */ 
+    if ( substr( $content, 0, 4 ) == '</p>' ) 
+        $content = substr( $content, 4 ); 
+ 
+    /* Remove '<p>' from the end of the string. */ 
+    if ( substr( $content, -3, 3 ) == '<p>' ) 
+        $content = substr( $content, 0, -3 ); 
+ 
+    /* Remove any instances of '<p></p>'. */ 
+    $content = str_replace( array( '<p></p>' ), '', $content ); 
+ 
+    return $content; 
+} 
