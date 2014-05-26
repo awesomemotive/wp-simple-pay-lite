@@ -99,7 +99,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$currency             = $sc_script_options['script']['currency'];
 	
 	
-	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc_checkout_form">';
+	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
 	// filter out HTML from $content?
 	
 	$content = parse_shortcode_content( $content );
