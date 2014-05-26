@@ -342,7 +342,8 @@ class Stripe_Checkout {
 			$this->get_plugin_title(),
 			'manage_options',
 			$this->plugin_slug,
-			array( $this, 'display_plugin_admin_page' )
+			array( $this, 'display_plugin_admin_page' ),
+			'dashicons-cart'
 		);
 		
 		// Change the first option to text "Settings" instead of "Stripe Checkout"
