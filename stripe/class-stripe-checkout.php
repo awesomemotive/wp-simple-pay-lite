@@ -170,7 +170,7 @@ class Stripe_Checkout {
 		wp_register_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array(), $this->version );
 		
 		
-		if( sc_has_shortcode() && empty( $sc_options['disable_css'] ) ) {
+		if( sc_has_shortcode() ) {
 			// Load Stripe CSS for button
 			wp_enqueue_style( 'stripe-checkout-css' );
 		}

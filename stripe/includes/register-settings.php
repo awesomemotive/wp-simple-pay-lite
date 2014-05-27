@@ -107,7 +107,7 @@ function sc_register_settings() {
 			'disable_css' => array(
 				'id'   => 'disable_css',
 				'name' => __( 'Disable CSS File Reference', 'sc' ),
-				'desc' => __( "Advanced. Will prevent the plugin's CSS and Stripe CSS files from being loaded.", 'sc' ),
+				'desc' => __( "Advanced. Will prevent the plugin's CSS file from being loaded.", 'sc' ),
 				'type' => 'checkbox'
 			)
 		),
