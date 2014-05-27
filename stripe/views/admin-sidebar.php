@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container">
 	<div class="sidebar-content">
 		<p>
-			<?php _e( 'Need some help with something? Have a feature request?', 'sc' ); ?>
+			<?php _e( 'Need some help? Have a feature request?', 'sc' ); ?>
 		</p>
 		<p>
 			<a href="https://wordpress.org/support/plugin/stripe" target="_blank">
