@@ -181,8 +181,6 @@ function sc_help_url( $tab = '', $string = '' ) {
 		$string = __( 'Help', 'sc' );
 	}
 	
-	//$args = apply_filters( 'sc_admin_help_query_args', $args );
-	
 	return '<a href="' . add_query_arg( $args, admin_url( 'admin.php' ) ) . '">' . $string . '</a>';
 }
 
@@ -217,13 +215,9 @@ function sc_add_shipping_meta( $meta ) {
 		// Add Shipping Name as an item
 		$meta['Shipping Name']    = $_POST['sc-shipping-name'];
 		
-		// Combine Address into one item to display
+		// Show address on two lines: Address 1 and Address 2 in Stripe dashboard -> payments 
 		$meta['Shipping Address 1'] = $_POST['sc-shipping-address'];
 		$meta['Shipping Address 2'] = $_POST['sc-shipping-zip'] . ', ' . $_POST['sc-shipping-city'] . ', ' . $_POST['sc-shipping-state'] . ', ' . $_POST['sc-shipping-country'];
-		//$meta['Shipping City']    = $_POST['sc-shipping-city'];
-		//$meta['Shipping State']   = $_POST['sc-shipping-state'];
-		//$meta['Shipping Zip']     = $_POST['sc-shipping-zip'];
-		//$meta['Shipping Country'] = $_POST['sc-shipping-country'];
 	}
 	
 	return $meta;

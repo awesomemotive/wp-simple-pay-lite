@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Admin helper functions to get the base plugin tab and help tab set
+ * 
+ * @since 1.1.1
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /* 
  * Get Admin Tabs and label
  * 
@@ -11,7 +22,6 @@
  * 
  * @return array
  */
-
 function sc_get_admin_tabs() {
 	
 	$tabs = array();

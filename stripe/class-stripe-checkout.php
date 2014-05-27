@@ -105,11 +105,13 @@ class Stripe_Checkout {
 		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
 	}
 	
-	
+	/**
+	 * Function to smoothly upgrade from version 1.1.0 to 1.1.1 of the plugin
+	 * 
+	 * @since 1.1.1
+	 */
 	function upgrade_plugin() {
 
-		//require_once( 'includes/upgrade.php' );
-		
 		$keys_options = get_option( 'sc_settings_general' );
 	
 		// Check if test mode was enabled
@@ -135,11 +137,20 @@ class Stripe_Checkout {
 		add_option( 'sc_upgrade_has_run', 1 );
 	}
 	
-	
+	/**
+	 * Set the title of the 'Stripe Keys' tab
+	 * 
+	 * @since 1.1.1
+	 */
 	function sc_settings_keys_title( $title ) {
 		return __( 'Stripe Keys', 'sc' );
 	}
 	
+	/**
+	 * Set the title of the 'Default Settings' tab
+	 * 
+	 * @since 1.1.1
+	 */
 	function sc_settings_default_title( $title ) {
 		return __( 'Default Settings', 'sc' );
 	}
@@ -176,18 +187,12 @@ class Stripe_Checkout {
 	 */
 	function enqueue_public_scripts() {
 		
-		// Register Stripe Checkout
-		wp_register_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true );
-		
-		// Register public script
+		// Register Stripe Checkout and public script
+		wp_register_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true ); 
 		wp_register_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), $this->version, true );
 		
-		
 		if( sc_has_shortcode() ) {
-			//wp_enqueue_script( 'jquery' );
-		
 			wp_enqueue_script( 'stripe-checkout' );
-		
 			wp_enqueue_script( $this->plugin_slug . '-public' );
 		}
 		
@@ -208,6 +213,12 @@ class Stripe_Checkout {
 		$script_vars = array();
 	}
 	
+	
+	/**
+	 * Load admin scripts
+	 * 
+	 * @since 1.1.1
+	 */
 	public function enqueue_admin_scripts() {
 		
 		if( $this->viewing_this_plugin() ) {
@@ -377,10 +388,20 @@ class Stripe_Checkout {
 		);
 	}
 	
+	/**
+	 * Function to handle the output of the Add Ons submenu
+	 * 
+	 * @since 1.1.1
+	 */
 	function display_admin_addons_page() {
-		echo 'hello world';
+		
 	}
 	
+	/**
+	 * Function to handle the output of the Help submenu
+	 * 
+	 * @since 1.1.1
+	 */
 	function display_admin_help_page() {
 		include_once( 'views/admin-help.php' );
 	}
@@ -414,19 +435,12 @@ class Stripe_Checkout {
 		// Include shortcode functions
 		include_once( 'includes/shortcodes.php' );
 		
-		// Hooks examples
-		//include_once( 'includes/hooks-examples.php' );
-		//
-		
 		include_once( 'includes/register-settings.php' );
 		
 		//$sc_options = sc_get_settings();
 		sc_set_defaults();
 		
 		$sc_options = sc_get_settings();
-
-		// Upgrade
-		
 	}
 
 	/**
@@ -465,20 +479,12 @@ class Stripe_Checkout {
 	 * @return  bool
 	 */
 	private function viewing_this_plugin() {
-		/*if ( ! isset( $this->plugin_screen_hook_suffix ) )
-			return false;*/
 
 		$screen = get_current_screen();
-
-		/*if ( $screen->id == $this->plugin_screen_hook_suffix )
-			return true;
-		else
-			return false;*/
 		
 		if( in_array( $screen->id, $this->plugin_screen_hook_suffix ) ) {
 			return true;
 		}
-		
 		
 		return false;
 	}

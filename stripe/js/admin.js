@@ -8,7 +8,6 @@
 		
 		$("[name*='enable_live_key']").bootstrapSwitch();
 		
-		
 	});
 }(jQuery));
 

@@ -22,9 +22,7 @@ function sc_register_settings() {
 	
 	global $sc_options;
 	
-	//if( ! is_array( $sc_options ) ) {
-		$sc_options = array();
-	//}
+	$sc_options = array();
 	
 	$sc_settings = array(
 
@@ -152,7 +150,6 @@ function sc_register_settings() {
 	$sc_settings_title = '';
 	
 	foreach( $sc_settings as $setting => $option ) {
-		//echo '<h1>Setting: ' . $setting . '</h1>'; // $setting = the main key 
 		
 		if( false == get_option( 'sc_settings_' . $setting ) ) {
 			add_option( 'sc_settings_' . $setting );
@@ -181,9 +178,6 @@ function sc_register_settings() {
 		$sc_options = array_merge( $sc_options, is_array( get_option( 'sc_settings_' . $setting ) ) ? get_option( 'sc_settings_' . $setting ) : array() );
 	}
 	
-	//echo '<pre>Master Settings<br>' . print_r( $sc_options, true ) . '</pre>';
-	
-	//delete_option( 'sc_settings_master' );
 	update_option( 'sc_settings_master', $sc_options );
 	
 }
@@ -315,7 +309,6 @@ function sc_license_callback( $args ) {
  * 
  */
 function sc_settings_sanitize( $input ) {
-	//add_settings_error( 'sc-notices', '', '', '' );
 	return $input;
 }
 
@@ -352,8 +345,6 @@ function sc_get_settings() {
 	
 	if( isset( $sc_options['currency'] ) ) {
 		$sc_options['currency'] = strtoupper( $sc_options['currency'] );
-		
-		//update_option( 'sc_settings_master', $sc_options );
 	}
 	
 	return $sc_options;

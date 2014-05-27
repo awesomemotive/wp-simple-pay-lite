@@ -3,9 +3,6 @@
 /**
  * Represents the view for the administration dashboard.
  *
- * This includes the header, options, and other information that should provide
- * The User Interface to the end user.
- *
  * @package    SC
  * @subpackage Views
  * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorsceb@gmail.com>
@@ -16,19 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
 include_once( 'admin-helper-functions.php' );
-
 
 global $sc_options;
 $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
-
 
 ?>
 
 <div class="wrap">
 	<?php settings_errors(); ?>
-	
 	<div id="sc-settings">
 		<div id="sc-settings-content">
 
@@ -49,10 +42,8 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 			</h2>
 
 			<div id="tab_container">
-
 				<form method="post" action="options.php">
 					<?php
-					
 						$sc_tabs = sc_get_admin_tabs();
 						
 						foreach( $sc_tabs as $key => $value ) {
@@ -68,8 +59,6 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 								echo $submit_button;
 							}
 						}
-
-						
 					?>
 				</form>
 			</div><!-- #tab_container-->
@@ -78,6 +67,5 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 		<div id="sc-settings-sidebar">
 			<?php include( 'admin-sidebar.php' ); ?>
 		</div>
-
 	</div>
 </div><!-- .wrap -->

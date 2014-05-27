@@ -3,9 +3,6 @@
 /**
  * Represents the view for the administration Help dashboard.
  *
- * This includes the header, options, and other information that should provide
- * The User Interface to the end user.
- *
  * @package    SC
  * @subpackage Views
  * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorsceb@gmail.com>

@@ -100,7 +100,6 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	
 	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
-	// filter out HTML from $content?
 	
 	$content = parse_shortcode_content( $content );
 	
@@ -123,8 +122,6 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			      <input type="hidden" name="sc-shipping-address" class="sc-shipping-address" value="" />
 				  <input type="hidden" name="sc-shipping-city" class="sc-shipping-city" value="" />';
 	}
-	
-	// Add filter HERE to allow for custom hidden fields to be added
 	
 	$html .= '<button class="sc_checkout stripe-button-el"><span>';
 	$html .= $payment_button_label;
@@ -163,14 +160,10 @@ function sc_stripe_total( $attr ) {
 				), $attr, 'stripe_total' ) );
 	
 	if( $sc_script_options['script']['currency'] == 'USD' ) {
-		
 		$html  = '<div class="sc-form-group">';
 		$html .= $label . ' $<span class="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span>';
 		$html .= '</div>';
-	
-		//return $label . '$' . $sc_script_options['script']['amount'] . '<br>';
 	} else {
-		
 		$html  = '<div class="sc-form-group">';
 		$html .= $label . ' <span class="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'];
 		$html .= '</div>';
@@ -189,18 +182,18 @@ add_shortcode( 'stripe_total', 'sc_stripe_total' );
  */
 function parse_shortcode_content( $content ) { 
  
-    /* Parse nested shortcodes and add formatting. */ 
+    // Parse nested shortcodes and add formatting.
     $content = trim( wpautop( do_shortcode( $content ) ) ); 
  
-    /* Remove '</p>' from the start of the string. */ 
+    // Remove '</p>' from the start of the string.
     if ( substr( $content, 0, 4 ) == '</p>' ) 
         $content = substr( $content, 4 ); 
  
-    /* Remove '<p>' from the end of the string. */ 
+    // Remove '<p>' from the end of the string.
     if ( substr( $content, -3, 3 ) == '<p>' ) 
         $content = substr( $content, 0, -3 ); 
  
-    /* Remove any instances of '<p></p>'. */ 
+    // Remove any instances of '<p></p>'.
     $content = str_replace( array( '<p></p>' ), '', $content ); 
  
     return $content; 

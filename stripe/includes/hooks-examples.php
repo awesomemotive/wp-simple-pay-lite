@@ -8,6 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// TODO 
+// Update this file with more robust examples from the 1.1.1 code?
+// Keep in mind we also have a list of hooks in an excel sheet, so maybe we just wait until a help website is up for it?
+
 /**
  * Changes the HTML output of the payment details
  * 

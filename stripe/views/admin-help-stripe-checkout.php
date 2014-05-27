@@ -1,3 +1,18 @@
+<?php
+
+/**
+ * Admin help tab display
+ * 
+ * @since 1.1.1
+ */
+
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 
 <h3><?php _e( 'Stripe Checkout Shortcode Help', 'sc' ); ?></h3>
 
