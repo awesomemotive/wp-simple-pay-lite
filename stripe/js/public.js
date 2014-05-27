@@ -7,55 +7,48 @@
 		// Pretty sure we don't need to set the handler variables as global since we usually just modify
 		// the sc_script variables. As long as we set the current form and dataAttr globally I think we will be okay
 		window.stripeCheckout = {
-			// Handler variables
-			/*
-			key:             sc_script,
-			image:           '',
-			tokenFunctions:  new Array(),
-			name:            '',
-			description:     '',
-			amount:          '',
-			currency:        '',
-			panelLabel:      '',
-			billingAddress:  '',
-			shippingAddress: '',
-			allowRememberMe: '',
-			email:           '',
-			*/
 			// Functions to run
 			functions:       new Array(),
 			// Form Details
 			currentForm:     '',
-			dataAttr:        ''
+			dataAttr:        '',
 			// Validation functions
-			//validateFunctions: new Array()
+			validateRules:   {}
 		};
 		
-			/*
-			 * Call on click handler when button is clicked then use amount (need to sanitize first) and pass to the 
-			 * Stripe Checkout handler
-			 */	
-			$( 'button.sc_checkout' ).closest( 'form' ).submit( function( event ) {
-				
-				// Set our currentForm
-				stripeCheckout.currentForm = $(this);
-				
-				event.preventDefault();
-				
-				// Set our dataAttr to this current form
-				stripeCheckout.dataAttr = $(this).attr('data-sc-id');
-				
-				
+		/*
+		 * Call on click handler when button is clicked then use amount (need to sanitize first) and pass to the 
+		 * Stripe Checkout handler
+		 */	
+		$( 'button.sc_checkout' ).closest( 'form' ).submit( function( event ) {
+
+			// Set our currentForm
+			stripeCheckout.currentForm = $(this);
+
+			event.preventDefault();
+
+			// Set our dataAttr to this current form
+			stripeCheckout.dataAttr = $(this).attr('data-sc-id');
+
+			stripeCheckout.currentForm.validate({
+				rules: stripeCheckout.validateRules
+			});		
+
+			if( ! stripeCheckout.currentForm.valid() ) {
+				// Cancel original form submit.
+				return false;
+			} else {
+
 				// Run all functions before processing the handler
 				for( var i = 0; i < stripeCheckout.functions.length; i++ ) {
 					stripeCheckout.functions[i]();
 				}
-				
+
 				var handler = StripeCheckout.configure({
 					key: sc_script[stripeCheckout.dataAttr].key,
 					image: ( sc_script[stripeCheckout.dataAttr].image != -1 ? sc_script[stripeCheckout.dataAttr].image : '' ),
 					token: function(token, args) {
-					  
+
 						// Set the values on our hidden elements to pass when submitting the form for payment
 						stripeCheckout.currentForm.find('.sc_stripeToken').val( token.id );
 						stripeCheckout.currentForm.find('.sc_amount').val( sc_script[stripeCheckout.dataAttr].amount );
@@ -70,14 +63,14 @@
 							stripeCheckout.currentForm.find('.sc-shipping-address').val(args.shipping_address_line1);
 							stripeCheckout.currentForm.find('.sc-shipping-city').val(args.shipping_address_city);
 						}
-						
+
 						//Unbind right before submitting so we don't get stuck in a loop
 						stripeCheckout.currentForm.unbind('submit');
 
 						stripeCheckout.currentForm.submit();
 					}
 				 });
-				 
+
 				 handler.open({
 					 name: ( sc_script[stripeCheckout.dataAttr].name != -1 ? sc_script[stripeCheckout.dataAttr].name : '' ),
 					 description: ( sc_script[stripeCheckout.dataAttr].description != -1 ? sc_script[stripeCheckout.dataAttr].description : '' ),
@@ -89,9 +82,7 @@
 					 allowRememberMe: ( sc_script[stripeCheckout.dataAttr].allowRememberMe == 1 || sc_script[stripeCheckout.dataAttr].allowRememberMe == 'true' ?  true : false ),
 					 email: ( sc_script[stripeCheckout.dataAttr].email != -1 ?  sc_script[stripeCheckout.dataAttr].email : '' )
 				 });
-				 
-				 event.preventDefault();
-
-			});
+			}
+		});
 	});
 }(jQuery));
