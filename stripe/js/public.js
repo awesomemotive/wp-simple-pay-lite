@@ -9,29 +9,10 @@
 
 				// To proceed with form submit.
 				var currentForm = $( this );
-				console.log( 'form to submit', currentForm );
-				
-				
-				console.log( 'Button Clicked - called from SC');
 				
 				event.preventDefault();
 				
 				var dataAttr = $(this).attr( 'data-sc-id' );
-				
-				console.log( 'Data: ', dataAttr );
-				
-				// Show options passed
-				console.log( 'key: ', sc_script[dataAttr].key );
-				console.log( 'image: ', sc_script[dataAttr].image );
-				console.log( 'name: ', sc_script[dataAttr].name );
-				console.log( 'description: ', sc_script[dataAttr].description );
-				console.log( 'amount: ', sc_script[dataAttr].amount );
-				console.log( 'currency: ', sc_script[dataAttr].currency );
-				console.log( 'panelLabel: ', sc_script[dataAttr].panelLabel );
-				console.log( 'billingAddress: ', sc_script[dataAttr].billingAddress );
-				console.log( 'shippingAddress: ', sc_script[dataAttr].shippingAddress );
-				console.log( 'allowRememberMe: ', sc_script[dataAttr].allowRememberMe );
-				console.log( 'email', sc_script[dataAttr].email );
 				
 				var handler = StripeCheckout.configure({
 					key: sc_script[dataAttr].key,
