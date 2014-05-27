@@ -25,7 +25,7 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'base';
 	<div id="sc-settings">
 		<div id="sc-settings-content">
 
-			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+			<h2><?php echo Stripe_Checkout::get_plugin_title() . ' ' . esc_html( get_admin_page_title() ); ?></h2>
 			
 			<h2 class="nav-tab-wrapper">
 				<?php
