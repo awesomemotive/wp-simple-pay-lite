@@ -31,44 +31,25 @@
 			//validateFunctions: new Array()
 		};
 		
-		//stripeCheckout.functions.push( function() {
-			//alert( 'Hello World #1' );
-		//});
-		
-		
-		//alert( stripeHandlerParams.key );
 			/*
 			 * Call on click handler when button is clicked then use amount (need to sanitize first) and pass to the 
 			 * Stripe Checkout handler
 			 */	
 			$( 'button.sc_checkout' ).closest( 'form' ).submit( function( event ) {
 				
-
-				
-				// To proceed with form submit.
-				//var currentForm = $( this );
-				
+				// Set our currentForm
 				stripeCheckout.currentForm = $(this);
 				
 				event.preventDefault();
 				
-				//var dataAttr = $(this).attr( 'data-sc-id' );
-				
+				// Set our dataAttr to this current form
 				stripeCheckout.dataAttr = $(this).attr('data-sc-id');
 				
 				
-				/*for( var i = 0; i < stripeCheckout.validateFunctions.length; i++ ) {
-					if( stripeCheckout.validateFunctions[i]() == false ) {
-						return false;
-					}
-				}*/
-				
-				
+				// Run all functions before processing the handler
 				for( var i = 0; i < stripeCheckout.functions.length; i++ ) {
 					stripeCheckout.functions[i]();
 				}
-				
-				//return false;
 				
 				var handler = StripeCheckout.configure({
 					key: sc_script[stripeCheckout.dataAttr].key,
