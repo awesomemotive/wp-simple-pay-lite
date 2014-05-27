@@ -29,6 +29,8 @@
 
 			// Set our dataAttr to this current form
 			stripeCheckout.dataAttr = $(this).attr('data-sc-id');
+			
+			console.log( 'stripeCheckout.dataAttr: ', stripeCheckout.dataAttr );
 
 			stripeCheckout.currentForm.validate({
 				rules: stripeCheckout.validateRules
@@ -43,6 +45,20 @@
 				for( var i = 0; i < stripeCheckout.functions.length; i++ ) {
 					stripeCheckout.functions[i]();
 				}
+				
+				// Show options passed
+ 				console.log( 'key[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].key );
+ 				console.log( 'image[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].image );
+ 				console.log( 'name[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].name );
+ 				console.log( 'description[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].description );
+ 				console.log( 'amount[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].amount );
+ 				console.log( 'currency[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].currency );
+ 				console.log( 'panelLabel[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].panelLabel );
+ 				console.log( 'billingAddress[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].billingAddress );
+ 				console.log( 'shippingAddress[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].shippingAddress );
+ 				console.log( 'allowRememberMe[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].allowRememberMe );
+				console.log( 'email[' + stripeCheckout.dataAttr + ']', sc_script[stripeCheckout.dataAttr].email );
+
 
 				var handler = StripeCheckout.configure({
 					key: sc_script[stripeCheckout.dataAttr].key,
