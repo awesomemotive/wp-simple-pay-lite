@@ -103,6 +103,12 @@ function sc_register_settings() {
 				'desc' => __( 'Adds a "Remember Me" option to the checkout form to allow the user to store their credit card for future use with other sites using Stripe. ', 'sc' ) .
 					sprintf( '<a href="%s" target="_blank">%s</a>', 'https://stripe.com/checkout/info', __('See how it works', 'sc' ) ) . '.',
 				'type' => 'checkbox'
+			),
+			'disable_css' => array(
+				'id'   => 'disable_css',
+				'name' => __( 'Disable CSS File Reference', 'sc' ),
+				'desc' => __( "Advanced. Will prevent the plugin's CSS and Stripe CSS files from being loaded.", 'sc' ),
+				'type' => 'checkbox'
 			)
 		),
 		

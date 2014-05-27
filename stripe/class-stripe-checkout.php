@@ -161,6 +161,7 @@ class Stripe_Checkout {
 	 * @since 1.0.0
 	 */
 	function enqueue_public_styles() {
+		global $sc_options;
 		
 		// Register Stripe styles
 		wp_register_style( 'stripe-checkout-css', 'https://checkout.stripe.com/v3/checkout/button.css', array(), null );
@@ -169,13 +170,13 @@ class Stripe_Checkout {
 		wp_register_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array(), $this->version );
 		
 		
-		if( sc_has_shortcode() ) {
+		if( sc_has_shortcode() && empty( $sc_options['disable_css'] ) ) {
 			// Load Stripe CSS for button
 			wp_enqueue_style( 'stripe-checkout-css' );
 		}
 		
 		// Only load after the user has clicked to pay
-		if( sc_has_shortcode() || isset( $_GET['payment'] ) ) {
+		if( ( sc_has_shortcode() || isset( $_GET['payment'] ) ) && empty( $sc_options['disable_css'] ) ) {
 			wp_enqueue_style( $this->plugin_slug . '-public' );
 		}
 	}
