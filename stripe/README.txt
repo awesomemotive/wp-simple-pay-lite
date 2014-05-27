@@ -150,19 +150,12 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 = 1.1.1 =
 
-* Moved admin settings from a submenu item to a main menu item.
-* Updated Admin UI to use tabs.
-* Admin help moved to it's own section.
-* Added default settings options.
-* Added a lot of filters and hooks.
-* New UI switch for changing between Live and Test modes.
+* Improved admin user interface (tabs, help, live/test switch, etc).
 * Added prefill_email shortcode attribute.
-* CSS ad JS no longer load on pages unless a button is added to it.
-* Moved from using the simple checkout to using the customized version from Stripe to allow for more flexibility.
-* Updated to current version of Stripe library.
-* Various bug fixes.
-* If shipping address is enabled, shipping fields are now stored in payment meta data.
-
+* If shipping address is enabled, shipping fields are now stored in payment meta data as Stripe doesn't store natively.
+* Scripts and CSS no longer load on pages unless a Stripe checkout form exists on it.
+* Updated Stripe PHP library to 1.14.1.
+* Added many filters and hooks for extensibility.
 
 = 1.1.0 =
 

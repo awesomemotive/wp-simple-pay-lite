@@ -106,8 +106,8 @@ function sc_register_settings() {
 			),
 			'disable_css' => array(
 				'id'   => 'disable_css',
-				'name' => __( 'Disable CSS File Reference', 'sc' ),
-				'desc' => __( "Advanced. Will prevent the plugin's CSS file from being loaded.", 'sc' ),
+				'name' => __( 'Disable Form CSS', 'sc' ),
+				'desc' => __( 'Disable the plugin from ouputting the default form CSS. Also disables for all add-ons.', 'sc' ),
 				'type' => 'checkbox'
 			)
 		),

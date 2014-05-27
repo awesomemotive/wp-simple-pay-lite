@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<h3><?php _e( 'Stripe Checkout Shortcode Help', 'sc' ); ?></h3>
+<h3><?php echo Stripe_Checkout::get_plugin_title() . ' ' . __( 'Shortcodes', 'sc' ); ?></h3>
 
 <p>
 	<?php _e( 'Use the shortcode', 'sc' ); ?> <code>[stripe]</code> <?php _e( 'to display the Stripe Checkout button within your content.', 'sc' ); ?>
