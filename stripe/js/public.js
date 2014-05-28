@@ -31,7 +31,13 @@
 			stripeCheckout.dataAttr = $(this).attr('data-sc-id');
 			
 			console.log( 'stripeCheckout.dataAttr: ', stripeCheckout.dataAttr );
-
+			
+			// Run all functions before processing the handler
+			for( var i = 0; i < stripeCheckout.functions.length; i++ ) {
+				stripeCheckout.functions[i]();
+			}
+			
+			
 			stripeCheckout.currentForm.validate({
 				rules: stripeCheckout.validateRules
 			});		
@@ -41,10 +47,7 @@
 				return false;
 			} else {
 
-				// Run all functions before processing the handler
-				for( var i = 0; i < stripeCheckout.functions.length; i++ ) {
-					stripeCheckout.functions[i]();
-				}
+				
 				
 				// Show options passed
  				console.log( 'key[' + stripeCheckout.dataAttr + ']: ', sc_script[stripeCheckout.dataAttr].key );
