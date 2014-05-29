@@ -2,10 +2,7 @@
 	"use strict";
 	$(function () {
 		
-		
-		// TODO
-		// Pretty sure we don't need to set the handler variables as global since we usually just modify
-		// the sc_script variables. As long as we set the current form and dataAttr globally I think we will be okay
+		// Set a global variable so other scripts can hook in if needed
 		window.stripeCheckout = {
 			// Functions to run
 			functions:       new Array(),
@@ -30,22 +27,21 @@
 			// Set our dataAttr to this current form
 			stripeCheckout.dataAttr = $(this).attr('data-sc-id');
 			
-			console.log( 'stripeCheckout.dataAttr: ', stripeCheckout.dataAttr );
-			
 			// Run all functions before processing the handler
 			for( var i = 0; i < stripeCheckout.functions.length; i++ ) {
 				stripeCheckout.functions[i]();
 			}
 			
-			
-			stripeCheckout.currentForm.validate({
-				rules: stripeCheckout.validateRules
-			});		
+			if( $.isFunction($.fn.validate) ) {
+				stripeCheckout.currentForm.validate({
+					rules: stripeCheckout.validateRules
+				});
 
-			if( ! stripeCheckout.currentForm.valid() ) {
-				// Cancel original form submit.
-				return false;
-			} else {
+				if( ! stripeCheckout.currentForm.valid() ) {
+					// Cancel original form submit.
+					return false;
+				} 
+			}
 
 				
 				
@@ -101,7 +97,6 @@
 					 allowRememberMe: ( sc_script[stripeCheckout.dataAttr].allowRememberMe == 1 || sc_script[stripeCheckout.dataAttr].allowRememberMe == 'true' ?  true : false ),
 					 email: ( sc_script[stripeCheckout.dataAttr].email != -1 ?  sc_script[stripeCheckout.dataAttr].email : '' )
 				 });
-			}
 		});
 	});
 }(jQuery));
