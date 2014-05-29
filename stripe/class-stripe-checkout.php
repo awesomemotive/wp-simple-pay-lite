@@ -192,6 +192,9 @@ class Stripe_Checkout {
 		wp_register_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true ); 
 		wp_register_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery' ), $this->version, true );
 		
+		// Register jQuery Validate
+		wp_register_script( 'sc-jquery-validate', plugins_url( 'js/jquery.validate.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
+		
 		if( sc_has_shortcode() ) {
 			wp_enqueue_script( 'stripe-checkout' );
 			wp_enqueue_script( $this->plugin_slug . '-public' );
