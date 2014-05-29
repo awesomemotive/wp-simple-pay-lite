@@ -318,6 +318,30 @@ function sc_settings_sanitize( $input ) {
 	return $input;
 }
 
+/**
+ * Radio button callback function
+ *
+ * @since 1.1.1
+ */
+function sc_radio_callback( $args ) {
+	global $sc_options;
+
+	foreach ( $args['options'] as $key => $option ) {
+		$checked = false;
+	
+
+		if ( isset( $sc_options[ $args['id'] ] ) && $sc_options[ $args['id'] ] == $key )
+			$checked = true;
+		elseif( isset( $args['std'] ) && $args['std'] == $key && ! isset( $sc_options[ $args['id'] ] ) )
+			$checked = true;
+
+		echo '<input name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" id="sc_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
+		echo '<label for="sc_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+	}
+
+	echo '<p class="description">' . $args['desc'] . '</p>';
+}
+
 /*
  *  Default callback function if correct one does not exist
  * 
