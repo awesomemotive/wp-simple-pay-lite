@@ -150,12 +150,13 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 = 1.1.1 =
 
-* Improved admin user interface (tabs, help, live/test switch, etc).
 * Added prefill_email shortcode attribute.
-* If shipping address is enabled, shipping fields are now stored in payment meta data as Stripe doesn't store natively.
-* Scripts and CSS no longer load on pages unless a Stripe checkout form exists on it.
-* Updated Stripe PHP library to 1.14.1.
+* Shipping name and address are now stored in payment metadata if enabled. Stripe does not store them natively.
+* Plugin and Stripe Scripts and CSS now load only on pages that include the shortcode.
+* Updated to most recent Stripe PHP library.
 * Added many filters and hooks for extensibility.
+* General usuability improvements to settings pages.
+* Added basic form CSS and the option to disable it.
 
 = 1.1.0 =
 
@@ -167,7 +168,7 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * Added shipping shortcode attribute.
 * Added enable_remember shortcode attribute.
 * Added success_redirect_url shortcode attribute.
-* Updated to most recent Stripe library.
+* Updated to most recent Stripe PHP library.
 * Added a couple of action and filter hooks.
 * Fixed bug where other instances of Stripe class were causing errors.
 * Removed a default string being added to customer description in Stripe dashboard.
