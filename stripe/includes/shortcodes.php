@@ -45,6 +45,10 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		$data_key = ( ! empty( $sc_options['test_publish_key'] ) ? $sc_options['test_publish_key'] : '' );
 	}
 	
+	if( empty( $data_key ) ) {
+		return '';
+	}
+	
 	if( ! empty( $prefill_email ) && $prefill_email !== 'false' ) {
 		// Get current logged in user email
 		if( is_user_logged_in() ) {
