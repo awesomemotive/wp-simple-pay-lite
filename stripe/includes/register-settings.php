@@ -329,7 +329,7 @@ function sc_missing_callback( $args ) {
 }
 
 /*
- *
+ * Set the default settings when first installed
  * 
  * @since 1.0.0
  * 
@@ -344,7 +344,11 @@ function sc_set_defaults() {
 	}
 }
 
-
+/*
+ * Update the global settings
+ * 
+ * @since 1.1.1
+ */
 function sc_get_settings() {
 	
 	$sc_options = get_option( 'sc_settings_master' );
