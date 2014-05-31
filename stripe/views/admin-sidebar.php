@@ -34,11 +34,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container">
 	<div class="sidebar-content">
 		<p>
-			<?php _e( 'We\'d love a super short review. Seriously, it means a lot.', 'sc' ); ?>
+			<?php _e( 'Now accepting 5-star reviews! It only takes seconds and means a lot.', 'sc' ); ?>
 		</p>
 
 		<a href="https://wordpress.org/support/view/plugin-reviews/stripe" class="button-primary" target="_blank">
-			<?php _e( 'Submit a review', 'sc' ); ?></a>
+			<?php _e( 'Rate this Plugin Now', 'sc' ); ?></a>
 	</div>
 </div>
 
