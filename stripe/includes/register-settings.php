@@ -117,7 +117,7 @@ function sc_register_settings() {
 			'enable_live_key' => array(
 				'id'   => 'enable_live_key',
 				'name' => __( 'Test or Live Mode', 'sc' ),
-				'desc' => __( '<br><em>Place Stripe in Test mode using your test API keys.</em>', 'sc' ),
+				'desc' => '<p class="description">' . __( 'Toggle between using your Test or Live API keys.', 'sc' ) . '</p>',
 				'type' => 'checkbox'
 			),
 			'test_secret_key' => array(
