@@ -158,7 +158,7 @@ function sc_convert_amount( $amount, $currency ) {
 		return $amount;
 	}
 	
-	return number_format( ( $amount / 100 ), 2 );
+	return number_format( ( $amount / 100 ), 2, '.', ',' );
 }
 
 /**

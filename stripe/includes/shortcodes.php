@@ -177,7 +177,7 @@ function sc_stripe_total( $attr ) {
 		$html .= '</div>';
 	} else {
 		$html  = '<div class="sc-form-group">';
-		$html .= $label . ' <span class="sc_total">' . $sc_script_options['script']['amount'] . '</span> ' . $sc_script_options['script']['currency'];
+		$html .= $label . ' <span class="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span> ' . $sc_script_options['script']['currency'];
 		$html .= '</div>';
 	}
 	
