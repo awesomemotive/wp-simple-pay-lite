@@ -170,15 +170,15 @@ class Stripe_Checkout {
 		wp_register_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array(), $this->version );
 		
 		
-		if( sc_has_shortcode() ) {
+		//if( sc_has_shortcode() ) {
 			// Load Stripe CSS for button
 			wp_enqueue_style( 'stripe-checkout-css' );
-		}
+		//}
 		
 		// Only load after the user has clicked to pay
-		if( ( sc_has_shortcode() || isset( $_GET['payment'] ) ) && empty( $sc_options['disable_css'] ) ) {
+		//if( ( sc_has_shortcode() || isset( $_GET['payment'] ) ) && empty( $sc_options['disable_css'] ) ) {
 			wp_enqueue_style( $this->plugin_slug . '-public' );
-		}
+		//}
 	}
 	
 	/**
@@ -195,10 +195,10 @@ class Stripe_Checkout {
 		// Register jQuery Validate
 		wp_register_script( 'sc-jquery-validate', plugins_url( 'js/jquery.validate.min.js', __FILE__ ), array( 'jquery' ), $this->version, true );
 		
-		if( sc_has_shortcode() ) {
+		//if( sc_has_shortcode() ) {
 			wp_enqueue_script( 'stripe-checkout' );
 			wp_enqueue_script( $this->plugin_slug . '-public' );
-		}
+		//}
 		
 	}
 	
