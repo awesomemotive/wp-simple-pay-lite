@@ -5,10 +5,7 @@
 		$.fn.bootstrapSwitch.defaults.offColor = 'warning';
 		$.fn.bootstrapSwitch.defaults.onText = 'Live';
 		$.fn.bootstrapSwitch.defaults.offText = 'Test';
-		
-		$("[name*='enable_live_key']").bootstrapSwitch();
-		
+
+        $('input[name="sc_settings_keys[enable_live_key]"]').bootstrapSwitch();
 	});
 }(jQuery));
-
-
