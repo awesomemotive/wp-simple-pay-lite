@@ -173,11 +173,11 @@ function sc_stripe_total( $attr ) {
 	
 	if( $sc_script_options['script']['currency'] == 'USD' ) {
 		$html  = '<div class="sc-form-group">';
-		$html .= $label . ' $<span class="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span>';
+		$html .= $label . ' $<span class="sc-total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span>';
 		$html .= '</div>';
 	} else {
 		$html  = '<div class="sc-form-group">';
-		$html .= $label . ' <span class="sc_total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span> ' . $sc_script_options['script']['currency'];
+		$html .= $label . ' <span class="sc-total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span> ' . $sc_script_options['script']['currency'];
 		$html .= '</div>';
 	}
 	
