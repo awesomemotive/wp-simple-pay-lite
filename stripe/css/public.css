@@ -58,3 +58,8 @@
 	background-color: #eeeeee;
 	opacity: 1;
 }
+
+.sc-form-group textarea.sc-form-control {
+    height: auto;
+    width: 100%;
+}
