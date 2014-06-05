@@ -225,6 +225,14 @@ function sc_add_shipping_meta( $meta ) {
 add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
 
 
+function sc_activate_license() {
+	echo 'Success';
+	
+	die();
+}
+add_action( 'wp_ajax_sc_activate_license', 'sc_activate_license' );
+
+
 /*function sc_license_settings() {
 	
 	$settings['licenses']['sc_default'] = array(
