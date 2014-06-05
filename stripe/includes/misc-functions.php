@@ -243,8 +243,10 @@ function sc_activate_license() {
 	if( is_wp_error( $response ) )
 	{
 		echo 'ERR#002 - Error Activating License ( ' . $response->get_error_message() . ' )';
+		
+		die();
 	}
-
+	
 	$activate_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 	echo $activate_data->license;
