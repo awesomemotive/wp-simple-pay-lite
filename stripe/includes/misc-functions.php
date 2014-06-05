@@ -226,7 +226,11 @@ add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
 
 
 function sc_activate_license() {
-	echo 'Success';
+	
+	$license = $_POST['license'];
+	$item    = $_POST['item'];
+
+	echo "Licesne: $license, Item: $item";
 	
 	die();
 }

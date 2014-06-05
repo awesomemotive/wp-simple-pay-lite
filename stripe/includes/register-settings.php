@@ -207,7 +207,8 @@ function sc_get_settings_field_args( $option, $section ) {
 		'section' => $section,
 		'size'    => isset( $option['size'] ) ? $option['size'] : null,
 		'options' => isset( $option['options'] ) ? $option['options'] : '',
-		'std'     => isset( $option['std'] ) ? $option['std'] : ''
+		'std'     => isset( $option['std'] ) ? $option['std'] : '',
+		'product' => isset( $option['product'] ) ? $option['product'] : ''
 	);
 
 	// Link label to input using 'label_for' argument if text, textarea, password, select, or variations of.
@@ -298,13 +299,21 @@ function sc_license_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 	
+	$item = '';
+	
 	$html  = '<div class="license-wrap">';
 	
 	$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
 	$html .= "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
 	
 	// Add button on side of input
-	$html .= '<button>Activate</button>';
+	$html .= '<button data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">Activate</button>';
+	
+	/*$button = '';
+	$button = apply_filters( 'sc_license_button', $button );*/
+	
+	//$html .= $button;
+	
 	// Render and style description text underneath if it exists.
 	if ( ! empty( $args['desc'] ) ) {
 		$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
