@@ -297,14 +297,21 @@ function sc_license_callback( $args ) {
 	} else {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
-
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
-	$html = "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
-
+	
+	$html  = '<div class="license-wrap">';
+	
+	$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
+	$html .= "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
+	
+	// Add button on side of input
+	$html .= '<button>Activate</button>';
 	// Render and style description text underneath if it exists.
-	if ( ! empty( $args['desc'] ) )
+	if ( ! empty( $args['desc'] ) ) {
 		$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
-
+	}
+	
+	$html .= '</div>';
+	
 	echo $html;
 }
 

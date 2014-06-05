@@ -72,4 +72,4 @@ function sc_license_tab( $tabs ) {
 	return $tabs;
 }
 add_filter( 'sc_admin_tabs', 'sc_license_tab' );
-	
+

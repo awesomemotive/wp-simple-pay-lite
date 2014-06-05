@@ -223,3 +223,25 @@ function sc_add_shipping_meta( $meta ) {
 	return $meta;
 }
 add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
+
+
+/*function sc_license_settings() {
+	
+	$settings['licenses']['sc_default'] = array(
+			'id'   => 'sc_default',
+			'name' => 'TODO: Filler text.',
+			'desc' => '<p class="description">' . __( 'TODO: More Filler Text', 'sc' ) . '</p>',
+			'type' => 'section'
+	);
+
+
+	return $settings;
+}
+add_filter( 'sc_settings', 'sc_license_settings' );
+
+
+function sc_settings_licenses_title( $title ) {
+	return __( 'Addon Licenses', 'sc' );
+}
+add_filter( 'sc_settings_licenses_title', 'sc_settings_licenses_title' );*/
+
