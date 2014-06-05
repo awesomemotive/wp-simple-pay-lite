@@ -306,8 +306,16 @@ function sc_license_callback( $args ) {
 	$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
 	$html .= "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
 	
+	
+	$licenses = get_option( 'sc_licenses' );
+	
+	
 	// Add button on side of input
-	$html .= '<button data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">Activate</button>';
+	if( ! empty( $licenses[ $args['product'] ] ) && $licenses[ $args['product'] ] == 'valid' ) {
+		$html .= '<button data-sc-action="deactivate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Deactivate', 'sc' ) . '</button>';
+	} else {
+		$html .= '<button data-sc-action="activate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
+	}
 	
 	/*$button = '';
 	$button = apply_filters( 'sc_license_button', $button );*/
@@ -320,6 +328,8 @@ function sc_license_callback( $args ) {
 	}
 	
 	$html .= '</div>';
+	
+	//$html = '<pre>' . print_r( $sc_licenses, true ) . '</pre>';
 	
 	echo $html;
 }

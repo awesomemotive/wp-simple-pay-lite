@@ -227,13 +227,18 @@ add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
 
 function sc_activate_license() {
 	
-	$license = $_POST['license'];
-	$item    = $_POST['item'];
+	//global $sc_licenses;
+	
+	$sc_licenses = get_option( 'sc_licenses' );
+	
+	$current_license = $_POST['license'];
+	$item            = $_POST['item'];
+	$action          = $_POST['sc_action'];
 	
 	// Do activation
 	$activate_params = array(
-		'edd_action' => 'activate_license',
-		'license'    => $license,
+		'edd_action' => $action,
+		'license'    => $current_license,
 		'item_name'  => urlencode( $item ),
 		'url' => home_url()
 	);
@@ -242,13 +247,23 @@ function sc_activate_license() {
 
 	if( is_wp_error( $response ) )
 	{
-		echo 'ERR#002 - Error Activating License ( ' . $response->get_error_message() . ' )';
+		echo 'ERROR';
 		
 		die();
 	}
 	
 	$activate_data = json_decode( wp_remote_retrieve_body( $response ) );
-
+	
+	if( $activate_data->license == 'valid' ) {
+		$sc_licenses[$item] = 'valid';
+	} else {
+		$sc_licenses[$item] = 'invalid';
+	}
+	
+	update_option( 'sc_licenses', $sc_licenses );
+	
+	//echo '<pre>' . print_r( $sc_licenses, true ) . '</pre>';
+	
 	echo $activate_data->license;
 	
 	

@@ -8,7 +8,9 @@
 
         $('input[name="sc_settings_keys[enable_live_key]"]').bootstrapSwitch();
 		
-		$('.license-wrap button').click(function(e) { 
+		$('.license-wrap button').on( 'click', function(e) { 
+			
+			var button = $(this);
 			
 			e.preventDefault();
 			
@@ -16,12 +18,21 @@
 			
 			var data = {
 				action: 'sc_activate_license',
-				license: $(this).parent().find('input[type="text"]').val(),
-				item: $(this).data('sc-item')
+				license: button.parent().find('input[type="text"]').val(),
+				item: button.attr('data-sc-item'),
+				sc_action: button.attr('data-sc-action')
 			}
 			
 			$.post( ajaxurl, data, function(response) {
 				console.log( 'Response from server: ', response );
+				
+				if( response == 'valid' ) {
+					button.html( 'Deactivate' );
+					button.attr('data-sc-action', 'deactivate_license');
+				} else if( response == 'deactivated' ) {
+					button.html( 'Activate' );
+					button.attr( 'data-sc-action', 'activate_license' );
+				}
 			});
 			
 		});
