@@ -52,6 +52,9 @@ class Stripe_Checkout {
 	 * @var      string
 	 */
 	protected $plugin_screen_hook_suffix = null;
+	
+	
+	protected $sc_edd_sl_store_url = 'http://eddsl.philsapps.com/';
 
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
@@ -284,6 +287,11 @@ class Stripe_Checkout {
 		// Plugin version
 		if ( ! defined( 'SC_PLUGIN_VERSION' ) ) {
 			define( 'SC_PLUGIN_VERSION', $this->version );
+		}
+		
+		// EDD SL Updater
+		if( ! defined( 'SC_EDD_SL_STORE_URL' ) ) {
+			define( 'SC_EDD_SL_STORE_URL', $this->sc_edd_sl_store_url );
 		}
 	}
 	

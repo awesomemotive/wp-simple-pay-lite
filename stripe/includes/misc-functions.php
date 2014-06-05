@@ -229,8 +229,29 @@ function sc_activate_license() {
 	
 	$license = $_POST['license'];
 	$item    = $_POST['item'];
+	
+	// Do activation
+	$activate_params = array(
+		'edd_action' => 'activate_license',
+		'license'    => $license,
+		'item_name'  => urlencode( $item ),
+		'url' => home_url()
+	);
 
-	echo "Licesne: $license, Item: $item";
+	$response = wp_remote_get( add_query_arg( $activate_params, SC_EDD_SL_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+	if( is_wp_error( $response ) )
+	{
+		echo 'ERR#002 - Error Activating License ( ' . $response->get_error_message() . ' )';
+	}
+
+	$activate_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+	echo $activate_data->license;
+	
+	
+
+	//echo "Licesne: $license, Item: $item";
 	
 	die();
 }
