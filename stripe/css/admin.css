@@ -112,6 +112,10 @@
 	color: #aaa6a9; 
 }
 
+.sc-spinner-wrap {  
+	display: none;
+}
+
 .sc-spinner {
 	float: none;
 	display: inline-block;

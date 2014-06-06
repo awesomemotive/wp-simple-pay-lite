@@ -317,7 +317,7 @@ function sc_license_callback( $args ) {
 		$html .= '<button data-sc-action="activate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
 	}
 	
-	$html .= '<span class="spinner sc-spinner"></span>';
+	$html .= '<span class="sc-spinner-wrap"><span class="spinner sc-spinner"></span></span>';
 	$html .= '<span class="sc-license-message"></span>';
 	
 	/*$button = '';
