@@ -307,3 +307,21 @@ function sc_license_settings( $settings ) {
 add_filter( 'sc_settings', 'sc_license_settings' );
 
 
+function sc_check_license( $license, $item ) {
+	
+	$check_params = array(
+		'edd_action' => 'check_license',
+		'license'    => $license,
+		'item_name'  => urlencode( $item ),
+		'url' => home_url()
+	);
+	
+	$response = wp_remote_get( add_query_arg( $check_params, SC_EDD_SL_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+	if( is_wp_error( $response ) )
+	{
+		return 'ERROR';
+	}
+	
+	return json_decode( wp_remote_retrieve_body( $response ) )->license;
+}
