@@ -292,12 +292,12 @@ function sc_activate_license() {
 add_action( 'wp_ajax_sc_activate_license', 'sc_activate_license' );
 
 
-/*function sc_license_settings() {
+function sc_license_settings( $settings ) {
 	
-	$settings['licenses']['sc_default'] = array(
-			'id'   => 'sc_default',
-			'name' => 'TODO: Filler text.',
-			'desc' => '<p class="description">' . __( 'TODO: More Filler Text', 'sc' ) . '</p>',
+	$settings['licenses']['note'] = array(
+			'id'   => 'note',
+			'name' => '',
+			'desc' => '<p class="description">' . __( 'To activate licenses for Stripe Checkout add-ons, you must first install and activate the chosen add-on. License key settings will then appear below.', 'sc' ) . '</p>',
 			'type' => 'section'
 	);
 
@@ -306,9 +306,4 @@ add_action( 'wp_ajax_sc_activate_license', 'sc_activate_license' );
 }
 add_filter( 'sc_settings', 'sc_license_settings' );
 
-
-function sc_settings_licenses_title( $title ) {
-	return __( 'Addon Licenses', 'sc' );
-}
-add_filter( 'sc_settings_licenses_title', 'sc_settings_licenses_title' );*/
 
