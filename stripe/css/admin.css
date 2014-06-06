@@ -94,3 +94,20 @@
 	font-size: 14px;
 }
 
+/* License Stuff */
+.sc-license-message { 
+	display: inline-block; 
+	margin-left: 7px;
+}
+
+.sc-valid { 
+	color: green; 
+}
+
+.sc-invalid { 
+	color: red; 
+}
+
+.sc-inactive { 
+	color: gray; 
+}
