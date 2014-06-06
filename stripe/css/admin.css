@@ -101,13 +101,20 @@
 }
 
 .sc-valid { 
-	color: green; 
+	color: #529943;
 }
 
 .sc-invalid { 
-	color: red; 
+	color: #f00; 
 }
 
 .sc-inactive { 
-	color: gray; 
+	color: #aaa6a9; 
+}
+
+.sc-spinner {
+	float: none;
+	display: inline-block;
+	margin-top: 4px;
+	vertical-align: top;
 }
