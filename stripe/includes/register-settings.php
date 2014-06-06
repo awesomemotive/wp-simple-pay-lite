@@ -320,16 +320,14 @@ function sc_license_callback( $args ) {
 	$license_class = '';
 	$valid_message = '';
 	
-	if( ! empty( $value ) ) {
-		$valid = sc_check_license( $value, $args['product'] );
-		
-		if( $valid == 'valid' ) {
-			$license_class = 'sc-valid';
-			$valid_message = __( 'License Valid', 'sc' );
-		} else if ( $valid == 'site_inactive' ) {
-			$license_class = 'sc-inactive';
-			$valid_message = __( 'License Inactive', 'sc' );
-		}
+	$valid = sc_check_license( $value, $args['product'] );
+
+	if( $valid == 'valid' ) {
+		$license_class = 'sc-valid';
+		$valid_message = __( 'License Valid', 'sc' );
+	} else {
+		$license_class = 'sc-inactive';
+		$valid_message = __( 'License Inactive', 'sc' );
 	}
 	
 	$html .= '<span class="sc-spinner-wrap"><span class="spinner sc-spinner"></span></span>';
