@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container">
 	<div class="sidebar-content">
 		<p>
-			<?php _e( 'Want to know when we add major features to Stripe Checkout?', 'sc' ); ?>
+			<?php _e( 'Want to be notified of major features or add-ons to Stripe Checkout?', 'sc' ); ?>
 		</p>
 
 		<form action="http://philderksen.us1.list-manage1.com/subscribe/post?u=7a94395392f63c258fe90f941&amp;id=e8bf1dff87" method="post" target="_blank" novalidate>
