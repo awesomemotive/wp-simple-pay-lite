@@ -20,7 +20,8 @@
 				action: 'sc_activate_license',
 				license: button.parent().find('input[type="text"]').val(),
 				item: button.attr('data-sc-item'),
-				sc_action: button.attr('data-sc-action')
+				sc_action: button.attr('data-sc-action'),
+				id: button.parent().find('input[type="text"]').attr('id')
 			}
 			
 			$.post( ajaxurl, data, function(response) {

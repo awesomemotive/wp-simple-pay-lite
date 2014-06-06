@@ -234,6 +234,15 @@ function sc_activate_license() {
 	$current_license = $_POST['license'];
 	$item            = $_POST['item'];
 	$action          = $_POST['sc_action'];
+	$id              = $_POST['id'];
+	
+	// Need to trim the id of the excess stuff so we can update our option later
+	$length = strpos( $id, ']' ) - strpos( $id, '[' );
+	$id = substr( $id, strpos( $id, '[' ) + 1, $length - 1 );
+	
+	//echo $id;
+	
+	//die();
 	
 	// Do activation
 	$activate_params = array(
@@ -256,6 +265,14 @@ function sc_activate_license() {
 	
 	if( $activate_data->license == 'valid' ) {
 		$sc_licenses[$item] = 'valid';
+		
+		$sc_settings_licenses = get_option( 'sc_settings_licenses' );
+		
+		$sc_settings_licenses[$id] = $current_license;
+		
+		update_option( 'sc_settings_licenses', $sc_settings_licenses );
+		
+		
 	} else {
 		$sc_licenses[$item] = 'invalid';
 	}
