@@ -8,17 +8,11 @@
 
         $('input[name="sc_settings_keys[enable_live_key]"]').bootstrapSwitch();
 		
-		//$('.sc-spinner').hide();
-		
-		$('.license-wrap button').on( 'click', function(e) { 
+		$('.license-wrap button').on( 'click', function(e) {
 			
 			var button = $(this);
 			
-			
-			
 			e.preventDefault();
-			
-			console.log( 'Button clicked' );
 			
 			if( button.parent().find('input[type="text"]').val().length < 1 ) {
 				button.html( 'Activate' );
@@ -36,7 +30,6 @@
 				}
 
 				$.post( ajaxurl, data, function(response) {
-					console.log( 'Response from server: ', response );
 
 					button.parent().find('.sc-spinner-wrap').hide();
 
