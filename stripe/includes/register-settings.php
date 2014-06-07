@@ -312,9 +312,11 @@ function sc_license_callback( $args ) {
 	
 	// Add button on side of input
 	if( ! empty( $licenses[ $args['product'] ] ) && $licenses[ $args['product'] ] == 'valid' && ! empty( $value ) ) {
-		$html .= '<button data-sc-action="deactivate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Deactivate', 'sc' ) . '</button>';
+		$html .= '<button class="button" data-sc-action="deactivate_license" data-sc-item="' .
+		         ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Deactivate', 'sc' ) . '</button>';
 	} else {
-		$html .= '<button data-sc-action="activate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
+		$html .= '<button class="button" data-sc-action="activate_license" data-sc-item="' .
+		         ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
 	}
 	
 	$license_class = '';
@@ -324,10 +326,10 @@ function sc_license_callback( $args ) {
 
 	if( $valid == 'valid' ) {
 		$license_class = 'sc-valid';
-		$valid_message = __( 'License Valid', 'sc' );
+		$valid_message = __( 'License is valid and active.', 'sc' );
 	} else {
 		$license_class = 'sc-inactive';
-		$valid_message = __( 'License Inactive', 'sc' );
+		$valid_message = __( 'License is inactive.', 'sc' );
 	}
 	
 	$html .= '<span class="sc-spinner-wrap"><span class="spinner sc-spinner"></span></span>';
