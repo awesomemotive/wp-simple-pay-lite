@@ -223,3 +223,105 @@ function sc_add_shipping_meta( $meta ) {
 	return $meta;
 }
 add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
+
+
+function sc_activate_license() {
+	
+	//global $sc_licenses;
+	
+	$sc_licenses = get_option( 'sc_licenses' );
+	
+	$current_license = $_POST['license'];
+	$item            = $_POST['item'];
+	$action          = $_POST['sc_action'];
+	$id              = $_POST['id'];
+	
+	// Need to trim the id of the excess stuff so we can update our option later
+	$length = strpos( $id, ']' ) - strpos( $id, '[' );
+	$id = substr( $id, strpos( $id, '[' ) + 1, $length - 1 );
+	
+	//echo $id;
+	
+	//die();
+	
+	// Do activation
+	$activate_params = array(
+		'edd_action' => $action,
+		'license'    => $current_license,
+		'item_name'  => urlencode( $item ),
+		'url' => home_url()
+	);
+
+	$response = wp_remote_get( add_query_arg( $activate_params, SC_EDD_SL_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+	if( is_wp_error( $response ) )
+	{
+		echo 'ERROR';
+		
+		die();
+	}
+	
+	$activate_data = json_decode( wp_remote_retrieve_body( $response ) );
+	
+	if( $activate_data->license == 'valid' ) {
+		$sc_licenses[$item] = 'valid';
+		
+		$sc_settings_licenses = get_option( 'sc_settings_licenses' );
+		
+		$sc_settings_licenses[$id] = $current_license;
+		
+		update_option( 'sc_settings_licenses', $sc_settings_licenses );
+		
+		
+	} else {
+		$sc_licenses[$item] = 'invalid';
+	}
+	
+	update_option( 'sc_licenses', $sc_licenses );
+	
+	//echo '<pre>' . print_r( $sc_licenses, true ) . '</pre>';
+	
+	echo $activate_data->license;
+	
+	
+
+	//echo "Licesne: $license, Item: $item";
+	
+	die();
+}
+add_action( 'wp_ajax_sc_activate_license', 'sc_activate_license' );
+
+
+function sc_license_settings( $settings ) {
+	
+	$settings['licenses']['note'] = array(
+			'id'   => 'note',
+			'name' => '',
+			'desc' => '<p class="description">' . __( 'To activate licenses for Stripe Checkout add-ons, you must first install and activate the chosen add-on. License key settings will then appear below.', 'sc' ) . '</p>',
+			'type' => 'section'
+	);
+
+
+	return $settings;
+}
+add_filter( 'sc_settings', 'sc_license_settings' );
+
+
+function sc_check_license( $license, $item ) {
+	
+	$check_params = array(
+		'edd_action' => 'check_license',
+		'license'    => $license,
+		'item_name'  => urlencode( $item ),
+		'url' => home_url()
+	);
+	
+	$response = wp_remote_get( add_query_arg( $check_params, SC_EDD_SL_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
+
+	if( is_wp_error( $response ) )
+	{
+		return 'ERROR';
+	}
+	
+	return json_decode( wp_remote_retrieve_body( $response ) )->license;
+}

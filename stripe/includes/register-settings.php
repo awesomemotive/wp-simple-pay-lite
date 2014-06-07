@@ -207,7 +207,8 @@ function sc_get_settings_field_args( $option, $section ) {
 		'section' => $section,
 		'size'    => isset( $option['size'] ) ? $option['size'] : null,
 		'options' => isset( $option['options'] ) ? $option['options'] : '',
-		'std'     => isset( $option['std'] ) ? $option['std'] : ''
+		'std'     => isset( $option['std'] ) ? $option['std'] : '',
+		'product' => isset( $option['product'] ) ? $option['product'] : ''
 	);
 
 	// Link label to input using 'label_for' argument if text, textarea, password, select, or variations of.
@@ -297,14 +298,55 @@ function sc_license_callback( $args ) {
 	} else {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
+	
+	$item = '';
+	
+	$html  = '<div class="license-wrap">';
+	
+	$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
+	$html .= "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
+	
+	
+	$licenses = get_option( 'sc_licenses' );
+	
+	
+	// Add button on side of input
+	if( ! empty( $licenses[ $args['product'] ] ) && $licenses[ $args['product'] ] == 'valid' && ! empty( $value ) ) {
+		$html .= '<button data-sc-action="deactivate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Deactivate', 'sc' ) . '</button>';
+	} else {
+		$html .= '<button data-sc-action="activate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
+	}
+	
+	$license_class = '';
+	$valid_message = '';
+	
+	$valid = sc_check_license( $value, $args['product'] );
 
-	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
-	$html = "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
-
+	if( $valid == 'valid' ) {
+		$license_class = 'sc-valid';
+		$valid_message = __( 'License Valid', 'sc' );
+	} else {
+		$license_class = 'sc-inactive';
+		$valid_message = __( 'License Inactive', 'sc' );
+	}
+	
+	$html .= '<span class="sc-spinner-wrap"><span class="spinner sc-spinner"></span></span>';
+	$html .= '<span class="sc-license-message ' . $license_class . '">' . $valid_message . '</span>';
+	
+	/*$button = '';
+	$button = apply_filters( 'sc_license_button', $button );*/
+	
+	//$html .= $button;
+	
 	// Render and style description text underneath if it exists.
-	if ( ! empty( $args['desc'] ) )
+	if ( ! empty( $args['desc'] ) ) {
 		$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
-
+	}
+	
+	$html .= '</div>';
+	
+	//$html = '<pre>' . print_r( $sc_licenses, true ) . '</pre>';
+	
 	echo $html;
 }
 

@@ -52,6 +52,9 @@ class Stripe_Checkout {
 	 * @var      string
 	 */
 	protected $plugin_screen_hook_suffix = null;
+	
+	
+	protected $sc_edd_sl_store_url = 'http://eddsl.philsapps.com/';
 
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
@@ -100,6 +103,7 @@ class Stripe_Checkout {
 		// Filters to add the settings page titles
 		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
+		add_filter( 'sc_settings_licenses_title', array( $this, 'sc_settings_licenses_title' ) );
 		
 		// Hook into wp_footer so we can localize our script AFTER all the shortcodes have been processed
 		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
@@ -135,6 +139,15 @@ class Stripe_Checkout {
 		
 		// Let us know that we ran the upgrade
 		add_option( 'sc_upgrade_has_run', 1 );
+	}
+	
+	/**
+	 * Set the title of the 'Licenses' tab
+	 * 
+	 * @since 1.1.1
+	 */
+	function sc_settings_licenses_title( $title ) {
+		return __( 'Add-On Licenses', 'sc' );
 	}
 	
 	/**
@@ -284,6 +297,11 @@ class Stripe_Checkout {
 		// Plugin version
 		if ( ! defined( 'SC_PLUGIN_VERSION' ) ) {
 			define( 'SC_PLUGIN_VERSION', $this->version );
+		}
+		
+		// EDD SL Updater
+		if( ! defined( 'SC_EDD_SL_STORE_URL' ) ) {
+			define( 'SC_EDD_SL_STORE_URL', $this->sc_edd_sl_store_url );
 		}
 	}
 	
