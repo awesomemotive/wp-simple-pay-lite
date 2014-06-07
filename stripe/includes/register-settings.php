@@ -312,9 +312,11 @@ function sc_license_callback( $args ) {
 	
 	// Add button on side of input
 	if( ! empty( $licenses[ $args['product'] ] ) && $licenses[ $args['product'] ] == 'valid' && ! empty( $value ) ) {
-		$html .= '<button data-sc-action="deactivate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Deactivate', 'sc' ) . '</button>';
+		$html .= '<button class="button" data-sc-action="deactivate_license" data-sc-item="' .
+		         ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Deactivate', 'sc' ) . '</button>';
 	} else {
-		$html .= '<button data-sc-action="activate_license" data-sc-item="' . ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
+		$html .= '<button class="button" data-sc-action="activate_license" data-sc-item="' .
+		         ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
 	}
 	
 	$license_class = '';
