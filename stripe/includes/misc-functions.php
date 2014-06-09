@@ -320,8 +320,14 @@ function sc_check_license( $license, $item ) {
 
 	if( is_wp_error( $response ) )
 	{
-		return 'ERROR';
+		return 'error';
 	}
 	
-	return json_decode( wp_remote_retrieve_body( $response ) )->license;
+	$is_valid = json_decode( wp_remote_retrieve_body( $response ) );
+	
+	if( ! empty( $is_valid ) ) {
+		return json_decode( wp_remote_retrieve_body( $response ) )->license;
+	} else {
+		return 'notfound';
+	}
 }

@@ -327,6 +327,9 @@ function sc_license_callback( $args ) {
 	if( $valid == 'valid' ) {
 		$license_class = 'sc-valid';
 		$valid_message = __( 'License is valid and active.', 'sc' );
+	} else if( $valid == 'notfound' ) {
+		$license_class = 'sc-invalid';
+		$valid_message = __( 'License service could not be found. Please contact support for assistance.', 'sc' );
 	} else {
 		$license_class = 'sc-inactive';
 		$valid_message = __( 'License is inactive.', 'sc' );

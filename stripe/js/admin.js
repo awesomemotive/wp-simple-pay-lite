@@ -41,8 +41,12 @@
 						button.html( 'Activate' );
 						button.attr( 'data-sc-action', 'activate_license' );
 						button.parent().find('.sc-license-message').html( 'License is inactive.' ).removeClass('sc-valid sc-invalid').addClass( 'sc-inactive' );
-					} else {
+					} else if( response == 'invalid' ) {
 						button.parent().find('.sc-license-message').html( 'Sorry, but this license key is invalid.' ).removeClass('sc-inactive sc-valid').addClass( 'sc-invalid' );
+					} else if( response == 'notfound' ) {
+						button.parent().find('.sc-license-message').html( 'License service could not be found. Please contact support for assistance.' ).removeClass('sc-inactive sc-valid').addClass( 'sc-invalid' );
+					} else if ( response == 'error' ) {
+						button.parent().find('.sc-license-message').html( 'An error has occurred, please try again.' ).removeClass('sc-inactive sc-valid').addClass( 'sc-invalid' );
 					}
 				});
 			}
