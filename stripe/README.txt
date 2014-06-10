@@ -152,11 +152,11 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 * Added prefill_email shortcode attribute.
 * Shipping name and address are now stored in payment metadata if enabled. Stripe does not store them natively.
-* Plugin and Stripe Scripts and CSS now load only on pages that include the shortcode.
-* Updated to most recent Stripe PHP library.
+* Added basic form CSS and the option to disable it.
 * Added many filters and hooks for extensibility.
 * General usuability improvements to settings pages.
-* Added basic form CSS and the option to disable it.
+* Updated to most recent Stripe PHP library.
+* Implemented add-on infrastructure.
 
 = 1.1.0 =
 
