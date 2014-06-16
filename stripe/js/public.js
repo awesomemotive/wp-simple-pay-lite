@@ -1,6 +1,13 @@
+/**
+ * Stripe Checkout public facing JavaScript
+ *
+ * @package SC
+ * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ */
+
 (function ($) {
-	"use strict";
-	$(function () {
+    'use strict';
+    $(function() {
 		
 		// Set a global variable so other scripts can hook in if needed
 		window.stripeCheckout = {
