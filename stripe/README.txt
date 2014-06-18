@@ -154,9 +154,10 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * Shipping name and address are now stored in payment metadata if enabled. Stripe does not store them natively.
 * Added basic form CSS and the option to disable it.
 * Added many filters and hooks for extensibility.
+* Implemented add-on infrastructure.
 * General usuability improvements to settings pages.
 * Updated to most recent Stripe PHP library.
-* Implemented add-on infrastructure.
+* Included most recent Parsley JS validation library.
 
 = 1.1.0 =
 

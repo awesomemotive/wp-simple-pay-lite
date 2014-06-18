@@ -152,9 +152,8 @@ add_filter( 'the_content', 'sc_show_payment_details' );
 function sc_convert_amount( $amount, $currency ) {
 	
 	$zero_based = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
-	
-	
-	if( in_array( $currency, $zero_based ) ) {
+
+	if( in_array( strtoupper( $currency ), $zero_based ) ) {
 		return $amount;
 	}
 	

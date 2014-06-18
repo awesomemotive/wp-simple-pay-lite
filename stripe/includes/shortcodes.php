@@ -109,10 +109,11 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$amount               = $sc_script_options['script']['amount'];
 	$success_redirect_url = $sc_script_options['other']['success-redirect-url'];
 	$currency             = $sc_script_options['script']['currency'];
-	
-	
-	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
-	
+
+	// Add Parsley JS validation attribute.
+	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form" ' .
+	         'data-parsley-validate>';
+
 	$content = parse_shortcode_content( $content );
 	
 	$html .= apply_filters( 'sc_shortcode_content', $content );
@@ -134,7 +135,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			      <input type="hidden" name="sc-shipping-address" class="sc-shipping-address" value="" />
 				  <input type="hidden" name="sc-shipping-city" class="sc-shipping-city" value="" />';
 	}
-	
+
 	$html .= '<button class="sc_checkout stripe-button-el"><span>';
 	$html .= $payment_button_label;
 	$html .= '</span></button>';

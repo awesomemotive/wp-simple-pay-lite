@@ -8,86 +8,66 @@
 (function ($) {
     'use strict';
     $(function() {
-		
-		// Set a global variable so other scripts can hook in if needed
-		window.stripeCheckout = {
-			// Functions to run
-			functions:       new Array(),
-			// Form Details
-			currentForm:     '',
-			dataAttr:        '',
-			// Validation functions
-			validateRules:   {}
-		};
-		
-		/*
-		 * Call on click handler when button is clicked then use amount (need to sanitize first) and pass to the 
-		 * Stripe Checkout handler
-		 */	
-		$( 'button.sc_checkout' ).closest( 'form' ).submit( function( event ) {
 
-			// Set our currentForm
-			stripeCheckout.currentForm = $(this);
+        // Including Parsley JS validation even though it might not be needed unless using add-ons.
+        // If there's a better way figure it out later.
 
-			event.preventDefault();
+        $('.sc-checkout-form').each(function() {
+            var scForm = $(this);
 
-			// Set our dataAttr to this current form
-			stripeCheckout.dataAttr = $(this).attr('data-sc-id');
-			
-			// Run all functions before processing the handler
-			for( var i = 0; i < stripeCheckout.functions.length; i++ ) {
-				stripeCheckout.functions[i]();
-			}
-			
-			if( $.isFunction($.fn.validate) ) {
-				stripeCheckout.currentForm.validate({
-					rules: stripeCheckout.validateRules
-				});
+            // Unbind original submit handler since we're never going to post the form.
+            scForm.submit(function(event) {
+                event.preventDefault();
+            });
 
-				if( ! stripeCheckout.currentForm.valid() ) {
-					// Cancel original form submit.
-					return false;
-				} 
-			}
+            // Now use Parsley's built-in validate event.
+            scForm.parsley().subscribe('parsley:form:validate', function(formInstance) {
 
-			var handler = StripeCheckout.configure({
-				key: sc_script[stripeCheckout.dataAttr].key,
-				image: ( sc_script[stripeCheckout.dataAttr].image != -1 ? sc_script[stripeCheckout.dataAttr].image : '' ),
-				token: function(token, args) {
+                if ( formInstance.isValid() ) {
 
-					// Set the values on our hidden elements to pass when submitting the form for payment
-					stripeCheckout.currentForm.find('.sc_stripeToken').val( token.id );
-					stripeCheckout.currentForm.find('.sc_amount').val( sc_script[stripeCheckout.dataAttr].amount );
-					stripeCheckout.currentForm.find('.sc_stripeEmail').val( token.email );
+                    // Get the "sc-id" ID of the current form as there may be multiple forms on the page.
+                    var formId = scForm.data('sc-id') || '';
 
-					// Add shipping fields values if the shipping information is filled
-					if( ! $.isEmptyObject( args ) ) {
-						stripeCheckout.currentForm.find('.sc-shipping-name').val(args.shipping_name);
-						stripeCheckout.currentForm.find('.sc-shipping-country').val(args.shipping_address_country);
-						stripeCheckout.currentForm.find('.sc-shipping-zip').val(args.shipping_address_zip);
-						stripeCheckout.currentForm.find('.sc-shipping-state').val(args.shipping_address_state);
-						stripeCheckout.currentForm.find('.sc-shipping-address').val(args.shipping_address_line1);
-						stripeCheckout.currentForm.find('.sc-shipping-city').val(args.shipping_address_city);
-					}
+                    // Sanitize amount, then pass to the Stripe Checkout handler.
+                    // StripeCheckout object from Stripe's checkout.js.
+                    // sc_script from localized script values from PHP.
+                    // Reference https://stripe.com/docs/checkout#integration-custom for help.
 
-					//Unbind right before submitting so we don't get stuck in a loop
-					stripeCheckout.currentForm.unbind('submit');
+                    var handler = StripeCheckout.configure({
+                        key: sc_script[formId].key,
+                        image: ( sc_script[formId].image != -1 ? sc_script[formId].image : '' ),
+                        token: function(token, args) {
 
-					stripeCheckout.currentForm.submit();
-				}
-			 });
+                            // Set the values on our hidden elements to pass when submitting the form for payment
+                            scForm.find('.sc_stripeToken').val( token.id );
+                            scForm.find('.sc_amount').val( sc_script[formId].amount );
+                            scForm.find('.sc_stripeEmail').val( token.email );
 
-			 handler.open({
-				 name: ( sc_script[stripeCheckout.dataAttr].name != -1 ? sc_script[stripeCheckout.dataAttr].name : '' ),
-				 description: ( sc_script[stripeCheckout.dataAttr].description != -1 ? sc_script[stripeCheckout.dataAttr].description : '' ),
-				 amount: sc_script[stripeCheckout.dataAttr].amount,
-				 currency: ( sc_script[stripeCheckout.dataAttr].currency != -1 ? sc_script[stripeCheckout.dataAttr].currency : 'USD' ),
-				 panelLabel: ( sc_script[stripeCheckout.dataAttr].panelLabel != -1 ? sc_script[stripeCheckout.dataAttr].panelLabel : 'Pay {{amount}}' ),
-				 billingAddress: ( sc_script[stripeCheckout.dataAttr].billingAddress == 'true' || sc_script[stripeCheckout.dataAttr].billingAddress == 1 ? true : false ),
-				 shippingAddress: ( sc_script[stripeCheckout.dataAttr].shippingAddress == 'true' || sc_script[stripeCheckout.dataAttr].shippingAddress == 1 ? true : false ),
-				 allowRememberMe: ( sc_script[stripeCheckout.dataAttr].allowRememberMe == 1 || sc_script[stripeCheckout.dataAttr].allowRememberMe == 'true' ?  true : false ),
-				 email: ( sc_script[stripeCheckout.dataAttr].email != -1 ?  sc_script[stripeCheckout.dataAttr].email : '' )
-			 });
-		});
-	});
+                            // Add shipping fields values if the shipping information is filled
+                            if( ! $.isEmptyObject( args ) ) {
+                                scForm.find('.sc-shipping-name').val(args.shipping_name);
+                                scForm.find('.sc-shipping-country').val(args.shipping_address_country);
+                                scForm.find('.sc-shipping-zip').val(args.shipping_address_zip);
+                                scForm.find('.sc-shipping-state').val(args.shipping_address_state);
+                                scForm.find('.sc-shipping-address').val(args.shipping_address_line1);
+                                scForm.find('.sc-shipping-city').val(args.shipping_address_city);
+                            }
+                        }
+                    });
+
+                    handler.open({
+                        name: ( sc_script[formId].name != -1 ? sc_script[formId].name : '' ),
+                        description: ( sc_script[formId].description != -1 ? sc_script[formId].description : '' ),
+                        amount: sc_script[formId].amount,
+                        currency: ( sc_script[formId].currency != -1 ? sc_script[formId].currency : 'USD' ),
+                        panelLabel: ( sc_script[formId].panelLabel != -1 ? sc_script[formId].panelLabel : 'Pay {{amount}}' ),
+                        billingAddress: ( sc_script[formId].billingAddress == 'true' || sc_script[formId].billingAddress == 1 ? true : false ),
+                        shippingAddress: ( sc_script[formId].shippingAddress == 'true' || sc_script[formId].shippingAddress == 1 ? true : false ),
+                        allowRememberMe: ( sc_script[formId].allowRememberMe == 1 || sc_script[formId].allowRememberMe == 'true' ?  true : false ),
+                        email: ( sc_script[formId].email != -1 ?  sc_script[formId].email : '' )
+                    });
+                }
+            });
+        });
+    });
 }(jQuery));

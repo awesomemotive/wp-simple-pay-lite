@@ -66,3 +66,13 @@
 .sc-form-group input[type="radio"] {
     margin: 0 5px 0 0;
 }
+
+/* Parsley JS Validation styles */
+
+.sc-form-group ul.parsley-errors-list,
+.sc-form-group ul.parsley-errors-list li {
+    color: #a94442;
+    list-style-type: none;
+    margin-left: 0;
+}
+
