@@ -144,20 +144,67 @@ function sc_show_payment_details( $content ) {
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
 
-/*
- * Function to convert the amount passed from cents to dollars
- * 
- * @since 1.1.0
+/**
+ * Convert the amount passed from decimal to whole number (i.e. cents to dollars in USD).
+ * Needed for Stripe's calculated amount. Don't convert if using zero-decimal currency.
+ *
+ * @since 1.1.1
  */
-function sc_convert_amount( $amount, $currency ) {
-	
-	$zero_based = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
 
-	if( in_array( strtoupper( $currency ), $zero_based ) ) {
-		return $amount;
+//TODO Using? Not yet. Maybe in JS?
+function sc_decimal_to_stripe_amount( $amount, $currency_code ) {
+
+	if ( !sc_is_zero_decimal_currency( $currency_code) ) {
+		$amount = $amount * 100;
 	}
-	
-	return number_format( ( $amount / 100 ), 2, '.', ',' );
+
+	// Always round to integer.
+	return round( $amount );
+}
+
+/**
+ * Convert amount opposite of sc_decimal_to_stripe_amount().
+ * Needed for Stripe's calculated amount. Don't convert if using zero-decimal currency.
+ *
+ * @since 1.1.1
+ */
+function sc_stripe_to_decimal_amount( $amount, $currency_code ) {
+
+	if ( !sc_is_zero_decimal_currency( $currency_code) ) {
+		// Always round to 2 decimals.
+		$amount = round( $amount / 100, 2 );
+	}
+
+	return $amount;
+}
+
+/**
+ * Format Stripe (non-decimal) amount for screen.
+ *
+ * @since 1.1.1
+ */
+function sc_stripe_to_formatted_amount( $amount, $currency_code ) {
+
+	// First convert to decimal if needed.
+	$amount = sc_stripe_to_decimal_amount( $amount, $currency_code );
+
+	// Use 2 decimals unless zero-decimal currency.
+	// TODO Use PHP number_format instead?
+	$formatted_amount = number_format_i18n( $amount, ( sc_is_zero_decimal_currency( $currency_code ) ? 0 : 2 ) );
+
+	return $formatted_amount;
+}
+
+/**
+ * Check if currency is zero-decimal according to Stripe.
+ * See: https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
+ *
+ * @since 1.1.1
+ */
+function sc_is_zero_decimal_currency( $currency_code ) {
+	$zero_decimal_currency_list = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
+
+	return in_array( strtoupper( $currency_code ), $zero_decimal_currency_list );
 }
 
 /**

@@ -166,22 +166,18 @@ function sc_stripe_total( $attr ) {
 	
 	global $sc_options, $sc_script_options;
 	
-	$html = '';
-	
 	extract( shortcode_atts( array(
 					'label' => ( ! empty( $sc_options['stripe_total_label'] ) ? $sc_options['stripe_total_label'] : __( 'Total Amount:', 'sc' ) )
 				), $attr, 'stripe_total' ) );
-	
-	if( $sc_script_options['script']['currency'] == 'USD' ) {
-		$html  = '<div class="sc-form-group">';
-		$html .= $label . ' $<span class="sc-total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span>';
-		$html .= '</div>';
-	} else {
-		$html  = '<div class="sc-form-group">';
-		$html .= $label . ' <span class="sc-total">' . sc_convert_amount( $sc_script_options['script']['amount'], $sc_script_options['script']['currency'] ) . '</span> ' . $sc_script_options['script']['currency'];
-		$html .= '</div>';
-	}
-	
+
+	$currency_code = strtoupper( $sc_script_options['script']['currency'] );
+	$stripe_amount = $sc_script_options['script']['amount'];
+
+	$html  = '<div class="sc-form-group">';
+	$html .= $label . ' ';
+	$html .= '<span class="sc-total">' . sc_stripe_to_formatted_amount( $stripe_amount, $currency_code ) . '</span>';
+	$html .= '</div>';
+
 	return $html;
 }
 add_shortcode( 'stripe_total', 'sc_stripe_total' );
@@ -193,6 +189,9 @@ add_shortcode( 'stripe_total', 'sc_stripe_total' );
  * 
  * @since 1.1.1
  */
+
+//TODO Needed and used?
+
 function parse_shortcode_content( $content ) { 
  
     // Parse nested shortcodes and add formatting.

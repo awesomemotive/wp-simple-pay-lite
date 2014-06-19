@@ -28,6 +28,25 @@
                     // Get the "sc-id" ID of the current form as there may be multiple forms on the page.
                     var formId = scForm.data('sc-id') || '';
 
+                    //TODO
+                    var finalAmount = sc_script[formId].amount;
+
+                    console.log(sc_script[formId]);
+                    console.log(finalAmount);
+
+                    console.log(scForm.find('.sc-uea-custom-amount'));
+
+                    //TODO If user-entered amount add-on and field found, use it instead of pre-set amount.
+                    if ( scForm.find('.sc-uea-custom-amount').length ) {
+
+                        //TODO Currency convert?
+
+                        //finalAmount = scForm.find('.sc-uea-custom-amount');
+                        finalAmount = parseFloat( scForm.find('.sc-uea-custom-amount').val() * 100 );
+                    }
+
+                    console.log(finalAmount);
+
                     // Sanitize amount, then pass to the Stripe Checkout handler.
                     // StripeCheckout object from Stripe's checkout.js.
                     // sc_script from localized script values from PHP.
@@ -40,8 +59,11 @@
 
                             // Set the values on our hidden elements to pass when submitting the form for payment
                             scForm.find('.sc_stripeToken').val( token.id );
-                            scForm.find('.sc_amount').val( sc_script[formId].amount );
-                            scForm.find('.sc_stripeEmail').val( token.email );
+
+                            //TODO Amount and email getting set twice?
+                            //TODO Test pre-filled email.
+                            //TODO scForm.find('.sc_amount').val( finalAmount );
+                            //scForm.find('.sc_stripeEmail').val( token.email );
 
                             // Add shipping fields values if the shipping information is filled
                             if( ! $.isEmptyObject( args ) ) {
@@ -58,7 +80,8 @@
                     handler.open({
                         name: ( sc_script[formId].name != -1 ? sc_script[formId].name : '' ),
                         description: ( sc_script[formId].description != -1 ? sc_script[formId].description : '' ),
-                        amount: sc_script[formId].amount,
+                        //TODO amount: sc_script[formId].amount,
+                        amount: finalAmount,
                         currency: ( sc_script[formId].currency != -1 ? sc_script[formId].currency : 'USD' ),
                         panelLabel: ( sc_script[formId].panelLabel != -1 ? sc_script[formId].panelLabel : 'Pay {{amount}}' ),
                         billingAddress: ( sc_script[formId].billingAddress == 'true' || sc_script[formId].billingAddress == 1 ? true : false ),
