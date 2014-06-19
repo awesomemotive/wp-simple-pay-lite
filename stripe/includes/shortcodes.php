@@ -117,22 +117,22 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	$html .= apply_filters( 'sc_shortcode_content', $content );
 	
-	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />
-			  <input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />
-			  <input type="hidden" name="sc-amount" class="sc_amount" value="" />
-			  <input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />
-			  <input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />
-			  <input type="hidden" name="stripeToken" value="" class="sc_stripeToken" />
-			  <input type="hidden" name="stripeEmail" value="" class="sc_stripeEmail" />';
+	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />';
+	$html .= '<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />';
+	$html .= '<input type="hidden" name="sc-amount" class="sc_amount" value="" />';
+	$html .= '<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />';
+	$html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
+	$html .= '<input type="hidden" name="stripeToken" value="" class="sc_stripeToken" />';
+	$html .= '<input type="hidden" name="stripeEmail" value="" class="sc_stripeEmail" />';
 	
 	// Add shipping information fields if it is enabled
 	if( $shipping === 'true' ) {
-		$html .= '<input type="hidden" name="sc-shipping-name" class="sc-shipping-name" value="" />
-			      <input type="hidden" name="sc-shipping-country" class="sc-shipping-country" value="" />
-			      <input type="hidden" name="sc-shipping-zip" class="sc-shipping-zip" value="" />
-			      <input type="hidden" name="sc-shipping-state" class="sc-shipping-state" value="" />
-			      <input type="hidden" name="sc-shipping-address" class="sc-shipping-address" value="" />
-				  <input type="hidden" name="sc-shipping-city" class="sc-shipping-city" value="" />';
+		$html .= '<input type="hidden" name="sc-shipping-name" class="sc-shipping-name" value="" />';
+		$html .= '<input type="hidden" name="sc-shipping-country" class="sc-shipping-country" value="" />';
+		$html .= '<input type="hidden" name="sc-shipping-zip" class="sc-shipping-zip" value="" />';
+		$html .= '<input type="hidden" name="sc-shipping-state" class="sc-shipping-state" value="" />';
+		$html .= '<input type="hidden" name="sc-shipping-address" class="sc-shipping-address" value="" />';
+		$html .= '<input type="hidden" name="sc-shipping-city" class="sc-shipping-city" value="" />';
 	}
 	
 	$html .= '<button class="sc_checkout stripe-button-el"><span>';
