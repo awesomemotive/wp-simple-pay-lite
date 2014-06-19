@@ -6,13 +6,13 @@
  * @package   SC
  * @author    Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  * @license   GPL-2.0+
- * @link      http://philderksen.com
+ * @link      http://wpstripe.net
  * @copyright 2014 Phil Derksen
  *
  * @wordpress-plugin
  * Plugin Name: Simple Stripe Checkout
- * Plugin URI: http://philderksen.com/stripe-checkout-wordpress/
- * Description: Add a Stripe Checkout form overlay to your site in 2 minutes using a shortcode.
+ * Plugin URI: http://wpstripe.net
+ * Description: Add a Stripe Checkout form overlay to your site in minutes using shortcodes.
  * Version: 1.1.1-beta3
  * Author: Phil Derksen
  * Author URI: http://philderksen.com
