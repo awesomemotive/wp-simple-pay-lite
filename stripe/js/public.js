@@ -78,11 +78,15 @@
                                 scForm.find('.sc-shipping-city').val(args.shipping_address_city);
                             }
 
-                            //TODO Disable and change text on original payment button for UI feedback?
-
                             //Unbind original form submit trigger before calling again to "reset" it and submit normally.
                             scForm.unbind('submit');
                             scForm.submit();
+
+                            //Disable original payment button and change text for UI feedback while POST-ing to Stripe.
+                            scForm.find('.sc_checkout')
+                                .prop('disabled', true)
+                                .find('span')
+                                    .text('Please wait...');
                         }
                     });
 
