@@ -124,10 +124,20 @@ function sc_show_payment_details( $content ) {
 
 			$payment_details_html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
 			$payment_details_html .= '<p>' . __( 'Here\'s what you bought:', 'sc' ) . '</p>' . "\n";
-			$payment_details_html .= ( ! empty( $sc_payment_details['description'] ) ? $sc_payment_details['description'] . '<br/>' . "\n" : '' );
-			$payment_details_html .= ( ! empty( $sc_payment_details['name'] ) ? 'From: ' . $sc_payment_details['name'] . '<br/>' . "\n" : '' );
-			$payment_details_html .= ( ! empty( $sc_payment_details['amount'] ) ? '<br/><strong>' . __( 'Total Paid: ', 'sc' ) . sc_convert_amount( $sc_payment_details['amount'], $sc_payment_details['currency'] ) . ' ' . $sc_payment_details['currency'] . '</strong>' . "\n" : '' );
-			
+
+			if ( ! empty( $sc_payment_details['description'] ) ) {
+				$payment_details_html .= $sc_payment_details['description'] . '<br/>' . "\n";
+			}
+			if ( ! empty( $sc_payment_details['name'] ) ) {
+				$payment_details_html .= 'From: ' . $sc_payment_details['name'] . '<br/>' . "\n";
+			}
+			if ( ! empty( $sc_payment_details['amount'] ) ) {
+				$payment_details_html .=  '<br/>' . "\n";
+				$payment_details_html .=  '<strong>' . __( 'Total Paid: ', 'sc' );
+				$payment_details_html .=  sc_stripe_to_formatted_amount( $sc_payment_details['amount'], $sc_payment_details['currency'] ) . "\n";
+				$payment_details_html .=  ' ' . $sc_payment_details['currency'] . '</strong>' . "\n";
+			}
+
 			$after_payment_details_html = '</div>' . "\n";
 			
 			$before_payment_details_html = apply_filters( 'sc_before_payment_details_html', $before_payment_details_html );
@@ -151,7 +161,7 @@ add_filter( 'the_content', 'sc_show_payment_details' );
  * @since 1.1.1
  */
 
-//TODO Using? Not yet. Maybe in JS?
+//TODO Using yet?
 function sc_decimal_to_stripe_amount( $amount, $currency_code ) {
 
 	if ( !sc_is_zero_decimal_currency( $currency_code) ) {
@@ -189,22 +199,29 @@ function sc_stripe_to_formatted_amount( $amount, $currency_code ) {
 	$amount = sc_stripe_to_decimal_amount( $amount, $currency_code );
 
 	// Use 2 decimals unless zero-decimal currency.
-	// TODO Use PHP number_format instead?
 	$formatted_amount = number_format_i18n( $amount, ( sc_is_zero_decimal_currency( $currency_code ) ? 0 : 2 ) );
 
 	return $formatted_amount;
 }
 
 /**
- * Check if currency is zero-decimal according to Stripe.
+ * List of zero-decimal currencies according to Stripe.
+ * Needed for PHP and JS.
  * See: https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
  *
  * @since 1.1.1
  */
-function sc_is_zero_decimal_currency( $currency_code ) {
-	$zero_decimal_currency_list = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
+function sc_zero_decimal_currencies() {
+	return array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
+}
 
-	return in_array( strtoupper( $currency_code ), $zero_decimal_currency_list );
+/**
+ * Check if currency is zero-decimal.
+ *
+ * @since 1.1.1
+ */
+function sc_is_zero_decimal_currency( $currency_code ) {
+	return in_array( strtoupper( $currency_code ), sc_zero_decimal_currencies() );
 }
 
 /**

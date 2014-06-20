@@ -103,6 +103,9 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			'allowRememberMe' => ( ! empty( $sc_script_options['script']['allow-remember-me'] ) ? $sc_script_options['script']['allow-remember-me'] : ( ! empty( $sc_options['enable_remember'] ) ? $sc_options['enable_remember'] : -1 ) ),
 			'email'           => ( ! empty( $sc_script_options['script']['email'] ) && ! ( $sc_script_options['script']['email'] === 'false' ) ? $sc_script_options['script']['email'] : -1 )
 	);
+
+	// Reference for Stripe's zero-decimal currencies in JS.
+	$script_vars['zero_decimal_currencies'] = sc_zero_decimal_currencies();
 	
 	$name                 = $sc_script_options['script']['name'];
 	$description          = $sc_script_options['script']['description'];
@@ -110,9 +113,9 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$success_redirect_url = $sc_script_options['other']['success-redirect-url'];
 	$currency             = $sc_script_options['script']['currency'];
 
-	// Add Parsley JS validation attribute.
-	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form" ' .
-	         'data-parsley-validate>';
+	//Add Parsley JS form validation attribute here.
+	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form" ';
+	$html .= 'data-parsley-validate>';
 
 	$content = parse_shortcode_content( $content );
 	
@@ -136,15 +139,13 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		$html .= '<input type="hidden" name="sc-shipping-city" class="sc-shipping-city" value="" />';
 	}
 
-	$html .= '<button class="sc_checkout stripe-button-el"><span>';
-	$html .= $payment_button_label;
-	$html .= '</span></button>';
+	$html .= '<button class="sc_checkout stripe-button-el"><span>' . $payment_button_label . '</span></button>';
 	$html .= '</form>';
-	
+
 	// Increment static uid counter
 	$uid++;
 	
-	if( ( empty( $sc_script_options['script']['amount'] ) || $sc_script_options['script']['amount'] < 50 ) || ! isset( $sc_script_options['script']['amount'] ) ) {
+	if( ( empty( $amount ) || $amount < 50 ) || ! isset( $amount ) ) {
 		return '';
 	} else if( ! isset( $_GET['payment'] ) ) {
 		return $html;
@@ -189,10 +190,7 @@ add_shortcode( 'stripe_total', 'sc_stripe_total' );
  * 
  * @since 1.1.1
  */
-
-//TODO Needed and used?
-
-function parse_shortcode_content( $content ) { 
+function parse_shortcode_content( $content ) {
  
     // Parse nested shortcodes and add formatting.
     $content = trim( wpautop( do_shortcode( $content ) ) ); 
