@@ -171,26 +171,26 @@ function sc_stripe_total( $attr ) {
 					'label' => ( ! empty( $sc_options['stripe_total_label'] ) ? $sc_options['stripe_total_label'] : __( 'Total Amount:', 'sc' ) )
 				), $attr, 'stripe_total' ) );
 
-	$currency_code = strtoupper( $sc_script_options['script']['currency'] );
+	$currency = strtoupper( $sc_script_options['script']['currency'] );
 	$stripe_amount = $sc_script_options['script']['amount'];
 
 	$html  = '<div class="sc-form-group">';
 	$html .= $label . ' ';
-	$html .= '<span class="sc-total">';
+	$html .= '<span class="sc-total-amount">';
 
 	// USD only: Show dollar sign on left of amount.
-	if ( $currency_code === 'USD' ) {
+	if ( $currency === 'USD' ) {
 		$html .= '$';
 	}
 
-	$html .= sc_stripe_to_formatted_amount( $stripe_amount, $currency_code );
+	$html .= sc_stripe_to_formatted_amount( $stripe_amount, $currency );
 
 	// Non-USD: Show currency on right of amount.
-	if ( $currency_code !== 'USD' ) {
-		$html .= ' <span class="sc-total-currency">' . $currency_code . '</span>';
+	if ( $currency !== 'USD' ) {
+		$html .= ' ' . $currency;
 	}
 
-	$html .= '</span>';
+	$html .= '</span>'; //sc-total-amount
 	$html .= '</div>'; //sc-form-group
 
 	return $html;

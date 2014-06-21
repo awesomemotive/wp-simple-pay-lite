@@ -162,9 +162,9 @@ add_filter( 'the_content', 'sc_show_payment_details' );
  */
 
 //TODO Using yet?
-function sc_decimal_to_stripe_amount( $amount, $currency_code ) {
+function sc_decimal_to_stripe_amount( $amount, $currency ) {
 
-	if ( !sc_is_zero_decimal_currency( $currency_code) ) {
+	if ( !sc_is_zero_decimal_currency( $currency) ) {
 		$amount = $amount * 100;
 	}
 
@@ -178,9 +178,9 @@ function sc_decimal_to_stripe_amount( $amount, $currency_code ) {
  *
  * @since 1.1.1
  */
-function sc_stripe_to_decimal_amount( $amount, $currency_code ) {
+function sc_stripe_to_decimal_amount( $amount, $currency ) {
 
-	if ( !sc_is_zero_decimal_currency( $currency_code) ) {
+	if ( !sc_is_zero_decimal_currency( $currency) ) {
 		// Always round to 2 decimals.
 		$amount = round( $amount / 100, 2 );
 	}
@@ -193,13 +193,13 @@ function sc_stripe_to_decimal_amount( $amount, $currency_code ) {
  *
  * @since 1.1.1
  */
-function sc_stripe_to_formatted_amount( $amount, $currency_code ) {
+function sc_stripe_to_formatted_amount( $amount, $currency ) {
 
 	// First convert to decimal if needed.
-	$amount = sc_stripe_to_decimal_amount( $amount, $currency_code );
+	$amount = sc_stripe_to_decimal_amount( $amount, $currency );
 
 	// Use 2 decimals unless zero-decimal currency.
-	$formatted_amount = number_format_i18n( $amount, ( sc_is_zero_decimal_currency( $currency_code ) ? 0 : 2 ) );
+	$formatted_amount = number_format_i18n( $amount, ( sc_is_zero_decimal_currency( $currency ) ? 0 : 2 ) );
 
 	return $formatted_amount;
 }
@@ -220,8 +220,8 @@ function sc_zero_decimal_currencies() {
  *
  * @since 1.1.1
  */
-function sc_is_zero_decimal_currency( $currency_code ) {
-	return in_array( strtoupper( $currency_code ), sc_zero_decimal_currencies() );
+function sc_is_zero_decimal_currency( $currency ) {
+	return in_array( strtoupper( $currency ), sc_zero_decimal_currencies() );
 }
 
 /**
