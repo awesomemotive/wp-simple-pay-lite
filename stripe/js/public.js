@@ -35,14 +35,13 @@
                     // Amount already preset in basic [stripe] shortcode (or default of 50).
                     var finalAmount = sc_script[formId].amount;
 
-                    //If user-entered amount add-on active and found in form, use it's amount instead of preset/default.
-                    var scUeaInput = scForm.find('.sc-uea-custom-amount');
+                    // If user-entered amount add-on active and found in form, use it's amount instead of preset/default.
+                    var scUeaAmount = scForm.find('.sc-uea-custom-amount').val();
 
-                    if ( scUeaInput.length ) {
+                    if ( scUeaAmount ) {
+
 
                         // Multiply amount to what Stripe needs unless zero-decimal currency used.
-                        var scUeaAmount = scUeaInput.val();
-
                         // Always round so there's no decimal. Stripe hates that.
                         if ( $.inArray( sc_script[formId].currency.toUpperCase(), sc_script['zero_decimal_currencies'] ) > -1 ) {
                             finalAmount = Math.round(scUeaAmount);
@@ -51,7 +50,7 @@
                         }
                     }
 
-                    // Sanitize amount, then pass to the Stripe Checkout handler.
+                    // Now pass to the Stripe Checkout handler.
                     // StripeCheckout object from Stripe's checkout.js.
                     // sc_script from localized script values from PHP.
                     // Reference https://stripe.com/docs/checkout#integration-custom for help.
