@@ -176,8 +176,22 @@ function sc_stripe_total( $attr ) {
 
 	$html  = '<div class="sc-form-group">';
 	$html .= $label . ' ';
-	$html .= '<span class="sc-total">' . sc_stripe_to_formatted_amount( $stripe_amount, $currency_code ) . '</span>';
-	$html .= '</div>';
+	$html .= '<span class="sc-total">';
+
+	// USD only: Show dollar sign on left of amount.
+	if ( $currency_code === 'USD' ) {
+		$html .= '$';
+	}
+
+	$html .= sc_stripe_to_formatted_amount( $stripe_amount, $currency_code );
+
+	// Non-USD: Show currency on right of amount.
+	if ( $currency_code !== 'USD' ) {
+		$html .= ' <span class="sc-total-currency">' . $currency_code . '</span>';
+	}
+
+	$html .= '</span>';
+	$html .= '</div>'; //sc-form-group
 
 	return $html;
 }
