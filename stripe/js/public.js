@@ -5,6 +5,8 @@
  * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  */
 
+/* global sc_script */
+
 (function ($) {
     'use strict';
     $(function() {
@@ -40,13 +42,12 @@
 
                     if ( scUeaAmount ) {
 
-
                         // Multiply amount to what Stripe needs unless zero-decimal currency used.
                         // Always round so there's no decimal. Stripe hates that.
-                        if ( $.inArray( sc_script[formId].currency.toUpperCase(), sc_script['zero_decimal_currencies'] ) > -1 ) {
+                        if ( isZeroDecimalCurrency(sc_script[formId].currency) ) {
                             finalAmount = Math.round(scUeaAmount);
                         } else {
-                            finalAmount = Math.round( parseFloat( scUeaAmount * 100 ) );
+                            finalAmount = Math.round( parseFloat(scUeaAmount * 100) );
                         }
                     }
 
@@ -106,5 +107,13 @@
                 }
             });
         });
+
+        // Zero-decimal currency check.
+        // Just like sc_is_zero_decimal_currency() in PHP.
+        // References sc_script['zero_decimal_currencies'] localized JS value.
+        function isZeroDecimalCurrency(currency) {
+            return ( $.inArray(currency.toUpperCase(), sc_script['zero_decimal_currencies']) > 1 );
+        }
     });
+
 }(jQuery));
