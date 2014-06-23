@@ -29,7 +29,7 @@
             // http://parsleyjs.org/doc/index.html#psly-events-overview
             scForm.parsley().subscribe('parsley:form:validate', function(formInstance) {
 
-                if ( formInstance.isValid() ) {
+                if (formInstance.isValid()) {
 
                     // Get the "sc-id" ID of the current form as there may be multiple forms on the page.
                     var formId = scForm.data('sc-id') || '';
@@ -40,7 +40,7 @@
                     // If user-entered amount add-on active and found in form, use it's amount instead of preset/default.
                     var scUeaAmount = scForm.find('.sc-uea-custom-amount').val();
 
-                    if ( scUeaAmount ) {
+                    if (scUeaAmount) {
 
                         // Multiply amount to what Stripe needs unless zero-decimal currency used.
                         // Always round so there's no decimal. Stripe hates that.
