@@ -1,4 +1,4 @@
-/* Payment details at the top of the post */
+/* Payment details at the top of the post. */
 .sc-payment-details-wrap { 
 	background: #dff0d8;
 	border: 0;
@@ -11,14 +11,19 @@
 .sc-checkout-form {
 	margin-bottom: 15px;
 }
+
+/* Form control styling mainly for custom fields add-on. */
+
 .sc-form-group {
 	margin-bottom: 15px;
 }
+
 .sc-form-group label {
 	display: inline-block;
 	margin-bottom: 5px;
 	font-weight: bold;
 }
+
 .sc-form-group .sc-form-control {
 	display: block;
 	width: 15em;
@@ -35,22 +40,27 @@
 	-webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+
 .sc-form-group .sc-form-control:focus {
 	border-color: #66afe9;
 	outline: 0;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
+
 .sc-form-group .sc-form-control::-moz-placeholder {
 	color: #999999;
 	opacity: 1;
 }
+
 .sc-form-group .sc-form-control:-ms-input-placeholder {
 	color: #999999;
 }
+
 .sc-form-group .sc-form-control::-webkit-input-placeholder {
 	color: #999999;
 }
+
 .sc-form-group .sc-form-control[disabled],
 .sc-form-group .sc-form-control[readonly],
 .sc-form-group fieldset[disabled] .sc-form-control {
@@ -58,13 +68,58 @@
 	background-color: #eeeeee;
 	opacity: 1;
 }
+
 .sc-form-group textarea.sc-form-control {
     height: auto;
     width: 100%;
 }
+
 .sc-form-group input[type="checkbox"],
 .sc-form-group input[type="radio"] {
     margin: 0 5px 0 0;
+}
+
+/* User-entered amount add-on */
+
+.sc-form-group .sc-uea-container {
+    display: block;
+}
+
+/* UEA field is inline-block so USD dollar sign can be placed on the left of it. */
+.sc-form-group .sc-uea-container .sc-uea-custom-amount {
+    display: inline-block;
+}
+
+/* Coupon codes add-on */
+
+.sc-form-group .sc-coup-coupon-container {
+    display: block;
+}
+
+/* Coupon code field is inline-block so "Apply" button can be placed on the right of it. */
+.sc-form-group .sc-coup-coupon-container .sc-coup-coupon {
+    display: inline-block;
+}
+
+.sc-form-group .sc-coup-coupon-container .sc-coup-apply-button {
+    margin-left: 10px;
+}
+
+.sc-form-group .sc-coup-validation-message {
+    color: #a94442;
+}
+
+.sc-form-group .sc-coup-loading {
+    display: none;
+}
+
+.sc-form-group .sc-coup-loading img {
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.sc-form-group .sc-coup-remove-coupon {
+    display: none;
 }
 
 /* Parsley JS Validation styles */
