@@ -35,32 +35,6 @@ function sc_get_admin_tabs() {
 	
 }
 
-/*
- * Return the Admin Help tabs
- * 
- * @since 1.1.1
- */
-function sc_get_admin_help_tabs() {
-	$tabs = array();
-	
-	$tabs = array( 
-		'base' => __( 'Base Shortcodes', 'sc' )
-	);
-	
-	return apply_filters( 'sc_help_tabs', $tabs );
-}
-
-/**
- * Use action to load base help file
- * 
- * @since 1.1.1
- */
-function sc_load_help() {
-	include_once( 'admin-help-stripe-checkout.php' );
-}
-add_action( 'sc_help_display_base', 'sc_load_help' );
-
-
 /**
  * Add Licenses admin tab
  * 

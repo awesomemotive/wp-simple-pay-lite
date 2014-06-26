@@ -366,16 +366,6 @@ class Stripe_Checkout {
 			array( $this, 'display_plugin_admin_page' )
 		);
 		
-		// Add Help submenu page
-		$this->plugin_screen_hook_suffix[] = add_submenu_page(
-			$this->plugin_slug,
-			__( 'Help', 'sc' ),
-			__( 'Help', 'sc' ),
-			'manage_options',
-			$this->plugin_slug . '_help',
-			array( $this, 'display_admin_help_page' )
-		);
-		
 		// Add Add-Ons submenu page
 		$this->plugin_screen_hook_suffix[] = add_submenu_page(
 			$this->plugin_slug,
@@ -394,15 +384,6 @@ class Stripe_Checkout {
 	 */
 	function display_admin_addons_page() {
 		
-	}
-	
-	/**
-	 * Function to handle the output of the Help submenu
-	 * 
-	 * @since 1.1.1
-	 */
-	function display_admin_help_page() {
-		include_once( 'views/admin-help.php' );
 	}
 
 	/**

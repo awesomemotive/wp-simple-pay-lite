@@ -225,30 +225,6 @@ function sc_is_zero_decimal_currency( $currency ) {
 }
 
 /**
- * Return the admin help page URL
- * 
- * @since 1.1.1
- */
-function sc_help_url( $tab = '', $string = '' ) {
-	
-	if( empty( $tab ) ) {
-		$tab = 'base';
-	}
-	
-	$args = array(
-		'page' => 'stripe-checkout_help',
-		'tab'  => $tab
-	);
-	
-	if( empty( $string ) ) {
-		$string = __( 'Help', 'sc' );
-	}
-	
-	return '<a href="' . add_query_arg( $args, admin_url( 'admin.php' ) ) . '">' . $string . '</a>';
-}
-
-
-/**
  * Check if the [stripe] shortcode exists on this page
  * 
  * @since 1.0.0

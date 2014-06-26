@@ -30,8 +30,9 @@ function sc_register_settings() {
 		'default' => array(
 			'note' => array(
 				'id'   => 'settings_note',
-				'name' => sc_help_url( '', __( 'Shortcode Help', 'sc' ) ),
-				'desc' => '<p class="description">' . __( 'Shortcode attributes take precedence and will always be used over default settings.', 'sc' ) . '</p>',
+				'name' => '',
+				'desc' => '<a href="http://wpstripe.net/docs/shortcodes/stripe-checkout/" target="_blank">' . __( 'See shortcode options and examples', 'sc' ) . '</a> ' . __( 'for', 'sc' ) . ' ' . Stripe_Checkout::get_plugin_title() .
+					'<p class="description">' . __( 'Shortcode attributes take precedence and will always be used over default settings.', 'sc' ) . '</p>',
 				'type' => 'section'
 			),
 			'name' => array(
