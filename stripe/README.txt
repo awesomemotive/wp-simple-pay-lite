@@ -158,6 +158,7 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 * General usuability improvements to settings pages.
 * Updated to most recent Stripe PHP library.
 * Included most recent Parsley JS validation library.
+* Moved in-plugin help to online help at wpstripe.net.
 
 = 1.1.0 =
 
