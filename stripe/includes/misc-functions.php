@@ -156,24 +156,6 @@ function sc_show_payment_details( $content ) {
 add_filter( 'the_content', 'sc_show_payment_details' );
 
 /**
- * Convert the amount passed from decimal to whole number (i.e. cents to dollars in USD).
- * Needed for Stripe's calculated amount. Don't convert if using zero-decimal currency.
- *
- * @since 1.1.1
- */
-
-//TODO Using yet?
-function sc_decimal_to_stripe_amount( $amount, $currency ) {
-
-	if ( !sc_is_zero_decimal_currency( $currency) ) {
-		$amount = $amount * 100;
-	}
-
-	// Always round to integer.
-	return round( $amount );
-}
-
-/**
  * Convert amount opposite of sc_decimal_to_stripe_amount().
  * Needed for Stripe's calculated amount. Don't convert if using zero-decimal currency.
  *
