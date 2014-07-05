@@ -280,6 +280,11 @@ class Stripe_Checkout {
 		if( ! defined( 'SC_EDD_SL_STORE_URL' ) ) {
 			define( 'SC_EDD_SL_STORE_URL', $this->sc_edd_sl_store_url );
 		}
+
+		// Website for this plugin
+		if( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
+			define( 'SC_WEBSITE_BASE_URL', 'http://wpstripe.net/' );
+		}
 	}
 	
 	/**
