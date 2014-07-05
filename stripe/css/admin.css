@@ -11,89 +11,34 @@
 
 #sc-settings-sidebar {
 	float: right;
-	margin-top: 9px;
 	margin-right: -310px;
 	width: 290px;
 }
 
-#sc-settings-sidebar .sidebar-container,
-#sc-settings-sidebar .sidebar-container-nobg {
-	border-radius: 0;
-	font-size: 15px;
-	margin-bottom: 18px;
-	padding: 0;
+#sc-settings-sidebar .centered {
+	text-align: center;
+}
+
+#sc-settings-sidebar .button-large {
+	font-size: 17px;
+	line-height: 30px;
+	height: 32px;
+}
+
+#sc-settings-sidebar .last-blurb {
+	font-size: 17px;
+}
+
+/* Alternative postbox class with no background or border. */
+#sc-settings-sidebar .postbox-nobg {
 	position: relative;
-	text-align: left;
+	min-width: 255px;
 }
 
-#sc-settings-sidebar .sidebar-container {
-	background-color: #fff;
-	border: 1px solid #e5e5e5;
+/* postbox overrides */
+#sc-settings-sidebar .sidebar-container .postbox .inside {
+	margin-bottom: 0;
 }
-
-#sc-settings-sidebar .sidebar-title-large,
-#sc-settings-sidebar .sidebar-title-medium {
-	background-color: #333;
-	border-bottom: 1px solid #ebebeb;
-	color: #ffffff;
-	font-size: 12px;
-	font-weight: 700;
-	line-height: 1.3;
-	margin: 0;
-	padding: 10px 20px 11px;
-	text-align: center;
-	-webkit-border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
-	border-radius: 5px 5px 0 0;
-}
-
-#sc-settings-sidebar .sidebar-title-large {
-	font-size: 20px;
-}
-
-#sc-settings-sidebar .sidebar-title-medium {
-	font-size: 16px;
-}
-
-#sc-settings-sidebar .sidebar-title-small {
-	font-size: 14px;
-	font-weight: 700;
-	line-height: 1.3;
-	margin: 0;
-	padding: 10px 14px 5px;
-	text-align: center;
-}
-
-#sc-settings-sidebar .sidebar-content {
-	padding: 14px;
-}
-
-#sc-settings-sidebar .sidebar-content ul {
-	margin: 0;
-}
-
-#sc-settings-sidebar .sidebar-content ul li {
-	margin-bottom: 8px;
-}
-
-#sc-settings-sidebar .sidebar-content ul li i {
-	margin-right: 5px;
-}
-
-#sc-settings-sidebar .sidebar-content p {
-	font-size: 14px;
-	line-height: 1.3;
-	margin: 0 0 10px;
-}
-
-#sc-settings-sidebar .sidebar-content.centered {
-	text-align: center;
-}
-
-#sc-settings-sidebar .sidebar-content.rss-news ul {
-	font-size: 14px;
-}
-
 /* License Stuff */
 .sc-license-message { 
 	display: inline-block; 
