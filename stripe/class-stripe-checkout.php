@@ -192,7 +192,7 @@ class Stripe_Checkout {
 		wp_enqueue_script( 'parsley', plugins_url( 'js/parsley.min.js', __FILE__ ), array( 'jquery' ), null, true );
 	}
 	
-	/*
+	/**
 	 * Function to localize the script variables being sent from the shortcodes
 	 * 
 	 * @since 1.1.1
@@ -337,8 +337,6 @@ class Stripe_Checkout {
 	 * Fired when the plugin is activated.
 	 *
 	 * @since    1.0.0
-	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
 	public static function activate() {
 		// Add value to indicate that we should show admin install notice.

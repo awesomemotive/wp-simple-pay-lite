@@ -103,6 +103,7 @@ function sc_charge_card() {
 		exit;
 	}
 }
+
 // We only want to run the charge if the Token is set
 if( isset( $_POST['stripeToken'] ) ) {
 	add_action( 'init', 'sc_charge_card' );
@@ -242,7 +243,6 @@ function sc_has_shortcode() {
 	return false;
 }
 
-
 /**
  * Since Stripe does not deal with Shipping information we will add it as meta to pass to the Dashboard
  * 
@@ -265,9 +265,6 @@ add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
 
 
 function sc_activate_license() {
-	
-	//global $sc_licenses;
-	
 	$sc_licenses = get_option( 'sc_licenses' );
 	
 	$current_license = $_POST['license'];
@@ -278,10 +275,6 @@ function sc_activate_license() {
 	// Need to trim the id of the excess stuff so we can update our option later
 	$length = strpos( $id, ']' ) - strpos( $id, '[' );
 	$id = substr( $id, strpos( $id, '[' ) + 1, $length - 1 );
-	
-	//echo $id;
-	
-	//die();
 	
 	// Do activation
 	$activate_params = array(
