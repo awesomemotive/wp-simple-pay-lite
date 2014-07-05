@@ -358,6 +358,8 @@ class Stripe_Checkout {
 			array( $this, 'display_plugin_admin_page' ),
 			'dashicons-cart'
 		);
+
+		/* TODO Remove add-ons submenu for now, which leaves no reason for the Settings submenu item either.
 		
 		// Change the first option to text "Settings" instead of "Stripe Checkout"
 		$this->plugin_screen_hook_suffix[] = add_submenu_page(
@@ -378,16 +380,21 @@ class Stripe_Checkout {
 			$this->plugin_slug . '_addons',
 			array( $this, 'display_admin_addons_page' )
 		);
+
+		*/
 	}
-	
+
 	/**
 	 * Function to handle the output of the Add Ons submenu
-	 * 
+	 *
 	 * @since 1.1.1
 	 */
+	/* TODO Remove add-ons submenu for now.
+
 	function display_admin_addons_page() {
-		
+
 	}
+	*/
 
 	/**
 	 * Render the settings page for this plugin.
