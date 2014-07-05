@@ -370,3 +370,19 @@ function sc_check_license( $license, $item ) {
 		return 'notfound';
 	}
 }
+
+/**
+ * Return true if any add-ons are active.
+ *
+ * @since   1.1.1
+ *
+ * @return  boolean
+ */
+// TODO Use global variable instead?
+function sc_is_addon_active() {
+	return (
+		class_exists( 'Stripe_Coupons' ) ||
+		class_exists( 'Stripe_Custom_Fields' ) ||
+		class_exists( 'Stripe_User_Entered_Amount' )
+	);
+}
