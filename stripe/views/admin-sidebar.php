@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="inside">
 			<div class="main">
 				<p class="last-blurb centered">
-					<?php _e( 'Just a few you get with Stripe Checkout Pro', 'sc' ); ?>
+					<?php _e( 'Additional perks you\'ll get with Stripe Checkout Pro', 'sc' ); ?>
 				</p>
 
 				<ul>
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</ul>
 
 				<div class="centered">
-					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL . '#pricing', 'stripe_checkout', 'sidebar_link', 'pro_upgrade' ); ?>"
+					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'pro_upgrade' ); ?>"
 					   class="button-primary button-large" target="_blank">
 						<?php _e( 'Upgrade to Pro Now', 'sc' ); ?></a>
 				</div>
