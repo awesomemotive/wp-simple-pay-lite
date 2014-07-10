@@ -17,21 +17,11 @@ Instead of spending time building your own checkout forms you can use Stripe's, 
 
 > "Stripe Checkout is an embeddable payment form for desktop, tablet, and mobile devices. It works within your site—customers can pay instantly, without being redirected away to complete the transaction."
 
-Read more and see a demo at https://stripe.com/checkout.
+[View Stripe Checkout Live Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 ###Plugin Requirements###
 
-This is a simple standalone Stripe checkout plugin. That's it.
-
-It does **NOT** require or integrate with:
-
-* E-commerce plugins
-* Membership site plugins
-* Form building plugins
-
-If you're using one of these, you can probably find a Stripe add-on designed for it.
-
-But if all you need is a quick and easy standalone checkout form, Simple Stripe Checkout should do the job.
+This is a simple standalone Stripe checkout plugin. That's it. No other plugins required.
 
 Note that Stripe suggests that the pages hosting the checkout form be SSL (start with `https://`). [Read more about SSL](https://stripe.com/help/ssl).
 
@@ -45,6 +35,16 @@ It only takes a couple minutes to add a payment form to your site.
 
 Viola! Now a payment button that opens your checkout form in an overlay will pop up.
 
+###Add-Ons Available in Stripe Checkout Pro Only###
+
+* **User Entered Amounts** - Let the customer enter what they want to pay.
+
+* **Coupon Codes** - Setup discount codes in you Stripe dashboard for customers to apply to their total.
+
+* **Custom Fields** - Record additional data along with each Stripe payment.
+
+[Learn More About Stripe Checkout Pro](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+
 Here are a few shortcode examples (amounts in U.S. cents):
 
 `[stripe name="The Awesome Store" amount="1999" description="The Awesome Blueprint Book"]`
@@ -55,9 +55,13 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 `[stripe name="The Awesome Store" amount="1999" description="The Book of Awesomeness" checkout_button_label="Now only {{amount}}!" enable_remember="false"]`
 
+[Detailed shortcode documentation here](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+
 Easily toggle between test and live mode until you're ready.
 
 If you want your customers to receive email receipts, make sure you enable this setting in your Stripe dashboard.
+
+[Learn More About Stripe Checkout Pro](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 ###Feature Requests and Updates###
 
@@ -66,6 +70,8 @@ If you want your customers to receive email receipts, make sure you enable this 
 * [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout).
 
 == Installation ==
+
+There are three ways to install this plugin.
 
 = 1. Admin Search =
 1. In your Admin, go to menu Plugins > Add.
