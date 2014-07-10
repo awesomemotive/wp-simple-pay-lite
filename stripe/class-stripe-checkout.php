@@ -192,7 +192,7 @@ class Stripe_Checkout {
 		wp_enqueue_script( 'parsley', plugins_url( 'js/parsley.min.js', __FILE__ ), array( 'jquery' ), null, true );
 	}
 	
-	/*
+	/**
 	 * Function to localize the script variables being sent from the shortcodes
 	 * 
 	 * @since 1.1.1
@@ -280,6 +280,11 @@ class Stripe_Checkout {
 		if( ! defined( 'SC_EDD_SL_STORE_URL' ) ) {
 			define( 'SC_EDD_SL_STORE_URL', $this->sc_edd_sl_store_url );
 		}
+
+		// Website for this plugin
+		if( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
+			define( 'SC_WEBSITE_BASE_URL', 'http://wpstripe.net/' );
+		}
 	}
 	
 	/**
@@ -332,8 +337,6 @@ class Stripe_Checkout {
 	 * Fired when the plugin is activated.
 	 *
 	 * @since    1.0.0
-	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
 	public static function activate() {
 		// Add value to indicate that we should show admin install notice.
@@ -355,6 +358,8 @@ class Stripe_Checkout {
 			array( $this, 'display_plugin_admin_page' ),
 			'dashicons-cart'
 		);
+
+		/* TODO Remove add-ons submenu for now, which leaves no reason for the Settings submenu item either.
 		
 		// Change the first option to text "Settings" instead of "Stripe Checkout"
 		$this->plugin_screen_hook_suffix[] = add_submenu_page(
@@ -375,16 +380,21 @@ class Stripe_Checkout {
 			$this->plugin_slug . '_addons',
 			array( $this, 'display_admin_addons_page' )
 		);
+
+		*/
 	}
-	
+
 	/**
 	 * Function to handle the output of the Add Ons submenu
-	 * 
+	 *
 	 * @since 1.1.1
 	 */
+	/* TODO Remove add-ons submenu for now.
+
 	function display_admin_addons_page() {
-		
+
 	}
+	*/
 
 	/**
 	 * Render the settings page for this plugin.

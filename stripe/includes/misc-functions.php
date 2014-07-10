@@ -103,6 +103,7 @@ function sc_charge_card() {
 		exit;
 	}
 }
+
 // We only want to run the charge if the Token is set
 if( isset( $_POST['stripeToken'] ) ) {
 	add_action( 'init', 'sc_charge_card' );
@@ -153,24 +154,6 @@ function sc_show_payment_details( $content ) {
 	return $content;
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
-
-/**
- * Convert the amount passed from decimal to whole number (i.e. cents to dollars in USD).
- * Needed for Stripe's calculated amount. Don't convert if using zero-decimal currency.
- *
- * @since 1.1.1
- */
-
-//TODO Using yet?
-function sc_decimal_to_stripe_amount( $amount, $currency ) {
-
-	if ( !sc_is_zero_decimal_currency( $currency) ) {
-		$amount = $amount * 100;
-	}
-
-	// Always round to integer.
-	return round( $amount );
-}
 
 /**
  * Convert amount opposite of sc_decimal_to_stripe_amount().
@@ -242,7 +225,6 @@ function sc_has_shortcode() {
 	return false;
 }
 
-
 /**
  * Since Stripe does not deal with Shipping information we will add it as meta to pass to the Dashboard
  * 
@@ -265,9 +247,6 @@ add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
 
 
 function sc_activate_license() {
-	
-	//global $sc_licenses;
-	
 	$sc_licenses = get_option( 'sc_licenses' );
 	
 	$current_license = $_POST['license'];
@@ -278,10 +257,6 @@ function sc_activate_license() {
 	// Need to trim the id of the excess stuff so we can update our option later
 	$length = strpos( $id, ']' ) - strpos( $id, '[' );
 	$id = substr( $id, strpos( $id, '[' ) + 1, $length - 1 );
-	
-	//echo $id;
-	
-	//die();
 	
 	// Do activation
 	$activate_params = array(
@@ -369,4 +344,43 @@ function sc_check_license( $license, $item ) {
 	} else {
 		return 'notfound';
 	}
+}
+
+/**
+ * Return true if any add-ons are active.
+ *
+ * @since   1.1.1
+ *
+ * @return  boolean
+ */
+// TODO Use global variable instead?
+function sc_is_addon_active() {
+	return (
+		class_exists( 'Stripe_Coupons' ) ||
+		class_exists( 'Stripe_Custom_Fields' ) ||
+		class_exists( 'Stripe_User_Entered_Amount' )
+	);
+}
+
+/**
+ * Google Analytics campaign URL.
+ *
+ * @since   1.1.1
+ *
+ * @param   string  $base_url Plain URL to navigate to
+ * @param   string  $source   GA "source" tracking value
+ * @param   string  $medium   GA "medium" tracking value
+ * @param   string  $campaign GA "campaign" tracking value
+ * @return  string  $url      Full Google Analytics campaign URL
+ */
+function sc_ga_campaign_url( $base_url, $source, $medium, $campaign ) {
+	// $medium examples: 'sidebar_link', 'banner_image'
+
+	$url = add_query_arg( array(
+		'utm_source'   => $source,
+		'utm_medium'   => $medium,
+		'utm_campaign' => $campaign
+	), $base_url );
+
+	return $url;
 }

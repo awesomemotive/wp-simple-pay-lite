@@ -14,50 +14,90 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="sidebar-container">
-	<div class="sidebar-content">
-		<p>
-			<?php _e( 'Want to be notified of major features or add-ons to Stripe Checkout?', 'sc' ); ?>
-		</p>
+<!-- Use some built-in WP admin theme styles. -->
 
-		<form action="http://philderksen.us1.list-manage1.com/subscribe/post?u=7a94395392f63c258fe90f941&amp;id=e8bf1dff87" method="post" target="_blank" novalidate>
+<?php if ( ! sc_is_addon_active() ): // If add-ons are active don't show. ?>
+
+<div class="sidebar-container metabox-holder">
+	<div class="postbox">
+		<h3 class="wp-ui-primary"><span><?php _e( 'Need More Options?', 'sc' ); ?></span></h3>
+		<div class="inside">
+			<div class="main">
+				<p class="last-blurb centered">
+					<?php _e( 'Additional perks you\'ll get with Stripe Checkout Pro', 'sc' ); ?>
+				</p>
+
+				<ul>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Let customers enter an amount', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Add custom fields', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Integrate coupon codes', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Access to future Stripe add-ons', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Automatic updates & email support', 'sc' ); ?></li>
+				</ul>
+
+				<div class="centered">
+					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'pro_upgrade' ); ?>"
+					   class="button-primary button-large" target="_blank">
+						<?php _e( 'Upgrade to Pro Now', 'sc' ); ?></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php endif; // End add-ons check ?>
+
+<div class="sidebar-container metabox-holder">
+	<div class="postbox">
+		<h3 class="wp-ui-primary"><span><?php _e( 'Resources', 'sc' ); ?></span></h3>
+		<div class="inside">
+			<ul>
+				<li>
+					<div class="dashicons dashicons-arrow-right-alt2"></div>
+					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'stripe_checkout', 'sidebar_link', 'docs' ); ?>" target="_blank">
+						<?php _e( 'Instructions & Help', 'sc' ); ?></a>
+				</li>
+
+				<?php if ( ! sc_is_addon_active() ): // If add-ons are active don't show. ?>
+
+				<li>
+					<div class="dashicons dashicons-arrow-right-alt2"></div>
+					<a href="http://wordpress.org/support/plugin/stripe" target="_blank">
+						<?php _e( 'Community Support Forums', 'sc' ); ?></a>
+				</li>
+
+				<?php endif; ?>
+
+				<li>
+					<div class="dashicons dashicons-arrow-right-alt2"></div>
+					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'addons' ); ?>" target="_blank">
+						<?php _e( 'Stripe Checkout Add-Ons', 'sc' ); ?></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="sidebar-container metabox-holder">
+	<div class="postbox">
+		<div class="inside">
 			<p>
-				<input type="email" name="EMAIL" class="large-text" placeholder="Your email address">
+				<?php _e( 'Now accepting 5-star reviews! It only takes seconds and means a lot.', 'sc' ); ?>
 			</p>
-			<p>
-				<input type="submit" value="<?php _e( 'Keep me in the Loop!', 'sc' ); ?>" name="subscribe" class="button-primary">
-			</p>
-		</form>
+			<div class="centered">
+				<a href="http://wordpress.org/support/view/plugin-reviews/stripe" class="button-primary" target="_blank">
+					<?php _e( 'Rate this Plugin Now', 'sc' ); ?></a>
+			</div>
+		</div>
 	</div>
 </div>
 
-<div class="sidebar-container">
-	<div class="sidebar-content">
-		<p>
-			<?php _e( 'Now accepting 5-star reviews! It only takes seconds and means a lot.', 'sc' ); ?>
-		</p>
-
-		<a href="https://wordpress.org/support/view/plugin-reviews/stripe" class="button-primary" target="_blank">
-			<?php _e( 'Rate this Plugin Now', 'sc' ); ?></a>
-	</div>
-</div>
-
-<div class="sidebar-container">
-	<div class="sidebar-content">
-		<p>
-			<?php _e( 'Need some help? Have a feature request?', 'sc' ); ?>
-		</p>
-		<p>
-			<a href="https://wordpress.org/support/plugin/stripe" target="_blank">
-				<?php _e( 'Visit our Community Support Forums', 'sc' ); ?></a>
-		</p>
-	</div>
-</div>
-
-<div class="sidebar-container-nobg">
-	<div class="sidebar-content centered">
-		<a href="https://stripe.com/" target="_blank">
-			<img src="<?php echo SC_PLUGIN_URL; ?>assets/powered-by-stripe.png" />
-		</a>
+<div class="sidebar-container metabox-holder">
+	<div class="postbox-nobg">
+		<div class="inside centered">
+			<a href="https://stripe.com/" target="_blank">
+				<img src="<?php echo SC_PLUGIN_URL; ?>assets/powered-by-stripe.png" />
+			</a>
+		</div>
 	</div>
 </div>
