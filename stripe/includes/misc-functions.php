@@ -91,14 +91,8 @@ function sc_charge_card() {
 			$sc_payment_details['description'] = $description;
 			$sc_payment_details['currency']    = $currency;
 
-			$test = Stripe_Checkout::get_instance();
-			$test->session->set( 'sc_payment_details', $sc_payment_details );
-			
+			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );		
 		}
-		
-		//$sc_payment_details = $test->session->get( 'sc_payment_details' );
-	
-		//echo '<pre>' . print_r( $sc_payment_details, true ) . '</pre>';
 		
 		do_action( 'sc_redirect_before' );
 		
@@ -122,11 +116,7 @@ if( isset( $_POST['stripeToken'] ) ) {
  */
 function sc_show_payment_details( $content ) {
 	
-	$test = Stripe_Checkout::get_instance();
-	
-	$sc_payment_details = $test->session->get( 'sc_payment_details' );
-	
-	//echo '<pre>' . print_r( $sc_payment_details, true ) . '</pre>';
+	$sc_payment_details = Stripe_Checkout::get_instance()->session->get( 'sc_payment_details' );
 	
 	$payment_details_html = '';
 	
@@ -158,11 +148,9 @@ function sc_show_payment_details( $content ) {
 			
 			$content = $before_payment_details_html . $payment_details_html . $after_payment_details_html . $content;
 			
-			//delete_option( 'sc_payment_details' );
-			
 			$sc_payment_details['show'] = false;
 			
-			$test->session->set( 'sc_payment_details', $sc_payment_details );
+			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );
 		}
 	}
 	
