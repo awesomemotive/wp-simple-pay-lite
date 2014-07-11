@@ -89,36 +89,25 @@
                                     .text('Please wait...');
                         }
                     });
-					
-					
-					// TODO is there a better way to do this? When using do_shortcode() the prefill_email option not being set causes some errors and issues and this fixes it
-					// by not including the 'email=""' if prefill_email is not set. Having it set to blank is what causes the issue.
-					if( sc_script[formId].email != -1 ) {
-						handler.open({
-							name: ( sc_script[formId].name != -1 ? sc_script[formId].name : '' ),
-							description: ( sc_script[formId].description != -1 ? sc_script[formId].description : '' ),
-							amount: finalAmount,
-							currency: ( sc_script[formId].currency != -1 ? sc_script[formId].currency : 'USD' ),
-							panelLabel: ( sc_script[formId].panelLabel != -1 ? sc_script[formId].panelLabel : 'Pay {{amount}}' ),
-							billingAddress: ( sc_script[formId].billingAddress == 'true' || sc_script[formId].billingAddress == 1 ? true : false ),
-							shippingAddress: ( sc_script[formId].shippingAddress == 'true' || sc_script[formId].shippingAddress == 1 ? true : false ),
-							allowRememberMe: ( sc_script[formId].allowRememberMe == 1 || sc_script[formId].allowRememberMe == 'true' ?  true : false ),
-							email: ( sc_script[formId].email != -1 ?  sc_script[formId].email : '' )
-						});
-					} else {
-						handler.open({
-							name: ( sc_script[formId].name != -1 ? sc_script[formId].name : '' ),
-							description: ( sc_script[formId].description != -1 ? sc_script[formId].description : '' ),
-							amount: finalAmount,
-							currency: ( sc_script[formId].currency != -1 ? sc_script[formId].currency : 'USD' ),
-							panelLabel: ( sc_script[formId].panelLabel != -1 ? sc_script[formId].panelLabel : 'Pay {{amount}}' ),
-							billingAddress: ( sc_script[formId].billingAddress == 'true' || sc_script[formId].billingAddress == 1 ? true : false ),
-							shippingAddress: ( sc_script[formId].shippingAddress == 'true' || sc_script[formId].shippingAddress == 1 ? true : false ),
-							allowRememberMe: ( sc_script[formId].allowRememberMe == 1 || sc_script[formId].allowRememberMe == 'true' ?  true : false )
-						});
-					}
-					
-					
+
+	                var stripeParams = {
+		                name: ( sc_script[formId].name != -1 ? sc_script[formId].name : '' ),
+		                description: ( sc_script[formId].description != -1 ? sc_script[formId].description : '' ),
+		                amount: finalAmount,
+		                currency: ( sc_script[formId].currency != -1 ? sc_script[formId].currency : 'USD' ),
+		                panelLabel: ( sc_script[formId].panelLabel != -1 ? sc_script[formId].panelLabel : 'Pay {{amount}}' ),
+		                billingAddress: ( sc_script[formId].billingAddress == 'true' || sc_script[formId].billingAddress == 1 ? true : false ),
+		                shippingAddress: ( sc_script[formId].shippingAddress == 'true' || sc_script[formId].shippingAddress == 1 ? true : false ),
+		                allowRememberMe: ( sc_script[formId].allowRememberMe == 1 || sc_script[formId].allowRememberMe == 'true' ?  true : false )
+	                };
+
+	                // When using do_shortcode() the prefill_email option not being set causes some errors and issues and this fixes it
+	                // by not including the 'email=""' if prefill_email is not set. Having it set to blank is what causes the issue.
+	                if ( sc_script[formId].email != -1 ) {
+		                stripeParams.email = sc_script[formId].email;
+	                }
+
+	                handler.open( stripeParams );
 
                     // Let Stripe checkout overlay do the original form submit after it's ready.
                     formInstance.submitEvent.preventDefault();
