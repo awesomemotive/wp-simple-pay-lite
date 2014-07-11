@@ -55,6 +55,9 @@ class Stripe_Checkout {
 	
 	
 	protected $sc_edd_sl_store_url = 'http://wpstripe.net/';
+	
+	
+	public $session;
 
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
@@ -71,7 +74,9 @@ class Stripe_Checkout {
 		}
 		
 		// Include required files.
-		add_action( 'init', array( $this, 'includes' ), 1 );
+		//add_action( 'init', array( $this, 'includes' ), 1 );
+		$this->setup_constants();
+		$this->includes();
 		
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
@@ -89,7 +94,7 @@ class Stripe_Checkout {
 		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
 		
 		// Set our plugin constants
-		add_action( 'init', array( $this, 'setup_constants' ) );
+		//add_action( 'init', array( $this, 'setup_constants' ) );
 		
 		// Check WP version
 		add_action( 'admin_init', array( $this, 'check_wp_version' ) );
@@ -328,6 +333,7 @@ class Stripe_Checkout {
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
 			self::$instance = new self;
+			self::$instance->session = new SC_Session();
 		}
 
 		return self::$instance;
@@ -418,6 +424,8 @@ class Stripe_Checkout {
 			require_once( 'stripe-php/Stripe.php' );
 		}
 		
+		
+		include_once( 'includes/class-sc-session.php' );
 		
 		// Include any necessary functions
 		include_once( 'includes/misc-functions.php' );
