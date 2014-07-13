@@ -4,22 +4,15 @@
  *
  * This is a wrapper class for WP_Session / PHP $_SESSION and handles the storage of cart items, purchase sessions, etc
  *
- * @package     EDD
- * @subpackage  Classes/Session
- * @copyright   Copyright (c) 2014, Pippin Williamson
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since       1.5
+ * @package SC
+ * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ * @since   1.1.2
  */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) )
 	exit;
 
-/**
- * EDD_Session Class
- *
- * @since 1.5
- */
 class SC_Session {
 
 	/**
