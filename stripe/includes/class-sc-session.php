@@ -45,12 +45,12 @@ class SC_Session {
 		}
 
 		if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
-			require_once( SC_PLUGIN_DIR . 'includes/class-recursive-arrayaccess.php' );
+			require_once( SC_PLUGIN_DIR . 'libraries/wp-session-manager/class-recursive-arrayaccess.php' );
 		}
 
 		if ( ! class_exists( 'WP_Session' ) ) {
-			require_once( SC_PLUGIN_DIR . 'includes/class-wp-session.php' );
-			require_once( SC_PLUGIN_DIR . 'includes/wp-session.php' );
+			require_once( SC_PLUGIN_DIR . 'libraries/wp-session-manager/class-wp-session.php' );
+			require_once( SC_PLUGIN_DIR . 'libraries/wp-session-manager/wp-session.php' );
 		}
 
 		add_filter( 'wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
