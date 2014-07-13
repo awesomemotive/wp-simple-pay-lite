@@ -421,10 +421,9 @@ class Stripe_Checkout {
 		global $sc_options;
 		
 		if( ! class_exists( 'Stripe' ) ) {
-			require_once( 'stripe-php/Stripe.php' );
+			require_once( 'libraries/stripe-php/Stripe.php' );
 		}
-		
-		
+
 		include_once( 'includes/class-sc-session.php' );
 		
 		// Include any necessary functions

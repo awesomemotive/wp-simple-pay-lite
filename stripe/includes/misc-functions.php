@@ -20,7 +20,7 @@ function sc_charge_card() {
 	if( isset( $_POST['stripeToken'] ) ) {
 		
 		if( ! class_exists( 'Stripe' ) ) {
-			require_once( SC_PLUGIN_DIR . 'stripe-php/Stripe.php' );
+			require_once( SC_PLUGIN_DIR . 'libraries/stripe-php/Stripe.php' );
 		}
 		
 		global $sc_options;
