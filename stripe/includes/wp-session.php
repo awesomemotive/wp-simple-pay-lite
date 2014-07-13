@@ -1,6 +1,7 @@
 <?php
 /**
  * WordPress session managment.
+ * https://github.com/ericmann/wp-session-manager
  *
  * Standardizes WordPress session data and uses either database transients or in-memory caching
  * for storing user session information.
