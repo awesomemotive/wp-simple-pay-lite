@@ -152,6 +152,11 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 == Changelog ==
 
+= 1.1.2 =
+
+* Fixed bug where a blank email address was getting sent and causing some payments to hang or fail.
+* Now using WP Session Manager to handle session data (https://github.com/ericmann/wp-session-manager).
+
 = 1.1.1 =
 
 * Added prefill_email shortcode attribute.
