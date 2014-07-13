@@ -62,6 +62,3 @@ function sc_v111_upgrade() {
 	add_option( 'sc_upgrade_has_run', 1 );
 }
 sc_do_all_upgrades();
-
-
-//add_action( 'init', 'd' );
