@@ -10,6 +10,10 @@
  * @since 3.6.0
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) )
+	exit;
+
 /**
  * Recursive array class to allow multidimensional array access.
  *

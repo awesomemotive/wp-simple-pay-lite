@@ -11,8 +11,9 @@
  * @since       1.5
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) )
+	exit;
 
 /**
  * EDD_Session Class
