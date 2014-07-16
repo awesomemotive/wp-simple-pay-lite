@@ -387,3 +387,18 @@ function sc_ga_campaign_url( $base_url, $source, $medium, $campaign ) {
 
 	return $url;
 }
+
+/**
+ * Disables opengraph tags to avoid conflicts with WP SEO by Yoast
+ *
+ * @since 1.2.0
+ */
+function sc_disable_seo_og() {
+	
+	$sc_payment_details = Stripe_Checkout::get_instance()->session->get( 'sc_payment_details' );
+	
+	if ( $sc_payment_details['show'] == true ) {
+		remove_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
+	}
+}
+add_action( 'template_redirect', 'sc_disable_seo_og', 1 );
