@@ -54,7 +54,7 @@ class Stripe_Checkout {
 	protected $plugin_screen_hook_suffix = null;
 	
 	
-	protected $sc_edd_sl_store_url = 'http://wpstripe.net/';
+	protected $sc_edd_sl_store_url = 'http://eddsl.philsapps.com/';
 	
 	
 	public $session;
@@ -112,6 +112,25 @@ class Stripe_Checkout {
 		
 		// Hook into wp_footer so we can localize our script AFTER all the shortcodes have been processed
 		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
+		
+		// Add admin notice for license keys
+		add_action( 'admin_notices', array( $this, 'license_key_notice' ) );
+	}
+	
+	function license_key_notice() {
+		
+		global $sc_options;
+		
+		$sc_licenses = get_option( 'sc_licenses' );
+		
+		$arg1 = ( ! empty( $sc_options['sc_coup_license'] ) ? ( ! empty( $sc_licenses['Stripe Coupons'] ) && ( $sc_licenses['Stripe Coupons'] != 'valid' ) ) : true );
+		$arg2 = ( ! empty( $sc_options['sc_cf_license'] )  ? ( ! empty( $sc_licenses['Stripe Custom Fields'] ) && ( $sc_licenses['Stripe Custom Fields'] != 'valid' ) ) : true );
+		$arg3 = ( ! empty( $sc_options['sc_uea_license'] ) ? ( ! empty( $sc_licenses['Stripe User Entered Amount'] ) && ( $sc_licenses['Stripe User Entered Amount'] != 'valid' ) ) : true );
+		
+		
+		if( $arg1 || $arg2 || $arg3 ) {
+			include_once( 'views/admin-license-notice.php' );
+		}
 	}
 	
 	/**

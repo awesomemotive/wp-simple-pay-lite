@@ -430,5 +430,7 @@ function sc_get_settings() {
 		$sc_options['currency'] = strtoupper( $sc_options['currency'] );
 	}
 	
+	
+	
 	return $sc_options;
 }
