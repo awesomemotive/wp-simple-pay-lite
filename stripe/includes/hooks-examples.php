@@ -42,10 +42,15 @@ function remove_payment_details( $payment_details ) {
  * 
  * In this example I have setup a "Thank You" page to point to after the purchase
  */
-function test_sc_redirect( $redirect ) {
-	return 'http://nickyoungweb.com/zip/?page_id=1018';
+function test_sc_redirect( $redirect, $failed ) {
+	
+	if( $failed ) {
+		return 'http://www.mysite.com/fail-redirect';
+	} else {
+		return 'http://www.mysite.com/success-redirect';
+	}
 }
-//add_filter( 'sc_redirect', 'test_sc_redirect' );
+//add_filter( 'sc_redirect', 'test_sc_redirect', 10, 2 );
 
 
 /*

@@ -67,14 +67,16 @@ function sc_charge_card() {
 				)
 			);
 			
-			$redirect = add_query_arg( array( 'payment' => 'success', 'amount' => $amount ), apply_filters( 'sc_redirect', $redirect ) );
+			$query_args = array( 'payment' => 'success', 'amount' => $amount );
 			
 			$failed = false;
 			
 			
 		} catch(Stripe_CardError $e) {
 		  
-			$redirect = add_query_arg( 'payment', 'failed', get_permalink() );
+			$redirect = get_permalink();
+			
+			$query_args = array( 'payment' => 'failed' );
 			
 			$failed = true;
 		}
@@ -96,7 +98,7 @@ function sc_charge_card() {
 		
 		do_action( 'sc_redirect_before' );
 		
-		wp_redirect( $redirect );
+		wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
 		
 		do_action( 'sc_redirect_after' );
 		
