@@ -119,6 +119,8 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 = 1.2.0 =
 
+* Added verify_zip attribute and default settings option.
+* Updated sc_redirect filter to allow modification for failed redirect URLs.
 * Fixed compatibility issue with the [WordPress SEO plugin](https://wordpress.org/plugins/wordpress-seo/).
 
 = 1.1.2 =
