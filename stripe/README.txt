@@ -41,7 +41,7 @@ Viola! Now a payment button that opens your checkout form in an overlay will pop
 * **Coupon Codes** - Setup discount codes in your Stripe dashboard for customers to apply to their total.
 * **Custom Fields** - Record additional data along with each Stripe payment.
 
-[Learn More About Stripe Checkout Pro](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[See Add-On Pricing & Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Here are a few shortcode examples (amounts in U.S. cents):
 
@@ -53,7 +53,7 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 `[stripe name="The Awesome Store" amount="1999" description="The Book of Awesomeness" checkout_button_label="Now only {{amount}}!" enable_remember="false"]`
 
-[Detailed shortcode documentation here](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Detailed Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Easily toggle between test and live mode until you're ready.
 
@@ -97,42 +97,7 @@ There are three ways to install this plugin.
 
 == Frequently Asked Questions ==
 
-**Where do I enter my Stripe keys and toggle between Test and Live modes?**
-
-In your WordPress admin go to Settings > Simple Stripe Checkout after the plugin is activated.
-
-**How do my customers get email receipts?**
-
-This plugin does not email receipts through WordPress. Instead, we let Stripe take care of it.
-
-To enable email receipts go to your Stripe dashboard > Account settings > Emails. You can configure business details and upload a logo here as well.
-
-Note that you won't receive emails in Test mode.
-
-**Where are my Stripe payment records?**
-
-Unlike other form builder and e-commerce plugins, this plugin does not keep record of your transactions since Stripe already does this for you. Just visit your Stripe dashboard to view all your payments and related transactions.
-
-**Is SSL (https://) required?**
-
-*From the official [Stripe checkout documentation](https://stripe.com/docs/checkout):*
-
-> All submissions of payment info using Checkout are made via a secure HTTPS connection. However, in order to protect yourself from certain forms of man-in-the-middle attacks, we suggest that you also serve the page containing the payment form with HTTPS as well. This means that any page that a Checkout form may exist on should start with `https://` rather than just `http://`.
-
-> If you are not familiar with the process of buying SSL certificates and integrating them with your server to enable a secure HTTPS connection, please visit our [Help Page for SSL](https://stripe.com/help/ssl).
-
-**What does the "Remember me everywhere" option on the checkout form do?**
-
-Stripe now has "1-tap" payments to allow customers to optionally save their details. [Read more here](https://stripe.com/checkout#onetap)
-
-**I need to add each payment to a Google spreadsheet, each customer to a mailing list, or perform some other custom action after each transaction.**
-
-Try using [Zapier](https://zapier.com/app/explore?services=stripe) to connect Stripe with other services, or perform custom actions with Stripe's [webhooks](https://stripe.com/docs/webhooks).
-
-= Feature Requests & Announcements =
-
-* [Submit feature requests in our support forums.](https://wordpress.org/support/plugin/stripe)
-* [Get notified of major updates.](http://eepurl.com/Q_ET9)
+[Simple Stripe Checkout FAQ](http://wpstripe.net/docs/getting-started/simple-stripe-checkout-faq/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 = General Troubleshooting =
 
@@ -154,12 +119,12 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 = 1.2.0 =
 
-
+* Fixed compatibility issue with the [WordPress SEO plugin](https://wordpress.org/plugins/wordpress-seo/).
 
 = 1.1.2 =
 
 * Fixed bug where a blank email address was getting sent and causing some payments to hang or fail.
-* Now using WP Session Manager to handle session data (https://github.com/ericmann/wp-session-manager).
+* Now using [WP Session Manager](https://github.com/ericmann/wp-session-manager) to handle session data.
 
 = 1.1.1 =
 
