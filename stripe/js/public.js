@@ -89,7 +89,9 @@
                                     .text('Please wait...');
                         }
                     });
-
+					
+					console.log( 'zipCode', sc_script[formId].zipCode );
+					
 	                var stripeParams = {
 		                name: ( sc_script[formId].name != -1 ? sc_script[formId].name : '' ),
 		                description: ( sc_script[formId].description != -1 ? sc_script[formId].description : '' ),
@@ -98,7 +100,8 @@
 		                panelLabel: ( sc_script[formId].panelLabel != -1 ? sc_script[formId].panelLabel : 'Pay {{amount}}' ),
 		                billingAddress: ( sc_script[formId].billingAddress == 'true' || sc_script[formId].billingAddress == 1 ? true : false ),
 		                shippingAddress: ( sc_script[formId].shippingAddress == 'true' || sc_script[formId].shippingAddress == 1 ? true : false ),
-		                allowRememberMe: ( sc_script[formId].allowRememberMe == 1 || sc_script[formId].allowRememberMe == 'true' ?  true : false )
+		                allowRememberMe: ( sc_script[formId].allowRememberMe == 1 || sc_script[formId].allowRememberMe == 'true' ?  true : false ),
+						zipCode: ( sc_script[formId].zipCode == 1 || sc_script[formId].zipCode == 'true' ?  true : false )
 	                };
 
 	                // When using do_shortcode() the prefill_email option not being set causes some errors and issues and this fixes it

@@ -99,6 +99,12 @@ function sc_register_settings() {
 				'desc' => __( 'Require the user to enter their shipping address during checkout.', 'sc' ),
 				'type' => 'checkbox'
 			),
+			'verify_zip' => array(
+				'id'   => 'verify_zip',
+				'name' => __( 'Verify Zip Code', 'sc' ),
+				'desc' => __( 'Verifies the zip code of the card.', 'sc' ),
+				'type' => 'checkbox'
+			),
 			'enable_remember' => array(
 				'id'   => 'enable_remember',
 				'name' => __( 'Enable "Remember Me"', 'sc' ),
