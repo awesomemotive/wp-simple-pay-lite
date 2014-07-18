@@ -123,12 +123,12 @@ class Stripe_Checkout {
 		
 		$sc_licenses = get_option( 'sc_licenses' );
 		
-		$arg1 = ( ! empty( $sc_options['sc_coup_license'] ) ? ( ! empty( $sc_licenses['Stripe Coupons'] ) && ( $sc_licenses['Stripe Coupons'] != 'valid' ) ) : true );
-		$arg2 = ( ! empty( $sc_options['sc_cf_license'] )  ? ( ! empty( $sc_licenses['Stripe Custom Fields'] ) && ( $sc_licenses['Stripe Custom Fields'] != 'valid' ) ) : true );
-		$arg3 = ( ! empty( $sc_options['sc_uea_license'] ) ? ( ! empty( $sc_licenses['Stripe User Entered Amount'] ) && ( $sc_licenses['Stripe User Entered Amount'] != 'valid' ) ) : true );
+		$sc_coup = ( ! empty( $sc_options['sc_coup_license'] ) ? ( class_exists( 'Stripe_Coupons' ) && ! empty( $sc_licenses['Stripe Coupons'] ) && ( $sc_licenses['Stripe Coupons'] != 'valid' ) ) : true );
+		$sc_cf   = ( ! empty( $sc_options['sc_cf_license'] )  ? ( class_exists( 'Stripe_Custom_Fields' ) && ! empty( $sc_licenses['Stripe Custom Fields'] ) && ( $sc_licenses['Stripe Custom Fields'] != 'valid' ) ) : true );
+		$sc_uea  = ( ! empty( $sc_options['sc_uea_license'] ) ? ( class_exists( 'Stripe_User_Entered_Amount' ) && ! empty( $sc_licenses['Stripe User Entered Amount'] ) && ( $sc_licenses['Stripe User Entered Amount'] != 'valid' ) ) : true );
 		
-		
-		if( $arg1 || $arg2 || $arg3 ) {
+		// If one is of these is true then we need to output the message
+		if( $sc_coup || $sc_cf || $sc_uea ) {
 			include_once( 'views/admin-license-notice.php' );
 		}
 	}
