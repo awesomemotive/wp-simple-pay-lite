@@ -90,8 +90,6 @@
                         }
                     });
 					
-					console.log( 'zipCode', sc_script[formId].zipCode );
-					
 	                var stripeParams = {
 		                name: ( sc_script[formId].name != -1 ? sc_script[formId].name : '' ),
 		                description: ( sc_script[formId].description != -1 ? sc_script[formId].description : '' ),
