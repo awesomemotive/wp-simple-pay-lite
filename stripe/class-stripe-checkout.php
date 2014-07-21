@@ -54,7 +54,7 @@ class Stripe_Checkout {
 	protected $plugin_screen_hook_suffix = null;
 	
 	
-	protected $sc_edd_sl_store_url = 'http://eddsl.philsapps.com/';
+	protected $sc_edd_sl_store_url = 'http://wpstripe.net/';
 	
 	
 	public $session;
