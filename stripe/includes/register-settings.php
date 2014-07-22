@@ -80,6 +80,13 @@ function sc_register_settings() {
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
+			'failure_redirect_url' => array(
+				'id'   => 'failure_redirect_url',
+				'name' => __( 'Failure Redirect URL', 'sc' ),
+				'desc' => __( 'The URL that the user should be redirected to after a failed payment.' , 'sc' ),
+				'type' => 'text',
+				'size' => 'regular-text'
+			),
 			'stripe_total_label' => array(
 				'id'   => 'stripe_total_label',
 				'name' => __( 'Stripe Total Label', 'sc' ),

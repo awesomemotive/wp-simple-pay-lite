@@ -74,7 +74,7 @@ function sc_charge_card() {
 			
 		} catch(Stripe_CardError $e) {
 		  
-			$redirect = get_permalink();
+			$redirect = ( ! empty( $sc_options['failure_redirect_url']  ) ? $sc_options['failure_redirect_url'] : get_permalink() );
 			
 			$query_args = array( 'payment' => 'failed' );
 			
