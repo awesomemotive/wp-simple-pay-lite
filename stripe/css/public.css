@@ -6,6 +6,10 @@
 	margin-bottom: 15px;
 }
 
+.sc-payment-details-error {
+	background: #ffbaba;
+}
+
 /* Basic form styles. Most based off Bootstrap 3. */
 
 .sc-checkout-form {
