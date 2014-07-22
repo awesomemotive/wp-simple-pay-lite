@@ -34,6 +34,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
 					'enable_remember'       => '',    // true or false
 					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
+					'failure_redirect_url'  => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
 					'prefill_email'         => 'false',
 					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' )
 				), $attr, 'stripe' ) );
@@ -85,7 +86,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 			'verify_zip'           => $verify_zip
 		),
 		'other' => array(
-			'success-redirect-url' => $success_redirect_url
+			'success-redirect-url' => $success_redirect_url,
+			'failure-redirect-url' => $failure_redirect_url
 		)
 	);
 	
@@ -114,6 +116,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$description          = $sc_script_options['script']['description'];
 	$amount               = $sc_script_options['script']['amount'];
 	$success_redirect_url = $sc_script_options['other']['success-redirect-url'];
+	$failure_redirect_url = $sc_script_options['other']['failure-redirect-url'];
 	$currency             = $sc_script_options['script']['currency'];
 
 	//Add Parsley JS form validation attribute here.
@@ -128,6 +131,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$html .= '<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />';
 	$html .= '<input type="hidden" name="sc-amount" class="sc_amount" value="" />';
 	$html .= '<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />';
+	$html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $failure_redirect_url ) ? $failure_redirect_url : get_permalink() ) ) . '" />';
 	$html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
 	$html .= '<input type="hidden" name="stripeToken" value="" class="sc_stripeToken" />';
 	$html .= '<input type="hidden" name="stripeEmail" value="" class="sc_stripeEmail" />';

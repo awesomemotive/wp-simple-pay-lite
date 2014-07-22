@@ -26,7 +26,8 @@ function sc_charge_card() {
 		global $sc_options;
 		
 		// Set redirect
-		$redirect     = $_POST['sc-redirect'];
+		$redirect      = $_POST['sc-redirect'];
+		$fail_redirect = $_POST['sc-redirect-fail'];
 		
 		// Get the credit card details submitted by the form
 		$token       = $_POST['stripeToken'];
@@ -74,7 +75,7 @@ function sc_charge_card() {
 			
 		} catch(Stripe_CardError $e) {
 		  
-			$redirect = ( ! empty( $sc_options['failure_redirect_url']  ) ? $sc_options['failure_redirect_url'] : get_permalink() );
+			$redirect = $fail_redirect;
 			
 			$query_args = array( 'payment' => 'failed' );
 			
