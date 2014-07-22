@@ -32,7 +32,7 @@
 				$.post( ajaxurl, data, function(response) {
 
 					button.parent().find('.sc-spinner-wrap').hide();
-
+					
 					if( response == 'valid' ) {
 						button.html( 'Deactivate' );
 						button.attr('data-sc-action', 'deactivate_license');

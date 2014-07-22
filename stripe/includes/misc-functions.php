@@ -316,6 +316,8 @@ function sc_activate_license() {
 		update_option( 'sc_settings_licenses', $sc_settings_licenses );
 		
 		
+	} else if( $activate_data->license == 'deactivated' ) {
+		$sc_licenses[$item] = 'deactivated';
 	} else {
 		$sc_licenses[$item] = 'invalid';
 	}
