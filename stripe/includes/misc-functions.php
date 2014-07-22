@@ -163,7 +163,7 @@ function sc_show_payment_details( $content ) {
 			} else {
 				$before_payment_details_html = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
 
-				$payment_details_html .= '<p>' . __( 'Unfortunately, an error has occurred. Please go back and try again.', 'sc' ) . '</p>' . "\n";
+				$payment_details_html .= '<p>' . __( 'Sorry, but for some reason your card was declined and your payment did not complete.', 'sc' ) . '</p>' . "\n";
 				
 				$after_payment_details_html = '</div>' . "\n";
 				
