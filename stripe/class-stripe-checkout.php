@@ -123,9 +123,31 @@ class Stripe_Checkout {
 		
 		$sc_licenses = get_option( 'sc_licenses' );
 		
-		$sc_coup = ( ! empty( $sc_options['sc_coup_license'] ) ? ( class_exists( 'Stripe_Coupons' ) && ! empty( $sc_licenses['Stripe Coupons'] ) && ( $sc_licenses['Stripe Coupons'] != 'valid' ) ) : true );
-		$sc_cf   = ( ! empty( $sc_options['sc_cf_license'] )  ? ( class_exists( 'Stripe_Custom_Fields' ) && ! empty( $sc_licenses['Stripe Custom Fields'] ) && ( $sc_licenses['Stripe Custom Fields'] != 'valid' ) ) : true );
-		$sc_uea  = ( ! empty( $sc_options['sc_uea_license'] ) ? ( class_exists( 'Stripe_User_Entered_Amount' ) && ! empty( $sc_licenses['Stripe User Entered Amount'] ) && ( $sc_licenses['Stripe User Entered Amount'] != 'valid' ) ) : true );
+		$sc_coup = false;
+		$sc_cf   = false;
+		$sc_uea  = false;
+		
+		if( class_exists( 'Stripe_Coupons' ) ) {
+			if( empty( $sc_options['sc_coup_license'] ) ) {
+				$sc_coup = true;
+			}
+			/*if( ! empty( $sc_options['sc_coup_license'] ) && $sc_licenses['Stripe Coupons'] != 'valid' ) {
+				echo 'Valid: ' . $sc_licenses['Stripe Coupons'] . '<br>';
+				$sc_coup = true;
+			}*/
+		}
+		
+		if( class_exists( 'Stripe_Custom_Fields' ) ) {
+			if( empty( $sc_options['sc_cf_license'] ) ) {
+				$sc_cf = true;
+			}
+		}
+		
+		if( class_exists( 'Stripe_User_Entered_Amount' ) ) {
+			if( empty( $sc_options['sc_uea_license'] ) ) {
+				$sc_uea = true;
+			}
+		}
 		
 		// If one is of these is true then we need to output the message
 		if( $sc_coup || $sc_cf || $sc_uea ) {
