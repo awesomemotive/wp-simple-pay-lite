@@ -133,7 +133,7 @@ class Stripe_Checkout {
 		$sc_uea  = false;
 
 		// Uncomment to test individual license key statuses.
-		echo '<pre>LICENSE KEY NOTICE<br>' . print_r( $sc_licenses, true ) . '</pre>';
+		//echo '<pre>LICENSE KEY NOTICE<br>' . print_r( $sc_licenses, true ) . '</pre>';
 
 		if( class_exists( 'Stripe_Coupons' ) ) {
 			if( empty( $sc_options['sc_coup_license'] ) ) {
