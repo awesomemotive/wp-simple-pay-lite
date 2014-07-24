@@ -117,6 +117,11 @@ class Stripe_Checkout {
 		add_action( 'admin_notices', array( $this, 'license_key_notice' ) );
 	}
 
+	/**
+	 * Check and display notice to admin if any add-on license keys are missing or invalid.
+	 *
+	 * @since 1.2.0
+	 */
 	function license_key_notice() {
 		
 		global $sc_options;
@@ -126,9 +131,10 @@ class Stripe_Checkout {
 		$sc_coup = false;
 		$sc_cf   = false;
 		$sc_uea  = false;
-		
-		//echo '<pre>LICENSE KEY NOTICE<br>' . print_r( $sc_licenses, true ) . '</pre>';
-		
+
+		// Uncomment to test individual license key statuses.
+		echo '<pre>LICENSE KEY NOTICE<br>' . print_r( $sc_licenses, true ) . '</pre>';
+
 		if( class_exists( 'Stripe_Coupons' ) ) {
 			if( empty( $sc_options['sc_coup_license'] ) ) {
 				$sc_coup = true;
@@ -151,7 +157,7 @@ class Stripe_Checkout {
 			if( empty( $sc_options['sc_uea_license'] ) ) {
 				$sc_uea = true;
 			}
-			if( ! empty( $sc_options['sc_uea_license'] ) && ( ! empty( $sc_licenses['Stripe User Entered Amount'] ) &&  $sc_licenses['Stripe Coupons'] == 'invalid' ) ) {
+			if( ! empty( $sc_options['sc_uea_license'] ) && ( ! empty( $sc_licenses['Stripe User Entered Amount'] ) &&  $sc_licenses['Stripe User Entered Amount'] == 'invalid' ) ) {
 				$sc_coup = true;
 			}
 		}
