@@ -309,7 +309,7 @@ function sc_license_callback( $args ) {
 	global $sc_options;
 	
 	$sc_licenses = get_option( 'sc_licenses' );
-
+	
 	if ( isset( $sc_options[ $args['id'] ] ) ) {
 		$value = $sc_options[ $args['id'] ];
 	} else {
@@ -340,8 +340,6 @@ function sc_license_callback( $args ) {
 	$valid_message = '';
 	
 	$valid = sc_check_license( $value, $args['product'] );
-	
-	//echo '"' . $args['product'] . '" Valid check: ' . $valid . '<br>';
 
 	if( $valid == 'valid' ) {
 		$sc_licenses[$args['product']] = 'valid';
@@ -367,19 +365,12 @@ function sc_license_callback( $args ) {
 	$html .= '<span class="sc-spinner-wrap"><span class="spinner sc-spinner"></span></span>';
 	$html .= '<span class="sc-license-message ' . $license_class . '">' . $valid_message . '</span>';
 	
-	/*$button = '';
-	$button = apply_filters( 'sc_license_button', $button );*/
-	
-	//$html .= $button;
-	
 	// Render and style description text underneath if it exists.
 	if ( ! empty( $args['desc'] ) ) {
 		$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
 	}
 	
 	$html .= '</div>';
-	
-	//$html = '<pre>' . print_r( $sc_licenses, true ) . '</pre>';
 	
 	echo $html;
 }
