@@ -233,8 +233,14 @@ class Stripe_Checkout {
 	 * @since 1.0.0
 	 */
 	function enqueue_public_styles() {
+		
+		global $sc_options;
+		
 		wp_enqueue_style( 'stripe-checkout-css', 'https://checkout.stripe.com/v3/checkout/button.css', array(), null );
-		wp_enqueue_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array( 'stripe-checkout-css' ), $this->version );
+		
+		if( empty( $sc_options['disable_css'] ) ) {
+			wp_enqueue_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array( 'stripe-checkout-css' ), $this->version );
+		}
 	}
 	
 	/**
