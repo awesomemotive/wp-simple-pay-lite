@@ -56,6 +56,11 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	}
 	
 	if( empty( $data_key ) ) {
+		
+		if( current_user_can( 'manage_options' ) ) {
+			return '<p>' . __( 'You must enter your API keys before the Stripe button will show up here.', 'sc' ) . '</p>';
+		}
+		
 		return '';
 	}
 	
@@ -153,7 +158,13 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$uid++;
 	
 	if( ( empty( $amount ) || $amount < 50 ) || ! isset( $amount ) ) {
+		
+		if( current_user_can( 'manage_options' ) ) {
+			return '<p>' . __( 'You must fill in a valid amount for the Stripe button to show up here.', 'sc' ) . '</p>';
+		}
+		
 		return '';
+		
 	} else if( ! isset( $_GET['payment'] ) ) {
 		return $html;
 	}
