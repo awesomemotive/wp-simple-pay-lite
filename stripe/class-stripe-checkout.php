@@ -136,7 +136,7 @@ class Stripe_Checkout {
 			if( empty( $sc_options['sc_coup_license'] ) ) {
 				$sc_coup = true;
 			}
-			if( ! empty( $sc_options['sc_coup_license'] ) && ( ! empty( $sc_licenses['Stripe Coupons'] ) &&  $sc_licenses['Stripe Coupons'] != 'valid' ) ) {
+			if( ( ! empty( $sc_options['sc_coup_license'] ) && ( ! empty( $sc_licenses['Stripe Coupons'] ) &&  $sc_licenses['Stripe Coupons'] != 'valid' ) ) || empty( $sc_licenses['Stripe Coupons'] ) ) {
 				$sc_coup = true;
 			}
 		}
@@ -145,7 +145,7 @@ class Stripe_Checkout {
 			if( empty( $sc_options['sc_cf_license'] ) ) {
 				$sc_cf = true;
 			}
-			if( ! empty( $sc_options['sc_cf_license'] ) && ( ! empty( $sc_licenses['Stripe Custom Fields'] ) &&  $sc_licenses['Stripe Custom Fields'] != 'valid' ) ) {
+			if( ( ! empty( $sc_options['sc_cf_license'] ) && ( ! empty( $sc_licenses['Stripe Custom Fields'] ) &&  $sc_licenses['Stripe Custom Fields'] != 'valid' ) ) || empty( $sc_licenses['Stripe Custom Fields'] ) ) {
 				$sc_coup = true;
 			}
 		}
@@ -154,7 +154,7 @@ class Stripe_Checkout {
 			if( empty( $sc_options['sc_uea_license'] ) ) {
 				$sc_uea = true;
 			}
-			if( ! empty( $sc_options['sc_uea_license'] ) && ( ! empty( $sc_licenses['Stripe User Entered Amount'] ) &&  $sc_licenses['Stripe User Entered Amount'] != 'valid' ) ) {
+			if( ( ! empty( $sc_options['sc_uea_license'] ) && ( ! empty( $sc_licenses['Stripe User Entered Amount'] ) &&  $sc_licenses['Stripe User Entered Amount'] != 'valid' ) ) || empty( $sc_licenses['Stripe User Entered Amount'] ) ) {
 				$sc_coup = true;
 			}
 		}
