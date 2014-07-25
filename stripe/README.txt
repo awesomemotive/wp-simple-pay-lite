@@ -117,6 +117,10 @@ See the official [Stripe checkout documentation](https://stripe.com/docs/checkou
 
 == Changelog ==
 
+= 1.2.1 =
+
+* Fixed a bug with the disable CSS option.
+
 = 1.2.0 =
 
 * Added verify_zip shortcode attribute.
