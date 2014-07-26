@@ -536,7 +536,7 @@ class Stripe_Checkout {
 
 		$screen = get_current_screen();
 		
-		if( in_array( $screen->id, $this->plugin_screen_hook_suffix ) ) {
+		if( ! empty( $this->plugin_screen_hook_suffix ) && in_array( $screen->id, $this->plugin_screen_hook_suffix ) ) {
 			return true;
 		}
 		
