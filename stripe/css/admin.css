@@ -44,26 +44,3 @@
 	display: inline-block; 
 	margin-left: 7px;
 }
-
-.sc-valid { 
-	color: #529943;
-}
-
-.sc-invalid { 
-	color: #f00; 
-}
-
-.sc-inactive { 
-	color: #aaa6a9; 
-}
-
-.sc-spinner-wrap {  
-	display: none;
-}
-
-.sc-spinner {
-	float: none;
-	display: inline-block;
-	margin-top: 4px;
-	vertical-align: top;
-}
