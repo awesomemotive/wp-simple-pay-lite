@@ -112,57 +112,6 @@ class Stripe_Checkout {
 		
 		// Hook into wp_footer so we can localize our script AFTER all the shortcodes have been processed
 		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
-		
-		// Add admin notice for license keys
-		add_action( 'admin_notices', array( $this, 'license_key_notice' ) );
-	}
-
-	/**
-	 * Check and display notice to admin if any add-on license keys are missing or invalid.
-	 *
-	 * @since 1.2.0
-	 */
-	function license_key_notice() {
-		
-		global $sc_options;
-		
-		$sc_licenses = get_option( 'sc_licenses' );
-		
-		$sc_coup = false;
-		$sc_cf   = false;
-		$sc_uea  = false;
-
-		if( class_exists( 'Stripe_Coupons' ) ) {
-			if( empty( $sc_options['sc_coup_license'] ) ) {
-				$sc_coup = true;
-			}
-			if( ( ! empty( $sc_options['sc_coup_license'] ) && ( ! empty( $sc_licenses['Stripe Coupons'] ) &&  $sc_licenses['Stripe Coupons'] != 'valid' ) ) || empty( $sc_licenses['Stripe Coupons'] ) ) {
-				$sc_coup = true;
-			}
-		}
-		
-		if( class_exists( 'Stripe_Custom_Fields' ) ) {
-			if( empty( $sc_options['sc_cf_license'] ) ) {
-				$sc_cf = true;
-			}
-			if( ( ! empty( $sc_options['sc_cf_license'] ) && ( ! empty( $sc_licenses['Stripe Custom Fields'] ) &&  $sc_licenses['Stripe Custom Fields'] != 'valid' ) ) || empty( $sc_licenses['Stripe Custom Fields'] ) ) {
-				$sc_coup = true;
-			}
-		}
-		
-		if( class_exists( 'Stripe_User_Entered_Amount' ) ) {
-			if( empty( $sc_options['sc_uea_license'] ) ) {
-				$sc_uea = true;
-			}
-			if( ( ! empty( $sc_options['sc_uea_license'] ) && ( ! empty( $sc_licenses['Stripe User Entered Amount'] ) &&  $sc_licenses['Stripe User Entered Amount'] != 'valid' ) ) || empty( $sc_licenses['Stripe User Entered Amount'] ) ) {
-				$sc_coup = true;
-			}
-		}
-		
-		// If one of these is true then we need to output the message
-		if( $sc_coup || $sc_cf || $sc_uea ) {
-			include_once( 'views/admin-license-notice.php' );
-		}
 	}
 	
 	/**
