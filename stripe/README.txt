@@ -1,4 +1,4 @@
-=== Simple Stripe Checkout ===
+﻿=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 3.6.1
@@ -55,6 +55,8 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 [Detailed Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
+[General Plugin Troubleshooting / FAQ](http://wpstripe.net/docs/simple-stripe-checkout-faq/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+
 Easily toggle between test and live mode until you're ready.
 
 If you want your customers to receive email receipts, make sure you enable this setting in your Stripe dashboard.
@@ -97,17 +99,9 @@ There are three ways to install this plugin.
 
 == Frequently Asked Questions ==
 
-[Simple Stripe Checkout FAQ](http://wpstripe.net/docs/getting-started/simple-stripe-checkout-faq/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Detailed Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-= General Troubleshooting =
-
-Your theme must implement **wp_footer()** in the footer.php file, otherwise JavaScript will not load correctly. You can test if this is the issue by switching to a WordPress stock theme such as twenty-twelve temporarily.
-
-If the overlay doesn't get triggered on click (and your browser is redirected to a stripe.com URL), please make sure that there is not extra code that is hijacking the click event (for example, a Google Analytics onclick event).
-
-A popular known plugin that does this is "Google Analytics for WordPress". Try unchecking one or both of these options: 1) Track outbound clicks & downloads, 2) Check Advanced Settings, then make sure "Track outbound clicks as pageviews" is un-checked.
-
-See the official [Stripe checkout documentation](https://stripe.com/docs/checkout) for further troubleshooting.
+[General Plugin Troubleshooting / FAQ](http://wpstripe.net/docs/simple-stripe-checkout-faq/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 == Screenshots ==
 
