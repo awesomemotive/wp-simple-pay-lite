@@ -53,10 +53,6 @@ class Stripe_Checkout {
 	 */
 	protected $plugin_screen_hook_suffix = null;
 	
-	
-	protected $sc_edd_sl_store_url = 'http://wpstripe.net/';
-	
-	
 	public $session;
 
 	/**
@@ -74,7 +70,6 @@ class Stripe_Checkout {
 		}
 		
 		// Include required files.
-		//add_action( 'init', array( $this, 'includes' ), 1 );
 		$this->setup_constants();
 		$this->includes();
 		
@@ -93,9 +88,6 @@ class Stripe_Checkout {
 		// Add plugin listing "Settings" action link.
 		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
 		
-		// Set our plugin constants
-		//add_action( 'init', array( $this, 'setup_constants' ) );
-		
 		// Check WP version
 		add_action( 'admin_init', array( $this, 'check_wp_version' ) );
 		
@@ -108,7 +100,6 @@ class Stripe_Checkout {
 		// Filters to add the settings page titles
 		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
-		add_filter( 'sc_settings_licenses_title', array( $this, 'sc_settings_licenses_title' ) );
 		
 		// Hook into wp_footer so we can localize our script AFTER all the shortcodes have been processed
 		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
@@ -144,15 +135,6 @@ class Stripe_Checkout {
 		
 		// Let us know that we ran the upgrade
 		add_option( 'sc_upgrade_has_run', 1 );
-	}
-	
-	/**
-	 * Set the title of the 'Licenses' tab
-	 * 
-	 * @since 1.1.1
-	 */
-	function sc_settings_licenses_title( $title ) {
-		return __( 'Add-On Licenses', 'sc' );
 	}
 	
 	/**
@@ -286,11 +268,6 @@ class Stripe_Checkout {
 		if ( ! defined( 'SC_PLUGIN_VERSION' ) ) {
 			define( 'SC_PLUGIN_VERSION', $this->version );
 		}
-		
-		// EDD SL Updater
-		if( ! defined( 'SC_EDD_SL_STORE_URL' ) ) {
-			define( 'SC_EDD_SL_STORE_URL', $this->sc_edd_sl_store_url );
-		}
 
 		// Website for this plugin
 		if( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
@@ -371,18 +348,6 @@ class Stripe_Checkout {
 			'dashicons-cart'
 		);
 	}
-
-	/**
-	 * Function to handle the output of the Add Ons submenu
-	 *
-	 * @since 1.1.1
-	 */
-	/* TODO Remove add-ons submenu for now.
-
-	function display_admin_addons_page() {
-
-	}
-	*/
 
 	/**
 	 * Render the settings page for this plugin.
