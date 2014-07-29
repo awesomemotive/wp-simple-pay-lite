@@ -35,15 +35,3 @@ function sc_get_admin_tabs() {
 	
 }
 
-/**
- * Add Licenses admin tab
- * 
- * @since 1.1.1
- */
-function sc_license_tab( $tabs ) {
-	$tabs['licenses'] = __( 'Licenses', 'sc' );
-
-	return $tabs;
-}
-add_filter( 'sc_admin_tabs', 'sc_license_tab' );
-
