@@ -23,7 +23,7 @@ Instead of spending time building your own checkout forms you can use Stripe's, 
 
 This is a simple standalone Stripe checkout plugin. That's it. No other plugins required.
 
-Note that Stripe suggests that the pages hosting the checkout form be SSL (start with `https://`). [Read more about SSL](https://stripe.com/help/ssl).
+Note that Stripe suggests that the pages hosting the checkout form be SSL (starts with `https://`). [Read more about SSL](https://stripe.com/help/ssl).
 
 ###Start Accepting Payments in 3 Easy Steps###
 
