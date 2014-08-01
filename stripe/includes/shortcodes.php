@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function sc_stripe_shortcode( $attr, $content = null ) {
 	
-	global $sc_options, $sc_script_options, $script_vars;
+	global $sc_options;
 	
 	STATIC $uid = 1;
 	
@@ -26,11 +26,11 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
 					'description'           => '',
 					'amount'                => '',
-					'image_url'             => '',
+					'image_url'             => ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : '' ),
 					'currency'              => ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : 'USD' ),
-					'checkout_button_label' => '',
-					'billing'               => '',    // true or false
-					'shipping'              => '',    // true or false
+					'checkout_button_label' => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),
+					'billing'               => ( ! empty( $sc_options['billing'] ) ? 'true' : 'false' ),    // true or false
+					'shipping'              => ( ! empty( $sc_options['shipping'] ) ? 'true' : 'false' ),    // true or false
 					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
 					'enable_remember'       => '',    // true or false
 					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
@@ -73,85 +73,34 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		}
 	}
 	
-	// Save all of our options to an array so others can run them through a filter if they need to
-	$sc_script_options = array( 
-		'script' => array(
-			'key'                  => $data_key,
-			'name'                 => $name,
-			'description'          => $description,
-			'amount'               => $amount,
-			'image'                => $image_url,
-			'currency'             => strtoupper( $currency ),
-			'panel-label'          => $checkout_button_label,
-			'billing-address'      => $billing,
-			'shipping-address'     => $shipping,
-			'label'                => $payment_button_label,
-			'allow-remember-me'    => $enable_remember,
-			'email'                => $prefill_email,
-			'verify_zip'           => $verify_zip
-		),
-		'other' => array(
-			'success-redirect-url' => $success_redirect_url,
-			'failure-redirect-url' => $failure_redirect_url
-		)
-	);
-	
-	$sc_script_options = apply_filters( 'sc_modify_script_options', $sc_script_options );
-	
-	// Set our global array based on the uid so we can make sure each button/form is unique
-	$script_vars[$uid] = array(
-			'key'             => ( ! empty( $sc_script_options['script']['key'] ) ? $sc_script_options['script']['key'] : ( ! empty( $sc_options['key'] ) ? $sc_options['key'] : -1 ) ),
-			'name'            => ( ! empty( $sc_script_options['script']['name'] ) ? $sc_script_options['script']['name'] : ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : -1 ) ),
-			'description'     => ( ! empty( $sc_script_options['script']['description'] ) ? $sc_script_options['script']['description'] : ( ! empty( $sc_options['description'] ) ? $sc_options['description'] : -1 ) ),
-			'amount'          => ( ! empty( $sc_script_options['script']['amount'] ) ? $sc_script_options['script']['amount'] : ( ! empty( $sc_options['amount'] ) ? $sc_options['amount'] : -1 ) ),
-			'image'           => ( ! empty( $sc_script_options['script']['image'] ) ? $sc_script_options['script']['image'] : ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : -1 ) ),
-			'currency'        => ( ! empty( $sc_script_options['script']['currency'] ) ? $sc_script_options['script']['currency'] : ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : -1 ) ),
-			'panelLabel'      => ( ! empty( $sc_script_options['script']['panel-label'] ) ? $sc_script_options['script']['panel-label'] : ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : -1 ) ),
-			'billingAddress'  => ( ! empty( $sc_script_options['script']['billing-address'] ) ? $sc_script_options['script']['billing-address'] : ( ! empty( $sc_options['billing'] ) ? $sc_options['billing'] : -1 ) ),
-			'shippingAddress' => ( ! empty( $sc_script_options['script']['shipping-address'] ) ? $sc_script_options['script']['shipping-address'] : ( ! empty( $sc_options['shipping'] ) ? $sc_options['shipping'] : -1 ) ),
-			'allowRememberMe' => ( ! empty( $sc_script_options['script']['allow-remember-me'] ) ? $sc_script_options['script']['allow-remember-me'] : ( ! empty( $sc_options['enable_remember'] ) ? $sc_options['enable_remember'] : -1 ) ),
-			'email'           => ( ! empty( $sc_script_options['script']['email'] ) && ! ( $sc_script_options['script']['email'] === 'false' ) ? $sc_script_options['script']['email'] : -1 ),
-			'zipCode'         => ( ! empty( $sc_script_options['script']['verify_zip'] ) && ! ( $sc_script_options['script']['verify_zip'] === 'false' ) ? $sc_script_options['script']['verify_zip'] : -1 )
-	);
+	$html = parse_shortcode_content( $content );
 
-	// Reference for Stripe's zero-decimal currencies in JS.
-	$script_vars['zero_decimal_currencies'] = sc_zero_decimal_currencies();
+	$html .= '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
 	
-	$name                 = $sc_script_options['script']['name'];
-	$description          = $sc_script_options['script']['description'];
-	$amount               = $sc_script_options['script']['amount'];
-	$success_redirect_url = $sc_script_options['other']['success-redirect-url'];
-	$failure_redirect_url = $sc_script_options['other']['failure-redirect-url'];
-	$currency             = $sc_script_options['script']['currency'];
-
-	//Add Parsley JS form validation attribute here.
-	$html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form" ';
-	$html .= 'data-parsley-validate>';
-
-	$content = parse_shortcode_content( $content );
-	
-	$html .= apply_filters( 'sc_shortcode_content', $content );
+	$html .= '<script
+				src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+				data-key="' . $data_key . '" ' .
+				( ! empty( $image_url ) ? 'data-image="' . $image_url . '" ' : '' ) . 
+				( ! empty( $name ) ? 'data-name="' . $name . '" ' : '' ) .
+				( ! empty( $description ) ? 'data-description="' . $description . '" ' : '' ) .
+				( ! empty( $amount ) ? 'data-amount="' . $amount . '" ' : '' ) .
+				( ! empty( $currency ) ? 'data-currency="' . $currency . '" ' : '' ) .
+				( ! empty( $checkout_button_label ) ? 'data-panel-label="' . $checkout_button_label . '" ' : '' ) .
+				( ! empty( $verify_zip ) ? 'data-zip-code="' . $verify_zip . '" ' : '' ) .
+				( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . $prefill_email . '" ' : '' ) .
+				( ! empty( $payment_button_label ) ? 'data-label="' . $payment_button_label . '" ' : '' ) .
+				( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
+				( ! empty( $shipping ) ? 'data-shipping-address="' . $shipping . '" ' : 'data-shipping-address="false" ' ) .
+				( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
+				'></script>';
 	
 	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />';
 	$html .= '<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />';
-	$html .= '<input type="hidden" name="sc-amount" class="sc_amount" value="" />';
+	$html .= '<input type="hidden" name="sc-amount" class="sc_amount" value="' . esc_attr( $amount ) . '" />';
 	$html .= '<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />';
 	$html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $failure_redirect_url ) ? $failure_redirect_url : get_permalink() ) ) . '" />';
 	$html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
-	$html .= '<input type="hidden" name="stripeToken" value="" class="sc_stripeToken" />';
-	$html .= '<input type="hidden" name="stripeEmail" value="" class="sc_stripeEmail" />';
-	
-	// Add shipping information fields if it is enabled
-	if( $shipping === 'true' ) {
-		$html .= '<input type="hidden" name="sc-shipping-name" class="sc-shipping-name" value="" />';
-		$html .= '<input type="hidden" name="sc-shipping-country" class="sc-shipping-country" value="" />';
-		$html .= '<input type="hidden" name="sc-shipping-zip" class="sc-shipping-zip" value="" />';
-		$html .= '<input type="hidden" name="sc-shipping-state" class="sc-shipping-state" value="" />';
-		$html .= '<input type="hidden" name="sc-shipping-address" class="sc-shipping-address" value="" />';
-		$html .= '<input type="hidden" name="sc-shipping-city" class="sc-shipping-city" value="" />';
-	}
 
-	$html .= '<button class="sc_checkout stripe-button-el"><span>' . $payment_button_label . '</span></button>';
 	$html .= '</form>';
 
 	// Increment static uid counter
