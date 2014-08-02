@@ -91,18 +91,12 @@ class Stripe_Checkout {
 		// Check WP version
 		add_action( 'admin_init', array( $this, 'check_wp_version' ) );
 		
-		// Add public JS
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_scripts' ) );
-		
 		// Add public CSS
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_styles' ) );
 		
 		// Filters to add the settings page titles
 		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
-		
-		// Hook into wp_footer so we can localize our script AFTER all the shortcodes have been processed
-		add_action( 'wp_footer', array( $this, 'localize_shortcode_script' ) );
 	}
 	
 	/**
@@ -164,42 +158,10 @@ class Stripe_Checkout {
 		
 		global $sc_options;
 		
-		wp_enqueue_style( 'stripe-checkout-css', 'https://checkout.stripe.com/v3/checkout/button.css', array(), null );
-		
 		if( empty( $sc_options['disable_css'] ) ) {
-			wp_enqueue_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array( 'stripe-checkout-css' ), $this->version );
+			wp_enqueue_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array(), $this->version );
 		}
 	}
-	
-	/**
-	 * Load public facing JS
-	 * 
-	 * @since 1.0.0
-	 */
-	function enqueue_public_scripts() {
-		wp_enqueue_script( 'stripe-checkout', 'https://checkout.stripe.com/checkout.js', array(), null, true );
-		wp_enqueue_script( $this->plugin_slug . '-public', plugins_url( 'js/public.js', __FILE__ ), array( 'jquery', 'stripe-checkout' ), $this->version, true );
-		
-		// Register Parsley JS validation library.
-		// TODO Tried latest 2.0.2 (6/17/14) and it didn't work. Reverted to 2.0.0 (4/19/14).
-		wp_enqueue_script( 'parsley', plugins_url( 'js/parsley.min.js', __FILE__ ), array( 'jquery' ), null, true );
-	}
-	
-	/**
-	 * Function to localize the script variables being sent from the shortcodes
-	 * 
-	 * @since 1.1.1
-	 */
-	function localize_shortcode_script() {
-		
-		global $script_vars;
-		
-		wp_localize_script( SC_PLUGIN_SLUG . '-public', 'sc_script', $script_vars );
-		
-		// clear it out after we use it
-		$script_vars = array();
-	}
-	
 	
 	/**
 	 * Load admin scripts
