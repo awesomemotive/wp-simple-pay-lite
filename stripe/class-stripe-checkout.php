@@ -342,8 +342,7 @@ class Stripe_Checkout {
 		include_once( 'includes/shortcodes.php' );
 		
 		include_once( 'includes/register-settings.php' );
-		
-		//$sc_options = sc_get_settings();
+
 		sc_set_defaults();
 		
 		$sc_options = sc_get_settings();
@@ -359,7 +358,6 @@ class Stripe_Checkout {
 	public static function get_plugin_title() {
 		return __( 'Stripe Checkout', 'sc' );
 	}
-
 
 	/**
 	 * Add Settings action link to left of existing action links on plugin listing page.
@@ -407,7 +405,7 @@ class Stripe_Checkout {
 			return;
 
 		// Delete stored value if "hide" button click detected (custom querystring value set to 1).
-		// or if on a PIB admin page. Then exit.
+		// or if on an admin page. Then exit.
 		if ( ! empty( $_REQUEST['sc-dismiss-install-nag'] ) || $this->viewing_this_plugin() ) {
 			delete_option( 'sc_show_admin_install_notice' );
 			return;
