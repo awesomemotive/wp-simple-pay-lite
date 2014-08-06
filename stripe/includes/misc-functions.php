@@ -310,11 +310,3 @@ function sc_disable_seo_og() {
 		remove_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
 	}
 }
-
-function sc_is_addon_active() {
-	return (
-		class_exists( 'Stripe_Coupons' ) ||
-		class_exists( 'Stripe_Custom_Fields' ) ||
-		class_exists( 'Stripe_User_Entered_Amount' )
-	);
-}
