@@ -35,13 +35,13 @@ It only takes a couple minutes to add a payment form to your site.
 
 Viola! Now a payment button that opens your checkout form in an overlay will pop up.
 
-###Add-Ons Available in Stripe Checkout Pro Only###
+###Available in Stripe Checkout Pro Only###
 
 * **User Entered Amounts** - Let the customer enter what they want to pay.
 * **Coupon Codes** - Setup discount codes in your Stripe dashboard for customers to apply to their total.
 * **Custom Fields** - Record additional data along with each Stripe payment.
 
-[See Add-On Pricing & Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[See Pricing & Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Here are a few shortcode examples (amounts in U.S. cents):
 
