@@ -111,6 +111,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.2 =
+
+* Removed unnecessary code previously required for add-ons.
+
 = 1.2.1 =
 
 * Fixed a bug with the disable CSS option.
