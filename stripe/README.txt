@@ -66,7 +66,7 @@ If you want your customers to receive email receipts, make sure you enable this 
 ###Feature Requests and Updates###
 
 * [Submit feature requests in our support forums.](https://wordpress.org/support/plugin/stripe)
-* [Get notified of major updates.](http://eepurl.com/Q_ET9)
+* [Get notified of major updates.](http://eepurl.com/YMXvP)
 * [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout).
 
 == Installation ==
