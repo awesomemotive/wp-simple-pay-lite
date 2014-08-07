@@ -32,6 +32,14 @@ if ( ! defined( 'SC_MAIN_FILE' ) ) {
 	define( 'SC_MAIN_FILE', __FILE__ );
 }
 
+if( ! defined( 'SC_PATH' ) ) {
+	define( 'SC_PATH', plugin_dir_path( __FILE__ ) );
+}
+
+if( ! defined( 'SC_URL' ) ) {
+	define( 'SC_URL', plugins_url( '', __FILE__ ) . '/' );
+}
+
 require_once( plugin_dir_path( __FILE__ ) . 'class-stripe-checkout.php' );
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.

@@ -159,7 +159,7 @@ class Stripe_Checkout {
 		global $sc_options;
 		
 		if( empty( $sc_options['disable_css'] ) ) {
-			wp_enqueue_style( $this->plugin_slug . '-public', plugins_url( 'css/public.css', __FILE__ ), array(), $this->version );
+			wp_enqueue_style( $this->plugin_slug . '-public', SC_URL . 'public/css/public.css', array(), $this->version );
 		}
 	}
 	
@@ -171,8 +171,8 @@ class Stripe_Checkout {
 	public function enqueue_admin_scripts() {
 		
 		if( $this->viewing_this_plugin() ) {
-			wp_enqueue_script( 'bootstrap-switch', plugins_url( 'js/bootstrap-switch.min.js', __FILE__ ), array( 'jquery' ), null, true );
-			wp_enqueue_script( $this->plugin_slug . '-admin', plugins_url( 'js/admin.js', __FILE__ ), array( 'jquery', 'bootstrap-switch' ), $this->version, true );
+			wp_enqueue_script( 'bootstrap-switch', SC_URL . 'admin/js/bootstrap-switch.min.js', array( 'jquery' ), null, true );
+			wp_enqueue_script( $this->plugin_slug . '-admin', SC_URL . 'admin/js/admin.js', array( 'jquery', 'bootstrap-switch' ), $this->version, true );
 		}
 	}
 
@@ -184,8 +184,8 @@ class Stripe_Checkout {
 	public function enqueue_admin_styles() {
 
 		if ( $this->viewing_this_plugin() ) {
-			wp_enqueue_style( 'bootstrap-switch', plugins_url( 'css/bootstrap-switch.min.css', __FILE__ ), array(), null );
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ), array( 'bootstrap-switch' ), $this->version );
+			wp_enqueue_style( 'bootstrap-switch', SC_URL . 'admin/css/bootstrap-switch.min.css', array(), null );
+			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array( 'bootstrap-switch' ), $this->version );
 		}
 	}
 	
@@ -317,7 +317,7 @@ class Stripe_Checkout {
 	 * @since    1.0.0
 	 */
 	public function display_plugin_admin_page() {
-		include_once( 'views/admin.php' );
+		include_once( SC_PATH . 'admin/views/admin.php' );
 	}
 	
 	/**
@@ -333,16 +333,17 @@ class Stripe_Checkout {
 			require_once( 'libraries/stripe-php/Stripe.php' );
 		}
 
-		include_once( 'includes/class-sc-session.php' );
+		include_once( SC_PATH . 'public/includes/class-sc-session.php' );
 		
 		// Include any necessary functions
-		include_once( 'includes/misc-functions.php' );
+		include_once( SC_PATH . 'public/includes/misc-functions.php' );
 		
 		// Include shortcode functions
-		include_once( 'includes/shortcodes.php' );
+		include_once( SC_PATH . 'includes/shortcodes.php' );
 		
-		include_once( 'includes/register-settings.php' );
-
+		include_once( SC_PATH . 'includes/register-settings.php' );
+		
+		//$sc_options = sc_get_settings();
 		sc_set_defaults();
 		
 		$sc_options = sc_get_settings();
@@ -359,6 +360,7 @@ class Stripe_Checkout {
 		return __( 'Stripe Checkout', 'sc' );
 	}
 
+
 	/**
 	 * Add Settings action link to left of existing action links on plugin listing page.
 	 *
@@ -369,7 +371,7 @@ class Stripe_Checkout {
 	 */
 	public function settings_link( $links ) {
 
-		$setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( 'page', $this->plugin_slug, admin_url( 'options-general.php' ) ), __( 'Settings', 'sc' ) );
+		$setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( 'page', $this->plugin_slug, admin_url( 'admin.php' ) ), __( 'Settings', 'sc' ) );
 		array_unshift( $links, $setting_link );
 
 		return $links;
@@ -405,7 +407,6 @@ class Stripe_Checkout {
 			return;
 
 		// Delete stored value if "hide" button click detected (custom querystring value set to 1).
-		// or if on an admin page. Then exit.
 		if ( ! empty( $_REQUEST['sc-dismiss-install-nag'] ) || $this->viewing_this_plugin() ) {
 			delete_option( 'sc_show_admin_install_notice' );
 			return;
@@ -413,7 +414,7 @@ class Stripe_Checkout {
 
 		// At this point show install notice. Show it only on the plugin screen.
 		if( get_current_screen()->id == 'plugins' ) {
-			include_once( 'views/admin-install-notice.php' );
+			include_once( SC_PATH . 'admin/views/admin-install-notice.php' );
 		}
 	}
 }
