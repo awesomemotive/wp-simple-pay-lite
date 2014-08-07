@@ -41,10 +41,6 @@ Thumbs.db
 ###########################
 .idea
 
-# MS Sync Toy dat file *
-########################
-SyncToy*.dat
-
 # Netbeans IDE *
 ################
 /stripe/nbproject/*
