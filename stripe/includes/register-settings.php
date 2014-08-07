@@ -122,7 +122,7 @@ function sc_register_settings() {
 			'disable_css' => array(
 				'id'   => 'disable_css',
 				'name' => __( 'Disable Form CSS', 'sc' ),
-				'desc' => __( 'Disable the plugin from ouputting the default form CSS. Also disables for all add-ons.', 'sc' ),
+				'desc' => __( 'Disable the plugin from ouputting the default form CSS.', 'sc' ),
 				'type' => 'checkbox'
 			)
 		),

@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- Use some built-in WP admin theme styles. -->
 
-<?php if ( ! sc_is_addon_active() ): // If add-ons are active don't show. ?>
-
 <div class="sidebar-container metabox-holder">
 	<div class="postbox">
 		<h3 class="wp-ui-primary"><span><?php _e( 'Need More Options?', 'sc' ); ?></span></h3>
@@ -31,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Let customers enter an amount', 'sc' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Add custom fields', 'sc' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Integrate coupon codes', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Access to future Stripe add-ons', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Access to advanced Stripe add-ons', 'sc' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Automatic updates & email support', 'sc' ); ?></li>
 				</ul>
 
@@ -45,8 +43,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 </div>
 
-<?php endif; // End add-ons check ?>
-
 <div class="sidebar-container metabox-holder">
 	<div class="postbox">
 		<h3 class="wp-ui-primary"><span><?php _e( 'Resources', 'sc' ); ?></span></h3>
@@ -58,20 +54,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php _e( 'Instructions & Help', 'sc' ); ?></a>
 				</li>
 
-				<?php if ( ! sc_is_addon_active() ): // If add-ons are active don't show. ?>
-
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
 					<a href="http://wordpress.org/support/plugin/stripe" target="_blank">
 						<?php _e( 'Community Support Forums', 'sc' ); ?></a>
 				</li>
 
-				<?php endif; ?>
-
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
 					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'addons' ); ?>" target="_blank">
-						<?php _e( 'Stripe Checkout Add-Ons', 'sc' ); ?></a>
+						<?php _e( 'Stripe Checkout Pro', 'sc' ); ?></a>
 				</li>
 			</ul>
 		</div>
