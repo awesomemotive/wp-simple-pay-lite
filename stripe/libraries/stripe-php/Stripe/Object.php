@@ -3,13 +3,13 @@
 class Stripe_Object implements ArrayAccess
 {
   /**
-   * @var array Attributes that should not be sent to the API because they're
-   *    not updatable (e.g. API key, ID).
+   * @var Stripe_Util_Set Attributes that should not be sent to the API because
+   *    they're not updatable (e.g. API key, ID).
    */
   public static $permanentAttributes;
   /**
-   * @var array Attributes that are nested but still updatable from the parent
-   *    class's URL (e.g. metadata).
+   * @var Stripe_Util_Set Attributes that are nested but still updatable from
+   *    the parent class's URL (e.g. metadata).
    */
   public static $nestedUpdatableAttributes;
 
@@ -34,7 +34,7 @@ class Stripe_Object implements ArrayAccess
 
     $this->_retrieveOptions = array();
     if (is_array($id)) {
-      foreach($id as $key => $value) {
+      foreach ($id as $key => $value) {
         if ($key != 'id') {
           $this->_retrieveOptions[$key] = $value;
         }
@@ -58,10 +58,11 @@ class Stripe_Object implements ArrayAccess
       );
     }
 
-    if (self::$nestedUpdatableAttributes->includes($k) && isset($this->$k) && is_array($v)) {
+    if (self::$nestedUpdatableAttributes->includes($k)
+        && isset($this->$k) && is_array($v)) {
       $this->$k->replaceWith($v);
     } else {
-      // TODO: may want to clear from $_transientValues.  (Won't be user-visible.)
+      // TODO: may want to clear from $_transientValues (Won't be user-visible).
       $this->_values[$k] = $v;
     }
     if (!self::$permanentAttributes->includes($k))
@@ -127,7 +128,7 @@ class Stripe_Object implements ArrayAccess
   /**
    * This unfortunately needs to be public to be used in Util.php
    *
-   * @param Stripe_Object $class
+   * @param string $class
    * @param array $values
    * @param string|null $apiKey
    *
@@ -149,8 +150,7 @@ class Stripe_Object implements ArrayAccess
    */
   public static function constructFrom($values, $apiKey=null)
   {
-    $class = get_class($this);
-    return self::scopedConstructFrom($class, $values, $apiKey);
+    return self::scopedConstructFrom(__CLASS__, $values, $apiKey);
   }
 
   /**
@@ -184,7 +184,9 @@ class Stripe_Object implements ArrayAccess
         continue;
 
       if (self::$nestedUpdatableAttributes->includes($k) && is_array($v)) {
-        $this->_values[$k] = Stripe_Object::scopedConstructFrom('Stripe_AttachedObject', $v, $apiKey);
+        $this->_values[$k] = Stripe_Object::scopedConstructFrom(
+            'Stripe_AttachedObject', $v, $apiKey
+        );
       } else {
         $this->_values[$k] = Stripe_Util::convertToStripeObject($v, $apiKey);
       }
@@ -213,7 +215,8 @@ class Stripe_Object implements ArrayAccess
 
     // Get nested updates.
     foreach (self::$nestedUpdatableAttributes->toArray() as $property) {
-      if (isset($this->$property) && $this->$property instanceOf Stripe_Object) {
+      if (isset($this->$property)
+          && $this->$property instanceOf Stripe_Object) {
         $params[$property] = $this->$property->serializeParameters();
       }
     }
@@ -244,7 +247,8 @@ class Stripe_Object implements ArrayAccess
 
   public function __toString()
   {
-    return $this->__toJSON();
+    $class = get_class($this);
+    return $class . ' JSON: ' . $this->__toJSON();
   }
 
   public function __toArray($recursive=false)
