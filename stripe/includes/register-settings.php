@@ -87,13 +87,6 @@ function sc_register_settings() {
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
-			'stripe_total_label' => array(
-				'id'   => 'stripe_total_label',
-				'name' => __( 'Stripe Total Label', 'sc' ),
-				'desc' => __( 'The default label for the stripe_total shortcode.' , 'sc' ),
-				'type' => 'text',
-				'size' => 'regular-text'
-			),
 			'billing' => array(
 				'id'   => 'billing',
 				'name' => __( 'Enable Billing Address', 'sc' ),
