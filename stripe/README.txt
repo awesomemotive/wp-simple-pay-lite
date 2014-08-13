@@ -114,6 +114,7 @@ There are three ways to install this plugin.
 = 1.2.2 =
 
 * Removed unnecessary code previously required for add-ons.
+* Updated to most recent Stripe PHP library (v1.17.1).
 
 = 1.2.1 =
 
@@ -141,7 +142,7 @@ There are three ways to install this plugin.
 * Added many filters and hooks for extensibility.
 * Implemented add-on infrastructure.
 * General usuability improvements to settings pages.
-* Updated to most recent Stripe PHP library.
+* Updated to most recent Stripe PHP library (v1.16.0).
 * Included most recent Parsley JS validation library.
 * Moved in-plugin help to online help at wpstripe.net.
 
@@ -155,7 +156,7 @@ There are three ways to install this plugin.
 * Added shipping shortcode attribute.
 * Added enable_remember shortcode attribute.
 * Added success_redirect_url shortcode attribute.
-* Updated to most recent Stripe PHP library.
+* Updated to most recent Stripe PHP library (v1.13.0).
 * Added a couple of action and filter hooks.
 * Fixed bug where other instances of Stripe class were causing errors.
 * Removed a default string being added to customer description in Stripe dashboard.
