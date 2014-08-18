@@ -65,7 +65,12 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 		</div><!-- #sc-settings-content -->
 
 		<div id="sc-settings-sidebar">
-			<?php include( 'admin-sidebar.php' ); ?>
+			<?php if ( class_exists( 'Stripe_Checkout_Pro' ) ): ?>
+				<?php include( 'admin-sidebar-pro.php' ); ?>
+			<?php else: ?>
+				<?php include( 'admin-sidebar.php' ); ?>
+			<?php endif; ?>
 		</div>
+
 	</div>
 </div><!-- .wrap -->
