@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
 					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'stripe_checkout', 'sidebar_link', 'docs' ); ?>" target="_blank">
-						<?php _e( 'Instructions & Help', 'sc' ); ?></a>
+						<?php _e( 'Documentation', 'sc' ); ?></a>
 				</li>
 
 				<li>
