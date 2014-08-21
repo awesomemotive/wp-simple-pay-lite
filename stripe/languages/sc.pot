@@ -1,322 +1,314 @@
-# Copyright (C) 2014 
-# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version:  \n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/stripe\n"
-"POT-Creation-Date: 2014-07-10 17:16:59+00:00\n"
+"Project-Id-Version: Stripe Checkout Lite\n"
+"POT-Creation-Date: 2014-08-21 11:51-0700\n"
+"PO-Revision-Date: 2014-08-21 11:51-0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;_x\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: class-stripe-checkout.php:150
-msgid "Add-On Licenses"
-msgstr ""
-
-#: class-stripe-checkout.php:159 views/admin-helper-functions.php:30
+#: stripe/admin/views/admin-helper-functions.php:30
+#: stripe/class-stripe-checkout.php:140
 msgid "Stripe Keys"
 msgstr ""
 
-#: class-stripe-checkout.php:168 views/admin-helper-functions.php:31
+#: stripe/admin/views/admin-helper-functions.php:31
+#: stripe/class-stripe-checkout.php:149
 msgid "Default Settings"
 msgstr ""
 
-#: class-stripe-checkout.php:354 class-stripe-checkout.php:458
+#: stripe/admin/views/admin-install-notice.php:26
+msgid " is now installed."
+msgstr ""
+
+#: stripe/admin/views/admin-install-notice.php:27
+msgid "Get started by entering your Stripe keys"
+msgstr ""
+
+#: stripe/admin/views/admin-install-notice.php:28
+msgid "Hide this"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:21
+msgid "Need More Options?"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:25
+msgid "Additional perks you'll get with Stripe Checkout Pro"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:29
+msgid "Let customers enter an amount"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:30
+msgid "Add custom fields"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:31
+msgid "Integrate coupon codes"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:32
+msgid "Access to advanced Stripe add-ons"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:33
+msgid "Automatic updates & email support"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:39
+msgid "Upgrade to Pro Now"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:48
+msgid "Resources"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:54
+msgid "Documentation"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:60
+msgid "Community Support Forums"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:66
+msgid "Stripe Checkout Pro"
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:77
+msgid "Now accepting 5-star reviews! It only takes seconds and means a lot."
+msgstr ""
+
+#: stripe/admin/views/admin-sidebar.php:81
+msgid "Rate this Plugin Now"
+msgstr ""
+
+#: stripe/class-stripe-checkout.php:203
+msgid " requires WordPress version <strong>"
+msgstr ""
+
+#: stripe/class-stripe-checkout.php:305 stripe/class-stripe-checkout.php:374
 msgid "Settings"
 msgstr ""
 
-#: class-stripe-checkout.php:444
+#: stripe/class-stripe-checkout.php:360
 msgid "Stripe Checkout"
 msgstr ""
 
-#: includes/misc-functions.php:126
-msgid "Congratulations. Your payment went through!"
-msgstr ""
-
-#: includes/misc-functions.php:127
-msgid "Here's what you bought:"
-msgstr ""
-
-#: includes/misc-functions.php:137
-msgid "Total Paid: "
-msgstr ""
-
-#: includes/misc-functions.php:314
-msgid ""
-"To activate licenses for Stripe Checkout add-ons, you must first install and "
-"activate the chosen add-on. License key settings will then appear below."
-msgstr ""
-
-#: includes/register-settings.php:35
+#: stripe/includes/register-settings.php:35
 msgid "See shortcode options and examples"
 msgstr ""
 
-#: includes/register-settings.php:35
+#: stripe/includes/register-settings.php:35
 msgid "for"
 msgstr ""
 
-#: includes/register-settings.php:36
+#: stripe/includes/register-settings.php:36
 msgid ""
 "Shortcode attributes take precedence and will always be used over default "
 "settings."
 msgstr ""
 
-#: includes/register-settings.php:41
+#: stripe/includes/register-settings.php:41
 msgid "Site Name"
 msgstr ""
 
-#: includes/register-settings.php:42
+#: stripe/includes/register-settings.php:42
 msgid "The name of your store or website. Defaults to Site Name."
 msgstr ""
 
-#: includes/register-settings.php:48
+#: stripe/includes/register-settings.php:48
 msgid "Currency Code"
 msgstr ""
 
-#: includes/register-settings.php:49
+#: stripe/includes/register-settings.php:49
 msgid "Specify a currency using it's "
 msgstr ""
 
-#: includes/register-settings.php:50
+#: stripe/includes/register-settings.php:50
 msgid "3-letter ISO Code"
 msgstr ""
 
-#: includes/register-settings.php:51
+#: stripe/includes/register-settings.php:51
 msgid "Defaults to USD."
 msgstr ""
 
-#: includes/register-settings.php:57
+#: stripe/includes/register-settings.php:57
 msgid "Image URL"
 msgstr ""
 
-#: includes/register-settings.php:58
+#: stripe/includes/register-settings.php:58
 msgid ""
 "A URL pointing to a square image of your brand or product. The recommended "
 "minimum size is 128x128px."
 msgstr ""
 
-#: includes/register-settings.php:64
+#: stripe/includes/register-settings.php:64
 msgid "Checkout Button Label"
 msgstr ""
 
-#: includes/register-settings.php:65
+#: stripe/includes/register-settings.php:65
 msgid ""
 "The label of the payment button in the checkout form. You can use {{amount}} "
 "to display the amount."
 msgstr ""
 
-#: includes/register-settings.php:71
+#: stripe/includes/register-settings.php:71
 msgid "Payment Button Label"
 msgstr ""
 
-#: includes/register-settings.php:72
+#: stripe/includes/register-settings.php:72
 msgid ""
 "Text to display on the default blue button that users click to initiate a "
 "checkout process."
 msgstr ""
 
-#: includes/register-settings.php:78
+#: stripe/includes/register-settings.php:78
 msgid "Success Redirect URL"
 msgstr ""
 
-#: includes/register-settings.php:79
+#: stripe/includes/register-settings.php:79
 msgid ""
 "The URL that the user should be redirected to after a successful payment."
 msgstr ""
 
-#: includes/register-settings.php:85
-msgid "Stripe Total Label"
+#: stripe/includes/register-settings.php:85
+msgid "Failure Redirect URL"
 msgstr ""
 
-#: includes/register-settings.php:86
-msgid "The default label for the stripe_total shortcode."
+#: stripe/includes/register-settings.php:86
+msgid "The URL that the user should be redirected to after a failed payment."
 msgstr ""
 
-#: includes/register-settings.php:92
+#: stripe/includes/register-settings.php:92
 msgid "Enable Billing Address"
 msgstr ""
 
-#: includes/register-settings.php:93
+#: stripe/includes/register-settings.php:93
 msgid "Require the user to enter their billing address during checkout."
 msgstr ""
 
-#: includes/register-settings.php:98
+#: stripe/includes/register-settings.php:98
 msgid "Enable Shipping Address"
 msgstr ""
 
-#: includes/register-settings.php:99
+#: stripe/includes/register-settings.php:99
 msgid "Require the user to enter their shipping address during checkout."
 msgstr ""
 
-#: includes/register-settings.php:104
+#: stripe/includes/register-settings.php:104
+msgid "Verify Zip Code"
+msgstr ""
+
+#: stripe/includes/register-settings.php:105
+msgid "Verifies the zip code of the card."
+msgstr ""
+
+#: stripe/includes/register-settings.php:110
 msgid "Enable \"Remember Me\""
 msgstr ""
 
-#: includes/register-settings.php:105
+#: stripe/includes/register-settings.php:111
 msgid ""
 "Adds a \"Remember Me\" option to the checkout form to allow the user to "
 "store their credit card for future use with other sites using Stripe. "
 msgstr ""
 
-#: includes/register-settings.php:106
+#: stripe/includes/register-settings.php:112
 msgid "See how it works"
 msgstr ""
 
-#: includes/register-settings.php:111
+#: stripe/includes/register-settings.php:117
 msgid "Disable Form CSS"
 msgstr ""
 
-#: includes/register-settings.php:112
-msgid ""
-"Disable the plugin from ouputting the default form CSS. Also disables for "
-"all add-ons."
+#: stripe/includes/register-settings.php:118
+msgid "Disable the plugin from ouputting the default form CSS."
 msgstr ""
 
-#: includes/register-settings.php:121
+#: stripe/includes/register-settings.php:127
 msgid "Test or Live Mode"
 msgstr ""
 
-#: includes/register-settings.php:122
+#: stripe/includes/register-settings.php:128
 msgid "Toggle between using your Test or Live API keys."
 msgstr ""
 
-#: includes/register-settings.php:127
+#: stripe/includes/register-settings.php:133
 msgid "Test Secret Key"
 msgstr ""
 
-#: includes/register-settings.php:128
+#: stripe/includes/register-settings.php:134
 msgid "Enter your test secret key, found in your Stripe account settings."
 msgstr ""
 
-#: includes/register-settings.php:134
+#: stripe/includes/register-settings.php:140
 msgid "Test Publishable Key"
 msgstr ""
 
-#: includes/register-settings.php:135
+#: stripe/includes/register-settings.php:141
 msgid "Enter your test publishable key, found in your Stripe account settings."
 msgstr ""
 
-#: includes/register-settings.php:141
+#: stripe/includes/register-settings.php:147
 msgid "Live Secret Key"
 msgstr ""
 
-#: includes/register-settings.php:142
+#: stripe/includes/register-settings.php:148
 msgid "Enter your live secret key, found in your Stripe account settings."
 msgstr ""
 
-#: includes/register-settings.php:148
+#: stripe/includes/register-settings.php:154
 msgid "Live Publishable Key"
 msgstr ""
 
-#: includes/register-settings.php:149
+#: stripe/includes/register-settings.php:155
 msgid "Enter your live publishable key, found in your Stripe account settings."
 msgstr ""
 
-#: includes/register-settings.php:318
-msgid "Deactivate"
-msgstr ""
-
-#: includes/register-settings.php:321
-msgid "Activate"
-msgstr ""
-
-#: includes/register-settings.php:331
-msgid "License is valid and active."
-msgstr ""
-
-#: includes/register-settings.php:334
-msgid ""
-"License service could not be found. Please contact support for assistance."
-msgstr ""
-
-#: includes/register-settings.php:337
-msgid "License is inactive."
-msgstr ""
-
-#: includes/register-settings.php:401
+#: stripe/includes/register-settings.php:337
+#, php-format
 msgid ""
 "The callback function used for the <strong>%s</strong> setting is missing."
 msgstr ""
 
-#: includes/shortcodes.php:34
+#: stripe/includes/shortcodes.php:34
 msgid "Pay with Card"
 msgstr ""
 
-#: includes/shortcodes.php:171
-msgid "Total Amount:"
+#: stripe/includes/shortcodes.php:61
+msgid ""
+"You must enter your API keys before the Stripe button will show up here."
 msgstr ""
 
-#: views/admin-helper-functions.php:44
-msgid "Licenses"
+#: stripe/includes/shortcodes.php:110
+msgid "You must fill in a valid amount for the Stripe button to show up here."
 msgstr ""
 
-#: views/admin-install-notice.php:26
-msgid " is now installed."
+#: stripe/public/includes/misc-functions.php:136
+msgid "Congratulations. Your payment went through!"
 msgstr ""
 
-#: views/admin-install-notice.php:27
-msgid "Get started by entering your Stripe keys"
+#: stripe/public/includes/misc-functions.php:137
+msgid "Here's what you bought:"
 msgstr ""
 
-#: views/admin-install-notice.php:28
-msgid "Hide this"
+#: stripe/public/includes/misc-functions.php:147
+msgid "Total Paid: "
 msgstr ""
 
-#: views/admin-sidebar.php:23
-msgid "Need More Options?"
-msgstr ""
-
-#: views/admin-sidebar.php:27
-msgid "Additional perks you'll get with Stripe Checkout Pro"
-msgstr ""
-
-#: views/admin-sidebar.php:31
-msgid "Let customers enter an amount"
-msgstr ""
-
-#: views/admin-sidebar.php:32
-msgid "Add custom fields"
-msgstr ""
-
-#: views/admin-sidebar.php:33
-msgid "Integrate coupon codes"
-msgstr ""
-
-#: views/admin-sidebar.php:34
-msgid "Access to future Stripe add-ons"
-msgstr ""
-
-#: views/admin-sidebar.php:35
-msgid "Automatic updates & email support"
-msgstr ""
-
-#: views/admin-sidebar.php:41
-msgid "Upgrade to Pro Now"
-msgstr ""
-
-#: views/admin-sidebar.php:52
-msgid "Resources"
-msgstr ""
-
-#: views/admin-sidebar.php:58
-msgid "Instructions & Help"
-msgstr ""
-
-#: views/admin-sidebar.php:66
-msgid "Community Support Forums"
-msgstr ""
-
-#: views/admin-sidebar.php:74
-msgid "Stripe Checkout Add-Ons"
-msgstr ""
-
-#: views/admin-sidebar.php:85
-msgid "Now accepting 5-star reviews! It only takes seconds and means a lot."
-msgstr ""
-
-#: views/admin-sidebar.php:89
-msgid "Rate this Plugin Now"
+#: stripe/public/includes/misc-functions.php:166
+msgid ""
+"Sorry, but for some reason your card was declined and your payment did not "
+"complete."
 msgstr ""
