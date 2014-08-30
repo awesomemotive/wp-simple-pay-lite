@@ -1,7 +1,7 @@
 ﻿=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 3.6.1
+Requires at least: 3.7.4
 Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2 or later
