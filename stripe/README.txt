@@ -53,9 +53,9 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 `[stripe name="The Awesome Store" amount="1999" description="The Book of Awesomeness" checkout_button_label="Now only {{amount}}!" enable_remember="false"]`
 
-[Detailed Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Documentation & Getting Started](http://wpstripe.net/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-[General Plugin Troubleshooting / FAQ](http://wpstripe.net/docs/simple-stripe-checkout-faq/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Easily toggle between test and live mode until you're ready.
 
@@ -65,9 +65,9 @@ If you want your customers to receive email receipts, make sure you enable this 
 
 ###Feature Requests and Updates###
 
-* [Submit feature requests in our support forums.](https://wordpress.org/support/plugin/stripe)
-* [Get notified of major updates.](http://eepurl.com/YMXvP)
-* [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout).
+* [Submit feature requests in our support forums](https://wordpress.org/support/plugin/stripe)
+* [Get notified of major updates](http://eepurl.com/YMXvP)
+* [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout)
 
 == Installation ==
 
