@@ -37,9 +37,10 @@ Viola! Now a payment button that opens your checkout form in an overlay will pop
 
 ###Available in Stripe Checkout Pro Only###
 
-* **User Entered Amounts** - Let the customer enter what they want to pay.
+* **User Entered Amounts** - Allow customers enter what they want to pay.
 * **Coupon Codes** - Setup discount codes in your Stripe dashboard for customers to apply to their total.
 * **Custom Fields** - Record additional data along with each Stripe payment.
+* **Subscriptions** - Let customers pay and sign up for your Stripe recurring plans.
 
 [See Pricing & Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
