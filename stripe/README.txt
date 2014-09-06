@@ -1,7 +1,7 @@
 ﻿=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 3.6.1
+Requires at least: 3.7.4
 Tested up to: 4.0
 Stable tag: trunk
 License: GPLv2 or later
@@ -37,9 +37,10 @@ Viola! Now a payment button that opens your checkout form in an overlay will pop
 
 ###Available in Stripe Checkout Pro Only###
 
-* **User Entered Amounts** - Let the customer enter what they want to pay.
+* **User Entered Amounts** - Allow customers enter what they want to pay.
 * **Coupon Codes** - Setup discount codes in your Stripe dashboard for customers to apply to their total.
 * **Custom Fields** - Record additional data along with each Stripe payment.
+* **Subscriptions** - Let customers pay and sign up for your Stripe recurring plans.
 
 [See Pricing & Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
@@ -53,9 +54,9 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 `[stripe name="The Awesome Store" amount="1999" description="The Book of Awesomeness" checkout_button_label="Now only {{amount}}!" enable_remember="false"]`
 
-[Detailed Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Documentation & Getting Started](http://wpstripe.net/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-[General Plugin Troubleshooting / FAQ](http://wpstripe.net/docs/simple-stripe-checkout-faq/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Easily toggle between test and live mode until you're ready.
 
@@ -65,9 +66,9 @@ If you want your customers to receive email receipts, make sure you enable this 
 
 ###Feature Requests and Updates###
 
-* [Submit feature requests in our support forums.](https://wordpress.org/support/plugin/stripe)
-* [Get notified of major updates.](http://eepurl.com/YMXvP)
-* [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout).
+* [Submit feature requests in our support forums](https://wordpress.org/support/plugin/stripe)
+* [Get notified of major updates](http://eepurl.com/YMXvP)
+* [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout)
 
 == Installation ==
 
@@ -80,7 +81,7 @@ There are three ways to install this plugin.
 1. Look for the author name `Phil Derksen` on the plugin.
 1. Click to install.
 1. Activate the plugin.
-1. A new menu item `Simple Stripe Checkout` will appear under your Settings menu option.
+1. A new menu item `Simple Stripe Checkout` will appear in the main menu.
 
 = 2. Download & Upload =
 1. Download the plugin (a zip file) on the right column of this page.
@@ -88,14 +89,14 @@ There are three ways to install this plugin.
 1. Select the tab "Upload".
 1. Upload the .zip file you just downloaded.
 1. Activate the plugin.
-1. A new menu item `Simple Stripe Checkout` will appear under your Settings menu option.
+1. A new menu item `Simple Stripe Checkout` will appear in the main menu.
 
 = 3. FTP Upload =
 1. Download the plugin (.zip file) on the right column of this page.
 1. Unzip the zip file contents.
 1. Upload the `stripe` folder to the `/wp-content/plugins/` directory of your site.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
-1. A new menu item `Simple Stripe Checkout` will appear under your Settings menu option.
+1. A new menu item `Simple Stripe Checkout` will appear in the main menu.
 
 == Frequently Asked Questions ==
 
