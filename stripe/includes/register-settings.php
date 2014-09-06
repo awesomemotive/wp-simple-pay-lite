@@ -117,6 +117,12 @@ function sc_register_settings() {
 				'name' => __( 'Disable Form CSS', 'sc' ),
 				'desc' => __( 'Disable the plugin from ouputting the default form CSS.', 'sc' ),
 				'type' => 'checkbox'
+			),
+			'uninstall_save_settings' => array(
+				'id'   => 'uninstall_save_settings',
+				'name' => __( 'Save Settings', 'sc' ),
+				'desc' => __( 'Save your settings when uninstalling this plugin. Useful when upgrading or re-installing.', 'sc' ),
+				'type' => 'checkbox'
 			)
 		),
 		

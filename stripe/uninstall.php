@@ -12,12 +12,18 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-delete_option( 'sc_settings_master' );
-delete_option( 'sc_settings_default' );
-delete_option( 'sc_settings_keys' );
-delete_option( 'sc_show_admin_install_notice' );
-delete_option( 'sc_has_run' );
-delete_option( 'sc_version' );
-delete_option( 'sc_upgrade_has_run' );
-delete_option( 'sc_settings_licenses' );
-delete_option( 'sc_licenses' );
+$general = get_option( 'sc_settings_default' );
+
+if( empty( $general['uninstall_save_settings'] ) ) {
+
+	delete_option( 'sc_settings_master' );
+	delete_option( 'sc_settings_default' );
+	delete_option( 'sc_settings_keys' );
+	delete_option( 'sc_show_admin_install_notice' );
+	delete_option( 'sc_has_run' );
+	delete_option( 'sc_version' );
+	delete_option( 'sc_upgrade_has_run' );
+	delete_option( 'sc_settings_licenses' );
+	delete_option( 'sc_licenses' );
+	
+}
