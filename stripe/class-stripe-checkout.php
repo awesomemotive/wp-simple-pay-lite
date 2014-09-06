@@ -307,7 +307,7 @@ class Stripe_Checkout {
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' ),
-			'dashicons-cart'
+			plugins_url( '/assets/icon-16x16.png', __FILE__ )
 		);
 	}
 
