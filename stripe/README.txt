@@ -112,6 +112,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.3 =
+
+* Added version strings to scripts.
+
 = 1.2.2 =
 
 * Removed unnecessary code previously required for add-ons.
