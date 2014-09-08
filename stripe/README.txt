@@ -114,7 +114,7 @@ There are three ways to install this plugin.
 
 = 1.2.3 =
 
-* Added version strings to scripts.
+* Added option to save settings when uninstalling.
 
 = 1.2.2 =
 
