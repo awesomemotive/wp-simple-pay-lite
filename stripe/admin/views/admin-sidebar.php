@@ -27,9 +27,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<ul>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Let customers enter an amount', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Add custom fields', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Integrate coupon codes', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Access to advanced Stripe add-ons', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Collect data with custom fields', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Offer discounts with coupon codes', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscriptions integration', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe add-ons as they\'re released', 'sc' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Automatic updates & email support', 'sc' ); ?></li>
 				</ul>
 
