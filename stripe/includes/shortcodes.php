@@ -36,12 +36,13 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
 					'failure_redirect_url'  => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
 					'prefill_email'         => 'false',
-					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' )
+					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
+					'test_mode'             => 'false'
 				), $attr, 'stripe' ) );
 	
 	
 	// Check if in test mode or live mode
-	if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 ) {
+	if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
 		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );
 		
 		if( empty( $sc_options['live_secret_key'] ) ) {
@@ -98,6 +99,10 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$html .= '<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />';
 	$html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $failure_redirect_url ) ? $failure_redirect_url : get_permalink() ) ) . '" />';
 	$html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
+	
+	if( $test_mode == 'true' ) {
+		$html .= '<input type="hidden" name="sc_test_mode" value="true" />';
+	}
 
 	$html .= '</form>';
 

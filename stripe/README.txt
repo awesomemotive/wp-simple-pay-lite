@@ -116,6 +116,7 @@ There are three ways to install this plugin.
 = 1.2.3 =
 
 * Added option to save settings when uninstalling.
+* Added test_mode attribute to specify test mode per form.
 
 = 1.2.2 =
 
