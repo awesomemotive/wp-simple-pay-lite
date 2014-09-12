@@ -108,7 +108,8 @@ There are three ways to install this plugin.
 
 1. Desktop checkout overlay
 2. Mobile checkout overlay
-3. Admin settings page
+3. Settings: Stripe keys
+4. Settings: Site-wide defaults
 
 == Changelog ==
 
