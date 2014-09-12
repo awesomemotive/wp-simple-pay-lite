@@ -146,7 +146,7 @@ class Stripe_Checkout {
 	 * @since 1.1.1
 	 */
 	function sc_settings_default_title( $title ) {
-		return __( 'Default Settings', 'sc' );
+		return __( 'Site-wide Default Settings', 'sc' );
 	}
 	
 	/**
