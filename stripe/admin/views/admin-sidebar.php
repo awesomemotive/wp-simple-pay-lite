@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
 					<a href="http://wordpress.org/support/plugin/stripe" target="_blank">
-						<?php _e( 'Community Support Forums', 'sc' ); ?></a>
+						<?php _e( 'Community support forums', 'sc' ); ?></a>
 				</li>
 
 				<li>
