@@ -113,6 +113,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.4 =
+
+* Updated 3rd party JS/CSS library Bootstrap Switch.
+
 = 1.2.3 =
 
 * Added option to save settings when uninstalling.
