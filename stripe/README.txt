@@ -115,6 +115,7 @@ There are three ways to install this plugin.
 
 = 1.2.4 =
 
+* Updated to most recent Stripe PHP library (v1.17.2).
 * Updated 3rd party JS/CSS library Bootstrap Switch.
 
 = 1.2.3 =
