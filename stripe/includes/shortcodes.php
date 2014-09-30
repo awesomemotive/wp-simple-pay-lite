@@ -59,7 +59,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	if( empty( $data_key ) ) {
 		
 		if( current_user_can( 'manage_options' ) ) {
-			return '<p>' . __( 'You must enter your API keys before the Stripe button will show up here.', 'sc' ) . '</p>';
+			return '<h6>' . __( 'You must enter your API keys before the Stripe button will show up here.', 'sc' ) . '</h6>';
 		}
 		
 		return '';
@@ -108,11 +108,20 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 
 	// Increment static uid counter
 	$uid++;
-	
-	if( ( empty( $amount ) || $amount < 50 ) || ! isset( $amount ) ) {
-		
+
+	//Stripe minimum amount allowed.
+	$stripe_minimum_amount = 50;
+
+	if( ( empty( $amount ) || $amount < $stripe_minimum_amount ) || ! isset( $amount ) ) {
+
 		if( current_user_can( 'manage_options' ) ) {
-			return '<p>' . __( 'You must fill in a valid amount for the Stripe button to show up here.', 'sc' ) . '</p>';
+			$html =  '<h6>';
+			$html .= __( 'Stripe checkout requires an amount of ', 'sc' ) . $stripe_minimum_amount;
+			$html .= ' (' . sc_stripe_to_formatted_amount( $stripe_minimum_amount, $currency ) . ' ' . $currency . ')';
+			$html .= __( ' or larger.', 'sc' );
+			$html .= '</h6>';
+
+			return $html;
 		}
 		
 		return '';
