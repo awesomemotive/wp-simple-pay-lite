@@ -117,6 +117,7 @@ There are three ways to install this plugin.
 
 * Updated to most recent Stripe PHP library (v1.17.2).
 * Updated 3rd party JS/CSS library Bootstrap Switch.
+* Improved messaging for minimum required amount by Stripe (50 units).
 
 = 1.2.3 =
 
