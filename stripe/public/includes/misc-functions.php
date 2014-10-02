@@ -2,7 +2,7 @@
 
 /**
  * Misc plugin functions
- * 
+ *
  * @since 1.0.0
  */
 
@@ -12,53 +12,57 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Common method to set Stripe API key from options.
+ *
+ * @since 1.2.4
+ */
+function sc_set_stripe_key() {
+	global $sc_options;
+	$key = '';
+
+	// Check first if in live or test mode.
+	if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
+		$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
+	} else {
+		$key = ( ! empty( $sc_options['test_secret_key'] ) ? $sc_options['test_secret_key'] : '' );
+	}
+
+	Stripe::setApiKey( $key );
+}
+
+/**
  * Function that will actually charge the customers credit card
- * 
+ *
  * @since 1.0.0
  */
 function sc_charge_card() {
 	if( isset( $_POST['stripeToken'] ) ) {
-		
-		if( ! class_exists( 'Stripe' ) ) {
-			require_once( SC_PLUGIN_DIR . 'libraries/stripe-php/Stripe.php' );
-		}
-		
-		global $sc_options;
-		
-		// Set redirect
+
 		$redirect      = $_POST['sc-redirect'];
 		$fail_redirect = $_POST['sc-redirect-fail'];
-		
+
 		// Get the credit card details submitted by the form
 		$token       = $_POST['stripeToken'];
 		$amount      = $_POST['sc-amount'];
 		$description = $_POST['sc-description'];
 		$name        = $_POST['sc-name'];
 		$currency    = $_POST['sc-currency'];
-		
-		$test_mode   = ( isset( $_POST['sc_test_mode'] ) ? 'true' : 'false' );
-		
-		if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
-			$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
-		} else {
-			$key = ( ! empty( $sc_options['test_secret_key'] ) ? $sc_options['test_secret_key'] : '' );
-		}
-		
+
 		$meta = array();
-		
 		$meta = apply_filters( 'sc_meta_values', $meta );
-		
-		// Set your secret key: remember to change this to your live secret key in production
-		Stripe::setApiKey( $key );
-		
-		// Create new customer 
-		$new_customer = Stripe_Customer::create( array( 
-				'email' => $_POST['stripeEmail'],
-				'card'  => $token
-			));
-		
+
+		sc_set_stripe_key();
+
+		// Create new customer
+		$new_customer = Stripe_Customer::create( array(
+			'email' => $_POST['stripeEmail'],
+			'card'  => $token
+		));
+
 		$amount = apply_filters( 'sc_charge_amount', $amount );
-		
+
+		$charge = null;
+
 		// Create the charge on Stripe's servers - this will charge the user's default card
 		try {
 			$charge = Stripe_Charge::create( array(
@@ -66,29 +70,33 @@ function sc_charge_card() {
 					'currency'    => $currency,
 					'customer'    => $new_customer['id'],
 					'description' => $description,
-					'metadata'  => $meta
+					'metadata'    => $meta
 				)
 			);
-			
-			$query_args = array( 'payment' => 'success', 'amount' => $amount );
-			
+
+			// TODO Get Charge ID
+			//echo $charge;
+			//wp_die();
+
+			//$query_args = array( 'payment' => 'success', 'amount' => $amount );
+
 			$failed = false;
-			
-			
+
 		} catch(Stripe_CardError $e) {
-		  
+
+			// TODO fail redirect url
 			$redirect = $fail_redirect;
-			
-			$query_args = array( 'payment' => 'failed' );
-			
+
+			//$query_args = array( 'payment' => 'failed' );
+
 			$failed = true;
 		}
-		
+
 		unset( $_POST['stripeToken'] );
-		
-		
+
 		if( ! $failed ) {
 
+			/*
 			// Update our payment details option so we can show it at the top of the content
 			$sc_payment_details['show']        = true;
 			$sc_payment_details['amount']      = $amount;
@@ -96,20 +104,28 @@ function sc_charge_card() {
 			$sc_payment_details['description'] = $description;
 			$sc_payment_details['currency']    = $currency;
 
-			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );		
+			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );
+			*/
+
 		} else {
+
+			/*
 			$sc_payment_details['show'] = true;
 			$sc_payment_details['fail'] = true;
-			
-			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );	
+
+			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );
+			*/
 		}
-		
+
 		do_action( 'sc_redirect_before' );
-		
+
+		// Add Stripe charge ID to querystring.
+		$query_args = array( 'charge' => $charge->id );
+
 		wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
-		
+
 		do_action( 'sc_redirect_after' );
-		
+
 		exit;
 	}
 }
@@ -125,6 +141,42 @@ if( isset( $_POST['stripeToken'] ) ) {
  * @since 1.0.0
  */
 function sc_show_payment_details( $content ) {
+
+	// TODO Testing charge retrieval
+
+	$html = '';
+
+	sc_set_stripe_key();
+
+	if( isset( $_GET['charge'] ) ) {
+
+		$charge = $_GET['charge'];
+
+		$charge_response = Stripe_Charge::retrieve( $charge );
+
+		$html = 'Charge ID: ' . $charge . '<br/>' .
+		        'Amount: ' . $charge_response->amount . '<br/>' .
+		        'Currency: ' . $charge_response->currency . '<br/>' .
+		        'Last 4: ' . $charge_response->card->last4 . '<br/>' .
+		        'Description: ' . $charge_response->description . '<br/>' .
+		        'Metadata: ' . $charge_response->metadata . '<br/>';
+
+		$customer_id = $charge_response->customer;
+
+		$customer_response = Stripe_Customer::retrieve( $customer_id );
+
+		$html .= 'Customer ID: ' . $customer_id . '<br/>' .
+		         'Customer Email: ' . $customer_response->email . '<br/>';
+
+		$html .= '<p>Charge raw: ' . $charge_response . '</p>';
+		$html .= '<p>Customer raw: ' . $customer_response . '</p>';
+	}
+
+	return $content . $html;
+
+	// End testing
+
+	/*
 	
 	$sc_payment_details = Stripe_Checkout::get_instance()->session->get( 'sc_payment_details' );
 	
@@ -181,7 +233,9 @@ function sc_show_payment_details( $content ) {
 			}
 		}
 	}
-	
+
+	*/
+
 	return $content;
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
@@ -240,38 +294,38 @@ function sc_is_zero_decimal_currency( $currency ) {
 
 /**
  * Check if the [stripe] shortcode exists on this page
- * 
+ *
  * @since 1.0.0
  */
 function sc_has_shortcode() {
 	global $post;
-	
+
 	// Currently ( 5/8/2014 ) the has_shortcode() function will not find a 
 	// nested shortcode. This seems to do the trick currently, will switch if 
 	// has_shortcode() gets updated. -NY
 	if ( strpos( $post->post_content, '[stripe' ) !== false ) {
 		return true;
 	}
-	
+
 	return false;
 }
 
 /**
  * Since Stripe does not deal with Shipping information we will add it as meta to pass to the Dashboard
- * 
+ *
  * @since 1.1.1
  */
 function sc_add_shipping_meta( $meta ) {
 	if( isset( $_POST['sc-shipping-name'] ) ) {
-		
+
 		// Add Shipping Name as an item
 		$meta['Shipping Name']    = $_POST['sc-shipping-name'];
-		
+
 		// Show address on two lines: Address 1 and Address 2 in Stripe dashboard -> payments 
 		$meta['Shipping Address 1'] = $_POST['sc-shipping-address'];
 		$meta['Shipping Address 2'] = $_POST['sc-shipping-zip'] . ', ' . $_POST['sc-shipping-city'] . ', ' . $_POST['sc-shipping-state'] . ', ' . $_POST['sc-shipping-country'];
 	}
-	
+
 	return $meta;
 }
 add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
@@ -305,9 +359,9 @@ function sc_ga_campaign_url( $base_url, $source, $medium, $campaign ) {
  * @since 1.2.0
  */
 function sc_disable_seo_og() {
-	
+
 	$sc_payment_details = Stripe_Checkout::get_instance()->session->get( 'sc_payment_details' );
-	
+
 	if ( $sc_payment_details['show'] == true ) {
 		remove_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
 	}
