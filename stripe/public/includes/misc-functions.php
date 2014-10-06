@@ -45,8 +45,11 @@ function sc_charge_card() {
 		$token       = $_POST['stripeToken'];
 		$amount      = $_POST['sc-amount'];
 		$description = $_POST['sc-description'];
-		$name        = $_POST['sc-name'];
+		$store_name  = $_POST['sc-name'];
 		$currency    = $_POST['sc-currency'];
+
+		$charge = array();
+		$query_args = array();
 
 		$meta = array();
 		$meta = apply_filters( 'sc_meta_values', $meta );
@@ -61,8 +64,6 @@ function sc_charge_card() {
 
 		$amount = apply_filters( 'sc_charge_amount', $amount );
 
-		$charge = null;
-
 		// Create the charge on Stripe's servers - this will charge the user's default card
 		try {
 			$charge = Stripe_Charge::create( array(
@@ -74,53 +75,25 @@ function sc_charge_card() {
 				)
 			);
 
-			// TODO Get Charge ID
-			//echo $charge;
-			//wp_die();
-
-			//$query_args = array( 'payment' => 'success', 'amount' => $amount );
+			// Add Stripe charge ID to querystring.
+			$query_args = array( 'charge' => $charge->id, 'store_name' => urlencode( $store_name ) );
 
 			$failed = false;
 
 		} catch(Stripe_CardError $e) {
 
-			// TODO fail redirect url
+			// Catch Stripe errors
 			$redirect = $fail_redirect;
-
-			//$query_args = array( 'payment' => 'failed' );
+			
+			// Add failure indicator to querystring.
+			$query_args = array( 'charge_failed' => true );
 
 			$failed = true;
 		}
 
 		unset( $_POST['stripeToken'] );
 
-		if( ! $failed ) {
-
-			/*
-			// Update our payment details option so we can show it at the top of the content
-			$sc_payment_details['show']        = true;
-			$sc_payment_details['amount']      = $amount;
-			$sc_payment_details['name']        = $name;
-			$sc_payment_details['description'] = $description;
-			$sc_payment_details['currency']    = $currency;
-
-			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );
-			*/
-
-		} else {
-
-			/*
-			$sc_payment_details['show'] = true;
-			$sc_payment_details['fail'] = true;
-
-			Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );
-			*/
-		}
-
 		do_action( 'sc_redirect_before' );
-
-		// Add Stripe charge ID to querystring.
-		$query_args = array( 'charge' => $charge->id );
 
 		wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
 
@@ -142,19 +115,22 @@ if( isset( $_POST['stripeToken'] ) ) {
  */
 function sc_show_payment_details( $content ) {
 
-	// TODO Testing charge retrieval
+	// TODO $html out once finalized.
 
 	$html = '';
+	$payment_details_html = '';
 
 	sc_set_stripe_key();
 
-	if( isset( $_GET['charge'] ) ) {
+	// TODO Testing charge retrieval
 
-		$charge = $_GET['charge'];
+	if ( isset( $_GET['charge'] ) ) {
 
-		$charge_response = Stripe_Charge::retrieve( $charge );
+		$charge_id = $_GET['charge'];
 
-		$html = 'Charge ID: ' . $charge . '<br/>' .
+		$charge_response = Stripe_Charge::retrieve( $charge_id );
+
+		$html .= 'Charge ID: ' . $charge_id . '<br/>' .
 		        'Amount: ' . $charge_response->amount . '<br/>' .
 		        'Currency: ' . $charge_response->currency . '<br/>' .
 		        'Last 4: ' . $charge_response->card->last4 . '<br/>' .
@@ -170,11 +146,58 @@ function sc_show_payment_details( $content ) {
 
 		$html .= '<p>Charge raw: ' . $charge_response . '</p>';
 		$html .= '<p>Customer raw: ' . $customer_response . '</p>';
+
+		$content = $html . $content;
 	}
 
-	return $content . $html;
-
 	// End testing
+
+	// Successful charge output.
+	if ( isset( $_GET['charge'] ) ) {
+
+		$charge_id = $_GET['charge'];
+
+		// https://stripe.com/docs/api/php#charges
+		$charge_response = Stripe_Charge::retrieve( $charge_id );
+
+		$before_payment_details_html = '<div class="sc-payment-details-wrap">' . "\n";
+
+		$payment_details_html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
+
+		if ( ! empty( $charge_response->description ) ) {
+			$payment_details_html .= '<p>' . __( 'Here\'s what you bought:', 'sc' ) . '</p>' . "\n";
+			$payment_details_html .= $charge_response->description . '<br/>' . "\n";
+		}
+
+		// Get name from querystring. Not in Stripe charge object (yet).
+		if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
+			$payment_details_html .= 'From: ' . $_GET['store_name'] . '<br/>' . "\n";
+		}
+
+		$payment_details_html .=  '<br/>' . "\n";
+		$payment_details_html .=  '<strong>' . __( 'Total Paid: ', 'sc' );
+		$payment_details_html .=  sc_stripe_to_formatted_amount( $charge_response->amount, $charge_response->currency ) . "\n";
+		$payment_details_html .=  ' ' . strtoupper( $charge_response->currency ) . '</strong>' . "\n";
+
+		$after_payment_details_html = '</div>' . "\n";
+
+		$before_payment_details_html = apply_filters( 'sc_before_payment_details_html', $before_payment_details_html );
+
+		// TODO Passing charge response to filter work for subscriptions?
+		$payment_details_html        = apply_filters( 'sc_payment_details_html', $payment_details_html, $charge_response );
+
+		$after_payment_details_html  = apply_filters( 'sc_after_payment_details_html', $after_payment_details_html );
+
+		$content = $before_payment_details_html . $payment_details_html . $after_payment_details_html . $content;
+
+	} elseif ( isset( $_GET['charge_failed'] ) ) {
+		// TODO Failed charge output.
+
+		$html .= 'Failed. Sorry.';
+
+	} else {
+		// Regular output. Do nothing.
+	}
 
 	/*
 	
