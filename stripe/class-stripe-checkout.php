@@ -87,6 +87,7 @@ class Stripe_Checkout {
 
 		// Add plugin listing "Settings" action link.
 		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
 		
 		// Check WP version
 		add_action( 'admin_init', array( $this, 'check_wp_version' ) );
@@ -374,6 +375,13 @@ class Stripe_Checkout {
 		$setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( 'page', $this->plugin_slug, admin_url( 'admin.php' ) ), __( 'Settings', 'sc' ) );
 		array_unshift( $links, $setting_link );
 
+		return $links;
+	}
+	
+	public function purchase_pro_link( $links ) {
+		$pro_link = sprintf( '<a href="%s">%s</a>', sc_ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'plugin_listing', 'pro_upgrade' ), __( 'Purchase Pro', 'sc' ) );
+		array_push( $links, $pro_link );
+		
 		return $links;
 	}
 
