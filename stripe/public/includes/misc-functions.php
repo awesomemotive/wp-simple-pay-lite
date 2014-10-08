@@ -130,6 +130,10 @@ function sc_show_payment_details( $content ) {
 
 		$html = '<div class="sc-payment-details-wrap">';
 		
+		$html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
+		
+		$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s%s%s', 'sc' ), '<strong>', $charge_id, '</strong>' ) . '</p>';
+		
 		if( ! empty( $charge_response->description ) ) {
 			$html .= '<p>' . __( "Here's what you bought:", 'sc' ) . '</p>';
 			$html .= $charge_response->description . '<br>' . "\n";
