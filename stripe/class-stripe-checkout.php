@@ -278,7 +278,6 @@ class Stripe_Checkout {
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
 			self::$instance = new self;
-			self::$instance->session = new SC_Session();
 		}
 
 		return self::$instance;
@@ -332,8 +331,6 @@ class Stripe_Checkout {
 		if( ! class_exists( 'Stripe' ) ) {
 			require_once( 'libraries/stripe-php/Stripe.php' );
 		}
-
-		include_once( SC_PATH . 'public/includes/class-sc-session.php' );
 		
 		// Include any necessary functions
 		include_once( SC_PATH . 'public/includes/misc-functions.php' );
