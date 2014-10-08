@@ -132,8 +132,6 @@ function sc_show_payment_details( $content ) {
 		
 		$html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
 		
-		$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s%s%s', 'sc' ), '<strong>', $charge_id, '</strong>' ) . '</p>';
-		
 		if( ! empty( $charge_response->description ) ) {
 			$html .= '<p>' . __( "Here's what you bought:", 'sc' ) . '</p>';
 			$html .= $charge_response->description . '<br>' . "\n";
@@ -145,6 +143,8 @@ function sc_show_payment_details( $content ) {
 		
 		$html .= '<br><strong>' . __( 'Total Paid: ', 'sc' ) . sc_stripe_to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' . 
 				strtoupper( $charge_response->currency ) . '</strong>' . "\n";
+		
+		$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'sc' ), $charge_id ) . '</p>';
 		
 		$html .= '</div>';
 		
