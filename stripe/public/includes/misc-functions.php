@@ -116,149 +116,46 @@ if( isset( $_POST['stripeToken'] ) ) {
 function sc_show_payment_details( $content ) {
 
 	// TODO $html out once finalized.
-
 	$html = '';
-	$payment_details_html = '';
 
 	sc_set_stripe_key();
-
-	// TODO Testing charge retrieval
-
-	if ( isset( $_GET['charge'] ) ) {
-
-		$charge_id = $_GET['charge'];
-
-		$charge_response = Stripe_Charge::retrieve( $charge_id );
-
-		$html .= 'Charge ID: ' . $charge_id . '<br/>' .
-		        'Amount: ' . $charge_response->amount . '<br/>' .
-		        'Currency: ' . $charge_response->currency . '<br/>' .
-		        'Last 4: ' . $charge_response->card->last4 . '<br/>' .
-		        'Description: ' . $charge_response->description . '<br/>' .
-		        'Metadata: ' . $charge_response->metadata . '<br/>';
-
-		$customer_id = $charge_response->customer;
-
-		$customer_response = Stripe_Customer::retrieve( $customer_id );
-
-		$html .= 'Customer ID: ' . $customer_id . '<br/>' .
-		         'Customer Email: ' . $customer_response->email . '<br/>';
-
-		$html .= '<p>Charge raw: ' . $charge_response . '</p>';
-		$html .= '<p>Customer raw: ' . $customer_response . '</p>';
-
-		$content = $html . $content;
-	}
-
-	// End testing
 
 	// Successful charge output.
 	if ( isset( $_GET['charge'] ) ) {
 
-		$charge_id = $_GET['charge'];
+		$charge_id = esc_html( $_GET['charge'] );
 
 		// https://stripe.com/docs/api/php#charges
 		$charge_response = Stripe_Charge::retrieve( $charge_id );
 
-		$before_payment_details_html = '<div class="sc-payment-details-wrap">' . "\n";
-
-		$payment_details_html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
-
-		if ( ! empty( $charge_response->description ) ) {
-			$payment_details_html .= '<p>' . __( 'Here\'s what you bought:', 'sc' ) . '</p>' . "\n";
-			$payment_details_html .= $charge_response->description . '<br/>' . "\n";
+		$html = '<div class="sc-payment-details-wrap">';
+		
+		if( ! empty( $charge_response->description ) ) {
+			$html .= '<p>' . __( "Here's what you bought:", 'sc' ) . '</p>';
+			$html .= $charge_response->description . '<br>' . "\n";
 		}
-
-		// Get name from querystring. Not in Stripe charge object (yet).
+		
 		if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
-			$payment_details_html .= 'From: ' . $_GET['store_name'] . '<br/>' . "\n";
+			$html .= 'From: ' . esc_html( $_GET['store_name'] ) . '<br/>' . "\n";
 		}
-
-		$payment_details_html .=  '<br/>' . "\n";
-		$payment_details_html .=  '<strong>' . __( 'Total Paid: ', 'sc' );
-		$payment_details_html .=  sc_stripe_to_formatted_amount( $charge_response->amount, $charge_response->currency ) . "\n";
-		$payment_details_html .=  ' ' . strtoupper( $charge_response->currency ) . '</strong>' . "\n";
-
-		$after_payment_details_html = '</div>' . "\n";
-
-		$before_payment_details_html = apply_filters( 'sc_before_payment_details_html', $before_payment_details_html );
-
-		// TODO Passing charge response to filter work for subscriptions?
-		$payment_details_html        = apply_filters( 'sc_payment_details_html', $payment_details_html, $charge_response );
-
-		$after_payment_details_html  = apply_filters( 'sc_after_payment_details_html', $after_payment_details_html );
-
-		$content = $before_payment_details_html . $payment_details_html . $after_payment_details_html . $content;
+		
+		$html .= '<br><strong>' . __( 'Total Paid: ', 'sc' ) . sc_stripe_to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' . 
+				strtoupper( $charge_response->currency ) . '</strong>' . "\n";
+		
+		$html .= '</div>';
+		
+		
+		return apply_filters( 'sc_payment_details', $html, $charge_response ) . $content;
 
 	} elseif ( isset( $_GET['charge_failed'] ) ) {
 		// TODO Failed charge output.
 
 		$html .= 'Failed. Sorry.';
+		
+		return apply_filters( 'sc_payment_details_error', $html ) . $content;
 
-	} else {
-		// Regular output. Do nothing.
-	}
-
-	/*
+	} 
 	
-	$sc_payment_details = Stripe_Checkout::get_instance()->session->get( 'sc_payment_details' );
-	
-	$payment_details_html = '';
-	
-	if( ! empty( $sc_payment_details ) ) {
-		if( $sc_payment_details['show'] != false ) {
-			if( empty( $sc_payment_details['fail'] ) ) {
-				$before_payment_details_html = '<div class="sc-payment-details-wrap">' . "\n";
-
-				$payment_details_html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
-				$payment_details_html .= '<p>' . __( 'Here\'s what you bought:', 'sc' ) . '</p>' . "\n";
-
-				if ( ! empty( $sc_payment_details['description'] ) ) {
-					$payment_details_html .= $sc_payment_details['description'] . '<br/>' . "\n";
-				}
-				if ( ! empty( $sc_payment_details['name'] ) ) {
-					$payment_details_html .= 'From: ' . $sc_payment_details['name'] . '<br/>' . "\n";
-				}
-				if ( ! empty( $sc_payment_details['amount'] ) ) {
-					$payment_details_html .=  '<br/>' . "\n";
-					$payment_details_html .=  '<strong>' . __( 'Total Paid: ', 'sc' );
-					$payment_details_html .=  sc_stripe_to_formatted_amount( $sc_payment_details['amount'], $sc_payment_details['currency'] ) . "\n";
-					$payment_details_html .=  ' ' . $sc_payment_details['currency'] . '</strong>' . "\n";
-				}
-
-				$after_payment_details_html = '</div>' . "\n";
-
-				$before_payment_details_html = apply_filters( 'sc_before_payment_details_html', $before_payment_details_html );
-				$payment_details_html        = apply_filters( 'sc_payment_details_html', $payment_details_html, $sc_payment_details );
-				$after_payment_details_html  = apply_filters( 'sc_after_payment_details_html', $after_payment_details_html );
-
-				$content = $before_payment_details_html . $payment_details_html . $after_payment_details_html . $content;
-
-				$sc_payment_details['show'] = false;
-
-				Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );
-			} else {
-				$before_payment_details_html = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
-
-				$payment_details_html .= '<p>' . __( 'Sorry, but for some reason your card was declined and your payment did not complete.', 'sc' ) . '</p>' . "\n";
-				
-				$after_payment_details_html = '</div>' . "\n";
-				
-				$before_payment_details_html = apply_filters( 'sc_before_payment_details_error_html', $before_payment_details_html );
-				$payment_details_html        = apply_filters( 'sc_payment_details_error_html', $payment_details_html, $sc_payment_details );
-				$after_payment_details_html  = apply_filters( 'sc_after_payment_details_error_html', $after_payment_details_html );
-
-				$content = $before_payment_details_html . $payment_details_html . $after_payment_details_html . $content;
-
-				$sc_payment_details['show'] = false;
-				
-				Stripe_Checkout::get_instance()->session->set( 'sc_payment_details', $sc_payment_details );
-			}
-		}
-	}
-
-	*/
-
 	return $content;
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
