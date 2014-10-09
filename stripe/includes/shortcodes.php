@@ -126,7 +126,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		
 		return '';
 		
-	} else if( ! isset( $_GET['payment'] ) ) {
+	} else if( ! isset( $_GET['charge'] ) ) {
 		return $html;
 	}
 	
