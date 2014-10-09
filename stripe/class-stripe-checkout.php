@@ -87,7 +87,11 @@ class Stripe_Checkout {
 
 		// Add plugin listing "Settings" action link.
 		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
+
+		// Add upgrade link (if not already in Pro).
+		if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
+			add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
+		}
 		
 		// Check WP version
 		add_action( 'admin_init', array( $this, 'check_wp_version' ) );
