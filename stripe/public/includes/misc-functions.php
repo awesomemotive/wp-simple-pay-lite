@@ -85,8 +85,10 @@ function sc_charge_card() {
 			// Catch Stripe errors
 			$redirect = $fail_redirect;
 			
+			$e = $e->getJsonBody();
+			
 			// Add failure indicator to querystring.
-			$query_args = array( 'charge_failed' => true );
+			$query_args = array( 'charge' => $e['error']['charge'], 'charge_failed' => true );
 
 			$failed = true;
 		}
@@ -121,7 +123,7 @@ function sc_show_payment_details( $content ) {
 	sc_set_stripe_key();
 
 	// Successful charge output.
-	if ( isset( $_GET['charge'] ) ) {
+	if ( isset( $_GET['charge'] ) && ! isset( $_GET['charge_failed'] ) ) {
 
 		$charge_id = esc_html( $_GET['charge'] );
 
@@ -153,8 +155,11 @@ function sc_show_payment_details( $content ) {
 
 	} elseif ( isset( $_GET['charge_failed'] ) ) {
 		// TODO Failed charge output.
-
-		$html .= 'Failed. Sorry.';
+		
+		$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">';
+		$html .= __( 'Sorry, but your card was declined and your payment was not processed.', 'sc' );
+		$html .= '<br><br>' . sprintf( __( 'Transaction ID: %s', 'sc' ), esc_html( $_GET['charge'] ) );
+		$html .= '</div>';
 		
 		return apply_filters( 'sc_payment_details_error', $html ) . $content;
 
