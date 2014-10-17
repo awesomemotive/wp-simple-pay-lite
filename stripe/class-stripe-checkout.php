@@ -21,7 +21,7 @@ class Stripe_Checkout {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.2.4';
+	protected $version = '1.2.5';
 
 	/**
 	 * Unique identifier for your plugin.
