@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.2.4
  */
-function sc_set_stripe_key() {
+function sc_set_stripe_key( $test_mode = 'false' ) {
 	global $sc_options;
 	$key = '';
 
@@ -47,6 +47,7 @@ function sc_charge_card() {
 		$description = $_POST['sc-description'];
 		$store_name  = $_POST['sc-name'];
 		$currency    = $_POST['sc-currency'];
+		$test_mode   = $_POST['sc_test_mode'];
 
 		$charge = array();
 		$query_args = array();
@@ -54,7 +55,7 @@ function sc_charge_card() {
 		$meta = array();
 		$meta = apply_filters( 'sc_meta_values', $meta );
 
-		sc_set_stripe_key();
+		sc_set_stripe_key( $test_mode );
 
 		// Create new customer
 		$new_customer = Stripe_Customer::create( array(
