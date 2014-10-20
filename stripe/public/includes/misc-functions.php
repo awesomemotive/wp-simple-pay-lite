@@ -47,7 +47,7 @@ function sc_charge_card() {
 		$description = $_POST['sc-description'];
 		$store_name  = $_POST['sc-name'];
 		$currency    = $_POST['sc-currency'];
-		$test_mode   = $_POST['sc_test_mode'];
+		$test_mode   = ( isset( $_POST['sc_test_mode'] ) ? $_POST['sc_test_mode'] : 'false' );
 
 		$charge = array();
 		$query_args = array();
