@@ -345,6 +345,10 @@ class Stripe_Checkout {
 		
 		include_once( SC_PATH . 'includes/register-settings.php' );
 		
+		if( is_admin() ) {
+			include_once( SC_PATH . 'admin/includes/upgrade-link.php' );
+		}
+		
 		//$sc_options = sc_get_settings();
 		sc_set_defaults();
 		
