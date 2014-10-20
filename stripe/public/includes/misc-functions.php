@@ -97,7 +97,12 @@ function sc_charge_card() {
 		unset( $_POST['stripeToken'] );
 
 		do_action( 'sc_redirect_before' );
-
+		
+		if( $test_mode == 'true' ) {
+			$query_args['test_mode'] = 'true';
+		}
+		
+		
 		wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
 
 		do_action( 'sc_redirect_after' );
@@ -120,8 +125,10 @@ function sc_show_payment_details( $content ) {
 
 	// TODO $html out once finalized.
 	$html = '';
+	
+	$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : 'false' );
 
-	sc_set_stripe_key();
+	sc_set_stripe_key( $test_mode );
 
 	// Successful charge output.
 	if ( isset( $_GET['charge'] ) && ! isset( $_GET['charge_failed'] ) ) {
