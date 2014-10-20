@@ -93,6 +93,9 @@ class Stripe_Checkout {
 			add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
 		}
 		
+		// Add "Upgrade to Pro" submenu link
+		add_action( 'init', array( $this, 'admin_upgrade_link' ) );
+		
 		// Check WP version
 		add_action( 'admin_init', array( $this, 'check_wp_version' ) );
 		
@@ -102,6 +105,17 @@ class Stripe_Checkout {
 		// Filters to add the settings page titles
 		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
+	}
+	
+	/**
+	 * Add "Upgrade to Pro" submenu link
+	 * 
+	 * @since 1.2.5
+	 */
+	function admin_upgrade_link() {
+		if( is_admin() ) {
+			include_once( SC_PATH . 'admin/includes/upgrade-link.php' );
+		}
 	}
 	
 	/**
@@ -344,10 +358,6 @@ class Stripe_Checkout {
 		include_once( SC_PATH . 'includes/shortcodes.php' );
 		
 		include_once( SC_PATH . 'includes/register-settings.php' );
-		
-		if( is_admin() ) {
-			include_once( SC_PATH . 'admin/includes/upgrade-link.php' );
-		}
 		
 		//$sc_options = sc_get_settings();
 		sc_set_defaults();
