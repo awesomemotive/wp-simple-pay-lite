@@ -116,6 +116,7 @@ There are three ways to install this plugin.
 = 1.2.5 =
 
 * Fixed bug with remember me option.
+* Fixed bug with test_mode attribute.
 
 = 1.2.4 =
 
