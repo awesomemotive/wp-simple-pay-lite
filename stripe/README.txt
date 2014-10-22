@@ -113,6 +113,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.5.1 =
+
+* Added missing PHP file.
+
 = 1.2.5 =
 
 * Fixed a bug with the remember me option.
