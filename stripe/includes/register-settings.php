@@ -118,6 +118,12 @@ function sc_register_settings() {
 				'desc' => __( 'Disable the plugin from ouputting the default form CSS.', 'sc' ),
 				'type' => 'checkbox'
 			),
+			'disable_success_message' => array(
+				'id'   => 'disable_success_message',
+				'name' => __( 'Disable Success HTML', 'sc' ),
+				'desc' => __( 'Disables success message output. Useful if you are redirecting to your own success page.', 'sc' ),
+				'type' => 'checkbox'
+			),
 			'uninstall_save_settings' => array(
 				'id'   => 'uninstall_save_settings',
 				'name' => __( 'Save Settings', 'sc' ),
