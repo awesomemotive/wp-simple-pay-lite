@@ -80,6 +80,12 @@ function sc_register_settings() {
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
+			'disable_success_message' => array(
+				'id'   => 'disable_success_message',
+				'name' => __( 'Disable Success Message', 'sc' ),
+				'desc' => __( 'Disable default success message. Useful if you are redirecting to your own success page.', 'sc' ),
+				'type' => 'checkbox'
+			),
 			'failure_redirect_url' => array(
 				'id'   => 'failure_redirect_url',
 				'name' => __( 'Failure Redirect URL', 'sc' ),
@@ -116,12 +122,6 @@ function sc_register_settings() {
 				'id'   => 'disable_css',
 				'name' => __( 'Disable Form CSS', 'sc' ),
 				'desc' => __( 'Disable the plugin from ouputting the default form CSS.', 'sc' ),
-				'type' => 'checkbox'
-			),
-			'disable_success_message' => array(
-				'id'   => 'disable_success_message',
-				'name' => __( 'Disable Success HTML', 'sc' ),
-				'desc' => __( 'Disables success message output. Useful if you are redirecting to your own success page.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'uninstall_save_settings' => array(
