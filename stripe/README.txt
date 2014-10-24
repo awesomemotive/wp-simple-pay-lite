@@ -113,6 +113,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.6 =
+
+* Added option to hide success message HTML.
+
 = 1.2.5.1 =
 
 * Added missing PHP file.
