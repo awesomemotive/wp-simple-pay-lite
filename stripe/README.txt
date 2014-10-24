@@ -115,7 +115,7 @@ There are three ways to install this plugin.
 
 = 1.2.6 =
 
-* Added option to hide success message HTML.
+* Added option to disable the default success message output.
 
 = 1.2.5.1 =
 
