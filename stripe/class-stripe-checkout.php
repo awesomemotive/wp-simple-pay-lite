@@ -262,26 +262,11 @@ class Stripe_Checkout {
 	 * @since    1.0.0
 	 */
 	public function plugin_textdomain() {
-		// Set filter for plugin's languages directory
-		$sc_lang_dir = dirname( plugin_basename( SC_MAIN_FILE ) ) . '/languages/';
-		$sc_lang_dir = apply_filters( 'sc_languages_directory', $sc_lang_dir );
-
-		// Traditional WordPress plugin locale filter
-		$locale        = apply_filters( 'plugin_locale',  get_locale(), 'sc' );
-		$mofile        = sprintf( '%1$s-%2$s.mo', 'sc', $locale );
-
-		// Setup paths to current locale file
-		$mofile_local  = $sc_lang_dir . $mofile;
-		$mofile_global = WP_LANG_DIR . '/sc/' . $mofile;
-
-		if ( file_exists( $mofile_global ) ) {
-			load_textdomain( 'sc', $mofile_global );
-		} elseif ( file_exists( $mofile_local ) ) {
-			load_textdomain( 'sc', $mofile_local );
-		} else {
-			// Load the default language files
-			load_plugin_textdomain( 'sc', false, $sc_lang_dir );
-		}
+		load_plugin_textdomain(
+			'sc',
+			false,
+			dirname( plugin_basename( SC_MAIN_FILE ) ) . '/languages/'
+		);
 
 	}
 	
