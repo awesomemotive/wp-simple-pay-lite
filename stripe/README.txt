@@ -113,6 +113,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.7 =
+
+* Simplified text domain function.
+
 = 1.2.6 =
 
 * Added option to disable the default success message output.
