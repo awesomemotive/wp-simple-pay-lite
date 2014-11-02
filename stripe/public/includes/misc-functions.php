@@ -254,26 +254,6 @@ function sc_has_shortcode() {
 }
 
 /**
- * Since Stripe does not deal with Shipping information we will add it as meta to pass to the Dashboard
- *
- * @since 1.1.1
- */
-function sc_add_shipping_meta( $meta ) {
-	if( isset( $_POST['sc-shipping-name'] ) ) {
-
-		// Add Shipping Name as an item
-		$meta['Shipping Name']    = $_POST['sc-shipping-name'];
-
-		// Show address on two lines: Address 1 and Address 2 in Stripe dashboard -> payments 
-		$meta['Shipping Address 1'] = $_POST['sc-shipping-address'];
-		$meta['Shipping Address 2'] = $_POST['sc-shipping-zip'] . ', ' . $_POST['sc-shipping-city'] . ', ' . $_POST['sc-shipping-state'] . ', ' . $_POST['sc-shipping-country'];
-	}
-
-	return $meta;
-}
-add_filter( 'sc_meta_values', 'sc_add_shipping_meta' );
-
-/**
  * Google Analytics campaign URL.
  *
  * @since   1.1.1
