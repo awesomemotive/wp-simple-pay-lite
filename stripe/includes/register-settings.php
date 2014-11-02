@@ -96,13 +96,8 @@ function sc_register_settings() {
 			'billing' => array(
 				'id'   => 'billing',
 				'name' => __( 'Enable Billing Address', 'sc' ),
-				'desc' => __( 'Require the user to enter their billing address during checkout.', 'sc' ),
-				'type' => 'checkbox'
-			),
-			'shipping' => array(
-				'id'   => 'shipping',
-				'name' => __( 'Enable Shipping Address', 'sc' ),
-				'desc' => __( 'Require the user to enter their shipping address during checkout.', 'sc' ),
+				'desc' => __( 'Require the user to enter their billing address during checkout.', 'sc' ) . 
+						( class_exists( 'Stripe_Checkout_Pro' ) ? '<br><em>' . __( 'See below if you also need to require a shipping address.', 'sc' ) . '</em>' : '' ),
 				'type' => 'checkbox'
 			),
 			'verify_zip' => array(
