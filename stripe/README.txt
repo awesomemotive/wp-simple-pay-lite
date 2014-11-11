@@ -113,6 +113,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.8 =
+
+* Updated to most recent Stripe PHP library (v1.17.3).
+
 = 1.2.7 =
 
 * Removed shipping address support. Not supported natively by Stripe Checkout now ([see docs](https://stripe.com/docs/checkout)).
