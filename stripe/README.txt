@@ -1,8 +1,8 @@
 ﻿=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 3.7.4
-Tested up to: 4.0
+Requires at least: 3.8.5
+Tested up to: 4.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -115,6 +115,7 @@ There are three ways to install this plugin.
 
 = 1.2.8 =
 
+* Tested with WordPress 4.1.
 * Updated to most recent Stripe PHP library (v1.17.3).
 
 = 1.2.7 =
