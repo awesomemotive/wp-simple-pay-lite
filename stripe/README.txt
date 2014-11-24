@@ -115,9 +115,9 @@ There are three ways to install this plugin.
 
 = 1.2.8 =
 
-* Updated Bootstrap files.
-* Tested with WordPress 4.1.
+* Updated to most recent Bootstrap Switch library (v3.2.2).
 * Updated to most recent Stripe PHP library (v1.17.3).
+* Tested with WordPress 4.1.
 
 = 1.2.7 =
 
