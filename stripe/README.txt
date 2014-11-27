@@ -117,7 +117,7 @@ There are three ways to install this plugin.
 
 * Updated to most recent Stripe PHP library (v1.17.3).
 * Updated to most recent Bootstrap Switch library (v3.2.2).
-* Tested with WordPress 4.1.
+* Tested up to WordPress 4.1.
 
 = 1.2.7 =
 
@@ -165,7 +165,7 @@ There are three ways to install this plugin.
 * Added failure_redirect_url shortcode attribute.
 * Updated sc_redirect filter to allow modification for failed redirect URLs.
 * Fixed compatibility issue with the [WordPress SEO plugin](https://wordpress.org/plugins/wordpress-seo/).
-* Tested with WordPress 4.0.
+* Tested up to WordPress 4.0.
 
 = 1.1.2 =
 
