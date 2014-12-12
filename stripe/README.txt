@@ -113,6 +113,11 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.2.9 =
+
+* Removed Bootstrap Switch
+* Added CSS Toggle Switch
+
 = 1.2.8 =
 
 * Updated to most recent Stripe PHP library (v1.17.3).
