@@ -181,15 +181,6 @@ class Stripe_Checkout {
 			wp_enqueue_style( $this->plugin_slug . '-public', SC_URL . 'public/css/public.css', array(), $this->version );
 		}
 	}
-	
-	/**
-	 * Load admin scripts
-	 * 
-	 * @since 1.1.1
-	 */
-	public function enqueue_admin_scripts() {
-		
-	}
 
 	/**
 	 * Enqueue admin-specific style sheets for this plugin's admin pages only.
@@ -199,8 +190,7 @@ class Stripe_Checkout {
 	public function enqueue_admin_styles() {
 
 		if ( $this->viewing_this_plugin() ) {
-			wp_enqueue_style( 'bootstrap-switch', SC_URL . 'admin/css/bootstrap-switch.min.css', array(), $this->version );
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array( 'bootstrap-switch' ), $this->version );
+			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array(), $this->version );
 			wp_enqueue_style( $this->plugin_slug .'-toggle-switch', SC_URL . 'admin/css/toggle-switch.css', array(), $this->version );
 		}
 	}
