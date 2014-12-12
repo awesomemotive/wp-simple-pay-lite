@@ -133,7 +133,7 @@ function sc_register_settings() {
 				'id'   => 'enable_live_key',
 				'name' => __( 'Test or Live Mode', 'sc' ),
 				'desc' => '<p class="description">' . __( 'Toggle between using your Test or Live API keys.', 'sc' ) . '</p>',
-				'type' => 'checkbox'
+				'type' => 'toggle_control'
 			),
 			'test_secret_key' => array(
 				'id'   => 'test_secret_key',
@@ -235,6 +235,24 @@ function sc_get_settings_field_args( $option, $section ) {
 	return $settings_args;
 }
 
+
+function sc_toggle_control_callback( $args ) {
+	global $sc_options;
+	
+	$checked = ( isset( $sc_options[$args['id']] ) ? checked( 1, $sc_options[$args['id']], false ) : '' );
+	
+	$html = '<div class="sc-toggle-switch-wrap">
+			<label class="switch-light switch-candy switch-candy-blue" onclick="">
+				<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>
+				<span>
+				  <span>Test</span>
+				  <span>Live</span>
+				</span>
+				<a></a>
+			</label></div>';
+	
+	echo $html;
+}
 
 /**
  * Textbox callback function

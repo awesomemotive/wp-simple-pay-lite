@@ -189,10 +189,6 @@ class Stripe_Checkout {
 	 */
 	public function enqueue_admin_scripts() {
 		
-		if( $this->viewing_this_plugin() ) {
-			wp_enqueue_script( 'bootstrap-switch', SC_URL . 'admin/js/bootstrap-switch.min.js', array( 'jquery' ), $this->version, true );
-			wp_enqueue_script( $this->plugin_slug . '-admin', SC_URL . 'admin/js/admin.js', array( 'jquery', 'bootstrap-switch' ), $this->version, true );
-		}
 	}
 
 	/**
@@ -205,6 +201,7 @@ class Stripe_Checkout {
 		if ( $this->viewing_this_plugin() ) {
 			wp_enqueue_style( 'bootstrap-switch', SC_URL . 'admin/css/bootstrap-switch.min.css', array(), $this->version );
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array( 'bootstrap-switch' ), $this->version );
+			wp_enqueue_style( $this->plugin_slug .'-toggle-switch', SC_URL . 'admin/css/toggle-switch.css', array(), $this->version );
 		}
 	}
 	

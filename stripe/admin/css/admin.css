@@ -44,3 +44,9 @@
 	display: inline-block; 
 	margin-left: 7px;
 }
+
+/* Toggle switch wrap */
+.sc-toggle-switch-wrap {
+	width: 300px;
+	margin-left: -88px;
+}
