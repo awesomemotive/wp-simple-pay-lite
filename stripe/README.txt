@@ -115,8 +115,7 @@ There are three ways to install this plugin.
 
 = 1.2.9 =
 
-* Removed Bootstrap Switch
-* Added CSS Toggle Switch
+* Test/Live mode toggle switch updated. Now CSS only.
 
 = 1.2.8 =
 
