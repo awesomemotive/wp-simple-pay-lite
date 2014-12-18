@@ -71,14 +71,15 @@ class Stripe_Checkout {
 		
 		// Include required files.
 		$this->setup_constants();
-		$this->includes();
+		//$this->includes();
+		add_action( 'init', array( $this, 'includes' ), 1 );
 		
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 
 		// Enqueue admin styles.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
-
+		
 		// Add admin notice after plugin activation. Also check if should be hidden.
 		add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
 
@@ -316,7 +317,7 @@ class Stripe_Checkout {
 		
 		global $sc_options;
 		
-		if( ! class_exists( 'Stripe' ) ) {
+		if( ! class_exists( 'Stripe' ) /*&& function_exists( 'curl_version' )*/ ) {
 			require_once( 'libraries/stripe-php/Stripe.php' );
 		}
 		
