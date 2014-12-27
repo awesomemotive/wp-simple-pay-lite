@@ -51,12 +51,9 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 								settings_fields( 'sc_settings_' . $key );
 								do_settings_sections( 'sc_settings_' . $key );
 								
-								$submit_button = get_submit_button();
-								$submit_button = apply_filters( 'sc_submit_button_' . $key, $submit_button );
-								
 								do_action( 'sc_settings_' . $key );
 								
-								echo $submit_button;
+								submit_button();
 							}
 						}
 					?>
