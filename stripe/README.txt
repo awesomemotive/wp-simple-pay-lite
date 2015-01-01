@@ -113,6 +113,11 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.3.0 =
+
+* Added new filter to shortcode.
+* Updated Stripe PHP Library to 1.17.5.
+
 = 1.2.9 =
 
 * Test/Live mode toggle switch updated. Now CSS only.
