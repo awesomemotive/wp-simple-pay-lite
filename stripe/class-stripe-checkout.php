@@ -98,11 +98,32 @@ class Stripe_Checkout {
 		add_action( 'admin_init', array( $this, 'check_wp_version' ) );
 		
 		// Add public CSS
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_public_styles' ) );
+		add_action( 'init', array( $this, 'enqueue_public_styles' ) );
 		
 		// Filters to add the settings page titles
 		add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 		add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
+		
+		// Load scripts when posts load so we know if we need to include them or not
+		add_filter( 'the_posts', array( $this, 'load_scripts' ) );
+	}
+	
+	function load_scripts( $posts ){
+
+		if ( empty( $posts ) ) {
+			return $posts;
+		}
+
+		foreach ( $posts as $post ){
+			if ( strpos( $post->post_content, '[stripe' ) !== false ){
+				// Load CSS
+				wp_enqueue_style( $this->plugin_slug . '-public' );
+				
+				break;
+			}
+		}
+
+		return $posts;
 	}
 	
 	/**
@@ -176,7 +197,7 @@ class Stripe_Checkout {
 		global $sc_options;
 		
 		if( empty( $sc_options['disable_css'] ) ) {
-			wp_enqueue_style( $this->plugin_slug . '-public', SC_URL . 'public/css/public.css', array(), $this->version );
+			wp_register_style( $this->plugin_slug . '-public', SC_URL . 'public/css/public.css', array(), $this->version );
 		}
 	}
 
