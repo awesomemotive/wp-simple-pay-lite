@@ -287,3 +287,26 @@ function sc_disable_seo_og() {
 		remove_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
 	}
 }
+
+/**
+ * Filters the content to remove any extra paragraph or break tags
+ * caused by shortcodes.
+ *
+ * @since 1.0.0
+ *
+ * @param string $content  String of HTML content.
+ * @return string $content Amended string of HTML content.
+ * 
+ * REF: https://thomasgriffin.io/remove-empty-paragraph-tags-shortcodes-wordpress/
+ */
+function sc_shortcode_fix( $content ) {
+
+    $array = array(
+        '<p>['    => '[',
+        ']</p>'   => ']',
+        ']<br />' => ']'
+    );
+	
+    return strtr( $content, $array );
+}
+add_filter( 'the_content', 'sc_shortcode_fix' );
