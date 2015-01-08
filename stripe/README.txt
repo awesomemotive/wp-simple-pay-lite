@@ -118,6 +118,7 @@ There are three ways to install this plugin.
 * Added new filter to shortcode.
 * Updated Stripe PHP Library to 1.17.5.
 * Scripts and styles now only enqueued on posts and pages where required.
+* Added function to remove unwanted formatting in shortcodes.
 
 = 1.2.9 =
 
