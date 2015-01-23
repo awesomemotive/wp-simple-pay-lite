@@ -109,13 +109,15 @@ class Stripe_Checkout {
 	}
 	
 	function load_scripts( $posts ){
-
+		
+		global $sc_options;
+		
 		if ( empty( $posts ) ) {
 			return $posts;
 		}
-
+		
 		foreach ( $posts as $post ){
-			if ( strpos( $post->post_content, '[stripe' ) !== false ){
+			if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( ! empty( $sc_options['always_enqueue'] ) ) ) {
 				// Load CSS
 				wp_enqueue_style( $this->plugin_slug . '-public' );
 				

@@ -119,6 +119,13 @@ function sc_register_settings() {
 				'desc' => __( 'Disable the plugin from ouputting the default form CSS.', 'sc' ),
 				'type' => 'checkbox'
 			),
+			'always_enqueue' => array(
+				'id'   => 'always_enqueue',
+				'name' => __( 'Always Enqueue Scripts & Styles', 'sc' ),
+				'desc' => __( sprintf( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations. ' .
+								'Alternatively you can <a href="%s" target="_blank">enqueue the plugin\'s scripts and styles with code</a>.', 'https://gist.github.com/pderksen/8500903df86303fdbeba' ), 'sc' ),
+				'type' => 'checkbox'
+			),
 			'uninstall_save_settings' => array(
 				'id'   => 'uninstall_save_settings',
 				'name' => __( 'Save Settings', 'sc' ),
