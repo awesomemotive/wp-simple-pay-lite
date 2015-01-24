@@ -122,8 +122,7 @@ function sc_register_settings() {
 			'always_enqueue' => array(
 				'id'   => 'always_enqueue',
 				'name' => __( 'Always Enqueue Scripts & Styles', 'sc' ),
-				'desc' => __( sprintf( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations. ' .
-								'Alternatively you can <a href="%s" target="_blank">enqueue the plugin\'s scripts and styles with code</a>.', 'https://gist.github.com/pderksen/8500903df86303fdbeba' ), 'sc' ),
+				'desc' => __( sprintf( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.' ), 'sc' ),
 				'type' => 'checkbox'
 			),
 			'uninstall_save_settings' => array(
