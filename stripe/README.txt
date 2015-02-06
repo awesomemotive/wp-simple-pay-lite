@@ -115,10 +115,11 @@ There are three ways to install this plugin.
 
 = 1.3.0 =
 
-* Added new filter to shortcode.
 * Updated Stripe PHP Library to 1.17.5.
 * Scripts and styles now only enqueued on posts and pages where required.
+* Added option to always enqueue scripts and styles on every post and page.
 * Added function to remove unwanted formatting in shortcodes.
+* Cleaned up payment success and error details HTML.
 
 = 1.2.9 =
 
