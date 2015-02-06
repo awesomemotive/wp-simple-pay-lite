@@ -123,7 +123,6 @@ function sc_show_payment_details( $content ) {
 	
 	global $sc_options;
 
-	// TODO $html out once finalized.
 	$html = '';
 	
 	$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : 'false' );
@@ -131,51 +130,61 @@ function sc_show_payment_details( $content ) {
 	sc_set_stripe_key( $test_mode );
 
 	// Successful charge output.
-	if ( isset( $_GET['charge'] ) && ! isset( $_GET['charge_failed'] ) ) {
+	if ( isset( $_GET['charge'] ) && !isset( $_GET['charge_failed'] ) ) {
 		
-		if( empty( $sc_options['disable_success_message'] ) ) {
+		if ( empty( $sc_options['disable_success_message'] ) ) {
+
 			$charge_id = esc_html( $_GET['charge'] );
 
 			// https://stripe.com/docs/api/php#charges
 			$charge_response = Stripe_Charge::retrieve( $charge_id );
 
-			$html = '<div class="sc-payment-details-wrap">';
+			$html = '<div class="sc-payment-details-wrap">' . "\n";
 
 			$html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
+			$html .= '<p>' . "\n";
 
-			if( ! empty( $charge_response->description ) ) {
-				$html .= '<p>' . __( "Here's what you bought:", 'sc' ) . '</p>';
-				$html .= $charge_response->description . '<br>' . "\n";
+			if ( ! empty( $charge_response->description ) ) {
+				$html .= __( "Here's what you bought:", 'sc' ) . '<br/>' . "\n";
+				$html .= $charge_response->description . '<br/>' . "\n";
 			}
 
 			if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
 				$html .= 'From: ' . esc_html( $_GET['store_name'] ) . '<br/>' . "\n";
 			}
 
-			$html .= '<br><strong>' . __( 'Total Paid: ', 'sc' ) . sc_stripe_to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' . 
-					strtoupper( $charge_response->currency ) . '</strong>' . "\n";
+			$html .= '<br/>' . "\n";
+			$html .= '<strong>' . __( 'Total Paid: ', 'sc' ) . sc_stripe_to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
+			         strtoupper( $charge_response->currency ) . '</strong>' . "\n";
 
-			$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'sc' ), $charge_id ) . '</p>';
+			$html .= '</p>' . "\n";
 
-			$html .= '</div>';
+			$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'sc' ), $charge_id ) . '</p>' . "\n";
 
+			$html .= '</div>' . "\n";
 
 			return apply_filters( 'sc_payment_details', $html, $charge_response ) . $content;
-		} else { 
+
+		} else {
+
 			return $content;
 		}
 
 	} elseif ( isset( $_GET['charge_failed'] ) ) {
-		// TODO Failed charge output.
-		
-		$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">';
-		$html .= __( 'Sorry, but your card was declined and your payment was not processed.', 'sc' );
-		$html .= '<br><br>' . sprintf( __( 'Transaction ID: %s', 'sc' ), esc_html( $_GET['charge'] ) );
-		$html .= '</div>';
+
+		// LITE ONLY: Payment details error included in payment details function.
+
+		$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
+		$html .= '<p>' . "\n";
+
+		$html .= __( 'Sorry, but there has been an error processing your payment.', 'sc' ) . "\n";
+		$html .= __( 'If the problem persists please contact the site owner.', 'sc' ) . "\n";
+
+		$html .= '</p>' . "\n";
+		$html .= '</div>' . "\n";
 		
 		return apply_filters( 'sc_payment_details_error', $html ) . $content;
-
-	} 
+	}
 	
 	return $content;
 }
