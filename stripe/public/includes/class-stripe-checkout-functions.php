@@ -9,14 +9,15 @@ class Stripe_Checkout_Functions {
 	
 	
 	protected static $instance = null;
-	// Class constructor
 	
+	protected static $token = false;
+	
+	// Class constructor
 	private function __construct() {
-		// TODO: probably nothing
-		// Maybe add filters here
 		
 		// We only want to run the charge if the Token is set
 		if( isset( $_POST['stripeToken'] ) ) {
+			self::$token = true;
 			add_action( 'init', array( $this, 'charge_card' ) );
 		}
 		
@@ -51,7 +52,7 @@ class Stripe_Checkout_Functions {
 	 * @since 1.0.0
 	 */
 	public static function charge_card() { 
-		if( isset( $_POST['stripeToken'] ) ) {
+		if( self::$token ) {
 
 			$redirect      = $_POST['sc-redirect'];
 			$fail_redirect = $_POST['sc-redirect-fail'];
@@ -115,7 +116,8 @@ class Stripe_Checkout_Functions {
 			if( $test_mode == 'true' ) {
 				$query_args['test_mode'] = 'true';
 			}
-
+			
+			self::$token = false;
 
 			wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
 
