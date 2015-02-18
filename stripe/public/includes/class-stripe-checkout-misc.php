@@ -12,7 +12,7 @@ class Stripe_Checkout_Misc {
 		// class constructor
 		// TODO: load filters/hooks here?
 		
-		add_filter( 'the_content', array( $this, 'sc_shortcode_fix' ) );
+		add_filter( 'the_content', array( $this, 'shortcode_fix' ) );
 	}
 	
 	public static function to_decimal_amount( $amount, $currency ) { 
@@ -36,7 +36,7 @@ class Stripe_Checkout_Misc {
 		return $formatted_amount;
 	}
 	
-	public static function sc_has_shortcode() {
+	public static function has_shortcode() {
 		global $post;
 
 		// Currently ( 5/8/2014 ) the has_shortcode() function will not find a 
@@ -60,7 +60,7 @@ class Stripe_Checkout_Misc {
 	 * @param   string  $campaign GA "campaign" tracking value
 	 * @return  string  $url      Full Google Analytics campaign URL
 	 */
-	public static function sc_ga_campaign_url( $base_url, $source, $medium, $campaign ) { 
+	public static function ga_campaign_url( $base_url, $source, $medium, $campaign ) { 
 		// $medium examples: 'sidebar_link', 'banner_image'
 
 		$url = add_query_arg( array(
@@ -73,8 +73,7 @@ class Stripe_Checkout_Misc {
 	}
 	
 	// TODO: What is this for? Why is session still being used here?
-	public static function sc_disable_seo_og() { 
-		$sc_payment_details = Stripe_Checkout::get_instance()->session->get( 'sc_payment_details' );
+	public static function disable_seo_og() { 
 
 		if ( $sc_payment_details['show'] == true ) {
 			remove_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
@@ -92,7 +91,7 @@ class Stripe_Checkout_Misc {
 	 * 
 	 * REF: https://thomasgriffin.io/remove-empty-paragraph-tags-shortcodes-wordpress/
 	 */
-	public static function sc_shortcode_fix( $content ) { 
+	public static function shortcode_fix( $content ) { 
 		$array = array(
 			'<p>['    => '[',
 			']</p>'   => ']',
@@ -106,6 +105,7 @@ class Stripe_Checkout_Misc {
 	private static function is_zero_decimal_currency( $currency ) { 
 		return in_array( strtoupper( $currency ), self::$zero_decimal_currencies );
 	}
+	
 	
 	// Return instance of this class
 	public static function get_instance() {

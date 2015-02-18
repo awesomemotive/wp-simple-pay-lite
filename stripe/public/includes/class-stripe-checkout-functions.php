@@ -4,7 +4,7 @@
 class Stripe_Checkout_Functions {
 	
 	
-	
+	protected static $instance = null;
 	// Class constructor
 	
 	private function __construct() {
@@ -13,10 +13,10 @@ class Stripe_Checkout_Functions {
 		
 		// We only want to run the charge if the Token is set
 		if( isset( $_POST['stripeToken'] ) ) {
-			add_action( 'init', array( $this, 'sc_charge_card' ) );
+			add_action( 'init', array( $this, 'charge_card' ) );
 		}
 		
-		add_filter( 'the_content', array( $this, 'sc_show_payment_details' ) );
+		add_filter( 'the_content', array( $this, 'show_payment_details' ) );
 	}
 	
 	// Public functions
@@ -46,7 +46,7 @@ class Stripe_Checkout_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	public static function sc_charge_card() { 
+	public static function charge_card() { 
 		if( isset( $_POST['stripeToken'] ) ) {
 
 			$redirect      = $_POST['sc-redirect'];
@@ -126,7 +126,7 @@ class Stripe_Checkout_Functions {
 	 * 
 	 * @since 1.0.0
 	 */
-	public static function sc_show_payment_details( $content ) { 
+	public static function show_payment_details( $content ) { 
 		global $sc_options;
 
 		$html = '';
@@ -196,4 +196,14 @@ class Stripe_Checkout_Functions {
 		return $content;
 	}
 	
+	// Return instance of this class
+	public static function get_instance() {
+
+		// If the single instance hasn't been set, set it now.
+		if ( null == self::$instance ) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
+	}
 }
