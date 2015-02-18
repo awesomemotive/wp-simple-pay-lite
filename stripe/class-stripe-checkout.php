@@ -71,7 +71,8 @@ class Stripe_Checkout {
 		
 		// Include required files.
 		$this->setup_constants();
-		//$this->includes();
+
+		add_action( 'init', array( $this, 'load_classes' ), 0 );
 		add_action( 'init', array( $this, 'includes' ), 1 );
 		
 		// Add the options page and menu item.
@@ -331,6 +332,29 @@ class Stripe_Checkout {
 		include_once( SC_PATH . 'admin/views/admin.php' );
 	}
 	
+	/*
+	 * Load and create instances of necessary classes
+	 */
+	public function load_classes() {
+		// Include classes
+		
+		if( ! class_exists( 'Stripe' ) ) {
+			require_once( 'libraries/stripe-php/Stripe.php' );
+		}
+		
+		if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
+			include_once( SC_PATH . 'public/includes/class-stripe-checkout-functions.php' );
+		}
+		
+		if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
+			include_once( SC_PATH . 'public/includes/class-stripe-checkout-misc.php' );
+		}
+		
+		// Set instances here for loaded classes
+		Stripe_Checkout_Functions::get_instance();
+		Stripe_Checkout_Misc::get_instance();
+	}
+	
 	/**
 	 * Include required files (admin and frontend).
 	 *
@@ -339,21 +363,6 @@ class Stripe_Checkout {
 	public function includes() {
 		
 		global $sc_options;
-		
-		if( ! class_exists( 'Stripe' ) /*&& function_exists( 'curl_version' )*/ ) {
-			require_once( 'libraries/stripe-php/Stripe.php' );
-		}
-		
-		// Include any necessary functions
-		include_once( SC_PATH . 'public/includes/misc-functions.php' );
-		
-		// Include classes
-		include_once( SC_PATH . 'public/includes/class-stripe-checkout-functions.php' );
-		include_once( SC_PATH . 'public/includes/class-stripe-checkout-misc.php' );
-		
-		// Set instances here for loaded classes
-		Stripe_Checkout_Functions::get_instance();
-		Stripe_Checkout_Misc::get_instance();
 		
 		// Include shortcode functions
 		include_once( SC_PATH . 'includes/shortcodes.php' );
