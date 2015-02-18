@@ -346,6 +346,9 @@ class Stripe_Checkout {
 		
 		// Include any necessary functions
 		include_once( SC_PATH . 'public/includes/misc-functions.php' );
+		include_once( SC_PATH . 'public/includes/class-stripe-checkout-functions.php' );
+		
+		Stripe_Checkout_Functions::get_instance();
 		
 		// Include shortcode functions
 		include_once( SC_PATH . 'includes/shortcodes.php' );

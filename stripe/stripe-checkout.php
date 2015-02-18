@@ -46,3 +46,4 @@ require_once( plugin_dir_path( __FILE__ ) . 'class-stripe-checkout.php' );
 register_activation_hook( __FILE__, array( 'Stripe_Checkout', 'activate' ) );
 
 Stripe_Checkout::get_instance();
+
