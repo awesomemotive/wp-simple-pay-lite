@@ -78,7 +78,6 @@ class Stripe_Checkout_Misc {
 		return $url;
 	}
 	
-	// TODO: What is this for? Why is session still being used here?
 	public static function disable_seo_og() { 
 
 		if ( $sc_payment_details['show'] == true ) {

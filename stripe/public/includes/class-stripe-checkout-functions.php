@@ -165,7 +165,7 @@ class Stripe_Checkout_Functions {
 				}
 
 				$html .= '<br/>' . "\n";
-				$html .= '<strong>' . __( 'Total Paid: ', 'sc' ) . sc_stripe_to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
+				$html .= '<strong>' . __( 'Total Paid: ', 'sc' ) . Stripe_Checkout_Misc::to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
 						 strtoupper( $charge_response->currency ) . '</strong>' . "\n";
 
 				$html .= '</p>' . "\n";

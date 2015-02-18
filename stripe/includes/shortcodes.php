@@ -119,7 +119,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		if( current_user_can( 'manage_options' ) ) {
 			$html =  '<h6>';
 			$html .= __( 'Stripe checkout requires an amount of ', 'sc' ) . $stripe_minimum_amount;
-			$html .= ' (' . sc_stripe_to_formatted_amount( $stripe_minimum_amount, $currency ) . ' ' . $currency . ')';
+			$html .= ' (' . Stripe_Checkout_Misc::to_formatted_amount( $stripe_minimum_amount, $currency ) . ' ' . $currency . ')';
 			$html .= __( ' or larger.', 'sc' );
 			$html .= '</h6>';
 
