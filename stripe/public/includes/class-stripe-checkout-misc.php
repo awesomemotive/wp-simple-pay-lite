@@ -1,5 +1,11 @@
 <?php
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+
 class Stripe_Checkout_Misc {
 	
 	// Class variables
