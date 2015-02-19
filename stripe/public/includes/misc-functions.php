@@ -122,7 +122,7 @@ if( isset( $_POST['stripeToken'] ) ) {
 function sc_show_payment_details( $content ) {
 	
 	
-	if( is_main_query() ) {
+	if( in_the_loop() && is_main_query() ) {
 		global $sc_options;
 
 		$html = '';
@@ -189,7 +189,7 @@ function sc_show_payment_details( $content ) {
 		}
 	}
 
-		return $content;
+	return $content;
 }
 add_filter( 'the_content', 'sc_show_payment_details' );
 
