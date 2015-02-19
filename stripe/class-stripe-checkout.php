@@ -107,6 +107,20 @@ class Stripe_Checkout {
 		
 		// Load scripts when posts load so we know if we need to include them or not
 		add_filter( 'the_posts', array( $this, 'load_scripts' ) );
+		
+		add_action( 'init', array( $this, 'register_settings' ), 1 );
+	}
+	
+	function register_settings() {
+		global $sc_options;
+		
+		include_once( SC_PATH . 'includes/class-register-settings.php' );
+		
+		Stripe_Checkout_Register_Settings::get_instance();
+		
+		Stripe_Checkout_Register_Settings::set_defaults();
+
+		$sc_options = Stripe_Checkout_Register_Settings::get_settings();
 	}
 	
 	function load_scripts( $posts ){
@@ -361,18 +375,8 @@ class Stripe_Checkout {
 	 * @since     1.0.0
 	 */
 	public function includes() {
-		
-		global $sc_options;
-		
 		// Include shortcode functions
 		include_once( SC_PATH . 'includes/shortcodes.php' );
-		
-		include_once( SC_PATH . 'includes/register-settings.php' );
-		
-		//$sc_options = sc_get_settings();
-		sc_set_defaults();
-		
-		$sc_options = sc_get_settings();
 	}
 
 	/**
