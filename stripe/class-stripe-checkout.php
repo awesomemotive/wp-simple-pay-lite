@@ -21,7 +21,7 @@ class Stripe_Checkout {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.3.0';
+	public $version = '1.3.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -33,7 +33,7 @@ class Stripe_Checkout {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'stripe-checkout';
+	public $plugin_slug = 'stripe-checkout';
 
 	/**
 	 * Instance of this class.
@@ -150,7 +150,9 @@ class Stripe_Checkout {
 	 */
 	function admin_upgrade_link() {
 		if( is_admin() ) {
-			include_once( SC_PATH . 'admin/includes/upgrade-link.php' );
+			include_once( SC_PATH . 'admin/includes/class-upgrade-link.php' );
+			
+			Stripe_Checkout_Upgrade_Link::get_instance();
 		}
 	}
 	
