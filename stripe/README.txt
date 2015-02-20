@@ -115,7 +115,7 @@ There are three ways to install this plugin.
 
 = 1.3.0 =
 
-* Updated Stripe PHP Library to 1.17.5.
+* TODO Updated to most recent Stripe PHP library (v2.#.#).
 * Scripts and styles now only enqueued on posts and pages where required.
 * Added option to always enqueue scripts and styles on every post and page.
 * Added function to remove unwanted formatting in shortcodes.
