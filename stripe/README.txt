@@ -120,6 +120,7 @@ There are three ways to install this plugin.
 * Added option to always enqueue scripts and styles on every post and page.
 * Added function to remove unwanted formatting in shortcodes.
 * Cleaned up payment success and error details HTML.
+* Fixed duplicate payment success and failure output for rare themes that render multiple post content areas.
 
 = 1.2.9 =
 
