@@ -114,13 +114,23 @@ class Stripe_Checkout {
 	function register_settings() {
 		global $sc_options;
 		
-		include_once( SC_PATH . 'includes/class-register-settings.php' );
+		//include_once( SC_PATH . 'includes/class-register-settings.php' );
 		
-		Stripe_Checkout_Register_Settings::get_instance();
+		//Stripe_Checkout_Register_Settings::get_instance();
 		
-		Stripe_Checkout_Register_Settings::set_defaults();
+		//Stripe_Checkout_Register_Settings::set_defaults();
 
-		$sc_options = Stripe_Checkout_Register_Settings::get_settings();
+		//$sc_options = Stripe_Checkout_Register_Settings::get_settings();
+		
+		include_once( SC_PATH . 'includes/class-mm-settings.php' );
+		include_once( SC_PATH . 'includes/settings.php' );
+		
+		$mm_settings = new MM_Settings( 'sc', $sc_settings );
+		
+		$sc_options = $mm_settings->get_settings();
+		
+		//echo '<pre>SC Options:<br>' . print_r( $sc_options, true ) . '</pre>';
+		
 	}
 	
 	function load_scripts( $posts ){

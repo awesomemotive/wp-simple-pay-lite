@@ -102,7 +102,7 @@ class Stripe_Checkout_Misc {
 			']</p>'   => ']',
 			']<br />' => ']'
 		);
-
+		
 		return strtr( $content, $array );
 	}
 	
