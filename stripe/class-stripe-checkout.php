@@ -123,6 +123,7 @@ class Stripe_Checkout {
 		//$sc_options = Stripe_Checkout_Register_Settings::get_settings();
 		
 		include_once( SC_PATH . 'includes/class-mm-settings.php' );
+		include_once( SC_PATH . 'includes/class-mm-settings-callbacks.php' );
 		include_once( SC_PATH . 'includes/settings.php' );
 		
 		$mm_settings = new MM_Settings( 'sc', $sc_settings );
