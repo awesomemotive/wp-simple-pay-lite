@@ -5,20 +5,18 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 	
 	class MM_Settings_Callbacks {
 		
+		// We make these static so they don't constantly get overwritten
 		protected static $settings;
-		
 		private static $children = array();
 		
+		/*
+		 * Constructor
+		 * 
+		 * Needs a main settings object passed in
+		 * We then set this classes settings to the passed in object so we can use the parent settings
+		 */
 		public function __construct( MM_Settings $settings ) {
-			//echo ' hit 1<br>';
 			self::$settings = $settings;
-			//echo '<pre>' . print_r( self::$settings, true ) . '</pre>';
-		}
-		
-		public function get_settings() {
-			//echo 'hit 2<br>';
-			//echo '<pre>Settings:<br>' . print_r( self::$settings, true ) . '</pre>';
-			return self::$settings;
 		}
 		
 		// Callback functions
@@ -84,79 +82,27 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		}
 		
 		
-		// TODO: This method is still specific to SC so it needs to be reworked.
-		public function license_callback( $args ) {
-
-			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
-				$value = self::$settings->saved_settings[ $args['id'] ];
-			} else {
-				$value = isset( $args['std'] ) ? $args['std'] : '';
-			}
-
-			$item = '';
-
-			$html  = '<div class="license-wrap">';
-
-			$size  = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular-text';
-			$html .= "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
-
-
-			$licenses = get_option( 'sc_licenses' );
-
-
-			// Add button on side of input
-			if( ! empty( $licenses[ $args['product'] ] ) && $licenses[ $args['product'] ] == 'valid' && ! empty( $value ) ) {
-				$html .= '<button class="button" data-sc-action="deactivate_license" data-sc-item="' .
-						 ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Deactivate', 'sc' ) . '</button>';
-			} else {
-				$html .= '<button class="button" data-sc-action="activate_license" data-sc-item="' .
-						 ( ! empty( $args['product'] ) ? $args['product'] : 'none' ) . '">' . __( 'Activate', 'sc' ) . '</button>';
-			}
-
-			$license_class = '';
-			$valid_message = '';
-			
-			// TODO: Add class methods for license checking?
-			$valid = sc_check_license( $value, $args['product'] );
-
-			if( $valid == 'valid' ) {
-				$license_class = 'sc-valid';
-				$valid_message = __( 'License is valid and active.', 'sc' );
-			} else if( $valid == 'notfound' ) {
-				$license_class = 'sc-invalid';
-				$valid_message = __( 'License service could not be found. Please contact support for assistance.', 'sc' );
-			} else {
-				$license_class = 'sc-inactive';
-				$valid_message = __( 'License is inactive.', 'sc' );
-			}
-
-			$html .= '<span class="sc-spinner-wrap"><span class="spinner sc-spinner"></span></span>';
-			$html .= '<span class="sc-license-message ' . $license_class . '">' . $valid_message . '</span>';
-
-			// Render and style description text underneath if it exists.
-			if ( ! empty( $args['desc'] ) ) {
-				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
-			}
-
-			$html .= '</div>';
-
-			echo $html;
-		}
-		
+		/*
+		 * Method used to call any child method callbacks or to output a default message
+		 * if there are no callbacks found
+		 */
 		public function missing_callback( $args ) {
-			//echo '<pre>' . print_r( self::$children, true ) . '</pre>';
 			
+			// Indicator for our default output later if we need it
 			$has_child_method = false;
 			
+			// There is a child class
 			if( ! empty( self::$children ) ) {
 				
+				// Loop through children and load their callback methods if they exist
 				foreach( self::$children as $child ) {
 					if( method_exists( $child, $args['callback'] ) ) {
 						
+						// The child class has a method found so let's set this to true
 						$has_child_method = true;
 						
+						// Create a new child class object and call the callback method
 						$child = new $child;
-						// TODO: Need to figure out a way to generically check for a callback since we won't know it's name
 						$child->$args['callback']( $args );
 					}
 				}
@@ -167,11 +113,11 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			}
 		}
 		
-		
+		/*
+		 * Used by children of this class to make themselves "visible" from this class
+		 */
 		public function add_child( $child ) {
 			self::$children[] = $child;
-			
-			//echo '<pre>' . print_r( self::$children, true ) . '</pre>';
 		}
 	}
 }

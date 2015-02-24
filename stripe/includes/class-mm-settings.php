@@ -21,6 +21,13 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 		}
 		
+		/*
+		 * This method returns the SAVED Settings
+		 * 
+		 * It will loop through all the settings options and return only those that are not empty.
+		 * 
+		 * Returns as an array. 
+		 */
 		public function get_settings() {
 
 			foreach( $this->settings as $setting => $options ) {
@@ -39,7 +46,9 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			return $this->saved_settings;
 		}
 		
-		
+		/**
+		 * Method to loop through all of the passed in settings array args and connect it with the WP Settings API
+		 */
 		public function register_settings() {
 
 			foreach( $this->settings as $setting => $options ) {
@@ -81,6 +90,13 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			}
 		}
 		
+		/*
+		 * Return generic add_settings_field $args parameter array.
+		 *
+		 * @param   string  $option   Single settings option key.
+		 * @param   string  $section  Section of settings apge.
+		 * @return  array             $args parameter to use with add_settings_field call.
+		 */
 		public function get_settings_field_args( $option, $section ) {
 			$settings_args = array(
 				'id'      => $option['id'],
@@ -102,6 +118,9 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			return $settings_args;
 		}
 		
+		/*
+		 * Method to sanitize any input
+		 */
 		public function sanitize_settings( $input ) {
 			return $input;
 		}

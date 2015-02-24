@@ -4,15 +4,31 @@ class MM_Settings_Text extends MM_Settings_Callbacks {
 	
 	protected static $settings;
 	
-	public function __construct() {
-		
-		
-		//echo '<pre>' . print_r( self::$settings, true ) . '</pre>';
+	/*
+	 * Class constructor
+	 * 
+	 * This doesn't need to actually do anything, but we must define it so the class doesn't try running 
+	 * the parent constructor. That will lead to errors.
+	 */
+	public function __construct() {	}
+	
+	/*
+	 * Adds the child class to the "view" of the main class
+	 * Each class the extends settings must do this so that we can make sure the callbacks can be found
+	 */
+	public function add_child_class() {
+		parent::add_child( get_called_class() );
 	}
+	
+	
+	/**
+	 * Below we can define any extended functionality callbacks
+	 */
+	
 	
 	public function text_callback( $args ) {
 		
-		self::$settings = parent::get_settings();
+		self::$settings = parent::$settings;
 		
 		//echo '<pre>' . print_r( self::$settings, true ) . '</pre>';
 		
@@ -44,11 +60,9 @@ class MM_Settings_Text extends MM_Settings_Callbacks {
 
 		echo $html;
 	}
-	
-	public function add_child_class() {
-		parent::add_child( get_called_class() );
-	}
 }
 
+
+// We need to do this to make it all work correctly
 $text = new MM_Settings_Text();
 $text->add_child_class();
