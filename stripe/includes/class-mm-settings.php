@@ -69,10 +69,10 @@ if( ! class_exists( 'MM_Settings' ) ) {
 					add_settings_field(
 						$section . '[' . $v['id'] . ']',
 						$v['name'],
-						method_exists( $this, $v['type'] . '_callback' ) ? array( $this, $v['type'] . '_callback' ) : array( $this, 'missing_callback' ),
+						method_exists( new MM_Settings_Callbacks( $this ), $v['type'] . '_callback' ) ? array( new MM_Settings_Callbacks( $this ), $v['type'] . '_callback' ) : array( new MM_Settings_Callbacks( $this ), 'missing_callback' ),
 						$section,
 						$section,
-						$this->get_settings_field_args( $v, $setting )
+						array_merge( $this->get_settings_field_args( $v, $setting ), array( 'callback' => $v['type'] . '_callback' ) )
 					);
 				}
 				

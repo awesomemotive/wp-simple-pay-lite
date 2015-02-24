@@ -3,18 +3,28 @@
 
 if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 	
-	class MM_Settings_Callbacks extends MM_Settings {
+	class MM_Settings_Callbacks {
 		
-		public function __construct() {
-			//echo '<pre>' . print_r( $this->saved_settings, true ) . '</pre>';
-			//$this->saved_settings = parent::get_settings();
-			//echo 'PREFIX: ' . $this->prefix;
+		protected static $settings;
+		
+		private static $children = array();
+		
+		public function __construct( MM_Settings $settings ) {
+			//echo ' hit 1<br>';
+			self::$settings = $settings;
+			//echo '<pre>' . print_r( self::$settings, true ) . '</pre>';
+		}
+		
+		public function get_settings() {
+			//echo 'hit 2<br>';
+			//echo '<pre>Settings:<br>' . print_r( self::$settings, true ) . '</pre>';
+			return self::$settings;
 		}
 		
 		// Callback functions
 		public function toggle_control_callback( $args ) {
 			
-			$checked = ( isset( $this->saved_settings[$args['id']] ) ? checked( 1, $this->saved_settings[$args['id']], false ) : '' );
+			$checked = ( isset( self::$settings->saved_settings[$args['id']] ) ? checked( 1, self::$settings->saved_settings[$args['id']], false ) : '' );
 
 			$html = '<div class="sc-toggle-switch-wrap">
 					<label class="switch-light switch-candy switch-candy-blue" onclick="">
@@ -29,26 +39,11 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo $html;
 		}
 
-		public function text_callback( $args ) {
+		//public function text_callback( $args ) {}
 
-			if ( isset( $this->saved_settings[ $args['id'] ] ) )
-				$value = $this->saved_settings[ $args['id'] ];
-			else
-				$value = isset( $args['std'] ) ? $args['std'] : '';
-
-			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : '';
-			$html = "\n" . '<input type="text" class="' . $size . '" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
-
-			// Render and style description text underneath if it exists.
-			if ( ! empty( $args['desc'] ) )
-				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
-
-			echo $html;
-		}
-
-		public function checkbox_callback( $args ) {
+		/*public function checkbox_callback( $args ) {
 			
-			$checked = ( isset( $this->saved_settings[$args['id']] ) ? checked( 1, $this->saved_settings[$args['id']], false ) : '' );
+			$checked = ( isset( self::$settings->saved_settings[$args['id']] ) ? checked( 1, self::$settings->saved_settings[$args['id']], false ) : '' );
 
 			$html = "\n" . '<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>' . "\n";
 
@@ -57,7 +52,7 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 				$html .= '<label for="sc_settings_' . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
 
 			echo $html;
-		}
+		}*/
 
 		public function section_callback( $args ) {
 			
@@ -75,9 +70,9 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			foreach ( $args['options'] as $key => $option ) {
 				$checked = false;
 
-				if ( isset( $this->saved_settings[ $args['id'] ] ) && $this->saved_settings[ $args['id'] ] == $key ) {
+				if ( isset( self::$settings->saved_settings[ $args['id'] ] ) && self::$settings->saved_settings[ $args['id'] ] == $key ) {
 					$checked = true;
-				} else if( isset( $args['std'] ) && $args['std'] == $key && ! isset( $this->saved_settings[ $args['id'] ] ) ) {
+				} else if( isset( $args['std'] ) && $args['std'] == $key && ! isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
 					$checked = true;
 				}
 
@@ -92,8 +87,8 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		// TODO: This method is still specific to SC so it needs to be reworked.
 		public function license_callback( $args ) {
 
-			if ( isset( $this->saved_settings[ $args['id'] ] ) ) {
-				$value = $this->saved_settings[ $args['id'] ];
+			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
+				$value = self::$settings->saved_settings[ $args['id'] ];
 			} else {
 				$value = isset( $args['std'] ) ? $args['std'] : '';
 			}
@@ -148,9 +143,35 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo $html;
 		}
 		
-		public function missing_callback() {
-			echo '<p>This callback is missing from the MM_Settings class</p>';
+		public function missing_callback( $args ) {
+			//echo '<pre>' . print_r( self::$children, true ) . '</pre>';
+			
+			$has_child_method = false;
+			
+			if( ! empty( self::$children ) ) {
+				
+				foreach( self::$children as $child ) {
+					if( method_exists( $child, $args['callback'] ) ) {
+						
+						$has_child_method = true;
+						
+						$child = new $child;
+						// TODO: Need to figure out a way to generically check for a callback since we won't know it's name
+						$child->$args['callback']( $args );
+					}
+				}
+			}
+			
+			if( ! $has_child_method ) {
+				echo '<p>This callback is missing from the MM_Settings class</p>';
+			}
 		}
 		
+		
+		public function add_child( $child ) {
+			self::$children[] = $child;
+			
+			//echo '<pre>' . print_r( self::$children, true ) . '</pre>';
+		}
 	}
 }
