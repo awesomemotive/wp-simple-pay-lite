@@ -49,11 +49,11 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		public function checkbox_callback( $args ) {
 			$checked = ( isset( self::$settings->saved_settings[$args['id']] ) ? checked( 1, self::$settings->saved_settings[$args['id']], false ) : '' );
 
-			$html = "\n" . '<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>' . "\n";
+			$html = "\n" . '<input type="checkbox" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>' . "\n";
 
 			// Render description text directly to the right in a label if it exists.
 			if ( ! empty( $args['desc'] ) )
-				$html .= '<label for="sc_settings_' . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
+				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
 
 			echo $html;
 		}
@@ -78,8 +78,8 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 					$checked = true;
 				}
 
-				echo '<input name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" id="sc_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
-				echo '<label for="sc_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+				echo '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
+				echo '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
 			}
 
 			echo '<p class="description">' . $args['desc'] . '</p>';
@@ -95,9 +95,10 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			$html = "\n";
 
 			foreach ( $args['options'] as $key => $option ) {
+				// TODO: use get setting to get this since we want it to be more abstract than using the global variable ( $pib_options )
 				if ( isset( $pib_options[$args['id']][$key] ) ) { $enabled = $option; } else { $enabled = NULL; }
-				$html .= '<label for="pib_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" class="pib-checkbox-label">';
-				$html .= '<input name="pib_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" id="pib_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked($option, $enabled, false) . '/>' . "\n";
+				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" class="pib-checkbox-label">';
+				$html .= '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked($option, $enabled, false) . '/>' . "\n";
 				$html .= $option . '</label>';
 			}
 
@@ -115,9 +116,10 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 				return;
 			}
 
-			$html = "\n" . '<select id="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" name="pib_settings_' . $args['section'] . '[' . $args['id'] . ']"/>' . "\n";
+			$html = "\n" . '<select id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"/>' . "\n";
 
 			foreach ( $args['options'] as $option => $name ) :
+				// TODO: use get setting to get this since we want it to be more abstract than using the global varable ( $pib_options )
 				$selected = isset( $pib_options[$args['id']] ) ? selected( $option, $pib_options[$args['id']], false ) : '';
 				$html .= '<option value="' . $option . '" ' . $selected . '>' . $name . '</option>' . "\n";
 			endforeach;
@@ -132,13 +134,14 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		}
 		
 		public function textarea_callback( $args ) {
+			// TODO: Change to get from self::$settings
 			if ( isset( $pib_options[ $args['id'] ] ) )
 				$value = $pib_options[ $args['id'] ];
 			else
 				$value = isset( $args['std'] ) ? $args['std'] : '';
 
 			// Ignoring size at the moment.
-			$html = "\n" . '<textarea class="large-text" cols="50" rows="10" id="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" name="pib_settings_' . $args['section'] . '[' . $args['id'] . ']">' . esc_textarea( $value ) . '</textarea>' . "\n";
+			$html = "\n" . '<textarea class="large-text" cols="50" rows="10" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']">' . esc_textarea( $value ) . '</textarea>' . "\n";
 
 			// Render and style description text underneath if it exists.
 			if ( ! empty( $args['desc'] ) )
@@ -148,17 +151,18 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		}
 		
 		public function number_callback( $args ) {
+			// TODO: Change to get from self::$settings
 			if ( isset( $pib_options[ $args['id'] ] ) )
 				$value = $pib_options[ $args['id'] ];
 			else
 				$value = isset( $args['std'] ) ? $args['std'] : '';
 
 			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-			$html = "\n" . '<input type="number" class="' . $size . '-text" id="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" name="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
+			$html = "\n" . '<input type="number" class="' . $size . '-text" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
 
 			// Render description text directly to the right in a label if it exists.
 			if ( ! empty( $args['desc'] ) )
-				$html .= '<label for="pib_settings_' . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
+				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
 
 			echo $html;
 		}
