@@ -40,8 +40,9 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			$html = "\n" . '<input type="text" class="' . $size . '" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
 
 			// Render and style description text underneath if it exists.
-			if ( ! empty( $args['desc'] ) )
+			if ( ! empty( $args['desc'] ) ) {
 				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+			}
 
 			echo $html;
 		}
@@ -52,8 +53,9 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			$html = "\n" . '<input type="checkbox" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>' . "\n";
 
 			// Render description text directly to the right in a label if it exists.
-			if ( ! empty( $args['desc'] ) )
+			if ( ! empty( $args['desc'] ) ) {
 				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
+			}
 
 			echo $html;
 		}
@@ -74,11 +76,11 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 
 				if ( isset( self::$settings->saved_settings[ $args['id'] ] ) && self::$settings->saved_settings[ $args['id'] ] == $key ) {
 					$checked = true;
-				} else if( isset( $args['std'] ) && $args['std'] == $key && ! isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
+				} elseif ( isset( $args['std'] ) && $args['std'] == $key && ! isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
 					$checked = true;
 				}
 
-				echo '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked(true, $checked, false) . '/>&nbsp;';
+				echo '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
 				echo '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
 			}
 
@@ -88,6 +90,7 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		public function multicheck_callback( $args ) {
 			// Return empty string if no options.
 			if ( empty( $args['options'] ) ) {
+				// TODO: Would it be better to add an admin error message here instead?
 				echo '';
 				return;
 			}
@@ -96,15 +99,21 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 
 			foreach ( $args['options'] as $key => $option ) {
 				// TODO: use get setting to get this since we want it to be more abstract than using the global variable ( $pib_options )
-				if ( isset( $pib_options[$args['id']][$key] ) ) { $enabled = $option; } else { $enabled = NULL; }
+				if ( isset( $pib_options[$args['id']][$key] ) ) { 
+					$enabled = $option; 
+				} else { 
+					$enabled = NULL; 
+				}
+				
 				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" class="pib-checkbox-label">';
-				$html .= '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked($option, $enabled, false) . '/>' . "\n";
+				$html .= '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked( $option, $enabled, false ) . '/>' . "\n";
 				$html .= $option . '</label>';
 			}
 
 			// Render and style description text underneath if it exists.
-			if ( ! empty( $args['desc'] ) )
+			if ( ! empty( $args['desc'] ) ) {
 				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+			}
 
 			echo $html;
 		}
@@ -112,57 +121,63 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		public function select_callback( $args ) {
 			// Return empty string if no options.
 			if ( empty( $args['options'] ) ) {
+				// TODO: Add error messaging instead of blank?
 				echo '';
 				return;
 			}
 
 			$html = "\n" . '<select id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"/>' . "\n";
 
-			foreach ( $args['options'] as $option => $name ) :
+			foreach ( $args['options'] as $option => $name ) {
 				// TODO: use get setting to get this since we want it to be more abstract than using the global varable ( $pib_options )
-				$selected = isset( $pib_options[$args['id']] ) ? selected( $option, $pib_options[$args['id']], false ) : '';
+				$selected = isset( $pib_options[ $args['id'] ] ) ? selected( $option, $pib_options[ $args['id'] ], false ) : '';
 				$html .= '<option value="' . $option . '" ' . $selected . '>' . $name . '</option>' . "\n";
-			endforeach;
+			}
 
 			$html .= '</select>' . "\n";
 
 			// Render and style description text underneath if it exists.
-			if ( ! empty( $args['desc'] ) )
+			if ( ! empty( $args['desc'] ) ) {
 				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+			}
 
 			echo $html;
 		}
 		
 		public function textarea_callback( $args ) {
 			// TODO: Change to get from self::$settings
-			if ( isset( $pib_options[ $args['id'] ] ) )
+			if ( isset( $pib_options[ $args['id'] ] ) ) {
 				$value = $pib_options[ $args['id'] ];
-			else
+			} else {
 				$value = isset( $args['std'] ) ? $args['std'] : '';
+			}
 
 			// Ignoring size at the moment.
 			$html = "\n" . '<textarea class="large-text" cols="50" rows="10" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']">' . esc_textarea( $value ) . '</textarea>' . "\n";
 
 			// Render and style description text underneath if it exists.
-			if ( ! empty( $args['desc'] ) )
+			if ( ! empty( $args['desc'] ) ) {
 				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+			}
 
 			echo $html;
 		}
 		
 		public function number_callback( $args ) {
 			// TODO: Change to get from self::$settings
-			if ( isset( $pib_options[ $args['id'] ] ) )
+			if ( isset( $pib_options[ $args['id'] ] ) ) {
 				$value = $pib_options[ $args['id'] ];
-			else
+			} else {
 				$value = isset( $args['std'] ) ? $args['std'] : '';
+			}
 
 			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 			$html = "\n" . '<input type="number" class="' . $size . '-text" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
 
 			// Render description text directly to the right in a label if it exists.
-			if ( ! empty( $args['desc'] ) )
+			if ( ! empty( $args['desc'] ) ) {
 				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
+			}
 
 			echo $html;
 		}
