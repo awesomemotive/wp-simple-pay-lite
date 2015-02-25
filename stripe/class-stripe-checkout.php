@@ -117,7 +117,7 @@ class Stripe_Checkout {
 		//include_once( SC_PATH . 'includes/abstract-register-settings.php' );
 		include_once( SC_PATH . 'includes/class-mm-settings.php' );
 		include_once( SC_PATH . 'includes/class-mm-settings-callbacks.php' );
-		include_once( SC_PATH . 'includes/testing-extends.php' );
+		//include_once( SC_PATH . 'includes/testing-extends.php' );
 		
 		include_once( SC_PATH . 'includes/settings.php' );
 

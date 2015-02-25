@@ -46,6 +46,16 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			return $this->saved_settings;
 		}
 		
+		
+		public function get_setting( $setting ) {
+			// TODO: Return indvidual setting
+		}
+		
+		public function sort_settings() {
+			// TODO: Sort settings by a position number
+		}
+		
+		
 		/**
 		 * Method to loop through all of the passed in settings array args and connect it with the WP Settings API
 		 */
@@ -81,7 +91,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 						method_exists( new MM_Settings_Callbacks( $this ), $v['type'] . '_callback' ) ? array( new MM_Settings_Callbacks( $this ), $v['type'] . '_callback' ) : array( new MM_Settings_Callbacks( $this ), 'missing_callback' ),
 						$section,
 						$section,
-						array_merge( $this->get_settings_field_args( $v, $setting ), array( 'callback' => $v['type'] . '_callback' ) )
+						array_merge( $this->get_settings_field_args( $v, $setting ), array( 'callback' => $v['type'] . '_callback', 'prefix' => $this->prefix . '_' ) )
 					);
 				}
 				

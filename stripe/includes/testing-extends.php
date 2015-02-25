@@ -7,10 +7,12 @@ class MM_Settings_Text extends MM_Settings_Callbacks {
 	/*
 	 * Class constructor
 	 * 
-	 * This doesn't need to actually do anything, but we must define it so the class doesn't try running 
-	 * the parent constructor. That will lead to errors.
+	 * We must define this to avoid errors with the parent class __constructor() being loaded
+	 * We can use this to set our settings in the child class
 	 */
-	public function __construct() {	}
+	public function __construct() {	
+		self::$settings = parent::$settings;	
+	}
 	
 	/*
 	 * Adds the child class to the "view" of the main class
@@ -27,8 +29,6 @@ class MM_Settings_Text extends MM_Settings_Callbacks {
 	
 	
 	public function text_callback( $args ) {
-		
-		self::$settings = parent::$settings;
 		
 		//echo '<pre>' . print_r( self::$settings, true ) . '</pre>';
 		

@@ -19,28 +19,34 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			self::$settings = $settings;
 		}
 		
-		// Callback functions
-		public function toggle_control_callback( $args ) {
+		/*
+		 * Used by children of this class to make themselves "visible" from this class
+		 */
+		public function add_child( $child ) {
+			self::$children[] = $child;
+		}
+		
+		// Default callbacks
+		
+		public function text_callback( $args ) {
 			
-			$checked = ( isset( self::$settings->saved_settings[$args['id']] ) ? checked( 1, self::$settings->saved_settings[$args['id']], false ) : '' );
+			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
+				$value = self::$settings->saved_settings[ $args['id'] ];
+			} else {
+				$value = isset( $args['std'] ) ? $args['std'] : '';
+			}
 
-			$html = '<div class="sc-toggle-switch-wrap">
-					<label class="switch-light switch-candy switch-candy-blue" onclick="">
-						<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>
-						<span>
-						  <span>Test</span>
-						  <span>Live</span>
-						</span>
-						<a></a>
-					</label></div>';
+			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : '';
+			$html = "\n" . '<input type="text" class="' . $size . '" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" value="' . trim( esc_attr( $value ) ) . '"/>' . "\n";
+
+			// Render and style description text underneath if it exists.
+			if ( ! empty( $args['desc'] ) )
+				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
 
 			echo $html;
 		}
-
-		//public function text_callback( $args ) {}
-
-		/*public function checkbox_callback( $args ) {
-			
+		
+		public function checkbox_callback( $args ) {
 			$checked = ( isset( self::$settings->saved_settings[$args['id']] ) ? checked( 1, self::$settings->saved_settings[$args['id']], false ) : '' );
 
 			$html = "\n" . '<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>' . "\n";
@@ -50,10 +56,9 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 				$html .= '<label for="sc_settings_' . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
 
 			echo $html;
-		}*/
-
+		}
+		
 		public function section_callback( $args ) {
-			
 			$html = '';
 
 			if ( ! empty( $args['desc'] ) ) {
@@ -62,9 +67,8 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 
 			echo $html;
 		}
-
+		
 		public function radio_callback( $args ) {
-
 			foreach ( $args['options'] as $key => $option ) {
 				$checked = false;
 
@@ -81,6 +85,83 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo '<p class="description">' . $args['desc'] . '</p>';
 		}
 		
+		public function multicheck_callback( $args ) {
+			// Return empty string if no options.
+			if ( empty( $args['options'] ) ) {
+				echo '';
+				return;
+			}
+
+			$html = "\n";
+
+			foreach ( $args['options'] as $key => $option ) {
+				if ( isset( $pib_options[$args['id']][$key] ) ) { $enabled = $option; } else { $enabled = NULL; }
+				$html .= '<label for="pib_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" class="pib-checkbox-label">';
+				$html .= '<input name="pib_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" id="pib_settings_' . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked($option, $enabled, false) . '/>' . "\n";
+				$html .= $option . '</label>';
+			}
+
+			// Render and style description text underneath if it exists.
+			if ( ! empty( $args['desc'] ) )
+				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+
+			echo $html;
+		}
+		
+		public function select_callback( $args ) {
+			// Return empty string if no options.
+			if ( empty( $args['options'] ) ) {
+				echo '';
+				return;
+			}
+
+			$html = "\n" . '<select id="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" name="pib_settings_' . $args['section'] . '[' . $args['id'] . ']"/>' . "\n";
+
+			foreach ( $args['options'] as $option => $name ) :
+				$selected = isset( $pib_options[$args['id']] ) ? selected( $option, $pib_options[$args['id']], false ) : '';
+				$html .= '<option value="' . $option . '" ' . $selected . '>' . $name . '</option>' . "\n";
+			endforeach;
+
+			$html .= '</select>' . "\n";
+
+			// Render and style description text underneath if it exists.
+			if ( ! empty( $args['desc'] ) )
+				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+
+			echo $html;
+		}
+		
+		public function textarea_callback( $args ) {
+			if ( isset( $pib_options[ $args['id'] ] ) )
+				$value = $pib_options[ $args['id'] ];
+			else
+				$value = isset( $args['std'] ) ? $args['std'] : '';
+
+			// Ignoring size at the moment.
+			$html = "\n" . '<textarea class="large-text" cols="50" rows="10" id="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" name="pib_settings_' . $args['section'] . '[' . $args['id'] . ']">' . esc_textarea( $value ) . '</textarea>' . "\n";
+
+			// Render and style description text underneath if it exists.
+			if ( ! empty( $args['desc'] ) )
+				$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
+
+			echo $html;
+		}
+		
+		public function number_callback( $args ) {
+			if ( isset( $pib_options[ $args['id'] ] ) )
+				$value = $pib_options[ $args['id'] ];
+			else
+				$value = isset( $args['std'] ) ? $args['std'] : '';
+
+			$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+			$html = "\n" . '<input type="number" class="' . $size . '-text" id="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" name="pib_settings_' . $args['section'] . '[' . $args['id'] . ']" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
+
+			// Render description text directly to the right in a label if it exists.
+			if ( ! empty( $args['desc'] ) )
+				$html .= '<label for="pib_settings_' . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
+
+			echo $html;
+		}
 		
 		/*
 		 * Method used to call any child method callbacks or to output a default message
@@ -111,13 +192,6 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			if( ! $has_child_method ) {
 				echo '<p>This callback is missing from the MM_Settings class</p>';
 			}
-		}
-		
-		/*
-		 * Used by children of this class to make themselves "visible" from this class
-		 */
-		public function add_child( $child ) {
-			self::$children[] = $child;
 		}
 	}
 }
