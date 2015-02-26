@@ -63,8 +63,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
-					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'addons' ); ?>" target="_blank">
-						<?php _e( 'Stripe Checkout Pro', 'sc' ); ?></a>
+					<a href="https://dashboard.stripe.com/" target="_blank">
+						<?php _e( 'Stripe Dashboard', 'sc' ); ?></a>
 				</li>
 			</ul>
 		</div>
