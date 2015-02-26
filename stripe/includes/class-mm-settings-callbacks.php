@@ -5,24 +5,28 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 	
 	class MM_Settings_Callbacks {
 		
-		// We make these static so they don't constantly get overwritten
+		// Class static variable
 		protected static $settings;
 		private static $children = array();
 		
 		public static $class_version = '1.0.0';
 		
-		/*
+		/**
 		 * Constructor
 		 * 
 		 * Needs a main settings object passed in
 		 * We then set this classes settings to the passed in object so we can use the parent settings
+		 * 
+		 * @since 1.0.0
 		 */
 		public function __construct( MM_Settings $settings ) {
 			self::$settings = $settings;
 		}
 		
-		/*
+		/**
 		 * Used by children of this class to make themselves "visible" from this class
+		 * 
+		 * @since 1.0.0
 		 */
 		public function add_child( $child ) {
 			self::$children[] = $child;
@@ -30,6 +34,13 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		
 		// Default callbacks
 		
+		/**
+		 * 
+		 * Method to output text inputs
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function text_callback( $args ) {
 			
 			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
@@ -49,6 +60,13 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo $html;
 		}
 		
+		/**
+		 * 
+		 * Method to output checkbox inputs
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function checkbox_callback( $args ) {
 			$checked = ( isset( self::$settings->saved_settings[$args['id']] ) ? checked( 1, self::$settings->saved_settings[$args['id']], false ) : '' );
 
@@ -61,7 +79,14 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 
 			echo $html;
 		}
-		
+			
+		/**
+		 * 
+		 * Method to output text without any inputs
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function section_callback( $args ) {
 			$html = '';
 
@@ -72,6 +97,13 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo $html;
 		}
 		
+		/**
+		 * 
+		 * Method to output radio inputs
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function radio_callback( $args ) {
 			foreach ( $args['options'] as $key => $option ) {
 				$checked = false;
@@ -89,6 +121,14 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo '<p class="description">' . $args['desc'] . '</p>';
 		}
 		
+		/**
+		 * 
+		 * Method to output multiple checkbox option inputs
+		 * This is for a setting that there are multiple checkbox type options but they need to be tied to the same setting name
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function multicheck_callback( $args ) {
 			// Return empty string if no options.
 			if ( empty( $args['options'] ) ) {
@@ -123,6 +163,13 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo $html;
 		}
 		
+		/**
+		 * 
+		 * Method to output select box inputs
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function select_callback( $args ) {
 			// Return empty string if no options.
 			if ( empty( $args['options'] ) ) {
@@ -152,6 +199,13 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo $html;
 		}
 		
+		/**
+		 * 
+		 * Method to output textarea inputs
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function textarea_callback( $args ) {
 			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
 				$value = self::$settings->saved_settings[ $args['id'] ];
@@ -170,6 +224,13 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			echo $html;
 		}
 		
+		/**
+		 * 
+		 * Method to output number (HTML5) inputs
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
+		 */
 		public function number_callback( $args ) {
 			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
 				$value = self::$settings->saved_settings[ $args['id'] ];
@@ -191,6 +252,9 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		/*
 		 * Method used to call any child method callbacks or to output a default message
 		 * if there are no callbacks found
+		 * 
+		 * @param array $args
+		 * @since 1.0.0
 		 */
 		public function missing_callback( $args ) {
 			
@@ -214,6 +278,7 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 				}
 			}
 			
+			// If there are no methods found then we let the admin know a callback is missing
 			if( ! $has_child_method ) {
 				echo '<p>There is no callback defined for: <strong>' . $args['callback'] . '</strong></p>';
 			}
