@@ -56,9 +56,17 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			return $this->saved_settings;
 		}
 		
-		
+		/**
+		 * 
+		 * @param string $setting
+		 * @return Returns the setting if it exists and false if it doesn't
+		 */
 		public function get_setting( $setting ) {
-			// TODO: Return indvidual setting
+			if ( isset( $this->saved_settings[$setting] ) ) {
+				return $this->saved_settings[$setting];
+			}
+			
+			return false;
 		}
 		
 		
