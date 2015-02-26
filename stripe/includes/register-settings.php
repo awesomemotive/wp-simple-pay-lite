@@ -259,8 +259,8 @@ function sc_toggle_control_callback( $args ) {
 			<label class="switch-light switch-candy switch-candy-blue" onclick="">
 				<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>
 				<span>
-				  <span>Test</span>
-				  <span>Live</span>
+				  <span>' . __( 'Test', 'sc' ) . '</span>
+				  <span>' . __( 'Live', 'sc' ) . '</span>
 				</span>
 				<a></a>
 			</label></div>';
