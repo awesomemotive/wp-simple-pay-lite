@@ -104,7 +104,7 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 					$enabled = NULL; 
 				}
 				
-				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" class="pib-checkbox-label">';
+				$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']">';
 				$html .= '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked( $option, $enabled, false ) . '/>' . "\n";
 				$html .= $option . '</label>';
 			}
