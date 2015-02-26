@@ -90,8 +90,12 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		public function multicheck_callback( $args ) {
 			// Return empty string if no options.
 			if ( empty( $args['options'] ) ) {
-				// TODO: Would it be better to add an admin error message here instead?
-				echo '';
+				if ( current_user_can( 'manage_options' ) ) {
+					echo '<p><strong>Warning:</strong> You have not included in options for this multiple checkbox setting.</p>';
+				} else {
+					echo '';
+				}
+				
 				return;
 			}
 
@@ -120,8 +124,12 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		public function select_callback( $args ) {
 			// Return empty string if no options.
 			if ( empty( $args['options'] ) ) {
-				// TODO: Add error messaging instead of blank?
-				echo '';
+				if( current_user_can( 'manage_options' ) ) {
+					echo '<p><strong>Warning:</strong> You have not included in options for this select setting.</p>';
+				} else {
+					echo '';
+				}
+				
 				return;
 			}
 
