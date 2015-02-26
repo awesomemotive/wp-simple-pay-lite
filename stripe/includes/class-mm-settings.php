@@ -124,7 +124,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			// Link label to input using 'label_for' argument if text, textarea, password, select, or variations of.
 			// Just add to existing settings args array if needed.
 			if ( in_array( $option['type'], array( 'text', 'select', 'textarea', 'password', 'number' ) ) ) {
-				$settings_args = array_merge( $settings_args, array( 'label_for' => 'sc_settings_' . $section . '[' . $option['id'] . ']' ) );
+				$settings_args = array_merge( $settings_args, array( 'label_for' => $this->prefix . '_' . $section . '[' . $option['id'] . ']' ) );
 			}
 
 			return $settings_args;
