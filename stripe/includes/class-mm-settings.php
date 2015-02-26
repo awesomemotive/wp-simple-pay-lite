@@ -57,9 +57,12 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		}
 		
 		/**
+		 * Get a specific setting
 		 * 
 		 * @param string $setting
 		 * @return Returns the setting if it exists and false if it doesn't
+		 * 
+		 * @since 1.0.0
 		 */
 		public function get_setting( $setting ) {
 			if ( isset( $this->saved_settings[$setting] ) ) {
