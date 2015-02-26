@@ -98,8 +98,7 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			$html = "\n";
 
 			foreach ( $args['options'] as $key => $option ) {
-				// TODO: use get setting to get this since we want it to be more abstract than using the global variable ( $pib_options )
-				if ( isset( $pib_options[$args['id']][$key] ) ) { 
+				if ( isset( self::$settings->saved_settings[ $args['id'] ][ $key ] ) ) { 
 					$enabled = $option; 
 				} else { 
 					$enabled = NULL; 
@@ -129,8 +128,7 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			$html = "\n" . '<select id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"/>' . "\n";
 
 			foreach ( $args['options'] as $option => $name ) {
-				// TODO: use get setting to get this since we want it to be more abstract than using the global varable ( $pib_options )
-				$selected = isset( $pib_options[ $args['id'] ] ) ? selected( $option, $pib_options[ $args['id'] ], false ) : '';
+				$selected = isset( self::$settings->saved_settings[ $args['id'] ] ) ? selected( $option, self::$settings->saved_settings[ $args['id'] ], false ) : '';
 				$html .= '<option value="' . $option . '" ' . $selected . '>' . $name . '</option>' . "\n";
 			}
 
@@ -145,9 +143,8 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		}
 		
 		public function textarea_callback( $args ) {
-			// TODO: Change to get from self::$settings
-			if ( isset( $pib_options[ $args['id'] ] ) ) {
-				$value = $pib_options[ $args['id'] ];
+			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
+				$value = self::$settings->saved_settings[ $args['id'] ];
 			} else {
 				$value = isset( $args['std'] ) ? $args['std'] : '';
 			}
@@ -164,9 +161,8 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		}
 		
 		public function number_callback( $args ) {
-			// TODO: Change to get from self::$settings
-			if ( isset( $pib_options[ $args['id'] ] ) ) {
-				$value = $pib_options[ $args['id'] ];
+			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
+				$value = self::$settings->saved_settings[ $args['id'] ];
 			} else {
 				$value = isset( $args['std'] ) ? $args['std'] : '';
 			}
