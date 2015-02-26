@@ -27,6 +27,7 @@ function sc_register_settings() {
 	$sc_settings = array(
 
 		/* Default Settings */
+
 		'default' => array(
 			'note' => array(
 				'id'   => 'settings_note',
@@ -47,7 +48,7 @@ function sc_register_settings() {
 				'id'   => 'currency',
 				'name' => __( 'Currency Code', 'sc' ),
 				'desc' => __( 'Specify a currency using it\'s ', 'sc' ) .
-							sprintf( '<a href="%s" target="_blank">%s</a>', 'https://support.stripe.com/questions/which-currencies-does-stripe-support', __('3-letter ISO Code', 'sc' ) ) . '. ' .
+							sprintf( '<a href="%s" target="_blank">%s</a>', 'https://support.stripe.com/questions/which-currencies-does-stripe-support', __( '3-letter ISO Code', 'sc' ) ) . '. ' .
 							__( 'Defaults to USD.', 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
@@ -110,7 +111,7 @@ function sc_register_settings() {
 				'id'   => 'enable_remember',
 				'name' => __( 'Enable "Remember Me"', 'sc' ),
 				'desc' => __( 'Adds a "Remember Me" option to the checkout form to allow the user to store their credit card for future use with other sites using Stripe. ', 'sc' ) .
-					sprintf( '<a href="%s" target="_blank">%s</a>', 'https://stripe.com/checkout/info', __('See how it works', 'sc' ) ) . '.',
+					sprintf( '<a href="%s" target="_blank">%s</a>', 'https://stripe.com/checkout/info', __( 'See how it works', 'sc' ) ) . '.',
 				'type' => 'checkbox'
 			),
 			'disable_css' => array(
@@ -134,6 +135,7 @@ function sc_register_settings() {
 		),
 		
 		/* Keys settings */
+
 		'keys' => array(
 			'enable_live_key' => array(
 				'id'   => 'enable_live_key',
