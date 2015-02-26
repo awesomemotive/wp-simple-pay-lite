@@ -113,7 +113,7 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.3.0 =
+= 1.3.0 - TODO =
 
 * TODO Updated to most recent Stripe PHP library (v2.#.#).
 * Scripts and styles now only enqueued on posts and pages where required.
