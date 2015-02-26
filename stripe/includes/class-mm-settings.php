@@ -13,8 +13,14 @@ if( ! class_exists( 'MM_Settings' ) ) {
 				$settings_sections = array(),
 				$saved_settings = array();
 		
-		// For example it will look someting like:
-		// $settings = new MM_Settings( 'sc', $settings_array );
+		/**
+		 * Class constructor
+		 * 
+		 * @param string $prefix
+		 * @param array $settings
+		 * 
+		 * @since 1.0.0
+		 */
 		public function __construct( $prefix, $settings ) {
 			
 			$this->prefix   = $prefix . '_settings';
@@ -29,6 +35,8 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		 * It will loop through all the settings options and return only those that are not empty.
 		 * 
 		 * Returns as an array. 
+		 * 
+		 * @since 1.0.0
 		 */
 		public function get_settings() {
 
@@ -53,15 +61,41 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			// TODO: Return indvidual setting
 		}
 		
+		
+		/**
+		 * Sorts the settings based on the 'sort' argument
+		 * 
+		 * @since 1.0.0
+		 */
 		public function sort_settings() {
-			// TODO: Sort settings by a position number
+			
+			foreach( $this->settings as $setting => $options ) {
+				
+				uasort( $this->settings[$setting], function( $a, $b ) {
+
+					if ( ! isset( $a['sort'] ) ) {
+						$a['sort'] = 0;
+					}
+
+					if ( ! isset( $b['sort'] ) ) {
+						$b['sort'] = 0;
+					}
+
+					return $a['sort'] - $b['sort'];
+				} );
+			}
 		}
 		
 		
 		/**
 		 * Method to loop through all of the passed in settings array args and connect it with the WP Settings API
+		 * 
+		 * @since 1.0.0
 		 */
 		public function register_settings() {
+			
+			// Sort first
+			$this->sort_settings();
 
 			foreach( $this->settings as $setting => $options ) {
 				
@@ -108,6 +142,8 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		 * @param   string  $option   Single settings option key.
 		 * @param   string  $section  Section of settings apge.
 		 * @return  array             $args parameter to use with add_settings_field call.
+		 * 
+		 * @since 1.0.0
 		 */
 		public function get_settings_field_args( $option, $section ) {
 			$settings_args = array(
@@ -132,6 +168,8 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		
 		/*
 		 * Method to sanitize any input
+		 * 
+		 * @since 1.0.0
 		 */
 		public function sanitize_settings( $input ) {
 			return $input;
