@@ -5,6 +5,8 @@ if( ! class_exists( 'MM_Settings' ) ) {
 	
 	class MM_Settings {
 		
+		public static $class_version = '1.0.0';
+		
 		// class variables
 		public $settings,
 			    $prefix,

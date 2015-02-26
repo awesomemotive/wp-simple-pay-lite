@@ -9,6 +9,8 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 		protected static $settings;
 		private static $children = array();
 		
+		public static $class_version = '1.0.0';
+		
 		/*
 		 * Constructor
 		 * 
