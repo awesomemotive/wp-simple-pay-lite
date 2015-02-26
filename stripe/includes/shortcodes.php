@@ -32,6 +32,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'billing'               => ( ! empty( $sc_options['billing'] ) ? 'true' : 'false' ),    // true or false
 					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
 					'enable_remember'       => ( ! empty( $sc_options['enable_remember'] ) ? 'true' : 'false' ),    // true or false
+					'bitcoin'               => ( ! empty( $sc_options['bitcoin'] ) ? 'true' : 'false' ),    // true or false
 					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
 					'failure_redirect_url'  => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
 					'prefill_email'         => 'false',
@@ -91,6 +92,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . $prefill_email . '" ' : '' ) .
 		( ! empty( $payment_button_label ) ? 'data-label="' . $payment_button_label . '" ' : '' ) .
 		( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
+		( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 		( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
 		'></script>';
 	
