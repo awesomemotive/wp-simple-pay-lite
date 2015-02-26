@@ -209,7 +209,7 @@ if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 			}
 			
 			if( ! $has_child_method ) {
-				echo '<p>This callback is missing from the MM_Settings class</p>';
+				echo '<p>There is no callback defined for: <strong>' . $args['callback'] . '</strong></p>';
 			}
 		}
 	}
