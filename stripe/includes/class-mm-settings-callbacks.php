@@ -1,6 +1,8 @@
 <?php
 
 
+// TODO: Add direct file access check
+
 if( ! class_exists( 'MM_Settings_Callbacks' ) ) {
 	
 	class MM_Settings_Callbacks {

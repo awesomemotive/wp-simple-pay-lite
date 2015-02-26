@@ -1,6 +1,8 @@
 <?php
 
 
+// TODO: Add direct file access check
+
 if( ! class_exists( 'MM_Settings' ) ) {
 	
 	class MM_Settings {

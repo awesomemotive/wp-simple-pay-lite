@@ -1,5 +1,7 @@
 <?php
 
+// TODO: Add direct file access check
+
 $sc_settings = array(
 
 			/* Default Settings */
