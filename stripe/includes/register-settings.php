@@ -122,7 +122,7 @@ function sc_register_settings() {
 			'always_enqueue' => array(
 				'id'   => 'always_enqueue',
 				'name' => __( 'Always Enqueue Scripts & Styles', 'sc' ),
-				'desc' => __( sprintf( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.' ), 'sc' ),
+				'desc' => __( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'uninstall_save_settings' => array(
