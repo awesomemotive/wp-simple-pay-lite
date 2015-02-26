@@ -143,6 +143,12 @@ function sc_register_settings() {
 				'desc' => '<p class="description">' . __( 'Toggle between using your Test or Live API keys.', 'sc' ) . '</p>',
 				'type' => 'toggle_control'
 			),
+			'note' => array(
+				'id'   => 'api_key_note',
+				'name' => '',
+				'desc' => sprintf( '<a href="%s" target="_blank">%s</a>', 'https://dashboard.stripe.com/account/apikeys', __( 'Find your Stripe API keys here', 'sc' ) ),
+				'type' => 'section'
+			),
 			'test_secret_key' => array(
 				'id'   => 'test_secret_key',
 				'name' => __( 'Test Secret Key', 'sc' ),
