@@ -32,8 +32,8 @@ function sc_register_settings() {
 			'note' => array(
 				'id'   => 'settings_note',
 				'name' => '',
-				'desc' => '<a href="' . sc_ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'stripe_checkout', 'settings', 'docs' ) . '" target="_blank">' .
-				          __( 'See shortcode options and examples', 'sc' ) . '</a> ' . __( 'for', 'sc' ) . ' ' . Stripe_Checkout::get_plugin_title() .
+				'desc' => sprintf( '<a href="%s" target="_blank">%s</a>', sc_ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'stripe_checkout', 'settings', 'docs' ), __( 'See shortcode options and examples', 'sc' ) ) . ' ' .
+				          __( 'for', 'sc' ) . ' ' . Stripe_Checkout::get_plugin_title() . '<br/>' .
 				          '<p class="description">' . __( 'Shortcode attributes take precedence and will always override site-wide default settings.', 'sc' ) . '</p>',
 				'type' => 'section'
 			),
