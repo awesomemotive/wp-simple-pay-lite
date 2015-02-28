@@ -19,11 +19,9 @@ Instead of spending time building your own checkout forms you can use Stripe's, 
 
 [View Stripe Checkout Live Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-###Plugin Requirements###
+This is a simple standalone Stripe checkout plugin. That's it. **No other plugins required.**
 
-This is a simple standalone Stripe checkout plugin. That's it. No other plugins required.
-
-Note that Stripe suggests that the pages hosting the checkout form be SSL (they should start with `https://`). [Read more about SSL](https://stripe.com/help/ssl).
+**SSL Note:** Stripe does require that pages hosting the checkout form be SSL (they should start with `https://`). [Read more about SSL](https://stripe.com/help/ssl)
 
 ###Start Accepting Payments in 3 Easy Steps###
 
