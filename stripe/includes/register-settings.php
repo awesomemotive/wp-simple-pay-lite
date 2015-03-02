@@ -27,12 +27,13 @@ function sc_register_settings() {
 	$sc_settings = array(
 
 		/* Default Settings */
+
 		'default' => array(
 			'note' => array(
 				'id'   => 'settings_note',
 				'name' => '',
-				'desc' => '<a href="' . sc_ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'stripe_checkout', 'settings', 'docs' ) . '" target="_blank">' .
-				          __( 'See shortcode options and examples', 'sc' ) . '</a> ' . __( 'for', 'sc' ) . ' ' . Stripe_Checkout::get_plugin_title() .
+				'desc' => sprintf( '<a href="%s" target="_blank">%s</a>', sc_ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'stripe_checkout', 'settings', 'docs' ), __( 'See shortcode options and examples', 'sc' ) ) . ' ' .
+				          __( 'for', 'sc' ) . ' ' . Stripe_Checkout::get_plugin_title() . '<br/>' .
 				          '<p class="description">' . __( 'Shortcode attributes take precedence and will always override site-wide default settings.', 'sc' ) . '</p>',
 				'type' => 'section'
 			),
@@ -47,7 +48,7 @@ function sc_register_settings() {
 				'id'   => 'currency',
 				'name' => __( 'Currency Code', 'sc' ),
 				'desc' => __( 'Specify a currency using it\'s ', 'sc' ) .
-							sprintf( '<a href="%s" target="_blank">%s</a>', 'https://support.stripe.com/questions/which-currencies-does-stripe-support', __('3-letter ISO Code', 'sc' ) ) . '. ' .
+							sprintf( '<a href="%s" target="_blank">%s</a>', 'https://support.stripe.com/questions/which-currencies-does-stripe-support', __( '3-letter ISO Code', 'sc' ) ) . '. ' .
 							__( 'Defaults to USD.', 'sc' ),
 				'type' => 'text',
 				'size' => 'regular-text'
@@ -110,7 +111,7 @@ function sc_register_settings() {
 				'id'   => 'enable_remember',
 				'name' => __( 'Enable "Remember Me"', 'sc' ),
 				'desc' => __( 'Adds a "Remember Me" option to the checkout form to allow the user to store their credit card for future use with other sites using Stripe. ', 'sc' ) .
-					sprintf( '<a href="%s" target="_blank">%s</a>', 'https://stripe.com/checkout/info', __('See how it works', 'sc' ) ) . '.',
+					sprintf( '<a href="%s" target="_blank">%s</a>', 'https://stripe.com/checkout/info', __( 'See how it works', 'sc' ) ) . '.',
 				'type' => 'checkbox'
 			),
 			'disable_css' => array(
@@ -122,7 +123,7 @@ function sc_register_settings() {
 			'always_enqueue' => array(
 				'id'   => 'always_enqueue',
 				'name' => __( 'Always Enqueue Scripts & Styles', 'sc' ),
-				'desc' => __( sprintf( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.' ), 'sc' ),
+				'desc' => __( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'uninstall_save_settings' => array(
@@ -134,6 +135,7 @@ function sc_register_settings() {
 		),
 		
 		/* Keys settings */
+
 		'keys' => array(
 			'enable_live_key' => array(
 				'id'   => 'enable_live_key',
@@ -141,31 +143,37 @@ function sc_register_settings() {
 				'desc' => '<p class="description">' . __( 'Toggle between using your Test or Live API keys.', 'sc' ) . '</p>',
 				'type' => 'toggle_control'
 			),
+			'note' => array(
+				'id'   => 'api_key_note',
+				'name' => '',
+				'desc' => sprintf( '<a href="%s" target="_blank">%s</a>', 'https://dashboard.stripe.com/account/apikeys', __( 'Find your Stripe API keys here', 'sc' ) ),
+				'type' => 'section'
+			),
 			'test_secret_key' => array(
 				'id'   => 'test_secret_key',
 				'name' => __( 'Test Secret Key', 'sc' ),
-				'desc' => __( 'Enter your test secret key, found in your Stripe account settings.' , 'sc' ),
+				'desc' => '',
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'test_publish_key' => array(
 				'id'   => 'test_publish_key',
 				'name' => __( 'Test Publishable Key', 'sc' ),
-				'desc' => __( 'Enter your test publishable key, found in your Stripe account settings.' , 'sc' ),
+				'desc' => '',
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'live_secret_key' => array(
 				'id'   => 'live_secret_key',
 				'name' => __( 'Live Secret Key', 'sc' ),
-				'desc' => __( 'Enter your live secret key, found in your Stripe account settings.' , 'sc' ),
+				'desc' => '',
 				'type' => 'text',
 				'size' => 'regular-text'
 			),
 			'live_publish_key' => array(
 				'id'   => 'live_publish_key',
 				'name' => __( 'Live Publishable Key', 'sc' ),
-				'desc' => __( 'Enter your live publishable key, found in your Stripe account settings.' , 'sc' ),
+				'desc' => '',
 				'type' => 'text',
 				'size' => 'regular-text'
 			)
@@ -251,8 +259,8 @@ function sc_toggle_control_callback( $args ) {
 			<label class="switch-light switch-candy switch-candy-blue" onclick="">
 				<input type="checkbox" id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" value="1" ' . $checked . '/>
 				<span>
-				  <span>Test</span>
-				  <span>Live</span>
+				  <span>' . __( 'Test', 'sc' ) . '</span>
+				  <span>' . __( 'Live', 'sc' ) . '</span>
 				</span>
 				<a></a>
 			</label></div>';
