@@ -74,7 +74,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		}
 		
 		public function ajax_save_button( $id, $label ) {
-			echo '<button id="test">' . $label . '</button>';
+			echo '<button id="test" class="button-primary">' . $label . '</button>';
 		}
 		
 		public function do_ajax_save() {
