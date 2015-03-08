@@ -116,8 +116,8 @@ function sc_register_settings() {
 			),
 			'disable_css' => array(
 				'id'   => 'disable_css',
-				'name' => __( 'Disable Form CSS', 'sc' ),
-				'desc' => __( 'Disable the plugin from ouputting the default form CSS.', 'sc' ),
+				'name' => __( 'Disable Plugin CSS', 'sc' ),
+				'desc' => __( 'If this option is checked, this plugin\'s CSS file will not be referenced.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'always_enqueue' => array(
