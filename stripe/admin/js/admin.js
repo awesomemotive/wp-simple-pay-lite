@@ -39,6 +39,17 @@
 				console.log( response );
 			});
 		});
+		
+		
+		// Active tab stuff
+		$('.nav-tab').click( function() {
+			$(this).parent().children( '.nav-tab' ).each( function(index) {
+				$(this).removeClass('nav-tab-active');
+			});
+			
+			$(this).addClass('nav-tab-active');
+		});
+		
 	});
 }(jQuery));
 

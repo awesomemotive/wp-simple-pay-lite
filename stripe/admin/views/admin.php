@@ -13,14 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-include_once( 'admin-helper-functions.php' );
-
 global $sc_options, $settings;
-$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
-
-
-					
-
 
 ?>
 
@@ -33,11 +26,18 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 			
 			<h2 class="nav-tab-wrapper">
 				<?php
-					
+					$first_time = true;
+					$is_active  = '';
 					
 					foreach( $settings->get_tabs() as $key => $value) {
+						if( $first_time == true ) {
+							$is_active = 'nav-tab-active';
+							$first_time = false;
+						} else {
+							$is_active = '';
+						}
 				?>
-						<a href="#<?php echo $key; ?>" class="nav-tab sc-nav-tab" data-tab-id="<?php echo $key; ?>"><?php echo $value; ?></a>
+						<a href="#<?php echo $key; ?>" class="nav-tab sc-nav-tab <?php echo $is_active; ?>" data-tab-id="<?php echo $key; ?>"><?php echo $value; ?></a>
 				<?php
 					}
 				?>
