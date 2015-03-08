@@ -15,20 +15,8 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		
 		public $tabs;
 		
-		/**
-		 * Class constructor
-		 * 
-		 * @param string $prefix
-		 * @param array $settings
-		 * 
-		 * @since 1.0.0
-		 */
+		
 		public function __construct( $option ) {
-			
-			//$this->prefix   = $prefix . '_settings';
-			//$this->settings = $settings;
-			
-			//add_action( 'admin_init', array( $this, 'register_settings' ) );
 			$this->option = $option;
 			
 			if ( false === get_option( $this->option ) ) {
@@ -42,22 +30,15 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		}
 		
 		public function sc_button_save() {
-			//echo 'test';
-			//echo '<pre>' . print_r( $_POST, true ) . '</pre>';
 			
 			$settings = array();
 			
 			$saved = explode( '&', $_POST['form_data'] );
 			
 			foreach( $saved as $k => $v ) {
-				//$settings[$v] = explode();
 				$value = explode( '=', $v );
-				
-				//echo '<pre>' . print_r( $value, true ) . '</pre>';
-				
 				$settings[$value[0]] = $value[1];
 			}
-			//echo '<pre>' . print_r( $settings, true ) . '</pre>';		
 			
 			$this->update_settings( $settings );
 			
@@ -160,30 +141,6 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			}
 			
 			$this->tabs = $tabs;
-		}
-
-		/**
-		 * Sorts the settings based on the 'sort' argument
-		 * 
-		 * @since 1.0.0
-		 */
-		public function sort_settings() {
-			
-			foreach( $this->settings as $setting => $options ) {
-				
-				uasort( $this->settings[$setting], function( $a, $b ) {
-
-					if ( ! isset( $a['sort'] ) ) {
-						$a['sort'] = 0;
-					}
-
-					if ( ! isset( $b['sort'] ) ) {
-						$b['sort'] = 0;
-					}
-
-					return $a['sort'] - $b['sort'];
-				} );
-			}
 		}
 	}
 }
