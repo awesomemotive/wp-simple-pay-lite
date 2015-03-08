@@ -50,3 +50,12 @@
 	width: 300px;
 	margin-left: -88px;
 }
+
+.sc-admin-hidden { display: none; }
+.tab-content { display: block; }
+
+.tab-content label {
+	font-weight: bold;
+	display: block;
+	margin-top: 15px;
+}

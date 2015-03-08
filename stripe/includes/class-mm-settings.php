@@ -10,10 +10,10 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		public static $class_version = '1.0.0';
 		
 		// class variables
-		public $settings,
-			    $prefix,
-				$settings_sections = array(),
-				$saved_settings = array();
+		protected $settings;
+		protected $option;
+		
+		public $tabs;
 		
 		/**
 		 * Class constructor
@@ -23,58 +23,145 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		 * 
 		 * @since 1.0.0
 		 */
-		public function __construct( $prefix, $settings ) {
+		public function __construct( $option ) {
 			
-			$this->prefix   = $prefix . '_settings';
+			//$this->prefix   = $prefix . '_settings';
+			//$this->settings = $settings;
+			
+			//add_action( 'admin_init', array( $this, 'register_settings' ) );
+			$this->option = $option;
+			
+			if ( false === get_option( $this->option ) ) {
+				add_option( $this->option );
+			}
+			
+			$this->set_defaults();
+			
+			add_action( 'wp_ajax_sc_button_save', array( $this, 'sc_button_save' ) );
+			
+		}
+		
+		public function sc_button_save() {
+			//echo 'test';
+			//echo '<pre>' . print_r( $_POST, true ) . '</pre>';
+			
+			$settings = array();
+			
+			$saved = explode( '&', $_POST['form_data'] );
+			
+			foreach( $saved as $k => $v ) {
+				//$settings[$v] = explode();
+				$value = explode( '=', $v );
+				
+				//echo '<pre>' . print_r( $value, true ) . '</pre>';
+				
+				$settings[$value[0]] = $value[1];
+			}
+			//echo '<pre>' . print_r( $settings, true ) . '</pre>';		
+			
+			$this->update_settings( $settings );
+			
+			die();
+		}
+		
+		protected function set_defaults() {
+			$this->settings = array(
+				'name'                    => '',
+				'currency'                => '',
+				'image_url'               => '',
+				'checkout_button_label'   => '',
+				'payment_button_label'    => '',
+				'success_redirect_url'    => '',
+				'disable_success_message' => '',
+				'failure_redirect_url'    => '',
+				'billing'                 => '',
+				'verify_zip'              => '',
+				'enable_remember'         => 1,
+				'disable_css'             => '',
+				'always_enqueue'          => '',
+				'uninstall_save_settings' => 1,
+				'enable_live_key'         => '',
+				'test_secret_key'         => '',
+				'test_publish_key'        => '',
+				'live_secret_key'         => '',
+				'live_publish_key'        => '',
+			);
+		}
+		
+		public function load_template( $file_name, $ext = '.php' ) {
+			include_once( SC_PATH . 'template/' . $file_name . $ext );
+		}
+		
+		public function ajax_save_button( $id, $label ) {
+			echo '<button id="test">' . $label . '</button>';
+		}
+		
+		public function do_ajax_save() {
+			
+			update_option( $this->option, $this->settings );
+		}
+		
+		public function get_settings() {
+			$saved_settings = is_array( get_option( $this->option ) ) ? get_option( $this->option ) : array();
+			
+			return array_merge( $this->settings, $saved_settings );
+		}
+		
+		public function update_settings( $settings ) {
 			$this->settings = $settings;
 			
-			add_action( 'admin_init', array( $this, 'register_settings' ) );
+			update_option( $this->option, $this->settings );
 		}
 		
-		/*
-		 * This method returns the SAVED Settings
-		 * 
-		 * It will loop through all the settings options and return only those that are not empty.
-		 * 
-		 * Returns as an array. 
-		 * 
-		 * @since 1.0.0
-		 */
-		public function get_settings() {
+		public function get_tabs() {
+			
+			$this->tabs = array(
+				'keys'    => __( 'Stripe Keys', 'sc' ),
+				'default' => __( 'Default Settings', 'sc' ),
+			);
+			
+			return $this->tabs;
+		}
+		
+		public function get_setting_value( $id ) {
+			$settings = is_array( get_option( $this->option ) ) ? get_option( $this->option ) : array();
+			
+			if( isset( $settings[$id] ) && ! empty( $settings[$id] ) ) {
+				return $settings[$id];
+			}
+			
+			return '';
+		}
+		
+		public function textbox( $id, $classes = '' ) {
+			
+			$html = '<input type="text" class="' . esc_html( $classes ) . '" name="' . $this->get_setting_id( $id ) . '" id="' . $this->get_setting_id( $id ) . '" value="' . $this->get_setting_value( $id ) . '" />';
+			
+			echo $html;
+		}
+		
+		public function get_setting_id( $id ) {
+			return $this->option . '_' . $id;
+		}
+		
+		public function load_tabs( $tabs = array() ) {
+			
+			if( empty( $tabs ) ) {
+				$tabs = array( 
+					'keys' => array(
+								'label'    => __( 'Stripe Keys', 'sc' ),
+								'template' => 'keys'
+							),
+					'default' => array(
+								'label'    => __( 'Default Settings', 'sc' ),
+								'template' => 'default',
+							),
+				);
+			}
+			
+			$this->tabs = $tabs;
+		}
 
-			foreach( $this->settings as $setting => $options ) {
-				$section = $this->prefix . '_' . $setting;
-				
-				$current = is_array( get_option( $section ) ) ? get_option( $section )  : array();
-				
-				// Loop through and add only the options that aren't empty
-				foreach( $current as $k => $v ) {
-					if( ! empty( $v ) ) {
-						$this->saved_settings[$k] = $v;
-					}
-				}
-			}
-			
-			return $this->saved_settings;
-		}
-		
-		/**
-		 * Get a specific setting
-		 * 
-		 * @param string $setting
-		 * @return Returns the setting if it exists and false if it doesn't
-		 * 
-		 * @since 1.0.0
-		 */
-		public function get_setting( $setting ) {
-			if ( isset( $this->saved_settings[$setting] ) ) {
-				return $this->saved_settings[$setting];
-			}
-			
-			return false;
-		}
-		
-		
 		/**
 		 * Sorts the settings based on the 'sort' argument
 		 * 
@@ -98,95 +185,5 @@ if( ! class_exists( 'MM_Settings' ) ) {
 				} );
 			}
 		}
-		
-		
-		/**
-		 * Method to loop through all of the passed in settings array args and connect it with the WP Settings API
-		 * 
-		 * @since 1.0.0
-		 */
-		public function register_settings() {
-			
-			// Sort first
-			$this->sort_settings();
-
-			foreach( $this->settings as $setting => $options ) {
-				
-				$section = $this->prefix . '_' . $setting;
-				
-				$this->settings_sections[] = $section;
-				
-				// First if the options do not exist then create them
-				if ( false === get_option( $section ) ) {
-					add_option( $section );
-				}
-				
-				// Second, we add the settings section
-				add_settings_section(
-					$section,
-					$options['section_name'],
-					'__return_false',
-					$section
-				);
-				
-				unset( $options['section_name'] );
-				
-				// Third we load all the settings options for this section
-				foreach ( $options as $option => $v ) {
-
-					add_settings_field(
-						$section . '[' . $v['id'] . ']',
-						$v['name'],
-						method_exists( new MM_Settings_Callbacks( $this ), $v['type'] . '_callback' ) ? array( new MM_Settings_Callbacks( $this ), $v['type'] . '_callback' ) : array( new MM_Settings_Callbacks( $this ), 'missing_callback' ),
-						$section,
-						$section,
-						array_merge( $this->get_settings_field_args( $v, $setting ), array( 'callback' => $v['type'] . '_callback', 'prefix' => $this->prefix . '_' ) )
-					);
-				}
-				
-				// Fourth we register the settings so we don't get issues when saving
-				register_setting( $section, $section, array( $this, 'sanitize_settings' ) );
-			}
-		}
-		
-		/*
-		 * Return generic add_settings_field $args parameter array.
-		 *
-		 * @param   string  $option   Single settings option key.
-		 * @param   string  $section  Section of settings apge.
-		 * @return  array             $args parameter to use with add_settings_field call.
-		 * 
-		 * @since 1.0.0
-		 */
-		public function get_settings_field_args( $option, $section ) {
-			$settings_args = array(
-				'id'      => $option['id'],
-				'desc'    => $option['desc'],
-				'name'    => $option['name'],
-				'section' => $section,
-				'size'    => isset( $option['size'] ) ? $option['size'] : null,
-				'options' => isset( $option['options'] ) ? $option['options'] : '',
-				'std'     => isset( $option['std'] ) ? $option['std'] : '',
-				'product' => isset( $option['product'] ) ? $option['product'] : ''
-			);
-
-			// Link label to input using 'label_for' argument if text, textarea, password, select, or variations of.
-			// Just add to existing settings args array if needed.
-			if ( in_array( $option['type'], array( 'text', 'select', 'textarea', 'password', 'number' ) ) ) {
-				$settings_args = array_merge( $settings_args, array( 'label_for' => $this->prefix . '_' . $section . '[' . $option['id'] . ']' ) );
-			}
-
-			return $settings_args;
-		}
-		
-		/*
-		 * Method to sanitize any input
-		 * 
-		 * @since 1.0.0
-		 */
-		public function sanitize_settings( $input ) {
-			return $input;
-		}
 	}
-	
 }

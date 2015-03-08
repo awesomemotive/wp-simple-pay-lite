@@ -15,8 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 include_once( 'admin-helper-functions.php' );
 
-global $sc_options;
+global $sc_options, $settings;
 $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
+
+
+					
+
 
 ?>
 
@@ -30,34 +34,20 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 			<h2 class="nav-tab-wrapper">
 				<?php
 					
-					$sc_tabs = sc_get_admin_tabs();
 					
-					foreach( $sc_tabs as $key => $value ) {
+					foreach( $settings->get_tabs() as $key => $value) {
 				?>
-						<a href="<?php echo add_query_arg( 'tab', $key, remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
-							<?php echo $active_tab == $key ? 'nav-tab-active' : ''; ?>"><?php echo $value ?></a>
+						<a href="#<?php echo $key; ?>" class="nav-tab sc-nav-tab" data-tab-id="<?php echo $key; ?>"><?php echo $value; ?></a>
 				<?php
 					}
 				?>
 			</h2>
 
 			<div id="tab_container">
-				<form method="post" action="options.php">
-					<?php
-						$sc_tabs = sc_get_admin_tabs();
-						
-						foreach( $sc_tabs as $key => $value ) {
-							if ( $active_tab == $key ) {
-								settings_fields( 'sc_settings_' . $key );
-								do_settings_sections( 'sc_settings_' . $key );
-								
-								do_action( 'sc_settings_' . $key );
-								
-								submit_button();
-							}
-						}
-					?>
-				</form>
+				<?php
+					$settings->load_template( 'default' );
+					$settings->load_template( 'keys' );
+				?>
 			</div><!-- #tab_container-->
 		</div><!-- #sc-settings-content -->
 

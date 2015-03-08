@@ -115,16 +115,21 @@ class Stripe_Checkout {
 		global $sc_options;
 		
 		//include_once( SC_PATH . 'includes/abstract-register-settings.php' );
-		include_once( SC_PATH . 'includes/class-mm-settings.php' );
-		include_once( SC_PATH . 'includes/class-mm-settings-callbacks.php' );
-		include_once( SC_PATH . 'includes/class-sc-settings-extension.php' );
+		//include_once( SC_PATH . 'includes/class-mm-settings.php' );
+		//include_once( SC_PATH . 'includes/class-mm-settings-callbacks.php' );
+		//include_once( SC_PATH . 'includes/class-sc-settings-extension.php' );
 		
-		include_once( SC_PATH . 'includes/settings.php' );
+		//include_once( SC_PATH . 'includes/settings.php' );
 
-		$mm_settings = new MM_Settings( 'sc', $sc_settings );
+		//$mm_settings = new MM_Settings( 'sc', $sc_settings );
 		
 		
-		$sc_options = $mm_settings->get_settings();
+		//$sc_options = $mm_settings->get_settings();
+		include_once( SC_PATH . 'includes/class-mm-settings.php' );
+		
+		global $settings;
+		
+		$settings = new MM_Settings( 'sc_settings' );
 		
 	}
 	
@@ -236,6 +241,8 @@ class Stripe_Checkout {
 			wp_enqueue_style( $this->plugin_slug .'-toggle-switch', SC_URL . 'admin/css/toggle-switch.css', array(), $this->version );
 			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array( $this->plugin_slug .'-toggle-switch' ), $this->version );
 		}
+		
+		wp_enqueue_script( $this->plugin_slug . '-admin', SC_URL . 'admin/js/admin.js', array( 'jquery' ), $this->version, true );
 	}
 	
 	/**
