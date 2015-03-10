@@ -84,7 +84,7 @@ function sc_charge_card() {
 
 			$failed = false;
 
-		} catch( \Stripe\CardError $e) {
+		} catch( \Stripe\Error\Card $e ) {
 
 			// Catch Stripe errors
 			$redirect = $fail_redirect;
