@@ -32,7 +32,7 @@ function sc_set_stripe_key( $test_mode = 'false' ) {
 		$key = ( ! empty( $sc_options['test_secret_key'] ) ? $sc_options['test_secret_key'] : '' );
 	}
 
-	Stripe::setApiKey( $key );
+	\Stripe\Stripe::setApiKey( $key );
 }
 
 /**
@@ -63,14 +63,14 @@ function sc_charge_card() {
 		sc_set_stripe_key( $test_mode );
 
 		// Create new customer
-		$new_customer = Stripe_Customer::create( array(
+		$new_customer = \Stripe\Customer::create( array(
 			'email' => $_POST['stripeEmail'],
 			'card'  => $token
 		));
 
 		// Create the charge on Stripe's servers - this will charge the user's default card
 		try {
-			$charge = Stripe_Charge::create( array(
+			$charge = \Stripe\Charge::create( array(
 					'amount'      => $amount, // amount in cents, again
 					'currency'    => $currency,
 					'customer'    => $new_customer['id'],
@@ -84,7 +84,7 @@ function sc_charge_card() {
 
 			$failed = false;
 
-		} catch(Stripe_CardError $e) {
+		} catch( \Stripe\CardError $e) {
 
 			// Catch Stripe errors
 			$redirect = $fail_redirect;
@@ -144,7 +144,7 @@ function sc_show_payment_details( $content ) {
 				$charge_id = esc_html( $_GET['charge'] );
 
 				// https://stripe.com/docs/api/php#charges
-				$charge_response = Stripe_Charge::retrieve( $charge_id );
+				$charge_response = \Stripe\Charge::retrieve( $charge_id );
 
 				$html = '<div class="sc-payment-details-wrap">' . "\n";
 
