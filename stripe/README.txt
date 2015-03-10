@@ -120,6 +120,7 @@ There are three ways to install this plugin.
 * Added function to remove unwanted formatting in shortcodes.
 * Cleaned up payment success and error details HTML.
 * Fixed duplicate payment success and failure output for rare themes that render multiple post content areas.
+* Added id attribute to shortcode to allow custom form id's.
 
 = 1.2.9 =
 
