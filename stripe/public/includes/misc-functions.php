@@ -41,77 +41,75 @@ function sc_set_stripe_key( $test_mode = 'false' ) {
  * @since 1.0.0
  */
 function sc_charge_card() {
-	if( isset( $_POST['stripeToken'] ) ) {
 
-		$redirect      = $_POST['sc-redirect'];
-		$fail_redirect = $_POST['sc-redirect-fail'];
+	$redirect      = $_POST['sc-redirect'];
+	$fail_redirect = $_POST['sc-redirect-fail'];
 
-		// Get the credit card details submitted by the form
-		$token       = $_POST['stripeToken'];
-		$amount      = $_POST['sc-amount'];
-		$description = $_POST['sc-description'];
-		$store_name  = $_POST['sc-name'];
-		$currency    = $_POST['sc-currency'];
-		$test_mode   = ( isset( $_POST['sc_test_mode'] ) ? $_POST['sc_test_mode'] : 'false' );
+	// Get the credit card details submitted by the form
+	$token       = $_POST['stripeToken'];
+	$amount      = $_POST['sc-amount'];
+	$description = $_POST['sc-description'];
+	$store_name  = $_POST['sc-name'];
+	$currency    = $_POST['sc-currency'];
+	$test_mode   = ( isset( $_POST['sc_test_mode'] ) ? $_POST['sc_test_mode'] : 'false' );
 
-		$charge = array();
-		$query_args = array();
+	$charge = array();
+	$query_args = array();
 
-		$meta = array();
-		$meta = apply_filters( 'sc_meta_values', $meta );
+	$meta = array();
+	$meta = apply_filters( 'sc_meta_values', $meta );
 
-		sc_set_stripe_key( $test_mode );
+	sc_set_stripe_key( $test_mode );
 
-		// Create new customer
-		$new_customer = \Stripe\Customer::create( array(
-			'email' => $_POST['stripeEmail'],
-			'card'  => $token
-		));
+	// Create new customer
+	$new_customer = \Stripe\Customer::create( array(
+		'email' => $_POST['stripeEmail'],
+		'card'  => $token
+	));
 
-		// Create the charge on Stripe's servers - this will charge the user's default card
-		try {
-			$charge = \Stripe\Charge::create( array(
-					'amount'      => $amount, // amount in cents, again
-					'currency'    => $currency,
-					'customer'    => $new_customer['id'],
-					'description' => $description,
-					'metadata'    => $meta
-				)
-			);
+	// Create the charge on Stripe's servers - this will charge the user's default card
+	try {
+		$charge = \Stripe\Charge::create( array(
+				'amount'      => $amount, // amount in cents, again
+				'currency'    => $currency,
+				'customer'    => $new_customer['id'],
+				'description' => $description,
+				'metadata'    => $meta
+			)
+		);
 
-			// Add Stripe charge ID to querystring.
-			$query_args = array( 'charge' => $charge->id, 'store_name' => urlencode( $store_name ) );
+		// Add Stripe charge ID to querystring.
+		$query_args = array( 'charge' => $charge->id, 'store_name' => urlencode( $store_name ) );
 
-			$failed = false;
+		$failed = false;
 
-		} catch( \Stripe\Error\Card $e ) {
+	} catch( \Stripe\Error\Card $e ) {
 
-			// Catch Stripe errors
-			$redirect = $fail_redirect;
-			
-			$e = $e->getJsonBody();
-			
-			// Add failure indicator to querystring.
-			$query_args = array( 'charge' => $e['error']['charge'], 'charge_failed' => true );
+		// Catch Stripe errors
+		$redirect = $fail_redirect;
 
-			$failed = true;
-		}
+		$e = $e->getJsonBody();
 
-		unset( $_POST['stripeToken'] );
+		// Add failure indicator to querystring.
+		$query_args = array( 'charge' => $e['error']['charge'], 'charge_failed' => true );
 
-		do_action( 'sc_redirect_before' );
-		
-		if( $test_mode == 'true' ) {
-			$query_args['test_mode'] = 'true';
-		}
-		
-		
-		wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
-
-		do_action( 'sc_redirect_after' );
-
-		exit;
+		$failed = true;
 	}
+
+	unset( $_POST['stripeToken'] );
+
+	do_action( 'sc_redirect_before' );
+
+	if( $test_mode == 'true' ) {
+		$query_args['test_mode'] = 'true';
+	}
+
+
+	wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
+
+	do_action( 'sc_redirect_after' );
+
+	exit;
 }
 
 // We only want to run the charge if the Token is set
