@@ -19,20 +19,21 @@
 		});
 		
 		// DO AJAX save?
-		$('#test').click( function( e ) {
+		$('button.ajax_save').click( function( e ) {
 			
-			console.log('clicked');
 			e.preventDefault();
 			
-			var serialized_data = $('#default-settings').serialize();
+			var form_id = $(this).parent( 'form' ).attr('id');
+			console.log( 'Form ID', form_id);
 			
-			console.log( serialized_data );
+			var serialized_data = $('#' + form_id ).serialize();
 			
 			var data = {
 					action: 'sc_button_save',
 					form_data: serialized_data
 				};
 			
+			console.log( 'Serialized Data', serialized_data );
 			console.log( "Ajax URL", ajaxurl );
 
 			$.post( ajaxurl, data, function(response) {

@@ -74,7 +74,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		}
 		
 		public function ajax_save_button( $id, $label ) {
-			echo '<button id="test" class="button-primary">' . $label . '</button>';
+			echo '<button class="ajax_save button-primary">' . $label . '</button>';
 		}
 		
 		public function do_ajax_save() {
@@ -105,7 +105,10 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		}
 		
 		public function get_setting_value( $id ) {
+			
 			$settings = is_array( get_option( $this->option ) ) ? get_option( $this->option ) : array();
+			
+			$this->settings = $settings;
 			
 			if( isset( $settings[$id] ) && ! empty( $settings[$id] ) ) {
 				return $settings[$id];

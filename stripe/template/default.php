@@ -114,9 +114,8 @@
 			<span><?php _e( 'Save your settings when uninstalling this plugin. Useful when upgrading or re-installing.', 'sc' ); ?></span>
 		</div>
 		
-		<div>
-			<?php $settings->ajax_save_button( 'test', 'Click to Save!' ); ?>
-		</div>
+		
+		<?php $settings->ajax_save_button( 'test', 'Click to Save!' ); ?>
 	</form>
 </div>
 
