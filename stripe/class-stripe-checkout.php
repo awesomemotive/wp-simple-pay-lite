@@ -339,11 +339,16 @@ class Stripe_Checkout {
 	public function includes() {
 		
 		global $sc_options;
-		
-		if( ! class_exists( 'Stripe' ) /*&& function_exists( 'curl_version' )*/ ) {
-			require_once( 'libraries/stripe-php/Stripe.php' );
+
+		// TODO Add back to includes() inside class after refactor and not needed in misc-functions.php.
+		// TODO Check for curl -- function_exists( 'curl_version' )
+		// TODO Check for PHP 5.3.3 (or whatever stripe-php currenly requires).
+		/*
+		if ( ! class_exists( 'Stripe' ) ) {
+			require_once( SC_PATH . 'libraries/stripe-php/init.php' );
 		}
-		
+		*/
+
 		// Include any necessary functions
 		include_once( SC_PATH . 'public/includes/misc-functions.php' );
 		

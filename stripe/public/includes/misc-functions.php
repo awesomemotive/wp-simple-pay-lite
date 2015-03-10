@@ -11,6 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Check for and include Stripe PHP library here until we refactor.
+if ( ! class_exists( 'Stripe' ) ) {
+	require_once( SC_PATH . 'libraries/stripe-php/init.php' );
+}
+
 /**
  * Common method to set Stripe API key from options.
  *
