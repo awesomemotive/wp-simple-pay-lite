@@ -37,9 +37,17 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'failure_redirect_url'  => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
 					'prefill_email'         => 'false',
 					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
-					'test_mode'             => 'false'
+					'test_mode'             => 'false',
+					'id'               => null,
 				), $attr, 'stripe' ) );
 	
+	
+	if ( $id === null || empty( $id ) ) {
+		$id = 'sc_checkout_form_' . $uid;
+		
+		// Increment static uid counter
+		$uid++;
+	}
 	
 	// Check if in test mode or live mode
 	if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
@@ -76,7 +84,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 
 	$html  =
 		'<form method="POST" action="" class="sc-checkout-form" ' .
-		'id="sc_checkout_form_' . $uid . '" ' .
+		'id="' . esc_attr( $id ) . '" ' .
 		'data-sc-id="' . $uid . '">';
 	
 	$html .=
@@ -112,9 +120,6 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$html .= apply_filters( 'sc_before_payment_button', $filter_html );
 
 	$html .= '</form>';
-
-	// Increment static uid counter
-	$uid++;
 
 	//Stripe minimum amount allowed.
 	$stripe_minimum_amount = 50;
