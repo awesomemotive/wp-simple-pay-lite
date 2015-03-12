@@ -111,7 +111,7 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.3.0 - TODO =
+= 1.3.0 - March 12, 2015 =
 
 * Added the ability to accept Bitcoin payments.
 * Updated to most recent Stripe PHP library (v2.1.1), which now requires PHP 5.3.3 or higher.
