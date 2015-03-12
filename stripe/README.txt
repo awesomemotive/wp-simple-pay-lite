@@ -121,6 +121,7 @@ There are three ways to install this plugin.
 * Cleaned up payment success and error details HTML.
 * Fixed duplicate payment success and failure output for rare themes that render multiple post content areas.
 * Added id attribute to shortcode to allow custom form id's.
+* Now sanitizes Stripe API keys with invalid copied characters following a space.
 
 = 1.2.9 =
 
