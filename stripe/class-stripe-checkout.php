@@ -21,7 +21,7 @@ class Stripe_Checkout {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.3.0';
+	protected $version = '1.3.0.1';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -344,7 +344,7 @@ class Stripe_Checkout {
 		// TODO Check for curl -- function_exists( 'curl_version' )
 		// TODO Check for PHP 5.3.3 (or whatever stripe-php currenly requires).
 		/*
-		if ( ! class_exists( 'Stripe' ) ) {
+		if ( ! class_exists( 'Stripe\Stripe' ) ) {
 			require_once( SC_PATH . 'libraries/stripe-php/init.php' );
 		}
 		*/

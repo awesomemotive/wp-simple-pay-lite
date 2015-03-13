@@ -111,6 +111,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.3.0.1 - March 13, 2015 =
+
+* Corrected the Stripe PHP class check to include new v2.0.0+ namepace. Should fix issues when running other Stripe-related plugins that utilize a version of the Stripe PHP library less than v2.0.0.
+
 = 1.3.0 - March 12, 2015 =
 
 * Added the ability to accept Bitcoin payments.
