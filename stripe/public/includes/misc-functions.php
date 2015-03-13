@@ -11,8 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Check for and include Stripe PHP library here until we refactor.
-if ( ! class_exists( 'Stripe' ) ) {
+// Check for and include Stripe PHP (v2.0.0 +) library here until we refactor.
+// Note plugins using Stripe PHP v1.18.0 or before can run alongside this plugin since the class namespace was updated.
+// Was 'Stripe', now 'Stripe\Stripe'.
+
+if ( ! class_exists( 'Stripe\Stripe' ) ) {
 	require_once( SC_PATH . 'libraries/stripe-php/init.php' );
 }
 
