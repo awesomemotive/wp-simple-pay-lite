@@ -114,6 +114,12 @@ function sc_register_settings() {
 					sprintf( '<a href="%s" target="_blank">%s</a>', 'https://stripe.com/checkout/info', __( 'See how it works', 'sc' ) ) . '.',
 				'type' => 'checkbox'
 			),
+			'use_bitcoin' => array(
+				'id'   => 'use_bitcoin',
+				'name' => __( 'Enable Bitcoin', 'sc' ),
+				'desc' => sprintf( __( 'Enable accepting <a href="%s" target="_blank">Bitcoin</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/bitcoin' ),
+				'type' => 'checkbox'
+			),
 			'disable_css' => array(
 				'id'   => 'disable_css',
 				'name' => __( 'Disable Plugin CSS', 'sc' ),
