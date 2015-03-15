@@ -1,4 +1,4 @@
-<div class="sc-admin-hidden" id="keys-settings-tab">
+<div class="tab-content" id="keys-settings-tab">
 	<form method="post" action="#license-settings" id="license-settings">
 		<?php
 			//$settings = new MM_Settings( 'sc_settings' );

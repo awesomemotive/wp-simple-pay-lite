@@ -1,4 +1,4 @@
-<div class="tab-content" id="default-settings-tab">
+<div class="sc-admin-hidden" id="default-settings-tab">
 	<form method="post" action="#default-settings" id="default-settings">
 		<?php
 			global $settings;
