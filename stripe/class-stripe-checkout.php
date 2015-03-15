@@ -126,10 +126,11 @@ class Stripe_Checkout {
 		
 		//$sc_options = $mm_settings->get_settings();
 		include_once( SC_PATH . 'includes/class-mm-settings.php' );
+		include_once( SC_PATH . 'includes/class-mm-settings-output.php' );
 		
 		global $settings;
 		
-		$settings = new MM_Settings( 'sc_settings' );
+		$settings = new MM_Settings_Output( 'sc_settings' );
 		
 	}
 	

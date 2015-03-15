@@ -73,9 +73,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			include_once( SC_PATH . 'template/' . $file_name . $ext );
 		}
 		
-		public function ajax_save_button( $id, $label ) {
-			echo '<button class="ajax_save button-primary">' . $label . '</button>';
-		}
+		
 		
 		public function do_ajax_save() {
 			
@@ -117,12 +115,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			return '';
 		}
 		
-		public function textbox( $id, $classes = '' ) {
-			
-			$html = '<input type="text" class="' . esc_html( $classes ) . '" name="' . $this->get_setting_id( $id ) . '" id="' . $this->get_setting_id( $id ) . '" value="' . $this->get_setting_value( $id ) . '" />';
-			
-			echo $html;
-		}
+		
 		
 		public function get_setting_id( $id ) {
 			return $this->option . '_' . $id;
