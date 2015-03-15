@@ -111,13 +111,17 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
+= 1.3.1 - TODO =
+
+* Added the ability to accept Bitcoin payments via default settings.
+
 = 1.3.0.1 - March 13, 2015 =
 
 * Corrected the Stripe PHP class check to include new v2.0.0+ namepace. Should fix issues when running other Stripe-related plugins that utilize a version of the Stripe PHP library less than v2.0.0.
 
 = 1.3.0 - March 12, 2015 =
 
-* Added the ability to accept Bitcoin payments.
+* Added the ability to accept Bitcoin payments via shortcode (bitcoin="true").
 * Updated to most recent Stripe PHP library (v2.1.1), which now requires PHP 5.3.3 or higher.
 * Scripts and styles now only enqueued on posts and pages where required.
 * Added option to always enqueue scripts and styles on every post and page.
