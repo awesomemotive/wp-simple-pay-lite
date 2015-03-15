@@ -28,7 +28,7 @@ class MM_Settings_Output extends MM_Settings {
 	 */
 	public function checkbox( $id, $classes = '' ) {
 		
-		$value = $this->get_setting_id( $id );
+		$value = $this->get_setting_value( $id );
 		
 		$checked = ( ! empty( $value ) ? checked( 1, $value, false ) : '' );
 		

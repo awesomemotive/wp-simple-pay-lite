@@ -24,17 +24,24 @@
 			e.preventDefault();
 			
 			var form_id = $(this).parent( 'form' ).attr('id');
-			console.log( 'Form ID', form_id);
 			
 			var serialized_data = $('#' + form_id ).serialize();
 			
+			var checkboxes = '';
+			
+			// Loop through checkboxes and save as 0 if they are unchecked. Need to do this for ease with saving settings in WP later.
+			$('input[type=checkbox]').each(function() {
+				if (!this.checked) {
+					checkboxes += '&' + this.name + '=0';
+				}
+			});
+			
+			serialized_data += checkboxes;
+			
 			var data = {
 					action: 'sc_button_save',
-					form_data: serialized_data
+					form_data: encodeURIComponent( serialized_data )
 				};
-			
-			console.log( 'Serialized Data', serialized_data );
-			console.log( "Ajax URL", ajaxurl );
 
 			$.post( ajaxurl, data, function(response) {
 				console.log( response );

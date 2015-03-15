@@ -10,7 +10,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		public static $class_version = '1.0.0';
 		
 		// class variables
-		protected $settings;
+		protected $settings = array();
 		protected $option;
 		
 		public $tabs;
@@ -33,7 +33,10 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			
 			$settings = array();
 			
-			$saved = explode( '&', $_POST['form_data'] );
+			// Remove the '+' signs for strings with spaces
+			$saved = str_replace( '%2B', ' ', $_POST['form_data'] );
+			
+			$saved = explode( '&', urldecode( $saved ) );
 			
 			foreach( $saved as $k => $v ) {
 				$value = explode( '=', $v );
@@ -73,23 +76,30 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			include_once( SC_PATH . 'template/' . $file_name . $ext );
 		}
 		
-		
-		
-		public function do_ajax_save() {
-			
-			update_option( $this->option, $this->settings );
-		}
-		
 		public function get_settings() {
 			$saved_settings = is_array( get_option( $this->option ) ) ? get_option( $this->option ) : array();
 			
 			return array_merge( $this->settings, $saved_settings );
 		}
 		
-		public function update_settings( $settings ) {
-			$this->settings = $settings;
+		public function update_settings( $settings = array() ) {
+			$this->settings = get_option( $this->option );
+			
+			$this->settings = array_merge( $this->settings, $settings );
+			
+			foreach( $this->settings as $setting ) {
+				if ( empty( $setting ) ) {
+					unset( $this->settings[$setting] );
+				}
+			}
 			
 			update_option( $this->option, $this->settings );
+		}
+		
+		public function print_settings() {
+			$settings = get_option( $this->option );
+			
+			echo '<pre>' . print_r( $settings, true ) . '</pre>';
 		}
 		
 		public function get_tabs() {
@@ -108,14 +118,14 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			
 			$this->settings = $settings;
 			
+			$id = $this->get_setting_id( $id );
+			
 			if( isset( $settings[$id] ) && ! empty( $settings[$id] ) ) {
 				return $settings[$id];
 			}
 			
 			return '';
 		}
-		
-		
 		
 		public function get_setting_id( $id ) {
 			return $this->option . '_' . $id;
