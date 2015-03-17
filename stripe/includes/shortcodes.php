@@ -49,6 +49,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		$uid++;
 	}
 	
+	$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : $test_mode );
+	
 	// Check if in test mode or live mode
 	if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
 		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );

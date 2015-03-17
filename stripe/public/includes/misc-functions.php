@@ -27,7 +27,7 @@ if ( ! class_exists( 'Stripe\Stripe' ) ) {
 function sc_set_stripe_key( $test_mode = 'false' ) {
 	global $sc_options;
 	$key = '';
-
+	
 	// Check first if in live or test mode.
 	if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
 		$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
