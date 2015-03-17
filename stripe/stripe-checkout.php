@@ -40,9 +40,9 @@ if( ! defined( 'SC_URL' ) ) {
 	define( 'SC_URL', plugins_url( '', __FILE__ ) . '/' );
 }
 
-require_once( plugin_dir_path( __FILE__ ) . 'class-stripe-checkout.php' );
+require_once( SC_PATH . 'class-stripe-checkout.php' );
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
-register_activation_hook( __FILE__, array( 'Stripe_Checkout', 'activate' ) );
+register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
 
 Stripe_Checkout::get_instance();
