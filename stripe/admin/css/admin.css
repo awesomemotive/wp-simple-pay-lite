@@ -59,3 +59,18 @@
 	display: block;
 	margin-top: 15px;
 }
+
+.ajax_save {
+	display: block;
+	margin-top: 15px!important;
+}
+
+.sc-ajax-saved {
+	display: block;
+	border: 1px solid #3B993A;
+	background: #DEFFDD;
+	font-weight: bold;
+	margin-top: 5px;
+	padding: 3px;
+	width: 200px;
+}

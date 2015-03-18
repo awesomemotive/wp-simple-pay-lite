@@ -23,6 +23,8 @@
 			
 			e.preventDefault();
 			
+			var button = $(this);
+			
 			var form_id = $(this).parent( 'form' ).attr('id');
 			
 			var serialized_data = $('#' + form_id ).serialize();
@@ -45,6 +47,11 @@
 
 			$.post( ajaxurl, data, function(response) {
 				console.log( response );
+				// Create a new element to show the save message
+				var save_message = $('<div class="sc-ajax-saved">Settings have been saved!</div>');
+				button.after( save_message );
+				$('.sc-ajax-saved').fadeOut( 5000 );
+				$('body').remove( '.sc-ajax-saved' );
 			});
 		});
 		
