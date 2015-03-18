@@ -7,8 +7,7 @@ class MM_Settings_Output extends MM_Settings {
 		parent::__construct( $option );
 	}
 	
-	public function ajax_save_button( $id, $label ) {
-			//echo 'HIT ME';
+	public function ajax_save_button( $label ) {
 			echo '<button class="ajax_save button-primary">' . $label . '</button>';
 		}
 	

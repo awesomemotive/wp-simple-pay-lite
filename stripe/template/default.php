@@ -109,7 +109,7 @@
 		</div>
 		
 		
-		<?php $settings->ajax_save_button( 'test', 'Click to Save!' ); ?>
+		<?php $settings->ajax_save_button( 'Save Settings' ); ?>
 	</form>
 </div>
 

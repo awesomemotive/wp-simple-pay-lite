@@ -1,8 +1,7 @@
 <div class="tab-content" id="keys-settings-tab">
 	<form method="post" action="#license-settings" id="license-settings">
 		<?php
-			//$settings = new MM_Settings( 'sc_settings' );
-		global $settings;
+			global $settings;
 		?>
 		
 		<div>	
@@ -29,6 +28,6 @@
 			<?php $settings->textbox( 'live_publish_key', 'regular-text' ); ?>
 		</div>
 
-		<?php $settings->ajax_save_button( 'test', 'Click to Save!' ); ?>
+		<?php $settings->ajax_save_button( 'Save Settings' ); ?>
 	</form>
 </div>
