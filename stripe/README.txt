@@ -114,6 +114,7 @@ There are three ways to install this plugin.
 = 1.3.1 - TODO =
 
 * Added the ability to accept Bitcoin payments via default settings.
+* Now checks that host is running PHP 5.3.3 or higher using the WPupdatePHP library.
 
 = 1.3.0.1 - March 13, 2015 =
 
