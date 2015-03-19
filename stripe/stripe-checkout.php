@@ -45,4 +45,20 @@ require_once( SC_PATH . 'class-stripe-checkout.php' );
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
 
-Stripe_Checkout::get_instance();
+// Check for required and recommended versions of PHP before loading plugin.
+// https://github.com/WPupdatePHP/wp-update-php
+require_once( SC_PATH . 'libraries/WPUpdatePhp.php' );
+
+$updatePhp = new WPUpdatePhp( '5.3.3', '5.4' );
+$updatePhp->set_plugin_name( 'Simple Stripe Checkout' );
+
+// Show admin notice and don't execute rest of plugin if it doesn't meet required version of PHP.
+// Note the plugin will still be active.
+if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
+
+	// TODO Uncomment recommended admin notice once it can be hidden by user.
+	// Show admin notice for recommended version of PHP, but if required version still met continue loading plugin.
+	//$updatePhp->does_it_meet_recommended_php_version( PHP_VERSION );
+
+	Stripe_Checkout::get_instance();
+}
