@@ -6,7 +6,7 @@
 		
 		<div>
 			<label for="<?php echo $settings->get_setting_id( 'enable_live_key' ); ?>">Transaction Mode</label>
-			<?php $settings->toggle_control( 'enable_live_key' ); ?>
+			<?php $settings->toggle_control( 'enable_live_key', array( __( 'Test', 'sc' ), __( 'Live', 'sc' ) ) ); ?>
 		</div>
 		
 		<div>
