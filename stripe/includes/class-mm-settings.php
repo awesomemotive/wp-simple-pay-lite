@@ -126,7 +126,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 				return $settings[$id];
 			}
 			
-			return '';
+			return null;
 		}
 		
 		public function get_setting_id( $id ) {

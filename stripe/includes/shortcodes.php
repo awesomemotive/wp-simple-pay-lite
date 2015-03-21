@@ -18,7 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function sc_stripe_shortcode( $attr, $content = null ) {
 	
-	global $sc_options;
+	//global $sc_options;
+	
+	global $settings;
 	
 	STATIC $uid = 1;
 	
@@ -41,16 +43,18 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	
 	// Check if in test mode or live mode
-	if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
-		$data_key = ( ! empty( $sc_options['live_publish_key'] ) ? $sc_options['live_publish_key'] : '' );
+	if( $settings->get_setting_value( 'enable_live_key' ) == 0 || $test_mode == 'true' ) {
+		// Test mode
+		$data_key = ( $settings->get_setting_value( 'test_publish_key' ) !== null ? $settings->get_setting_value( 'test_publish_key' ) : '' );
 		
-		if( empty( $sc_options['live_secret_key'] ) ) {
+		if( null === $settings->get_setting_value( 'test_secret_key' ) ) {
 			$data_key = '';
 		}
 	} else {
-		$data_key = ( ! empty( $sc_options['test_publish_key'] ) ? $sc_options['test_publish_key'] : '' );
+		// Live mode
+		$data_key = ( $settings->get_setting_value( 'live_publish_key' ) !== null ? $settings->get_setting_value( 'live_publish_key' ) : '' );
 		
-		if( empty( $sc_options['test_secret_key'] ) ) {
+		if( null === $settings->get_setting_value( 'live_secret_key' ) ) {
 			$data_key = '';
 		}
 	}
