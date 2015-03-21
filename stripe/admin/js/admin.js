@@ -23,6 +23,8 @@
 			
 			e.preventDefault();
 			
+			$(this).attr( 'disabled', true );
+			
 			var button = $(this);
 			
 			var form_id = $(this).parent( 'form' ).attr('id');
@@ -52,6 +54,7 @@
 				button.after( save_message );
 				$('.sc-ajax-saved').fadeOut( 5000 );
 				$('body').remove( '.sc-ajax-saved' );
+				button.attr( 'disabled', false );
 			});
 		});
 		
