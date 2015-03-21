@@ -127,10 +127,12 @@ class Stripe_Checkout {
 		//$sc_options = $mm_settings->get_settings();
 		include_once( SC_PATH . 'includes/class-mm-settings.php' );
 		include_once( SC_PATH . 'includes/class-mm-settings-output.php' );
+		include_once( SC_PATH . 'includes/class-mm-settings-extended.php' );
 		
 		global $settings;
 		
-		$settings = new MM_Settings_Output( 'sc_settings' );
+		// We load the exteded class here so that it will load all of the class functions all the way back to the base
+		$settings = new MM_Settings_Extended( 'sc_settings' );
 		
 	}
 	
