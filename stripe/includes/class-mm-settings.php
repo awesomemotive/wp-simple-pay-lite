@@ -72,6 +72,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			);
 		}
 		
+		// TODO: make less specific
 		public function load_template( $file_name, $ext = '.php' ) {
 			include_once( SC_PATH . 'template/' . $file_name . $ext );
 		}
@@ -102,6 +103,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			echo '<pre>' . print_r( $settings, true ) . '</pre>';
 		}
 		
+		// TODO: make less specific
 		public function get_tabs() {
 			
 			$this->tabs = array(
@@ -131,6 +133,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			return $this->option . '_' . $id;
 		}
 		
+		// TODO: Make less specific
 		public function load_tabs( $tabs = array() ) {
 			
 			if( empty( $tabs ) ) {
