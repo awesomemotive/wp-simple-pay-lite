@@ -89,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="postbox-nobg">
 		<div class="inside centered">
 			<a href="https://stripe.com/" target="_blank">
-				<img src="<?php echo SC_PLUGIN_URL; ?>assets/powered-by-stripe.png" />
+				<img src="<?php echo SC_IMG_PATH; ?>powered-by-stripe.png" />
 			</a>
 		</div>
 	</div>

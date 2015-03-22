@@ -80,7 +80,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		
 		// TODO: make less specific
 		public function load_template( $file_name, $ext = '.php' ) {
-			include_once( SC_PATH . 'template/' . $file_name . $ext );
+			include_once( SC_VIEWS_PATH . 'template-' . $file_name . $ext );
 		}
 		
 		public function get_settings() {

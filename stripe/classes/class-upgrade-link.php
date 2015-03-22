@@ -45,8 +45,8 @@ class Stripe_Checkout_Upgrade_Link {
 	}
 	
 	public function load_scripts() {
-		wp_enqueue_style( $this->plugin_slug .'-upgrade-link', SC_URL . 'admin/css/upgrade-link.css', array(), $this->version );
-		wp_enqueue_script( $this->plugin_slug . '-upgrade-link', SC_URL . 'admin/js/upgrade-link.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_style( $this->plugin_slug .'-upgrade-link', SC_CSS_PATH . 'admin-upgrade-link.css', array(), $this->version );
+		wp_enqueue_script( $this->plugin_slug . '-upgrade-link', SC_JS_PATH. 'admin-upgrade-link.js', array( 'jquery' ), $this->version, true );
 	}
 	
 	/**

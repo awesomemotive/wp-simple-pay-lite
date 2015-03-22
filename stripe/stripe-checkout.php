@@ -28,19 +28,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! defined( 'SC_MAIN_FILE' ) ) {
-	define( 'SC_MAIN_FILE', __FILE__ );
-}
-
-if( ! defined( 'SC_PATH' ) ) {
+if ( ! defined( 'SC_PATH' ) ) {
 	define( 'SC_PATH', plugin_dir_path( __FILE__ ) );
 }
 
-if( ! defined( 'SC_URL' ) ) {
-	define( 'SC_URL', plugins_url( '', __FILE__ ) . '/' );
+if ( ! defined( 'SC_CLASS_PATH' ) ) {
+	define( 'SC_CLASS_PATH', plugin_dir_path( __FILE__ ) . 'classes/' );
 }
 
-require_once( plugin_dir_path( __FILE__ ) . 'class-stripe-checkout.php' );
+if ( ! defined( 'SC_CSS_PATH' ) ) {
+	define( 'SC_CSS_PATH', plugins_url( '', __FILE__ ) . '/assets/css/' );
+}
+
+if ( ! defined( 'SC_JS_PATH' ) ) {
+	define( 'SC_JS_PATH', plugins_url( '', __FILE__ ) . '/assets/js/' );
+}
+
+if ( ! defined( 'SC_IMG_PATH' ) ) {
+	define( 'SC_IMG_PATH', plugins_url( '', __FILE__ ) . '/assets/img/' );
+}
+
+if ( ! defined( 'SC_INCLUDES_PATH' ) ) {
+	define( 'SC_INCLUDES_PATH', plugin_dir_path( __FILE__ ) . 'includes/' );
+}
+
+if ( ! defined( 'SC_LANGUAGES_PATH' ) ) {
+	define( 'SC_LANGUAGES_PATH', plugin_dir_path( __FILE__ ) . 'languages/' );
+}
+
+if ( ! defined( 'SC_LIBRARIES_PATH' ) ) {
+	define( 'SC_LIBRARIES_PATH', plugin_dir_path( __FILE__ ) . 'libraries/' );
+}
+
+if ( ! defined( 'SC_VIEWS_PATH' ) ) {
+	define( 'SC_VIEWS_PATH', plugin_dir_path( __FILE__ ) . 'views/' );
+}
+
+require_once( SC_CLASS_PATH . 'class-stripe-checkout.php' );
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( __FILE__, array( 'Stripe_Checkout', 'activate' ) );

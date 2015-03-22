@@ -125,9 +125,9 @@ class Stripe_Checkout {
 		
 		
 		//$sc_options = $mm_settings->get_settings();
-		include_once( SC_PATH . 'includes/class-mm-settings.php' );
-		include_once( SC_PATH . 'includes/class-mm-settings-output.php' );
-		include_once( SC_PATH . 'includes/class-mm-settings-extended.php' );
+		include_once( SC_CLASS_PATH . 'class-mm-settings.php' );
+		include_once( SC_CLASS_PATH . 'class-mm-settings-output.php' );
+		include_once( SC_CLASS_PATH . 'class-mm-settings-extended.php' );
 		
 		global $settings;
 		
@@ -163,7 +163,7 @@ class Stripe_Checkout {
 	 */
 	function admin_upgrade_link() {
 		if( is_admin() ) {
-			include_once( SC_PATH . 'admin/includes/class-upgrade-link.php' );
+			include_once( SC_CLASS_PATH . 'class-upgrade-link.php' );
 			
 			Stripe_Checkout_Upgrade_Link::get_instance();
 		}
@@ -229,7 +229,7 @@ class Stripe_Checkout {
 		global $sc_options;
 		
 		if( empty( $sc_options['disable_css'] ) ) {
-			wp_register_style( $this->plugin_slug . '-public', SC_URL . 'public/css/public.css', array(), $this->version );
+			wp_register_style( $this->plugin_slug . '-public', SC_CSS_PATH . 'public-main.css', array(), $this->version );
 		}
 	}
 
@@ -241,11 +241,11 @@ class Stripe_Checkout {
 	public function enqueue_admin_styles() {
 
 		if ( $this->viewing_this_plugin() ) {
-			wp_enqueue_style( $this->plugin_slug .'-toggle-switch', SC_URL . 'admin/css/toggle-switch.css', array(), $this->version );
-			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_URL . 'admin/css/admin.css', array( $this->plugin_slug .'-toggle-switch' ), $this->version );
+			wp_enqueue_style( $this->plugin_slug .'-toggle-switch', SC_CSS_PATH . 'toggle-switch.css', array(), $this->version );
+			wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_CSS_PATH . 'admin-main.css', array( $this->plugin_slug .'-toggle-switch' ), $this->version );
 		}
 		
-		wp_enqueue_script( $this->plugin_slug . '-admin', SC_URL . 'admin/js/admin.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_slug . '-admin', SC_JS_PATH . 'admin-main.js', array( 'jquery' ), $this->version, true );
 	}
 	
 	/**
@@ -258,9 +258,9 @@ class Stripe_Checkout {
 		$required_wp_version = '3.6.1';
 		
 		if ( version_compare( $wp_version, $required_wp_version, '<' ) ) {
-			deactivate_plugins( SC_MAIN_FILE ); 
-			wp_die( sprintf( __( $this->get_plugin_title() . ' requires WordPress version <strong>' . $required_wp_version . '</strong> to run properly. ' .
-				'Please update WordPress before reactivating this plugin. <a href="%s">Return to Plugins</a>.', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
+			//deactivate_plugins( SC_MAIN_FILE ); 
+			//wp_die( sprintf( __( $this->get_plugin_title() . ' requires WordPress version <strong>' . $required_wp_version . '</strong> to run properly. ' .
+			//	'Please update WordPress before reactivating this plugin. <a href="%s">Return to Plugins</a>.', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
 		}
 	}
 	
@@ -305,7 +305,7 @@ class Stripe_Checkout {
 		load_plugin_textdomain(
 			'sc',
 			false,
-			dirname( plugin_basename( SC_MAIN_FILE ) ) . '/languages/'
+			SC_LANGUAGES_PATH
 		);
 
 	}
@@ -350,7 +350,7 @@ class Stripe_Checkout {
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' ),
-			plugins_url( '/assets/icon-16x16.png', __FILE__ )
+			SC_IMG_PATH . 'icon-16x16.png'
 		);
 	}
 
@@ -360,7 +360,7 @@ class Stripe_Checkout {
 	 * @since    1.0.0
 	 */
 	public function display_plugin_admin_page() {
-		include_once( SC_PATH . 'admin/views/admin.php' );
+		include_once( SC_VIEWS_PATH . 'admin-page.php' );
 	}
 	
 	/*
@@ -370,15 +370,15 @@ class Stripe_Checkout {
 		// Include classes
 		
 		if( ! class_exists( 'Stripe' ) ) {
-			require_once( 'libraries/stripe-php/Stripe.php' );
+			require_once( SC_LIBRARIES_PATH . 'stripe-php/Stripe.php' );
 		}
 		
 		if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
-			include_once( SC_PATH . 'public/includes/class-stripe-checkout-functions.php' );
+			include_once( SC_CLASS_PATH . 'class-stripe-checkout-functions.php' );
 		}
 		
 		if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
-			include_once( SC_PATH . 'public/includes/class-stripe-checkout-misc.php' );
+			include_once( SC_CLASS_PATH . 'class-stripe-checkout-misc.php' );
 		}
 		
 		// Set instances here for loaded classes
@@ -393,7 +393,7 @@ class Stripe_Checkout {
 	 */
 	public function includes() {
 		// Include shortcode functions
-		include_once( SC_PATH . 'includes/shortcodes.php' );
+		include_once( SC_INCLUDES_PATH . 'shortcodes.php' );
 	}
 
 	/**
@@ -468,7 +468,7 @@ class Stripe_Checkout {
 
 		// At this point show install notice. Show it only on the plugin screen.
 		if( get_current_screen()->id == 'plugins' ) {
-			include_once( SC_PATH . 'admin/views/admin-install-notice.php' );
+			include_once( SC_VIEWS_PATH . 'admin-install-notice.php' );
 		}
 	}
 }
