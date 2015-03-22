@@ -1,7 +1,9 @@
 <?php
 
-
-// TODO: Add direct file access check
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if( ! class_exists( 'MM_Settings' ) ) {
 	

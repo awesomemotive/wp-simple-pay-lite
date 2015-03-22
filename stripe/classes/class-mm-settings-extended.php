@@ -1,5 +1,10 @@
 <?php
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if( ! class_exists( 'MM_Settings_Extended' ) ) {
 	class MM_Settings_Extended extends MM_Settings_Output {
 
