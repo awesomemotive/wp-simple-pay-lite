@@ -49,7 +49,7 @@ register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) )
 // https://github.com/WPupdatePHP/wp-update-php
 require_once( SC_PATH . 'libraries/WPUpdatePhp.php' );
 
-$updatePhp = new WPUpdatePhp( '5.3.3', '5.4' );
+$updatePhp = new WPUpdatePhp( '5.3', '5.4' );
 $updatePhp->set_plugin_name( 'Simple Stripe Checkout' );
 
 // Show admin notice and don't execute rest of plugin if it doesn't meet required version of PHP.
