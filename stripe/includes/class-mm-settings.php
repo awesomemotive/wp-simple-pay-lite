@@ -36,7 +36,13 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			// Remove the '+' signs for strings with spaces
 			$saved = str_replace( '%2B', ' ', $_POST['form_data'] );
 			
-			$saved = explode( '&', urldecode( $saved ) );
+			$saved = urldecode( $saved );
+			
+			// Replace [ and ] with an underscore
+			$saved = str_replace( '%5B', '_', $saved );
+			$saved = str_replace( '%5D', '', $saved );
+			
+			$saved = explode( '&', $saved );
 			
 			foreach( $saved as $k => $v ) {
 				$value = explode( '=', $v );
@@ -86,7 +92,11 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		public function update_settings( $settings = array() ) {
 			$this->settings = get_option( $this->option );
 			
-			$this->settings = array_merge( $this->settings, $settings );
+			if( is_array( $this->settings ) ) {
+				$this->settings = array_merge( $this->settings, $settings );
+			} else {
+				$this->settings = $settings;
+			}
 			
 			foreach( $this->settings as $setting ) {
 				if ( empty( $setting ) ) {

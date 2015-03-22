@@ -42,6 +42,11 @@
 			
 			serialized_data += checkboxes;
 			
+			serialized_data = serialized_data.replace( '[', '_' );
+			serialized_data = serialized_data.replace( ']', '_' );
+			
+			console.log( 'Serialized Data', serialized_data );
+			
 			var data = {
 					action: 'sc_button_save',
 					form_data: encodeURIComponent( serialized_data )

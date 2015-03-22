@@ -60,55 +60,27 @@ class MM_Settings_Output extends MM_Settings {
 	 * @param array $args
 	 * @since 1.0.0
 	 */
-	public function radio_callback( $args ) {
-		foreach ( $args['options'] as $key => $option ) {
-			$checked = false;
-			if ( isset( self::$settings->saved_settings[ $args['id'] ] ) && self::$settings->saved_settings[ $args['id'] ] == $key ) {
-				$checked = true;
-			} elseif ( isset( $args['std'] ) && $args['std'] == $key && ! isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
-				$checked = true;
-			}
-			echo '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="radio" value="' . $key . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
-			echo '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']">' . $option . '</label><br/>';
+	public function radio_button( $id, $label, $value, $section = '' ) {
+		
+		$html = '';
+		
+		if( ! empty( $section ) ) {
+			$id   = $this->get_setting_id( $id );
+			$name = $this->option . '[' . $section . ']';
+			
+			$saved_value =  $this->get_setting_value( $section );
+			
+			$checked = $saved_value !== null ? ( ( $saved_value == $value ) ? true : false ) : false;
+			
+		} else {
+			$id = $this->get_setting_id( $id );
+			
+			$checked = ( $this->get_setting_value( $id ) !== null ? true : false );
 		}
-		echo '<p class="description">' . $args['desc'] . '</p>';
-	}
-
-	/**
-	 * 
-	 * Method to output multiple checkbox option inputs
-	 * This is for a setting that there are multiple checkbox type options but they need to be tied to the same setting name
-	 * 
-	 * @param array $args
-	 * @since 1.0.0
-	 */
-	public function multicheck_callback( $args ) {
-		// Return empty string if no options.
-		if ( empty( $args['options'] ) ) {
-			if ( current_user_can( 'manage_options' ) ) {
-				echo '<p><strong>Warning:</strong> You have not included in options for this multiple checkbox setting.</p>';
-			} else {
-				echo '';
-			}
-
-			return;
-		}
-		$html = "\n";
-		foreach ( $args['options'] as $key => $option ) {
-			if ( isset( self::$settings->saved_settings[ $args['id'] ][ $key ] ) ) { 
-				$enabled = $option; 
-			} else { 
-				$enabled = NULL; 
-			}
-
-			$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']">';
-			$html .= '<input name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked( $option, $enabled, false ) . '/>' . "\n";
-			$html .= $option . '</label>';
-		}
-		// Render and style description text underneath if it exists.
-		if ( ! empty( $args['desc'] ) ) {
-			$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
-		}
+		
+		$html  = '<input name="' . $name . '" id="' . $id . '" type="radio" value="' . esc_attr( $value ) . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
+		$html .= '<label for="' . $id . '">' . $label . '</label><br/>';
+		
 		echo $html;
 	}
 
@@ -119,9 +91,9 @@ class MM_Settings_Output extends MM_Settings {
 	 * @param array $args
 	 * @since 1.0.0
 	 */
-	public function select_callback( $args ) {
+	public function selectbox( $id, $options, $classes = '' ) {
 		// Return empty string if no options.
-		if ( empty( $args['options'] ) ) {
+		if ( empty( $options ) ) {
 			if( current_user_can( 'manage_options' ) ) {
 				echo '<p><strong>Warning:</strong> You have not included in options for this select setting.</p>';
 			} else {
@@ -130,16 +102,17 @@ class MM_Settings_Output extends MM_Settings {
 
 			return;
 		}
-		$html = "\n" . '<select id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"/>' . "\n";
-		foreach ( $args['options'] as $option => $name ) {
-			$selected = isset( self::$settings->saved_settings[ $args['id'] ] ) ? selected( $option, self::$settings->saved_settings[ $args['id'] ], false ) : '';
-			$html .= '<option value="' . $option . '" ' . $selected . '>' . $name . '</option>' . "\n";
+		
+		$selected = $this->get_setting_value( $id ) !== null ? $this->get_setting_value( $id ) : '';
+		
+		$html = '<select id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id )  . '" />' . "\n";
+		
+		foreach ( $options as $option ) {
+			$html .= '<option value="' . $option . '" ' . selected( $option, $selected, false ) . '>' . $option . '</option>' . "\n";
 		}
+		
 		$html .= '</select>' . "\n";
-		// Render and style description text underneath if it exists.
-		if ( ! empty( $args['desc'] ) ) {
-			$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
-		}
+		
 		echo $html;
 	}
 
@@ -150,18 +123,16 @@ class MM_Settings_Output extends MM_Settings {
 	 * @param array $args
 	 * @since 1.0.0
 	 */
-	public function textarea_callback( $args ) {
-		if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
-			$value = self::$settings->saved_settings[ $args['id'] ];
+	public function textarea( $id, $classes = '' ) {
+		if ( $this->get_setting_value( $id ) !== null ) {
+			$value = $this->get_setting_value( $id );
 		} else {
-			$value = isset( $args['std'] ) ? $args['std'] : '';
+			$value = '';
 		}
+		
 		// Ignoring size at the moment.
-		$html = "\n" . '<textarea class="large-text" cols="50" rows="10" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']">' . esc_textarea( $value ) . '</textarea>' . "\n";
-		// Render and style description text underneath if it exists.
-		if ( ! empty( $args['desc'] ) ) {
-			$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
-		}
+		$html = '<textarea class="large-text" cols="50" rows="10" id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id ) . '">' . esc_textarea( $value ) . '</textarea>' . "\n";
+		
 		echo $html;
 	}
 
@@ -172,19 +143,20 @@ class MM_Settings_Output extends MM_Settings {
 	 * @param array $args
 	 * @since 1.0.0
 	 */
-	public function number_callback( $args ) {
-		if ( isset( self::$settings->saved_settings[ $args['id'] ] ) ) {
-			$value = self::$settings->saved_settings[ $args['id'] ];
+	public function number( $id, $classes = '' ) {
+		
+		if ( $this->get_setting_id( $id ) !== null ) {
+			$value = $this->get_setting_value( $id );
 		} else {
-			$value = isset( $args['std'] ) ? $args['std'] : '';
+			$value = '';
 		}
-		$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
-		$html = "\n" . '<input type="number" class="' . $size . '-text" id="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" name="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
-		// Render description text directly to the right in a label if it exists.
-		if ( ! empty( $args['desc'] ) ) {
-			$html .= '<label for="' . $args['prefix'] . $args['section'] . '[' . $args['id'] . ']"> '  . $args['desc'] . '</label>' . "\n";
+		
+		if( empty( $classes ) ) {
+			$classes = 'regular-text';
 		}
+		
+		$html = '<input type="number" class="' . esc_attr( $classes ) . '" id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id ) . '" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
+		
 		echo $html;
 	}
-	
 }
