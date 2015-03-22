@@ -123,4 +123,6 @@ if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return self::$instance;
 		}
 	}
+	
+	Stripe_Checkout_Misc::get_instance();
 }

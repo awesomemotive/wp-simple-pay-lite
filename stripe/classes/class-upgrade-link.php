@@ -63,4 +63,6 @@ if( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 			return self::$instance;
 		}
 	}
+	
+	Stripe_Checkout_Upgrade_Link::get_instance();
 }

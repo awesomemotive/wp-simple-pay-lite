@@ -166,7 +166,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			if( is_admin() ) {
 				include_once( SC_CLASS_PATH . 'class-upgrade-link.php' );
 
-				Stripe_Checkout_Upgrade_Link::get_instance();
+				//Stripe_Checkout_Upgrade_Link::get_instance();
 			}
 		}
 
@@ -383,8 +383,8 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			}
 
 			// Set instances here for loaded classes
-			Stripe_Checkout_Functions::get_instance();
-			Stripe_Checkout_Misc::get_instance();
+			//Stripe_Checkout_Functions::get_instance();
+			//Stripe_Checkout_Misc::get_instance();
 		}
 
 		/**
