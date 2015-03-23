@@ -9,15 +9,15 @@ if( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 	class Stripe_Checkout_Upgrade_Link {
 
 		protected static $instance = null;
-
-		public $plugin_slug;
-
-		public $version;
+		
+		public $base = null;
 
 		public function __construct() {
 
-			$this->plugin_slug = Stripe_Checkout::get_instance()->plugin_slug;
-			$this->version     = Stripe_Checkout::get_instance()->version;
+			//$this->plugin_slug = Stripe_Checkout::get_instance()->plugin_slug;
+			//$this->version     = Stripe_Checkout::get_instance()->version;
+			
+			$this->base = Stripe_Checkout::get_instance();
 
 			add_action( 'admin_footer', array( $this, 'load_scripts' ) );
 			add_action( 'admin_menu', array( $this, 'upgrade_link' ) );
@@ -25,11 +25,11 @@ if( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 
 		public function upgrade_link() {
 			$page_hook = add_submenu_page( 
-					SC_PLUGIN_SLUG, 
+					$this->base->plugin_slug, 
 					__( 'Upgrade to Pro', 'sc' ), 
 					__( 'Upgrade to Pro', 'sc' ), 
 					'manage_options', 
-					SC_PLUGIN_SLUG . '-upgrade', 
+					$this->base->plugin_slug . '-upgrade', 
 					array( $this, 'redirect' )
 				);
 
@@ -46,8 +46,8 @@ if( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		}
 
 		public function load_scripts() {
-			wp_enqueue_style( $this->plugin_slug .'-upgrade-link', SC_CSS_PATH . 'admin-upgrade-link.css', array(), $this->version );
-			wp_enqueue_script( $this->plugin_slug . '-upgrade-link', SC_JS_PATH. 'admin-upgrade-link.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_style( $this->base->plugin_slug .'-upgrade-link', SC_CSS_PATH . 'admin-upgrade-link.css', array(), $this->base->version );
+			wp_enqueue_script( $this->base->plugin_slug . '-upgrade-link', SC_JS_PATH. 'admin-upgrade-link.js', array( 'jquery' ), $this->base->version, true );
 		}
 
 		/**

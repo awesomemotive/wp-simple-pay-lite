@@ -55,7 +55,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		protected $plugin_screen_hook_suffix = null;
 
 		public $session;
-
+		
 		/**
 		 * Initialize the plugin by setting localization, filters, and administration functions.
 		 *
@@ -240,26 +240,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @since    1.0.0
 		 */
 		public function setup_constants() {
-			// Plugin slug.
-			if ( ! defined( 'SC_PLUGIN_SLUG' ) ) {
-				define( 'SC_PLUGIN_SLUG', $this->plugin_slug );
-			}
-
-			// Plugin folder URL.
-			if ( ! defined( 'SC_PLUGIN_URL' ) ) {
-				define( 'SC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-			}
-
-			// Plugin directory
-			if ( ! defined( 'SC_PLUGIN_DIR' ) ) {
-				define( 'SC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-			}
-
-			// Plugin version
-			if ( ! defined( 'SC_PLUGIN_VERSION' ) ) {
-				define( 'SC_PLUGIN_VERSION', $this->version );
-			}
-
+			
 			// Website for this plugin
 			if( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 				define( 'SC_WEBSITE_BASE_URL', 'http://wpstripe.net/' );
