@@ -64,53 +64,67 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		private function __construct() {
 
 			// Load plugin text domain
+			// TODO: Leave in this main class
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
-
+			
+			// TODO: Move to admin class?
 			if( ! get_option( 'sc_upgrade_has_run' ) ) {
 				add_action( 'init', array( $this, 'upgrade_plugin' ), 0 );
 			}
 
 			// Include required files.
+			// TODO: Do we still need this?
 			$this->setup_constants();
-
-			add_action( 'init', array( $this, 'load_classes' ), 0 );
-			add_action( 'init', array( $this, 'includes' ), 1 );
+			
+			// TODO: Leave in main class and put into one function
+			//add_action( 'init', array( $this, 'load_classes' ), 0 );
+			//add_action( 'init', array( $this, 'includes' ), 1 );
+			$this->includes();
 
 			// Add the options page and menu item.
+			// TODO: Move to admin class
 			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 
-			// Enqueue admin styles.
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+			
 
 			// Add admin notice after plugin activation. Also check if should be hidden.
+			// TODO: Create and add to admin notice class
 			add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
 
 			// Add plugin listing "Settings" action link.
+			// TODO: Move to admin class
 			add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
 
 			// Add upgrade link (if not already in Pro).
+			// TODO: Remove upgrade link class and add this in the admin class?
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
 				add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
 			}
 
 			// Add "Upgrade to Pro" submenu link
+			// TODO: Add to admin class
 			add_action( 'init', array( $this, 'admin_upgrade_link' ) );
 
 			// Check WP version
+			// TODO: Add to admin notices class
 			add_action( 'admin_init', array( $this, 'check_wp_version' ) );
 
-			// Add public CSS
-			add_action( 'init', array( $this, 'enqueue_public_styles' ) );
+			
 
 			// Filters to add the settings page titles
+			// TODO: Remove these since settings are changed now?
 			add_filter( 'sc_settings_keys_title', array( $this, 'sc_settings_keys_title' ) );
 			add_filter( 'sc_settings_default_title', array( $this, 'sc_settings_default_title' ) );
 
-			// Load scripts when posts load so we know if we need to include them or not
-			add_filter( 'the_posts', array( $this, 'load_scripts' ) );
-
+			
+			
+			// TODO: leave here or add to a base settings class?
 			add_action( 'init', array( $this, 'register_settings' ), 1 );
 		}
+		
+		/*function init() {
+			$this->load_classes();
+		}*/
 
 		function register_settings() {
 			global $sc_options;
@@ -137,25 +151,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 
 		}
 
-		function load_scripts( $posts ){
-
-			global $sc_options;
-
-			if ( empty( $posts ) ) {
-				return $posts;
-			}
-
-			foreach ( $posts as $post ){
-				if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( ! empty( $sc_options['always_enqueue'] ) ) ) {
-					// Load CSS
-					wp_enqueue_style( $this->plugin_slug . '-public' );
-
-					break;
-				}
-			}
-
-			return $posts;
-		}
+		
 
 		/**
 		 * Add "Upgrade to Pro" submenu link
@@ -220,34 +216,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			return __( 'Site-wide Default Settings', 'sc' );
 		}
 
-		/**
-		 * Load public facing CSS
-		 * 
-		 * @since 1.0.0
-		 */
-		function enqueue_public_styles() {
-
-			global $sc_options;
-
-			if( empty( $sc_options['disable_css'] ) ) {
-				wp_register_style( $this->plugin_slug . '-public', SC_CSS_PATH . 'public-main.css', array(), $this->version );
-			}
-		}
-
-		/**
-		 * Enqueue admin-specific style sheets for this plugin's admin pages only.
-		 *
-		 * @since     1.0.0
-		 */
-		public function enqueue_admin_styles() {
-
-			if ( $this->viewing_this_plugin() ) {
-				wp_enqueue_style( $this->plugin_slug .'-toggle-switch', SC_CSS_PATH . 'toggle-switch.css', array(), $this->version );
-				wp_enqueue_style( $this->plugin_slug .'-admin-styles', SC_CSS_PATH . 'admin-main.css', array( $this->plugin_slug .'-toggle-switch' ), $this->version );
-			}
-
-			wp_enqueue_script( $this->plugin_slug . '-admin', SC_JS_PATH . 'admin-main.js', array( 'jquery' ), $this->version, true );
-		}
+		
 
 		/**
 		 * Make sure user has the minimum required version of WordPress installed to use the plugin
@@ -367,7 +336,8 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		/*
 		 * Load and create instances of necessary classes
 		 */
-		public function load_classes() {
+		// TODO: FIX to work with new structure/setup
+		/*public function load_classes() {
 			// Include classes
 
 			if( ! class_exists( 'Stripe' ) ) {
@@ -385,7 +355,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			// Set instances here for loaded classes
 			//Stripe_Checkout_Functions::get_instance();
 			//Stripe_Checkout_Misc::get_instance();
-		}
+		}*/
 
 		/**
 		 * Include required files (admin and frontend).
@@ -393,8 +363,20 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @since     1.0.0
 		 */
 		public function includes() {
+			
+			// Classes
+			include_once( SC_CLASS_PATH . 'class-mm-settings.php' );
+			include_once( SC_CLASS_PATH . 'class-mm-settings-output.php' );
+			include_once( SC_CLASS_PATH . 'class-mm-settings-extended.php' );
+			include_once( SC_CLASS_PATH . 'class-stripe-checkout-functions.php' );
+			include_once( SC_CLASS_PATH . 'class-stripe-checkout-misc.php' );
+			include_once( SC_CLASS_PATH . 'class-stripe-checkout-scripts.php' );
+			include_once( SC_CLASS_PATH . 'class-upgrade-link.php' );
+			
 			// Include shortcode functions
 			include_once( SC_INCLUDES_PATH . 'shortcodes.php' );
+			
+			
 		}
 
 		/**
@@ -439,7 +421,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 *
 		 * @return  bool
 		 */
-		private function viewing_this_plugin() {
+		public function viewing_this_plugin() {
 
 			$screen = get_current_screen();
 
