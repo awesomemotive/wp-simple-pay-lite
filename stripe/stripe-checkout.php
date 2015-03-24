@@ -69,3 +69,6 @@ require_once( SC_CLASS_PATH . 'class-stripe-checkout.php' );
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( __FILE__, array( 'Stripe_Checkout', 'activate' ) );
+
+
+// TODO: Update Stripe Library and class calls!
