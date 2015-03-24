@@ -31,6 +31,9 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		 * Function that will actually determine if the scripts should be used or not
 		 * 
 		 * @since 1.0.0
+		 * 
+		 * 
+		 * // TODO: FIX to work with new structure/setup
 		 */
 		public function load_scripts( $posts ){
 
@@ -73,30 +76,12 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		 */
 		public function enqueue_admin_styles() {
 
-			if ( $this->base->viewing_this_plugin() ) {
+			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
 				wp_enqueue_style( $this->base->plugin_slug .'-toggle-switch', SC_CSS_PATH . 'toggle-switch.css', array(), $this->base->version );
 				wp_enqueue_style( $this->base->plugin_slug .'-admin-styles', SC_CSS_PATH . 'admin-main.css', array( $this->base->plugin_slug .'-toggle-switch' ), $this->base->version );
 			}
 
 			wp_enqueue_script( $this->base->plugin_slug . '-admin', SC_JS_PATH . 'admin-main.js', array( 'jquery' ), $this->base->version, true );
-		}
-		
-		/**
-		 * Check if viewing this plugin's admin page.
-		 *
-		 * @since   1.0.0
-		 *
-		 * @return  bool
-		 */
-		private function viewing_this_plugin() {
-
-			$screen = get_current_screen();
-
-			if( ! empty( $this->base->plugin_screen_hook_suffix ) && in_array( $screen->id, $this->base->plugin_screen_hook_suffix ) ) {
-				return true;
-			}
-
-			return false;
 		}
 		
 		/**

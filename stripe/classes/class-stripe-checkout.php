@@ -22,7 +22,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 *
 		 * @var     string
 		 */
-		public $version = '1.3.0';
+		public $version = '1.3.1';
 
 		/**
 		 * Unique identifier for your plugin.
@@ -45,14 +45,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 */
 		protected static $instance = null;
 
-		/**
-		 * Slug of the plugin screen.
-		 *
-		 * @since    1.0.0
-		 *
-		 * @var      string
-		 */
-		protected $plugin_screen_hook_suffix = null;
+		
 
 		public $session;
 		
@@ -81,9 +74,8 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			//add_action( 'init', array( $this, 'includes' ), 1 );
 			$this->includes();
 
-			// Add the options page and menu item.
-			// TODO: Move to admin class
-			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
+			
+			
 
 			
 
@@ -91,19 +83,11 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			// TODO: Create and add to admin notice class
 			add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
 
-			// Add plugin listing "Settings" action link.
-			// TODO: Move to admin class
-			add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
+			
 
-			// Add upgrade link (if not already in Pro).
-			// TODO: Remove upgrade link class and add this in the admin class?
-			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . $this->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
-			}
+			
 
-			// Add "Upgrade to Pro" submenu link
-			// TODO: Add to admin class
-			add_action( 'init', array( $this, 'admin_upgrade_link' ) );
+			
 
 			// Check WP version
 			// TODO: Add to admin notices class
@@ -153,18 +137,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 
 		
 
-		/**
-		 * Add "Upgrade to Pro" submenu link
-		 * 
-		 * @since 1.2.5
-		 */
-		function admin_upgrade_link() {
-			if( is_admin() ) {
-				include_once( SC_CLASS_PATH . 'class-upgrade-link.php' );
-
-				//Stripe_Checkout_Upgrade_Link::get_instance();
-			}
-		}
+		
 
 		/**
 		 * Function to smoothly upgrade from version 1.1.0 to 1.1.1 of the plugin
@@ -288,55 +261,8 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			update_option( 'sc_show_admin_install_notice', 1 );
 		}
 
-		/**
-		 * Register the administration menu for this plugin into the WordPress Dashboard menu.
-		 *
-		 * @since    1.0.0
-		 */
-		public function add_plugin_admin_menu() {
+		
 
-			$this->plugin_screen_hook_suffix[] = add_menu_page(
-				$this->get_plugin_title() . ' ' . __( 'Settings', 'sc' ),
-				$this->get_plugin_title(),
-				'manage_options',
-				$this->plugin_slug,
-				array( $this, 'display_plugin_admin_page' ),
-				SC_IMG_PATH . 'icon-16x16.png'
-			);
-		}
-
-		/**
-		 * Render the settings page for this plugin.
-		 *
-		 * @since    1.0.0
-		 */
-		public function display_plugin_admin_page() {
-			include_once( SC_VIEWS_PATH . 'admin-page.php' );
-		}
-
-		/*
-		 * Load and create instances of necessary classes
-		 */
-		// TODO: FIX to work with new structure/setup
-		/*public function load_classes() {
-			// Include classes
-
-			if( ! class_exists( 'Stripe' ) ) {
-				require_once( SC_LIBRARIES_PATH . 'stripe-php/Stripe.php' );
-			}
-
-			if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
-				include_once( SC_CLASS_PATH . 'class-stripe-checkout-functions.php' );
-			}
-
-			if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
-				include_once( SC_CLASS_PATH . 'class-stripe-checkout-misc.php' );
-			}
-
-			// Set instances here for loaded classes
-			//Stripe_Checkout_Functions::get_instance();
-			//Stripe_Checkout_Misc::get_instance();
-		}*/
 
 		/**
 		 * Include required files (admin and frontend).
@@ -346,6 +272,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		public function includes() {
 			
 			// Classes
+			include_once( SC_CLASS_PATH . 'class-stripe-checkout-admin.php' );
 			include_once( SC_CLASS_PATH . 'class-mm-settings.php' );
 			include_once( SC_CLASS_PATH . 'class-mm-settings-output.php' );
 			include_once( SC_CLASS_PATH . 'class-mm-settings-extended.php' );
@@ -372,46 +299,9 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		}
 
 
-		/**
-		 * Add Settings action link to left of existing action links on plugin listing page.
-		 *
-		 * @since   1.0.0
-		 *
-		 * @param   array  $links  Default plugin action links
-		 * @return  array  $links  Amended plugin action links
-		 */
-		public function settings_link( $links ) {
+		
 
-			$setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( 'page', $this->plugin_slug, admin_url( 'admin.php' ) ), __( 'Settings', 'sc' ) );
-			array_unshift( $links, $setting_link );
-
-			return $links;
-		}
-
-		public function purchase_pro_link( $links ) {
-			$pro_link = sprintf( '<a href="%s">%s</a>', Stripe_Checkout_Misc::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'plugin_listing', 'pro_upgrade' ), __( 'Purchase Pro', 'sc' ) );
-			array_push( $links, $pro_link );
-
-			return $links;
-		}
-
-		/**
-		 * Check if viewing this plugin's admin page.
-		 *
-		 * @since   1.0.0
-		 *
-		 * @return  bool
-		 */
-		public function viewing_this_plugin() {
-
-			$screen = get_current_screen();
-
-			if( ! empty( $this->plugin_screen_hook_suffix ) && in_array( $screen->id, $this->plugin_screen_hook_suffix ) ) {
-				return true;
-			}
-
-			return false;
-		}
+		
 
 		/**
 		 * Show notice after plugin install/activate in admin dashboard.
