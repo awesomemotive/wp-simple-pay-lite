@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Stripe Checkout Notices class file
+ *
+ * @package SC
+ * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 	class Stripe_Checkout_Notices {

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Stripe Checkout Admin class file
+ *
+ * @package SC
+ * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 	class Stripe_Checkout_Admin {
@@ -92,7 +103,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 */
 		function admin_upgrade_link() {
 			if ( is_admin() ) {
-				include_once( SC_CLASS_PATH . 'class-upgrade-link.php' );
+				include_once( SC_CLASS_PATH . 'class-stripe-checkout-upgrade-link.php' );
 
 				//Stripe_Checkout_Upgrade_Link::get_instance();
 			}

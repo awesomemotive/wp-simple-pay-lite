@@ -188,13 +188,15 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			include_once( SC_CLASS_PATH . 'class-stripe-checkout-functions.php' );
 			include_once( SC_CLASS_PATH . 'class-stripe-checkout-misc.php' );
 			include_once( SC_CLASS_PATH . 'class-stripe-checkout-scripts.php' );
-			include_once( SC_CLASS_PATH . 'class-upgrade-link.php' );
+			include_once( SC_CLASS_PATH . 'class-stripe-checkout-upgrade-link.php' );
 			include_once( SC_CLASS_PATH . 'class-stripe-checkout-notices.php' );
 			
+			// Libraries
+			// TODO: This may just be temporary as we may want a better way to load libraries only when they are needed.
+			include_once( SC_LIBRARIES_PATH . 'stripe-php/Stripe.php' );
+			
 			// Include shortcode functions
-			include_once( SC_INCLUDES_PATH . 'shortcodes.php' );
-			
-			
+			include_once( SC_INCLUDES_PATH . 'shortcodes.php' );		
 		}
 
 		/**

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Stripe Checkout Functions class file
+ *
+ * @package SC
+ * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ */
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

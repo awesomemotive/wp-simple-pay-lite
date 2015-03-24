@@ -64,6 +64,7 @@ if ( ! defined( 'SC_VIEWS_PATH' ) ) {
 	define( 'SC_VIEWS_PATH', plugin_dir_path( __FILE__ ) . 'views/' );
 }
 
+// Include main class file
 require_once( SC_CLASS_PATH . 'class-stripe-checkout.php' );
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.

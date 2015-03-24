@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Base settings output class - displays the fields HTML
+ *
+ * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ */
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

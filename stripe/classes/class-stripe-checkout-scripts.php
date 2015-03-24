@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Stripe Checkout Scripts class file
+ *
+ * @package SC
+ * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 	
 	class Stripe_Checkout_Scripts {
