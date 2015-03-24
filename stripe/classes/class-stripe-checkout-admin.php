@@ -32,7 +32,6 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			$this->base = Stripe_Checkout::get_instance();
 			
 			// Add the options page and menu item.
-			// TODO: Move to admin class
 			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 			
 			// Add plugin listing "Settings" action link.

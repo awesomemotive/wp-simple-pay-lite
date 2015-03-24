@@ -57,7 +57,6 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		private function __construct() {
 
 			// Load plugin text domain
-			// TODO: Leave in this main class
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 			
 			// TODO: Move to admin class?
@@ -72,7 +71,6 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			// Include all necessary files
 			$this->includes();
 
-			// TODO: leave here or add to a base settings class?
 			add_action( 'init', array( $this, 'register_settings' ), 1 );
 		}
 
