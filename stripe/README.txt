@@ -1,8 +1,8 @@
 ﻿=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 3.8.5
-Tested up to: 4.1
+Requires at least: 3.9.3
+Tested up to: 4.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -115,6 +115,7 @@ There are three ways to install this plugin.
 
 * Added the ability to accept Bitcoin payments via default settings.
 * Now checks that host is running PHP 5.3.3 or higher using the WPupdatePHP library.
+* Tested up to WordPress 4.2.
 
 = 1.3.0.1 - March 13, 2015 =
 
