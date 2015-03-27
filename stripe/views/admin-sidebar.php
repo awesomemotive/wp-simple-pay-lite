@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</ul>
 
 				<div class="centered">
-					<a href="<?php echo Stripe_Checkout_Misc::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'pro_upgrade' ); ?>"
+					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'pro_upgrade' ); ?>"
 					   class="button-primary button-large" target="_blank">
 						<?php _e( 'Upgrade to Pro Now', 'sc' ); ?></a>
 				</div>
@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<ul>
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
-					<a href="<?php echo Stripe_Checkout_Misc::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'stripe_checkout', 'sidebar_link', 'docs' ); ?>" target="_blank">
+					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'stripe_checkout', 'sidebar_link', 'docs' ); ?>" target="_blank">
 						<?php _e( 'Documentation', 'sc' ); ?></a>
 				</li>
 
@@ -63,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
-					<a href="<?php echo Stripe_Checkout_Misc::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'addons' ); ?>" target="_blank">
+					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'addons' ); ?>" target="_blank">
 						<?php _e( 'Stripe Checkout Pro', 'sc' ); ?></a>
 				</li>
 			</ul>

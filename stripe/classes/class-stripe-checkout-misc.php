@@ -23,8 +23,6 @@ if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 
 		public function __construct() {
 			// class constructor
-			// TODO: load filters/hooks here?
-
 			add_filter( 'the_content', array( $this, 'shortcode_fix' ) );
 		}
 
@@ -60,29 +58,6 @@ if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			}
 
 			return false;
-		}
-
-		/**
-		 * Google Analytics campaign URL.
-		 *
-		 * @since   1.1.1
-		 *
-		 * @param   string  $base_url Plain URL to navigate to
-		 * @param   string  $source   GA "source" tracking value
-		 * @param   string  $medium   GA "medium" tracking value
-		 * @param   string  $campaign GA "campaign" tracking value
-		 * @return  string  $url      Full Google Analytics campaign URL
-		 */
-		public static function ga_campaign_url( $base_url, $source, $medium, $campaign ) { 
-			// $medium examples: 'sidebar_link', 'banner_image'
-
-			$url = add_query_arg( array(
-				'utm_source'   => $source,
-				'utm_medium'   => $medium,
-				'utm_campaign' => $campaign
-			), $base_url );
-
-			return $url;
 		}
 
 		public static function disable_seo_og() { 

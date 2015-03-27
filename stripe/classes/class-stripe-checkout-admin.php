@@ -31,7 +31,6 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
-			// TODO: Move to admin class?
 			if( ! get_option( 'sc_upgrade_has_run' ) ) {
 				add_action( 'init', array( $this, 'upgrade_plugin' ), 0 );
 			}
@@ -137,7 +136,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		}
 
 		public function purchase_pro_link( $links ) {
-			$pro_link = sprintf( '<a href="%s">%s</a>', Stripe_Checkout_Misc::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'plugin_listing', 'pro_upgrade' ), __( 'Purchase Pro', 'sc' ) );
+			$pro_link = sprintf( '<a href="%s">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'plugin_listing', 'pro_upgrade' ), __( 'Purchase Pro', 'sc' ) );
 			array_push( $links, $pro_link );
 
 			return $links;
@@ -174,6 +173,29 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			}
 
 			return false;
+		}
+		
+		/**
+		 * Google Analytics campaign URL.
+		 *
+		 * @since   1.1.1
+		 *
+		 * @param   string  $base_url Plain URL to navigate to
+		 * @param   string  $source   GA "source" tracking value
+		 * @param   string  $medium   GA "medium" tracking value
+		 * @param   string  $campaign GA "campaign" tracking value
+		 * @return  string  $url      Full Google Analytics campaign URL
+		 */
+		public static function ga_campaign_url( $base_url, $source, $medium, $campaign ) { 
+			// $medium examples: 'sidebar_link', 'banner_image'
+
+			$url = add_query_arg( array(
+				'utm_source'   => $source,
+				'utm_medium'   => $medium,
+				'utm_campaign' => $campaign
+			), $base_url );
+
+			return $url;
 		}
 		
 		/**

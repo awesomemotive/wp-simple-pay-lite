@@ -138,15 +138,22 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		public function includes() {
 			
 			// Classes
+			// Shared between public/admin side
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-extended.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-notices.php' );
+			
+			if( is_admin() ) {
+				// Admin side only
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-notices.php' );
+			} else {
+				// Public side only
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
+			}
 			
 			// Libraries
 			// TODO: This may just be temporary as we may want a better way to load libraries only when they are needed.
