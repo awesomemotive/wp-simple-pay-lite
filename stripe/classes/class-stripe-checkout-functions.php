@@ -59,7 +59,7 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			
 			
 
-			Stripe::setApiKey( $key );
+			\Stripe\Stripe::setApiKey( $key );
 		}
 
 		/**
@@ -91,14 +91,14 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 				Stripe_Checkout_Functions::set_key( $test_mode );
 
 				// Create new customer
-				$new_customer = Stripe_Customer::create( array(
+				$new_customer = \Stripe\Customer::create( array(
 					'email' => $_POST['stripeEmail'],
 					'card'  => $token
 				));
 
 				// Create the charge on Stripe's servers - this will charge the user's default card
 				try {
-					$charge = Stripe_Charge::create( array(
+					$charge = \Stripe\Charge::create( array(
 							'amount'      => $amount, // amount in cents, again
 							'currency'    => $currency,
 							'customer'    => $new_customer['id'],
@@ -112,7 +112,7 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 					$failed = false;
 
-				} catch(Stripe_CardError $e) {
+				} catch( \Stripe\Error\Card $e ) {
 
 					// Catch Stripe errors
 					$redirect = $fail_redirect;
@@ -167,7 +167,7 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					$charge_id = esc_html( $_GET['charge'] );
 
 					// https://stripe.com/docs/api/php#charges
-					$charge_response = Stripe_Charge::retrieve( $charge_id );
+					$charge_response = \Stripe\Charge::retrieve( $charge_id );
 
 					$html = '<div class="sc-payment-details-wrap">' . "\n";
 
