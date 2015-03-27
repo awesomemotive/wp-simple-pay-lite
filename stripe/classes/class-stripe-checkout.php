@@ -74,11 +74,8 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			add_action( 'init', array( $this, 'register_settings' ), 1 );
 		}
 
-		// TODO: Cleanup and use $sc_options instead of $settings. Fix in templates also.
 		function register_settings() {
 			global $sc_options;
-
-			//global $settings;
 
 			// We load the exteded class here so that it will load all of the class functions all the way back to the base
 			$sc_options = new MM_Settings_Extended( 'sc_settings' );

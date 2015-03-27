@@ -43,9 +43,6 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		 * Function that will actually determine if the scripts should be used or not
 		 * 
 		 * @since 1.0.0
-		 * 
-		 * 
-		 * // TODO: FIX to work with new structure/setup
 		 */
 		public function load_scripts( $posts ){
 
@@ -56,7 +53,6 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			}
 
 			foreach ( $posts as $post ){
-				//if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( ! empty( $sc_options['always_enqueue'] ) ) ) {
 				if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( $sc_options->get_setting_value( 'always_enqueue' ) !== null ) ) {
 					// Load CSS
 					wp_enqueue_style( $this->base->plugin_slug . '-public' );
@@ -77,9 +73,9 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 
 			global $sc_options;
 
-			//if( empty( $sc_options['disable_css'] ) ) {
+			if( $sc_options->get_setting_value( 'disable_css' ) === null ) {
 				wp_register_style( $this->base->plugin_slug . '-public', SC_DIR_URL . 'assets/css/public-main.css', array(), $this->base->version );
-			//}
+			}
 		}
 
 		/**
