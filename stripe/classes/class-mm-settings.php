@@ -147,24 +147,5 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		public function get_setting_id( $id ) {
 			return $this->option . '_' . $id;
 		}
-		
-		// TODO: Make less specific
-		public function load_tabs( $tabs = array() ) {
-			
-			if( empty( $tabs ) ) {
-				$tabs = array( 
-					'keys' => array(
-								'label'    => __( 'Stripe Keys', 'sc' ),
-								'template' => 'keys'
-							),
-					'default' => array(
-								'label'    => __( 'Default Settings', 'sc' ),
-								'template' => 'default',
-							),
-				);
-			}
-			
-			$this->tabs = $tabs;
-		}
 	}
 }
