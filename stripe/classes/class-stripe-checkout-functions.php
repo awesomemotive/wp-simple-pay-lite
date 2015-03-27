@@ -28,11 +28,17 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 				self::$token = true;
 				add_action( 'init', array( $this, 'charge_card' ) );
 			}
+			
+			$this->load_library();
 
 			add_filter( 'the_content', array( $this, 'show_payment_details' ) );
 		}
 
-		// Public functions
+		public function load_library() {
+			if ( ! class_exists( 'Stripe\Stripe' ) ) {
+				require_once( SC_DIR_PATH . 'libraries/stripe-php/init.php' );
+			}
+		}
 
 		/**
 		 * Common method to set Stripe API key from options.

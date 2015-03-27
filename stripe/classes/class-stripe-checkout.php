@@ -155,10 +155,6 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
 			}
 			
-			// Libraries
-			// TODO: This may just be temporary as we may want a better way to load libraries only when they are needed.
-			include_once( SC_DIR_PATH . 'libraries/stripe-php/init.php' );
-			
 			// Include shortcode functions
 			include_once( SC_DIR_PATH . 'includes/shortcodes.php' );
 		}
