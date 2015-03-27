@@ -176,10 +176,10 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		public function includes() {
 			
 			// Classes
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-extended.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );

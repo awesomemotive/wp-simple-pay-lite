@@ -31,6 +31,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
+			add_action( 'admin_init', array( $this, 'set_admin_tabs' ) );
+			
 			// Add the options page and menu item.
 			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 			
@@ -44,6 +46,15 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			
 			// Add "Upgrade to Pro" submenu link
 			add_action( 'init', array( $this, 'admin_upgrade_link' ) );
+		}
+		
+		public function set_admin_tabs() {
+			global $sc_options;
+			
+			$sc_options->set_tabs( array(
+				'keys'    => __( 'Stripe Keys', 'sc' ),
+				'default' => __( 'Default Settings', 'sc' ),
+			) );
 		}
 		
 		/**
