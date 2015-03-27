@@ -191,7 +191,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			
 			// Libraries
 			// TODO: This may just be temporary as we may want a better way to load libraries only when they are needed.
-			include_once( SC_DIR_PATH . 'libraries/stripe-php/Stripe.php' );
+			include_once( SC_DIR_PATH . 'libraries/stripe-php/init.php' );
 			
 			// Include shortcode functions
 			include_once( SC_DIR_PATH . 'includes/shortcodes.php' );
