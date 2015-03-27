@@ -20,41 +20,41 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	//global $sc_options;
 	
-	global $settings;
+	global $sc_options;
 	
 	STATIC $uid = 1;
 	
 	extract( shortcode_atts( array(
-					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
+					'name'                  => ( $sc_options->get_setting_value( 'name' ) !== null ? $sc_options->get_setting_value( 'name' ) : get_bloginfo( 'title' ) ),
 					'description'           => '',
 					'amount'                => '',
-					'image_url'             => ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : '' ),
-					'currency'              => ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : 'USD' ),
-					'checkout_button_label' => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),
-					'billing'               => ( ! empty( $sc_options['billing'] ) ? 'true' : 'false' ),    // true or false
-					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
-					'enable_remember'       => ( ! empty( $sc_options['enable_remember'] ) ? 'true' : 'false' ),    // true or false
-					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
-					'failure_redirect_url'  => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
+					'image_url'             => ( $sc_options->get_setting_value( 'image_url' ) !== null ? $sc_options->get_setting_value( 'image_url' ) : '' ),
+					'currency'              => ( $sc_options->get_setting_value( 'currency' ) !== null ? $sc_options->get_setting_value( 'currency' ) : 'USD' ),
+					'checkout_button_label' => ( $sc_options->get_setting_value( 'checkout_button_label' ) !== null ? $sc_options->get_setting_value( 'checkout_button_label' ) : '' ),
+					'billing'               => ( $sc_options->get_setting_value( 'billing' ) !== null ? 'true' : 'false' ),    // true or false
+					'payment_button_label'  => ( $sc_options->get_setting_value( 'payment_button_label' ) !== null ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'sc' ) ),
+					'enable_remember'       => ( $sc_options->get_setting_value( 'enable_remember' ) !== null ? 'true' : 'false' ),    // true or false
+					'success_redirect_url'  => ( $sc_options->get_setting_value( 'success_redirect_url' ) !== null ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
+					'failure_redirect_url'  => ( $sc_options->get_setting_value( 'failure_redirect_url' ) !== null ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
 					'prefill_email'         => 'false',
-					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
+					'verify_zip'            => ( $sc_options->get_setting_value( 'verify_zip' ) !== null ? 'true' : 'false' ),
 					'test_mode'             => 'false'
 				), $attr, 'stripe' ) );
 	
 	
 	// Check if in test mode or live mode
-	if( $settings->get_setting_value( 'enable_live_key' ) == 0 || $test_mode == 'true' ) {
+	if( $sc_options->get_setting_value( 'enable_live_key' ) == 0 || $test_mode == 'true' ) {
 		// Test mode
-		$data_key = ( $settings->get_setting_value( 'test_publish_key' ) !== null ? $settings->get_setting_value( 'test_publish_key' ) : '' );
+		$data_key = ( $sc_options->get_setting_value( 'test_publish_key' ) !== null ? $sc_options->get_setting_value( 'test_publish_key' ) : '' );
 		
-		if( null === $settings->get_setting_value( 'test_secret_key' ) ) {
+		if( null === $sc_options->get_setting_value( 'test_secret_key' ) ) {
 			$data_key = '';
 		}
 	} else {
 		// Live mode
-		$data_key = ( $settings->get_setting_value( 'live_publish_key' ) !== null ? $settings->get_setting_value( 'live_publish_key' ) : '' );
+		$data_key = ( $sc_options->get_setting_value( 'live_publish_key' ) !== null ? $sc_options->get_setting_value( 'live_publish_key' ) : '' );
 		
-		if( null === $settings->get_setting_value( 'live_secret_key' ) ) {
+		if( null === $sc_options->get_setting_value( 'live_secret_key' ) ) {
 			$data_key = '';
 		}
 	}

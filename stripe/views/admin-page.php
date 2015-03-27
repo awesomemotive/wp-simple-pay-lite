@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-global $sc_options, $settings;
+global $sc_options;
 
 ?>
 
@@ -29,7 +29,7 @@ global $sc_options, $settings;
 					$first_time = true;
 					$is_active  = '';
 					
-					foreach( $settings->get_tabs() as $key => $value) {
+					foreach( $sc_options->get_tabs() as $key => $value) {
 						if( $first_time == true ) {
 							$is_active = 'nav-tab-active';
 							$first_time = false;
@@ -45,8 +45,8 @@ global $sc_options, $settings;
 
 			<div id="tab_container">
 				<?php
-					$settings->load_template( SC_DIR_PATH . 'views/template-default.php' );
-					$settings->load_template( SC_DIR_PATH . 'views/template-keys.php' );
+					$sc_options->load_template( SC_DIR_PATH . 'views/template-default.php' );
+					$sc_options->load_template( SC_DIR_PATH . 'views/template-keys.php' );
 				?>
 			</div><!-- #tab_container-->
 		</div><!-- #sc-settings-content -->

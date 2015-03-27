@@ -78,10 +78,10 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		function register_settings() {
 			global $sc_options;
 
-			global $settings;
+			//global $settings;
 
 			// We load the exteded class here so that it will load all of the class functions all the way back to the base
-			$settings = new MM_Settings_Extended( 'sc_settings' );
+			$sc_options = new MM_Settings_Extended( 'sc_settings' );
 
 		}
 

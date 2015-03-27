@@ -45,11 +45,19 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			$key = '';
 
 			// Check first if in live or test mode.
-			if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
+			/*if( ! empty( $sc_options['enable_live_key'] ) && $sc_options['enable_live_key'] == 1 && $test_mode != 'true' ) {
 				$key = ( ! empty( $sc_options['live_secret_key'] ) ? $sc_options['live_secret_key'] : '' );
 			} else {
 				$key = ( ! empty( $sc_options['test_secret_key'] ) ? $sc_options['test_secret_key'] : '' );
+			}*/
+			
+			if( $sc_options->get_setting_value( 'enable_live_key' ) == 1 ) {
+				$key = $sc_options->get_setting_value( 'live_secret_key' );
+			} else {
+				$key = $sc_options->get_setting_value( 'test_secret_key' );
 			}
+			
+			
 
 			Stripe::setApiKey( $key );
 		}
@@ -153,8 +161,9 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			// Successful charge output.
 			if ( isset( $_GET['charge'] ) && !isset( $_GET['charge_failed'] ) ) {
 
-				if ( empty( $sc_options['disable_success_message'] ) ) {
-
+				//if ( empty( $sc_options['disable_success_message'] ) ) {
+				if ( $sc_options->get_setting_value( 'disable_success_message' ) === null ) {
+					
 					$charge_id = esc_html( $_GET['charge'] );
 
 					// https://stripe.com/docs/api/php#charges

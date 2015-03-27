@@ -56,7 +56,8 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			}
 
 			foreach ( $posts as $post ){
-				if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( ! empty( $sc_options['always_enqueue'] ) ) ) {
+				//if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( ! empty( $sc_options['always_enqueue'] ) ) ) {
+				if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( $sc_options->get_setting_value( 'always_enqueue' ) !== null ) ) {
 					// Load CSS
 					wp_enqueue_style( $this->base->plugin_slug . '-public' );
 
