@@ -59,13 +59,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			// Load plugin text domain
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 			
-			// TODO: Move to admin class?
-			if( ! get_option( 'sc_upgrade_has_run' ) ) {
-				add_action( 'init', array( $this, 'upgrade_plugin' ), 0 );
-			}
-
-			// Include required files.
-			// TODO: Do we still need this?
+			// Setup constants
 			$this->setup_constants();
 			
 			// Include all necessary files
@@ -80,38 +74,6 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			// We load the exteded class here so that it will load all of the class functions all the way back to the base
 			$sc_options = new MM_Settings_Extended( 'sc_settings' );
 
-		}
-
-		/**
-		 * Function to smoothly upgrade from version 1.1.0 to 1.1.1 of the plugin
-		 * 
-		 * @since 1.1.1
-		 */
-		function upgrade_plugin() {
-
-			$keys_options = get_option( 'sc_settings_general' );
-
-			// Check if test mode was enabled
-			if( isset( $keys_options['enable_test_key'] ) && $keys_options['enable_test_key'] == 1 ) {
-				// if it was then we remove it because we are now checking if live is enabled, not test
-				unset( $keys_options['enable_test_key'] );
-			} else {
-
-				// If was not in test mode then we need to set our new value to true
-				$keys_options['enable_live_key'] = 1;
-			}
-
-			// Delete old option settings from old version of SC
-			delete_option( 'sc_settings_general' );
-
-			// Update our new settings options
-			update_option( 'sc_settings_keys', $keys_options );
-
-			// Update version number option for future upgrades
-			update_option( 'sc_version', $this->version );
-
-			// Let us know that we ran the upgrade
-			add_option( 'sc_upgrade_has_run', 1 );
 		}
 
 		/**

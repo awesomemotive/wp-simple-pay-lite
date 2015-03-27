@@ -31,6 +31,11 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
+			// TODO: Move to admin class?
+			if( ! get_option( 'sc_upgrade_has_run' ) ) {
+				add_action( 'init', array( $this, 'upgrade_plugin' ), 0 );
+			}
+			
 			add_action( 'admin_init', array( $this, 'set_admin_tabs' ) );
 			
 			// Add the options page and menu item.
@@ -46,6 +51,38 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			
 			// Add "Upgrade to Pro" submenu link
 			add_action( 'init', array( $this, 'admin_upgrade_link' ) );
+		}
+		
+		/**
+		 * Function to smoothly upgrade from version 1.1.0 to 1.1.1 of the plugin
+		 * 
+		 * @since 1.1.1
+		 */
+		function upgrade_plugin() {
+
+			$keys_options = get_option( 'sc_settings_general' );
+
+			// Check if test mode was enabled
+			if( isset( $keys_options['enable_test_key'] ) && $keys_options['enable_test_key'] == 1 ) {
+				// if it was then we remove it because we are now checking if live is enabled, not test
+				unset( $keys_options['enable_test_key'] );
+			} else {
+
+				// If was not in test mode then we need to set our new value to true
+				$keys_options['enable_live_key'] = 1;
+			}
+
+			// Delete old option settings from old version of SC
+			delete_option( 'sc_settings_general' );
+
+			// Update our new settings options
+			update_option( 'sc_settings_keys', $keys_options );
+
+			// Update version number option for future upgrades
+			update_option( 'sc_version', $this->version );
+
+			// Let us know that we ran the upgrade
+			add_option( 'sc_upgrade_has_run', 1 );
 		}
 		
 		public function set_admin_tabs() {
