@@ -35,11 +35,11 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 			
 			// Add plugin listing "Settings" action link.
-			add_filter( 'plugin_action_links_' . plugin_basename( SC_PATH . $this->base->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
+			add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . $this->base->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
 			
 			// Add upgrade link (if not already in Pro).
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				add_filter( 'plugin_action_links_' . plugin_basename( SC_PATH . $this->base->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
+				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . $this->base->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
 			}
 			
 			// Add "Upgrade to Pro" submenu link
@@ -59,7 +59,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 				'manage_options',
 				$this->base->plugin_slug,
 				array( $this, 'display_plugin_admin_page' ),
-				SC_IMG_PATH . 'icon-16x16.png'
+				SC_DIR_URL . 'assets/img/icon-16x16.png'
 			);
 		}
 
@@ -69,7 +69,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * @since    1.0.0
 		 */
 		public function display_plugin_admin_page() {
-			include_once( SC_VIEWS_PATH . 'admin-page.php' );
+			include_once( SC_DIR_PATH . 'views/admin-page.php' );
 		}
 		
 		/**
@@ -102,7 +102,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 */
 		function admin_upgrade_link() {
 			if ( is_admin() ) {
-				include_once( SC_CLASS_PATH . 'class-stripe-checkout-upgrade-link.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
 
 				//Stripe_Checkout_Upgrade_Link::get_instance();
 			}

@@ -45,8 +45,8 @@ global $sc_options, $settings;
 
 			<div id="tab_container">
 				<?php
-					$settings->load_template( SC_VIEWS_PATH . 'template-default.php' );
-					$settings->load_template( SC_VIEWS_PATH . 'template-keys.php' );
+					$settings->load_template( SC_DIR_PATH . 'views/template-default.php' );
+					$settings->load_template( SC_DIR_PATH . 'views/template-keys.php' );
 				?>
 			</div><!-- #tab_container-->
 		</div><!-- #sc-settings-content -->

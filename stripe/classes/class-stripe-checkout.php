@@ -139,7 +139,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			load_plugin_textdomain(
 				'sc',
 				false,
-				SC_LANGUAGES_PATH
+				SC_DIR_PATH . 'languages/'
 			);
 
 		}
@@ -179,22 +179,22 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		public function includes() {
 			
 			// Classes
-			include_once( SC_CLASS_PATH . 'class-stripe-checkout-admin.php' );
-			include_once( SC_CLASS_PATH . 'class-mm-settings.php' );
-			include_once( SC_CLASS_PATH . 'class-mm-settings-output.php' );
-			include_once( SC_CLASS_PATH . 'class-mm-settings-extended.php' );
-			include_once( SC_CLASS_PATH . 'class-stripe-checkout-functions.php' );
-			include_once( SC_CLASS_PATH . 'class-stripe-checkout-misc.php' );
-			include_once( SC_CLASS_PATH . 'class-stripe-checkout-scripts.php' );
-			include_once( SC_CLASS_PATH . 'class-stripe-checkout-upgrade-link.php' );
-			include_once( SC_CLASS_PATH . 'class-stripe-checkout-notices.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
+			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
+			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
+			include_once( SC_DIR_PATH . 'classes/class-mm-settings-extended.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-notices.php' );
 			
 			// Libraries
 			// TODO: This may just be temporary as we may want a better way to load libraries only when they are needed.
-			include_once( SC_LIBRARIES_PATH . 'stripe-php/Stripe.php' );
+			include_once( SC_DIR_PATH . 'libraries/stripe-php/Stripe.php' );
 			
 			// Include shortcode functions
-			include_once( SC_INCLUDES_PATH . 'shortcodes.php' );		
+			include_once( SC_DIR_PATH . 'includes/shortcodes.php' );
 		}
 
 		/**
