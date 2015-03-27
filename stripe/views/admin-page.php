@@ -26,6 +26,12 @@ global $sc_options;
 			
 			<h2 class="nav-tab-wrapper">
 				<?php
+				
+					$sc_options->set_tabs( array(
+						'keys'    => __( 'Stripe Keys', 'sc' ),
+						'default' => __( 'Default Settings', 'sc' ),
+					) );
+				
 					$first_time = true;
 					$is_active  = '';
 					

@@ -121,14 +121,11 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			echo '<pre>' . print_r( $settings, true ) . '</pre>';
 		}
 		
-		// TODO: make less specific
+		public function set_tabs( $tabs ) {
+			$this->tabs = $tabs;
+		}
+		
 		public function get_tabs() {
-			
-			$this->tabs = array(
-				'keys'    => __( 'Stripe Keys', 'sc' ),
-				'default' => __( 'Default Settings', 'sc' ),
-			);
-			
 			return $this->tabs;
 		}
 		
