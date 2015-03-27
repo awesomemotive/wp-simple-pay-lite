@@ -19,7 +19,7 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 		
 		public $base = null;
 		
-		public function __construct() {
+		private function __construct() {
 			
 			$this->base = Stripe_Checkout::get_instance();
 			

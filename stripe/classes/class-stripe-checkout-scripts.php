@@ -22,7 +22,7 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		//public $plugin_slug = null;
 		public $base = null;
 		
-		public function __construct() {
+		private function __construct() {
 			
 			//$this->version = Stripe_Checkout::get_instance()->version;
 			//$this->plugin_slug = Stripe_Checkout::get_instance()->plugin_slug;

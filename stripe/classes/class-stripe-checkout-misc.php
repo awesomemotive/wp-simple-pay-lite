@@ -21,7 +21,7 @@ if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 
 		private static $zero_decimal_currencies = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
 
-		public function __construct() {
+		private function __construct() {
 			// class constructor
 			add_filter( 'the_content', array( $this, 'shortcode_fix' ) );
 		}

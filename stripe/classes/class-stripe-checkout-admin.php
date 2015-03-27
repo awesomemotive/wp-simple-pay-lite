@@ -28,7 +28,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 */
 		public $plugin_screen_hook_suffix = null;
 		
-		public function __construct() {
+		private function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
 			if( ! get_option( 'sc_upgrade_has_run' ) ) {

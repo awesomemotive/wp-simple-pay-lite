@@ -19,7 +19,7 @@ if( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		
 		public $base = null;
 
-		public function __construct() {
+		private function __construct() {
 
 			//$this->plugin_slug = Stripe_Checkout::get_instance()->plugin_slug;
 			//$this->version     = Stripe_Checkout::get_instance()->version;
