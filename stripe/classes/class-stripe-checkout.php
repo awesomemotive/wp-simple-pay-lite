@@ -156,7 +156,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			}
 			
 			// Include shortcode functions
-			include_once( SC_DIR_PATH . 'includes/shortcodes.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
 		}
 
 		/**
