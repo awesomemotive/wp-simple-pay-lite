@@ -33,7 +33,7 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   STATIC $uid = 1;
 
-		   extract( shortcode_atts( array(
+		   $attr = shortcode_atts( array(
 						   'name'                  => ( $sc_options->get_setting_value( 'name' ) !== null ? $sc_options->get_setting_value( 'name' ) : get_bloginfo( 'title' ) ),
 						   'description'           => '',
 						   'amount'                => '',
@@ -48,11 +48,29 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'prefill_email'         => 'false',
 						   'verify_zip'            => ( $sc_options->get_setting_value( 'verify_zip' ) !== null ? 'true' : 'false' ),
 						   'test_mode'             => 'false'
-					   ), $attr, 'stripe' ) );
-
+					   ), $attr, 'stripe' );
+		   
+		   
+		   /*
+		    * TODO: Should we just declare them all this way or use them in $attr[value] pair?
+		   $name                  = $attr['name'];
+		   $description           = $attr['description'];
+		   $amount                = $attr['amount'];
+		   $image_url             = $attr['image_url'];
+		   $currency              = $attr['currency'];
+		   $checkout_button_label = $attr['checkout_button_label'];
+		   $billing               = $attr['billing'];
+		   $payment_button_label  = $attr['payment_button_label'];
+		   $enable_remember       = $attr['enable_remember'];
+		   $success_redirect_url  = $attr['success_redirect_url'];
+		   $failure_redirect_url  = $attr['failure_redirect_url'];
+		   $prefill_email         = $attr['prefill_email'];
+		   $verify_zip            = $attr['verify_zip'];
+		   $test_mode             = $attr['test_mode'];
+		   */
 
 		   // Check if in test mode or live mode
-		   if( $sc_options->get_setting_value( 'enable_live_key' ) == 0 || $test_mode == 'true' ) {
+		   if( $sc_options->get_setting_value( 'enable_live_key' ) == 0 || $attr['test_mode'] == 'true' ) {
 			   // Test mode
 			   $data_key = ( $sc_options->get_setting_value( 'test_publish_key' ) !== null ? $sc_options->get_setting_value( 'test_publish_key' ) : '' );
 
@@ -77,12 +95,12 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   return '';
 		   }
 
-		   if( ! empty( $prefill_email ) && $prefill_email !== 'false' ) {
+		   if( ! empty( $attr['prefill_email'] ) && $attr['prefill_email'] !== 'false' ) {
 			   // Get current logged in user email
 			   if( is_user_logged_in() ) {
-				   $prefill_email = get_userdata( get_current_user_id() )->user_email;
+				   $attr['prefill_email'] = get_userdata( get_current_user_id() )->user_email;
 			   } else { 
-				   $prefill_email = 'false';
+				   $attr['prefill_email'] = 'false';
 			   }
 		   }
 
@@ -91,27 +109,27 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 					   data-key="' . $data_key . '" ' .
-					   ( ! empty( $image_url ) ? 'data-image="' . $image_url . '" ' : '' ) . 
-					   ( ! empty( $name ) ? 'data-name="' . $name . '" ' : '' ) .
-					   ( ! empty( $description ) ? 'data-description="' . $description . '" ' : '' ) .
-					   ( ! empty( $amount ) ? 'data-amount="' . $amount . '" ' : '' ) .
-					   ( ! empty( $currency ) ? 'data-currency="' . $currency . '" ' : '' ) .
-					   ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . $checkout_button_label . '" ' : '' ) .
-					   ( ! empty( $verify_zip ) ? 'data-zip-code="' . $verify_zip . '" ' : '' ) .
-					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . $prefill_email . '" ' : '' ) .
-					   ( ! empty( $payment_button_label ) ? 'data-label="' . $payment_button_label . '" ' : '' ) .
-					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
-					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
+					   ( ! empty( $attr['image_url'] ) ? 'data-image="' . $attr['image_url'] . '" ' : '' ) . 
+					   ( ! empty( $attr['name'] ) ? 'data-name="' . $attr['name'] . '" ' : '' ) .
+					   ( ! empty( $attr['description'] ) ? 'data-description="' . $attr['description'] . '" ' : '' ) .
+					   ( ! empty( $attr['amount'] ) ? 'data-amount="' . $attr['amount'] . '" ' : '' ) .
+					   ( ! empty( $attr['currency'] ) ? 'data-currency="' . $attr['currency'] . '" ' : '' ) .
+					   ( ! empty( $attr['checkout_button_label'] ) ? 'data-panel-label="' . $attr['checkout_button_label'] . '" ' : '' ) .
+					   ( ! empty( $attr['verify_zip'] ) ? 'data-zip-code="' . $attr['verify_zip'] . '" ' : '' ) .
+					   ( ! empty( $attr['prefill_email'] ) && 'false' != $attr['prefill_email'] ? 'data-email="' . $attr['prefill_email'] . '" ' : '' ) .
+					   ( ! empty( $attr['payment_button_label'] ) ? 'data-label="' . $attr['payment_button_label'] . '" ' : '' ) .
+					   ( ! empty( $attr['enable_remember'] ) ? 'data-allow-remember-me="' . $attr['enable_remember'] . '" ' : 'data-allow-remember-me="true" ' ) .
+					   ( ! empty( $attr['billing'] ) ? 'data-billing-address="' . $attr['billing'] . '" ' : 'data-billing-address="false" ' ) .
 					   '></script>';
 
-		   $html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />';
-		   $html .= '<input type="hidden" name="sc-description" value="' . esc_attr( $description ) . '" />';
-		   $html .= '<input type="hidden" name="sc-amount" class="sc_amount" value="' . esc_attr( $amount ) . '" />';
-		   $html .= '<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />';
-		   $html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $failure_redirect_url ) ? $failure_redirect_url : get_permalink() ) ) . '" />';
-		   $html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
+		   $html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $attr['name'] ) . '" />';
+		   $html .= '<input type="hidden" name="sc-description" value="' . esc_attr( $attr['description'] ) . '" />';
+		   $html .= '<input type="hidden" name="sc-amount" class="sc_amount" value="' . esc_attr( $attr['amount'] ) . '" />';
+		   $html .= '<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $attr['success_redirect_url'] ) ? $attr['success_redirect_url'] : get_permalink() ) ) . '" />';
+		   $html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $attr['failure_redirect_url'] ) ? $attr['failure_redirect_url'] : get_permalink() ) ) . '" />';
+		   $html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $attr['currency'] ) . '" />';
 
-		   if( $test_mode == 'true' ) {
+		   if( $attr['test_mode'] == 'true' ) {
 			   $html .= '<input type="hidden" name="sc_test_mode" value="true" />';
 		   }
 
@@ -127,12 +145,12 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   //Stripe minimum amount allowed.
 		   $stripe_minimum_amount = 50;
 
-		   if( ( empty( $amount ) || $amount < $stripe_minimum_amount ) || ! isset( $amount ) ) {
+		   if( ( empty( $attr['amount'] ) || $attr['amount'] < $stripe_minimum_amount ) || ! isset( $attr['amount'] ) ) {
 
 			   if( current_user_can( 'manage_options' ) ) {
 				   $html =  '<h6>';
 				   $html .= __( 'Stripe checkout requires an amount of ', 'sc' ) . $stripe_minimum_amount;
-				   $html .= ' (' . Stripe_Checkout_Misc::to_formatted_amount( $stripe_minimum_amount, $currency ) . ' ' . $currency . ')';
+				   $html .= ' (' . Stripe_Checkout_Misc::to_formatted_amount( $stripe_minimum_amount, $attr['currency'] ) . ' ' . $attr['currency'] . ')';
 				   $html .= __( ' or larger.', 'sc' );
 				   $html .= '</h6>';
 
