@@ -148,5 +148,13 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		public function get_setting_id( $id ) {
 			return $this->option . '_' . $id;
 		}
+		
+		public function get_option() {
+			return $this->option;
+		}
+		
+		public function delete_option() {
+			delete_option( $this->option );
+		}
 	}
 }

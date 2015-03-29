@@ -12,18 +12,14 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$general = get_option( 'sc_settings_default' );
+$settings = get_option( 'sc_settings' );
 
-if( empty( $general['uninstall_save_settings'] ) ) {
+if( $settings['sc_settings_uninstall_save_settings'] != 1 ) {
 
-	delete_option( 'sc_settings_master' );
-	delete_option( 'sc_settings_default' );
-	delete_option( 'sc_settings_keys' );
-	delete_option( 'sc_show_admin_install_notice' );
-	delete_option( 'sc_has_run' );
-	delete_option( 'sc_version' );
-	delete_option( 'sc_upgrade_has_run' );
-	delete_option( 'sc_settings_licenses' );
-	delete_option( 'sc_licenses' );
+	delete_option( 'sc_settings' );
 	
+	// TODO: since we have changed the settings option I think we need to
+	// decide what to do when users upgrade to this version. Maybe we keep the old settings around
+	// for a couple of versions until we know it is stable enough to delete them out. Or maybe we 
+	// just have a notice that they will be removed if they try to revert they will have to redo them?
 }
