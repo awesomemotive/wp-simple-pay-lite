@@ -27,12 +27,6 @@ if( ! class_exists( 'MM_Settings' ) ) {
 		public function __construct( $option ) {
 			$this->option = $option;
 			
-			if ( false === get_option( $this->option ) ) {
-				add_option( $this->option );
-			}
-			
-			$this->set_defaults();
-			
 			add_action( 'wp_ajax_sc_button_save', array( $this, 'sc_button_save' ) );
 			
 		}
@@ -62,29 +56,14 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			die();
 		}
 		
-		// TODO: Make less specific
-		protected function set_defaults() {
-			$this->settings = array(
-				'name'                    => '',
-				'currency'                => '',
-				'image_url'               => '',
-				'checkout_button_label'   => '',
-				'payment_button_label'    => '',
-				'success_redirect_url'    => '',
-				'disable_success_message' => '',
-				'failure_redirect_url'    => '',
-				'billing'                 => '',
-				'verify_zip'              => '',
-				'enable_remember'         => 1,
-				'disable_css'             => '',
-				'always_enqueue'          => '',
-				'uninstall_save_settings' => 1,
-				'enable_live_key'         => '',
-				'test_secret_key'         => '',
-				'test_publish_key'        => '',
-				'live_secret_key'         => '',
-				'live_publish_key'        => '',
-			);
+		public function set_defaults( $settings = array() ) {
+			
+			if ( false === get_option( $this->option ) ) {
+				
+				$this->settings = $settings;
+			
+				update_option( $this->option, $this->settings );
+			}
 		}
 		
 		
@@ -98,14 +77,15 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			return array_merge( $this->settings, $saved_settings );
 		}
 		
-		public function update_settings( $settings = array() ) {
-			$this->settings = get_option( $this->option );
+		public function update_settings( $settings ) {
 			
-			if( is_array( $this->settings ) ) {
-				$this->settings = array_merge( $this->settings, $settings );
-			} else {
-				$this->settings = $settings;
+			$old_settings = get_option( $this->option );
+			
+			if ( false === $old_settings ) {
+				$old_settings = $this->settings;
 			}
+			
+			$this->settings = array_merge( $old_settings, $settings );
 			
 			foreach( $this->settings as $setting ) {
 				if ( empty( $setting ) ) {

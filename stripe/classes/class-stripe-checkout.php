@@ -44,10 +44,6 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @var      object
 		 */
 		protected static $instance = null;
-
-		
-
-		public $session;
 		
 		/**
 		 * Initialize the plugin by setting localization, filters, and administration functions.
@@ -68,7 +64,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			add_action( 'init', array( $this, 'register_settings' ), 1 );
 		}
 
-		function register_settings() {
+		public function register_settings() {
 			global $sc_options;
 
 			// We load the exteded class here so that it will load all of the class functions all the way back to the base
@@ -143,6 +139,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-extended.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
 			
 			if( is_admin() ) {
 				// Admin side only
@@ -154,9 +151,6 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
 			}
-			
-			// Include shortcode functions
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
 		}
 
 		/**

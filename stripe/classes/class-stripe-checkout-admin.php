@@ -31,6 +31,9 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		private function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
+			add_action( 'init', array( $this, 'set_default_settings' ) );
+			
+			// TODO: Make up to date with new settings
 			if( ! get_option( 'sc_upgrade_has_run' ) ) {
 				add_action( 'init', array( $this, 'upgrade_plugin' ), 0 );
 			}
@@ -52,11 +55,23 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			add_action( 'init', array( $this, 'admin_upgrade_link' ) );
 		}
 		
+		public function set_default_settings() {
+			global $sc_options;
+			
+			$defaults = array(
+				$sc_options->get_setting_id( 'enable_remember' )         => 1,
+				$sc_options->get_setting_id( 'uninstall_save_settings' ) => 1,
+			);
+			
+			$sc_options->set_defaults( $defaults );
+		}
+		
 		/**
 		 * Function to smoothly upgrade from version 1.1.0 to 1.1.1 of the plugin
 		 * 
 		 * @since 1.1.1
 		 */
+		// TODO: Fix this to use new settings
 		function upgrade_plugin() {
 
 			$keys_options = get_option( 'sc_settings_general' );
