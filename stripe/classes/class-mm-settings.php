@@ -62,6 +62,7 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			die();
 		}
 		
+		// TODO: Make less specific
 		protected function set_defaults() {
 			$this->settings = array(
 				'name'                    => '',

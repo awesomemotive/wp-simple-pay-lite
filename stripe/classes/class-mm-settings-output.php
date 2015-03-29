@@ -25,7 +25,7 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 
 		public function textbox( $id, $classes = '' ) {
 
-			$html = '<input type="text" class="' . esc_html( $classes ) . '" name="' . $this->get_setting_id( $id ) . '" id="' . $this->get_setting_id( $id ) . '" value="' . $this->get_setting_value( $id ) . '" />';
+			$html = '<input type="text" class="' . esc_attr( $classes ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="' . esc_attr( $this->get_setting_value( $id ) ) . '" />';
 
 			echo $html;
 		}
@@ -43,7 +43,7 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 
 			$checked = ( ! empty( $value ) ? checked( 1, $value, false ) : '' );
 
-			$html = "\n" . '<input type="checkbox" class="' . esc_html( $classes ) . '" id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id ) . '" value="1" ' . $checked . '/>' . "\n";
+			$html = "\n" . '<input type="checkbox" class="' . esc_attr( $classes ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="1" ' . $checked . '/>' . "\n";
 
 			echo $html;
 		}
@@ -61,7 +61,8 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 				$classes = 'description';
 			}
 
-			$html = '<p class="' . esc_html( $classes ) . '">' . $text . '</p>';
+			$html = '<p class="' . esc_attr( $classes ) . '">' . $text . '</p>';
+			
 			echo $html;
 		}
 
@@ -90,8 +91,8 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 				$checked = ( $this->get_setting_value( $id ) !== null ? true : false );
 			}
 
-			$html  = '<input name="' . $name . '" id="' . $id . '" type="radio" value="' . esc_attr( $value ) . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
-			$html .= '<label for="' . $id . '">' . $label . '</label><br/>';
+			$html  = '<input name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '" type="radio" value="' . esc_attr( $value ) . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
+			$html .= '<label for="' . esc_attr( $id ) . '">' . $label . '</label><br/>';
 
 			echo $html;
 		}
@@ -107,7 +108,7 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 			// Return empty string if no options.
 			if ( empty( $options ) ) {
 				if( current_user_can( 'manage_options' ) ) {
-					echo '<p><strong>Warning:</strong> You have not included in options for this select setting.</p>';
+					echo '<p><strong>Warning:</strong> You have not included any options for this select setting.</p>';
 				} else {
 					echo '';
 				}
@@ -117,10 +118,10 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 
 			$selected = $this->get_setting_value( $id ) !== null ? $this->get_setting_value( $id ) : '';
 
-			$html = '<select id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id )  . '" />' . "\n";
+			$html = '<select id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) )  . '" />' . "\n";
 
 			foreach ( $options as $option ) {
-				$html .= '<option value="' . $option . '" ' . selected( $option, $selected, false ) . '>' . $option . '</option>' . "\n";
+				$html .= '<option value="' . esc_attr( $option ) . '" ' . selected( $option, $selected, false ) . '>' . esc_html( $option ) . '</option>' . "\n";
 			}
 
 			$html .= '</select>' . "\n";
@@ -135,15 +136,19 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 		 * @param array $args
 		 * @since 1.0.0
 		 */
-		public function textarea( $id, $classes = '' ) {
+		public function textarea( $id, $classes = null ) {
 			if ( $this->get_setting_value( $id ) !== null ) {
 				$value = $this->get_setting_value( $id );
 			} else {
 				$value = '';
 			}
+			
+			if( $classes === null ) {
+				$classes = 'large-text';
+			}
 
 			// Ignoring size at the moment.
-			$html = '<textarea class="large-text" cols="50" rows="10" id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id ) . '">' . esc_textarea( $value ) . '</textarea>' . "\n";
+			$html = '<textarea class="' . esc_attr( $classes ) . '" cols="50" rows="10" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '">' . esc_textarea( $value ) . '</textarea>' . "\n";
 
 			echo $html;
 		}
@@ -167,7 +172,7 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 				$classes = 'regular-text';
 			}
 
-			$html = '<input type="number" class="' . esc_attr( $classes ) . '" id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id ) . '" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
+			$html = '<input type="number" class="' . esc_attr( $classes ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
 
 			echo $html;
 		}

@@ -21,7 +21,7 @@ if( ! class_exists( 'MM_Settings_Extended' ) ) {
 		public function toggle_control( $id, $options, $classes = null ) {
 
 			if( count( $options ) != 2 ) {
-				echo 'You must include 2 options for a toggle switch!<br>';
+				echo __( 'You must include 2 options for a toggle switch!', 'sc' ) . '<br>';
 				return;
 			}
 
@@ -33,13 +33,13 @@ if( ! class_exists( 'MM_Settings_Extended' ) ) {
 
 			$checked = ( ! empty( $value ) ? checked( 1, $value, false ) : '' );
 
-			$html  = '<div class="' . $this->option . '-toggle-switch-wrap">';
+			$html  = '<div class="' . esc_attr( $this->option ) . '-toggle-switch-wrap">';
 			$html .= '<label class="' . esc_attr( $classes ) . '">';
-			$html .= '<input type="checkbox" id="' . $this->get_setting_id( $id ) . '" name="' . $this->get_setting_id( $id ) . '" value="1" ' . $checked . '/>';
+			$html .= '<input type="checkbox" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="1" ' . $checked . '/>';
 			$html .= '<span>';
 
 			foreach( $options as $o ) {
-				$html .= '<span>' . $o . '</span>';
+				$html .= '<span>' . esc_html( $o ) . '</span>';
 			}
 
 			$html .= '</span>';
