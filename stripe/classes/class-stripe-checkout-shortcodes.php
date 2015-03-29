@@ -50,9 +50,7 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'test_mode'             => 'false'
 					   ), $attr, 'stripe' );
 		   
-		   
-		   /*
-		    * TODO: Should we just declare them all this way or use them in $attr[value] pair?*/
+		   // Assign variables since we are not using extract
 		   $name                  = $attr['name'];
 		   $description           = $attr['description'];
 		   $amount                = $attr['amount'];
@@ -105,7 +103,8 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   }
 
 		   $html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
-
+		   
+		   // TODO: Add esc_attr() to attribute values!
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 					   data-key="' . $data_key . '" ' .
