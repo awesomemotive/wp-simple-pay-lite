@@ -71,13 +71,20 @@ if( ! class_exists( 'MM_Settings' ) ) {
 			include_once( $file );
 		}
 		
+		public function add_setting( $setting, $value ) {
+			$settings = get_option( $this->option );
+			$settings[ $this->get_setting_id( $setting ) ] = $value;
+			
+			$this->update_settings( $settings );
+		}
+		
 		public function get_settings() {
 			$saved_settings = is_array( get_option( $this->option ) ) ? get_option( $this->option ) : array();
 			
 			return array_merge( $this->settings, $saved_settings );
 		}
 		
-		public function update_settings( $settings ) {
+		public function update_settings( $settings = array() ) {
 			
 			$old_settings = get_option( $this->option );
 			

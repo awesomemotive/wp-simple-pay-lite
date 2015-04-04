@@ -45,5 +45,3 @@ require_once( SC_DIR_PATH . 'classes/class-stripe-checkout.php' );
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
-
-// TODO: Need to add upgrade routine so that all settings will be transferred correctly

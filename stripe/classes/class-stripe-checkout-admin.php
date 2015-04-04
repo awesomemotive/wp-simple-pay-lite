@@ -31,12 +31,9 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		private function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
-			add_action( 'init', array( $this, 'set_default_settings' ) );
+			add_action( 'init', array( $this, 'upgrade_plugin' ) , 2 );
 			
-			// TODO: Make up to date with new settings
-			if( ! get_option( 'sc_upgrade_has_run' ) ) {
-				add_action( 'init', array( $this, 'upgrade_plugin' ), 0 );
-			}
+			add_action( 'init', array( $this, 'set_default_settings' ) );
 			
 			add_action( 'admin_init', array( $this, 'set_admin_tabs' ) );
 			
@@ -71,32 +68,32 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * 
 		 * @since 1.1.1
 		 */
-		// TODO: Fix this to use new settings
-		function upgrade_plugin() {
+		public function upgrade_plugin() {
+			global $sc_options;
+			
+			if ( null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
+				// We need to check for the super old option also here.
+				if ( version_compare( $this->base->version, '1.3.1', '>=' ) ) {
+					$super_old_version = get_option( 'sc_version' );
+				}
 
-			$keys_options = get_option( 'sc_settings_general' );
+				if ( false === $super_old_version ) {
+					if ( null === $sc_options->get_setting_value( 'sc_version' ) ) {
+						$sc_options->add_setting( 'sc_version', $this->base->version );
+					} else {
+						$old = $sc_options->get_setting_value( 'sc_version' );
+						
+						$sc_options->add_setting( 'old_version', $old );
 
-			// Check if test mode was enabled
-			if( isset( $keys_options['enable_test_key'] ) && $keys_options['enable_test_key'] == 1 ) {
-				// if it was then we remove it because we are now checking if live is enabled, not test
-				unset( $keys_options['enable_test_key'] );
-			} else {
-
-				// If was not in test mode then we need to set our new value to true
-				$keys_options['enable_live_key'] = 1;
+						if ( version_compare( $old, $this->base->version, '<' ) ) {
+							include_once( SC_DIR_PATH . 'upgrade.php' );
+						}
+					}
+				} else {
+					$sc_options->add_setting( 'old_version', $super_old_version );
+					include_once( SC_DIR_PATH . 'upgrade.php' );
+				}
 			}
-
-			// Delete old option settings from old version of SC
-			delete_option( 'sc_settings_general' );
-
-			// Update our new settings options
-			update_option( 'sc_settings_keys', $keys_options );
-
-			// Update version number option for future upgrades
-			update_option( 'sc_version', $this->version );
-
-			// Let us know that we ran the upgrade
-			add_option( 'sc_upgrade_has_run', 1 );
 		}
 		
 		public function set_admin_tabs() {

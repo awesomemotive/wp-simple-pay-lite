@@ -51,7 +51,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @since     1.0.0
 		 */
 		private function __construct() {
-
+			
 			// Load plugin text domain
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 			
@@ -69,7 +69,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 
 			// We load the exteded class here so that it will load all of the class functions all the way back to the base
 			$sc_options = new MM_Settings_Extended( 'sc_settings' );
-
+			
 		}
 
 		/**
