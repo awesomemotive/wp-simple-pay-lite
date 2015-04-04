@@ -12,28 +12,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
+if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 	class Stripe_Checkout_Functions {
 
-
+		// Class instance variable
 		protected static $instance = null;
-
+		
+		// Stripe token instance
 		protected static $token = false;
 
 		// Class constructor
 		private function __construct() {
 
 			// We only want to run the charge if the Token is set
-			if( isset( $_POST['stripeToken'] ) ) {
+			if ( isset( $_POST['stripeToken'] ) ) {
 				self::$token = true;
 				add_action( 'init', array( $this, 'charge_card' ) );
 			}
 			
+			// Load Stripe library
 			$this->load_library();
-
+			
+			// Add the filter to show the details
 			add_filter( 'the_content', array( $this, 'show_payment_details' ) );
 		}
 
+		/*
+		 * Function to load the Stripe library
+		 */
 		public function load_library() {
 			if ( ! class_exists( 'Stripe\Stripe' ) ) {
 				require_once( SC_DIR_PATH . 'libraries/stripe-php/init.php' );
@@ -41,7 +47,7 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		}
 
 		/**
-		 * Common method to set Stripe API key from options.
+		 * Common function to set Stripe API key from options.
 		 *
 		 * @since 1.2.4
 		 */
@@ -51,7 +57,7 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			$key = '';
 
 			// Check first if in live or test mode.
-			if( $sc_options->get_setting_value( 'enable_live_key' ) == 1 && $test_mode != 'true' ) {
+			if ( $sc_options->get_setting_value( 'enable_live_key' ) == 1 && $test_mode != 'true' ) {
 				$key = $sc_options->get_setting_value( 'live_secret_key' );
 			} else {
 				$key = $sc_options->get_setting_value( 'test_secret_key' );
@@ -66,7 +72,7 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		 * @since 1.0.0
 		 */
 		public static function charge_card() { 
-			if( self::$token ) {
+			if ( self::$token ) {
 
 				$redirect      = $_POST['sc-redirect'];
 				$fail_redirect = $_POST['sc-redirect-fail'];
@@ -79,19 +85,18 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 				$currency    = $_POST['sc-currency'];
 				$test_mode   = ( isset( $_POST['sc_test_mode'] ) ? $_POST['sc_test_mode'] : 'false' );
 
-				$charge = array();
+				$charge     = array();
 				$query_args = array();
 
 				$meta = array();
 				$meta = apply_filters( 'sc_meta_values', $meta );
 
-				//sc_set_stripe_key( $test_mode );
 				Stripe_Checkout_Functions::set_key( $test_mode );
 
 				// Create new customer
 				$new_customer = \Stripe\Customer::create( array(
 					'email' => $_POST['stripeEmail'],
-					'card'  => $token
+					'card'  => $token,
 				));
 
 				// Create the charge on Stripe's servers - this will charge the user's default card
@@ -101,12 +106,15 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 							'currency'    => $currency,
 							'customer'    => $new_customer['id'],
 							'description' => $description,
-							'metadata'    => $meta
+							'metadata'    => $meta,
 						)
 					);
 
 					// Add Stripe charge ID to querystring.
-					$query_args = array( 'charge' => $charge->id, 'store_name' => urlencode( $store_name ) );
+					$query_args = array(
+						'charge'     => $charge->id,
+						'store_name' => urlencode( $store_name ),
+					);
 
 					$failed = false;
 
@@ -118,7 +126,10 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					$e = $e->getJsonBody();
 
 					// Add failure indicator to querystring.
-					$query_args = array( 'charge' => $e['error']['charge'], 'charge_failed' => true );
+					$query_args = array( 
+						'charge'        => $e['error']['charge'],
+						'charge_failed' => true,
+					);
 
 					$failed = true;
 				}
@@ -127,7 +138,7 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				do_action( 'sc_redirect_before' );
 
-				if( $test_mode == 'true' ) {
+				if( 'true' == $test_mode ) {
 					$query_args['test_mode'] = 'true';
 				}
 
@@ -153,13 +164,12 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 			$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : 'false' );
 
-			//sc_set_stripe_key( $test_mode );
 			Stripe_Checkout_Functions::set_key( $test_mode );
 
 			// Successful charge output.
-			if ( isset( $_GET['charge'] ) && !isset( $_GET['charge_failed'] ) ) {
+			if ( isset( $_GET['charge'] ) && ! isset( $_GET['charge_failed'] ) ) {
 
-				if ( $sc_options->get_setting_value( 'disable_success_message' ) === null ) {
+				if ( null === $sc_options->get_setting_value( 'disable_success_message' ) ) {
 					
 					$charge_id = esc_html( $_GET['charge'] );
 
@@ -193,7 +203,6 @@ if( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					return apply_filters( 'sc_payment_details', $html, $charge_response ) . $content;
 
 				} else {
-
 					return $content;
 				}
 

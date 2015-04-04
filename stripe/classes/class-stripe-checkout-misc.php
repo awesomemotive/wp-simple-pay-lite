@@ -12,30 +12,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
+if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 	class Stripe_Checkout_Misc {
 
-		// Class variables
-
+		// Class instance variable
 		protected static $instance = null;
-
+		
+		// Array of available zero decimal currencies
 		private static $zero_decimal_currencies = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
-
+		
+		/*
+		 * Class constructor
+		 */
 		private function __construct() {
-			// class constructor
+			// Add filter to fix shortcode spacing issues
 			add_filter( 'the_content', array( $this, 'shortcode_fix' ) );
 		}
-
+		
+		/*
+		 * Function to turn amount into a readable number with decimal places
+		 */
 		public static function to_decimal_amount( $amount, $currency ) { 
 
-			if ( ! self::is_zero_decimal_currency( $currency) ) {
+			if ( ! self::is_zero_decimal_currency( $currency ) ) {
 				// Always round to 2 decimals.
 				$amount = round( $amount / 100, 2 );
 			}
 
 			return $amount;
 		}
-
+		
+		/*
+		 * Format the amount
+		 */
 		public static function to_formatted_amount( $amount, $currency ) { 
 
 			// First convert to decimal if needed.
@@ -46,23 +55,30 @@ if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 
 			return $formatted_amount;
 		}
-
+		
+		/*
+		 * Function to find out if there is a shortcode on the page
+		 */
 		public static function has_shortcode() {
 			global $post;
 
 			// Currently ( 5/8/2014 ) the has_shortcode() function will not find a 
 			// nested shortcode. This seems to do the trick currently, will switch if 
 			// has_shortcode() gets updated. -NY
-			if ( strpos( $post->post_content, '[stripe' ) !== false ) {
+			if ( false !== strpos( $post->post_content, '[stripe' ) ) {
 				return true;
 			}
 
 			return false;
 		}
 
+		/*
+		 * Function to disable the OpenGraph tags from WP SEO
+		 */
 		public static function disable_seo_og() { 
-
-			if ( $sc_payment_details['show'] == true ) {
+			
+			// TODO: What is $sc_payment_details? Does this need to be updated to new structure?
+			if ( true == $sc_payment_details['show'] ) {
 				remove_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
 			}
 		}
@@ -82,19 +98,23 @@ if( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			$array = array(
 				'<p>['    => '[',
 				']</p>'   => ']',
-				']<br />' => ']'
+				']<br />' => ']',
 			);
 
 			return strtr( $content, $array );
 		}
 
-		// Private functions
+		/*
+		 * Check if currency is a zero decimal currency or not
+		 */
 		private static function is_zero_decimal_currency( $currency ) { 
 			return in_array( strtoupper( $currency ), self::$zero_decimal_currencies );
 		}
 
 
-		// Return instance of this class
+		/*
+		 * Return instance of this class
+		 */
 		public static function get_instance() {
 
 			// If the single instance hasn't been set, set it now.

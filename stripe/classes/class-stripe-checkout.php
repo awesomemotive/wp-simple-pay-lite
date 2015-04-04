@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! class_exists( 'Stripe_Checkout' ) ) {
+if ( ! class_exists( 'Stripe_Checkout' ) ) {
 	class Stripe_Checkout {
 
 		/**
@@ -46,7 +46,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		protected static $instance = null;
 		
 		/**
-		 * Initialize the plugin by setting localization, filters, and administration functions.
+		 * Initialize the plugin
 		 *
 		 * @since     1.0.0
 		 */
@@ -67,7 +67,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		public function register_settings() {
 			global $sc_options;
 
-			// We load the exteded class here so that it will load all of the class functions all the way back to the base
+			// We load the extended class here so that it will load all of the class functions all the way back to the base
 			$sc_options = new MM_Settings_Extended( 'sc_settings' );
 			
 		}
@@ -80,7 +80,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		public function setup_constants() {
 			
 			// Website for this plugin
-			if( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
+			if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 				define( 'SC_WEBSITE_BASE_URL', 'http://wpstripe.net/' );
 			}
 		}
@@ -123,6 +123,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 		 */
 		public static function activate() {
 			// Add value to indicate that we should show admin install notice.
+			// TODO: Update this to new structure
 			update_option( 'sc_show_admin_install_notice', 1 );
 		}
 
@@ -141,7 +142,7 @@ if( ! class_exists( 'Stripe_Checkout' ) ) {
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
 			
-			if( is_admin() ) {
+			if ( is_admin() ) {
 				// Admin side only
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );

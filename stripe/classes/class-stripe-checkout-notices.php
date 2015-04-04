@@ -15,10 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 	class Stripe_Checkout_Notices {
 		
+		// Class instance variable
 		public static $instance = null;
 		
+		// base class instance variable
 		public $base = null;
 		
+		/*
+		 * Class constructor
+		 */
 		private function __construct() {
 			
 			$this->base = Stripe_Checkout::get_instance();
@@ -49,7 +54,7 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 			}
 
 			// At this point show install notice. Show it only on the plugin screen.
-			if( get_current_screen()->id == 'plugins' ) {
+			if( 'plugins' == get_current_screen()->id ) {
 				include_once( SC_DIR_PATH . 'views/admin-notice-install.php' );
 			}
 		}
@@ -62,7 +67,8 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 		public function check_wp_version() {
 			global $wp_version;
 			$required_wp_version = '3.6.1';
-
+			
+			// TODO: Update this
 			if ( version_compare( $wp_version, $required_wp_version, '<' ) ) {
 				//deactivate_plugins( SC_MAIN_FILE ); 
 				//wp_die( sprintf( __( $this->get_plugin_title() . ' requires WordPress version <strong>' . $required_wp_version . '</strong> to run properly. ' .

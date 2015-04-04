@@ -11,14 +11,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
+if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 	
 	class Stripe_Checkout_Shortcodes {
 		
+		// class instance variable
 		private static $instance = null;
 		
+		/*
+		 * class constructor
+		 */
 		private function __construct() {
-			
+			// Add the shortcode functionality
 			add_shortcode( 'stripe', array( $this, 'stripe_shortcode' ) );
 		}
 		
@@ -34,20 +38,20 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   STATIC $uid = 1;
 
 		   $attr = shortcode_atts( array(
-						   'name'                  => ( $sc_options->get_setting_value( 'name' ) !== null ? $sc_options->get_setting_value( 'name' ) : get_bloginfo( 'title' ) ),
+						   'name'                  => ( null !== $sc_options->get_setting_value( 'name' ) ? $sc_options->get_setting_value( 'name' ) : get_bloginfo( 'title' ) ),
 						   'description'           => '',
 						   'amount'                => '',
-						   'image_url'             => ( $sc_options->get_setting_value( 'image_url' ) !== null ? $sc_options->get_setting_value( 'image_url' ) : '' ),
-						   'currency'              => ( $sc_options->get_setting_value( 'currency' ) !== null ? $sc_options->get_setting_value( 'currency' ) : 'USD' ),
-						   'checkout_button_label' => ( $sc_options->get_setting_value( 'checkout_button_label' ) !== null ? $sc_options->get_setting_value( 'checkout_button_label' ) : '' ),
-						   'billing'               => ( $sc_options->get_setting_value( 'billing' ) !== null ? 'true' : 'false' ),    // true or false
-						   'payment_button_label'  => ( $sc_options->get_setting_value( 'payment_button_label' ) !== null ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'sc' ) ),
-						   'enable_remember'       => ( $sc_options->get_setting_value( 'enable_remember' ) !== null ? 'true' : 'false' ),    // true or false
-						   'success_redirect_url'  => ( $sc_options->get_setting_value( 'success_redirect_url' ) !== null ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
-						   'failure_redirect_url'  => ( $sc_options->get_setting_value( 'failure_redirect_url' ) !== null ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
+						   'image_url'             => ( null !== $sc_options->get_setting_value( 'image_url' ) ? $sc_options->get_setting_value( 'image_url' ) : '' ),
+						   'currency'              => ( null !== $sc_options->get_setting_value( 'currency' ) ? $sc_options->get_setting_value( 'currency' ) : 'USD' ),
+						   'checkout_button_label' => ( null !== $sc_options->get_setting_value( 'checkout_button_label' ) ? $sc_options->get_setting_value( 'checkout_button_label' ) : '' ),
+						   'billing'               => ( null !== $sc_options->get_setting_value( 'billing' ) ? 'true' : 'false' ),    // true or false
+						   'payment_button_label'  => ( null !== $sc_options->get_setting_value( 'payment_button_label' ) ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'sc' ) ),
+						   'enable_remember'       => ( null !== $sc_options->get_setting_value( 'enable_remember' ) ? 'true' : 'false' ),    // true or false
+						   'success_redirect_url'  => ( null !== $sc_options->get_setting_value( 'success_redirect_url' ) ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
+						   'failure_redirect_url'  => ( null !== $sc_options->get_setting_value( 'failure_redirect_url' ) ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
 						   'prefill_email'         => 'false',
-						   'verify_zip'            => ( $sc_options->get_setting_value( 'verify_zip' ) !== null ? 'true' : 'false' ),
-						   'test_mode'             => 'false'
+						   'verify_zip'            => ( null !== $sc_options->get_setting_value( 'verify_zip' ) ? 'true' : 'false' ),
+						   'test_mode'             => 'false',
 					   ), $attr, 'stripe' );
 		   
 		   // Assign variables since we are not using extract
@@ -68,34 +72,34 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   
 
 		   // Check if in test mode or live mode
-		   if( $sc_options->get_setting_value( 'enable_live_key' ) == 0 || $test_mode == 'true' ) {
+		   if ( 0 == $sc_options->get_setting_value( 'enable_live_key' ) || 'true' == $test_mode ) {
 			   // Test mode
-			   $data_key = ( $sc_options->get_setting_value( 'test_publish_key' ) !== null ? $sc_options->get_setting_value( 'test_publish_key' ) : '' );
+			   $data_key = ( null !== $sc_options->get_setting_value( 'test_publish_key' ) ? $sc_options->get_setting_value( 'test_publish_key' ) : '' );
 
 			   if( null === $sc_options->get_setting_value( 'test_secret_key' ) ) {
 				   $data_key = '';
 			   }
 		   } else {
 			   // Live mode
-			   $data_key = ( $sc_options->get_setting_value( 'live_publish_key' ) !== null ? $sc_options->get_setting_value( 'live_publish_key' ) : '' );
+			   $data_key = ( null !== $sc_options->get_setting_value( 'live_publish_key' ) ? $sc_options->get_setting_value( 'live_publish_key' ) : '' );
 
 			   if( null === $sc_options->get_setting_value( 'live_secret_key' ) ) {
 				   $data_key = '';
 			   }
 		   }
 
-		   if( empty( $data_key ) ) {
+		   if ( empty( $data_key ) ) {
 
-			   if( current_user_can( 'manage_options' ) ) {
+			   if ( current_user_can( 'manage_options' ) ) {
 				   return '<h6>' . __( 'You must enter your API keys before the Stripe button will show up here.', 'sc' ) . '</h6>';
 			   }
 
 			   return '';
 		   }
 
-		   if( ! empty( $prefill_email ) && $prefill_email !== 'false' ) {
+		   if ( ! empty( $prefill_email ) && $prefill_email !== 'false' ) {
 			   // Get current logged in user email
-			   if( is_user_logged_in() ) {
+			   if ( is_user_logged_in() ) {
 				   $prefill_email = get_userdata( get_current_user_id() )->user_email;
 			   } else { 
 				   $prefill_email = 'false';
@@ -127,7 +131,7 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $failure_redirect_url ) ? $failure_redirect_url : get_permalink() ) ) . '" />';
 		   $html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
 
-		   if( $test_mode == 'true' ) {
+		   if ( 'true' == $test_mode ) {
 			   $html .= '<input type="hidden" name="sc_test_mode" value="true" />';
 		   }
 
@@ -143,9 +147,9 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   //Stripe minimum amount allowed.
 		   $stripe_minimum_amount = 50;
 
-		   if( ( empty( $amount ) || $amount < $stripe_minimum_amount ) || ! isset( $amount ) ) {
+		   if ( ( empty( $amount ) || $amount < $stripe_minimum_amount ) || ! isset( $amount ) ) {
 			   
-			   if( current_user_can( 'manage_options' ) ) {
+			   if ( current_user_can( 'manage_options' ) ) {
 				   
 				   $html  = '<h6>';
 				   $html .= sprintf( __( 'Stripe checkout requires an amount of %1$s (%2$s %3$s) or larger.', 'sc' ), 
@@ -157,12 +161,11 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 			   return '';
 
-		   } else if( ! isset( $_GET['charge'] ) ) {
+		   } elseif ( ! isset( $_GET['charge'] ) ) {
 			   return $html;
 		   }
 
 		   return '';
-
 	   }
 	   
 	   /**

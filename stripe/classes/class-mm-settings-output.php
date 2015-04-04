@@ -14,15 +14,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'MM_Settings_Output' ) ) {
 	class MM_Settings_Output extends MM_Settings {
 
-
+		/**
+		 * Class constructor
+		 */
 		public function __construct( $option ) {
 			parent::__construct( $option );
 		}
-
+		
+		/**
+		 * Function to output the AJAX Save button
+		 */
 		public function ajax_save_button( $label ) {
-				echo '<button class="ajax_save button-primary">' . $label . '</button>';
-			}
-
+			echo '<button class="ajax_save button-primary">' . $label . '</button>';
+		}
+		
+		/**
+		 * Function to output text inputs
+		 */
 		public function textbox( $id, $classes = '' ) {
 
 			$html = '<input type="text" class="' . esc_attr( $classes ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="' . esc_attr( $this->get_setting_value( $id ) ) . '" />';
@@ -30,12 +38,9 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 			echo $html;
 		}
 
+
 		/**
-		 * 
-		 * Method to output checkbox inputs
-		 * 
-		 * @param 
-		 * @since 1.0.0
+		 * Function to output checkbox inputs
 		 */
 		public function checkbox( $id, $classes = '' ) {
 
@@ -43,21 +48,18 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 
 			$checked = ( ! empty( $value ) ? checked( 1, $value, false ) : '' );
 
-			$html = "\n" . '<input type="checkbox" class="' . esc_attr( $classes ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="1" ' . $checked . '/>' . "\n";
+			$html = '<input type="checkbox" class="' . esc_attr( $classes ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="1" ' . $checked . '/>';
 
 			echo $html;
 		}
 
 		/**
-		 * 
-		 * Method to output text without any inputs
-		 * 
-		 * @param 
-		 * @since 1.0.0
+		 * Function to output text without any inputs
 		 */
-		public function description( $text  = '', $classes = null ) {
-
-			if( $classes === null ) {
+		public function description( $text = '', $classes = null ) {
+			
+			// Default classes
+			if ( null === $classes ) {
 				$classes = 'description';
 			}
 
@@ -67,28 +69,24 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 		}
 
 		/**
-		 * 
-		 * Method to output radio inputs
-		 * 
-		 * @param array $args
-		 * @since 1.0.0
+		 * Function to output radio button inputs
 		 */
 		public function radio_button( $id, $label, $value, $section = '' ) {
 
 			$html = '';
 
-			if( ! empty( $section ) ) {
+			if ( ! empty( $section ) ) {
 				$id   = $this->get_setting_id( $id );
 				$name = $this->option . '[' . $section . ']';
 
 				$saved_value =  $this->get_setting_value( $section );
 
-				$checked = $saved_value !== null ? ( ( $saved_value == $value ) ? true : false ) : false;
+				$checked = null !== $saved_value ? ( ( $saved_value == $value ) ? true : false ) : false;
 
 			} else {
 				$id = $this->get_setting_id( $id );
 
-				$checked = ( $this->get_setting_value( $id ) !== null ? true : false );
+				$checked = ( null !== $this->get_setting_value( $id ) ? true : false );
 			}
 
 			$html  = '<input name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '" type="radio" value="' . esc_attr( $value ) . '" ' . checked( true, $checked, false ) . '/>&nbsp;';
@@ -98,16 +96,12 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 		}
 
 		/**
-		 * 
-		 * Method to output select box inputs
-		 * 
-		 * @param array $args
-		 * @since 1.0.0
+		 * Function to output select box inputs
 		 */
 		public function selectbox( $id, $options, $classes = '' ) {
 			// Return empty string if no options.
 			if ( empty( $options ) ) {
-				if( current_user_can( 'manage_options' ) ) {
+				if ( current_user_can( 'manage_options' ) ) {
 					echo '<p><strong>Warning:</strong> You have not included any options for this select setting.</p>';
 				} else {
 					echo '';
@@ -116,63 +110,57 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 				return;
 			}
 
-			$selected = $this->get_setting_value( $id ) !== null ? $this->get_setting_value( $id ) : '';
+			$selected = null !== $this->get_setting_value( $id ) ? $this->get_setting_value( $id ) : '';
 
-			$html = '<select id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) )  . '" />' . "\n";
+			$html = '<select id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) )  . '" />';
 
 			foreach ( $options as $option ) {
-				$html .= '<option value="' . esc_attr( $option ) . '" ' . selected( $option, $selected, false ) . '>' . esc_html( $option ) . '</option>' . "\n";
+				$html .= '<option value="' . esc_attr( $option ) . '" ' . selected( $option, $selected, false ) . '>' . esc_html( $option ) . '</option>';
 			}
 
-			$html .= '</select>' . "\n";
+			$html .= '</select>';
 
 			echo $html;
 		}
 
 		/**
-		 * 
-		 * Method to output textarea inputs
-		 * 
-		 * @param array $args
-		 * @since 1.0.0
+		 * Function to output textarea inputs
 		 */
 		public function textarea( $id, $classes = null ) {
-			if ( $this->get_setting_value( $id ) !== null ) {
+			if ( null !== $this->get_setting_value( $id ) ) {
 				$value = $this->get_setting_value( $id );
 			} else {
 				$value = '';
 			}
 			
-			if( $classes === null ) {
+			// Default classes
+			if ( null === $classes ) {
 				$classes = 'large-text';
 			}
 
 			// Ignoring size at the moment.
-			$html = '<textarea class="' . esc_attr( $classes ) . '" cols="50" rows="10" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '">' . esc_textarea( $value ) . '</textarea>' . "\n";
+			$html = '<textarea class="' . esc_attr( $classes ) . '" cols="50" rows="10" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '">' . esc_textarea( $value ) . '</textarea>';
 
 			echo $html;
 		}
 
 		/**
-		 * 
-		 * Method to output number (HTML5) inputs
-		 * 
-		 * @param array $args
-		 * @since 1.0.0
+		 * Function to output number (HTML5) inputs
 		 */
 		public function number( $id, $classes = '' ) {
 
-			if ( $this->get_setting_id( $id ) !== null ) {
+			if ( null !== $this->get_setting_id( $id ) ) {
 				$value = $this->get_setting_value( $id );
 			} else {
 				$value = '';
 			}
-
-			if( empty( $classes ) ) {
+			
+			// Default classes
+			if ( empty( $classes ) ) {
 				$classes = 'regular-text';
 			}
 
-			$html = '<input type="number" class="' . esc_attr( $classes ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" step="1" value="' . esc_attr( $value ) . '"/>' . "\n";
+			$html = '<input type="number" class="' . esc_attr( $classes ) . '" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" step="1" value="' . esc_attr( $value ) . '"/>';
 
 			echo $html;
 		}

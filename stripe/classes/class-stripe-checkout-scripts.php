@@ -12,21 +12,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
+if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 	
 	class Stripe_Checkout_Scripts {
 		
+		// class instance variable
 		public static $instance = null;
 		
-		//public $version = null;
-		//public $plugin_slug = null;
+		// base class instance variable
 		public $base = null;
 		
+		/*
+		 * Class constructor
+		 */
 		private function __construct() {
-			
-			//$this->version = Stripe_Checkout::get_instance()->version;
-			//$this->plugin_slug = Stripe_Checkout::get_instance()->plugin_slug;
-			
+		
 			$this->base = Stripe_Checkout::get_instance();
 			
 			// Load scripts when posts load so we know if we need to include them or not
@@ -52,8 +52,8 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 				return $posts;
 			}
 
-			foreach ( $posts as $post ){
-				if ( ( strpos( $post->post_content, '[stripe' ) !== false ) || ( $sc_options->get_setting_value( 'always_enqueue' ) !== null ) ) {
+			foreach ( $posts as $post ) {
+				if ( ( false !== strpos( $post->post_content, '[stripe' ) ) || ( null !== $sc_options->get_setting_value( 'always_enqueue' ) ) ) {
 					// Load CSS
 					wp_enqueue_style( $this->base->plugin_slug . '-public' );
 
@@ -73,7 +73,7 @@ if( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 
 			global $sc_options;
 
-			if( $sc_options->get_setting_value( 'disable_css' ) === null ) {
+			if ( null === $sc_options->get_setting_value( 'disable_css' ) ) {
 				wp_register_style( $this->base->plugin_slug . '-public', SC_DIR_URL . 'assets/css/public-main.css', array(), $this->base->version );
 			}
 		}

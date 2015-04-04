@@ -15,8 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 	class Stripe_Checkout_Admin {
 		
+		// Class instance variable
 		public static $instance = null;
 		
+		// Base plugin instance variable
 		public $base;
 		
 		/**
@@ -31,10 +33,13 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		private function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
+			// We need to call a priority of 2 here to ensure that $sc_options has already been loaded
 			add_action( 'init', array( $this, 'upgrade_plugin' ) , 2 );
 			
+			// On init set the default settings
 			add_action( 'init', array( $this, 'set_default_settings' ) );
 			
+			// Set the admin tabs
 			add_action( 'admin_init', array( $this, 'set_admin_tabs' ) );
 			
 			// Add the options page and menu item.
@@ -47,11 +52,11 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
 				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . $this->base->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
 			}
-			
-			// Add "Upgrade to Pro" submenu link
-			add_action( 'init', array( $this, 'admin_upgrade_link' ) );
 		}
 		
+		/*
+		 * Setup the default settings
+		 */
 		public function set_default_settings() {
 			global $sc_options;
 			
@@ -96,6 +101,9 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			}
 		}
 		
+		/*
+		 * Set the tabs in the admin area
+		 */
 		public function set_admin_tabs() {
 			global $sc_options;
 			
@@ -155,19 +163,6 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		}
 		
 		/**
-		 * Add "Upgrade to Pro" submenu link
-		 * 
-		 * @since 1.2.5
-		 */
-		function admin_upgrade_link() {
-			if ( is_admin() ) {
-				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
-
-				//Stripe_Checkout_Upgrade_Link::get_instance();
-			}
-		}
-		
-		/**
 		 * Check if viewing this plugin's admin page.
 		 *
 		 * @since   1.0.0
@@ -177,8 +172,6 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public function viewing_this_plugin() {
 
 			$screen = get_current_screen();
-			
-			//echo '<pre>' . print_r( $this->plugin_screen_hook_suffix, true ) . '</pre>';
 
 			if ( ! empty( $this->plugin_screen_hook_suffix ) && in_array( $screen->id, $this->plugin_screen_hook_suffix ) ) {
 				return true;
@@ -204,7 +197,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			$url = add_query_arg( array(
 				'utm_source'   => $source,
 				'utm_medium'   => $medium,
-				'utm_campaign' => $campaign
+				'utm_campaign' => $campaign,
 			), $base_url );
 
 			return $url;

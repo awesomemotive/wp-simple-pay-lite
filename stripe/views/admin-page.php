@@ -30,15 +30,15 @@ global $sc_options;
 					$first_time = true;
 					$is_active  = '';
 					
-					foreach( $sc_options->get_tabs() as $key => $value) {
-						if( $first_time == true ) {
+					foreach ( $sc_options->get_tabs() as $key => $value ) {
+						if ( true == $first_time ) {
 							$is_active = 'nav-tab-active';
 							$first_time = false;
 						} else {
 							$is_active = '';
 						}
 				?>
-						<a href="#<?php echo $key; ?>" class="nav-tab sc-nav-tab <?php echo $is_active; ?>" data-tab-id="<?php echo $key; ?>"><?php echo $value; ?></a>
+						<a href="#<?php echo esc_attr( $key ); ?>" class="nav-tab sc-nav-tab <?php echo esc_attr( $is_active ); ?>" data-tab-id="<?php echo esc_attr( $key ); ?>"><?php echo $value; ?></a>
 				<?php
 					}
 				?>
@@ -53,12 +53,13 @@ global $sc_options;
 		</div><!-- #sc-settings-content -->
 
 		<div id="sc-settings-sidebar">
-			<?php if ( class_exists( 'Stripe_Checkout_Pro' ) ): ?>
-				<?php include( 'admin-sidebar-pro.php' ); ?>
-			<?php else: ?>
-				<?php include( 'admin-sidebar.php' ); ?>
-			<?php endif; ?>
+			<?php 
+				if ( class_exists( 'Stripe_Checkout_Pro' ) ) {
+					include( 'admin-sidebar-pro.php' );
+				} else {
+					include( 'admin-sidebar.php' );
+				}
+			?>
 		</div>
-
 	</div>
 </div><!-- .wrap -->
