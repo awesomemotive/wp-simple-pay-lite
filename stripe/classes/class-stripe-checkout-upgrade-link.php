@@ -70,8 +70,8 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		 * Load specific scripts
 		 */
 		public function load_scripts() {
-			wp_enqueue_style( $this->base->plugin_slug .'-upgrade-link', SC_DIR_PATH . 'assets/css/admin-upgrade-link.css', array(), $this->base->version );
-			wp_enqueue_script( $this->base->plugin_slug . '-upgrade-link', SC_DIR_PATH. 'assets/js/admin-upgrade-link.js', array( 'jquery' ), $this->base->version, true );
+			wp_enqueue_style( $this->base->plugin_slug .'-upgrade-link', SC_DIR_URL . 'assets/css/admin-upgrade-link.css', array(), $this->base->version );
+			wp_enqueue_script( $this->base->plugin_slug . '-upgrade-link', SC_DIR_URL . 'assets/js/admin-upgrade-link.js', array( 'jquery' ), $this->base->version, true );
 		}
 
 		/**
