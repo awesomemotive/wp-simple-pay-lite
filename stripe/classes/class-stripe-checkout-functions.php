@@ -158,70 +158,73 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		 * @since 1.0.0
 		 */
 		public static function show_payment_details( $content ) { 
-			global $sc_options;
+			
+			if( in_the_loop() && is_main_query() ) {
+				global $sc_options;
 
-			$html = '';
+				$html = '';
 
-			$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : 'false' );
+				$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : 'false' );
 
-			Stripe_Checkout_Functions::set_key( $test_mode );
+				Stripe_Checkout_Functions::set_key( $test_mode );
 
-			// Successful charge output.
-			if ( isset( $_GET['charge'] ) && ! isset( $_GET['charge_failed'] ) ) {
+				// Successful charge output.
+				if ( isset( $_GET['charge'] ) && ! isset( $_GET['charge_failed'] ) ) {
 
-				if ( null === $sc_options->get_setting_value( 'disable_success_message' ) ) {
-					
-					$charge_id = esc_html( $_GET['charge'] );
+					if ( null === $sc_options->get_setting_value( 'disable_success_message' ) ) {
 
-					// https://stripe.com/docs/api/php#charges
-					$charge_response = \Stripe\Charge::retrieve( $charge_id );
+						$charge_id = esc_html( $_GET['charge'] );
 
-					$html = '<div class="sc-payment-details-wrap">' . "\n";
+						// https://stripe.com/docs/api/php#charges
+						$charge_response = \Stripe\Charge::retrieve( $charge_id );
 
-					$html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
+						$html = '<div class="sc-payment-details-wrap">' . "\n";
+
+						$html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
+						$html .= '<p>' . "\n";
+
+						if ( ! empty( $charge_response->description ) ) {
+							$html .= __( "Here's what you bought:", 'sc' ) . '<br/>' . "\n";
+							$html .= $charge_response->description . '<br/>' . "\n";
+						}
+
+						if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
+							$html .= 'From: ' . esc_html( $_GET['store_name'] ) . '<br/>' . "\n";
+						}
+
+						$html .= '<br/>' . "\n";
+						$html .= '<strong>' . __( 'Total Paid: ', 'sc' ) . Stripe_Checkout_Misc::to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
+								 strtoupper( $charge_response->currency ) . '</strong>' . "\n";
+
+						$html .= '</p>' . "\n";
+
+						$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'sc' ), $charge_id ) . '</p>' . "\n";
+
+						$html .= '</div>' . "\n";
+
+						return apply_filters( 'sc_payment_details', $html, $charge_response ) . $content;
+
+					} else {
+						return $content;
+					}
+
+				} elseif ( isset( $_GET['charge_failed'] ) ) {
+
+					// LITE ONLY: Payment details error included in payment details function.
+
+					$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
 					$html .= '<p>' . "\n";
 
-					if ( ! empty( $charge_response->description ) ) {
-						$html .= __( "Here's what you bought:", 'sc' ) . '<br/>' . "\n";
-						$html .= $charge_response->description . '<br/>' . "\n";
-					}
-
-					if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
-						$html .= 'From: ' . esc_html( $_GET['store_name'] ) . '<br/>' . "\n";
-					}
-
-					$html .= '<br/>' . "\n";
-					$html .= '<strong>' . __( 'Total Paid: ', 'sc' ) . Stripe_Checkout_Misc::to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
-							 strtoupper( $charge_response->currency ) . '</strong>' . "\n";
+					$html .= __( 'Sorry, but there has been an error processing your payment.', 'sc' ) . "\n";
+					$html .= __( 'If the problem persists please contact the site owner.', 'sc' ) . "\n";
 
 					$html .= '</p>' . "\n";
-
-					$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'sc' ), $charge_id ) . '</p>' . "\n";
-
 					$html .= '</div>' . "\n";
 
-					return apply_filters( 'sc_payment_details', $html, $charge_response ) . $content;
-
-				} else {
-					return $content;
+					return apply_filters( 'sc_payment_details_error', $html ) . $content;
 				}
-
-			} elseif ( isset( $_GET['charge_failed'] ) ) {
-
-				// LITE ONLY: Payment details error included in payment details function.
-
-				$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
-				$html .= '<p>' . "\n";
-
-				$html .= __( 'Sorry, but there has been an error processing your payment.', 'sc' ) . "\n";
-				$html .= __( 'If the problem persists please contact the site owner.', 'sc' ) . "\n";
-
-				$html .= '</p>' . "\n";
-				$html .= '</div>' . "\n";
-
-				return apply_filters( 'sc_payment_details_error', $html ) . $content;
 			}
-
+			
 			return $content;
 		}
 
