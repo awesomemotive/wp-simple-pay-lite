@@ -153,9 +153,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   $html .= '</form>';
 
-		   // Increment static uid counter
-		   $uid++;
-
 		   //Stripe minimum amount allowed.
 		   $stripe_minimum_amount = 50;
 
