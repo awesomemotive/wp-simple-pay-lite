@@ -68,11 +68,10 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 			global $wp_version;
 			$required_wp_version = '3.6.1';
 			
-			// TODO: Update this
 			if ( version_compare( $wp_version, $required_wp_version, '<' ) ) {
-				//deactivate_plugins( SC_MAIN_FILE ); 
-				//wp_die( sprintf( __( $this->get_plugin_title() . ' requires WordPress version <strong>' . $required_wp_version . '</strong> to run properly. ' .
-				//	'Please update WordPress before reactivating this plugin. <a href="%s">Return to Plugins</a>.', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
+				deactivate_plugins( SC_MAIN_FILE ); 
+				wp_die( sprintf( __( $this->get_plugin_title() . ' requires WordPress version <strong>' . $required_wp_version . '</strong> to run properly. ' .
+					'Please update WordPress before reactivating this plugin. <a href="%s">Return to Plugins</a>.', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
 			}
 		}
 		

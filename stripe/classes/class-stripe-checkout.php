@@ -123,7 +123,6 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 */
 		public static function activate() {
 			// Add value to indicate that we should show admin install notice.
-			// TODO: Update this to new structure
 			update_option( 'sc_show_admin_install_notice', 1 );
 		}
 

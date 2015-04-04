@@ -72,17 +72,6 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return false;
 		}
 
-		/*
-		 * Function to disable the OpenGraph tags from WP SEO
-		 */
-		public static function disable_seo_og() { 
-			
-			// TODO: What is $sc_payment_details? Does this need to be updated to new structure?
-			if ( true == $sc_payment_details['show'] ) {
-				remove_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
-			}
-		}
-
 		/**
 		 * Filters the content to remove any extra paragraph or break tags
 		 * caused by shortcodes.
