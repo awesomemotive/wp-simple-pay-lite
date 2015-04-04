@@ -91,9 +91,9 @@
 		</div>
 
 		<div>
-			<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'disable_css' ) ); ?>"><?php _e( 'Disable CSS', 'sc' ); ?></label>
+			<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'disable_css' ) ); ?>"><?php _e( 'Disable Plugin CSS', 'sc' ); ?></label>
 			<?php $sc_options->checkbox( 'disable_css' ); ?>
-			<span><?php _e( 'Disable the plugin from ouputting the default form CSS.', 'sc' ); ?></span>
+			<span><?php _e( "If this option is checked, this plugin's CSS file will not be referenced.", 'sc' ); ?></span>
 		</div>
 
 		<div>
