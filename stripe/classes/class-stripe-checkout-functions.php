@@ -184,7 +184,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						$html .= '<p>' . "\n";
 
 						if ( ! empty( $charge_response->description ) ) {
-							$html .= __( "Here's what you bought:", 'sc' ) . '<br/>' . "\n";
+							$html .= __( "Here's what you purchased:", 'sc' ) . '<br/>' . "\n";
 							$html .= $charge_response->description . '<br/>' . "\n";
 						}
 
