@@ -47,6 +47,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'billing'               => ( null !== $sc_options->get_setting_value( 'billing' ) ? 'true' : 'false' ),    // true or false
 						   'payment_button_label'  => ( null !== $sc_options->get_setting_value( 'payment_button_label' ) ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'sc' ) ),
 						   'enable_remember'       => ( null !== $sc_options->get_setting_value( 'enable_remember' ) ? 'true' : 'false' ),    // true or false
+						   'bitcoin'               => ( null !== $sc_options->get_setting_value( 'bitcoin' ) ? 'true' : 'false' ),    // true or false
 						   'success_redirect_url'  => ( null !== $sc_options->get_setting_value( 'success_redirect_url' ) ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
 						   'failure_redirect_url'  => ( null !== $sc_options->get_setting_value( 'failure_redirect_url' ) ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
 						   'prefill_email'         => 'false',
@@ -64,6 +65,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $billing               = $attr['billing'];
 		   $payment_button_label  = $attr['payment_button_label'];
 		   $enable_remember       = $attr['enable_remember'];
+		   $bitcoin               = $attr['bitcoin'];
 		   $success_redirect_url  = $attr['success_redirect_url'];
 		   $failure_redirect_url  = $attr['failure_redirect_url'];
 		   $prefill_email         = $attr['prefill_email'];
@@ -121,6 +123,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . esc_attr( $prefill_email ) . '" ' : '' ) .
 					   ( ! empty( $payment_button_label ) ? 'data-label="' . esc_attr( $payment_button_label ) . '" ' : '' ) .
 					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . esc_attr( $enable_remember ) . '" ' : 'data-allow-remember-me="true" ' ) .
+					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 					   ( ! empty( $billing ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : 'data-billing-address="false" ' ) .
 					   '></script>';
 
