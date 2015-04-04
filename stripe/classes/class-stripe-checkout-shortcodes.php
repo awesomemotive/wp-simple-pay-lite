@@ -104,21 +104,20 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   $html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
 		   
-		   // TODO: Add esc_attr() to attribute values!
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-					   data-key="' . $data_key . '" ' .
-					   ( ! empty( $image_url ) ? 'data-image="' . $image_url . '" ' : '' ) . 
-					   ( ! empty( $name ) ? 'data-name="' . $name . '" ' : '' ) .
-					   ( ! empty( $description ) ? 'data-description="' . $description . '" ' : '' ) .
-					   ( ! empty( $amount ) ? 'data-amount="' . $amount . '" ' : '' ) .
-					   ( ! empty( $currency ) ? 'data-currency="' . $currency . '" ' : '' ) .
-					   ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . $checkout_button_label . '" ' : '' ) .
-					   ( ! empty( $verify_zip ) ? 'data-zip-code="' . $verify_zip . '" ' : '' ) .
-					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . $prefill_email . '" ' : '' ) .
-					   ( ! empty( $payment_button_label ) ? 'data-label="' . $payment_button_label . '" ' : '' ) .
-					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
-					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
+					   data-key="' . esc_attr( $data_key ) . '" ' .
+					   ( ! empty( $image_url ) ? 'data-image="' . esc_attr( $image_url ) . '" ' : '' ) . 
+					   ( ! empty( $name ) ? 'data-name="' . esc_attr( $name ) . '" ' : '' ) .
+					   ( ! empty( $description ) ? 'data-description="' . esc_attr( $description ) . '" ' : '' ) .
+					   ( ! empty( $amount ) ? 'data-amount="' . esc_attr( $amount ) . '" ' : '' ) .
+					   ( ! empty( $currency ) ? 'data-currency="' . esc_attr( $currency ) . '" ' : '' ) .
+					   ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . esc_attr( $checkout_button_label ) . '" ' : '' ) .
+					   ( ! empty( $verify_zip ) ? 'data-zip-code="' . esc_attr( $verify_zip ) . '" ' : '' ) .
+					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . esc_attr( $prefill_email ) . '" ' : '' ) .
+					   ( ! empty( $payment_button_label ) ? 'data-label="' . esc_attr( $payment_button_label ) . '" ' : '' ) .
+					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . esc_attr( $enable_remember ) . '" ' : 'data-allow-remember-me="true" ' ) .
+					   ( ! empty( $billing ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : 'data-billing-address="false" ' ) .
 					   '></script>';
 
 		   $html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />';
@@ -145,7 +144,8 @@ if( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $stripe_minimum_amount = 50;
 
 		   if( ( empty( $amount ) || $amount < $stripe_minimum_amount ) || ! isset( $amount ) ) {
-
+			   
+			   // TODO: Fix i18n string
 			   if( current_user_can( 'manage_options' ) ) {
 				   $html =  '<h6>';
 				   $html .= __( 'Stripe checkout requires an amount of ', 'sc' ) . $stripe_minimum_amount;
