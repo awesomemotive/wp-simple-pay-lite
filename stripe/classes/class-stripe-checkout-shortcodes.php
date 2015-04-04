@@ -53,6 +53,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'prefill_email'         => 'false',
 						   'verify_zip'            => ( null !== $sc_options->get_setting_value( 'verify_zip' ) ? 'true' : 'false' ),
 						   'test_mode'             => 'false',
+						   'id'                    => null,
 					   ), $attr, 'stripe' );
 		   
 		   // Assign variables since we are not using extract
@@ -71,6 +72,14 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $prefill_email         = $attr['prefill_email'];
 		   $verify_zip            = $attr['verify_zip'];
 		   $test_mode             = $attr['test_mode'];
+		   $id                    = $attr['id'];
+		   
+		   if ( null === $id || empty( $id ) ) {
+			   $id = 'sc_checkout_form_' . $uid;
+			
+				// Increment static uid counter
+				$uid++;
+		   }
 		   
 
 		   // Check if in test mode or live mode
@@ -108,7 +117,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   }
 		   }
 
-		   $html  = '<form id="sc_checkout_form_' . $uid . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
+		   $html  = '<form id="' . esc_attr( $id ) . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
 		   
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
