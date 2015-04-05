@@ -56,7 +56,7 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 			// Loop through the serialized form query and break it into a PHP array
 			foreach ( $saved as $k => $v ) {
 				$value = explode( '=', $v );
-				$settings[ $value[0] ] = $value[1];
+				$settings[ $value[0] ] = trim( $value[1] );
 			}
 			
 			$this->update_settings( $settings );
