@@ -51,7 +51,7 @@ register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) )
 // https://github.com/WPupdatePHP/wp-update-php
 require_once( SC_DIR_PATH . 'libraries/WPUpdatePhp.php' );
 
-$updatePhp = new WPUpdatePhp( '5.3.3' );
+$updatePhp = new WPUpdatePhp( '5.3', '5.4' );
 
 if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
 	Stripe_Checkout::get_instance();
