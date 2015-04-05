@@ -81,6 +81,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 				$uid++;
 		   }
 		   
+		   $test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : $test_mode );
 
 		   // Check if in test mode or live mode
 		   if ( 0 == $sc_options->get_setting_value( 'enable_live_key' ) || 'true' == $test_mode ) {
