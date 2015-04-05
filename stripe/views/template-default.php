@@ -89,6 +89,12 @@
 			<?php $sc_options->checkbox( 'enable_remember' ); ?>
 			<span><?php _e( 'Adds a "Remember Me" option to the checkout form to allow the user to store their credit card for future use with other sites using Stripe.', 'sc' ); ?></span>
 		</div>
+		
+		<div>
+			<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'use_bitcoin' ) ); ?>"><?php _e( 'Enable Bitcoin', 'sc' ); ?></label>
+			<?php $sc_options->checkbox( 'use_bitcoin' ); ?>
+			<span><?php printf( __( 'Enable accepting <a href="%s" target="_blank">Bitcoin</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/bitcoin' ); ?></span>
+		</div>
 
 		<div>
 			<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'disable_css' ) ); ?>"><?php _e( 'Disable Plugin CSS', 'sc' ); ?></label>
