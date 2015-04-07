@@ -7,7 +7,7 @@
  * @author    Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  * @license   GPL-2.0+
  * @link      http://wpstripe.net
- * @copyright 2014 Phil Derksen
+ * @copyright 2014-2015 Phil Derksen
  *
  * @wordpress-plugin
  * Plugin Name: Simple Stripe Checkout
