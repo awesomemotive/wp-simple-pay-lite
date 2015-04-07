@@ -38,7 +38,7 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 		/**
 		 * AJAX Save
 		 */
-		public function sc_button_save() {
+		public function button_save() {
 			
 			$settings = array();
 			
