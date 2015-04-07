@@ -164,7 +164,4 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			return __( 'Stripe Checkout', 'sc' );
 		}
 	}
-	
-	// Create the class instance
-	Stripe_Checkout::get_instance();
 }
