@@ -48,7 +48,7 @@
 			console.log( 'Serialized Data', serialized_data );
 			
 			var data = {
-					action: 'sc_button_save',
+					action: 'button_save',
 					form_data: encodeURIComponent( serialized_data )
 				};
 

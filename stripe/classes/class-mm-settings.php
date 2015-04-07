@@ -32,7 +32,7 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 			$this->option = $option;
 			
 			// When this class is loaded we initialize the action to use AJAX
-			add_action( 'wp_ajax_sc_button_save', array( $this, 'sc_button_save' ) );
+			add_action( 'wp_ajax_button_save', array( $this, 'button_save' ) );
 		}
 		
 		/**
