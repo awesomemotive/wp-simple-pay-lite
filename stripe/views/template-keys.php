@@ -1,5 +1,5 @@
-<div class="tab-content" id="keys-settings-tab">
-	<form method="post" action="#license-settings" id="license-settings">
+<div class="tab-content" id="stripe-keys-settings-tab">
+	<form method="post" action="#stripe-keys-settings" id="stripe-keys-settings">
 		<?php
 			global $sc_options;
 		?>
