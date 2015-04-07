@@ -49,6 +49,7 @@ register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) )
 // Check for minimum version of PHP before loading plugin.
 // Show admin notice if it doesn't.
 // https://github.com/WPupdatePHP/wp-update-php
+// plugin-name branch for now (to use set_plugin_name method)
 require_once( SC_DIR_PATH . 'libraries/WPUpdatePhp.php' );
 
 $updatePhp->set_plugin_name( 'Simple Stripe Checkout' );
