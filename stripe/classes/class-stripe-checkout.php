@@ -68,7 +68,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			global $sc_options;
 
 			// We load the extended class here so that it will load all of the class functions all the way back to the base
-			$sc_options = new MM_Settings_Extended( 'sc_settings' );
+			$sc_options = new Stripe_Checkout_Settings_Extended( 'sc_settings' );
 			
 		}
 
@@ -137,7 +137,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			// Shared between public/admin side
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
-			include_once( SC_DIR_PATH . 'classes/class-mm-settings-extended.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-settings-extended.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
 			

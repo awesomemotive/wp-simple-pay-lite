@@ -52,8 +52,8 @@ register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) )
 // plugin-name branch for now (to use set_plugin_name method)
 require_once( SC_DIR_PATH . 'libraries/WPUpdatePhp.php' );
 
-$updatePhp->set_plugin_name( 'Simple Stripe Checkout' );
 $updatePhp = new WPUpdatePhp( '5.3', '5.4' );
+$updatePhp->set_plugin_name( 'Simple Stripe Checkout' );
 
 if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
 	
