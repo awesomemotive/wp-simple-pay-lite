@@ -46,8 +46,8 @@ global $sc_options;
 
 			<div id="tab_container">
 				<?php
-					$sc_options->load_template( SC_DIR_PATH . 'views/template-default.php' );
-					$sc_options->load_template( SC_DIR_PATH . 'views/template-keys.php' );
+					$sc_options->load_template( SC_DIR_PATH . 'views/admin-main-tab-default.php' );
+					$sc_options->load_template( SC_DIR_PATH . 'views/admin-main-tab-stripe-keys.php' );
 				?>
 			</div><!-- #tab_container-->
 		</div><!-- #sc-settings-content -->

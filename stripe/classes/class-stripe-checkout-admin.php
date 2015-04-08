@@ -108,8 +108,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			global $sc_options;
 			
 			$sc_options->set_tabs( array(
-				'keys'    => __( 'Stripe Keys', 'sc' ),
-				'default' => __( 'Default Settings', 'sc' ),
+				'stripe-keys'    => __( 'Stripe Keys', 'sc' ),
+				'default'                     => __( 'Default Settings', 'sc' ),
 			) );
 		}
 		
@@ -136,7 +136,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * @since    1.0.0
 		 */
 		public function display_plugin_admin_page() {
-			include_once( SC_DIR_PATH . 'views/admin-page.php' );
+			include_once( SC_DIR_PATH . 'views/admin-main.php' );
 		}
 		
 		/**
