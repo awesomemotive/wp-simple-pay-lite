@@ -40,6 +40,11 @@ if ( ! defined( 'SC_DIR_URL' ) ) {
 	define( 'SC_DIR_URL', plugin_dir_url( __FILE__ ) );
 }
 
+// Website for this plugin
+if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
+	define( 'SC_WEBSITE_BASE_URL', 'http://wpstripe.net/' );
+}
+
 // Include main class file
 require_once( SC_DIR_PATH . 'classes/class-stripe-checkout.php' );
 

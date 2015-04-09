@@ -55,9 +55,6 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			// Load plugin text domain
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 			
-			// Setup constants
-			$this->setup_constants();
-			
 			// Include all necessary files
 			$this->includes();
 
@@ -70,19 +67,6 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			// We load the extended class here so that it will load all of the class functions all the way back to the base
 			$sc_options = new Stripe_Checkout_Settings_Extended( 'sc_settings' );
 			
-		}
-
-		/**
-		 * Setup any plugin constants we need 
-		 *
-		 * @since    1.0.0
-		 */
-		public function setup_constants() {
-			
-			// Website for this plugin
-			if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
-				define( 'SC_WEBSITE_BASE_URL', 'http://wpstripe.net/' );
-			}
 		}
 
 		/**
