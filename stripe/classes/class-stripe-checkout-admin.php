@@ -91,12 +91,12 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 						$sc_options->add_setting( 'old_version', $old );
 
 						if ( version_compare( $old, $this->base->version, '<' ) ) {
-							include_once( SC_DIR_PATH . 'upgrade.php' );
+							include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
 						}
 					}
 				} else {
 					$sc_options->add_setting( 'old_version', $super_old_version );
-					include_once( SC_DIR_PATH . 'upgrade.php' );
+					include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
 				}
 			}
 		}
