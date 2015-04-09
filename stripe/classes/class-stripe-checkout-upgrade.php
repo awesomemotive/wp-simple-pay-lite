@@ -37,12 +37,12 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 
 			$sc_options->add_setting( 'upgrade_has_run', 1 );
 		}
-		
+
+		// TODO: Remove old upgrade routines when new restructure upgrade in place.
+
 		private function sc_v113_upgrade() {
 	
 			global $sc_options;
-
-			// TODO: Remove old options?
 
 			// sc_settings_master holds a merge of all settings arrays tied to the Stripe plugin. This includes any settings that are implemented by users.
 			$master = get_option( 'sc_settings_master' );
