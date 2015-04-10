@@ -18,5 +18,15 @@ if( $settings['sc_settings_uninstall_save_settings'] != 1 ) {
 
 	delete_option( 'sc_settings' );
 
-	// TODO Delete all pre-restructure settings.
+	// Also remove old plugin options
+	
+	delete_option( 'sc_settings_master' );
+	delete_option( 'sc_settings_default' );
+	delete_option( 'sc_settings_keys' );
+	delete_option( 'sc_show_admin_install_notice' );
+	delete_option( 'sc_has_run' );
+	delete_option( 'sc_version' );
+	delete_option( 'sc_upgrade_has_run' );
+	delete_option( 'sc_settings_licenses' );
+	delete_option( 'sc_licenses' );
 }
