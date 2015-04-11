@@ -31,8 +31,19 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 		public function __construct( $option ) {
 			$this->option = $option;
 			
+			add_action( 'init', array( $this, 'register_settings' ) );
+			
 			// When this class is loaded we initialize the action to use AJAX
 			add_action( 'wp_ajax_button_save', array( $this, 'button_save' ) );
+		}
+		
+		
+		public function register_settings() {
+			register_setting( $this->option, $this->option, array( $this, 'sanitize' ) );
+		}
+		
+		public function sanitize( $input ) {
+			return $input;
 		}
 		
 		/**
@@ -159,8 +170,6 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 			
 			$this->settings = $settings;
 			
-			$id = $this->get_setting_id( $id );
-			
 			// Only return it if it is set and it is not empty
 			if ( isset( $settings[ $id ] ) && ! empty( $settings[ $id ] ) ) {
 				return $settings[ $id ];
@@ -173,7 +182,7 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 		 * Create an ID for the specified $id
 		 */
 		public function get_setting_id( $id ) {
-			return $this->option . '_' . $id;
+			return $this->option . '[' . $id . ']';
 		}
 		
 		/*
