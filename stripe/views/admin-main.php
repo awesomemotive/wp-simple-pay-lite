@@ -48,7 +48,7 @@ global $sc_options;
 				<form method="post" action="options.php">
 				<?php
 					settings_fields( $sc_options->get_option() );
-					$sc_options->load_template( SC_DIR_PATH . 'views/admin-main-tab-default.php' );
+					$sc_options->load_template( SC_DIR_PATH . 'views/tabs-admin-main.php' );
 				?>
 				</form>
 			</div><!-- #tab_container-->
