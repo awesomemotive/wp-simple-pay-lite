@@ -32,9 +32,6 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 			$this->option = $option;
 			
 			add_action( 'init', array( $this, 'register_settings' ) );
-			
-			// When this class is loaded we initialize the action to use AJAX
-			add_action( 'wp_ajax_button_save', array( $this, 'button_save' ) );
 		}
 		
 		
@@ -44,35 +41,6 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 		
 		public function sanitize( $input ) {
 			return $input;
-		}
-		
-		/**
-		 * AJAX Save
-		 */
-		public function button_save() {
-			
-			$settings = array();
-			
-			// Remove the '+' signs for strings with spaces
-			$saved = str_replace( '%2B', ' ', $_POST['form_data'] );
-			
-			$saved = urldecode( $saved );
-			
-			// Replace [ and ] with an underscore
-			$saved = str_replace( '%5B', '_', $saved );
-			$saved = str_replace( '%5D', '', $saved );
-			
-			$saved = explode( '&', $saved );
-			
-			// Loop through the serialized form query and break it into a PHP array
-			foreach ( $saved as $k => $v ) {
-				$value = explode( '=', $v );
-				$settings[ $value[0] ] = trim( $value[1] );
-			}
-			
-			$this->update_settings( $settings );
-			
-			die();
 		}
 		
 		/*

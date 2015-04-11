@@ -22,13 +22,6 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 		}
 		
 		/**
-		 * Function to output the AJAX Save button
-		 */
-		public function ajax_save_button( $label ) {
-			echo '<button class="ajax_save button-primary">' . $label . '</button>';
-		}
-		
-		/**
 		 * Function to output text inputs
 		 */
 		public function textbox( $id, $classes = '' ) {
