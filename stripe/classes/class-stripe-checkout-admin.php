@@ -33,11 +33,11 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		private function __construct() {
 			$this->base = Stripe_Checkout::get_instance();
 			
-			// We need to call a priority of 2 here to ensure that $sc_options has already been loaded
-			add_action( 'init', array( $this, 'upgrade_plugin' ) , 2 );
+			// We need to call a priority of 3 here to ensure that $sc_options has already been loaded and we do this after checking for default settings
+			add_action( 'init', array( $this, 'upgrade_plugin' ) , 3 );
 			
 			// On init set the default settings
-			add_action( 'init', array( $this, 'set_default_settings' ) );
+			add_action( 'init', array( $this, 'set_default_settings' ), 2 );
 			
 			// Set the admin tabs
 			add_action( 'admin_init', array( $this, 'set_admin_tabs' ) );
@@ -61,8 +61,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			global $sc_options;
 			
 			$defaults = array(
-				$sc_options->get_setting_id( 'enable_remember' )         => 1,
-				$sc_options->get_setting_id( 'uninstall_save_settings' ) => 1,
+				'enable_remember'         => 1,
+				'uninstall_save_settings' => 1,
 			);
 			
 			$sc_options->set_defaults( $defaults );
@@ -99,6 +99,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 					include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
 				}
 			}
+			
+			$sc_options->add_setting( 'upgrade_has_run', 1 );
 		}
 		
 		/*

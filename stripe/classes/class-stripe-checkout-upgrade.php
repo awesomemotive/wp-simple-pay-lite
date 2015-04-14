@@ -27,15 +27,13 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			$version = $sc_options->get_setting_value( 'old_version' );
 
 			if ( null !== $version ) {
-				if ( version_compare( $version, '1.3.1', '<' ) && null === $sc_options->get_setting_value( 'sc_upgrade_has_run' ) ) {
+				if ( version_compare( $version, '1.3.1', '<' ) && null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
 					$this->sc_v113_upgrade();
 				}
 			}
 
 			$new_version = Stripe_Checkout::get_instance()->version;
 			$sc_options->add_setting( 'sc_version', $new_version );
-
-			$sc_options->add_setting( 'upgrade_has_run', 1 );
 		}
 
 		// TODO: Remove old upgrade routines when new restructure upgrade in place.

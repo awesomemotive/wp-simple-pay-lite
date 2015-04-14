@@ -68,7 +68,7 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 		 */
 		public function add_setting( $setting, $value ) {
 			$settings = get_option( $this->option );
-			$settings[ $this->get_setting_id( $setting ) ] = $value;
+			$settings[ $setting ] = $value;
 			
 			$this->update_settings( $settings );
 		}
