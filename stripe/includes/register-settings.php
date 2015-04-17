@@ -481,6 +481,7 @@ function sc_set_defaults() {
 		$defaults = get_option( 'sc_settings_default' );
 		$defaults['enable_remember'] = 1;
 		$defaults['uninstall_save_settings'] = 1;
+		$defaults['always_enqueue'] = 1;
 		update_option( 'sc_settings_default', $defaults );
 		
 		add_option( 'sc_has_run', 1 );
