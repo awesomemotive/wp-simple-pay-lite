@@ -482,6 +482,7 @@ function sc_set_defaults() {
 		$defaults['enable_remember'] = 1;
 		$defaults['uninstall_save_settings'] = 1;
 		$defaults['always_enqueue'] = 1;
+
 		update_option( 'sc_settings_default', $defaults );
 		
 		add_option( 'sc_has_run', 1 );
@@ -500,8 +501,6 @@ function sc_get_settings() {
 	if( isset( $sc_options['currency'] ) ) {
 		$sc_options['currency'] = strtoupper( $sc_options['currency'] );
 	}
-	
-	
-	
+
 	return $sc_options;
 }
