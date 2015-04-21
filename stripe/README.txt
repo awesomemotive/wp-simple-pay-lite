@@ -117,6 +117,7 @@ There are three ways to install this plugin.
 * Added the ability to accept Bitcoin payments via default settings.
 * Now checks that host is running PHP 5.3.3 or higher using the WPupdatePHP library.
 * Option to always enqueue scripts & styles now enabled by default.
+* Updated to most recent Stripe PHP library (v2.1.2).
 * Tested up to WordPress 4.2.
 
 = 1.3.0.1 - March 13, 2015 =
