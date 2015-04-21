@@ -34,7 +34,7 @@ $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'keys';
 					
 					foreach( $sc_tabs as $key => $value ) {
 				?>
-						<a href="<?php echo add_query_arg( 'tab', $key, remove_query_arg( 'settings-updated' )); ?>" class="nav-tab
+						<a href="<?php echo esc_attr( add_query_arg( 'tab', $key, remove_query_arg( 'settings-updated' ) ) ); ?>" class="nav-tab
 							<?php echo $active_tab == $key ? 'nav-tab-active' : ''; ?>"><?php echo $value ?></a>
 				<?php
 					}

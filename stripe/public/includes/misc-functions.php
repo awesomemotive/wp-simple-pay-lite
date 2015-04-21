@@ -108,7 +108,7 @@ function sc_charge_card() {
 	}
 
 
-	wp_redirect( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) );
+	wp_redirect( esc_attr( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
 
 	do_action( 'sc_redirect_after' );
 
@@ -283,11 +283,11 @@ function sc_has_shortcode() {
 function sc_ga_campaign_url( $base_url, $source, $medium, $campaign ) {
 	// $medium examples: 'sidebar_link', 'banner_image'
 
-	$url = add_query_arg( array(
+	$url = esc_url( add_query_arg( array(
 		'utm_source'   => $source,
 		'utm_medium'   => $medium,
 		'utm_campaign' => $campaign
-	), $base_url );
+	), $base_url ) );
 
 	return $url;
 }
