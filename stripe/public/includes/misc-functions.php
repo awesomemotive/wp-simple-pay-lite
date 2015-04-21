@@ -108,7 +108,7 @@ function sc_charge_card() {
 	}
 
 
-	wp_redirect( esc_attr( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
+	wp_redirect( esc_url_raw( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
 
 	do_action( 'sc_redirect_after' );
 
