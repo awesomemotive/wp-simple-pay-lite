@@ -385,7 +385,7 @@ class Stripe_Checkout {
 	 */
 	public function settings_link( $links ) {
 
-		$setting_link = sprintf( '<a href="%s">%s</a>', esc_attr( add_query_arg( 'page', $this->plugin_slug, admin_url( 'admin.php' ) ) ), __( 'Settings', 'sc' ) );
+		$setting_link = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'page', $this->plugin_slug, admin_url( 'admin.php' ) ) ), __( 'Settings', 'sc' ) );
 		array_unshift( $links, $setting_link );
 
 		return $links;
