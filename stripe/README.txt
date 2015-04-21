@@ -111,12 +111,13 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.3.1 - TODO =
+= 1.3.1 - April 21, 2015 =
 
+* Updated calls to add_query_arg to prevent any possible XSS attacks.
 * Added the ability to accept Bitcoin payments via default settings.
 * Now checks that host is running PHP 5.3.3 or higher using the WPupdatePHP library.
+* Option to always enqueue scripts & styles now enabled by default.
 * Tested up to WordPress 4.2.
-* Enable "Always Enqueue Scripts" option by default.
 
 = 1.3.0.1 - March 13, 2015 =
 
