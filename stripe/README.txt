@@ -110,7 +110,7 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.3.1 - April 21, 2015 =
+= 1.3.1 - April 22, 2015 =
 
 * Updated calls to add_query_arg to prevent any possible XSS attacks.
 * Added the ability to accept Bitcoin payments via default settings.
