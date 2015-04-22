@@ -62,9 +62,8 @@ If you want your customers to receive email receipts, make sure you enable this 
 
 [Learn More About Stripe Checkout Pro](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-###Feature Requests and Updates###
+###Updates###
 
-* [Public roadmap and feature requests](https://trello.com/b/neTGsBIY)
 * [Get notified when new features are released](http://eepurl.com/YMXvP)
 * [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout)
 
