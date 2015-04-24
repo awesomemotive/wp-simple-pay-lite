@@ -1,9 +1,9 @@
 ﻿=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 3.9.3
+Requires at least: 3.9
 Tested up to: 4.2
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -109,6 +109,10 @@ There are three ways to install this plugin.
 4. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 1.3.2 - TODO =
+
+* Fixed bug where the data-sc-id attribute of each form was not incrementing when also using custom form IDs.
 
 = 1.3.1 - April 22, 2015 =
 
