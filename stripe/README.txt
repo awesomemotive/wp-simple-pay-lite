@@ -110,7 +110,7 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.3.2 - TODO =
+= 1.3.2 - April 24, 2015 =
 
 * Fixed bug where the data-sc-id attribute of each form was not incrementing when also using custom form IDs.
 
