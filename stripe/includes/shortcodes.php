@@ -20,11 +20,11 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	global $sc_options;
 
-	// Unique ID to be used with data-sc-id attribute for each form.
-	static $uid = 0;
+	// Variable to hold each form's data-sc-id attribute.
+	static $sc_id = 0;
 
-	// Increment static uid counter.
-	$uid++;
+	// Increment variable for each iteration.
+	$sc_id++;
 
 	extract( shortcode_atts( array(
 					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
@@ -44,9 +44,12 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'test_mode'             => 'false',
 					'id'                    => null,
 				), $attr, 'stripe' ) );
-	
-	if ( $id === null || empty( $id ) ) {
-		$id = 'sc_checkout_form_' . $uid;
+
+	// Generate custom form id attribute if one not specified.
+	// Rename var for clarity.
+	$form_id = $id;
+	if ( $form_id === null || empty( $form_id ) ) {
+		$form_id = 'sc_checkout_form_' . $sc_id;
 	}
 	
 	$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : $test_mode );
@@ -84,10 +87,11 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		}
 	}
 
+	// Populate <form> tag including "id" and data-sc-id attributes.
 	$html  =
 		'<form method="POST" action="" class="sc-checkout-form" ' .
-		'id="' . esc_attr( $id ) . '" ' .
-		'data-sc-id="' . $uid . '">';
+		'id="' . esc_attr( $form_id ) . '" ' .
+		'data-sc-id="' . $sc_id . '">';
 	
 	$html .=
 		'<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
