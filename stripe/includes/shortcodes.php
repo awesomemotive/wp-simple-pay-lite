@@ -19,9 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 function sc_stripe_shortcode( $attr, $content = null ) {
 	
 	global $sc_options;
-	
-	STATIC $uid = 1;
-	
+
+	// Unique ID to be used with data-sc-id attribute for each form.
+	static $uid = 0;
+
+	// Increment static uid counter.
+	$uid++;
+
 	extract( shortcode_atts( array(
 					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
 					'description'           => '',
@@ -38,15 +42,11 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'prefill_email'         => 'false',
 					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
 					'test_mode'             => 'false',
-					'id'               => null,
+					'id'                    => null,
 				), $attr, 'stripe' ) );
-	
 	
 	if ( $id === null || empty( $id ) ) {
 		$id = 'sc_checkout_form_' . $uid;
-		
-		// Increment static uid counter
-		$uid++;
 	}
 	
 	$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : $test_mode );
