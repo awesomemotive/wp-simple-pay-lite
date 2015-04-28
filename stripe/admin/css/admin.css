@@ -39,11 +39,6 @@
 #sc-settings-sidebar .sidebar-container .postbox .inside {
 	margin-bottom: 0;
 }
-/* License Stuff */
-.sc-license-message { 
-	display: inline-block; 
-	margin-left: 7px;
-}
 
 /* Toggle switch wrap */
 .sc-toggle-switch-wrap {
