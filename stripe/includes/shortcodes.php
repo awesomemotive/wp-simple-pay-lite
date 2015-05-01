@@ -43,6 +43,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
 					'test_mode'             => 'false',
 					'id'                    => null,
+					'alipay'                => ( ! empty( $sc_options['alipay'] ) ? $sc_options['alipay'] : 'false' ),
 				), $attr, 'stripe' ) );
 
 	// Generate custom form id attribute if one not specified.
@@ -108,6 +109,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
 		( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 		( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
+		( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
 		'></script>';
 	
 	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />';
