@@ -124,7 +124,7 @@ function sc_register_settings() {
 			'alipay' => array(
 				'id'      => 'alipay',
 				'name'    => __( 'Enable Alipay', 'sc' ),
-				'desc'    => sprintf( __( 'Enable accepting <a href="%s" targer="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/blog/stripe-alipay' ),
+				'desc'    => sprintf( __( 'Enable accepting <a href="%s" targer="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ),
 				'type'    => 'select',
 				'options' => array(
 					'false' => __( 'Disabled', 'sc' ),
