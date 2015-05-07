@@ -27,22 +27,23 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$sc_id++;
 
 	extract( shortcode_atts( array(
-					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
-					'description'           => '',
-					'amount'                => '',
-					'image_url'             => ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : '' ),
-					'currency'              => ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : 'USD' ),
-					'checkout_button_label' => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),
-					'billing'               => ( ! empty( $sc_options['billing'] ) ? 'true' : 'false' ),    // true or false
-					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
-					'enable_remember'       => ( ! empty( $sc_options['enable_remember'] ) ? 'true' : 'false' ),    // true or false
-					'bitcoin'               => ( ! empty( $sc_options['use_bitcoin'] ) ? 'true' : 'false' ),    // true or false
-					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
-					'failure_redirect_url'  => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
-					'prefill_email'         => 'false',
-					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
-					'test_mode'             => 'false',
-					'id'                    => null,
+					'name'                      => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
+					'description'               => '',
+					'amount'                    => '',
+					'image_url'                 => ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : '' ),
+					'currency'                  => ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : 'USD' ),
+					'checkout_button_label'     => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),
+					'billing'                   => ( ! empty( $sc_options['billing'] ) ? 'true' : 'false' ),    // true or false
+					'payment_button_label'      => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
+					'enable_remember'           => ( ! empty( $sc_options['enable_remember'] ) ? 'true' : 'false' ),    // true or false
+					'bitcoin'                   => ( ! empty( $sc_options['use_bitcoin'] ) ? 'true' : 'false' ),    // true or false
+					'success_redirect_url'      => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
+					'failure_redirect_url'      => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
+					'prefill_email'             => 'false',
+					'verify_zip'                => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
+					'test_mode'                 => 'false',
+					'id'                        => null,
+					'payment_details_placement' => 'above',
 				), $attr, 'stripe' ) );
 
 	// Generate custom form id attribute if one not specified.
@@ -116,6 +117,8 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$html .= '<input type="hidden" name="sc-redirect" value="' . esc_attr( ( ! empty( $success_redirect_url ) ? $success_redirect_url : get_permalink() ) ) . '" />';
 	$html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $failure_redirect_url ) ? $failure_redirect_url : get_permalink() ) ) . '" />';
 	$html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
+	$html .= '<input type="hidden" name="sc-details-placement" value="' . ( $payment_details_placement == 'below' ? 'below' : 'above' ) . '" />';
+	
 	
 	if( $test_mode == 'true' ) {
 		$html .= '<input type="hidden" name="sc_test_mode" value="true" />';

@@ -49,12 +49,13 @@ function sc_charge_card() {
 	$fail_redirect = $_POST['sc-redirect-fail'];
 
 	// Get the credit card details submitted by the form
-	$token       = $_POST['stripeToken'];
-	$amount      = $_POST['sc-amount'];
-	$description = $_POST['sc-description'];
-	$store_name  = $_POST['sc-name'];
-	$currency    = $_POST['sc-currency'];
-	$test_mode   = ( isset( $_POST['sc_test_mode'] ) ? $_POST['sc_test_mode'] : 'false' );
+	$token             = $_POST['stripeToken'];
+	$amount            = $_POST['sc-amount'];
+	$description       = $_POST['sc-description'];
+	$store_name        = $_POST['sc-name'];
+	$currency          = $_POST['sc-currency'];
+	$test_mode         = ( isset( $_POST['sc_test_mode'] ) ? $_POST['sc_test_mode'] : 'false' );
+	$details_placement = $_POST['sc-details-placement'];
 
 	$charge = array();
 	$query_args = array();
@@ -106,7 +107,8 @@ function sc_charge_card() {
 	if( $test_mode == 'true' ) {
 		$query_args['test_mode'] = 'true';
 	}
-
+	
+	$query_args['details_placement'] = $details_placement;
 
 	wp_redirect( esc_url_raw( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
 
@@ -134,6 +136,14 @@ function sc_show_payment_details( $content ) {
 		$html = '';
 
 		$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : 'false' );
+		
+		$details_placement = ( isset( $_GET['details_placement'] ) ? $_GET['details_placement'] : 'above' );
+		
+		// Since this is a GET query arg I reset it here in case someone tries to submit it again with their own string written in the URL. 
+		// This helps ensure it can only be set to below or above.
+		$details_placement = ( $details_placement == 'below' ? 'below' : 'above' );
+		
+		$is_above = ( $details_placement == 'below' ? 0 : 1 );
 
 		sc_set_stripe_key( $test_mode );
 
@@ -170,8 +180,12 @@ function sc_show_payment_details( $content ) {
 				$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'sc' ), $charge_id ) . '</p>' . "\n";
 
 				$html .= '</div>' . "\n";
-
-				return apply_filters( 'sc_payment_details', $html, $charge_response ) . $content;
+				
+				if ( $is_above ) {
+					return apply_filters( 'sc_payment_details', $html, $charge_response ) . $content;
+				} else {
+					return $content . apply_filters( 'sc_payment_details', $html, $charge_response );
+				}
 
 			} else {
 
@@ -190,14 +204,18 @@ function sc_show_payment_details( $content ) {
 
 			$html .= '</p>' . "\n";
 			$html .= '</div>' . "\n";
-
-			return apply_filters( 'sc_payment_details_error', $html ) . $content;
+			
+			if ( $is_above ) {
+				return apply_filters( 'sc_payment_details_error', $html ) . $content;
+			} else {
+				return $content . apply_filters( 'sc_payment_details_error', $html );
+			}
 		}
 	}
 
 	return $content;
 }
-add_filter( 'the_content', 'sc_show_payment_details' );
+add_filter( 'the_content', 'sc_show_payment_details', 11 );
 
 /**
  * Convert amount opposite of sc_decimal_to_stripe_amount().
