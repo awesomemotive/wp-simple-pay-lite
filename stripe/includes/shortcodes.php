@@ -45,7 +45,7 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 					'id'                    => null,
 					'alipay'                => ( ! empty( $sc_options['alipay'] ) ? $sc_options['alipay'] : 'false' ), // true, false or auto
 					'alipay_reusable'       => ( ! empty( $sc_options['alipay_reusable'] ) ? 'true' : 'false' ), // true or false
-					'locale'                => ( ! empty( $sc_options['locale'] ) ? $sc_options['locale'] : '' ), // empty or auto
+					'locale'                => ( ! empty( $sc_options['locale'] ) ? 'auto' : '' ), // empty or auto
 				), $attr, 'stripe' ) );
 
 	// Generate custom form id attribute if one not specified.
