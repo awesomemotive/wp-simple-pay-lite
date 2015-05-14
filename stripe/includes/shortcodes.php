@@ -27,22 +27,25 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 	$sc_id++;
 
 	extract( shortcode_atts( array(
-					'name'                      => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
-					'description'               => '',
-					'amount'                    => '',
-					'image_url'                 => ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : '' ),
-					'currency'                  => ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : 'USD' ),
-					'checkout_button_label'     => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),
-					'billing'                   => ( ! empty( $sc_options['billing'] ) ? 'true' : 'false' ),    // true or false
-					'payment_button_label'      => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
-					'enable_remember'           => ( ! empty( $sc_options['enable_remember'] ) ? 'true' : 'false' ),    // true or false
-					'bitcoin'                   => ( ! empty( $sc_options['use_bitcoin'] ) ? 'true' : 'false' ),    // true or false
-					'success_redirect_url'      => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
-					'failure_redirect_url'      => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
-					'prefill_email'             => 'false',
-					'verify_zip'                => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
-					'test_mode'                 => 'false',
-					'id'                        => null,
+					'name'                  => ( ! empty( $sc_options['name'] ) ? $sc_options['name'] : get_bloginfo( 'title' ) ),
+					'description'           => '',
+					'amount'                => '',
+					'image_url'             => ( ! empty( $sc_options['image_url'] ) ? $sc_options['image_url'] : '' ),
+					'currency'              => ( ! empty( $sc_options['currency'] ) ? $sc_options['currency'] : 'USD' ),
+					'checkout_button_label' => ( ! empty( $sc_options['checkout_button_label'] ) ? $sc_options['checkout_button_label'] : '' ),
+					'billing'               => ( ! empty( $sc_options['billing'] ) ? 'true' : 'false' ),    // true or false
+					'payment_button_label'  => ( ! empty( $sc_options['payment_button_label'] ) ? $sc_options['payment_button_label'] : __( 'Pay with Card', 'sc' ) ),
+					'enable_remember'       => ( ! empty( $sc_options['enable_remember'] ) ? 'true' : 'false' ),    // true or false
+					'bitcoin'               => ( ! empty( $sc_options['use_bitcoin'] ) ? 'true' : 'false' ),    // true or false
+					'success_redirect_url'  => ( ! empty( $sc_options['success_redirect_url'] ) ? $sc_options['success_redirect_url'] : get_permalink() ),
+					'failure_redirect_url'  => ( ! empty( $sc_options['failure_redirect_url'] ) ? $sc_options['failure_redirect_url'] : get_permalink() ),
+					'prefill_email'         => 'false',
+					'verify_zip'            => ( ! empty( $sc_options['verify_zip'] ) ? 'true' : 'false' ),
+					'test_mode'             => 'false',
+					'id'                    => null,
+					'alipay'                => ( ! empty( $sc_options['alipay'] ) ? $sc_options['alipay'] : 'false' ), // true, false or auto
+					'alipay_reusable'       => ( ! empty( $sc_options['alipay_reusable'] ) ? 'true' : 'false' ), // true or false
+					'locale'                => ( ! empty( $sc_options['locale'] ) ? 'auto' : '' ), // empty or auto
 					'payment_details_placement' => 'above',
 				), $attr, 'stripe' ) );
 
@@ -109,6 +112,9 @@ function sc_stripe_shortcode( $attr, $content = null ) {
 		( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
 		( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 		( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
+		( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
+		( ! empty( $alipay_reusable ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) .
+		( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .
 		'></script>';
 	
 	$html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />';

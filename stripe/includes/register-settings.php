@@ -121,6 +121,29 @@ function sc_register_settings() {
 				'desc' => sprintf( __( 'Enable accepting <a href="%s" target="_blank">Bitcoin</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/bitcoin' ),
 				'type' => 'checkbox'
 			),
+			'alipay' => array(
+				'id'      => 'alipay',
+				'name'    => __( 'Enable Alipay', 'sc' ),
+				'desc'    => sprintf( __( 'Enable accepting <a href="%s" targer="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ),
+				'type'    => 'select',
+				'options' => array(
+					'false' => __( 'Disabled', 'sc' ),
+					'true'  => __( 'Enabled', 'sc' ),
+					'auto'  => __( 'Auto-detect', 'sc' )
+				)
+			),
+			'alipay_reusable' => array(
+				'id'   => 'alipay_reusable',
+				'name' => __( 'Enable Alipay Reusable', 'sc' ),
+				'desc' => __( 'If you need reusable access to the customer’s account (to create recurring payments, for instance), then you must enable this option.', 'sc' ),
+				'type' => 'checkbox'
+			),
+			'locale' => array( 
+				'id'   => 'locale',
+				'name' => __( 'Set Auto Locale', 'sc' ),
+				'desc' => __( "This option will render a localized Checkout UI, based upon the language preferences of the user's web browser.", 'sc' ),
+				'type' => 'checkbox'
+			),
 			'disable_css' => array(
 				'id'   => 'disable_css',
 				'name' => __( 'Disable Plugin CSS', 'sc' ),
@@ -339,6 +362,34 @@ function sc_section_callback( $args ) {
 	if ( ! empty( $args['desc'] ) ) {
 		$html .= $args['desc'];
 	}
+
+	echo $html;
+}
+
+/*
+ * Select box callback function
+ */
+function sc_select_callback( $args ) {
+	global $sc_options;
+
+	// Return empty string if no options.
+	if ( empty( $args['options'] ) ) {
+		echo '';
+		return;
+	}
+
+	$html = "\n" . '<select id="sc_settings_' . $args['section'] . '[' . $args['id'] . ']" name="sc_settings_' . $args['section'] . '[' . $args['id'] . ']"/>' . "\n";
+
+	foreach ( $args['options'] as $option => $name ) :
+		$selected = isset( $sc_options[$args['id']] ) ? selected( $option, $sc_options[$args['id']], false ) : '';
+		$html .= '<option value="' . $option . '" ' . $selected . '>' . $name . '</option>' . "\n";
+	endforeach;
+
+	$html .= '</select>' . "\n";
+
+	// Render and style description text underneath if it exists.
+	if ( ! empty( $args['desc'] ) )
+		$html .= '<p class="description">' . $args['desc'] . '</p>' . "\n";
 
 	echo $html;
 }
