@@ -123,8 +123,8 @@ function sc_register_settings() {
 			),
 			'alipay' => array(
 				'id'      => 'alipay',
-				'name'    => __( 'Enable Alipay', 'sc' ),
-				'desc'    => sprintf( __( 'Enable accepting <a href="%s" targer="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ),
+				'name'    => __( 'Enable Alipay (beta)', 'sc' ),
+				'desc'    => sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ),
 				'type'    => 'select',
 				'options' => array(
 					'false' => __( 'Disabled', 'sc' ),
@@ -135,7 +135,7 @@ function sc_register_settings() {
 			'alipay_reusable' => array(
 				'id'   => 'alipay_reusable',
 				'name' => __( 'Enable Alipay Reusable', 'sc' ),
-				'desc' => __( 'If you need reusable access to the customer’s account (to create recurring payments, for instance), then you must enable this option.', 'sc' ),
+				'desc' => __( 'Enable reusable access to the customer’s account when using Alipay.', 'sc' ),
 				'type' => 'checkbox'
 			),
 			'locale' => array( 
