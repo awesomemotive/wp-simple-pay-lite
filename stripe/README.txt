@@ -115,6 +115,7 @@ There are three ways to install this plugin.
 * Added the ability to accept Alipay payments via shortcode (alipay="true" or "auto").
 * Added optional Alipay shortcode attributes (alipay_reusable="true" and/or locale="true").
 * Added the ability to accept Alipay payments via default settings.
+* Added payment_details_placement shortcode attribute.
 
 = 1.3.2 - April 24, 2015 =
 
