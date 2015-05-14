@@ -3,7 +3,7 @@ Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 3.9
 Tested up to: 4.2
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,7 +113,8 @@ There are three ways to install this plugin.
 = 1.3.3 - TODO =
 
 * Added the ability to accept Alipay payments via shortcode (alipay="true" or "auto").
-* Added more Alipay shortcode attributes. Optionally add alipay_reusable="true" and/or locale="true".
+* Added optional Alipay shortcode attributes (alipay_reusable="true" and/or locale="true").
+* Added the ability to accept Alipay payments via default settings.
 
 = 1.3.2 - April 24, 2015 =
 
