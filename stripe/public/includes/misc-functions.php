@@ -198,9 +198,6 @@ function sc_show_payment_details( $content ) {
 			
 			$charge = \Stripe\Charge::retrieve( $charge_id );
 			
-			//echo '<pre>' . print_r( $charge, true ) . '</pre>';
-			//echo 'MESSAGE: ' . $charge->failure_message . '<br>';
-			
 			// LITE ONLY: Payment details error included in payment details function.
 
 			$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
