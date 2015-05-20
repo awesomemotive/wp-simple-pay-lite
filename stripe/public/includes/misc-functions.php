@@ -108,7 +108,9 @@ function sc_charge_card() {
 		$query_args['test_mode'] = 'true';
 	}
 	
-	$query_args['details_placement'] = $details_placement;
+	if ( 'below' == $details_placement ) {
+		$query_args['details_placement'] = $details_placement;
+	}
 
 	wp_redirect( esc_url_raw( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
 
