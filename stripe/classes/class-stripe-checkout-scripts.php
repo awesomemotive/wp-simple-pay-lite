@@ -110,6 +110,4 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			return self::$instance;
 		}
 	}
-	
-	Stripe_Checkout_Scripts::get_instance();
 }

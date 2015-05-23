@@ -239,6 +239,4 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			return self::$instance;
 		}
 	}
-	
-	Stripe_Checkout_Functions::get_instance();
 }

@@ -92,6 +92,4 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 			return self::$instance;
 		}
 	}
-	
-	Stripe_Checkout_Notices::get_instance();
 }

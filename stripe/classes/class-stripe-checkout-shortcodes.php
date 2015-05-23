@@ -195,6 +195,4 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			return self::$instance;
 		}
 	}
-	
-	Stripe_Checkout_Shortcodes::get_instance();
 }
