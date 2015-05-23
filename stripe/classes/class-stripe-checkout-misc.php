@@ -100,6 +100,16 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return in_array( strtoupper( $currency ), self::$zero_decimal_currencies );
 		}
 
+		/**
+		 * List of zero-decimal currencies according to Stripe.
+		 * Needed for PHP and JS.
+		 * See: https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
+		 *
+		 * @since 2.0.0
+		 */
+		public static function zero_decimal_currencies() {
+			return array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
+		}
 
 		/*
 		 * Return instance of this class
@@ -114,6 +124,4 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return self::$instance;
 		}
 	}
-	
-	Stripe_Checkout_Misc::get_instance();
 }
