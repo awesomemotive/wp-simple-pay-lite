@@ -31,7 +31,7 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 		public function __construct( $option ) {
 			$this->option = $option;
 			
-			add_action( 'init', array( $this, 'register_settings' ) );
+			add_action( 'admin_init', array( $this, 'register_settings' ) );
 		}
 		
 		
