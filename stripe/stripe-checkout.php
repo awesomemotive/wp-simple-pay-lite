@@ -48,6 +48,9 @@ if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 // Include main class file
 require_once( SC_DIR_PATH . 'classes/class-stripe-checkout.php' );
 
+global $base_class;
+$base_class = Stripe_Checkout::get_instance();
+
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
 

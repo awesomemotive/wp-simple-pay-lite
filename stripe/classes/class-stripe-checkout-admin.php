@@ -18,9 +18,6 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		// Class instance variable
 		public static $instance = null;
 		
-		// Base plugin instance variable
-		public $base;
-		
 		/**
 		 * Slug of the plugin screen.
 		 *
@@ -31,7 +28,6 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public $plugin_screen_hook_suffix = null;
 		
 		private function __construct() {
-			$this->base = Stripe_Checkout::get_instance();
 			
 			// We need to call a priority of 3 here to ensure that $sc_options has already been loaded and we do this after checking for default settings
 			add_action( 'init', array( $this, 'upgrade_plugin' ) , 3 );
@@ -46,11 +42,11 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
 			
 			// Add plugin listing "Settings" action link.
-			add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . $this->base->plugin_slug . '.php' ), array( $this, 'settings_link' ) );
+			add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array( $this, 'settings_link' ) );
 			
 			// Add upgrade link (if not already in Pro).
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . $this->base->plugin_slug . '.php' ), array( $this, 'purchase_pro_link' ) );
+				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array( $this, 'purchase_pro_link' ) );
 			}
 		}
 		
@@ -74,23 +70,23 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * @since 1.1.1
 		 */
 		public function upgrade_plugin() {
-			global $sc_options;
+			global $sc_options, $base_class;
 			
 			if ( null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
 				// We need to check for the super old option also here.
-				if ( version_compare( $this->base->version, '1.3.1', '>=' ) ) {
+				if ( version_compare( $base_class->version, '1.3.1', '>=' ) ) {
 					$super_old_version = get_option( 'sc_version' );
 				}
 
 				if ( false === $super_old_version ) {
 					if ( null === $sc_options->get_setting_value( 'sc_version' ) ) {
-						$sc_options->add_setting( 'sc_version', $this->base->version );
+						$sc_options->add_setting( 'sc_version', $base_class->version );
 					} else {
 						$old = $sc_options->get_setting_value( 'sc_version' );
 						
 						$sc_options->add_setting( 'old_version', $old );
 
-						if ( version_compare( $old, $this->base->version, '<' ) ) {
+						if ( version_compare( $old, $base_class->version, '<' ) ) {
 							include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
 						}
 					}
@@ -109,10 +105,14 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public function set_admin_tabs() {
 			global $sc_options;
 			
-			$sc_options->set_tabs( array(
+			$tabs = array(
 				'stripe-keys'    => __( 'Stripe Keys', 'sc' ),
-				'default'                     => __( 'Default Settings', 'sc' ),
-			) );
+				'default'        => __( 'Default Settings', 'sc' ),
+			);
+			
+			$tabs = apply_filters( 'sc_admin_tabs', $tabs );
+			
+			$sc_options->set_tabs( $tabs );
 		}
 		
 		/**
@@ -122,11 +122,13 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 */
 		public function add_plugin_admin_menu() {
 			
+			global $base_class;
+			
 			$this->plugin_screen_hook_suffix[] = add_menu_page(
-				$this->base->get_plugin_title() . ' ' . __( 'Settings', 'sc' ),
-				$this->base->get_plugin_title(),
+				$base_class->get_plugin_title() . ' ' . __( 'Settings', 'sc' ),
+				$base_class->get_plugin_title(),
 				'manage_options',
-				$this->base->plugin_slug,
+				$base_class->plugin_slug,
 				array( $this, 'display_plugin_admin_page' ),
 				SC_DIR_URL . 'assets/img/icon-16x16.png'
 			);
@@ -150,8 +152,10 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * @return  array  $links  Amended plugin action links
 		 */
 		public function settings_link( $links ) {
-
-			$setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( 'page', $this->base->plugin_slug, admin_url( 'admin.php' ) ), __( 'Settings', 'sc' ) );
+			
+			global $base_class;
+			
+			$setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( 'page', $base_class->plugin_slug, admin_url( 'admin.php' ) ), __( 'Settings', 'sc' ) );
 			array_unshift( $links, $setting_link );
 
 			return $links;
@@ -222,6 +226,4 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			return self::$instance;
 		}
 	}
-	
-	Stripe_Checkout_Admin::get_instance();
 }
