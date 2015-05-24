@@ -59,6 +59,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			$defaults = array(
 				'enable_remember'         => 1,
 				'uninstall_save_settings' => 1,
+				'always_enqueue'          => 1,
 			);
 			
 			$sc_options->set_defaults( $defaults );
