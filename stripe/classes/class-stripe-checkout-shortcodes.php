@@ -70,6 +70,9 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $payment_button_label  = $attr['payment_button_label'];
 		   $enable_remember       = $attr['enable_remember'];
 		   $bitcoin               = $attr['bitcoin'];
+		   $alipay                = $attr['alipay'];
+		   $alipay_reusable       = $attr['alipay_reusable'];
+		   $locale                = $attr['locale'];
 		   $success_redirect_url  = $attr['success_redirect_url'];
 		   $failure_redirect_url  = $attr['failure_redirect_url'];
 		   $prefill_email         = $attr['prefill_email'];
@@ -138,6 +141,9 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . esc_attr( $enable_remember ) . '" ' : 'data-allow-remember-me="true" ' ) .
 					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 					   ( ! empty( $billing ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : 'data-billing-address="false" ' ) .
+					   ( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
+					   ( ! empty( $alipay_reusable ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) .
+					   ( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .
 					   '></script>';
 
 		   $html .= '<input type="hidden" name="sc-name" value="' . esc_attr( $name ) . '" />';

@@ -98,7 +98,13 @@
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay (beta)', 'sc' ); ?></label>
 		<?php $sc_options->description( sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ) ); ?>
-		<?php $sc_options->selectbox( 'alipay', array( 'Disabled', 'Enabled', 'Auto-Detect' ) ); ?>
+		<?php 
+			$sc_options->selectbox( 'alipay', array( 
+												'Disabled' => 'false', 
+												'Enabled' => 'true', 
+												'Auto-Detect' => 'auto' ) 
+									); 
+		?>
 	</div>
 	
 	<div>

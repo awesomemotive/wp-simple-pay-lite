@@ -110,8 +110,8 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 
 			$html = '<select id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) )  . '" />';
 
-			foreach ( $options as $option ) {
-				$html .= '<option value="' . esc_attr( $option ) . '" ' . selected( $option, $selected, false ) . '>' . esc_html( $option ) . '</option>';
+			foreach ( $options as $option => $value ) {
+				$html .= '<option value="' . esc_attr( $value) . '" ' . selected( $value, $selected, false ) . '>' . esc_html( $option ) . '</option>';
 			}
 
 			$html .= '</select>';
