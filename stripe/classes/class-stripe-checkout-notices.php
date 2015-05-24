@@ -18,15 +18,10 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 		// Class instance variable
 		public static $instance = null;
 		
-		// base class instance variable
-		public $base = null;
-		
 		/*
 		 * Class constructor
 		 */
 		private function __construct() {
-			
-			$this->base = Stripe_Checkout::get_instance();
 			
 			// Add admin notice after plugin activation. Also check if should be hidden.
 			add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );

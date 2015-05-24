@@ -19,16 +19,11 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		// class instance variable
 		public static $instance = null;
 		
-		// base class instance variable
-		public $base = null;
-		
 		/*
 		 * Class constructor
 		 */
 		private function __construct() {
 		
-			$this->base = Stripe_Checkout::get_instance();
-			
 			// Load scripts when posts load so we know if we need to include them or not
 			add_filter( 'the_posts', array( $this, 'load_scripts' ) );
 			
@@ -46,7 +41,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		 */
 		public function load_scripts( $posts ){
 
-			global $sc_options;
+			global $sc_options, $base_class;
 
 			if ( empty( $posts ) ) {
 				return $posts;
@@ -55,7 +50,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			foreach ( $posts as $post ) {
 				if ( ( false !== strpos( $post->post_content, '[stripe' ) ) || ( null !== $sc_options->get_setting_value( 'always_enqueue' ) ) ) {
 					// Load CSS
-					wp_enqueue_style( $this->base->plugin_slug . '-public' );
+					wp_enqueue_style( $base_class->plugin_slug . '-public' );
 
 					break;
 				}
@@ -71,10 +66,10 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		 */
 		public function enqueue_public_styles() {
 
-			global $sc_options;
+			global $sc_options, $base_class;
 
 			if ( null === $sc_options->get_setting_value( 'disable_css' ) ) {
-				wp_register_style( $this->base->plugin_slug . '-public', SC_DIR_URL . 'assets/css/public-main.css', array(), $this->base->version );
+				wp_register_style( $base_class->plugin_slug . '-public', SC_DIR_URL . 'assets/css/public-main.css', array(), $base_class->version );
 			}
 		}
 
@@ -84,13 +79,15 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		 * @since     1.0.0
 		 */
 		public function enqueue_admin_styles() {
-
+			
+			global $base_class;
+			
 			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
-				wp_enqueue_style( $this->base->plugin_slug .'-toggle-switch', SC_DIR_URL . 'assets/css/toggle-switch.css', array(), $this->base->version );
-				wp_enqueue_style( $this->base->plugin_slug .'-admin-styles', SC_DIR_URL . 'assets/css/admin-main.css', array( $this->base->plugin_slug .'-toggle-switch' ), $this->base->version );
+				wp_enqueue_style( $base_class->plugin_slug .'-toggle-switch', SC_DIR_URL . 'assets/css/toggle-switch.css', array(), $base_class->version );
+				wp_enqueue_style( $base_class->plugin_slug .'-admin-styles', SC_DIR_URL . 'assets/css/admin-main.css', array( $base_class->plugin_slug .'-toggle-switch' ), $base_class->version );
 			}
 
-			wp_enqueue_script( $this->base->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/admin-main.js', array( 'jquery' ), $this->base->version, true );
+			wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/admin-main.js', array( 'jquery' ), $base_class->version, true );
 		}
 		
 		/**

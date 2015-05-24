@@ -18,15 +18,10 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		// Class instance variable
 		protected static $instance = null;
 		
-		// base class instance variable
-		public $base = null;
-		
 		/*
 		 * Class constructor
 		 */
 		private function __construct() {
-			
-			$this->base = Stripe_Checkout::get_instance();
 			
 			// Load spcific scripts for upgrade link
 			add_action( 'admin_footer', array( $this, 'load_scripts' ) );
@@ -39,12 +34,15 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		 * Add the link to the admin menu
 		 */
 		public function upgrade_link() {
+			
+			global $base_class;
+			
 			$page_hook = add_submenu_page( 
-					$this->base->plugin_slug, 
+					$base_class->plugin_slug, 
 					__( 'Upgrade to Pro', 'sc' ), 
 					__( 'Upgrade to Pro', 'sc' ), 
 					'manage_options', 
-					$this->base->plugin_slug . '-upgrade', 
+					$base_class->plugin_slug . '-upgrade', 
 					array( $this, 'redirect' )
 				);
 
@@ -70,8 +68,11 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		 * Load specific scripts
 		 */
 		public function load_scripts() {
-			wp_enqueue_style( $this->base->plugin_slug .'-upgrade-link', SC_DIR_URL . 'assets/css/admin-upgrade-link.css', array(), $this->base->version );
-			wp_enqueue_script( $this->base->plugin_slug . '-upgrade-link', SC_DIR_URL . 'assets/js/admin-upgrade-link.js', array( 'jquery' ), $this->base->version, true );
+			
+			global $base_class;
+			
+			wp_enqueue_style( $base_class->plugin_slug .'-upgrade-link', SC_DIR_URL . 'assets/css/admin-upgrade-link.css', array(), $base_class->version );
+			wp_enqueue_script( $base_class->plugin_slug . '-upgrade-link', SC_DIR_URL . 'assets/js/admin-upgrade-link.js', array( 'jquery' ), $base_class->version, true );
 		}
 
 		/**
