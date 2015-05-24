@@ -57,6 +57,9 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			
 			// Include all necessary files
 			$this->includes();
+			
+			// Load all instances
+			$this->init();
 
 			add_action( 'init', array( $this, 'register_settings' ), 1 );
 		}
@@ -117,6 +120,32 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 */
 		public function includes() {
 			
+			/*include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-pro-licenses.php' );
+			
+			// Classes
+			// Shared between public/admin side
+			// These 3 classes are not being used as singletons so don't create instances for them
+			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
+			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-settings-extended.php' );
+						
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts-pro.php' );
+			include_once( SC_DIR_PATH . 'classes/class-shortcode-tracker.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
+			
+			if ( is_admin() ) {
+				// Admin side only
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-pro-admin.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-notices.php' );
+			} else {
+				// Public side only
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
+				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-pro-functions.php' );
+			}*/
+			
 			// Classes
 			// Shared between public/admin side
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
@@ -125,15 +154,30 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
 			
-			if ( is_admin() ) {
+			//if ( is_admin() ) {
 				// Admin side only
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-notices.php' );
-			} else {
+			//} else {
 				// Public side only
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
+			//}
+		}
+		
+		// TODO: This will be changed in Lite, and we can just override it in Pro
+		public function init() {
+			Stripe_Checkout_Scripts::get_instance();
+			Stripe_Checkout_Shortcodes::get_instance();
+			
+			if ( is_admin() ) {
+				Stripe_Checkout_Admin::get_instance();
+				Stripe_Checkout_Upgrade_Link::get_instance();
+				Stripe_Checkout_Notices::get_instance();
+			} else {
+				Stripe_Checkout_Misc::get_instance();
+				Stripe_Checkout_Functions::get_instance();
 			}
 		}
 
