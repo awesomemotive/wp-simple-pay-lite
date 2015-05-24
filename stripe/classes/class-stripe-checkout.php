@@ -166,7 +166,6 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			//}
 		}
 		
-		// TODO: This will be changed in Lite, and we can just override it in Pro
 		public function init() {
 			Stripe_Checkout_Scripts::get_instance();
 			Stripe_Checkout_Shortcodes::get_instance();

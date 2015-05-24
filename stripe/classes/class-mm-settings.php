@@ -40,6 +40,28 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 		}
 		
 		public function sanitize( $input ) {
+
+			// Clean up the API keys
+			if ( isset( $_POST['sc_settings'] ) ) {
+				foreach( $input as $k => $v ) {
+					
+					if ( $k == 'test_secret_key' || $k == 'test_publish_key' || $k == 'live_secret_key' || $k == 'live_publish_key' ) {
+						// Trim first
+						$key = trim( $v );
+
+						// Now search for a space
+						$space = strpos( $key, ' ' );
+
+						if( $space !== false ) {
+							$key = substr( $key, 0, $space );
+						}
+
+						// Just trimming again to remove any possible leftover spaces from the string replace
+						$input[$k] = trim( $key );
+					}
+				}
+			}
+			
 			return $input;
 		}
 		
