@@ -35,7 +35,9 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   global $sc_options;
 
-		   STATIC $uid = 1;
+		   STATIC $uid = 0;
+		   
+		   $uid++;
 
 		   $attr = shortcode_atts( array(
 						   'name'                  => ( null !== $sc_options->get_setting_value( 'name' ) ? $sc_options->get_setting_value( 'name' ) : get_bloginfo( 'title' ) ),
@@ -82,9 +84,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   
 		   if ( null === $id || empty( $id ) ) {
 			   $id = 'sc_checkout_form_' . $uid;
-			
-				// Increment static uid counter
-				$uid++;
 		   }
 		   
 		   $test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : $test_mode );
