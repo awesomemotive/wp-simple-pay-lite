@@ -94,6 +94,24 @@
 		<?php $sc_options->checkbox( 'use_bitcoin' ); ?>
 		<span><?php printf( __( 'Enable accepting <a href="%s" target="_blank">Bitcoin</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/bitcoin' ); ?></span>
 	</div>
+	
+	<div>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay (beta)', 'sc' ); ?></label>
+		<?php $sc_options->description( sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ) ); ?>
+		<?php $sc_options->selectbox( 'alipay', array( 'Disabled', 'Enabled', 'Auto-Detect' ) ); ?>
+	</div>
+	
+	<div>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay_reusable' ) ); ?>"><?php _e( 'Enable Alipay Reusable', 'sc' ); ?></label>
+		<?php $sc_options->checkbox( 'alipay_reusable' ); ?>
+		<span><?php _e( 'Enable reusable access to the customer’s account when using Alipay.', 'sc' ); ?></span>
+	</div>
+	
+	<div>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'locale' ) ); ?>"><?php _e( 'Set Auto Locale', 'sc' ); ?></label>
+		<?php $sc_options->checkbox( 'locale' ); ?>
+		<span><?php _e( "This option will render a localized Checkout UI, based upon the language preferences of the user's web browser.", 'sc' ); ?></span>
+	</div>
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'disable_css' ) ); ?>"><?php _e( 'Disable Plugin CSS', 'sc' ); ?></label>
