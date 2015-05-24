@@ -156,7 +156,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			
 			global $base_class;
 			
-			$setting_link = sprintf( '<a href="%s">%s</a>', add_query_arg( 'page', $base_class->plugin_slug, admin_url( 'admin.php' ) ), __( 'Settings', 'sc' ) );
+			$setting_link = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'page', $base_class->plugin_slug, admin_url( 'admin.php' ) ) ), __( 'Settings', 'sc' ) );
 			array_unshift( $links, $setting_link );
 
 			return $links;
@@ -201,11 +201,11 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public static function ga_campaign_url( $base_url, $source, $medium, $campaign ) { 
 			// $medium examples: 'sidebar_link', 'banner_image'
 
-			$url = add_query_arg( array(
+			$url = esc_url( add_query_arg( array(
 				'utm_source'   => $source,
 				'utm_medium'   => $medium,
 				'utm_campaign' => $campaign,
-			), $base_url );
+			), $base_url ) );
 
 			return $url;
 		}
