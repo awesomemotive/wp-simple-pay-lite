@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="inside">
 			<div class="main">
 				<p class="last-blurb centered">
-					<?php _e( 'Additional perks you\'ll get with Stripe Checkout Pro', 'sc' ); ?>
+					<?php _e( "Additional perks you'll get with Stripe Checkout Pro", 'sc' ); ?>
 				</p>
 
 				<ul>
@@ -46,7 +46,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="sidebar-container metabox-holder">
 	<div class="postbox">
-		<h3 class="wp-ui-primary"><span><?php _e( 'Resources', 'sc' ); ?></span></h3>
+		<div class="inside">
+			<p>
+				<?php _e( 'Your review helps more folks find our plugin. Thanks so much!', 'sc' ); ?>
+			</p>
+			<div class="centered">
+				<a href="https://wordpress.org/support/view/plugin-reviews/stripe#postform" class="button-primary" target="_blank">
+					<?php _e( 'Review this Plugin Now', 'sc' ); ?></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="sidebar-container metabox-holder">
+	<div class="postbox">
 		<div class="inside">
 			<ul>
 				<li>
@@ -57,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
-					<a href="http://wordpress.org/support/plugin/stripe" target="_blank">
+					<a href="https://wordpress.org/support/plugin/stripe" target="_blank">
 						<?php _e( 'Community support forums', 'sc' ); ?></a>
 				</li>
 
@@ -72,24 +85,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 <div class="sidebar-container metabox-holder">
-	<div class="postbox">
-		<div class="inside">
-			<p>
-				<?php _e( 'Now accepting 5-star reviews! It only takes seconds and means a lot.', 'sc' ); ?>
-			</p>
-			<div class="centered">
-				<a href="http://wordpress.org/support/view/plugin-reviews/stripe" class="button-primary" target="_blank">
-					<?php _e( 'Rate this Plugin Now', 'sc' ); ?></a>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="sidebar-container metabox-holder">
 	<div class="postbox-nobg">
 		<div class="inside centered">
 			<a href="https://stripe.com/" target="_blank">
-				<img src="<?php echo SC_DIR_URL; ?>assets/img/powered-by-stripe.png" />
+				<img src="<?php echo SC_DIR_URL; ?>assets/powered-by-stripe.png" />
 			</a>
 		</div>
 	</div>
