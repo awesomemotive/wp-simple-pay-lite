@@ -35,9 +35,9 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   global $sc_options;
 
-		   STATIC $uid = 0;
+		   STATIC $sc_id = 0;
 		   
-		   $uid++;
+		   $sc_id++;
 
 		   $attr = shortcode_atts( array(
 						   'name'                  => ( null !== $sc_options->get_setting_value( 'name' ) ? $sc_options->get_setting_value( 'name' ) : get_bloginfo( 'title' ) ),
@@ -82,9 +82,12 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $test_mode             = $attr['test_mode'];
 		   $id                    = $attr['id'];
 		   
-		   if ( null === $id || empty( $id ) ) {
-			   $id = 'sc_checkout_form_' . $uid;
-		   }
+			// Generate custom form id attribute if one not specified.
+			// Rename var for clarity.
+			$form_id = $id;
+			if ( $form_id === null || empty( $form_id ) ) {
+				$form_id = 'sc_checkout_form_' . $sc_id;
+			}
 		   
 		   $test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : $test_mode );
 
@@ -123,7 +126,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   }
 		   }
 
-		   $html  = '<form id="' . esc_attr( $id ) . '" method="POST" action="" data-sc-id="' . $uid . '" class="sc-checkout-form">';
+		   $html  = '<form id="' . esc_attr( $form_id ) . '" method="POST" action="" data-sc-id="' . $sc_id . '" class="sc-checkout-form">';
 		   
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
