@@ -143,7 +143,9 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					$query_args['test_mode'] = 'true';
 				}
 				
-				$query_args['details_placement'] = $details_placement;
+				if ( 'below' == $details_placement ) {
+					$query_args['details_placement'] = $details_placement;
+				}
 
 				self::$token = false;
 
