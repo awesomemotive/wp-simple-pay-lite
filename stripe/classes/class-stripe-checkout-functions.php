@@ -225,17 +225,16 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				} elseif ( isset( $_GET['charge_failed'] ) ) {
 
+					$charge_id = esc_html( $_GET['charge'] );
+			
+					$charge = \Stripe\Charge::retrieve( $charge_id );
 					// LITE ONLY: Payment details error included in payment details function.
 
 					$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
-					$html .= '<p>' . "\n";
-
-					$html .= __( 'Sorry, but there has been an error processing your payment.', 'sc' ) . "\n";
-					$html .= __( 'If the problem persists please contact the site owner.', 'sc' ) . "\n";
-
-					$html .= '</p>' . "\n";
+					$html .= '<p>' . __( 'Sorry, but there has been an error processing your payment.', 'sc' ) . '</p>' . "\n";
+					$html .= '<p>' . $charge->failure_message . '</p>';
 					$html .= '</div>' . "\n";
-
+			
 					if ( $is_above ) {
 						return apply_filters( 'sc_payment_details_error', $html ) . $content;
 					} else {
