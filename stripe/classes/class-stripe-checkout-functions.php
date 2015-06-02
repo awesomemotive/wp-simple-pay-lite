@@ -202,7 +202,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						}
 
 						if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
-							$html .= 'From: ' . esc_html( $_GET['store_name'] ) . '<br/>' . "\n";
+							$html .= 'From: ' . stripslashes( stripslashes( esc_html( $_GET['store_name'] ) ) ) . '<br/>' . "\n";
 						}
 
 						$html .= '<br/>' . "\n";
