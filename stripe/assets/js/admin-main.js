@@ -11,6 +11,21 @@
 	'use strict';
 
 	$(function () {
+		
+		if(window.location.hash) {
+			var hash = window.location.hash.substring(1);
+		} else {
+			var hash = 'stripe-keys';
+		}
+		
+		$('#' + hash + '-settings-tab').addClass('tab-content').show();
+		
+		$('.nav-tab-wrapper').children( '.nav-tab' ).each( function(index) {
+				if($(this).data('tab-id') == hash ) {
+					$(this).addClass('nav-tab-active');
+				}
+			});
+		
 		$('.sc-nav-tab').click( function() {
 			var tab_id = $(this).data('tab-id');
 			

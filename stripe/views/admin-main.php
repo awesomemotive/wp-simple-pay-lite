@@ -26,17 +26,7 @@ global $sc_options;
 			
 			<h2 class="nav-tab-wrapper">
 				<?php
-				
-					$first_time = true;
-					$is_active  = '';
-					
 					foreach ( $sc_options->get_tabs() as $key => $value ) {
-						if ( true == $first_time ) {
-							$is_active = 'nav-tab-active';
-							$first_time = false;
-						} else {
-							$is_active = '';
-						}
 				?>
 						<a href="#<?php echo esc_attr( $key ); ?>" class="nav-tab sc-nav-tab <?php echo esc_attr( $is_active ); ?>" data-tab-id="<?php echo esc_attr( $key ); ?>"><?php echo $value; ?></a>
 				<?php
