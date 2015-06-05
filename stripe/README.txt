@@ -1,9 +1,9 @@
-﻿=== Simple Stripe Checkout ===
+=== Simple Stripe Checkout ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 3.9.3
+Requires at least: 3.9
 Tested up to: 4.2
-Stable tag: 1.3.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,11 +19,9 @@ Instead of spending time building your own checkout forms you can use Stripe's, 
 
 [View Stripe Checkout Live Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-###Plugin Requirements###
+This is a simple standalone Stripe checkout plugin. That's it. **No other plugins required.**
 
-This is a simple standalone Stripe checkout plugin. That's it. No other plugins required.
-
-Note that Stripe suggests that the pages hosting the checkout form be SSL (they should start with `https://`). [Read more about SSL](https://stripe.com/help/ssl).
+**SSL Note:** Stripe does require that pages hosting the checkout form be SSL (they should start with `https://`). [Read more about SSL](https://stripe.com/help/ssl)
 
 ###Start Accepting Payments in 3 Easy Steps###
 
@@ -64,9 +62,8 @@ If you want your customers to receive email receipts, make sure you enable this 
 
 [Learn More About Stripe Checkout Pro](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-###Feature Requests and Updates###
+###Updates###
 
-* [Public roadmap and feature requests](https://trello.com/b/neTGsBIY)
 * [Get notified when new features are released](http://eepurl.com/YMXvP)
 * [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout)
 
@@ -100,9 +97,7 @@ There are three ways to install this plugin.
 
 == Frequently Asked Questions ==
 
-[Detailed Shortcode Documentation](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
-
-[General Plugin Troubleshooting / FAQ](http://wpstripe.net/docs/simple-stripe-checkout-faq/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Plugin Documentation](http://wpstripe.net/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 == Screenshots ==
 
@@ -113,13 +108,45 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.3.0 =
+= 1.4.0 - TODO =
 
-* Updated Stripe PHP Library to 1.17.5.
+= 1.3.3 - May 20, 2015 =
+
+* Added the ability to accept Alipay payments via shortcode (alipay="true" or "auto").
+* Added optional Alipay shortcode attributes (alipay_reusable="true" and/or locale="true").
+* Added the ability to accept Alipay payments via default settings.
+* Added the ability to show payment details below post content via shortcode (payment_details_placement="below").
+* Upon payment failure, the human-readable payment failure message is displayed instead of the failure code.
+* Updated to most recent Stripe PHP library (v2.1.4).
+
+= 1.3.2 - April 24, 2015 =
+
+* Fixed bug where the data-sc-id attribute of each form was not incrementing when also using custom form IDs.
+
+= 1.3.1 - April 22, 2015 =
+
+* Updated calls to add_query_arg to prevent any possible XSS attacks.
+* Added the ability to accept Bitcoin payments via default settings.
+* Now checks that host is running PHP 5.3.3 or higher using the WPupdatePHP library.
+* Option to always enqueue scripts & styles now enabled by default.
+* Updated to most recent Stripe PHP library (v2.1.2).
+* Tested up to WordPress 4.2.
+
+= 1.3.0.1 - March 13, 2015 =
+
+* Corrected the Stripe PHP class check to include new v2.0.0+ namepace. Should fix issues when running other Stripe-related plugins that utilize a version of the Stripe PHP library less than v2.0.0.
+
+= 1.3.0 - March 12, 2015 =
+
+* Added the ability to accept Bitcoin payments via shortcode (bitcoin="true").
+* Updated to most recent Stripe PHP library (v2.1.1), which now requires PHP 5.3.3 or higher.
 * Scripts and styles now only enqueued on posts and pages where required.
 * Added option to always enqueue scripts and styles on every post and page.
 * Added function to remove unwanted formatting in shortcodes.
 * Cleaned up payment success and error details HTML.
+* Fixed duplicate payment success and failure output for rare themes that render multiple post content areas.
+* Added id attribute to shortcode to allow custom form id's.
+* Now sanitizes Stripe API keys with invalid copied characters following a space.
 
 = 1.2.9 =
 
