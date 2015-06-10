@@ -18,7 +18,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 		protected static $instance = null;
 		
 		private function __construct() {
-			add_action( 'init', array( $this, 'run_all_upgrades' ) );
+			$this->run_all_upgrades();
 		}
 		
 		public function run_all_upgrades() {
@@ -27,8 +27,8 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			$version = $sc_options->get_setting_value( 'old_version' );
 
 			if ( null !== $version ) {
-				if ( version_compare( $version, '1.3.1', '<' ) && null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
-					$this->sc_v113_upgrade();
+				if ( version_compare( $version, '1.4.0', '<' ) && null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
+					$this->sc_v140_upgrade();
 				}
 			}
 
@@ -38,7 +38,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 
 		// TODO: Remove old upgrade routines when new restructure upgrade in place.
 
-		private function sc_v113_upgrade() {
+		private function sc_v140_upgrade() {
 	
 			global $sc_options;
 

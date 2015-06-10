@@ -89,11 +89,13 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 						if ( version_compare( $old, $base_class->version, '<' ) ) {
 							include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
+							Stripe_Checkout_Upgrade::get_instance();
 						}
 					}
 				} else {
 					$sc_options->add_setting( 'old_version', $super_old_version );
 					include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
+					Stripe_Checkout_Upgrade::get_instance();
 				}
 			}
 			
