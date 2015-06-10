@@ -49,6 +49,8 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			foreach ( $master as $option => $value ) {
 				$sc_options->add_setting( $option, $value );
 			}
+			
+			$sc_options->add_setting( 'had_upgrade', 1 );
 		}
 		
 		/**
