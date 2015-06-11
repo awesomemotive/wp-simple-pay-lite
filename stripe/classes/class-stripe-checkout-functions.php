@@ -151,8 +151,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				wp_redirect( esc_url_raw( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
 
-				do_action( 'sc_redirect_after' );
-
 				exit;
 			}
 		}
