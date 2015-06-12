@@ -32,7 +32,6 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 			echo $html;
 		}
 
-
 		/**
 		 * Function to output checkbox inputs
 		 */

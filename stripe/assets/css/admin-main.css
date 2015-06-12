@@ -46,9 +46,17 @@
 	margin-left: -88px;
 }
 
-.sc-admin-hidden { display: none; }
-.tab-content { display: block; }
+/* Used to hide settings on page load */
+.sc-admin-hidden { 
+	display: none; 
+}
 
+/* Content block for admin tabs */
+.tab-content { 
+	display: block; 
+}
+
+/* Labels for admin settings */
 .tab-content label {
 	font-weight: bold;
 	display: block;

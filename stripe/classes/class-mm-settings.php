@@ -34,11 +34,16 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 			add_action( 'admin_init', array( $this, 'register_settings' ) );
 		}
 		
-		
+		/**
+		 * Register the settings
+		 */
 		public function register_settings() {
 			register_setting( $this->option, $this->option, array( $this, 'sanitize' ) );
 		}
 		
+		/**
+		 * Sanitization function
+		 */
 		public function sanitize( $input ) {
 
 			// Clean up the API keys

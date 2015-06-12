@@ -15,12 +15,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 	class Stripe_Checkout_Upgrade {
 		
+		/**
+		 * Class instance variable
+		 */
 		protected static $instance = null;
 		
+		/**
+		 * Class constructor
+		 */
 		private function __construct() {
 			$this->run_all_upgrades();
 		}
 		
+		/**
+		 * Check and run upgrades if needed
+		 */
 		public function run_all_upgrades() {
 			global $sc_options;
 	
@@ -36,8 +45,10 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			$sc_options->add_setting( 'sc_version', $new_version );
 		}
 
-		// TODO: Remove old upgrade routines when new restructure upgrade in place.
 
+		/**
+		 * Run upgrade routine for version 1.4.0
+		 */
 		private function sc_v140_upgrade() {
 	
 			global $sc_options;

@@ -19,7 +19,6 @@ if( $settings['sc_settings_uninstall_save_settings'] != 1 ) {
 	delete_option( 'sc_settings' );
 
 	// Also remove old plugin options
-	
 	delete_option( 'sc_settings_master' );
 	delete_option( 'sc_settings_default' );
 	delete_option( 'sc_settings_keys' );

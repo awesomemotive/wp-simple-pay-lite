@@ -12,20 +12,24 @@
 
 	$(function () {
 		
+		// Get the # of the page so we can find out what tab to show
 		if(window.location.hash) {
 			var hash = window.location.hash.substring(1);
 		} else {
 			var hash = 'stripe-keys';
 		}
 		
+		// Show the tab content
 		$('#' + hash + '-settings-tab').addClass('tab-content').show();
 		
+		// Make the actual tab selected
 		$('.nav-tab-wrapper').children( '.nav-tab' ).each( function(index) {
 				if($(this).data('tab-id') == hash ) {
 					$(this).addClass('nav-tab-active');
 				}
 			});
 		
+		// Code to hide/show selected tabs
 		$('.sc-nav-tab').click( function() {
 			var tab_id = $(this).data('tab-id');
 			

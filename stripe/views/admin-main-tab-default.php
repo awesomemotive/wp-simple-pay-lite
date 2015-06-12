@@ -1,4 +1,15 @@
-<?php global $sc_options; ?>
+<?php 
+
+	/**
+	 * Represents the view for the Default Settings tab.
+	 *
+	 * @package    SC
+	 * @subpackage Views
+	 * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorsceb@gmail.com>
+	 */
+
+	global $sc_options; 
+?>
 
 <!-- Default Settings tab HTML -->
 <div class="sc-admin-hidden" id="default-settings-tab">

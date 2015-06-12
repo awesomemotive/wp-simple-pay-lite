@@ -27,6 +27,9 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 */
 		public $plugin_screen_hook_suffix = null;
 		
+		/**
+		 * Class constructor
+		 */
 		private function __construct() {
 			
 			// We need to call a priority of 3 here to ensure that $sc_options has already been loaded
@@ -56,6 +59,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public function set_default_settings() {
 			global $sc_options;
 			
+			// Check if an upgrade has happened and if not then load default settings since it is a fresh install.
 			if ( null === $sc_options->get_setting_value( 'had_upgrade' ) ) {
 				$sc_options->add_setting( 'enable_remember', 1 );
 				$sc_options->add_setting( 'uninstall_save_settings', 1 );
@@ -161,7 +165,10 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 			return $links;
 		}
-
+		
+		/**
+		 * Add settings action link for purchasing pro
+		 */
 		public function purchase_pro_link( $links ) {
 			$pro_link = sprintf( '<a href="%s">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'plugin_listing', 'pro_upgrade' ), __( 'Purchase Pro', 'sc' ) );
 			array_push( $links, $pro_link );

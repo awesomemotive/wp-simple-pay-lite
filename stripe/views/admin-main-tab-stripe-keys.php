@@ -1,4 +1,15 @@
-<?php global $sc_options; ?>
+<?php 
+
+	/**
+	 * Represents the view for the Stripe Keys admin tab.
+	 *
+	 * @package    SC
+	 * @subpackage Views
+	 * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorsceb@gmail.com>
+	 */
+
+	global $sc_options; 
+?>
 
 <!-- Stripe Keys tab HTML -->
 <div class="sc-admin-hidden" id="stripe-keys-settings-tab">
