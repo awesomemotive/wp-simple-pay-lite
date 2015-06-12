@@ -43,6 +43,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 
 			$new_version = Stripe_Checkout::get_instance()->version;
 			$sc_options->add_setting( 'sc_version', $new_version );
+			$sc_options->add_setting( 'upgrade_has_run', 1 );
 		}
 
 

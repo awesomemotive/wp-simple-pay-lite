@@ -100,8 +100,6 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 					Stripe_Checkout_Upgrade::get_instance();
 				}
 			}
-			
-			$sc_options->add_setting( 'upgrade_has_run', 1 );
 		}
 		
 		/*
