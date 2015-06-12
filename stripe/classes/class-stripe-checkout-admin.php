@@ -60,7 +60,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			global $sc_options;
 			
 			// Check if an upgrade has happened and if not then load default settings since it is a fresh install.
-			if ( null === $sc_options->get_setting_value( 'had_upgrade' ) ) {
+			if ( null === $sc_options->get_setting_value( 'had_upgrade' ) && null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
 				$sc_options->add_setting( 'enable_remember', 1 );
 				$sc_options->add_setting( 'uninstall_save_settings', 1 );
 				$sc_options->add_setting( 'always_enqueue', 1 );
