@@ -56,12 +56,12 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 			
 			// Include all necessary files
-			$this->includes();
+			add_action( 'init', array( $this, 'includes' ), 0 );
 			
 			// Load all instances
-			$this->init();
+			add_action( 'init', array( $this, 'init' ), 1 );
 
-			add_action( 'init', array( $this, 'register_settings' ), 1 );
+			add_action( 'init', array( $this, 'register_settings' ), 2 );
 		}
 		
 		/**

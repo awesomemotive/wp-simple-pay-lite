@@ -24,33 +24,29 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 		 * Class constructor
 		 */
 		private function __construct() {
-			$this->run_all_upgrades();
-		}
-		
-		/**
-		 * Check and run upgrades if needed
-		 */
-		public function run_all_upgrades() {
-			global $sc_options;
+			
+			global $base_class;
+			
+			$version = get_option( 'sc_version' );
 	
-			$version = $sc_options->get_setting_value( 'old_version' );
-
-			if ( null !== $version ) {
-				if ( version_compare( $version, '1.4.0', '<' ) && null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
-					$this->sc_v140_upgrade();
+			if( ! empty( $version ) ) {
+				
+				// Version 2.0.4 upgrade
+				if( version_compare( $version, '1.4.0', '<' ) ) {
+					add_action( 'admin_init', array( $this, 'v140_upgrade' ), 11 );
 				}
 			}
 
-			$new_version = Stripe_Checkout::get_instance()->version;
-			$sc_options->add_setting( 'sc_version', $new_version );
-			$sc_options->add_setting( 'upgrade_has_run', 1 );
+			$new_version = $base_class->version;
+			update_option( 'sc_version', $new_version );
+
+			add_option( 'sc_upgrade_has_run', 1 );
 		}
-
-
+		
 		/**
 		 * Run upgrade routine for version 1.4.0
 		 */
-		private function sc_v140_upgrade() {
+		public function v140_upgrade() {
 	
 			global $sc_options;
 
@@ -62,7 +58,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 				$sc_options->add_setting( $option, $value );
 			}
 			
-			$sc_options->add_setting( 'had_upgrade', 1 );
+			add_option( 'sc_had_upgrade', 1 );
 		}
 		
 		/**
@@ -82,4 +78,6 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			return self::$instance;
 		}
 	}
+	
+	Stripe_Checkout_Upgrade::get_instance();
 }

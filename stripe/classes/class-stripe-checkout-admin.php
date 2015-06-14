@@ -32,11 +32,23 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 */
 		private function __construct() {
 			
-			// We need to call a priority of 3 here to ensure that $sc_options has already been loaded
-			add_action( 'init', array( $this, 'upgrade_plugin' ) , 3 );
+			global $base_class;
 			
-			// On init set the default settings but after upgrade has already been called
-			add_action( 'init', array( $this, 'set_default_settings' ), 4 );
+			// We need to call a priority of 3 here to ensure that $sc_options has already been loaded
+			$old = get_option( 'sc_version' );
+		
+			if( version_compare( $old, $base_class->version, '<' ) ) {
+				delete_option( 'sc_upgrade_has_run' );
+				delete_option( 'sc_had_upgrade' );
+			} 
+				
+			if ( false === get_option( 'sc_set_defaults' ) ) {
+				add_action( 'admin_init', array( $this, 'set_default_settings' ), 12 );
+			}
+
+			if( false === get_option( 'sc_upgrade_has_run' ) ) {
+				$this->upgrade();
+			}
 			
 			// Set the admin tabs
 			add_action( 'admin_init', array( $this, 'set_admin_tabs' ) );
@@ -53,52 +65,24 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			}
 		}
 		
+		public function upgrade() {
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
+		}
+		
 		/*
 		 * Setup the default settings
 		 */
 		public function set_default_settings() {
 			global $sc_options;
-			
+		
 			// Check if an upgrade has happened and if not then load default settings since it is a fresh install.
-			if ( null === $sc_options->get_setting_value( 'had_upgrade' ) && null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
+			if ( false === get_option( 'sc_set_defaults' ) && false === get_option( 'sc_had_upgrade' ) ) {
+				
 				$sc_options->add_setting( 'enable_remember', 1 );
 				$sc_options->add_setting( 'uninstall_save_settings', 1 );
 				$sc_options->add_setting( 'always_enqueue', 1 );
-			}
-		}
-		
-		/**
-		 * Function to smoothly upgrade from version 1.1.0 to 1.1.1 of the plugin
-		 * 
-		 * @since 1.1.1
-		 */
-		public function upgrade_plugin() {
-			global $sc_options, $base_class;
-			
-			if ( null === $sc_options->get_setting_value( 'upgrade_has_run' ) ) {
-				// We need to check for the super old option also here.
-				if ( version_compare( $base_class->version, '1.3.1', '>=' ) ) {
-					$super_old_version = get_option( 'sc_version' );
-				}
-
-				if ( false === $super_old_version ) {
-					if ( null === $sc_options->get_setting_value( 'sc_version' ) ) {
-						$sc_options->add_setting( 'sc_version', $base_class->version );
-					} else {
-						$old = $sc_options->get_setting_value( 'sc_version' );
-						
-						$sc_options->add_setting( 'old_version', $old );
-
-						if ( version_compare( $old, $base_class->version, '<' ) ) {
-							include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
-							Stripe_Checkout_Upgrade::get_instance();
-						}
-					}
-				} else {
-					$sc_options->add_setting( 'old_version', $super_old_version );
-					include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
-					Stripe_Checkout_Upgrade::get_instance();
-				}
+				
+				add_option( 'sc_set_defaults', 1 );
 			}
 		}
 		
