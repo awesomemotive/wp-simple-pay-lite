@@ -82,6 +82,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 				$sc_options->add_setting( 'uninstall_save_settings', 1 );
 				$sc_options->add_setting( 'always_enqueue', 1 );
 				
+				do_action( 'sc_admin_defaults' );
+				
 				add_option( 'sc_set_defaults', 1 );
 			}
 		}
