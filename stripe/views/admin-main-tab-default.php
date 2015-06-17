@@ -23,48 +23,48 @@
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'name' ) ); ?>"><?php _e( 'Site Name', 'sc' ); ?></label>
 		<?php 
-			$sc_options->description( __( 'The name of your store or website. Defaults to Site Name.', 'sc' ) );
 			$sc_options->textbox( 'name', 'regular-text' ); 
+			$sc_options->description( __( 'The name of your store or website. Defaults to Site Name.', 'sc' ) );
 		?>
 	</div>
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'currency' ) ); ?>"><?php _e( 'Currency', 'sc' ); ?></label>
 		<?php
+			$sc_options->textbox( 'currency', 'regular-text' );
 			$sc_options->description( sprintf( __( 'Specify a currency using it\'s <a href="%s" target="_blank">3-letter ISO Code</a>. Defaults to USD.', 'sc' ), 'https://support.stripe.com/questions/which-currencies-does-stripe-support' ) );
-			$sc_options->textbox( 'currency', 'regular-text' ); 
 		?>
 	</div>
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'image_url' ) ); ?>"><?php _e( 'Image URL', 'sc' ); ?></label>
 		<?php 
+			$sc_options->textbox( 'image_url', 'regular-text' );
 			$sc_options->description( __( 'A URL pointing to a square image of your brand or product. The recommended minimum size is 128x128px.', 'sc' ) );
-			$sc_options->textbox( 'image_url', 'regular-text' ); 
 		?>
 	</div>
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'checkout_button_label' ) ); ?>"><?php _e( 'Checkout Button Label', 'sc' ); ?></label>
 		<?php 
+			$sc_options->textbox( 'checkout_button_label', 'regular-text' );
 			$sc_options->description( __( 'The label of the payment button in the checkout form. You can use {{amount}} to display the amount.', 'sc' ) );
-			$sc_options->textbox( 'checkout_button_label', 'regular-text' ); 
 		?>
 	</div>
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'payment_button_label' ) ); ?>"><?php _e( 'Payment Button Label', 'sc' ); ?></label>
 		<?php 
+			$sc_options->textbox( 'payment_button_label', 'regular-text' );
 			$sc_options->description( __( 'Text to display on the default blue button that users click to initiate a checkout process.', 'sc' ) );
-			$sc_options->textbox( 'payment_button_label', 'regular-text' ); 
 		?>
 	</div>
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'success_redirect_url' ) ); ?>"><?php _e( 'Success Redirect URL', 'sc' ); ?></label>
 		<?php 
-			$sc_options->description( __( 'The URL that the user should be redirected to after a successful payment.', 'sc' ) );
 			$sc_options->textbox( 'success_redirect_url', 'regular-text' ); 
+			$sc_options->description( __( 'The URL that the user should be redirected to after a successful payment.', 'sc' ) );
 		?>
 	</div>
 
@@ -76,10 +76,10 @@
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'failure_redirect_url' ) ); ?>"><?php _e( 'Failure Redirect URL', 'sc' ); ?></label>
-		<p class="description">
-			<?php _e( 'The URL that the user should be redirected to after a failed payment.', 'sc' ); ?>
-		</p>
-		<?php $sc_options->textbox( 'failure_redirect_url', 'regular-text' ); ?>
+		<?php 
+			$sc_options->textbox( 'failure_redirect_url', 'regular-text' ); 
+			$sc_options->description( __( 'The URL that the user should be redirected to after a failed payment.', 'sc' ) );
+		?>
 	</div>
 
 	<div>
@@ -108,13 +108,13 @@
 	
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay (beta)', 'sc' ); ?></label>
-		<?php $sc_options->description( sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ) ); ?>
 		<?php 
 			$sc_options->selectbox( 'alipay', array( 
 												'Disabled' => 'false', 
 												'Enabled' => 'true', 
 												'Auto-Detect' => 'auto' ) 
 									); 
+			$sc_options->description( sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ) );
 		?>
 	</div>
 	
