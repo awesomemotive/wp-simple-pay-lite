@@ -13,18 +13,20 @@
 	$(function () {
 		
 		// Get the # of the page so we can find out what tab to show
-		if(window.location.hash) {
-			var hash = window.location.hash.substring(1);
-		} else {
-			var hash = 'stripe-keys';
+		function get_hash() {
+			if(window.location.hash) {
+				return window.location.hash.substring(1);
+			} else {
+				return 'stripe-keys';
+			}
 		}
 		
 		// Show the tab content
-		$('#' + hash + '-settings-tab').addClass('tab-content').show();
+		$('#' + get_hash() + '-settings-tab').addClass('tab-content').show();
 		
 		// Make the actual tab selected
 		$('.nav-tab-wrapper').children( '.nav-tab' ).each( function(index) {
-				if($(this).data('tab-id') == hash ) {
+				if($(this).data('tab-id') == get_hash() ) {
 					$(this).addClass('nav-tab-active');
 				}
 			});
@@ -46,7 +48,11 @@
 			$(this).addClass('nav-tab-active');
 		});
 		
+		$('#sc-settings-content form #submit').on('click', function() {
+			//event.preventDefault();
+			$(this).closest('form').attr('action', 'options.php#' + get_hash() );
+			//$(this).closest('form').submit();
+		});
+		
 	});
 }(jQuery));
-
-
