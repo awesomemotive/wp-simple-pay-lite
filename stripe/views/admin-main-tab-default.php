@@ -127,7 +127,7 @@
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'locale' ) ); ?>"><?php _e( 'Set Auto Locale', 'sc' ); ?></label>
 		<?php $sc_options->checkbox( 'locale' ); ?>
-		<span><?php _e( "This option will render a localized Checkout UI, based upon the language preferences of the user's web browser.", 'sc' ); ?></span>
+		<span><?php _e( "This option will render a localized Checkout UI, based upon the language preferences of the user's web browser. Enabling this will disable the billing address.", 'sc' ); ?></span>
 	</div>
 
 	<div>

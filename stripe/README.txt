@@ -113,7 +113,7 @@ There are three ways to install this plugin.
 = 1.3.3 - May 20, 2015 =
 
 * Added the ability to accept Alipay payments via shortcode (alipay="true" or "auto").
-* Added optional Alipay shortcode attributes (alipay_reusable="true" and/or locale="true").
+* Added optional Alipay shortcode attributes (alipay_reusable="true" and/or locale="auto").
 * Added the ability to accept Alipay payments via default settings.
 * Added the ability to show payment details below post content via shortcode (payment_details_placement="below").
 * Upon payment failure, the human-readable payment failure message is displayed instead of the failure code.
