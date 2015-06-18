@@ -137,6 +137,9 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			// Public side
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
+			
+			// Old functions after everything else
+			include_once( SC_DIR_PATH . 'includes/old-functions.php' );
 		}
 		
 		/**
