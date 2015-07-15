@@ -14,7 +14,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 $settings = get_option( 'sc_settings' );
 
-if ( $settings['sc_settings_uninstall_save_settings'] != 1 ) {
+if ( $settings['uninstall_save_settings'] != 1 ) {
 
 	delete_option( 'sc_settings' );
 	delete_option( 'sc_had_upgrade' );
