@@ -110,6 +110,7 @@ There are three ways to install this plugin.
 
 = 1.4.0 - TODO =
 
+* Major code refactor.
 * Tested up to WordPress 4.3.
 
 = 1.3.3 - May 20, 2015 =
