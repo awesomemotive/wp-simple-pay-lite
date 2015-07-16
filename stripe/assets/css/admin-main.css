@@ -54,6 +54,7 @@
 /* Content block for admin tabs */
 #sc-settings-content .tab-content {
 	display: block;
+	padding-top: 15px;
 }
 
 /* Labels for admin settings */
