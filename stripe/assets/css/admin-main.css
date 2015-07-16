@@ -47,18 +47,24 @@
 }
 
 /* Used to hide settings on page load */
-.sc-admin-hidden { 
-	display: none; 
+.sc-admin-hidden {
+	display: none;
 }
 
 /* Content block for admin tabs */
-.tab-content { 
-	display: block; 
+#sc-settings-content .tab-content {
+	display: block;
 }
 
 /* Labels for admin settings */
-.tab-content label {
+#sc-settings-content .tab-content label {
 	font-weight: bold;
 	display: block;
 	margin-top: 15px;
+}
+
+#sc-settings-content .tab-content input[type="radio"] + label {
+	display: inline;
+	margin-top: 0px;
+	font-weight: normal;
 }
