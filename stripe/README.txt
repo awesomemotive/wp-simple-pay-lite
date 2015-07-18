@@ -111,7 +111,7 @@ There are three ways to install this plugin.
 = 1.4.0 - TODO =
 
 * Major code refactor.
-* Updated Stripe PHP library to latest version.
+* Updated to most recent Stripe PHP library (v2.3.0).
 * Tested up to WordPress 4.3.
 
 = 1.3.3 - May 20, 2015 =
