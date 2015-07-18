@@ -41,7 +41,31 @@
 }
 
 /* Toggle switch wrap */
-.sc-toggle-switch-wrap {
+.sc_settings-toggle-switch-wrap {
 	width: 300px;
 	margin-left: -88px;
+}
+
+/* Used to hide settings on page load */
+.sc-admin-hidden {
+	display: none;
+}
+
+/* Content block for admin tabs */
+#sc-settings-content .tab-content {
+	display: block;
+	padding-top: 15px;
+}
+
+/* Labels for admin settings */
+#sc-settings-content .tab-content label {
+	font-weight: bold;
+	display: block;
+	margin-top: 15px;
+}
+
+#sc-settings-content .tab-content input[type="radio"] + label {
+	display: inline;
+	margin-top: 0px;
+	font-weight: normal;
 }
