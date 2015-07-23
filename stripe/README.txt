@@ -1,4 +1,4 @@
-=== Simple Stripe Checkout ===
+=== WP Simple Pay Lite for Stripe ===
 Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 3.9
@@ -27,13 +27,13 @@ This is a simple standalone Stripe checkout plugin. That's it. **No other plugin
 
 It only takes a couple minutes to add a payment form to your site.
 
-1. Activate the plugin, go to Settings > Simple Stripe Checkout, then enter your Stripe keys.
+1. Activate the plugin, go to Settings > WP Simple Pay Lite for Stripe, then enter your Stripe keys.
 1. Edit the post or page where you want the payment button and checkout form to appear.
 1. Add a simple shortcode.
 
 Viola! Now a payment button that opens your checkout form in an overlay will pop up.
 
-###Available in Stripe Checkout Pro Only###
+###Available in WP Simple Pay Pro for Stripe Only###
 
 * **User Entered Amounts** - Allow customers enter what they want to pay.
 * **Coupon Codes** - Setup discount codes in your Stripe dashboard for customers to apply to their total.
@@ -60,7 +60,7 @@ Easily toggle between test and live mode until you're ready.
 
 If you want your customers to receive email receipts, make sure you enable this setting in your Stripe dashboard.
 
-[Learn More About Stripe Checkout Pro](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Learn More About WP Simple Pay Pro for Stripe](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 ###Updates###
 
@@ -74,11 +74,11 @@ There are three ways to install this plugin.
 = 1. Admin Search =
 1. In your Admin, go to menu Plugins > Add.
 1. Search for `Stripe Checkout`.
-1. Find the plugin that's labeled `Simple Stripe Checkout`.
+1. Find the plugin that's labeled `WP Simple Pay Lite`.
 1. Look for the author name `Phil Derksen` on the plugin.
 1. Click to install.
 1. Activate the plugin.
-1. A new menu item `Simple Stripe Checkout` will appear in the main menu.
+1. A new menu item `WP Simple Pay Lite` will appear in the main menu.
 
 = 2. Download & Upload =
 1. Download the plugin (a zip file) on the right column of this page.
@@ -86,14 +86,14 @@ There are three ways to install this plugin.
 1. Select the tab "Upload".
 1. Upload the .zip file you just downloaded.
 1. Activate the plugin.
-1. A new menu item `Simple Stripe Checkout` will appear in the main menu.
+1. A new menu item `WP Simple Pay Lite` will appear in the main menu.
 
 = 3. FTP Upload =
 1. Download the plugin (.zip file) on the right column of this page.
 1. Unzip the zip file contents.
 1. Upload the `stripe` folder to the `/wp-content/plugins/` directory of your site.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
-1. A new menu item `Simple Stripe Checkout` will appear in the main menu.
+1. A new menu item `WP Simple Pay Lite` will appear in the main menu.
 
 == Frequently Asked Questions ==
 

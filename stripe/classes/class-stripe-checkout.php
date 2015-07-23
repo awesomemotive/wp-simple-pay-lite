@@ -167,7 +167,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @return    string
 		 */
 		public static function get_plugin_title() {
-			return __( 'Stripe Checkout', 'sc' );
+			return __( 'WP Simple Pay Lite', 'sc' );
 		}
 	}
 }

@@ -15,7 +15,7 @@
 <div class="sc-admin-hidden" id="default-settings-tab">
 	<div>
 		<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'stripe_checkout', 'settings', 'docs' ); ?>" target="_blank">
-			<?php _e( 'See shortcode options and examples for Stripe Checkout.', 'sc' ); ?>
+			<?php _e( 'See shortcode options and examples for WP Simple Pay Lite.', 'sc' ); ?>
 		</a>
 		<?php $sc_options->description( __( 'Shortcode attributes take precedence and will always override site-wide default settings.', 'sc' ) ); ?>
 	</div>
