@@ -7,11 +7,11 @@ Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The easiest way to add a high conversion Stripe Checkout form to your site and start getting paid.
+The easiest way to add high conversion Stripe Checkout forms to your site and start accepting payments.
 
 == Description ==
 
-Add a highly optimized Stripe Checkout form overlay to your site in a few simple steps.
+Add highly optimized Stripe Checkout form overlays to your site in a few simple steps.
 
 Instead of spending time building your own checkout forms you can use Stripe's, which is continually tested for high conversion.
 
