@@ -176,7 +176,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   if ( current_user_can( 'manage_options' ) ) {
 				   
 				   $html  = '<h6>';
-				   $html .= sprintf( __( 'Stripe checkout requires an amount of %1$s (%2$s %3$s) or larger.', 'sc' ), 
+				   $html .= sprintf( __( 'WP Simple Pay for Stripe requires an amount of %1$s (%2$s %3$s) or larger.', 'sc' ),
 									$stripe_minimum_amount, Stripe_Checkout_Misc::to_formatted_amount( $stripe_minimum_amount, $currency ), $currency );
 				   $html .= '</h6>';
 
