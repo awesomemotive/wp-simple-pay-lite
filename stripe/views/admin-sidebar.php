@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="inside">
 			<div class="main">
 				<p class="last-blurb centered">
-					<?php _e( "Additional perks you'll get with WP Simple Pay Pro for Stripe", 'sc' ); ?>
+					<?php printf( __( "Additional perks you'll get with %s", 'sc' ), Stripe_Checkout::get_pro_plugin_title() ); ?>
 				</p>
 
 				<ul>
