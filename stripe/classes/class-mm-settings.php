@@ -109,6 +109,18 @@ if ( ! class_exists( 'MM_Settings' ) ) {
 			return array_merge( $this->settings, $saved_settings );
 		}
 		
+		public function delete_setting( $setting ) {
+			$settings = get_option( $this->option );
+			
+			if ( isset( $settings[ $setting ] ) ) {
+				unset( $settings[ $setting ] );
+			}
+			
+			// Since the class method update_settings merges the arrays together we need to update manually here to fully rid of the deleted setting
+			$this->settings = $settings;
+			update_option( $this->option, $this->settings );
+		}
+		
 		/*
 		 * Updates the settings in the database
 		 */
