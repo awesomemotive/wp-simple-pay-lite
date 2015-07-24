@@ -58,9 +58,17 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 			// Check first if in live or test mode.
 			if ( $sc_options->get_setting_value( 'enable_live_key' ) == 1 && $test_mode != 'true' ) {
-				$key = $sc_options->get_setting_value( 'live_secret_key' );
+				if ( ! ( null === $sc_options->get_setting_value( 'live_secret_key_temp' ) ) ) {
+					$key = $sc_options->get_setting_value( 'live_secret_key_temp' );
+				} else {
+					$key = $sc_options->get_setting_value( 'live_secret_key' );
+				}
 			} else {
-				$key = $sc_options->get_setting_value( 'test_secret_key' );
+				if ( ! ( null === $sc_options->get_setting_value( 'test_secret_key_temp' ) ) ) {
+					$key = $sc_options->get_setting_value( 'test_secret_key_temp' );
+				} else {
+					$key = $sc_options->get_setting_value( 'test_secret_key' );
+				}
 			}
 			
 			\Stripe\Stripe::setApiKey( $key );
