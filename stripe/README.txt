@@ -110,6 +110,8 @@ There are three ways to install this plugin.
 
 = 1.4.0 - TODO =
 
+* Added a shortcode attribute to allow different Stripe API keys to be set.
+* Change of product name (WP Simple Pay for Stripe).
 * Major code refactor.
 * Updated to most recent Stripe PHP library (v2.3.0).
 * Tested up to WordPress 4.3.
