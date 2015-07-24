@@ -61,7 +61,7 @@ register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) )
 require_once( SC_DIR_PATH . 'libraries/WPUpdatePhp.php' );
 
 $updatePhp = new WPUpdatePhp( '5.3', '5.4' );
-$updatePhp->set_plugin_name( 'WP Simple Pay Lite' );
+$updatePhp->set_plugin_name( 'WP Simple Pay Lite for Stripe' );
 
 if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
 	
