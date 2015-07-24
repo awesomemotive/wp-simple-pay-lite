@@ -1,7 +1,7 @@
-Stripe Checkout for WordPress
+WP Simple Pay Lite for Stripe
 ==================
 
-The simplest and fastest way to add a beautiful Stripe checkout forms to your WordPress site.
+The easiest way to add high conversion Stripe checkout forms to your site and start accepting payments.
 
 Uses the highly optimized web and mobile overlay checkout form from https://stripe.com/checkout.
 
