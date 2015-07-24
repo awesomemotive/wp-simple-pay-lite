@@ -1,5 +1,5 @@
 /**
- * Stripe Checkout Admin JS
+ * Admin JS
  *
  * @package SC
  * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>

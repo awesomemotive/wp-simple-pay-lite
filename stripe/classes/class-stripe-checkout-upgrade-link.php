@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Stripe Checkout Upgrade Link class file
+ * Upgrade Link class file
  *
  * @package SC
  * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>

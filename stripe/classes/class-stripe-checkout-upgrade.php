@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Stripe Checkout Upgrade class
+ * Upgrade class
  *
  * @package SC
  * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>

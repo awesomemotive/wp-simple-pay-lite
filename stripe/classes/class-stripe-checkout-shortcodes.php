@@ -1,6 +1,6 @@
 <?php
 /**
- * Stripe Checkout Shortcodes class file
+ * Shortcodes class file
  *
  * @package SC
  * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
