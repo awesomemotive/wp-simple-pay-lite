@@ -121,7 +121,7 @@
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay_reusable' ) ); ?>"><?php _e( 'Enable Alipay Reusable', 'sc' ); ?></label>
 		<?php $sc_options->checkbox( 'alipay_reusable' ); ?>
-		<span><?php _e( 'Enable reusable access to the customer’s account when using Alipay.', 'sc' ); ?></span>
+		<span><?php _e( "Enable reusable access to the customer's account when using Alipay.", 'sc' ); ?></span>
 	</div>
 	
 	<div>
