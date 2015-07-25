@@ -108,9 +108,9 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.0 - TODO =
+= 1.4.0 - July 25, 2015 =
 
-* Added a shortcode attribute to allow different Stripe API keys to be set.
+* Added shortcode attributes to allow alternate Stripe API keys other than those stored in the default settings.
 * Change of product name (WP Simple Pay Lite for Stripe).
 * Major code refactor.
 * Updated to most recent Stripe PHP library (v2.3.0).
