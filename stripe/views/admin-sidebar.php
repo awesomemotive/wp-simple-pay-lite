@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="inside">
 			<div class="main">
 				<p class="last-blurb centered">
-					<?php _e( 'Additional perks you\'ll get with Stripe Checkout Pro', 'sc' ); ?>
+					<?php printf( __( "Additional perks you'll get with %s", 'sc' ), Stripe_Checkout::get_pro_plugin_title() ); ?>
 				</p>
 
 				<ul>
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</ul>
 
 				<div class="centered">
-					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'pro_upgrade' ); ?>"
+					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'sidebar_link', 'pro_upgrade' ); ?>"
 					   class="button-primary button-large" target="_blank">
 						<?php _e( 'Upgrade to Pro Now', 'sc' ); ?></a>
 				</div>
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<ul>
 				<li>
 					<div class="dashicons dashicons-arrow-right-alt2"></div>
-					<a href="<?php echo sc_ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'stripe_checkout', 'sidebar_link', 'docs' ); ?>" target="_blank">
+					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'stripe_checkout', 'sidebar_link', 'docs' ); ?>" target="_blank">
 						<?php _e( 'Documentation', 'sc' ); ?></a>
 				</li>
 
@@ -88,7 +88,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="postbox-nobg">
 		<div class="inside centered">
 			<a href="https://stripe.com/" target="_blank">
-				<img src="<?php echo SC_PLUGIN_URL; ?>assets/powered-by-stripe.png" />
+				<img src="<?php echo SC_DIR_URL; ?>assets/img/powered-by-stripe.png" />
 			</a>
 		</div>
 	</div>

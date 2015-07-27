@@ -1,3 +1,13 @@
+### 2.3.0 2015-07-06
+
+* Add request ID to all Stripe exceptions
+
+### 2.2.0 2015-06-01
+
+* Add support for Alipay accounts as sources
+* Add support for bank accounts as sources (private beta)
+* Add support for bank accounts and cards as external_accounts on Account objects
+
 ### 2.1.4 2015-05-13
 
 * Fix CA certificate file path (thanks @lphilps & @matthewarkin)
