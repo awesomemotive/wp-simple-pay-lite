@@ -45,7 +45,7 @@ if ( ! defined( 'SC_DIR_URL' ) ) {
 
 // Website for this plugin
 if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
-	define( 'SC_WEBSITE_BASE_URL', 'http://wpsimplepay.com/' );
+	define( 'SC_WEBSITE_BASE_URL', 'http://wpstripe.net/' );
 }
 
 // Include main class file
