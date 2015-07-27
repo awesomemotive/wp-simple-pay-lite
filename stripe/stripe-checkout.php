@@ -27,10 +27,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Define constants.
 $stripe_checkout_requires = array( 'wp' => '3.9.0', 'php' => '5.3.0' );
 $stripe_checkout_constants = array(
-	'SC_REQUIRES'  => serialize( $stripe_checkout_requires ),
-	'SC_MAIN_FILE' => __FILE__,
-	'SC_URL'       => plugins_url( '', __FILE__ ) . '/',
-	'SC_PATH'      => plugin_dir_path( __FILE__ ),
+	'SC_REQUIRES'         => serialize( $stripe_checkout_requires ),
+	'SC_MAIN_FILE'        => __FILE__,
+	'SC_DIR_PATH'         => plugin_dir_path( __FILE__ ),
+	'SC_DIR_URL'          => plugin_dir_url( __FILE__ ) ,
+	'SC_WEBSITE_BASE_URL' => 'http://wpsimplepay.com/',
 );
 foreach( $stripe_checkout_constants as $constant => $value ) {
 	if ( ! defined( $constant ) ) {
@@ -72,8 +73,11 @@ if ( $stripe_checkout_requirements->pass() === false ) {
 }
 
 // Load the plugin.
-require_once SC_PATH . 'class-stripe-checkout.php';
+require_once SC_DIR_PATH . 'classes/class-stripe-checkout.php';
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
-Stripe_Checkout::get_instance();
+
+// Set up global holding the base class instance so we can easily use it throughout
+global $base_class;
+$base_class = Stripe_Checkout::get_instance();
