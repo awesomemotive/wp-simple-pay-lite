@@ -13,7 +13,7 @@ The easiest way to add high conversion Stripe checkout forms to your site and st
 
 Add highly optimized Stripe checkout form overlays to your site in a few simple steps.
 
-Instead of spending time building your own checkout forms you can use Stripe's, which is continually tested for high conversion.
+Instead of spending time building your own checkout forms you can use Stripe's, which are continually tested for high conversion.
 
 > "Stripe Checkout is an embeddable payment form for desktop, tablet, and mobile devices. It works within your site—customers can pay instantly, without being redirected away to complete the transaction."
 
@@ -25,22 +25,22 @@ This is a simple standalone Stripe checkout plugin. That's it. **No other plugin
 
 ###Start Accepting Payments in 3 Easy Steps###
 
-It only takes a couple minutes to add a payment form to your site.
+It only takes a couple minutes to add a Stripe payment form to your site.
 
-1. Activate the plugin, go to Settings > WP Simple Pay Lite for Stripe, then enter your Stripe keys.
+1. Activate the plugin, go to Settings > WP Simple Pay Lite for Stripe, then enter your Stripe API keys.
 1. Edit the post or page where you want the payment button and checkout form to appear.
-1. Add a simple shortcode.
+1. Add a simple shortcode. [See shortcode reference](http://wpsimplepay.com/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-Viola! Now a payment button that opens your checkout form in an overlay will pop up.
+Viola! Now a payment button that opens your Stripe checkout form in an overlay will pop up.
 
 ###Available in WP Simple Pay Pro for Stripe Only###
 
-* **User Entered Amounts** - Allow customers enter what they want to pay.
+* **User Entered Amounts** - Allow customers enter an amount they want to pay.
 * **Coupon Codes** - Setup discount codes in your Stripe dashboard for customers to apply to their total.
-* **Custom Fields** - Record additional data along with each Stripe payment.
+* **Custom Fields** - Record additional non-standard data along with each Stripe payment.
 * **Subscriptions** - Let customers pay and sign up for your Stripe recurring plans.
 
-[See Pricing & Demos](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[See Pricing & Demos for Pro](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Here are a few shortcode examples (amounts in U.S. cents):
 
@@ -54,13 +54,13 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 [Documentation & Getting Started](http://wpsimplepay.com/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-[Shortcode Documentation](http://wpsimplepay.com/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Shortcode Reference](http://wpsimplepay.com/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Easily toggle between test and live mode until you're ready.
 
-If you want your customers to receive email receipts, make sure you enable this setting in your Stripe dashboard.
+If you want your customers to receive standard email receipts, make sure you enable this setting in your Stripe dashboard.
 
-[Learn More About WP Simple Pay Pro for Stripe](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Learn more about WP Simple Pay Pro for Stripe](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 ###Updates###
 
@@ -108,9 +108,9 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.0 - TODO =
+= 1.4.0 - July 25, 2015 =
 
-* Added a shortcode attribute to allow different Stripe API keys to be set.
+* Added shortcode attributes to allow alternate Stripe API keys other than those stored in the default settings.
 * Change of product name (WP Simple Pay Lite for Stripe).
 * Major code refactor.
 * Updated to most recent Stripe PHP library (v2.3.0).
