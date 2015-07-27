@@ -36,6 +36,14 @@ class Stripe_Checkout_Requirements {
 	private $php = true;
 
 	/**
+	 * PHP Extensions.
+	 *
+	 * @access private
+	 * @var bool
+	 */
+	private $ext = true;
+
+	/**
 	 * Results failures.
 	 *
 	 * Associative array with requirements results.
@@ -55,7 +63,10 @@ class Stripe_Checkout_Requirements {
 		if ( $requirements && is_array( $requirements ) ) {
 
 			$errors       = array();
-			$requirements = array_merge( array( 'wp' => '', 'php' => '' ), (array) $requirements );
+			$requirements = array_merge(
+				array( 'wp' => '', 'php' => '', 'extensions' => array() ),
+				$requirements
+			);
 
 			// Check for WordPress version.
 			if ( $requirements['wp'] && is_string( $requirements['wp'] ) ) {
@@ -75,6 +86,19 @@ class Stripe_Checkout_Requirements {
 				if ( $php_ver === -1 ) {
 					$errors['php'] = PHP_VERSION;
 					$this->php = false;
+				}
+			}
+
+			if ( $requirements['ext'] && is_array( $requirements['ext'] ) ) {
+				foreach ( $requirements['ext'] as $extension ) {
+					if ( is_string( $extension ) ) {
+						$extension = htmlspecialchars( trim( $extension ) );
+						$loaded    = extension_loaded( $extension );
+						$errors['ext'][ $extension ] = $loaded;
+						if ( false === $loaded ) {
+							$this->ext = false;
+						}
+					}
 				}
 			}
 
@@ -100,7 +124,7 @@ class Stripe_Checkout_Requirements {
 	 * @return bool
 	 */
 	public function pass() {
-		return in_array( false, array( $this->wp, $this->php ) ) ? false : true;
+		return in_array( false, array( $this->wp, $this->php, $this->ext ) ) ? false : true;
 	}
 
 }

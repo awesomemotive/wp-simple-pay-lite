@@ -24,8 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Plugin requirements.
+$stripe_checkout_requires = array(
+	'wp'  => '3.9.0',
+	'php' => '5.3.0',
+	'ext' => array( 'curl', 'mbstring' )
+);
 // Define constants.
-$stripe_checkout_requires = array( 'wp' => '3.9.0', 'php' => '5.3.0' );
 $stripe_checkout_constants = array(
 	'SC_REQUIRES'         => serialize( $stripe_checkout_requires ),
 	'SC_MAIN_FILE'        => __FILE__,
@@ -44,29 +49,32 @@ include_once 'stripe-checkout-requirements.php';
 $stripe_checkout_requirements = new Stripe_Checkout_Requirements( $stripe_checkout_requires );
 if ( $stripe_checkout_requirements->pass() === false ) {
 
-	// Display an admin notice explaining why the plugin can't work.
-	function stripe_checkout_plugin_requirements() {
-		$required = unserialize( SC_REQUIRES );
-		if ( isset( $required['wp'] ) && isset( $required['php'] ) ) {
-			global $wp_version;
-			echo '<div class="error"><p>' . sprintf( __( 'Stripe Checkout requires PHP %1$s and WordPress %2$s to function properly. PHP version found: %3$s. WordPress installed version: %4$s. Please upgrade to meet the minimum requirements.', 'gce' ), $required['php'], $required['wp'], PHP_VERSION, $wp_version ) . '</p></div>';
-		}
-	}
-	add_action( 'admin_notices', 'stripe_checkout_plugin_requirements' );
-
 	$stripe_checkout_fails = $stripe_checkout_requirements->failures();
-	if ( isset( $stripe_checkout_fails['php'] ) ) {
 
-		// Deactivate the plugin
-		if ( isset( $_GET['activate'] ) ) {
-			unset( $_GET['activate'] );
-		};
-		function stripe_checkout_plugin_deactivate_self() {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
+	if ( isset( $stripe_checkout_fails['wp'] ) || isset( $stripe_checkout_fails['php']) ) {
+
+		// Display an admin notice if running old WordPress or PHP.
+		function stripe_checkout_plugin_requirements() {
+			$required = unserialize( SC_REQUIRES );
+			global $wp_version;
+			echo '<div class="error"><p>' . sprintf( __( 'Stripe Checkout requires PHP %1$s and WordPress %2$s to function properly. PHP version found: %3$s. WordPress installed version: %4$s. Please upgrade to meet the minimum requirements.', 'sc' ), $required['php'], $required['wp'], PHP_VERSION, $wp_version ) . '</p></div>';
 		}
-		add_action( 'admin_init', 'stripe_checkout_plugin_deactivate_self' );
+		add_action( 'admin_notices', 'stripe_checkout_plugin_requirements' );
+	}
 
-		// Halt the rest of the plugin execution if PHP check fails.
+	if ( ! isset( $stripe_checkout_fails['ext'] ) ) {
+
+		// Display a notice if extensions are not found.
+		function stripe_checkout_plugin_extensions() {
+			$required = unserialize( SC_REQUIRES );
+			$extensions = '<code>' . implode( ', ', $required['ext'] ) . '</code>';
+			echo '<div class="error"><p>' . sprintf( __( 'Stripe Checkout requires the following PHP extensions to work: %s. Please make sure they are installed or contact your host.', 'sc' ), $extensions ) . '</p></div>';
+		}
+		add_action( 'admin_notices', 'stripe_checkout_plugin_extensions' );
+	}
+
+	// Halt the rest of the plugin execution if PHP check fails or extensions not found.
+	if ( isset( $stripe_checkout_fails['php'] ) || isset( $stripe_checkout_fails['ext'] ) ) {
 		return;
 	}
 
