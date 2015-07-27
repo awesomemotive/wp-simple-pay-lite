@@ -2,7 +2,7 @@
   "name": "stripe",
   "title": "Simple Stripe Checkout",
   "description": "Add a Stripe Checkout form overlay to your site in minutes using shortcodes.",
-  "version": "v1.3.3",
+  "version": "v1.4.0",
   "license": "GPL-2.0+",
   "homepage": "https://github.com/pderksen/WP-Stripe-Checkout",
   "repository": {
