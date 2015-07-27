@@ -1,0 +1,31 @@
+{
+  "name": "google-calendar-events",
+  "title": "Google Calendar Events",
+  "description": "The easiest way to add a high conversion Stripe Checkout form to your site and start getting paid.",
+  "version": "v1.3.3",
+  "homepage": "https://github.com/pderksen/WP-Stripe-Checkout",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pderksen/WP-Stripe-Checkout"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "load-grunt-tasks": "^3.2.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-uglify": "^0.9.1",
+    "autoprefixer-core": "^5.2.1",
+    "grunt-sass": "^1.0.0",
+    "grunt-postcss": "^0.5.4",
+    "grunt-contrib-cssmin": "^0.12.3",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-compress": "^0.13.0",
+    "grunt-wp-deploy": "git://github.com/stephenharris/grunt-wp-deploy.git#b547b90aab",
+    "grunt-contrib-qunit": "^0.7.0",
+    "grunt-phpunit": "^0.3.6",
+    "qunitjs": "~1.18.0"
+  },
+  "keywords": []
+}

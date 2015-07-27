@@ -1,22 +1,58 @@
-# Mac crap
-.DS_Store
 
-# Windows crap
-ehthumbs.db
-Thumbs.db
+### IDE ###
 
-# PhpStorm IDE
+# PhpStorm
 .idea
 
-# Netbeans IDE
+# Netbeans
 nbproject
 
 # Sublime
 *.sublime-project
 *.sublime-workspace
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
 
-# Zip files
-*.zip
+### Development ###
 
-# POT files
-*.pot
+# Node
+/node_modules
+
+# Bower
+/bower_components
+
+# Composer
+/vendor
+/composer.lock
+
+# Sass
+.sass-cache
+
+# Tests
+phpunit.xml
+
+# Logging
+*.log
+*.logs
+/log
+/logs
+*.tmp
+temp
+tmp
+
+### Builds ###
+
+# wordpress.org
+/build
+/release*
+/svn
+
+### OS Files ###
+
+# OSX
+.DS_Store
+
+# Windows
+ehthumbs.db
+Thumbs.db
