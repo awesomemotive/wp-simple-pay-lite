@@ -15,7 +15,7 @@
  * @package   SC
  * @author    Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  * @license   GPL-2.0+
- * @link      http://wpstripe.net
+ * @link      http://wpsimplepay.com
  * @copyright 2014-2015 Phil Derksen
  */
 
