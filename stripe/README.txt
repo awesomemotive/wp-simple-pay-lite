@@ -108,7 +108,7 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.0.1 = July 27, 2015 =
+= 1.4.0.1 - July 27, 2015 =
 
 * Temporary revert back to old domain name (wpstripe.net) due to DNS issues.
 
