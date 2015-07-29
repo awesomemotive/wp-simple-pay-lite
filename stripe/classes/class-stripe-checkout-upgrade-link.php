@@ -62,7 +62,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		 * Set the redirect for the link when clicked
 		 */
 		public function redirect() {
-			wp_redirect( Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'plugin_menu', 'pro_upgrade' ), 301 );
+			wp_redirect( Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe-checkout', 'plugin-menu', 'pro-upgrade' ), 301 );
 			exit();
 		}
 		
