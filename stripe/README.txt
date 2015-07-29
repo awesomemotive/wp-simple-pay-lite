@@ -3,7 +3,7 @@ Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 3.9
 Tested up to: 4.3
-Stable tag: 1.4.0.1
+Stable tag: 1.4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,10 @@ There are three ways to install this plugin.
 4. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 1.4.0.2 - July 29, 2015 =
+
+* Fixed a bug that was causing a PHP fatal error in some cases.
 
 = 1.4.0.1 - July 27, 2015 =
 

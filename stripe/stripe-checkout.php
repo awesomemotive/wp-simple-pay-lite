@@ -13,7 +13,7 @@
  * Plugin Name: WP Simple Pay Lite for Stripe
  * Plugin URI: http://wpsimplepay.com
  * Description: Add highly optimized Stripe checkout form overlays to your site in a few simple steps.
- * Version: 1.4.0.1
+ * Version: 1.4.0.2
  * Author: Phil Derksen
  * Author URI: http://philderksen.com
  * License: GPL-2.0+
