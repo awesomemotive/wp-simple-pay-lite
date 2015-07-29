@@ -91,7 +91,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		/*
 		 * Set the tabs in the admin area
 		 */
-		public function set_admin_tabs() {
+		public function set_admin_tabs( $tabs ) {
 			global $sc_options;
 			
 			$tabs = array(
