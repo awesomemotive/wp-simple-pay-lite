@@ -1,26 +1,15 @@
 <?php
-
 /**
- * WP Simple Pay Lite for Stripe
- *
- * @package   SC
- * @author    Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
- * @license   GPL-2.0+
- * @link      http://wpsimplepay.com
- * @copyright 2014-2015 Phil Derksen
- *
- * @wordpress-plugin
  * Plugin Name: WP Simple Pay Lite for Stripe
  * Plugin URI: http://wpsimplepay.com
  * Description: Add highly optimized Stripe checkout form overlays to your site in a few simple steps.
+ * Author: Moonstone Media
+ * Author URI: http://moonstonemediagroup.com
  * Version: 1.4.0.2
- * Author: Phil Derksen
- * Author URI: http://philderksen.com
- * License: GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- * GitHub Plugin URI: https://github.com/pderksen/WP-Stripe-Checkout
  * Text Domain: sc
  * Domain Path: /languages/
+ *
+ * Copyright 2014 Moonstone Media/Phil Derksen. All rights reserved.
  */
 
 // Exit if accessed directly.
