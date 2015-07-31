@@ -38,7 +38,8 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		}
 
 		/*
-		 * Function to load the Stripe library
+		 * Function to load the Stripe library.
+		 * Include this plugin's Stripe library reference unless another plugin already includes it.
 		 */
 		public function load_library() {
 			if ( ! class_exists( 'Stripe\Stripe' ) ) {
