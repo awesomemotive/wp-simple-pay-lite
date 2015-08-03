@@ -81,7 +81,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		 * @since 1.0.0
 		 */
 		public static function charge_card() { 
-			if ( self::$token ) {
+			if ( self::$token && wp_verify_nonce( $_POST['wp-simple-pay-nonce'], 'charge_card' ) ) {
 
 				$redirect      = $_POST['sc-redirect'];
 				$fail_redirect = $_POST['sc-redirect-fail'];
