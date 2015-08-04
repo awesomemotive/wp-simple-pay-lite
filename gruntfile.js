@@ -1,23 +1,21 @@
 module.exports = function( grunt ) {
 
 	var pkg = grunt.file.readJSON( 'package.json' ),
-		// version = 'vX.Y.Z'
+		// version = 'X.Y.Z'
 		version = pkg.version,
-		// semver = 'X.Y.Z'
-		semver = version.substring( 1, version.length ),
 		// Files to include in a release
 		distFiles =  [
 			'stripe/**'
 		];
 
-	// Print current version number converted to semantic versioning
-	console.log( pkg.version + ' => ' + semver );
+	// Print current version number
+	console.log( pkg.version );
 
 	// Project configuration
 	grunt.initConfig( {
 
 		pkg: pkg,
-		semver : semver,
+		version : version,
 
 		clean: {
 			main: [ 'build' ]
@@ -35,7 +33,7 @@ module.exports = function( grunt ) {
 			main: {
 				options: {
 					mode: 'zip',
-					archive: './build/stripe-<%= semver %>.zip'
+					archive: './build/stripe-<%= version %>.zip'
 				},
 				expand: true,
 				src: distFiles,

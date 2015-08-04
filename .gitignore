@@ -20,3 +20,8 @@ nbproject
 
 # POT files
 *.pot
+
+# Grunt
+/build
+/node_modules
+npm-debug.log
