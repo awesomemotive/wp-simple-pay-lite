@@ -1,0 +1,20 @@
+{
+  "name": "stripe",
+  "title": "WP Simple Pay Lite for Stripe",
+  "description": "Show off your Google calendar in grid (month) or list view, in a post, page or widget, and in a style that matches your site.",
+  "version": "v1.4.0.3",
+  "homepage": "https://wordpress.org/plugins/stripe/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compress": "^0.13.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-phpunit": "^0.3.6",
+    "grunt-wp-deploy": "git://github.com/stephenharris/grunt-wp-deploy.git#b547b90aab",
+    "load-grunt-tasks": "^3.2.0"
+  }
+}
