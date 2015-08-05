@@ -5,7 +5,7 @@
  * Description: Add highly optimized Stripe checkout form overlays to your site in a few simple steps.
  * Author: Moonstone Media
  * Author URI: http://moonstonemediagroup.com
- * Version: 1.4.0.2
+ * Version: 1.4.0.3
  * Text Domain: sc
  * Domain Path: /languages/
  *
@@ -60,5 +60,13 @@ if ( $updatePhp->does_it_meet_required_php_version( PHP_VERSION ) ) {
 	
 	// Set up global holding the base class instance so we can easily use it throughout
 	global $base_class;
+	
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	
+	if ( is_plugin_active( 'stripe-checkout-pro/stripe-checkout-pro.php' ) ) {
+		deactivate_plugins( 'stripe-checkout/stripe-checkout.php' );
+		wp_die( sprintf( __( 'You cannot activate Stripe Checkout Lite with the Pro version already active. <a href="%s">Return to plugins page.</a>', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
+	}
+	
 	$base_class = Stripe_Checkout::get_instance();
 }
