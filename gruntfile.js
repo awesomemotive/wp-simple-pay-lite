@@ -55,7 +55,7 @@ module.exports = function( grunt ) {
 			files: {
 				expand: true,
 				cwd: 'stripe/assets/css/',
-				src: ['admin-*.css', 'public-*.css', '!*.min.css'],
+				src: ['admin-*.css', 'public-*.css', 'vendor/toggle-switch.css', '!*.min.css'],
 				dest: 'stripe/assets/css/',
 				ext: '.min.css'
 			}
