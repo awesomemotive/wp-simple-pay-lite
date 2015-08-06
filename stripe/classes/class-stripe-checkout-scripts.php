@@ -83,7 +83,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			global $base_class;
 			
 			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
-				wp_enqueue_style( $base_class->plugin_slug .'-toggle-switch', SC_DIR_URL . 'assets/css/toggle-switch.css', array(), $base_class->version );
+				wp_enqueue_style( $base_class->plugin_slug .'-toggle-switch', SC_DIR_URL . 'assets/css/vendor/toggle-switch.css', array(), $base_class->version );
 				wp_enqueue_style( $base_class->plugin_slug .'-admin-styles', SC_DIR_URL . 'assets/css/admin-main.css', array( $base_class->plugin_slug .'-toggle-switch' ), $base_class->version );
 			}
 
