@@ -64,7 +64,7 @@ If you want your customers to receive standard email receipts, make sure you ena
 ###Updates###
 
 * [Get notified when new features are released](http://eepurl.com/YMXvP)
-* [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout)
+* [Follow this project on Github](https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe)
 
 == Installation ==
 
