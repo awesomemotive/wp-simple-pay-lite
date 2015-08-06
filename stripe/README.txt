@@ -3,7 +3,7 @@ Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 3.9
 Tested up to: 4.3
-Stable tag: 1.4.0.3
+Stable tag: 1.4.1
 License: GPLv2 or later
 
 The easiest way to add high conversion Stripe checkout forms to your site and start accepting payments.
@@ -107,9 +107,10 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.0.3 - TODO =
+= 1.4.1 - TODO =
 
 * Tweak: Added deactivation code so Lite and Pro versions don't run at the same time.
+* Fix: Fixed a bug where other plugins using Stripe could conflict.
 
 = 1.4.0.2 - July 29, 2015 =
 

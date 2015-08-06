@@ -28,7 +28,7 @@ global $sc_options;
 				<?php
 					foreach ( $sc_options->get_tabs() as $key => $value ) {
 				?>
-						<a href="#<?php echo esc_attr( $key ); ?>" class="nav-tab sc-nav-tab <?php echo esc_attr( $is_active ); ?>" data-tab-id="<?php echo esc_attr( $key ); ?>"><?php echo $value; ?></a>
+						<a href="#<?php echo esc_attr( $key ); ?>" class="nav-tab sc-nav-tab" data-tab-id="<?php echo esc_attr( $key ); ?>"><?php echo $value; ?></a>
 				<?php
 					}
 				?>

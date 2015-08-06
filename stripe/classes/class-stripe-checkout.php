@@ -22,7 +22,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 *
 		 * @var     string
 		 */
-		public $version = '1.4.0.3';
+		public $version = '1.4.1';
 
 		/**
 		 * Unique identifier for your plugin.

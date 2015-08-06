@@ -25,7 +25,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		private function __construct() {
 
 			// We only want to run the charge if the Token is set
-			if ( isset( $_POST['stripeToken'] ) ) {
+			if ( isset( $_POST['stripeToken'] ) && isset( $_POST['wp-simple-pay'] ) ) {
 				self::$token = true;
 				add_action( 'init', array( $this, 'charge_card' ) );
 			}
@@ -81,7 +81,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		 * @since 1.0.0
 		 */
 		public static function charge_card() { 
-			if ( self::$token ) {
+			if ( self::$token && wp_verify_nonce( $_POST['wp-simple-pay-nonce'], 'charge_card' ) ) {
 
 				$redirect      = $_POST['sc-redirect'];
 				$fail_redirect = $_POST['sc-redirect-fail'];
