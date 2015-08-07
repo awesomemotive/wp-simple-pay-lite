@@ -55,7 +55,7 @@ if ( $stripe_checkout_requirements->pass() === false ) {
 
 	}
 
-	if ( ! isset( $stripe_checkout_fails['ext'] ) ) {
+	if ( isset( $stripe_checkout_fails['ext'] ) ) {
 
 		// Display a notice if extensions are not found.
 		function stripe_checkout_plugin_extensions() {
