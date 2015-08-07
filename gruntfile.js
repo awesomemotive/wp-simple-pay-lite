@@ -1,22 +1,17 @@
 module.exports = function( grunt ) {
 
 	var pkg = grunt.file.readJSON( 'package.json' ),
-		// version = 'vX.Y.Z'
-		version = pkg.version,
-		// semver = 'X.Y.Z'
-		semver = version.substring( 1, version.length ),
 		// Files to include in a release
 		distFiles =  [
 			'stripe/**'
 		];
 
-	console.log( pkg.title + ' - ' + semver );
+	console.log( pkg.title + ' - ' + pkg.version );
 
 	// Project configuration
 	grunt.initConfig( {
 
 		pkg: pkg,
-		version : semver,
 
 		clean: {
 			main: [ 'build' ]
@@ -34,7 +29,7 @@ module.exports = function( grunt ) {
 			main: {
 				options: {
 					mode: 'zip',
-					archive: './build/stripe-<%= version %>.zip'
+					archive: './build/stripe-<%= pkg.version %>.zip'
 				},
 				expand: true,
 				src: distFiles,
@@ -78,7 +73,8 @@ module.exports = function( grunt ) {
 	grunt.registerTask( 'css',		['cssmin'] );
 	grunt.registerTask( 'js',		['uglify'] );
 	grunt.registerTask( 'default',  ['css','js'] );
-	grunt.registerTask( 'release',	['default', 'clean', 'copy', 'compress'] );
+	grunt.registerTask( 'build',	['default', 'clean', 'copy', 'compress'] );
+	grunt.registerTask( 'release',	['build'] );
 	grunt.registerTask( 'deploy',	['release', 'wp_deploy'] );
 
 	grunt.util.linefeed = '\n';
