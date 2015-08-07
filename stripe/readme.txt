@@ -113,6 +113,7 @@ There are three ways to install this plugin.
 * Fix: Prevent conflicts with other plugins using Stripe.
 * Dev: Now using Grunt to automate build and file minification tasks.
 * Dev: Now JS & CSS files referenced are the minified versions. If SCRIPT_DEBUG set to true, all JS & CSS files referenced are the debug/unminified versions.
+* Dev: No longer using the WPupdatePHP library.
 
 = 1.4.0.2 - July 29, 2015 =
 
