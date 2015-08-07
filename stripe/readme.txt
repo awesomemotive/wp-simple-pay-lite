@@ -3,9 +3,8 @@ Contributors: pderksen, nickyoung87
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 3.9
 Tested up to: 4.3
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 The easiest way to add high conversion Stripe checkout forms to your site and start accepting payments.
 
@@ -17,7 +16,7 @@ Instead of spending time building your own checkout forms you can use Stripe's, 
 
 > "Stripe Checkout is an embeddable payment form for desktop, tablet, and mobile devices. It works within your site—customers can pay instantly, without being redirected away to complete the transaction."
 
-[View WP Simple Pay for Stripe Live Demos](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[View WP Simple Pay for Stripe Live Demos](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 This is a simple standalone Stripe checkout plugin. That's it. **No other plugins required.**
 
@@ -29,7 +28,7 @@ It only takes a couple minutes to add a Stripe payment form to your site.
 
 1. Activate the plugin, go to Settings > WP Simple Pay Lite for Stripe, then enter your Stripe API keys.
 1. Edit the post or page where you want the payment button and checkout form to appear.
-1. Add a simple shortcode. [See shortcode reference](http://wpsimplepay.com/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+1. Add a simple shortcode. [See shortcode reference](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Viola! Now a payment button that opens your Stripe checkout form in an overlay will pop up.
 
@@ -40,7 +39,7 @@ Viola! Now a payment button that opens your Stripe checkout form in an overlay w
 * **Custom Fields** - Record additional non-standard data along with each Stripe payment.
 * **Subscriptions** - Let customers pay and sign up for your Stripe recurring plans.
 
-[See Pricing & Demos for Pro](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[See Pricing & Demos for Pro](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Here are a few shortcode examples (amounts in U.S. cents):
 
@@ -52,20 +51,20 @@ Here are a few shortcode examples (amounts in U.S. cents):
 
 `[stripe name="The Awesome Store" amount="1999" description="The Book of Awesomeness" checkout_button_label="Now only {{amount}}!" enable_remember="false"]`
 
-[Documentation & Getting Started](http://wpsimplepay.com/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Documentation & Getting Started](http://wpstripe.net/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
-[Shortcode Reference](http://wpsimplepay.com/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Shortcode Reference](http://wpstripe.net/docs/shortcodes/stripe-checkout/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 Easily toggle between test and live mode until you're ready.
 
 If you want your customers to receive standard email receipts, make sure you enable this setting in your Stripe dashboard.
 
-[Learn more about WP Simple Pay Pro for Stripe](http://wpsimplepay.com/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Learn more about WP Simple Pay Pro for Stripe](http://wpstripe.net/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 ###Updates###
 
 * [Get notified when new features are released](http://eepurl.com/YMXvP)
-* [Follow this project on Github](https://github.com/pderksen/WP-Stripe-Checkout)
+* [Follow this project on Github](https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe)
 
 == Installation ==
 
@@ -75,7 +74,7 @@ There are three ways to install this plugin.
 1. In your Admin, go to menu Plugins > Add.
 1. Search for `WP Simple Pay`.
 1. Find the plugin that's labeled `WP Simple Pay Lite for Stripe`.
-1. Look for the author name `Phil Derksen` on the plugin.
+1. Look for the author name `Moonstone Media` on the plugin.
 1. Click to install.
 1. Activate the plugin.
 1. A new menu item `WP Simple Pay Lite for Stripe` will appear in the main menu.
@@ -97,7 +96,7 @@ There are three ways to install this plugin.
 
 == Frequently Asked Questions ==
 
-[Plugin Documentation](http://wpsimplepay.com/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
+[Plugin Documentation](http://wpstripe.net/docs/?utm_source=wordpress_org&utm_medium=link&utm_campaign=stripe_checkout)
 
 == Screenshots ==
 
@@ -107,6 +106,21 @@ There are three ways to install this plugin.
 4. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 1.4.1 - TODO =
+
+* Tweak: Added deactivation code so Lite and Pro versions don't run at the same time.
+* Fix: Prevent conflicts with other plugins using Stripe.
+* Dev: Now using Grunt to automate build and file minification tasks.
+* Dev: Now JS & CSS files referenced are the minified versions. If SCRIPT_DEBUG set to true, all JS & CSS files referenced are the debug/unminified versions.
+
+= 1.4.0.2 - July 29, 2015 =
+
+* Fixed a bug that was causing a PHP fatal error in some cases.
+
+= 1.4.0.1 - July 27, 2015 =
+
+* Temporary revert back to old domain name (wpstripe.net) due to DNS issues.
 
 = 1.4.0 - July 25, 2015 =
 
@@ -227,7 +241,7 @@ There are three ways to install this plugin.
 * General usuability improvements to settings pages.
 * Updated to most recent Stripe PHP library (v1.16.0).
 * Included most recent Parsley JS validation library.
-* Moved in-plugin help to online help at wpsimplepay.com.
+* Moved in-plugin help to online help at wpstripe.net.
 
 = 1.1.0 =
 

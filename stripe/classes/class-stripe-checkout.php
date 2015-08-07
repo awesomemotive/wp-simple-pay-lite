@@ -22,7 +22,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 *
 		 * @var     string
 		 */
-		public $version = '1.4.0';
+		public $version = '1.4.1';
 
 		/**
 		 * Unique identifier for your plugin.
@@ -56,12 +56,12 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
 			
 			// Include all necessary files
-			add_action( 'init', array( $this, 'includes' ), 0 );
+			$this->includes();
+			
+			add_action( 'init', array( $this, 'register_settings' ), 0 );
 			
 			// Load all instances
 			add_action( 'init', array( $this, 'init' ), 1 );
-
-			add_action( 'init', array( $this, 'register_settings' ), 2 );
 		}
 		
 		/**

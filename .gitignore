@@ -1,4 +1,3 @@
-
 ### IDE ###
 
 # PhpStorm
@@ -45,7 +44,6 @@ tmp
 
 # wordpress.org
 /build
-/release*
 /svn
 
 ### OS Files ###

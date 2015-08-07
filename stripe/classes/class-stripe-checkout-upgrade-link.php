@@ -62,7 +62,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		 * Set the redirect for the link when clicked
 		 */
 		public function redirect() {
-			wp_redirect( Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe_checkout', 'plugin_menu', 'pro_upgrade' ), 301 );
+			wp_redirect( Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe-checkout', 'plugin-menu', 'pro-upgrade', true ), 301 );
 			exit();
 		}
 		
@@ -72,9 +72,11 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		public function load_scripts() {
 			
 			global $base_class;
-			
-			wp_enqueue_style( $base_class->plugin_slug .'-upgrade-link', SC_DIR_URL . 'assets/css/admin-upgrade-link.css', array(), $base_class->version );
-			wp_enqueue_script( $base_class->plugin_slug . '-upgrade-link', SC_DIR_URL . 'assets/js/admin-upgrade-link.js', array( 'jquery' ), $base_class->version, true );
+
+			$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+
+			wp_enqueue_style( $base_class->plugin_slug .'-upgrade-link', SC_DIR_URL . 'assets/css/admin-upgrade-link' . $min . '.css', array(), $base_class->version );
+			wp_enqueue_script( $base_class->plugin_slug . '-upgrade-link', SC_DIR_URL . 'assets/js/admin-upgrade-link' . $min . '.js', array( 'jquery' ), $base_class->version, true );
 		}
 
 		/**

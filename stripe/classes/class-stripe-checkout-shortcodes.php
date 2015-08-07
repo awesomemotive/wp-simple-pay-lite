@@ -194,6 +194,8 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $html .= '<input type="hidden" name="sc-redirect-fail" value="' . esc_attr( ( ! empty( $failure_redirect_url ) ? $failure_redirect_url : get_permalink() ) ) . '" />';
 		   $html .= '<input type="hidden" name="sc-currency" value="' .esc_attr( $currency ) . '" />';
 		   $html .= '<input type="hidden" name="sc-details-placement" value="' . ( $payment_details_placement == 'below' ? 'below' : 'above' ) . '" />';
+		   $html .= '<input type="hidden" name="wp-simple-pay" value="1" />';
+		   $html .= wp_nonce_field( 'charge_card', 'wp-simple-pay-nonce', '', false );
 
 		   if ( 'true' == $test_mode ) {
 			   $html .= '<input type="hidden" name="sc_test_mode" value="true" />';

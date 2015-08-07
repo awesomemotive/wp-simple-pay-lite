@@ -18,11 +18,15 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		
 		// class instance variable
 		public static $instance = null;
+
+		private $min = null;
 		
 		/*
 		 * Class constructor
 		 */
 		private function __construct() {
+
+			$this->min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 		
 			// Load scripts when posts load so we know if we need to include them or not
 			add_filter( 'the_posts', array( $this, 'load_scripts' ) );
@@ -69,7 +73,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			global $sc_options, $base_class;
 
 			if ( null === $sc_options->get_setting_value( 'disable_css' ) ) {
-				wp_register_style( $base_class->plugin_slug . '-public', SC_DIR_URL . 'assets/css/public-main.css', array(), $base_class->version );
+				wp_register_style( $base_class->plugin_slug . '-public', SC_DIR_URL . 'assets/css/public-main' . $this->min . '.css', array(), $base_class->version );
 			}
 		}
 
@@ -83,11 +87,11 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			global $base_class;
 			
 			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
-				wp_enqueue_style( $base_class->plugin_slug .'-toggle-switch', SC_DIR_URL . 'assets/css/toggle-switch.css', array(), $base_class->version );
-				wp_enqueue_style( $base_class->plugin_slug .'-admin-styles', SC_DIR_URL . 'assets/css/admin-main.css', array( $base_class->plugin_slug .'-toggle-switch' ), $base_class->version );
+				wp_enqueue_style( $base_class->plugin_slug .'-toggle-switch', SC_DIR_URL . 'assets/css/vendor/toggle-switch' . $this->min . '.css', array(), $base_class->version );
+				wp_enqueue_style( $base_class->plugin_slug .'-admin-styles', SC_DIR_URL . 'assets/css/admin-main' . $this->min . '.css', array( $base_class->plugin_slug .'-toggle-switch' ), $base_class->version );
 			}
 
-			wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/admin-main.js', array( 'jquery' ), $base_class->version, true );
+			wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/admin-main' . $this->min . '.js', array( 'jquery' ), $base_class->version, true );
 		}
 		
 		/**
