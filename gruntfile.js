@@ -5,13 +5,12 @@ module.exports = function( grunt ) {
 		version = pkg.version,
 		// semver = 'X.Y.Z'
 		semver = version.substring( 1, version.length ),
-		// Files to include in a build
+		// Files to include in a release
 		distFiles =  [
 			'stripe/**'
 		];
 
-	// Print current version number converted to semantic versioning
-	console.log( 'WP Simple Pay Lite - ' + semver );
+	console.log( pkg.title + ' - ' + semver );
 
 	// Project configuration
 	grunt.initConfig( {
