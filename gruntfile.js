@@ -9,7 +9,7 @@ module.exports = function( grunt ) {
 		];
 
 	// Print current version number converted to semantic versioning
-	console.log( 'WP Simple Pay Lite -' + version );
+	console.log( 'WP Simple Pay Lite - ' + version );
 
 	// Project configuration
 	grunt.initConfig( {
