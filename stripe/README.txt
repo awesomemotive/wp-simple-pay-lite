@@ -110,7 +110,9 @@ There are three ways to install this plugin.
 = 1.4.1 - TODO =
 
 * Tweak: Added deactivation code so Lite and Pro versions don't run at the same time.
-* Fix: Fixed a bug where other plugins using Stripe could conflict.
+* Fix: Prevent conflicts with other plugins using Stripe.
+* Dev: Now using Grunt to automate build and file minification tasks.
+* Dev: Now JS & CSS files referenced are the minified versions. If SCRIPT_DEBUG set to true, all JS & CSS files referenced are the debug/unminified versions.
 
 = 1.4.0.2 - July 29, 2015 =
 
