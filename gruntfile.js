@@ -3,19 +3,21 @@ module.exports = function( grunt ) {
 	var pkg = grunt.file.readJSON( 'package.json' ),
 		// version = 'vX.Y.Z'
 		version = pkg.version,
-		// Files to include in a release
+		// semver = 'X.Y.Z'
+		semver = version.substring( 1, version.length ),
+		// Files to include in a build
 		distFiles =  [
 			'stripe/**'
 		];
 
 	// Print current version number converted to semantic versioning
-	console.log( 'WP Simple Pay Lite - ' + version );
+	console.log( 'WP Simple Pay Lite - ' + semver );
 
 	// Project configuration
 	grunt.initConfig( {
 
 		pkg: pkg,
-		version : version,
+		version : semver,
 
 		clean: {
 			main: [ 'build' ]
@@ -72,15 +74,13 @@ module.exports = function( grunt ) {
 
 	} );
 
-	// Load tasks
 	require('load-grunt-tasks')(grunt);
 
-	// Register tasks
-	grunt.registerTask( 'css', 		['cssmin'] );
-	grunt.registerTask( 'js', 		['uglify'] );
+	grunt.registerTask( 'css',		['cssmin'] );
+	grunt.registerTask( 'js',		['uglify'] );
 	grunt.registerTask( 'default',  ['css','js'] );
-	grunt.registerTask( 'release', 	['clean', 'uglify', 'cssmin', 'copy', 'compress'] );
-	grunt.registerTask( 'deploy', 	['release', 'wp_deploy'] );
+	grunt.registerTask( 'release',	['default', 'clean', 'copy', 'compress'] );
+	grunt.registerTask( 'deploy',	['release', 'wp_deploy'] );
 
 	grunt.util.linefeed = '\n';
 };
