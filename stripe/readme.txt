@@ -107,7 +107,7 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.1 - TODO =
+= 1.4.1 - August 9, 2015 =
 
 * Tweak: Added deactivation code so Lite and Pro versions don't run at the same time.
 * Fix: Prevent conflicts with other plugins using Stripe.
