@@ -87,7 +87,7 @@ module.exports = function( grunt ) {
 			main: {
 				options: {
 					mode: 'zip',
-					archive: './build/stripe-<%= pkg.version %>.zip'
+					archive: './build/wp-simple-pay-lite-for-stripe-<%= pkg.version %>.zip'
 				},
 				expand: true,
 				src: distFiles,
