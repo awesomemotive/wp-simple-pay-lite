@@ -29,7 +29,7 @@ $stripe_checkout_constants = array(
 	'SC_MAIN_FILE'        => __FILE__,
 	'SC_DIR_PATH'         => plugin_dir_path( __FILE__ ),
 	'SC_DIR_URL'          => plugin_dir_url( __FILE__ ) ,
-	'SC_WEBSITE_BASE_URL' => 'http://wpstripe.net/',
+	'SC_WEBSITE_BASE_URL' => 'http://wpsimplepay.com/',
 );
 foreach( $stripe_checkout_constants as $constant => $value ) {
 	if ( ! defined( $constant ) ) {
