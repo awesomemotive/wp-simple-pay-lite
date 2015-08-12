@@ -25,9 +25,6 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 			
 			// Add admin notice after plugin activation. Also check if should be hidden.
 			add_action( 'admin_notices', array( $this, 'admin_install_notice' ) );
-			
-			// Check WP version
-			add_action( 'admin_init', array( $this, 'check_wp_version' ) );
 		}
 		
 		/**
@@ -51,22 +48,6 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 			// At this point show install notice. Show it only on the plugin screen.
 			if( 'plugins' == get_current_screen()->id ) {
 				include_once( SC_DIR_PATH . 'views/admin-notice-install.php' );
-			}
-		}
-		
-		/**
-		 * Make sure user has the minimum required version of WordPress installed to use the plugin
-		 * 
-		 * @since 1.0.0
-		 */
-		public function check_wp_version() {
-			global $wp_version;
-			$required_wp_version = '3.6.1';
-			
-			if ( version_compare( $wp_version, $required_wp_version, '<' ) ) {
-				deactivate_plugins( SC_MAIN_FILE ); 
-				wp_die( sprintf( __( $this->get_plugin_title() . ' requires WordPress version <strong>' . $required_wp_version . '</strong> to run properly. ' .
-					'Please update WordPress before reactivating this plugin. <a href="%s">Return to Plugins</a>.', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
 			}
 		}
 		
