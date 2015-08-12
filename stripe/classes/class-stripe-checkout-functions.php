@@ -158,7 +158,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				self::$token = false;
 
-				wp_redirect( esc_url_raw( add_query_arg( $query_args, apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
+				wp_redirect( esc_url_raw( add_query_arg( apply_filters( 'sc_redirect_args', $query_args, $charge ), apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
 
 				exit;
 			}
