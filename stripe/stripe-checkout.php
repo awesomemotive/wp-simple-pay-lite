@@ -86,8 +86,13 @@ global $base_class;
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 if ( is_plugin_active( 'stripe-checkout-pro/stripe-checkout-pro.php' ) ) {
-	deactivate_plugins( 'stripe-checkout/stripe-checkout.php' );
-	wp_die( sprintf( __( 'You cannot activate Stripe Checkout Lite with the Pro version already active. <a href="%s">Return to plugins page.</a>', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
+	deactivate_plugins( 'stripe-checkout-pro/stripe-checkout-pro.php' );
+
+	function sc_deactivate_lite_notice() {
+		echo '<div class="error"><p>' . __( 'You cannot activate WP Simple Pay Lite and Pro at the same time. Please deactivate one to activate the other.', 'sc' ) . '</p></div>';
+	}
+	add_action( 'admin_notices', 'sc_deactivate_lite_notice' );
+	//wp_die( sprintf( __( 'You cannot activate Stripe Checkout Lite with the Pro version already active. <a href="%s">Return to plugins page.</a>', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
 }
 
 
