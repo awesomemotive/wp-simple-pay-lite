@@ -115,7 +115,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			
 			$this->plugin_screen_hook_suffix[] = add_menu_page(
 				$base_class->get_plugin_title() . ' ' . __( 'Settings', 'sc' ),
-				$base_class->get_plugin_admin_title(),
+				$base_class->get_plugin_menu_title(),
 				'manage_options',
 				$base_class->plugin_slug,
 				array( $this, 'display_plugin_admin_page' ),
