@@ -111,6 +111,8 @@ There are three ways to install this plugin.
 
 * Fix: Added admin message when trying to activate Pro with Lite still active.
 * Tweak: Adjusted name of admin menu label to be shorter.
+* Dev: Updated existing sc_redirect filter.
+* Dev: Added new sc_redirect_args filter.
 
 = 1.4.1 - August 9, 2015 =
 
