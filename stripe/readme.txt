@@ -107,7 +107,7 @@ There are three ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.2 - TODO =
+= 1.4.2 - August 14, 2015 =
 
 * Fix: Added admin message when trying to activate Pro with Lite still active.
 * Tweak: Adjusted name of admin menu label to be shorter.
