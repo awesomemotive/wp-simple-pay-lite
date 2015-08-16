@@ -23,7 +23,7 @@ global $sc_options;
 		<div id="sc-settings-content">
 
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			
+
 			<h2 class="nav-tab-wrapper">
 				<?php
 					foreach ( $sc_options->get_tabs() as $key => $value ) {
@@ -40,7 +40,9 @@ global $sc_options;
 					settings_fields( $sc_options->get_option() );
 					$sc_options->load_template( SC_DIR_PATH . 'views/admin-main-tab-default.php' );
 					$sc_options->load_template( SC_DIR_PATH . 'views/admin-main-tab-stripe-keys.php' );
-					
+
+					do_action( 'sc_admin_tab_content' );
+
 					submit_button();
 				?>
 				</form>
@@ -48,7 +50,7 @@ global $sc_options;
 		</div><!-- #sc-settings-content -->
 
 		<div id="sc-settings-sidebar">
-			<?php 
+			<?php
 				if ( class_exists( 'Stripe_Checkout_Pro' ) ) {
 					include( SC_DIR_PATH . 'views/admin-sidebar-pro.php' );
 				} else {

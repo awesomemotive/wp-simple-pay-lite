@@ -133,6 +133,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-admin.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-notices.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-system-status.php' );
 				
 			// Public side
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-functions.php' );
@@ -153,6 +154,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 				Stripe_Checkout_Admin::get_instance();
 				Stripe_Checkout_Upgrade_Link::get_instance();
 				Stripe_Checkout_Notices::get_instance();
+				Stripe_Checkout_System_Status::get_instance();
 			} else {
 				Stripe_Checkout_Misc::get_instance();
 				Stripe_Checkout_Functions::get_instance();
