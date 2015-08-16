@@ -56,14 +56,15 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
         {
 
             ?>
-            <div id="sc-system-status-report">
-                <p><?php _e('You can download the status report or copy and paste this information for troubleshooting when contacting support:', 'sc'); ?> </p>
-                <textarea readonly="readonly" onclick="this.select();"></textarea>
+            <div class="sc-admin-hidden" id="<?php echo $this->id; ?>-settings-tab">
+                <div id="sc-system-status-report">
+                    <p><?php _e('You can download the status report or copy and paste this information for troubleshooting when contacting support:', 'sc'); ?> </p>
+                    <textarea readonly="readonly" onclick="this.select();"></textarea>
 
-                <p><a href="#" id="sc-system-status-report-download"
-                      class="button button-primary"><?php _e('Download Report', 'sc'); ?></a></p>
-            </div>
-            <hr>
+                    <p><a href="#" id="sc-system-status-report-download"
+                          class="button button-primary"><?php _e('Download Report', 'sc'); ?></a></p>
+                </div>
+                <hr>
             <?php
 
             global $wpdb, $wp_version;
@@ -639,6 +640,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 });
 
             </script>
+            </div>
             <?php
 
         }
