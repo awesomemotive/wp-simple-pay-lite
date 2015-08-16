@@ -69,3 +69,59 @@
 	margin-top: 0px;
 	font-weight: normal;
 }
+
+
+.sc-system-status-report-panel {
+	margin: 20px 0;
+}
+
+.sc-system-status-report-panel thead th {
+	font-weight: bold;
+}
+
+.sc-system-status-report-panel tbody td,
+.sc-system-status-report-panel thead th {
+	font-size: 14px;
+	vertical-align: top;
+}
+
+.sc-system-status-report-panel tbody .tooltip {
+	text-align: center;
+	width: 20px;
+}
+
+.sc-system-status-report-panel tbody .label {
+	width: 30%;
+}
+
+.sc-system-status-report-panel tbody tr:nth-child(odd) td {
+	background-color: rgba(0, 0, 0, 0.02);
+}
+
+.sc-system-status-report-panel dl {
+	margin: 0;
+	padding: 0;
+}
+
+.sc-system-status-report-panel dt {
+	float: left;
+	font-style: italic;
+	margin: 0 4px 0 0;
+}
+
+.sc-system-status-report-panel dd {
+	margin: 0;
+}
+
+.sc-system-status-report-panel mark {
+	background-color: transparent;
+	font-weight: bold;
+}
+
+.sc-system-status-report-panel mark.ok {
+	color: green;
+}
+
+.sc-system-status-report-panel mark.error {
+	color: red;
+}
