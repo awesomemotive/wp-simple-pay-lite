@@ -71,6 +71,10 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                     'label'  => __( 'WordPress Installation', 'sc' ),
                     'export' => 'WordPress Installation'
                 ),
+                'simple_pay' => array(
+                    'label'  => __( 'Simple Pay Settings', 'sc' ),
+                    'export' => 'Simple Pay Settings',
+                ),
                 'theme' => array(
                     'label'  => __( 'Active Theme', 'sc' ),
                     'export' => 'Active Theme'
@@ -90,6 +94,19 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
             );
 
             // @todo add report information section for current plugin
+            global $sc_options;
+
+            $simple_pay_settings = $sc_options->get_settings();
+
+            $sections['simple_pay'] = array();
+
+            foreach( $simple_pay_settings as $key => $value ) {
+                $sections['simple_pay'][ $key ] = array(
+                    'label'        => $key,
+                    'label_export' => $key,
+                    'result'       => $value,
+                );
+            }
 
             /**
              * WordPress Installation
