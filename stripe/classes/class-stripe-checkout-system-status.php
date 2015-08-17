@@ -100,6 +100,13 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
             $sections['simple_pay'] = array();
 
+            // Show version stored in database
+            $sections['simple_pay']['sc_version'] = array(
+                'label'        => __( 'Plugin Version', 'sc' ),
+                'label_export' => 'Plugin Version',
+                'result'       => get_option( 'sc_version' ),
+            );
+
             foreach( $simple_pay_settings as $key => $value ) {
                 $sections['simple_pay'][ $key ] = array(
                     'label'        => $key,
