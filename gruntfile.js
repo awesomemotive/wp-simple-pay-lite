@@ -3,7 +3,8 @@ module.exports = function( grunt ) {
 	var pkg = grunt.file.readJSON( 'package.json' ),
 		// Files to include in a release
 		distFiles =  [
-			'stripe/**'
+			'stripe/**',
+			'!stripe/assets/img/wp/**'
 		];
 
 	console.log( pkg.title + ' - ' + pkg.version );
