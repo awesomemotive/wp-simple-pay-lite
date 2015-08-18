@@ -661,7 +661,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
          *
          * @return int|string
          */
-        private function let_to_num($size)
+        private static function let_to_num($size)
         {
 
             $l = substr($size, -1);
