@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Simple Pay Lite for Stripe
- * Plugin URI: http://wpsimplepay.com
+ * Plugin URI: https://wpsimplepay.com
  * Description: Add highly optimized Stripe checkout form overlays to your site in a few simple steps.
  * Author: Moonstone Media
  * Author URI: http://moonstonemediagroup.com
@@ -29,7 +29,7 @@ $stripe_checkout_constants = array(
 	'SC_MAIN_FILE'        => __FILE__,
 	'SC_DIR_PATH'         => plugin_dir_path( __FILE__ ),
 	'SC_DIR_URL'          => plugin_dir_url( __FILE__ ) ,
-	'SC_WEBSITE_BASE_URL' => 'http://wpsimplepay.com/',
+	'SC_WEBSITE_BASE_URL' => 'https://wpsimplepay.com/',
 );
 foreach( $stripe_checkout_constants as $constant => $value ) {
 	if ( ! defined( $constant ) ) {
