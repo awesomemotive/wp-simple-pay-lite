@@ -7,4 +7,4 @@ Uses the highly optimized web and mobile overlay checkout form from https://stri
 
 [Changelog on WordPress.org](http://wordpress.org/plugins/stripe/changelog/)
 
-Pro version and add-ons available at http://wpsimplepay.com
+Pro version and add-ons available at https://wpsimplepay.com

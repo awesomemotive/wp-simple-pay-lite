@@ -27,17 +27,10 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
          */
         public function __construct()
         {
-
             $this->id       = 'system-status';
             $this->label    = __( 'System Status', 'sc' );
             $this->sections = $this->add_sections();
             $this->fields   = $this->add_fields();
-
-            // Set the admin tabs
-            add_filter( 'sc_admin_tabs', array( $this, 'admin_tab' ) );
-
-            // Set admin tab content
-            add_action( 'sc_admin_tab_content', array( $this, 'set_admin_tab_content' ) );
         }
 
         /*
@@ -45,14 +38,13 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
          */
         public function admin_tab( $tabs ) {
 
-            $tabs[$this->id] = $this->label;
+            $tabs[ $this->id ] = $this->label;
 
             return $tabs;
         }
 
-        public function set_admin_tab_content() {
+        public static function set_content() {
             ?>
-            <div class="sc-admin-hidden" id="<?php echo $this->id; ?>-settings-tab">
                 <div id="sc-system-status-report">
                     <p><?php _e( 'You can download the status report or copy and paste this information for troubleshooting when contacting support:', 'sc' ); ?> </p>
                     <textarea readonly="readonly" onclick="this.select();"></textarea>
@@ -100,6 +92,13 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
             $sections['simple_pay'] = array();
 
+            // Show version stored in database
+            $sections['simple_pay']['sc_version'] = array(
+                'label'        => __( 'Plugin Version', 'sc' ),
+                'label_export' => 'Plugin Version',
+                'result'       => get_option( 'sc_version' ),
+            );
+
             foreach( $simple_pay_settings as $key => $value ) {
                 $sections['simple_pay'][ $key ] = array(
                     'label'        => $key,
@@ -120,7 +119,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 $script_debug = ( true === SCRIPT_DEBUG ? __('Yes', 'sc') : $script_debug );
             }
 
-            $memory = $this->let_to_num( WP_MEMORY_LIMIT );
+            $memory = self::let_to_num( WP_MEMORY_LIMIT );
             $memory_export = size_format( $memory );
 
             if ( $memory < 67108864 ) {
@@ -640,7 +639,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                     });
 
                 </script>
-            </div> <!-- close settings tab -->
+            <!-- </div> --> <!-- close settings tab -->
             <?php
         }
 
@@ -662,7 +661,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
          *
          * @return int|string
          */
-        private function let_to_num($size)
+        private static function let_to_num($size)
         {
 
             $l = substr($size, -1);

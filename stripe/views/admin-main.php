@@ -22,7 +22,7 @@ global $sc_options;
 	<div id="sc-settings">
 		<div id="sc-settings-content">
 
-			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 			<h2 class="nav-tab-wrapper">
 				<?php
