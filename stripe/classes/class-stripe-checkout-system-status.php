@@ -123,7 +123,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
             $memory_export = size_format( $memory );
 
             if ( $memory < 67108864 ) {
-                $memory = '<mark class="error">' . sprintf( __( '%1$s - It is reccomendend to set memory to at least 64MB. See: <a href="%2$s" target="_blank">Increasing memory allocated to PHP</a>', 'sc' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
+                $memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 64MB. See: <a href="%2$s" target="_blank">Increasing memory allocated to PHP</a>', 'sc' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
             } else {
                 $memory = '<mark class="ok">' . $memory_export . '</mark>';
             }
