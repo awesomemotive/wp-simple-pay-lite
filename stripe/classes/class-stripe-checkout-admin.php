@@ -124,8 +124,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 			$this->plugin_screen_hook_suffix[] = add_submenu_page(
 				$base_class->plugin_slug,
-				__( 'Tools', 'sc' ),
-				__( 'Tools', 'sc' ),
+				__( 'System Status', 'sc' ),
+				__( 'System Status', 'sc' ),
 				'manage_options',
 				$base_class->plugin_slug . '-tools',
 				array( 'Stripe_Checkout_System_Status', 'set_content' )

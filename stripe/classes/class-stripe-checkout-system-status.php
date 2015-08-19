@@ -45,14 +45,15 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
         public static function set_content() {
             ?>
-                <div id="sc-system-status-report">
-                    <p><?php _e( 'You can download the status report or copy and paste this information for troubleshooting when contacting support:', 'sc' ); ?> </p>
-                    <textarea readonly="readonly" onclick="this.select();"></textarea>
+            <h1><?php _e( 'System Status', 'sc' ); ?></h1>
+            <div id="sc-system-status-report">
+                <p><?php _e( 'You can download the status report or copy and paste this information for troubleshooting when contacting support:', 'sc' ); ?> </p>
+                <textarea readonly="readonly" onclick="this.select();"></textarea>
 
-                    <p><a href="#" id="sc-system-status-report-download"
-                          class="button button-primary"><?php _e( 'Download Report', 'sc' ); ?></a></p>
-                </div>
-                <hr>
+                <p><a href="#" id="sc-system-status-report-download"
+                      class="button button-primary"><?php _e( 'Download Report', 'sc' ); ?></a></p>
+            </div>
+            <hr>
             <?php
 
             global $wpdb, $wp_version;
@@ -583,62 +584,62 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
             do_action( 'sc_system_status_report' );
 
             ?>
-                <script type="text/javascript">
+            <script type="text/javascript">
 
-                    var report = '';
+                var report = '';
 
-                    jQuery('.sc-system-status-report-panel thead, .sc-system-status-report-panel tbody').each(function () {
+                jQuery('.sc-system-status-report-panel thead, .sc-system-status-report-panel tbody').each(function () {
 
-                        if (jQuery(this).is('thead')) {
+                    if (jQuery(this).is('thead')) {
 
-                            var label = jQuery(this).find('th').data('export');
-                            report = report + '\n### ' + jQuery.trim(label) + ' ###\n\n';
+                        var label = jQuery(this).find('th').data('export');
+                        report = report + '\n### ' + jQuery.trim(label) + ' ###\n\n';
 
-                        } else {
+                    } else {
 
-                            jQuery('tr', jQuery(this)).each(function () {
+                        jQuery('tr', jQuery(this)).each(function () {
 
-                                var label = jQuery(this).find('td:eq(1)').data('export');
-                                var the_name = jQuery.trim(label).replace(/(<([^>]+)>)/ig, ''); // Remove HTML
-                                var image = jQuery(this).find('td:eq(2)').find('img'); // Get WP 4.2 emojis
-                                var prefix = ( undefined === image.attr('alt') ) ? '' : image.attr('alt') + ' '; // Remove WP 4.2 emojis
-                                var the_value = jQuery.trim(prefix + jQuery(this).find('td:eq(2)').data('export'));
-                                var value_array = the_value.split(', ');
-                                if (value_array.length > 1) {
-                                    var temp_line = '';
-                                    jQuery.each(value_array, function (key, line) {
-                                        temp_line = temp_line + line + '\n';
-                                    });
-                                    the_value = temp_line;
-                                }
+                            var label = jQuery(this).find('td:eq(1)').data('export');
+                            var the_name = jQuery.trim(label).replace(/(<([^>]+)>)/ig, ''); // Remove HTML
+                            var image = jQuery(this).find('td:eq(2)').find('img'); // Get WP 4.2 emojis
+                            var prefix = ( undefined === image.attr('alt') ) ? '' : image.attr('alt') + ' '; // Remove WP 4.2 emojis
+                            var the_value = jQuery.trim(prefix + jQuery(this).find('td:eq(2)').data('export'));
+                            var value_array = the_value.split(', ');
+                            if (value_array.length > 1) {
+                                var temp_line = '';
+                                jQuery.each(value_array, function (key, line) {
+                                    temp_line = temp_line + line + '\n';
+                                });
+                                the_value = temp_line;
+                            }
 
-                                report = report + '' + the_name.trim() + ': ' + the_value.trim() + '\n';
-                            });
+                            report = report + '' + the_name.trim() + ': ' + the_value.trim() + '\n';
+                        });
 
-                        }
-
-                    });
-
-                    try {
-                        jQuery('#sc-system-status-report textarea').val(report).focus().select();
-                    } catch (e) {
-                        console.log(e);
                     }
 
-                    function downloadReport(text, name, type) {
-                        var a = document.getElementById('sc-system-status-report-download');
-                        var file = new Blob([text], {type: type});
-                        a.href = URL.createObjectURL(file);
-                        a.download = name;
-                    }
+                });
 
-                    jQuery('#sc-system-status-report-download').on('click', function () {
-                        var file = new Blob([report], {type: 'text/plain'});
-                        jQuery(this).attr('href', URL.createObjectURL(file));
-                        jQuery(this).attr('download', '<?php echo sanitize_title( str_replace( array( 'http://', 'https://' ), '', get_bloginfo( 'url') ) . '-' . date( 'Y-m-d', time() ) ); ?>');
-                    });
+                try {
+                    jQuery('#sc-system-status-report textarea').val(report).focus().select();
+                } catch (e) {
+                    console.log(e);
+                }
 
-                </script>
+                function downloadReport(text, name, type) {
+                    var a = document.getElementById('sc-system-status-report-download');
+                    var file = new Blob([text], {type: type});
+                    a.href = URL.createObjectURL(file);
+                    a.download = name;
+                }
+
+                jQuery('#sc-system-status-report-download').on('click', function () {
+                    var file = new Blob([report], {type: 'text/plain'});
+                    jQuery(this).attr('href', URL.createObjectURL(file));
+                    jQuery(this).attr('download', '<?php echo sanitize_title( str_replace( array( 'http://', 'https://' ), '', get_bloginfo( 'url') ) . '-' . date( 'Y-m-d', time() ) ); ?>');
+                });
+
+            </script>
             <!-- </div> --> <!-- close settings tab -->
             <?php
         }
