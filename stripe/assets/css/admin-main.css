@@ -70,6 +70,14 @@
 	font-weight: normal;
 }
 
+/* System Status CSS */
+#sc-system-status-report textarea {
+	font-family: monospace;
+	min-height: 200px;
+	padding: 5px 20px;
+	white-space: pre;
+	width: 100%;
+}
 
 .sc-system-status-report-panel {
 	margin: 20px 0;
