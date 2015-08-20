@@ -139,7 +139,7 @@
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'always_enqueue' ) ); ?>"><?php _e( 'Always Enqueue', 'sc' ); ?></label>
 		<?php $sc_options->checkbox( 'always_enqueue' ); ?>
-		<span><?php _e( 'Enqueue this plugin\'s scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.', 'sc' ); ?></span>
+		<span><?php _e( "Enqueue this plugin's scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.", 'sc' ); ?></span>
 	</div>
 
 	<div>
