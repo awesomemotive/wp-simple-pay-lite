@@ -52,7 +52,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'bitcoin'                   => ( null !== $sc_options->get_setting_value( 'use_bitcoin' ) ? 'true' : 'false' ),    // true or false
 						   'alipay'                    => ( null !== $sc_options->get_setting_value( 'alipay' ) ? $sc_options->get_setting_value( 'alipay' ) : 'false' ),
 						   'alipay_reusable'           => ( null !== $sc_options->get_setting_value( 'alipay_reusable' ) ? 'true' : 'false' ),
-						   'locale'                    => ( null !== $sc_options->get_setting_value( 'locale' ) ? $sc_options->get_setting_value( 'locale' ) : 'en' ),
+						   'locale'                    => ( null !== $sc_options->get_setting_value( 'locale' ) ? $sc_options->get_setting_value( 'locale' ) : 'auto' ),
 						   'success_redirect_url'      => ( null !== $sc_options->get_setting_value( 'success_redirect_url' ) ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
 						   'failure_redirect_url'      => ( null !== $sc_options->get_setting_value( 'failure_redirect_url' ) ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
 						   'prefill_email'             => 'false',
