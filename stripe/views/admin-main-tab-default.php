@@ -128,7 +128,7 @@
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'locale' ) ); ?>"><?php _e( 'Set Locale', 'sc' ); ?></label>
 		<?php
 			$sc_options->textbox( 'locale', 'small-text' );
-			$sc_options->description( sprintf( __( 'Specify "auto" to display Checkout in the user\'s preferred language, if available. English will be used by default if omitted. To select a particular language, ' .
+			$sc_options->description( sprintf( __( 'Auto will be used by default if omitted. To select a particular language, ' .
 						'pass the two letter ISO 639-1 code such as "zh" for Chinese. <br> <a href="%s" target="_blank">Languages supported by Stripe Checkout</a>', 'sc' ),
 						'https://support.stripe.com/questions/what-languages-does-stripe-checkout-support' ) );
 		?>
