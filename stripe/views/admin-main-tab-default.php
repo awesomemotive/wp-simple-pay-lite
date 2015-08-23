@@ -89,6 +89,12 @@
 	</div>
 
 	<div>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'shipping' ) ); ?>"><?php _e( 'Shipping', 'sc' ); ?></label>
+		<?php $sc_options->checkbox( 'shipping' ); ?>
+		<span><?php _e( 'Require the user to enter their shipping address during checkout.', 'sc' ); ?></span>
+	</div>
+
+	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'verify_zip' ) ); ?>"><?php _e( 'Verify Zip', 'sc' ); ?></label>
 		<?php $sc_options->checkbox( 'verify_zip' ); ?>
 		<span><?php _e( 'Verifies the zip code of the card.', 'sc' ); ?></span>

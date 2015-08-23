@@ -47,6 +47,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'currency'                  => ( null !== $sc_options->get_setting_value( 'currency' ) ? $sc_options->get_setting_value( 'currency' ) : 'USD' ),
 						   'checkout_button_label'     => ( null !== $sc_options->get_setting_value( 'checkout_button_label' ) ? $sc_options->get_setting_value( 'checkout_button_label' ) : '' ),
 						   'billing'                   => ( null !== $sc_options->get_setting_value( 'billing' ) ? 'true' : 'false' ),    // true or false
+			   			   'shipping'                  => ( null !== $sc_options->get_setting_value( 'shipping' ) ? 'true' : 'false' ),    // true or false,
 						   'payment_button_label'      => ( null !== $sc_options->get_setting_value( 'payment_button_label' ) ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'sc' ) ),
 						   'enable_remember'           => ( null !== $sc_options->get_setting_value( 'enable_remember' ) ? 'true' : 'false' ),    // true or false
 						   'bitcoin'                   => ( null !== $sc_options->get_setting_value( 'use_bitcoin' ) ? 'true' : 'false' ),    // true or false
@@ -74,6 +75,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $currency                  = $attr['currency'];
 		   $checkout_button_label     = $attr['checkout_button_label'];
 		   $billing                   = $attr['billing'];
+		   $shipping                  = $attr['shipping'];
 		   $payment_button_label      = $attr['payment_button_label'];
 		   $enable_remember           = $attr['enable_remember'];
 		   $bitcoin                   = $attr['bitcoin'];
@@ -182,6 +184,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . esc_attr( $enable_remember ) . '" ' : 'data-allow-remember-me="true" ' ) .
 					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 					   ( ! empty( $billing ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : 'data-billing-address="false" ' ) .
+			           ( ! empty( $shipping ) ? 'data-shipping-address="' . esc_attr( $shipping ) . '" ' : 'data-shipping-address="false" ' ) .
 					   ( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
 					   ( ! empty( $alipay_reusable ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) .
 					   ( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .
