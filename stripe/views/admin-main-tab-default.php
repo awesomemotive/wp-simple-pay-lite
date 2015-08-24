@@ -83,7 +83,7 @@
 	</div>
 
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'billing' ) ); ?>"><?php _e( 'Billing', 'sc' ); ?></label>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'billing' ) ); ?>"><?php _e( 'Enable Billing Address', 'sc' ); ?></label>
 		<?php $sc_options->checkbox( 'billing' ); ?>
 		<span><?php _e( 'Require the user to enter their billing address during checkout.', 'sc' ); ?></span>
 	</div>
