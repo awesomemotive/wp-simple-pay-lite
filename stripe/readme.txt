@@ -109,7 +109,7 @@ There are three ways to install this plugin.
 
 = 1.4.3 - TODO =
 
-* Tweak: Updated locale setting to accommodate new Stripe changes.
+* Tweak: Updated locale setting to allow specific languages recently added by Stripe. Also now defaults to "auto" (user's browser configuration).
 
 = 1.4.2 - August 14, 2015 =
 
