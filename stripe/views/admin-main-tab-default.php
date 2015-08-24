@@ -113,7 +113,7 @@
 	</div>
 	
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay (beta)', 'sc' ); ?></label>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay', 'sc' ); ?></label>
 		<?php 
 			$sc_options->selectbox( 'alipay', array( 
 												'Disabled' => 'false', 
