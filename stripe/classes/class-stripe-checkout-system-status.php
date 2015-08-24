@@ -45,6 +45,11 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
         public static function set_content() {
             ?>
+
+            <div class="wrap">
+                <div id="sc-settings">
+                    <div id="sc-settings-content">
+
             <h1><?php _e( 'System Status', 'sc' ); ?></h1>
             <div id="sc-system-status-report">
                 <p><?php _e( 'You can download the status report or copy and paste this information for troubleshooting when contacting support:', 'sc' ); ?> </p>
@@ -640,7 +645,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 });
 
             </script>
-            <!-- </div> --> <!-- close settings tab -->
+            </div></div></div>
             <?php
         }
 
