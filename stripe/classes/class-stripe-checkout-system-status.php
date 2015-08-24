@@ -50,15 +50,24 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 <div id="sc-settings">
                     <div id="sc-settings-content">
 
-            <h1><?php _e( 'System Status', 'sc' ); ?></h1>
-            <div id="sc-system-status-report">
-                <p><?php _e( 'You can download the status report or copy and paste this information for troubleshooting when contacting support:', 'sc' ); ?> </p>
-                <textarea readonly="readonly" onclick="this.select();"></textarea>
+                        <h1><?php _e( 'System Status', 'sc' ); ?></h1>
 
-                <p><a href="#" id="sc-system-status-report-download"
-                      class="button button-primary"><?php _e( 'Download Report', 'sc' ); ?></a></p>
-            </div>
-            <hr>
+                        <div id="sc-system-status-report">
+                            <p>
+                                <?php _e( 'Please copy and paste this information when contacting support:', 'sc' ); ?>
+                            </p>
+
+                            <textarea readonly="readonly" onclick="this.select();"></textarea>
+
+                            <p>
+                                <?php _e( 'Alternatively, you can download your information as a text file to attach, as well as view it below.', 'sc' ); ?>
+                            </p>
+                            <p>
+                                <a href="#" id="sc-system-status-report-download"
+                                   class="button button-primary"><?php _e( 'Download System Status File', 'sc' ); ?></a>
+                            </p>
+                        </div>
+                        <hr>
             <?php
 
             global $wpdb, $wp_version;
