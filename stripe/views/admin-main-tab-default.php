@@ -107,7 +107,7 @@
 	</div>
 	
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay (beta)', 'sc' ); ?></label>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay', 'sc' ); ?></label>
 		<?php 
 			$sc_options->selectbox( 'alipay', array( 
 												'Disabled' => 'false', 
@@ -128,9 +128,10 @@
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'locale' ) ); ?>"><?php _e( 'Set Locale', 'sc' ); ?></label>
 		<?php
 			$sc_options->textbox( 'locale', 'small-text' );
-			$sc_options->description( sprintf( __( 'Auto will be used by default if omitted. To select a particular language, ' .
-						'pass the two letter ISO 639-1 code such as "zh" for Chinese. <br> <a href="%s" target="_blank">Languages supported by Stripe Checkout</a>', 'sc' ),
-						'https://support.stripe.com/questions/what-languages-does-stripe-checkout-support' ) );
+			$sc_options->description( sprintf( __( '"auto" is used by default to select a language based on the user\'s browser configuration. '.
+			                                       'To select a particular language, pass the two letter ISO 639-1 code such as "zh" for Chinese. <br/>' .
+			                                       '<a href="%s" target="_blank">See languages supported by Stripe Checkout</a>', 'sc' ),
+				'https://support.stripe.com/questions/what-languages-does-stripe-checkout-support' ) );
 		?>
 	</div>
 
