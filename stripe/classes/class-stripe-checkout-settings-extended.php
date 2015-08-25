@@ -2,8 +2,6 @@
 
 /**
  * Settings extension for additional controls not available in the base class
- *
- * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  */
 
 // Exit if accessed directly.

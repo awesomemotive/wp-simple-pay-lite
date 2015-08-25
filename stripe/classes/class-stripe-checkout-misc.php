@@ -2,9 +2,6 @@
 
 /**
  * Misc class file
- *
- * @package SC
- * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  */
 
 // Exit if accessed directly.

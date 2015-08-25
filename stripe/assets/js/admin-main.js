@@ -1,8 +1,5 @@
 /**
- * Admin JS
- *
- * @package SC
- * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
+ * Admin JS file
  */
 
 /* global jQuery, sc_script */

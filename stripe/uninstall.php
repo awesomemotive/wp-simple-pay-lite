@@ -2,9 +2,6 @@
 
 /**
  * Fired when the plugin is uninstalled.
- *
- * @package SC
- * @author  Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  */
 
 // If uninstall, not called from WordPress, then exit.

@@ -2,10 +2,6 @@
 
 /**
  * Sidebar portion of the administration dashboard view.
- *
- * @package    SC
- * @subpackage views
- * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  */
 
 // Exit if accessed directly.

@@ -2,10 +2,6 @@
 
 	/**
 	 * Represents the view for the Stripe Keys admin tab.
-	 *
-	 * @package    SC
-	 * @subpackage Views
-	 * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorsceb@gmail.com>
 	 */
 
 	global $sc_options; 

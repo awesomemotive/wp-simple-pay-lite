@@ -1,3 +1,4 @@
+/* Default admin CSS for the upgrade link */
 
 a[href="admin.php?page=stripe-checkout-upgrade"] {
 	color: #6bbc5b !important;

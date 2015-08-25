@@ -2,10 +2,6 @@
 
 /**
  * Represents the view for the administration dashboard.
- *
- * @package    SC
- * @subpackage Views
- * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorsceb@gmail.com>
  */
 
 // Exit if accessed directly.

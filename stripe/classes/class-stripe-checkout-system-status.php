@@ -3,7 +3,6 @@
  * System Status
  *
  * Generates reports on current installation, for debugging or support purposes.
- *
  */
 
 

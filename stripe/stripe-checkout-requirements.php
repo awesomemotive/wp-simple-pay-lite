@@ -4,8 +4,6 @@
  *
  * Utility class to check current PHP version and WordPress to meet plugin requirements.
  * Based on https://github.com/nekojira/wp-requirements
- *
- * @package SC
  */
 
 if ( ! defined( 'WPINC' ) ) {

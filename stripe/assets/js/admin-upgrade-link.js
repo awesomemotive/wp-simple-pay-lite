@@ -1,3 +1,6 @@
+/**
+ * Admin upgrade link JS
+ */
 
 jQuery(document).ready(function ($) {
 	// Open upgrade link in a new window.

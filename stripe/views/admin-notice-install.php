@@ -2,10 +2,6 @@
 
 /**
  * Show notice after plugin install/activate in admin dashboard.
- *
- * @package    SC
- * @subpackage Views
- * @author     Phil Derksen <pderksen@gmail.com>, Nick Young <mycorpweb@gmail.com>
  */
 
 // Exit if accessed directly.
