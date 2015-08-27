@@ -27,7 +27,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
         public function __construct()
         {
             $this->id       = 'system-status';
-            $this->label    = __( 'System Status', 'sc' );
+            $this->label    = __( 'System Report', 'sc' );
             $this->sections = $this->add_sections();
             $this->fields   = $this->add_fields();
         }
@@ -49,7 +49,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 <div id="sc-settings">
                     <div id="sc-settings-content">
 
-                        <h1><?php _e( 'System Status', 'sc' ); ?></h1>
+                        <h1><?php _e( 'System Report', 'sc' ); ?></h1>
 
                         <div id="sc-system-status-report">
                             <p>
@@ -59,11 +59,11 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                             <textarea readonly="readonly" onclick="this.select();"></textarea>
 
                             <p>
-                                <?php _e( 'Alternatively, you can download your information as a text file to attach, as well as view it below.', 'sc' ); ?>
+                                <?php _e( 'You can also download your information as a text file to attach, or simply view it below.', 'sc' ); ?>
                             </p>
                             <p>
                                 <a href="#" id="sc-system-status-report-download"
-                                   class="button button-primary"><?php _e( 'Download System Status File', 'sc' ); ?></a>
+                                   class="button button-primary"><?php _e( 'Download System Report', 'sc' ); ?></a>
                             </p>
                         </div>
                         <hr>
