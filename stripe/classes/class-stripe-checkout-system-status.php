@@ -394,7 +394,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 $wp_post = '<mark class="ok">' . __( 'Yes', 'sc' ) . '</mark>';
                 $wp_post_export = 'Yes';
             } else {
-                $wp_post = '<mark class="error">' . __( 'No', 'sc' );
+                $wp_post = '<mark class="error">' . __( 'No', 'sc' ) . '</mark>';
                 $wp_post_export = 'No';
                 if ( is_wp_error( $response ) ) {
                     $wp_post_export .= $wp_post .= ' (' . $response->get_error_message() . ')';
@@ -408,10 +408,10 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
             // WP Remote GET.
             $response = wp_safe_remote_get( get_home_url( '/?p=1' ) );
             if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
-                $wp_get = '<mark class="ok">' . __('Yes', 'sc') . '</mark>';
+                $wp_get = '<mark class="ok">' . __( 'Yes', 'sc' ) . '</mark>';
                 $wp_get_export = 'Yes';
             } else {
-                $wp_get = '<mark class="error">' . __( 'No', 'sc' );
+                $wp_get = '<mark class="error">' . __( 'No', 'sc' ) . '</mark>';
                 $wp_get_export = 'No';
                 if ( is_wp_error( $response ) ) {
                     $wp_get_export .= $wp_get .= ' (' . $response->get_error_message() . ')';
