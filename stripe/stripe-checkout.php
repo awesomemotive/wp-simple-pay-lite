@@ -49,7 +49,17 @@ if ( $stripe_checkout_requirements->pass() === false ) {
 		function stripe_checkout_plugin_requirements() {
 			$required = unserialize( SC_REQUIRES );
 			global $wp_version;
-			echo '<div class="error"><p>' . sprintf( __( 'WP Simple Pay requires PHP %1$s and WordPress %2$s to function properly. PHP version found: %3$s. WordPress installed version: %4$s. Please update to meet the minimum requirements.', 'sc' ), $required['php'], $required['wp'], PHP_VERSION, $wp_version ) . '</p></div>';
+			echo '<div class="error">' .
+			        '<p>'  .
+					     sprintf(
+						     __( 'WP Simple Pay requires PHP %1$s and WordPress %2$s to function properly. PHP version found: %3$s. WordPress installed version: %4$s. Please upgrade to meet the minimum requirements. <a href="http://www.wpupdatephp.com/update/" target=_blank">Read more on why it is important to stay updated.</a>', 'sc' ),
+						     $required['php'],
+						     $required['wp'],
+						     PHP_VERSION,
+						     $wp_version
+					     ) .
+			        '</p>' .
+			     '</div>';
 		}
 		add_action( 'admin_notices', 'stripe_checkout_plugin_requirements' );
 
