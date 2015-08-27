@@ -382,42 +382,49 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 $server_timezone = '<mark class="ok">UTC</mark>';
             }
 
-            // WP Remote POST.
+            // WP Remote POST test.
             $response = wp_safe_remote_post( 'https://www.paypal.com/cgi-bin/webscr', array(
-                'timeout' => 60,
-                'body'    => array(
-                    'cmd' => '_notify-validate'
-                )
-            ));
-
+	            'timeout'    => 60,
+	            'body'       => array(
+		            'cmd'    => '_notify-validate'
+	            )
+            ) );
             if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
-                $wp_post = '<mark class="ok">' . __( 'Yes', 'sc' ) . '</mark>';
-                $wp_post_export = 'Yes';
+	            $wp_post_export = 'Yes';
+	            $wp_post = '<mark class="ok">' . __( 'Yes', 'gce' ) . '</mark>';
             } else {
-                $wp_post = '<mark class="error">' . __( 'No', 'sc' );
-                $wp_post_export = 'No';
-                if ( is_wp_error( $response ) ) {
-                    $wp_post_export .= $wp_post .= ' (' . $response->get_error_message() . ')';
-                } else {
-                    $wp_post_export .= $wp_post .= ' (' . $response['response']['code'] . ')';
-                }
-                $wp_post .= '</mark>';
+	            $wp_post_export = 'No';
+	            $wp_post = '<mark class="error">' . __( 'No', 'gce' );
+	            if ( is_wp_error( $response ) ) {
+		            $error = ' (' . $response->get_error_message() . ')';
+		            $wp_post .= $error;
+		            $wp_post_export .= $error;
+	            } else {
+		            $error = ' (' . $response['response']['code'] . ')';
+		            $wp_post .= $error;
+		            $wp_post_export .= $error;
+	            }
+	            $wp_post .= '</mark>';
             }
 
-            // WP Remote GET.
+            // WP Remote GET test.
             $response = wp_safe_remote_get( get_home_url( '/?p=1' ) );
             if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
-                $wp_get = '<mark class="ok">' . __( 'Yes', 'sc' ) . '</mark>';
-                $wp_get_export = 'Yes';
+	            $wp_get_export = 'Yes';
+	            $wp_get = '<mark class="ok">' . __( 'Yes', 'gce' ) . '</mark>';
             } else {
-                $wp_get = '<mark class="error">' . __( 'No', 'sc' );
-                $wp_get_export = 'No';
-                if ( is_wp_error( $response ) ) {
-                    $wp_get_export .= $wp_get .= ' (' . $response->get_error_message() . ')';
-                } else {
-                    $wp_get_export .= $wp_get .= ' (' . $response['response']['code'] . ')';
-                }
-                $wp_post .= '</mark>';
+	            $wp_get_export = 'No';
+	            $wp_get = '<mark class="error">' . __( 'No', 'gce' );
+	            if ( is_wp_error( $response ) ) {
+		            $error = ' (' . $response->get_error_message() . ')';
+		            $wp_get .= $error;
+		            $wp_get_export .= $error;
+	            } else {
+		            $error = ' (' . $response['response']['code'] . ')';
+		            $wp_get .= $error;
+		            $wp_get_export .= $error;
+	            }
+	            $wp_get .= '</mark>';
             }
 
             $php_memory_limit = ini_get( 'memory_limit' );
@@ -649,7 +656,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 jQuery('#sc-system-status-report-download').on('click', function () {
                     var file = new Blob([report], {type: 'text/plain'});
                     jQuery(this).attr('href', URL.createObjectURL(file));
-                    jQuery(this).attr('download', '<?php echo sanitize_title( str_replace( array( 'http://', 'https://' ), '', get_bloginfo( 'url') ) . '-' . date( 'Y-m-d', time() ) ); ?>');
+                    jQuery(this).attr('download', '<?php echo sanitize_title( str_replace( array( 'http://', 'https://' ), '', get_bloginfo( 'url') ) . '-system-report-' . date( 'Y-m-d', time() ) ); ?>');
                 });
 
             </script>
