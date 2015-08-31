@@ -106,7 +106,7 @@ There are several ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.3 - TODO =
+= 1.4.3 - August 31, 2015 =
 
 * Tweak: Updated locale setting to allow specific languages recently added by Stripe. Also now defaults to "auto" (user's browser configuration).
 * Feature: Added System Report page to assist with troubleshooting and support.
