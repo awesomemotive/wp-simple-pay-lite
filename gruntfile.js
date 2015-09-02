@@ -119,8 +119,10 @@ module.exports = function( grunt ) {
 		wp_deploy: {
 			deploy: {
 				options: {
-					plugin_slug: 'stripe-checkout',
-					build_dir: 'build/stripe'
+					plugin_slug: 'stripe',
+					plugin_main_file: 'stripe-checkout.php',
+					build_dir: 'build/stripe',
+					max_buffer: 400 * 1024
 				}
 			}
 		}
