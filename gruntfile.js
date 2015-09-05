@@ -54,8 +54,8 @@ module.exports = function( grunt ) {
 					potHeaders: {
 						poedit: true,
 						'report-msgid-bugs-to': 'https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe/issues',
-						'last-translator' : 'Phil Derksen <pderksen@gmail.com>',
-						'language-Team' : 'Phil Derksen <pderksen@gmail.com>',
+						'last-translator' : 'WP Simple Pay Team <support@wpsimplepay.com>',
+						'language-Team' : 'WP Simple Pay Team <support@wpsimplepay.com>',
 						'x-poedit-keywordslist': true
 					},
 					type: 'wp-plugin',
