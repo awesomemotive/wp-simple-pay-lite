@@ -114,11 +114,23 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
             );
 
             foreach( $simple_pay_settings as $key => $value ) {
-                $sections['simple_pay'][ $key ] = array(
-                    'label'        => $key,
-                    'label_export' => $key,
-                    'result'       => $value,
-                );
+
+                // Check to see if it's a live key. If it is then we want to hide it in the export.
+                if( $key === 'live_secret_key' || $key === 'live_publish_key' ) {
+                    $sections['simple_pay'][ $key ] = array(
+                        'label'         => $key,
+                        'label_export'  => '', // Don't show label in export
+                        'result'        => $value . ' ' . __( '(hidden in downloadable report)', 'sc' ),
+                        'result_export' => '', // Don't show value in export
+                    );
+                } else {
+                    $sections['simple_pay'][ $key ] = array(
+                        'label'        => $key,
+                        'label_export' => $key,
+                        'result'       => $value,
+                    );
+                }
+
             }
 
             /**
