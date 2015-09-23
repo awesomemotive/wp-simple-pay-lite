@@ -5,6 +5,6 @@ The easiest way to add high conversion Stripe checkout forms to your site and st
 
 Uses the highly optimized web and mobile overlay checkout form from https://stripe.com/checkout
 
-[Changelog on WordPress.org](http://wordpress.org/plugins/stripe/changelog/)
+[Changelog on WordPress.org](https://wordpress.org/plugins/stripe/changelog/)
 
-Pro version and add-ons available at https://wpsimplepay.com
+Premium version and add-ons available at https://wpsimplepay.com
