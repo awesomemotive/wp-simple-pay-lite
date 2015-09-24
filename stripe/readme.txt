@@ -106,6 +106,10 @@ There are several ways to install this plugin.
 
 == Changelog ==
 
+= 1.4.4 - TODO =
+
+* Fix: Fixed undefined variable PHP error.
+
 = 1.4.3 - August 31, 2015 =
 
 * Tweak: Updated locale setting to allow specific languages recently added by Stripe. Also now defaults to "auto" (user's browser configuration).
