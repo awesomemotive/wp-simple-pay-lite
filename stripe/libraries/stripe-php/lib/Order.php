@@ -2,13 +2,13 @@
 
 namespace Stripe;
 
-class Coupon extends ApiResource
+class Order extends ApiResource
 {
     /**
-     * @param string $id The ID of the coupon to retrieve.
+     * @param string $id The ID of the Order to retrieve.
      * @param array|string|null $opts
      *
-     * @return Coupon
+     * @return Order
      */
     public static function retrieve($id, $opts = null)
     {
@@ -19,7 +19,7 @@ class Coupon extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Coupon The created coupon.
+     * @return Order The created Order.
      */
     public static function create($params = null, $opts = null)
     {
@@ -27,20 +27,9 @@ class Coupon extends ApiResource
     }
 
     /**
-     * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Coupon The deleted coupon.
-     */
-    public function delete($params = null, $opts = null)
-    {
-        return $this->_delete($params, $opts);
-    }
-
-    /**
-     * @param array|string|null $opts
-     *
-     * @return Coupon The saved coupon.
+     * @return Order The saved Order.
      */
     public function save($opts = null)
     {
@@ -51,10 +40,21 @@ class Coupon extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Collection of Coupons
+     * @return Collection of Orders
      */
     public static function all($params = null, $opts = null)
     {
         return self::_all($params, $opts);
+    }
+
+    /**
+     * @return Order The paid order.
+     */
+    public function pay($params = null, $opts = null)
+    {
+        $url = $this->instanceUrl() . '/pay';
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
+        $this->refreshFrom($response, $opts);
+        return $this;
     }
 }

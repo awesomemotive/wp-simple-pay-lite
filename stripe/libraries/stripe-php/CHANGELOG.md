@@ -1,3 +1,27 @@
+### 3.4.0 2015-09-14
+
+* Products, SKUs, and Orders -- https://stripe.com/relay
+
+### 3.3.0 2015-09-11
+
+* Add support for 429 Rate Limit response
+
+### 3.2.0 2015-08-17
+
+* Add refund listing and retrieval without an associated charge
+
+### 3.1.0 2015-08-03
+
+* Add dispute listing and retrieval
+* Add support for manage account deletion
+
+### 3.0.0 2015-07-28
+
+* Rename `\Stripe\Object` to `\Stripe\StripeObject` (PHP 7 compatibility)
+* Rename `getCode` and `getParam` in exceptions to `getStripeCode` and `getStripeParam`
+* Add support for calling `json_encode` on Stripe objects in PHP 5.4+
+* Start supporting/testing PHP 7
+
 ### 2.3.0 2015-07-06
 
 * Add request ID to all Stripe exceptions

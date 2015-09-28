@@ -2,13 +2,13 @@
 
 namespace Stripe;
 
-class Coupon extends ApiResource
+class Product extends ApiResource
 {
     /**
-     * @param string $id The ID of the coupon to retrieve.
+     * @param string $id The ID of the Product to retrieve.
      * @param array|string|null $opts
      *
-     * @return Coupon
+     * @return Product
      */
     public static function retrieve($id, $opts = null)
     {
@@ -19,7 +19,7 @@ class Coupon extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Coupon The created coupon.
+     * @return Product The created Product.
      */
     public static function create($params = null, $opts = null)
     {
@@ -27,20 +27,9 @@ class Coupon extends ApiResource
     }
 
     /**
-     * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Coupon The deleted coupon.
-     */
-    public function delete($params = null, $opts = null)
-    {
-        return $this->_delete($params, $opts);
-    }
-
-    /**
-     * @param array|string|null $opts
-     *
-     * @return Coupon The saved coupon.
+     * @return Product The saved Product.
      */
     public function save($opts = null)
     {
@@ -51,7 +40,7 @@ class Coupon extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Collection of Coupons
+     * @return Collection of Products
      */
     public static function all($params = null, $opts = null)
     {

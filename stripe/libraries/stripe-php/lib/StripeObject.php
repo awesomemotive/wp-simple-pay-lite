@@ -5,7 +5,7 @@ namespace Stripe;
 use ArrayAccess;
 use InvalidArgumentException;
 
-class Object implements ArrayAccess
+class StripeObject implements ArrayAccess, JsonSerializable
 {
     /**
      * @var Util\Set Attributes that should not be sent to the API because
@@ -92,6 +92,8 @@ class Object implements ArrayAccess
     }
     public function &__get($k)
     {
+        // function should return a reference, using $nullval to return a reference to null
+        $nullval = null;
         if (array_key_exists($k, $this->_values)) {
             return $this->_values[$k];
         } else if ($this->_transientValues->includes($k)) {
@@ -104,11 +106,11 @@ class Object implements ArrayAccess
                     . "probably as a result of a save(). The attributes currently "
                     . "available on this object are: $attrs";
             error_log($message);
-            return null;
+            return $nullval;
         } else {
             $class = get_class($this);
             error_log("Stripe Notice: Undefined property of $class instance: $k");
-            return null;
+            return $nullval;
         }
     }
 
@@ -143,7 +145,7 @@ class Object implements ArrayAccess
      * @param array $values
      * @param array $opts
      *
-     * @return Object The object constructed from the given values.
+     * @return StripeObject The object constructed from the given values.
      */
     public static function constructFrom($values, $opts)
     {
@@ -217,7 +219,7 @@ class Object implements ArrayAccess
         // Get nested updates.
         foreach (self::$nestedUpdatableAttributes->toArray() as $property) {
             if (isset($this->$property)) {
-                if ($this->$property instanceof Object) {
+                if ($this->$property instanceof StripeObject) {
                     $serialized = $this->$property->serializeParameters();
                     if ($serialized) {
                         $params[$property] = $serialized;
@@ -227,6 +229,11 @@ class Object implements ArrayAccess
         }
 
         return $params;
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->__toArray(true);
     }
 
     public function __toJSON()
@@ -254,4 +261,4 @@ class Object implements ArrayAccess
     }
 }
 
-Object::init();
+StripeObject::init();
