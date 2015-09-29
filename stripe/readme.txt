@@ -106,7 +106,7 @@ There are several ways to install this plugin.
 
 == Changelog ==
 
-= 1.4.4 - TODO =
+= 1.4.4 - September 29, 2015 =
 
 * Fix: Fixed undefined variable PHP error.
 * Dev: Updated required WP version to 4.0.
