@@ -3,7 +3,7 @@ Contributors: pderksen, nickyoung87, nekojira
 Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 4.0
 Tested up to: 4.3
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 
 The easiest way to add high conversion Stripe checkout forms to your site and start accepting payments.
