@@ -106,6 +106,10 @@ There are several ways to install this plugin.
 
 == Changelog ==
 
+= 1.4.5 - September 29, 2015 =
+
+* Fix: Re-added missing files to wordpress.org repository.
+
 = 1.4.4 - September 29, 2015 =
 
 * Fix: Fixed undefined variable PHP error.

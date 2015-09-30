@@ -5,7 +5,7 @@
  * Description: Add highly optimized Stripe checkout form overlays to your site in a few simple steps.
  * Author: Moonstone Media
  * Author URI: http://moonstonemediagroup.com
- * Version: 1.4.4
+ * Version: 1.4.5
  * Text Domain: sc
  * Domain Path: /languages/
  *
