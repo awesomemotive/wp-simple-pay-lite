@@ -1,6 +1,6 @@
 === WP Simple Pay Lite for Stripe ===
 Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
-Tags: stripe, stripe checkout, simple stripe checkout, ecommerce, e-commerce
+Tags: stripe, stripe checkout, payments, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 4.0
 Tested up to: 4.3
 Stable tag: 1.4.5
