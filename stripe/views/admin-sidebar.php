@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</ul>
 
 				<div class="centered">
-					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'stripe-checkout', 'sidebar-link', 'pro-upgrade' ); ?>"
+					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'sidebar-link' ); ?>"
 					   class="button-primary button-large" target="_blank">
 						<?php _e( 'Upgrade to Pro Now', 'sc' ); ?></a>
 				</div>
