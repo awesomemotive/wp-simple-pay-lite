@@ -10,17 +10,19 @@ Add high conversion Stripe checkout forms to your WordPress site and start accep
 
 == Description ==
 
-No need to build custom checkout forms from scratch. In a few simple steps you can add Stripe's beautiful checkout forms to your WordPress site. Stripe's checkout form overlays are continually tested and optimized to maximize customer conversion.
+In a few simple steps you can add Stripe's beautiful checkout forms to your WordPress site. Stripe's forms are continually tested and optimized to maximize customer conversion.
 
 **What is Stripe Checkout?**
 
 *"Stripe Checkout is an embeddable payment form for desktop, tablet, and mobile devices. It works within your site—customers can pay instantly, without being redirected away to complete the transaction."*
 
-If simplicity and accepting credit card payments quickly and painlessly is what you're looking for, this is the plugin for you.
+If accepting credit card payments quickly and painlessly with little setup time is what you're looking for, this plugin is for you.
 
-This is a **standalone** Stripe checkout plugin. That's it. **No other plugins required.**
+WP Simple Pay is not designed to integrate with more complex shopping cart, form builder or membership site plugins. Many of those plugins already have their own Stripe integrations.
 
-If you're looking to add a shopping cart plugin, integrate with a form builder or add Stripe to your membership site, there are plenty of other great Stripe plugins out there that do that job well, but this one's not it.
+This is a standalone Stripe checkout plugin.
+
+That's it. **No other plugins required.**
 
 >**[Check out our demos & PRO version](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
@@ -42,15 +44,15 @@ SSL note: Stripe now requires that any page hosting a live checkout form be SSL 
 = PRO VERSION FEATURES =
 
 * *Everything in Lite plus...*
-* **User Entered Amounts** - Allow customers enter an amount they want to pay.
-* **Coupon Codes** - Setup discount codes in your Stripe dashboard for customers to apply to their total.
-* **Custom Fields** - Record additional non-standard data along with each Stripe payment.
+* **User Entered Amounts** - Allow customers to enter an amount they want to pay.
+* **Coupon Codes** - Setup discount codes in your Stripe dashboard that customers can use.
+* **Custom Fields** - Record additional (meta) data along with each Stripe payment.
 * Optionally gather a separate shipping address during checkout.
-* Customize the style of the payment button.
-* **Subscriptions** - Let customers pay and sign up for your Stripe recurring plans. *Available as part of the Business license or above.*
-* Allow customers to select one-time or recurring amounts to pay.
-* Charge a customer an initial setup fee as well as enroll them in a subscription.
-* Automatic easy updates through your site's dashboard.
+* Customize the payment button style with CSS.
+* **Subscriptions** - Let customers pay and sign up for your Stripe recurring plans (available with a Business license or above).
+* Allow customers to select between one-time or recurring amounts.
+* Charge customers an initial setup fee in addition to enrolling them in a subscription.
+* Automatic easy updates.
 * Access to additional Pro add-ons in development.
 * Priority email support with a 24-hour response time during weekdays backed by a top-notch team.
 
