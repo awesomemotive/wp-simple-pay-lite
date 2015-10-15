@@ -110,7 +110,7 @@
 												'Enabled' => 'true', 
 												'Auto-Detect' => 'auto' ) 
 									); 
-			$sc_options->description( sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay-beta' ) );
+			$sc_options->description( sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'sc' ), 'https://stripe.com/docs/guides/alipay' ) );
 		?>
 	</div>
 	
