@@ -160,7 +160,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * Add settings action link for purchasing pro
 		 */
 		public function purchase_pro_link( $links ) {
-			$pro_link = sprintf( '<a href="%s">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'settings-link' ), __( 'Purchase Pro', 'sc' ) );
+			$pro_link = sprintf( '<a href="%s" target="_blank">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'free-plugin', 'settings-link' ), __( 'Purchase Pro', 'sc' ) );
 			array_push( $links, $pro_link );
 
 			return $links;
@@ -189,18 +189,19 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 *
 		 * @since   1.1.1
 		 *
-		 * @param   string  $base_url Plain URL to navigate to
-		 * @param   string  $source   GA "source" tracking value
-		 * @param   string  $medium   GA "medium" tracking value
-		 * @param   string  $campaign GA "campaign" tracking value
-		 * @return  string  $url      Full Google Analytics campaign URL
+		 * @param   string  $base_url   Plain URL to navigate to
+		 * @param   string  $content    GA "content" tracking value
+		 * @param   bool    $raw        Use esc_url_raw instead (default = false)
+		 * @return  string  $url        Full Google Analytics campaign URL
 		 */
 		public static function ga_campaign_url( $base_url, $content, $raw = false ) {
+			// Set campaign var depending on if in Lite or Pro.
+			$campaign = ( class_exists( 'Stripe_Checkout_Pro' ) ? 'pro-plugin' : 'free-plugin' );
 
 			$url = add_query_arg( array(
 				'utm_source'   => 'inside-plugin',
 				'utm_medium'   => 'link',
-				'utm_campaign' => 'free-plugin',
+				'utm_campaign' => $campaign,
 				'utm_content'  => $content
 			), $base_url );
 			
