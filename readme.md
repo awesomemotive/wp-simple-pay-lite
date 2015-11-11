@@ -1,10 +1,9 @@
-WP Simple Pay Lite for Stripe
-==================
+# WP Simple Pay Lite for Stripe
 
-The easiest way to add high conversion Stripe checkout forms to your site and start accepting payments.
+Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
 
-Uses the highly optimized web and mobile overlay checkout form from https://stripe.com/checkout
+Utilizes the highly optimized web and mobile overlay checkout form from https://stripe.com/checkout
 
-[Changelog on WordPress.org](https://wordpress.org/plugins/stripe/changelog/)
+[Download](https://wordpress.org/plugins/stripe/) | [Docs](https://wpsimplepay.com/docs/) | [Changelog](https://wordpress.org/plugins/stripe/changelog/)
 
-Premium version and add-ons available at https://wpsimplepay.com
+Premium version and add-ons available at [wpsimplepay.com](https://wpsimplepay.com)
