@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: WP Simple Pay Lite for Stripe
- * Plugin URI: https://wpsimplepay.com
- * Description: Add highly optimized Stripe checkout form overlays to your site in a few simple steps.
- * Author: Moonstone Media
- * Author URI: http://moonstonemediagroup.com
- * Version: 1.4.5
+ * Plugin URI:  https://wpsimplepay.com
+ * Description: Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
+ * Author:      Moonstone Media
+ * Author URI:  https://wpsimplepay.com
+ * Version:     1.4.5
  * Text Domain: sc
  * Domain Path: /languages/
  *
- * Copyright 2014 Moonstone Media/Phil Derksen. All rights reserved.
+ * @copyright   2015 Moonstone Media/Phil Derksen. All rights reserved.
  */
 
 // Exit if accessed directly.
