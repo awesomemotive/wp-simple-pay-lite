@@ -1,13 +1,23 @@
 module.exports = function( grunt ) {
 
-	var pkg = grunt.file.readJSON( 'package.json' ),
-		// Files to include in a release
-		distFiles =  [
-			'stripe/**',
-			'!stripe/assets/img/wp/**'
-		];
+	var pkg = grunt.file.readJSON( 'package.json' );
 
 	console.log( pkg.title + ' - ' + pkg.version );
+
+	// Files to include in a release
+	var distFiles =  [
+		'**',
+		'!.git/**',
+		'!assets/img/wp/**',
+		'!build/**',
+		'!node_modules/**',
+		'!.editorconfig',
+		'!.gitignore',
+		'!.gitmodules',
+		'!gruntfile.js',
+		'!package.json',
+		'!**/*~'
+	];
 
 	// Project configuration
 	grunt.initConfig( {
@@ -67,7 +77,7 @@ module.exports = function( grunt ) {
 
 		po2mo: {
 			files: {
-				src: 'stripe/languages/*.po',
+				src: 'languages/*.po',
 				expand: true
 			}
 		},
@@ -80,7 +90,7 @@ module.exports = function( grunt ) {
 			main: {
 				expand: true,
 				src: distFiles,
-				dest: 'build'
+				dest: 'build/stripe'
 			}
 		},
 
@@ -92,16 +102,16 @@ module.exports = function( grunt ) {
 				},
 				expand: true,
 				src: distFiles,
-				dest: ''
+				dest: '/stripe'
 			}
 		},
 
 		uglify: {
 			files: {
 				expand: true,
-				cwd: 'stripe/assets/js/',
+				cwd: 'assets/js/',
 				src: ['admin-*.js', 'public-*.js', '!*.min.js'],
-				dest: 'stripe/assets/js/',
+				dest: 'assets/js/',
 				ext: '.min.js'
 			}
 		},
@@ -109,9 +119,9 @@ module.exports = function( grunt ) {
 		cssmin: {
 			files: {
 				expand: true,
-				cwd: 'stripe/assets/css/',
+				cwd: 'assets/css/',
 				src: ['admin-*.css', 'public-*.css', 'vendor/toggle-switch.css', '!*.min.css'],
-				dest: 'stripe/assets/css/',
+				dest: 'assets/css/',
 				ext: '.min.css'
 			}
 		},
