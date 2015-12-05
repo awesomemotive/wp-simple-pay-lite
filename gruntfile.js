@@ -26,7 +26,7 @@ module.exports = function( grunt ) {
 
 		checktextdomain: {
 			options:{
-				text_domain: 'sc',
+				text_domain: 'stripe',
 				correct_domain: false,
 				keywords: [
 					'__:1,2d',
@@ -46,7 +46,7 @@ module.exports = function( grunt ) {
 				]
 			},
 			files: {
-				src:  ['stripe/**/*.php'],
+				src:  ['**/*.php'],
 				expand: true
 			}
 		},
