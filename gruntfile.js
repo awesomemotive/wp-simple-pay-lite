@@ -5,7 +5,7 @@ module.exports = function( grunt ) {
 	console.log( pkg.title + ' - ' + pkg.version );
 
 	// Files to include in a release
-	var distFiles =  [
+	var distFiles = [
 		'**',
 		'!.git/**',
 		'!assets/img/wp/**',
@@ -25,7 +25,7 @@ module.exports = function( grunt ) {
 		pkg: pkg,
 
 		checktextdomain: {
-			options:{
+			options: {
 				text_domain: 'stripe',
 				correct_domain: false,
 				keywords: [
@@ -46,21 +46,13 @@ module.exports = function( grunt ) {
 				]
 			},
 			files: {
-				src:  ['**/*.php'],
+				src: [ '**/*.php' ],
 				expand: true
 			}
 		},
 
 		clean: {
 			main: [ 'build' ]
-		},
-
-		copy: {
-			main: {
-				expand: true,
-				src: distFiles,
-				dest: 'build/stripe'
-			}
 		},
 
 		compress: {
@@ -75,13 +67,11 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		uglify: {
-			files: {
+		copy: {
+			main: {
 				expand: true,
-				cwd: 'assets/js/',
-				src: ['admin-*.js', 'public-*.js', '!*.min.js'],
-				dest: 'assets/js/',
-				ext: '.min.js'
+				src: distFiles,
+				dest: 'build/stripe'
 			}
 		},
 
@@ -89,22 +79,32 @@ module.exports = function( grunt ) {
 			files: {
 				expand: true,
 				cwd: 'assets/css/',
-				src: ['admin-*.css', 'public-*.css', 'vendor/toggle-switch.css', '!*.min.css'],
+				src: [ 'admin-*.css', 'public-*.css', 'vendor/toggle-switch.css', '!*.min.css' ],
 				dest: 'assets/css/',
 				ext: '.min.css'
+			}
+		},
+
+		uglify: {
+			files: {
+				expand: true,
+				cwd: 'assets/js/',
+				src: [ 'admin-*.js', 'public-*.js', '!*.min.js' ],
+				dest: 'assets/js/',
+				ext: '.min.js'
 			}
 		}
 
 	} );
 
-	require('load-grunt-tasks')(grunt);
+	require( 'load-grunt-tasks' )( grunt );
 
-	grunt.registerTask( 'css',		['cssmin'] );
-	grunt.registerTask( 'js',		['uglify'] );
-	grunt.registerTask( 'default',  ['css','js'] );
+	grunt.registerTask( 'css', [ 'cssmin' ] );
+	grunt.registerTask( 'js', [ 'uglify' ] );
+	grunt.registerTask( 'default', [ 'css', 'js' ] );
 
 	// TODO Add checktextdomain to build task
-	grunt.registerTask( 'build',	['default', 'clean', 'copy', 'compress'] );
+	grunt.registerTask( 'build', [ 'default', 'clean', 'copy', 'compress' ] );
 
 	// TODO Add deploy task
 	//grunt.registerTask( 'deploy',	['build'] );
