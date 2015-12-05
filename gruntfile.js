@@ -51,37 +51,6 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		makepot: {
-			target: {
-				options: {
-					cwd: 'stripe',
-					domainPath: '/languages',
-					exclude: [],
-					include: [],
-					mainFile: 'stripe-checkout.php',
-					potComments: '',
-					potFilename: 'sc.pot',
-					potHeaders: {
-						poedit: true,
-						'report-msgid-bugs-to': 'https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe/issues',
-						'last-translator' : 'WP Simple Pay Team <support@wpsimplepay.com>',
-						'language-Team' : 'WP Simple Pay Team <support@wpsimplepay.com>',
-						'x-poedit-keywordslist': true
-					},
-					type: 'wp-plugin',
-					updateTimestamp: true,
-					updatePoFiles: true
-				}
-			}
-		},
-
-		po2mo: {
-			files: {
-				src: 'languages/*.po',
-				expand: true
-			}
-		},
-
 		clean: {
 			main: [ 'build' ]
 		},
@@ -124,30 +93,21 @@ module.exports = function( grunt ) {
 				dest: 'assets/css/',
 				ext: '.min.css'
 			}
-		},
-
-		wp_deploy: {
-			deploy: {
-				options: {
-					plugin_slug: 'stripe',
-					plugin_main_file: 'stripe-checkout.php',
-					build_dir: 'build/stripe',
-					max_buffer: 400 * 1024
-				}
-			}
 		}
 
 	} );
 
 	require('load-grunt-tasks')(grunt);
 
-	grunt.registerTask( 'localize', ['checktextdomain', 'makepot', 'po2mo'] );
 	grunt.registerTask( 'css',		['cssmin'] );
 	grunt.registerTask( 'js',		['uglify'] );
 	grunt.registerTask( 'default',  ['css','js'] );
+
+	// TODO Add checktextdomain to build task
 	grunt.registerTask( 'build',	['default', 'clean', 'copy', 'compress'] );
-	grunt.registerTask( 'release',	['build'] );
-	grunt.registerTask( 'deploy',	['release', 'wp_deploy'] );
+
+	// TODO Add deploy task
+	//grunt.registerTask( 'deploy',	['build'] );
 
 	grunt.util.linefeed = '\n';
 };
