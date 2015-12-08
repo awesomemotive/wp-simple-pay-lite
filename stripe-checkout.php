@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $stripe_checkout_requires = array(
 	'wp'  => '4.0.0',
 	'php' => '5.3.0',
-	'ext' => array( 'curl', 'mbstring' )
+	'ext' => array( 'curl', 'json', 'mbstring' )
 );
 // Define constants.
 $stripe_checkout_constants = array(

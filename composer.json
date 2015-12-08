@@ -21,9 +21,12 @@
   "prefer-stable": true,
   "require": {
     "php": ">=5.3.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
     "xrstf/composer-php52": "1.x",
     "stripe/stripe-php": "3.x",
-    "cbschuld/Browser.php": "dev-master",
+    "cbschuld/Browser.php": "dev-master"
   },
   "scripts": {
     "post-install-cmd": [
