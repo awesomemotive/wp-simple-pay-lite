@@ -102,14 +102,32 @@ module.exports = function( grunt ) {
 				dest: 'assets/js/',
 				ext: '.min.js'
 			}
+		},
+
+		usebanner: {
+			options: {
+				position : 'top',
+				banner   : '<%= banner %>',
+				linebreak: true
+			},
+			js     : {
+				files: {
+					src: ['assets/js/*.min.js']
+				}
+			},
+			css    : {
+				files: {
+					src: ['assets/css/*.min.css']
+				}
+			}
 		}
 
 	} );
 
 	require( 'load-grunt-tasks' )( grunt );
 
-	grunt.registerTask( 'css', [ 'cssmin' ] );
-	grunt.registerTask( 'js', [ 'uglify' ] );
+	grunt.registerTask( 'css', [ 'cssmin', 'usebanner:css' ] );
+	grunt.registerTask( 'js', [ 'uglify', 'usebanner:js' ] );
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
 
 	// TODO Add checktextdomain to build task
