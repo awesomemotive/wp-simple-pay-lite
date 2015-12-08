@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Plugin requirements.
 $stripe_checkout_requires = array(
 	'wp'  => '4.0.0',
-	'php' => '5.3.0',
+	'php' => '5.3.3',
 	'ext' => array( 'curl', 'json', 'mbstring' )
 );
 // Define constants.
