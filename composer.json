@@ -1,0 +1,37 @@
+{
+  "name": "moonstonemedia/WP-Simple-Pay-Lite-for-Stripe",
+  "description": "Add beautiful Stripe checkout forms to your WordPress site.",
+  "homepage": "https://wpsimplepay.com",
+  "type": "wordpress-plugin",
+  "license": "GPLv2.0+",
+  "keywords": ["wordpress", "plugin", "stripe"],
+  "authors": [
+    {
+      "name": "Moonstone Media",
+      "email": "phil@moonstonemediagroup.com",
+      "homepage": "http://moonstonemediagroup.com/"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe/",
+    "issues": "https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe/issues",
+    "forum": "https://wordpress.org/support/plugin/stripe"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=5.3.0",
+    "xrstf/composer-php52": "1.x"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
+    "post-update-cmd": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
+    "post-autoload-dump": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ]
+  }
+}
