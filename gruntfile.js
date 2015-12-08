@@ -4,7 +4,7 @@ module.exports = function( grunt ) {
 
 	console.log( pkg.title + ' - ' + pkg.version );
 
-	// Files to include in a release
+	// Files to include/exclude in a release.
 	var distFiles = [
 		'**',
 		'!.git/**',
@@ -14,6 +14,9 @@ module.exports = function( grunt ) {
 		'!.editorconfig',
 		'!.gitignore',
 		'!.gitmodules',
+		'!composer.json',
+		'!composer.lock',
+		'!readme.md',
 		'!gruntfile.js',
 		'!package.json',
 		'!**/*~'
