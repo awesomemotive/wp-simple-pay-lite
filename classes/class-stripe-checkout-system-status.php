@@ -537,7 +537,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                          */
                         if ( ! class_exists( 'Browser' ) ) {
 
-                            include_once( SC_DIR_PATH . 'libraries/browser-php/Browser.php' );
+                            include_once( SC_DIR_PATH . 'vendor/cbschuld/browser.php/lib/Browser.php' );
 
                             $user_client = new \Browser();
 

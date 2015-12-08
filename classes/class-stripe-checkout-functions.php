@@ -40,7 +40,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		 */
 		public function load_library() {
 			if ( ! class_exists( 'Stripe\Stripe' ) ) {
-				require_once( SC_DIR_PATH . 'libraries/stripe-php/init.php' );
+				require_once( SC_DIR_PATH . 'vendor/stripe/stripe-php/init.php' );
 			}
 		}
 
