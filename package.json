@@ -3,7 +3,7 @@
   "title": "WP Simple Pay Lite for Stripe",
   "description": "Add beautiful Stripe checkout forms to your WordPress site.",
   "version": "1.4.6",
-  "license": "GPL-2.0+",
+  "license": "GPLv2+",
   "homepage": "https://wordpress.org/plugins/stripe/",
   "repository": {
     "type": "git",

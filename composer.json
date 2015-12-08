@@ -3,7 +3,7 @@
   "description": "Add beautiful Stripe checkout forms to your WordPress site.",
   "homepage": "https://wpsimplepay.com",
   "type": "wordpress-plugin",
-  "license": "GPLv2.0+",
+  "license": "GPLv2+",
   "keywords": ["wordpress", "plugin", "stripe"],
   "authors": [
     {
