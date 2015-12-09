@@ -24,6 +24,7 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
+    "composer/installers": "1.x",
     "xrstf/composer-php52": "1.x",
     "stripe/stripe-php": "3.x",
     "cbschuld/Browser.php": "dev-master"
