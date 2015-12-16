@@ -9,9 +9,9 @@
 
 <!-- Stripe Keys tab HTML -->
 <div class="sc-admin-hidden" id="stripe-keys-settings-tab">
-	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'enable_live_key' ) ); ?>"><?php _e( 'Test or Live Mode', 'sc' ); ?></label>
-		<?php $sc_options->toggle_control( 'enable_live_key', array( __( 'Test', 'sc' ), __( 'Live', 'sc' ) ) ); ?>
+	<div class="sc-live-mode-toggle">
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'enable_live_key' ) ); ?>"><?php _e( 'Live Mode', 'sc' ); ?></label>
+		<?php $sc_options->sc_live_mode_toggle(); ?>
 		<?php $sc_options->description( sprintf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://dashboard.stripe.com/account/apikeys', 
 													__( 'Find your Stripe API keys here', 'sc' ) ), '' ); ?>
 	</div>

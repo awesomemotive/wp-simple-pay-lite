@@ -22,41 +22,26 @@ if ( ! class_exists( 'Stripe_Checkout_Settings_Extended' ) ) {
 		}
 		
 		/**
-		 * The function used to create the toggle control
-		 * 
-		 * @param string $id ID of the control
-		 * @param array $options The available options for the switch (needs exactly 2 options)
-		 * @param string $classes The CSS classes for the control
+		 * The function used to create the Stripe live mode toggle.
 		 */
-		public function toggle_control( $id, $options, $classes = null ) {
-			
-			// If there are not exactly 2 options then we return an error
-			if ( 2 != count( $options ) ) {
-				echo __( 'You must include 2 options for a toggle switch!', 'sc' ) . '<br>';
-				return;
-			}
-			
-			// Default classes
-			if( null === $classes ) {
-				$classes = 'switch-light switch-candy switch-candy-blue';
-			}
+		public function sc_live_mode_toggle() {
 
-			$value = $this->get_setting_value( $id );
+			// Since we're very specific to this one control right now.
+			$control_id = 'enable_live_key';
 
-			$checked = ( ! empty( $value ) ? checked( 1, $value, false ) : '' );
+			$setting_value = $this->get_setting_value( $control_id );
+			$setting_id = $this->get_setting_id( $control_id );
+			$esc_setting_id = esc_attr( $setting_id );
 
-			$html  = '<div class="' . esc_attr( $this->option ) . '-toggle-switch-wrap">';
-			$html .= '<label class="' . esc_attr( $classes ) . '">';
-			$html .= '<input type="checkbox" id="' . esc_attr( $this->get_setting_id( $id ) ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="1" ' . $checked . '/>';
-			$html .= '<span>';
+			$checked = ( ! empty( $setting_value ) ? checked( 1, $setting_value, false ) : '' );
 
-			foreach ( $options as $o ) {
-				$html .= '<span>' . esc_html( $o ) . '</span>';
-			}
-
-			$html .= '</span>';
-			$html .= '<a></a>';
-			$html .= '</label></div>';
+			$html  = '<div class="sc-livemode-onoffswitch">' . "\n";
+			$html .= '<input type="checkbox" id="' . $esc_setting_id . '" name="' . $esc_setting_id . '" class="sc-livemode-onoffswitch-checkbox" value="1" ' . $checked . '>';
+			$html .= '<label class="sc-livemode-onoffswitch-label" for="' . $esc_setting_id . '">' . "\n";
+			$html .= '<span class="sc-livemode-onoffswitch-inner"></span>' . "\n";
+			$html .= '<span class="sc-livemode-onoffswitch-switch"></span>' . "\n";
+			$html .= '</label>' . "\n";
+			$html .= '</div>' . "\n";
 
 			echo $html;
 		}
