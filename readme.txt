@@ -79,8 +79,9 @@ Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source
 
 = 1.4.7 - TODO =
 
-Tweak: Admin toggle switch UI for Test/Live modes changed.
-Dev: Now using Composer to handle PHP library dependencies (i.e. Stripe PHP).
+* Tweak: Translations moved from .po/.mo files to official wordpress.org translation packs.
+* Tweak: Admin toggle switch UI for Test/Live modes changed.
+* Dev: Now using Composer to handle PHP library dependencies (i.e. Stripe PHP).
 
 = 1.4.6 - November 19, 2015 =
 
