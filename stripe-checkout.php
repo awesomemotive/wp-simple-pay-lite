@@ -7,7 +7,7 @@
  * Author URI:  https://wpsimplepay.com
  * Version:     1.4.6
  * Text Domain: sc
- * Domain Path: /languages/
+ * Domain Path: /i18n
  *
  * @copyright   2015 Moonstone Media/Phil Derksen. All rights reserved.
  */
