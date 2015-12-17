@@ -36,7 +36,6 @@ module.exports = function( grunt ) {
 		checktextdomain: {
 			options: {
 				text_domain: 'stripe',
-				correct_domain: false,
 				keywords: [
 					'__:1,2d',
 					'_e:1,2d',
@@ -55,7 +54,14 @@ module.exports = function( grunt ) {
 				]
 			},
 			files: {
-				src: [ '**/*.php' ],
+				src: [
+					'classes/**/*.php',
+					'includes/**/*.php',
+					'views/**/*.php',
+					'stripe-checkout.php',
+					'stripe-checkout-requirements.php',
+					'uninstall.php'
+				],
 				expand: true
 			}
 		},
