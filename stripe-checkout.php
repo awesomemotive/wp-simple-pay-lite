@@ -52,7 +52,7 @@ if ( $stripe_checkout_requirements->pass() === false ) {
 			echo '<div class="error">' .
 			        '<p>'  .
 					     sprintf(
-						     __( 'WP Simple Pay requires PHP %1$s and WordPress %2$s to function properly. PHP version found: %3$s. WordPress installed version: %4$s. Please upgrade to meet the minimum requirements. <a href="http://www.wpupdatephp.com/update/" target=_blank">Read more on why it is important to stay updated.</a>', 'sc' ),
+						     __( 'WP Simple Pay requires PHP %1$s and WordPress %2$s to function properly. PHP version found: %3$s. WordPress installed version: %4$s. Please upgrade to meet the minimum requirements. <a href="http://www.wpupdatephp.com/update/" target=_blank">Read more on why it is important to stay updated.</a>', 'stripe' ),
 						     $required['php'],
 						     $required['wp'],
 						     PHP_VERSION,
@@ -71,7 +71,7 @@ if ( $stripe_checkout_requirements->pass() === false ) {
 		function stripe_checkout_plugin_extensions() {
 			$required = unserialize( SC_REQUIRES );
 			$extensions = '<code>' . implode( ', ', $required['ext'] ) . '</code>';
-			echo '<div class="error"><p>' . sprintf( __( 'WP Simple Pay requires the following PHP extensions to work: %s. Please make sure they are installed or contact your host.', 'sc' ), $extensions ) . '</p></div>';
+			echo '<div class="error"><p>' . sprintf( __( 'WP Simple Pay requires the following PHP extensions to work: %s. Please make sure they are installed or contact your host.', 'stripe' ), $extensions ) . '</p></div>';
 		}
 		add_action( 'admin_notices', 'stripe_checkout_plugin_extensions' );
 
@@ -99,7 +99,7 @@ if ( is_plugin_active( 'stripe-checkout-pro/stripe-checkout-pro.php' ) ) {
 	deactivate_plugins( 'stripe-checkout-pro/stripe-checkout-pro.php' );
 
 	function sc_deactivate_lite_notice() {
-		echo '<div class="error"><p>' . __( 'You cannot activate WP Simple Pay Lite and Pro at the same time. Please deactivate one to activate the other.', 'sc' ) . '</p></div>';
+		echo '<div class="error"><p>' . __( 'You cannot activate WP Simple Pay Lite and Pro at the same time. Please deactivate one to activate the other.', 'stripe' ) . '</p></div>';
 	}
 	add_action( 'admin_notices', 'sc_deactivate_lite_notice' );
 	//wp_die( sprintf( __( 'You cannot activate Stripe Checkout Lite with the Pro version already active. <a href="%s">Return to plugins page.</a>', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );

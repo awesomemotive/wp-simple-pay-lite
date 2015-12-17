@@ -44,7 +44,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'currency'                  => ( null !== $sc_options->get_setting_value( 'currency' ) ? $sc_options->get_setting_value( 'currency' ) : 'USD' ),
 						   'checkout_button_label'     => ( null !== $sc_options->get_setting_value( 'checkout_button_label' ) ? $sc_options->get_setting_value( 'checkout_button_label' ) : '' ),
 						   'billing'                   => ( null !== $sc_options->get_setting_value( 'billing' ) ? 'true' : 'false' ),    // true or false
-						   'payment_button_label'      => ( null !== $sc_options->get_setting_value( 'payment_button_label' ) ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'sc' ) ),
+						   'payment_button_label'      => ( null !== $sc_options->get_setting_value( 'payment_button_label' ) ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'stripe' ) ),
 						   'enable_remember'           => ( null !== $sc_options->get_setting_value( 'enable_remember' ) ? 'true' : 'false' ),    // true or false
 						   'bitcoin'                   => ( null !== $sc_options->get_setting_value( 'use_bitcoin' ) ? 'true' : 'false' ),    // true or false
 						   'alipay'                    => ( null !== $sc_options->get_setting_value( 'alipay' ) ? $sc_options->get_setting_value( 'alipay' ) : 'false' ),
@@ -147,7 +147,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   if ( empty( $data_key ) ) {
 
 			   if ( current_user_can( 'manage_options' ) ) {
-				   return '<h6>' . __( 'You must enter your API keys before the Stripe button will show up here.', 'sc' ) . '</h6>';
+				   return '<h6>' . __( 'You must enter your API keys before the Stripe button will show up here.', 'stripe' ) . '</h6>';
 			   }
 
 			   return '';
@@ -212,7 +212,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   if ( current_user_can( 'manage_options' ) ) {
 				   
 				   $html  = '<h6>';
-				   $html .= sprintf( __( 'WP Simple Pay for Stripe requires an amount of %1$s (%2$s %3$s) or larger.', 'sc' ),
+				   $html .= sprintf( __( 'WP Simple Pay for Stripe requires an amount of %1$s (%2$s %3$s) or larger.', 'stripe' ),
 									$stripe_minimum_amount, Stripe_Checkout_Misc::to_formatted_amount( $stripe_minimum_amount, $currency ), $currency );
 				   $html .= '</h6>';
 

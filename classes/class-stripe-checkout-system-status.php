@@ -27,7 +27,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
         public function __construct()
         {
             $this->id       = 'system-status';
-            $this->label    = __( 'System Report', 'sc' );
+            $this->label    = __( 'System Report', 'stripe' );
             $this->sections = $this->add_sections();
             $this->fields   = $this->add_fields();
         }
@@ -49,21 +49,21 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                 <div id="sc-settings">
                     <div id="sc-settings-content">
 
-                        <h1><?php _e( 'System Report', 'sc' ); ?></h1>
+                        <h1><?php _e( 'System Report', 'stripe' ); ?></h1>
 
                         <div id="sc-system-status-report">
                             <p>
-                                <?php _e( 'Please copy and paste this information when contacting support:', 'sc' ); ?>
+                                <?php _e( 'Please copy and paste this information when contacting support:', 'stripe' ); ?>
                             </p>
 
                             <textarea readonly="readonly" onclick="this.select();"></textarea>
 
                             <p>
-                                <?php _e( 'You can also download your information as a text file to attach, or simply view it below.', 'sc' ); ?>
+                                <?php _e( 'You can also download your information as a text file to attach, or simply view it below.', 'stripe' ); ?>
                             </p>
                             <p>
                                 <a href="#" id="sc-system-status-report-download"
-                                   class="button button-primary"><?php _e( 'Download System Report', 'sc' ); ?></a>
+                                   class="button button-primary"><?php _e( 'Download System Report', 'stripe' ); ?></a>
                             </p>
                         </div>
                         <hr>
@@ -74,27 +74,27 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                         $sections = array();
                         $panels = array(
                             'wordpress' => array(
-                                'label'  => __( 'WordPress Installation', 'sc' ),
+                                'label'  => __( 'WordPress Installation', 'stripe' ),
                                 'export' => 'WordPress Installation'
                             ),
                             'simple_pay' => array(
-                                'label'  => __( 'Simple Pay Settings', 'sc' ),
+                                'label'  => __( 'Simple Pay Settings', 'stripe' ),
                                 'export' => 'Simple Pay Settings',
                             ),
                             'theme' => array(
-                                'label'  => __( 'Active Theme', 'sc' ),
+                                'label'  => __( 'Active Theme', 'stripe' ),
                                 'export' => 'Active Theme'
                             ),
                             'plugins' => array(
-                                'label'  => __( 'Active Plugins', 'sc' ),
+                                'label'  => __( 'Active Plugins', 'stripe' ),
                                 'export' => 'Active Plugins'
                             ),
                             'server' => array(
-                                'label'  => __('Server Environment', 'sc'),
+                                'label'  => __('Server Environment', 'stripe'),
                                 'export' => 'Server Environment'
                             ),
                             'client' => array(
-                                'label'  => __( 'Client Information', 'sc' ),
+                                'label'  => __( 'Client Information', 'stripe' ),
                                 'export' => 'Client Information'
                             )
                         );
@@ -108,7 +108,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
                         // Show version stored in database
                         $sections['simple_pay']['sc_version'] = array(
-                            'label'        => __( 'Plugin Version', 'sc' ),
+                            'label'        => __( 'Plugin Version', 'stripe' ),
                             'label_export' => 'Plugin Version',
                             'result'       => get_option( 'sc_version' ),
                         );
@@ -120,7 +120,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                                 $sections['simple_pay'][ $key ] = array(
                                     'label'         => $key,
                                     'label_export'  => '', // Don't show label in export
-                                    'result'        => $value . ' ' . __( '(hidden in downloadable report)', 'sc' ),
+                                    'result'        => $value . ' ' . __( '(hidden in downloadable report)', 'stripe' ),
                                     'result_export' => '', // Don't show value in export
                                 );
                             } else {
@@ -137,19 +137,19 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                          * WordPress Installation
                          * ======================
                          */
-                        $debug_mode = $script_debug = __( 'No', 'sc' );
+                        $debug_mode = $script_debug = __( 'No', 'stripe' );
                         if ( defined( 'WP_DEBUG' ) ) {
-                            $debug_mode = ( true === WP_DEBUG ? __( 'Yes', 'sc' ) : $debug_mode );
+                            $debug_mode = ( true === WP_DEBUG ? __( 'Yes', 'stripe' ) : $debug_mode );
                         }
                         if ( defined( 'SCRIPT_DEBUG' ) ) {
-                            $script_debug = ( true === SCRIPT_DEBUG ? __('Yes', 'sc') : $script_debug );
+                            $script_debug = ( true === SCRIPT_DEBUG ? __('Yes', 'stripe') : $script_debug );
                         }
 
                         $memory = self::let_to_num( WP_MEMORY_LIMIT );
                         $memory_export = size_format( $memory );
 
                         if ( $memory < 41943040 ) {
-                            $memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 40MB. See: <a href="%2$s" target="_blank">Increasing memory allocated to PHP</a>', 'sc' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
+                            $memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 40MB. See: <a href="%2$s" target="_blank">Increasing memory allocated to PHP</a>', 'stripe' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
                         } else {
                             $memory = '<mark class="ok">' . $memory_export . '</mark>';
                         }
@@ -161,49 +161,49 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
                         $sections['wordpress'] = array(
                             'name' => array(
-                                'label'        => __( 'Site Name', 'sc' ),
+                                'label'        => __( 'Site Name', 'stripe' ),
                                 'label_export' => 'Site Name',
                                 'result'       => get_bloginfo( 'name' )
                             ),
                             'home_url' => array(
-                                'label'        => __( 'Home URL', 'sc' ),
+                                'label'        => __( 'Home URL', 'stripe' ),
                                 'label_export' => 'Home URL',
                                 'result'       => home_url(),
                             ),
                             'site_url' => array(
-                                'label'        => __( 'Site URL', 'sc' ),
+                                'label'        => __( 'Site URL', 'stripe' ),
                                 'label_export' => 'Site URL',
                                 'result'       => site_url(),
                             ),
                             'version' => array(
-                                'label'        => __( 'Version', 'sc' ),
+                                'label'        => __( 'Version', 'stripe' ),
                                 'label_export' => 'Version',
                                 'result'       => $wp_version,
                             ),
                             'locale' => array(
-                                'label'        => __( 'Locale', 'sc' ),
+                                'label'        => __( 'Locale', 'stripe' ),
                                 'label_export' => 'Locale',
                                 'result'       => get_locale(),
                             ),
                             'multisite' => array(
-                                'label'         => __( 'Multisite', 'sc' ),
+                                'label'         => __( 'Multisite', 'stripe' ),
                                 'label_export'  => 'Multisite',
-                                'result'        => $is_multisite ? __( 'Yes', 'sc' ) : __( 'No', 'sc' ),
+                                'result'        => $is_multisite ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
                                 'result_export' => $is_multisite ? 'Yes' : 'No',
                             ),
                             'permalink' => array(
-                                'label'         => __( 'Permalinks', 'sc' ),
+                                'label'         => __( 'Permalinks', 'stripe' ),
                                 'label_export'  => 'Permalinks',
                                 'result'        => '<code>' . $permalinks . '</code>',
                                 'result_export' => $permalinks,
                             ),
                             'memory_limit' => array(
-                                'label'         => __( 'WP Memory Limit', 'sc' ),
+                                'label'         => __( 'WP Memory Limit', 'stripe' ),
                                 'result'        => $memory,
                                 'result_export' => $memory_export,
                             ),
                             'debug_mode' => array(
-                                'label'  => __( 'WP Debug Mode', 'sc' ),
+                                'label'  => __( 'WP Debug Mode', 'stripe' ),
                                 'result' => $debug_mode,
                             ),
                             'script_debug' => array(
@@ -244,17 +244,17 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                         }
 
                         if ( version_compare( $theme_version, $theme_update_version, '<' ) ) {
-                            $theme_version = '<mark class="error">' . $theme_version . ' (' . sprintf( __( '%s is available', 'sc' ), esc_html( $theme_update_version ) ) . '</mark>';
+                            $theme_version = '<mark class="error">' . $theme_version . ' (' . sprintf( __( '%s is available', 'stripe' ), esc_html( $theme_update_version ) ) . '</mark>';
                         } else {
                             $theme_version = '<mark class="ok">' . $theme_version . '</mark>';
                         }
 
                         $theme = '<dl>';
-                        $theme .= '<dt>' . __( 'Name', 'sc' ) . '</dt>';
+                        $theme .= '<dt>' . __( 'Name', 'stripe' ) . '</dt>';
                         $theme .= '<dd>' . $theme_name . '</dd>';
-                        $theme .= '<dt>' . __( 'Author', 'sc' ) . '</dt>';
+                        $theme .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
                         $theme .= '<dd>' . $theme_author . '</dd>';
-                        $theme .= '<dt>' . __( 'Version', 'sc' ) . '</dt>';
+                        $theme .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
                         $theme .= '<dd>' . $theme_version . '</dd>';
                         $theme .= '</dl>';
 
@@ -270,11 +270,11 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
                                 $parent = wp_get_theme( $active_theme->Template );
                                 $parent_theme = '<dl>';
-                                $parent_theme .= '<dt>' . __( 'Name', 'sc' ) . '</dt>';
+                                $parent_theme .= '<dt>' . __( 'Name', 'stripe' ) . '</dt>';
                                 $parent_theme .= '<dd>' . $parent->Name . '</dd>';
-                                $parent_theme .= '<dt>' . __( 'Author', 'sc' ) . '</dt>';
+                                $parent_theme .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
                                 $parent_theme .= '<dd>' . $parent->Author . '</dd>';
-                                $parent_theme .= '<dt>' . __( 'Version', 'sc' ) . '</dt>';
+                                $parent_theme .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
                                 $parent_theme .= '<dd>' . $parent->Version . '</dd>';
                                 $parent_theme .= '</dl>';
 
@@ -284,19 +284,19 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
                         $sections['theme'] = array(
                             'theme' => array(
-                                'label'         => __( 'Theme Information', 'sc' ),
+                                'label'         => __( 'Theme Information', 'stripe' ),
                                 'label_export'  => 'Theme',
                                 'result'        => $theme,
                                 'result_export' => $theme_export,
                             ),
                             'theme_child' => array(
-                                'label'         => __( 'Child Theme', 'sc' ),
+                                'label'         => __( 'Child Theme', 'stripe' ),
                                 'label_export'  => 'Child Theme',
-                                'result'        => $is_child_theme ? __( 'Yes', 'sc' ) : __( 'No', 'sc' ),
+                                'result'        => $is_child_theme ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
                                 'result_export' => $is_child_theme ? 'Yes' : 'No',
                             ),
                             'theme_parent' => array(
-                                'label'         => __( 'Parent Theme', 'sc' ),
+                                'label'         => __( 'Parent Theme', 'stripe' ),
                                 'label_export'  => 'Parent Theme',
                                 'result'        => $parent_theme,
                                 'result_export' => $parent_theme_export,
@@ -336,7 +336,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                                         if ( ! empty ( $api->version ) ) {
                                             $plugin_update_version = $api->version;
                                             if ( version_compare( $plugin_version, $plugin_update_version, '<' ) ) {
-                                                $plugin_version = '<mark class="error">' . $plugin_version . ' (' . sprintf( __( '%s is available', 'sc' ), esc_html( $plugin_update_version ) ) . '</mark>';
+                                                $plugin_version = '<mark class="error">' . $plugin_version . ' (' . sprintf( __( '%s is available', 'stripe' ), esc_html( $plugin_update_version ) ) . '</mark>';
                                             } else {
                                                 $plugin_version = '<mark class="ok">' . $plugin_version . '</mark>';
                                             }
@@ -345,9 +345,9 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                                 }
 
                                 $plugin = '<dl>';
-                                $plugin .= '<dt>' . __( 'Author', 'sc' ) . '</dt>';
+                                $plugin .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
                                 $plugin .= '<dd>' . $plugin_author . '</dd>';
-                                $plugin .= '<dt>' . __( 'Version', 'sc' ) . '</dt>';
+                                $plugin .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
                                 $plugin .= '<dd>' . $plugin_version . '</dd>';
                                 $plugin .= '</dl>';
 
@@ -369,7 +369,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                          * ==================
                          */
                         if ( version_compare( PHP_VERSION, '5.4', '<' ) ) {
-                            $php = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to upgrade at least to PHP version 5.4 for security reasons. <a href="%2$s" target="_blank">Read more.</a>', 'sc' ), PHP_VERSION, 'http://www.wpupdatephp.com/update/' ) . '</mark>';
+                            $php = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to upgrade at least to PHP version 5.4 for security reasons. <a href="%2$s" target="_blank">Read more.</a>', 'stripe' ), PHP_VERSION, 'http://www.wpupdatephp.com/update/' ) . '</mark>';
                         } else {
                             $php = '<mark class="ok">' . PHP_VERSION . '</mark>';
                         }
@@ -389,7 +389,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
                         $default_timezone = $server_timezone_export = date_default_timezone_get();
                         if ( 'UTC' !== $default_timezone ) {
-                            $server_timezone = '<mark class="error">' . sprintf( __( 'Server default timezone is %s - it should be UTC', 'sc' ), $default_timezone ) . '</mark>';
+                            $server_timezone = '<mark class="error">' . sprintf( __( 'Server default timezone is %s - it should be UTC', 'stripe' ), $default_timezone ) . '</mark>';
                         } else {
                             $server_timezone = '<mark class="ok">UTC</mark>';
                         }
@@ -403,10 +403,10 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                         ) );
                         if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
                             $wp_post_export = 'Yes';
-                            $wp_post = '<mark class="ok">' . __( 'Yes', 'gce' ) . '</mark>';
+                            $wp_post = '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>';
                         } else {
                             $wp_post_export = 'No';
-                            $wp_post = '<mark class="error">' . __( 'No', 'gce' );
+                            $wp_post = '<mark class="error">' . __( 'No', 'stripe' );
                             if ( is_wp_error( $response ) ) {
                                 $error = ' (' . $response->get_error_message() . ')';
                                 $wp_post .= $error;
@@ -423,10 +423,10 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                         $response = wp_safe_remote_get( get_home_url( '/?p=1' ) );
                         if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
                             $wp_get_export = 'Yes';
-                            $wp_get = '<mark class="ok">' . __( 'Yes', 'gce' ) . '</mark>';
+                            $wp_get = '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>';
                         } else {
                             $wp_get_export = 'No';
-                            $wp_get = '<mark class="error">' . __( 'No', 'gce' );
+                            $wp_get = '<mark class="error">' . __( 'No', 'stripe' );
                             if ( is_wp_error( $response ) ) {
                                 $error = ' (' . $response->get_error_message() . ')';
                                 $wp_get .= $error;
@@ -447,85 +447,85 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
                         $sections['server'] = array(
                             'host' => array(
-                                'label'        => __( 'Web Server', 'sc' ),
+                                'label'        => __( 'Web Server', 'stripe' ),
                                 'label_export' => 'Web Server',
                                 'result'       => $host,
                             ),
                             'php_version' => array(
-                                'label'         => __( 'PHP Version', 'sc' ),
+                                'label'         => __( 'PHP Version', 'stripe' ),
                                 'label_export'  => 'PHP Version',
                                 'result'        => $php,
                                 'result_export' => PHP_VERSION,
                             ),
                             'mysql_version' => array(
-                                'label'         => __( 'MySQL Version', 'sc' ),
+                                'label'         => __( 'MySQL Version', 'stripe' ),
                                 'label_export'  => 'MySQL Version',
                                 'result'        => version_compare($mysql, '5.5', '>') ? '<mark class="ok">' . $mysql . '</mark>' : $mysql,
                                 'result_export' => $mysql,
                             ),
                             'server_timezone' => array(
-                                'label'         => __( 'Server Timezone', 'sc' ),
+                                'label'         => __( 'Server Timezone', 'stripe' ),
                                 'label_export'  => 'Server Timezone',
                                 'result'        => $server_timezone,
                                 'result_export' => $server_timezone_export,
                             ),
                             'display_errors' => array(
-                                'label'         => __( 'Display Errors', 'sc' ),
-                                'result'        => ( ini_get( 'display_errors' ) ) ? __( 'Yes', 'sc' ) . ' (' . ini_get( 'display_errors' ) . ')' : '-',
+                                'label'         => __( 'Display Errors', 'stripe' ),
+                                'result'        => ( ini_get( 'display_errors' ) ) ? __( 'Yes', 'stripe' ) . ' (' . ini_get( 'display_errors' ) . ')' : '-',
                                 'result_export' => ( ini_get( 'display_errors' ) ) ? 'Yes' : 'No',
                             ),
                             'php_safe_mode' => array(
-                                'label'         => __( 'Safe Mode', 'sc' ),
-                                'result'        => ( ini_get( 'safe_mode' ) ) ? __( 'Yes', 'sc' ) : __( 'No', 'sc' ),
+                                'label'         => __( 'Safe Mode', 'stripe' ),
+                                'result'        => ( ini_get( 'safe_mode' ) ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
                                 'result_export' => ( ini_get( 'safe_mode' ) ) ? 'Yes' : 'No',
                             ),
                             'php_memory_limit' => array(
-                                'label'  => __( 'Memory Limit', 'sc' ),
+                                'label'  => __( 'Memory Limit', 'stripe' ),
                                 'result' => $php_memory_limit ? $php_memory_limit : '-',
                             ),
                             'upload_max_filesize' => array(
-                                'label'  => __( 'Upload Max Filesize', 'sc' ),
+                                'label'  => __( 'Upload Max Filesize', 'stripe' ),
                                 'result' => $php_max_upload_filesize ? $php_max_upload_filesize : '-',
                             ),
                             'post_max_size' => array(
-                                'label' => __( 'Post Max Size', 'sc' ),
+                                'label' => __( 'Post Max Size', 'stripe' ),
                                 'result' => $php_post_max_size ? $php_post_max_size : '-',
                             ),
                             'max_execution_time' => array(
-                                'label'  => __( 'Max Execution Time', 'sc' ),
+                                'label'  => __( 'Max Execution Time', 'stripe' ),
                                 'result' => $php_max_execution_time ? $php_max_execution_time : '-',
                             ),
                             'max_input_vars' => array(
-                                'label'  => __( 'Max Input Vars', 'sc' ),
+                                'label'  => __( 'Max Input Vars', 'stripe' ),
                                 'result' => $php_max_input_vars ? $php_max_input_vars : '-',
                             ),
                             'fsockopen' => array(
                                 'label'         => 'fsockopen',
-                                'result'        => function_exists( 'fsockopen' ) ? __( 'Yes', 'sc' ) : __( 'No', 'sc' ),
+                                'result'        => function_exists( 'fsockopen' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
                                 'result_export' => function_exists( 'fsockopen' ) ? 'Yes' : 'No',
                             ),
                             'curl_init' => array(
                                 'label'         => 'cURL',
-                                'result'        => function_exists( 'curl_init' ) ? __( 'Yes', 'sc' ) : __( 'No', 'sc' ),
+                                'result'        => function_exists( 'curl_init' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
                                 'result_export' => function_exists( 'curl_init' ) ? 'Yes' : 'No',
                             ),
                             'soap' => array(
                                 'label'         => 'SOAP',
-                                'result'        => class_exists( 'SoapClient' ) ? __( 'Yes', 'sc' ) : __( 'No', 'sc' ),
+                                'result'        => class_exists( 'SoapClient' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
                                 'result_export' => class_exists( 'SoapClient' ) ? 'Yes' : 'No',
                             ),
                             'suhosin' => array(
                                 'label'         => 'SUHOSIN',
-                                'result'        => extension_loaded( 'suhosin' ) ? __( 'Yes', 'sc' ) : __( 'No', 'sc' ),
+                                'result'        => extension_loaded( 'suhosin' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
                                 'result_export' => extension_loaded( 'suhosin' ) ? 'Yes' : 'No',
                             ),
                             'wp_remote_post' => array(
-                                'label'         => __( 'WP Remote POST', 'sc' ),
+                                'label'         => __( 'WP Remote POST', 'stripe' ),
                                 'result'        => $wp_post,
                                 'result_export' => $wp_post_export,
                             ),
                             'wp_remote_get' => array(
-                                'label'         => __( 'WP Remote GET', 'sc' ),
+                                'label'         => __( 'WP Remote GET', 'stripe' ),
                                 'result'        => $wp_get,
                                 'result_export' => $wp_get_export,
                             ),
@@ -542,13 +542,13 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                             $user_client = new \Browser();
 
                             $browser = '<dl>';
-                            $browser .= '<dt>' . __( 'Name:', 'sc' ) . '</dt>';
+                            $browser .= '<dt>' . __( 'Name:', 'stripe' ) . '</dt>';
                             $browser .= '<dd>' . $user_client->getBrowser() . '</dd>';
-                            $browser .= '<dt>' . __( 'Version:', 'sc' ) . '</dt>';
+                            $browser .= '<dt>' . __( 'Version:', 'stripe' ) . '</dt>';
                             $browser .= '<dd>' . $user_client->getVersion() . '</dd>';
-                            $browser .= '<dt>' . __( 'User Agent:', 'sc' ) . '</dt>';
+                            $browser .= '<dt>' . __( 'User Agent:', 'stripe' ) . '</dt>';
                             $browser .= '<dd>' . $user_client->getUserAgent() . '</dd>';
-                            $browser .= '<dt>' . __( 'Platform:', 'sc' ) . '</dt>';
+                            $browser .= '<dt>' . __( 'Platform:', 'stripe' ) . '</dt>';
                             $browser .= '<dd>' . $user_client->getPlatform() . '</dd>';
                             $browser .= '</dl>';
 
@@ -557,7 +557,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                         } else {
 
                             $browser = '<dl>';
-                            $browser .= '<dt>' . __( 'User Agent:', 'sc' ) . '</dt>';
+                            $browser .= '<dt>' . __( 'User Agent:', 'stripe' ) . '</dt>';
                             $browser .= '<dd>' . $_SERVER['HTTP_USER_AGENT'] . '</dd>';
                             $browser .= '</dl>';
 
@@ -567,12 +567,12 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 
                         $sections['client'] = array(
                             'user_ip' => array(
-                                'label'        => __( 'IP Address', 'sc' ),
+                                'label'        => __( 'IP Address', 'stripe' ),
                                 'label_export' => 'IP Address',
                                 'result'       => $_SERVER['SERVER_ADDR'],
                             ),
                             'browser' => array(
-                                'label'         => __( 'Browser', 'sc' ),
+                                'label'         => __( 'Browser', 'stripe' ),
                                 'result'        => $browser,
                                 'result_export' => $browser_export,
                             )

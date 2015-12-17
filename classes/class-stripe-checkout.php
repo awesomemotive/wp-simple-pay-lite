@@ -79,7 +79,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 */
 		public function plugin_textdomain() {
 			load_plugin_textdomain(
-				'sc',
+				'stripe',
 				false,
 				SC_DIR_PATH . 'languages/'
 			);
@@ -166,16 +166,16 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @return    string
 		 */
 		public static function get_plugin_title() {
-			return __( 'WP Simple Pay Lite for Stripe', 'sc' );
+			return __( 'WP Simple Pay Lite for Stripe', 'stripe' );
 		}
 		
 		
 		public static function get_pro_plugin_title() {
-			return __( 'WP Simple Pay Pro for Stripe', 'sc' );
+			return __( 'WP Simple Pay Pro for Stripe', 'stripe' );
 		}
 
 		public static function get_plugin_menu_title() {
-			return __( 'Simple Pay Lite', 'sc' );
+			return __( 'Simple Pay Lite', 'stripe' );
 		}
 	}
 }

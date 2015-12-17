@@ -14,26 +14,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="sidebar-container metabox-holder">
 	<div class="postbox">
-		<h3 class="wp-ui-primary"><span><?php _e( 'Need More Options?', 'sc' ); ?></span></h3>
+		<h3 class="wp-ui-primary"><span><?php _e( 'Need More Options?', 'stripe' ); ?></span></h3>
 		<div class="inside">
 			<div class="main">
 				<p class="last-blurb centered">
-					<?php printf( __( "Additional perks you'll get with %s", 'sc' ), Stripe_Checkout::get_pro_plugin_title() ); ?>
+					<?php printf( __( "Additional perks you'll get with %s", 'stripe' ), Stripe_Checkout::get_pro_plugin_title() ); ?>
 				</p>
 
 				<ul>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Let customers enter an amount', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Collect data with custom fields', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Offer discounts with coupon codes', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscriptions integration', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe add-ons as they\'re released', 'sc' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Automatic updates & email support', 'sc' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Let customers enter an amount', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Collect data with custom fields', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Offer discounts with coupon codes', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscriptions integration', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe add-ons as they\'re released', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Automatic updates & email support', 'stripe' ); ?></li>
 				</ul>
 
 				<div class="centered">
 					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'sidebar-link' ); ?>"
 					   class="button-primary button-large" target="_blank">
-						<?php _e( 'Upgrade to Pro Now', 'sc' ); ?></a>
+						<?php _e( 'Upgrade to Pro Now', 'stripe' ); ?></a>
 				</div>
 			</div>
 		</div>

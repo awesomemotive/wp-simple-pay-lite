@@ -92,8 +92,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			global $sc_options;
 			
 			$tabs = array(
-				'stripe-keys'    => __( 'Stripe Keys', 'sc' ),
-				'default'        => __( 'Default Settings', 'sc' ),
+				'stripe-keys'    => __( 'Stripe Keys', 'stripe' ),
+				'default'        => __( 'Default Settings', 'stripe' ),
 			);
 			
 			$tabs = apply_filters( 'sc_admin_tabs', $tabs );
@@ -111,7 +111,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			global $base_class;
 			
 			$this->plugin_screen_hook_suffix[] = add_menu_page(
-				$base_class->get_plugin_title() . ' ' . __( 'Settings', 'sc' ),
+				$base_class->get_plugin_title() . ' ' . __( 'Settings', 'stripe' ),
 				$base_class->get_plugin_menu_title(),
 				'manage_options',
 				$base_class->plugin_slug,
@@ -121,8 +121,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 			$this->plugin_screen_hook_suffix[] = add_submenu_page(
 				$base_class->plugin_slug,
-				__( 'System Report', 'sc' ),
-				__( 'System Report', 'sc' ),
+				__( 'System Report', 'stripe' ),
+				__( 'System Report', 'stripe' ),
 				'manage_options',
 				$base_class->plugin_slug . '-tools',
 				array( 'Stripe_Checkout_System_Status', 'set_content' )
@@ -150,7 +150,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			
 			global $base_class;
 			
-			$setting_link = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'page', $base_class->plugin_slug, admin_url( 'admin.php' ) ) ), __( 'Settings', 'sc' ) );
+			$setting_link = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'page', $base_class->plugin_slug, admin_url( 'admin.php' ) ) ), __( 'Settings', 'stripe' ) );
 			array_unshift( $links, $setting_link );
 
 			return $links;
@@ -160,7 +160,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * Add settings action link for purchasing pro
 		 */
 		public function purchase_pro_link( $links ) {
-			$pro_link = sprintf( '<a href="%s" target="_blank">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'free-plugin', 'settings-link' ), __( 'Purchase Pro', 'sc' ) );
+			$pro_link = sprintf( '<a href="%s" target="_blank">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'free-plugin', 'settings-link' ), __( 'Purchase Pro', 'stripe' ) );
 			array_push( $links, $pro_link );
 
 			return $links;

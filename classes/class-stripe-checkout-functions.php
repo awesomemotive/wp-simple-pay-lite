@@ -199,11 +199,11 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 						$html = '<div class="sc-payment-details-wrap">' . "\n";
 
-						$html .= '<p>' . __( 'Congratulations. Your payment went through!', 'sc' ) . '</p>' . "\n";
+						$html .= '<p>' . __( 'Congratulations. Your payment went through!', 'stripe' ) . '</p>' . "\n";
 						$html .= '<p>' . "\n";
 
 						if ( ! empty( $charge_response->description ) ) {
-							$html .= __( "Here's what you purchased:", 'sc' ) . '<br/>' . "\n";
+							$html .= __( "Here's what you purchased:", 'stripe' ) . '<br/>' . "\n";
 							$html .= $charge_response->description . '<br/>' . "\n";
 						}
 
@@ -212,12 +212,12 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						}
 
 						$html .= '<br/>' . "\n";
-						$html .= '<strong>' . __( 'Total Paid: ', 'sc' ) . Stripe_Checkout_Misc::to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
+						$html .= '<strong>' . __( 'Total Paid: ', 'stripe' ) . Stripe_Checkout_Misc::to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
 								 strtoupper( $charge_response->currency ) . '</strong>' . "\n";
 
 						$html .= '</p>' . "\n";
 
-						$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'sc' ), $charge_id ) . '</p>' . "\n";
+						$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'stripe' ), $charge_id ) . '</p>' . "\n";
 
 						$html .= '</div>' . "\n";
 
@@ -239,7 +239,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					// LITE ONLY: Payment details error included in payment details function.
 
 					$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
-					$html .= '<p>' . __( 'Sorry, but there has been an error processing your payment.', 'sc' ) . '</p>' . "\n";
+					$html .= '<p>' . __( 'Sorry, but there has been an error processing your payment.', 'stripe' ) . '</p>' . "\n";
 					$html .= '<p>' . $charge->failure_message . '</p>';
 					$html .= '</div>' . "\n";
 			
