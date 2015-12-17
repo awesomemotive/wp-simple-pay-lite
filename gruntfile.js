@@ -135,9 +135,7 @@ module.exports = function( grunt ) {
 	grunt.registerTask( 'css', [ 'cssmin', 'usebanner:css' ] );
 	grunt.registerTask( 'js', [ 'uglify', 'usebanner:js' ] );
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
-
-	// TODO Add checktextdomain to build task
-	grunt.registerTask( 'build', [ 'default', 'clean', 'copy', 'compress' ] );
+	grunt.registerTask( 'build', [ 'default', 'checktextdomain', 'clean', 'copy', 'compress' ] );
 
 	// TODO Add deploy task
 	//grunt.registerTask( 'deploy',	['build'] );
