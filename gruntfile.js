@@ -112,18 +112,18 @@ module.exports = function( grunt ) {
 
 		usebanner: {
 			options: {
-				position : 'top',
-				banner   : '<%= banner %>',
+				position: 'top',
+				banner: '<%= banner %>',
 				linebreak: true
 			},
-			js     : {
+			js: {
 				files: {
-					src: ['assets/js/*.min.js']
+					src: [ 'assets/js/*.min.js' ]
 				}
 			},
-			css    : {
+			css: {
 				files: {
-					src: ['assets/css/*.min.css']
+					src: [ 'assets/css/*.min.css' ]
 				}
 			}
 		}

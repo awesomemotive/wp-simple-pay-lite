@@ -4,7 +4,11 @@
   "homepage": "https://wpsimplepay.com",
   "type": "wordpress-plugin",
   "license": "GPLv2+",
-  "keywords": ["wordpress", "plugin", "stripe"],
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "stripe"
+  ],
   "authors": [
     {
       "name": "Moonstone Media",
