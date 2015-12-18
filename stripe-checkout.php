@@ -5,7 +5,7 @@
  * Description: Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
  * Author:      Moonstone Media
  * Author URI:  https://wpsimplepay.com
- * Version:     1.4.6
+ * Version:     1.5.0
  * Text Domain: sc
  * Domain Path: /i18n
  *
