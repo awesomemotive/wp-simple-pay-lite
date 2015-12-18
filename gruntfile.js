@@ -7,7 +7,7 @@ module.exports = function( grunt ) {
 	// Files to include/exclude in a release.
 	var distFiles = [
 		'**',
-		'!assets/img/wp/**',
+		'!assets/images/wp/**',
 		'!build/**',
 		'!node_modules/**',
 		'!.editorconfig',

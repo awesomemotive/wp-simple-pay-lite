@@ -116,7 +116,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 				'manage_options',
 				$base_class->plugin_slug,
 				array( $this, 'display_plugin_admin_page' ),
-				SC_DIR_URL . 'assets/img/icon-16x16.png'
+				SC_DIR_URL . 'assets/images/icon-16x16.png'
 			);
 
 			$this->plugin_screen_hook_suffix[] = add_submenu_page(
