@@ -1,8 +1,4 @@
-/**
- * Admin JS file
- */
-
-/* global jQuery, sc_script */
+// Lite admin main
 
 (function ($) {
 	'use strict';

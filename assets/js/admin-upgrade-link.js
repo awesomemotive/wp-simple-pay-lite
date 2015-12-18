@@ -1,6 +1,4 @@
-/**
- * Admin upgrade link JS
- */
+// Lite admin upgrade link
 
 jQuery(document).ready(function ($) {
 	// Open upgrade link in a new window.
