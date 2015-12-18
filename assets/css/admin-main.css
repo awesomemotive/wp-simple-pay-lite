@@ -1,4 +1,6 @@
-/* Default admin CSS. */
+/* Lite admin main */
+
+/* Layout page similar to the built-in post edit screen */
 
 #sc-settings {
 	margin-right: 310px;
@@ -29,13 +31,13 @@
 	font-size: 17px;
 }
 
-/* Alternative postbox class with no background or border. */
+/* Alternative postbox class with no background or border */
 #sc-settings-sidebar .postbox-nobg {
 	position: relative;
 	min-width: 255px;
 }
 
-/* postbox overrides */
+/* Postbox overrides */
 #sc-settings-sidebar .sidebar-container .postbox .inside {
 	margin-bottom: 0;
 }
@@ -126,7 +128,7 @@ input[type="checkbox"].sc-livemode-onoffswitch-checkbox {
 	right: 0;
 }
 
-/* System Status CSS */
+/* System status report */
 
 #sc-system-status-report textarea {
 	font-family: monospace;

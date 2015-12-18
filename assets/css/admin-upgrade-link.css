@@ -1,4 +1,4 @@
-/* Default admin CSS for the upgrade link */
+/* Lite admin upgrade link */
 
 a[href="admin.php?page=stripe-checkout-upgrade"] {
 	color: #6bbc5b !important;
@@ -7,4 +7,3 @@ a[href="admin.php?page=stripe-checkout-upgrade"] {
 a[href="admin.php?page=stripe-checkout-upgrade"]:hover {
 	color: #7ad368 !important;
 }
-

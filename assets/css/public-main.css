@@ -1,6 +1,7 @@
-/* Public CSS file */
+/* Lite public main */
 
-/* Payment details at the top of the post. */
+/* Payment details at top of post */
+
 .sc-payment-details-wrap { 
 	background: #dff0d8;
 	border: 0;
@@ -12,9 +13,8 @@
 	background: #ffbaba;
 }
 
-/* Basic form styles. Most based off Bootstrap 3. */
+/* Forms */
 
 .sc-checkout-form {
 	margin-bottom: 15px;
 }
-
