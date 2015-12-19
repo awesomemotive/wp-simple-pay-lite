@@ -192,6 +192,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * @param   string  $base_url   Plain URL to navigate to
 		 * @param   string  $content    GA "content" tracking value
 		 * @param   bool    $raw        Use esc_url_raw instead (default = false)
+		 *
 		 * @return  string  $url        Full Google Analytics campaign URL
 		 */
 		public static function ga_campaign_url( $base_url, $content, $raw = false ) {
@@ -202,7 +203,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 				'utm_source'   => 'inside-plugin',
 				'utm_medium'   => 'link',
 				'utm_campaign' => $campaign,
-				'utm_content'  => $content
+				'utm_content'  => $content // i.e. 'sidebar-link', 'settings-link'
 			), $base_url );
 			
 			if ( $raw ) {
