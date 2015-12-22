@@ -124,10 +124,10 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			require_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
 
 			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-misc.php' );
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-settings-extended.php' );
 
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
 				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-scripts.php' );
-				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-settings-extended.php' );
 				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-shortcodes.php' );
 			}
 			

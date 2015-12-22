@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Settings extension for additional controls not available in the base class - SP Lite
+ * MM settings class extension - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.
@@ -20,8 +20,6 @@ if ( ! class_exists( 'Stripe_Checkout_Settings_Extended' ) ) {
 		public function __construct( $option ) {
 			parent::__construct( $option );
 		}
-
-		// TODO Share between Lite & Pro?
 		
 		/**
 		 * The function used to create the Stripe live mode toggle.
