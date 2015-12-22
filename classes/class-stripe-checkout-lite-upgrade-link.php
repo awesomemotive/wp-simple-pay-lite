@@ -24,9 +24,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 			add_action( 'admin_footer', array( $this, 'load_scripts' ) );
 			
 			// Add link to the admin menu
-			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				add_action( 'admin_menu', array( $this, 'upgrade_link' ) );
-			}
+			add_action( 'admin_menu', array( $this, 'upgrade_link' ) );
 		}
 		
 		/*
