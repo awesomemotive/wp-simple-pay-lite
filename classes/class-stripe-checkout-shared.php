@@ -119,34 +119,34 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @since     1.0.0
 		 */
 		public function includes() {
-			
-			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
-			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
 
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-misc.php' );
+			require_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
+			require_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
+
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-misc.php' );
 
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-scripts.php' );
-				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-settings-extended.php' );
-				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-shortcodes.php' );
+				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-scripts.php' );
+				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-settings-extended.php' );
+				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-shortcodes.php' );
 			}
 			
 			// Admin side
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-admin.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-notices.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-system-status.php' );
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-admin.php' );
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-notices.php' );
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-system-status.php' );
 
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade-link.php' );
+				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade-link.php' );
 			}
 
 			// upgrade.php included in class-stripe-checkout-share-admin.php upgrade() function
 
 			// Public side
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-functions.php' );
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-functions.php' );
 			
 			// Old functions after everything else
-			include_once( SC_DIR_PATH . 'includes/old-functions.php' );
+			require_once( SC_DIR_PATH . 'includes/old-functions.php' );
 		}
 
 		// TODO
