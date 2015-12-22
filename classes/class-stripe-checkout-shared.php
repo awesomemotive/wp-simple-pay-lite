@@ -140,12 +140,16 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade-link.php' );
 			}
 
+			// upgrade.php included in class-stripe-checkout-share-admin.php upgrade() function
+
 			// Public side
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-functions.php' );
 			
 			// Old functions after everything else
 			include_once( SC_DIR_PATH . 'includes/old-functions.php' );
 		}
+
+		// TODO
 		
 		/**
 		 * Get the instance for all the included classes

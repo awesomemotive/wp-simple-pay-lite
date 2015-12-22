@@ -61,11 +61,15 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array( $this, 'purchase_pro_link' ) );
 			}
 		}
-		
+
+		// SP Lite & Pro have separate upgrade classes
 		public function upgrade() {
 
-			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade.php' );
-
+			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
+				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade.php' );
+			} else {
+				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-pro-upgrade.php' );
+			}
 		}
 		
 		/*
