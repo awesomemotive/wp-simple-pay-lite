@@ -85,7 +85,7 @@ if ( $stripe_checkout_requirements->pass() === false ) {
 }
 
 // Load the plugin.
-require_once SC_DIR_PATH . 'classes/class-stripe-checkout.php';
+require_once SC_DIR_PATH . 'classes/class-stripe-checkout-shared.php';
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
 register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
