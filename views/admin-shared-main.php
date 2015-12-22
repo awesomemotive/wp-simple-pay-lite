@@ -34,8 +34,8 @@ global $sc_options;
 				<form method="post" action="options.php">
 				<?php
 					settings_fields( $sc_options->get_option() );
-					$sc_options->load_template( SC_DIR_PATH . 'views/admin-main-tab-default.php' );
-					$sc_options->load_template( SC_DIR_PATH . 'views/admin-main-tab-stripe-keys.php' );
+					$sc_options->load_template( SC_DIR_PATH . 'views/admin-shared-tab-default.php' );
+					$sc_options->load_template( SC_DIR_PATH . 'views/admin-shared-tab-stripe-keys.php' );
 
 					do_action( 'sc_admin_tab_content' );
 
@@ -48,9 +48,9 @@ global $sc_options;
 		<div id="sc-settings-sidebar">
 			<?php
 				if ( class_exists( 'Stripe_Checkout_Pro' ) ) {
-					include( SC_DIR_PATH . 'views/admin-sidebar-pro.php' );
+					include( SC_DIR_PATH . 'views/admin-pro-sidebar.php' );
 				} else {
-					include( SC_DIR_PATH . 'views/admin-sidebar.php' );
+					include( SC_DIR_PATH . 'views/admin-lite-sidebar.php' );
 				}
 			?>
 		</div>

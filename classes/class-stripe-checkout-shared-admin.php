@@ -141,7 +141,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * @since    1.0.0
 		 */
 		public function display_plugin_admin_page() {
-			include_once( SC_DIR_PATH . 'views/admin-main.php' );
+			include_once( SC_DIR_PATH . 'views/admin-shared-main.php' );
 		}
 		
 		/**
