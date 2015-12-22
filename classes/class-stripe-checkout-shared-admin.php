@@ -63,7 +63,9 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		}
 		
 		public function upgrade() {
-			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade.php' );
+
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade.php' );
+
 		}
 		
 		/*
