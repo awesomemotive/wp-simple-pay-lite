@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Scripts class file
+ * Scripts class file - SP Lite
  */
 
 // Exit if accessed directly.

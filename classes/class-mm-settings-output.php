@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base settings output class - displays the fields HTML
+ * Base settings output class - displays the fields HTML - Shared between SP Lite & Pro (and other plugins)
  */
 
 // Exit if accessed directly.

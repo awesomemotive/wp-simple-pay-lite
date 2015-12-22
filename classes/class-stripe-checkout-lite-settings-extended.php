@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Settings extension for additional controls not available in the base class
+ * Settings extension for additional controls not available in the base class - SP Lite
  */
 
 // Exit if accessed directly.

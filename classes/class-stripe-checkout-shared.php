@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Main class
+ * Main class - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.

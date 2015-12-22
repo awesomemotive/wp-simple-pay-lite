@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Functions class file
+ * Functions class file - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Notices class file
+ * Notices class file - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.

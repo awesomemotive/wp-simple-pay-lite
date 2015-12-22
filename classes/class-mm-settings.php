@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Base settings class
+ * Base settings class - Shared between SP Lite & Pro (and other plugins)
  */
 
 // Exit if accessed directly.
