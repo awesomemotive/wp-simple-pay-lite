@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Admin class file - Shared between SP Lite & Pro
+ * Admin class - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.

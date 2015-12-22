@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Upgrade Link class file - SP Lite
+ * Upgrade Link class - SP Lite
  */
 
 // Exit if accessed directly.

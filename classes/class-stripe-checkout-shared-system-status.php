@@ -1,6 +1,6 @@
 <?php
 /**
- * System Status - Shared between SP Lite & Pro
+ * System Status class - Shared between SP Lite & Pro
  *
  * Generates reports on current installation, for debugging or support purposes.
  */

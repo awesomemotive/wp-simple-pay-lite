@@ -1,6 +1,6 @@
 <?php
 /**
- * Shortcodes class file - SP Lite
+ * Shortcodes class - SP Lite
  */
 
 // Exit if accessed directly.
