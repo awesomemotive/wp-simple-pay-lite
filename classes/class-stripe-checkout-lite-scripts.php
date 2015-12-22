@@ -33,6 +33,9 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			
 			// Enqueue admin styles.
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
+
+			// Enqueue admin scripts
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 		}
 		
 		/**
@@ -86,8 +89,18 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
 				wp_enqueue_style( $base_class->plugin_slug .'-admin-styles', SC_DIR_URL . 'assets/css/admin-main' . $this->min . '.css', array(), $base_class->version );
 			}
+		}
 
-			wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/admin-main' . $this->min . '.js', array( 'jquery' ), $base_class->version, true );
+		/**
+		 * Enqueue admin-specific scripts for this plugin's admin pages only.
+		 */
+		public function enqueue_admin_scripts() {
+
+			global $base_class;
+
+			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
+				wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/admin-main' . $this->min . '.js', array( 'jquery' ), $base_class->version, true );
+			}
 		}
 		
 		/**
