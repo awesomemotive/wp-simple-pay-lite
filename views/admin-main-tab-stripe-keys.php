@@ -1,10 +1,16 @@
 <?php 
 
-	/**
-	 * Represents the view for the Stripe Keys admin tab.
-	 */
+/**
+ * Represents the view for the Stripe Keys admin tab - Shared between SP Lite & Pro
+ */
 
-	global $sc_options; 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+global $sc_options;
+
 ?>
 
 <!-- Stripe Keys tab HTML -->

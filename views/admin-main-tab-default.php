@@ -1,10 +1,16 @@
 <?php 
 
-	/**
-	 * Represents the view for the Default Settings tab.
-	 */
+/**
+ * Represents the view for the Default Settings tab - Shared between SP Lite & Pro
+ */
 
-	global $sc_options; 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+global $sc_options;
+
 ?>
 
 <!-- Default Settings tab HTML -->

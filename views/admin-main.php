@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Represents the view for the administration dashboard.
+ * Represents the view for the administration dashboard - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.

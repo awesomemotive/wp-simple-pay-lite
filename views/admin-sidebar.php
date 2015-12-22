@@ -1,13 +1,14 @@
 <?php
 
 /**
- * Sidebar portion of the administration dashboard view.
+ * Sidebar portion of the administration dashboard view - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 ?>
 
 <!-- Use some built-in WP admin theme styles. -->

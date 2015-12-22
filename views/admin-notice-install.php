@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Show notice after plugin install/activate in admin dashboard.
+ * Show notice after plugin install/activate in admin dashboard - Shared between SP Lite & Pro
  */
 
 // Exit if accessed directly.
