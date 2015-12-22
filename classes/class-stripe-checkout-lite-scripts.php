@@ -31,7 +31,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			// Add public CSS
 			add_action( 'init', array( $this, 'enqueue_public_styles' ) );
 			
-			// Enqueue admin styles.
+			// Enqueue admin styles
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 
 			// Enqueue admin scripts
@@ -64,7 +64,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 		}
 		
 		/**
-		 * Load public facing CSS
+		 * Enqueue public facing CSS
 		 * 
 		 * @since 1.0.0
 		 */

@@ -62,14 +62,13 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		}
 		
 		/**
-		 * Register the settings and load settings class
+		 * Register the settings and load settings class.
 		 */
 		public function register_settings() {
 			global $sc_options;
 
 			// We load the extended class here so that it will load all of the class functions all the way back to the base
 			$sc_options = new Stripe_Checkout_Settings_Extended( 'sc_settings' );
-			
 		}
 
 		/**
@@ -83,7 +82,6 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 				false,
 				SC_DIR_PATH . 'languages/'
 			);
-
 		}
 
 		/**
@@ -170,7 +168,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		}
 
 		/**
-		 * Return localized base plugin title.
+		 * Return localized plugin & menu titles.
 		 *
 		 * @since     1.0.0
 		 *
@@ -179,8 +177,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		public static function get_plugin_title() {
 			return __( 'WP Simple Pay Lite for Stripe', 'stripe' );
 		}
-		
-		
+
 		public static function get_pro_plugin_title() {
 			return __( 'WP Simple Pay Pro for Stripe', 'stripe' );
 		}
