@@ -122,16 +122,17 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
+
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-settings-extended.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-scripts.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shortcodes.php' );
 			
 			// Admin side
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-admin.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-notices.php' );
-			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-system-status.php' );
-				
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-system-status.php' );
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-upgrade-link.php' );
+
 			// Public side
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-functions.php' );
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-misc.php' );
