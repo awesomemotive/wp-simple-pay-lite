@@ -121,7 +121,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			require_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
 			require_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
 
-			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-misc.php' );
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-functions.php' );
 			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-settings-extended.php' );
 
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
@@ -141,7 +141,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			// upgrade.php included in class-stripe-checkout-share-admin.php upgrade() function
 
 			// Public side
-			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-functions.php' );
+			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-misc.php' );
 			
 			// Old functions after everything else
 			require_once( SC_DIR_PATH . 'includes/old-functions.php' );
@@ -153,18 +153,21 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * Get the instance for all the included classes
 		 */
 		public function init() {
+
 			Stripe_Checkout_Scripts::get_instance();
 			Stripe_Checkout_Shortcodes::get_instance();
 			
 			if ( is_admin() ) {
 				Stripe_Checkout_Admin::get_instance();
-				Stripe_Checkout_Upgrade_Link::get_instance();
+
 				Stripe_Checkout_Notices::get_instance();
 				Stripe_Checkout_System_Status::get_instance();
+				Stripe_Checkout_Upgrade_Link::get_instance();
 			} else {
 				Stripe_Checkout_Misc::get_instance();
-				Stripe_Checkout_Functions::get_instance();
 			}
+
+			Stripe_Checkout_Functions::get_instance();
 		}
 
 		/**
