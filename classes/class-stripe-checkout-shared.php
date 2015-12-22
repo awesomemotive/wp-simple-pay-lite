@@ -123,6 +123,8 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings.php' );
 			include_once( SC_DIR_PATH . 'classes/class-mm-settings-output.php' );
 
+			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-misc.php' );
+
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-scripts.php' );
 				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-settings-extended.php' );
@@ -140,10 +142,6 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 
 			// Public side
 			include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-functions.php' );
-
-			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				include_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-misc.php' );
-			}
 			
 			// Old functions after everything else
 			include_once( SC_DIR_PATH . 'includes/old-functions.php' );
