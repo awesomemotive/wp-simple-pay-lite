@@ -73,7 +73,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			global $sc_options, $base_class;
 
 			if ( null === $sc_options->get_setting_value( 'disable_css' ) ) {
-				wp_register_style( $base_class->plugin_slug . '-public', SC_DIR_URL . 'assets/css/public-main' . $this->min . '.css', array(), $base_class->version );
+				wp_register_style( $base_class->plugin_slug . '-public', SC_DIR_URL . 'assets/css/shared-public-main' . $this->min . '.css', array(), $base_class->version );
 			}
 		}
 
@@ -87,7 +87,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			global $base_class;
 			
 			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
-				wp_enqueue_style( $base_class->plugin_slug .'-admin-styles', SC_DIR_URL . 'assets/css/admin-main' . $this->min . '.css', array(), $base_class->version );
+				wp_enqueue_style( $base_class->plugin_slug .'-admin', SC_DIR_URL . 'assets/css/shared-admin-main' . $this->min . '.css', array(), $base_class->version );
 			}
 		}
 
@@ -99,7 +99,7 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 			global $base_class;
 
 			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
-				wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/admin-main' . $this->min . '.js', array( 'jquery' ), $base_class->version, true );
+				wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/shared-admin-main' . $this->min . '.js', array( 'jquery' ), $base_class->version, true );
 			}
 		}
 		
