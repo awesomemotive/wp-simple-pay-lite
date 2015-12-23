@@ -93,7 +93,7 @@ module.exports = function( grunt ) {
 			files: {
 				expand: true,
 				cwd: 'assets/css/',
-				src: [ 'admin-*.css', 'public-*.css', '!*.min.css' ],
+				src: [ '*.css', '!*.min.css', '!vendor/**' ],
 				dest: 'assets/css/',
 				ext: '.min.css'
 			}
@@ -103,7 +103,7 @@ module.exports = function( grunt ) {
 			files: {
 				expand: true,
 				cwd: 'assets/js/',
-				src: [ 'admin-*.js', 'public-*.js', '!*.min.js' ],
+				src: [ '*.js', '!*.min.js', '!vendor/**' ],
 				dest: 'assets/js/',
 				ext: '.min.js'
 			}
