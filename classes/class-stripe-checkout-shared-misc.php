@@ -15,9 +15,6 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 		// Class instance variable
 		protected static $instance = null;
 		
-		// Array of available zero decimal currencies
-		private static $zero_decimal_currencies = array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
-		
 		/*
 		 * Class constructor
 		 */
@@ -94,7 +91,7 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 		 * Check if currency is a zero decimal currency or not
 		 */
 		private static function is_zero_decimal_currency( $currency ) { 
-			return in_array( strtoupper( $currency ), self::$zero_decimal_currencies );
+			return in_array( strtoupper( $currency ), self::zero_decimal_currencies() );
 		}
 
 		/**
@@ -105,7 +102,7 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 		 * @since 2.0.0
 		 */
 		public static function zero_decimal_currencies() {
-			return array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VUV', 'XAF', 'XOF', 'XPF' );
+			return array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VND', 'VUV', 'XAF', 'XOF', 'XPF' );
 		}
 
 		/*
