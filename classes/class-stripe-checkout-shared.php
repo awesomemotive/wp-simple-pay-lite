@@ -80,7 +80,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			load_plugin_textdomain(
 				'stripe',
 				false,
-				SC_DIR_PATH . 'languages/'
+				SC_DIR_PATH . 'i18n/'
 			);
 		}
 
