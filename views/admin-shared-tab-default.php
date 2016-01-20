@@ -144,12 +144,6 @@ global $sc_options;
 	</div>
 
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'always_enqueue' ) ); ?>"><?php _e( 'Always Enqueue', 'stripe' ); ?></label>
-		<?php $sc_options->checkbox( 'always_enqueue' ); ?>
-		<span><?php _e( "Enqueue this plugin's scripts and styles on every post and page. Useful if using shortcodes in widgets or other non-standard locations.", 'stripe' ); ?></span>
-	</div>
-
-	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'uninstall_save_settings' ) ); ?>"><?php _e( 'Save Settings', 'stripe' ); ?></label>
 		<?php $sc_options->checkbox( 'uninstall_save_settings' ); ?>
 		<span><?php _e( 'Save your settings when uninstalling this plugin. Useful when upgrading or re-installing.', 'stripe' ); ?></span>
