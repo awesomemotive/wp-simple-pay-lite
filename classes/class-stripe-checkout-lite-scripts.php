@@ -10,99 +10,89 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
-	
+
 	class Stripe_Checkout_Scripts {
-		
+
 		// class instance variable
 		public static $instance = null;
 
-		private $min = null;
-		
-		/*
-		 * Class constructor
+		private $min = '';
+
+		/**
+		 * Constructor
+		 *
+		 * @since 1.0.0
 		 */
 		private function __construct() {
 
 			$this->min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		
-			// Load scripts when posts load so we know if we need to include them or not
-			add_filter( 'the_posts', array( $this, 'load_scripts' ) );
-			
-			// Add public CSS
-			add_action( 'init', array( $this, 'enqueue_public_styles' ) );
-			
-			// Enqueue admin styles
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 
-			// Enqueue admin scripts
+			// Front-end JS/CSS
+			// https://checkout.stripe.com/checkout.js is currently loaded inline on front-end.
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_styles' ) );
+
+			// Admin JS/CSS
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
-		}
-		
-		/**
-		 * Function that will actually determine if the scripts should be used or not
-		 * 
-		 * @since 1.0.0
-		 */
-		public function load_scripts( $posts ){
-
-			global $sc_options, $base_class;
-
-			if ( empty( $posts ) ) {
-				return $posts;
-			}
-
-			foreach ( $posts as $post ) {
-				if ( ( false !== strpos( $post->post_content, '[stripe' ) ) || ( null !== $sc_options->get_setting_value( 'always_enqueue' ) ) ) {
-					// Load CSS
-					wp_enqueue_style( $base_class->plugin_slug . '-public' );
-
-					break;
-				}
-			}
-
-			return $posts;
-		}
-		
-		/**
-		 * Enqueue public facing CSS
-		 * 
-		 * @since 1.0.0
-		 */
-		public function enqueue_public_styles() {
-
-			global $sc_options, $base_class;
-
-			if ( null === $sc_options->get_setting_value( 'disable_css' ) ) {
-				wp_register_style( $base_class->plugin_slug . '-public', SC_DIR_URL . 'assets/css/shared-public-main' . $this->min . '.css', array(), $base_class->version );
-			}
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		}
 
 		/**
-		 * Enqueue admin-specific style sheets for this plugin's admin pages only.
+		 * Enqueue Front-end Styles
 		 *
-		 * @since     1.0.0
+		 * @since 1.0.0
 		 */
-		public function enqueue_admin_styles() {
-			
-			global $base_class;
-			
-			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
-				wp_enqueue_style( $base_class->plugin_slug .'-admin', SC_DIR_URL . 'assets/css/shared-admin-main' . $this->min . '.css', array(), $base_class->version );
+		public function enqueue_frontend_styles() {
+
+			global $base_class, $sc_options;
+
+			// First check for disable CSS option
+			if ( null !== $sc_options->get_setting_value( 'disable_css' ) ) {
+				return;
 			}
+
+			$css_dir = SC_DIR_URL . 'assets/css/';
+
+			wp_register_style( $base_class->plugin_slug . '-public-lite', $css_dir . 'shared-public-main' . $this->min . '.css', array(), $base_class->version );
+			wp_enqueue_style( $base_class->plugin_slug . '-public-lite' );
 		}
 
 		/**
-		 * Enqueue admin-specific scripts for this plugin's admin pages only.
+		 * Enqueue Admin Scripts
+		 *
+		 * @since 1.0.0
 		 */
 		public function enqueue_admin_scripts() {
 
 			global $base_class;
 
+			$js_dir = SC_DIR_URL . 'assets/js/';
+
 			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
-				wp_enqueue_script( $base_class->plugin_slug . '-admin', SC_DIR_URL . 'assets/js/shared-admin-main' . $this->min . '.js', array( 'jquery' ), $base_class->version, true );
+
+				// Prefix local JS libraries to prevent clashing.
+				wp_register_script( $base_class->plugin_slug . '-admin-lite', $js_dir . 'shared-admin-main' . $this->min . '.js', array( 'jquery' ), $base_class->version, true );
+				wp_enqueue_script( $base_class->plugin_slug . '-admin-lite' );
 			}
 		}
-		
+
+		/**
+		 * Enqueue Admin Styles
+		 *
+		 * @since 1.0.0
+		 */
+		public function enqueue_admin_styles() {
+
+			global $base_class;
+
+			$css_dir = SC_DIR_URL . 'assets/css/';
+
+			if ( Stripe_Checkout_Admin::get_instance()->viewing_this_plugin() ) {
+
+				wp_register_style( $base_class->plugin_slug . '-admin-lite', $css_dir . 'shared-admin-main' . $this->min . '.css', array(), $base_class->version );
+				wp_enqueue_style( $base_class->plugin_slug . '-admin-lite' );
+			}
+		}
+
 		/**
 		 * Return an instance of this class.
 		 *
