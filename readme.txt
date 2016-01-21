@@ -79,9 +79,10 @@ Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source
 
 = 1.5.0 - TODO =
 
+* Tweak: Admin toggle switch UI for Test/Live modes updated.
 * Tweak: Translations moved from .po/.mo files to official wordpress.org translation packs.
-* Tweak: Admin toggle switch UI for Test/Live modes changed.
 * Dev: Now using Composer to handle PHP library dependencies (i.e. Stripe PHP).
+* Dev: Always enqueue scripts option removed. Now forced on unless dequeued in code.
 
 = 1.4.6 - November 19, 2015 =
 
