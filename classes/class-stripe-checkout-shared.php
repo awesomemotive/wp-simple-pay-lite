@@ -47,7 +47,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 *
 		 * @since     1.0.0
 		 */
-		private function __construct() {
+		public function __construct() {
 			
 			// Load plugin text domain
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
@@ -147,8 +147,6 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 			require_once( SC_DIR_PATH . 'includes/old-functions.php' );
 		}
 
-		// TODO
-		
 		/**
 		 * Get the instance for all the included classes
 		 */
