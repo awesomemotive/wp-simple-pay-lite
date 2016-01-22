@@ -6,7 +6,7 @@
  * Author:      Moonstone Media
  * Author URI:  https://wpsimplepay.com
  * Version:     1.5.0
- * Text Domain: sc
+ * Text Domain: stripe
  * Domain Path: /i18n
  *
  * @copyright   2015 Moonstone Media/Phil Derksen. All rights reserved.
