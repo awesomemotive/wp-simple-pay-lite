@@ -48,6 +48,16 @@ if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 	define( 'SC_WEBSITE_BASE_URL', 'https://wpsimplepay.com/' );
 }
 
+// Admin notice and stop execution if Pro plugin found.
+if ( class_exists( 'Stripe_Checkout_Pro' ) || class_exists( 'Simple_Pay_Pro' ) ) {
+	add_action( 'admin_notices', 'simpay_pro_active_notice' );
+	return;
+}
+
+function simpay_pro_active_notice() {
+	echo '<div class="error"><p>' . __( 'Simple Pay Lite and Pro cannot be active simultaneously. Please deactivate one of them to proceed.', 'stripe' ) . '</p></div>';
+}
+
 // Plugin requirements
 
 $stripe_checkout_requires = array(
@@ -116,17 +126,5 @@ register_activation_hook( SC_PLUGIN_FILE, array( 'Stripe_Checkout', 'activate' )
 // Set up global holding the base class instance so we can easily use it throughout
 global $base_class;
 
-include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-if ( is_plugin_active( 'stripe-checkout-pro/stripe-checkout-pro.php' ) ) {
-	deactivate_plugins( 'stripe-checkout-pro/stripe-checkout-pro.php' );
-
-	function sc_deactivate_lite_notice() {
-		echo '<div class="error"><p>' . __( 'You cannot activate WP Simple Pay Lite and Pro at the same time. Please deactivate one to activate the other.', 'stripe' ) . '</p></div>';
-	}
-	add_action( 'admin_notices', 'sc_deactivate_lite_notice' );
-	//wp_die( sprintf( __( 'You cannot activate Stripe Checkout Lite with the Pro version already active. <a href="%s">Return to plugins page.</a>', 'sc' ), get_admin_url( '', 'plugins.php' ) ) );
-}
-
-
+// Let's get going finally!
 $base_class = Stripe_Checkout::get_instance();
