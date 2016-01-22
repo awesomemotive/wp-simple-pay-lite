@@ -24,12 +24,12 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			
 			global $base_class;
 			
-			$version = get_option( 'sc_version' );
+			$old_version = get_option( 'sc_version' );
 	
-			if( ! empty( $version ) ) {
+			if( ! empty( $old_version ) ) {
 				
 				// Version 2.0.4 upgrade
-				if( version_compare( $version, '1.4.0', '<' ) ) {
+				if( version_compare( $old_version, '1.4.0', '<' ) ) {
 					add_action( 'admin_init', array( $this, 'v140_upgrade' ), 11 );
 				}
 			}
