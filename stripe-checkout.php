@@ -17,24 +17,47 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Plugin requirements.
+// Setup plugin constants.
+
+// Plugin version
+if ( ! defined( 'SIMPAY_VERSION' ) ) {
+	define( 'SIMPAY_VERSION', '1.5.0' );
+}
+
+// Plugin folder path
+// TODO SIMPAY_PLUGIN_DIR
+if ( ! defined( 'SC_DIR_PATH' ) ) {
+	define( 'SC_DIR_PATH', plugin_dir_path( __FILE__ ) );
+}
+
+// Plugin folder URL
+// TODO SIMPAY_PLUGIN_URL
+if ( ! defined( 'SC_DIR_URL' ) ) {
+	define( 'SC_DIR_URL', plugin_dir_url( __FILE__ ) );
+}
+
+// Plugin root file
+// TODO SIMPAY_PLUGIN_FILE
+if ( ! defined( 'SC_PLUGIN_FILE' ) ) {
+	define( 'SC_PLUGIN_FILE', __FILE__ );
+}
+
+// Base URL
+// TODO SIMPAY_BASE_URL
+if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
+	define( 'SC_WEBSITE_BASE_URL', 'https://wpsimplepay.com/' );
+}
+
+// Plugin requirements
+
 $stripe_checkout_requires = array(
 	'wp'  => '4.0.0',
 	'php' => '5.3.3',
-	'ext' => array( 'curl', 'json', 'mbstring' )
+	'ext' => array( 'curl', 'json', 'mbstring' ),
 );
-// Define constants.
-$stripe_checkout_constants = array(
-	'SC_REQUIRES'         => serialize( $stripe_checkout_requires ),
-	'SC_MAIN_FILE'        => __FILE__,
-	'SC_DIR_PATH'         => plugin_dir_path( __FILE__ ),
-	'SC_DIR_URL'          => plugin_dir_url( __FILE__ ) ,
-	'SC_WEBSITE_BASE_URL' => 'https://wpsimplepay.com/',
-);
-foreach( $stripe_checkout_constants as $constant => $value ) {
-	if ( ! defined( $constant ) ) {
-		define( $constant, $value );
-	}
+
+if ( ! defined( 'SC_REQUIRES' ) ) {
+	define( 'SC_REQUIRES', serialize( $stripe_checkout_requires ) );
 }
 
 // Check plugin requirements.
@@ -88,7 +111,7 @@ if ( $stripe_checkout_requirements->pass() === false ) {
 require_once SC_DIR_PATH . 'classes/class-stripe-checkout-shared.php';
 
 // Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
-register_activation_hook( SC_MAIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
+register_activation_hook( SC_PLUGIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
 
 // Set up global holding the base class instance so we can easily use it throughout
 global $base_class;
