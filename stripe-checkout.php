@@ -51,6 +51,7 @@ if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 // Admin notice and stop execution if Pro plugin found.
 if ( class_exists( 'Stripe_Checkout_Pro' ) || class_exists( 'Simple_Pay_Pro' ) ) {
 	add_action( 'admin_notices', 'simpay_pro_active_notice' );
+
 	return;
 }
 
@@ -60,70 +61,31 @@ function simpay_pro_active_notice() {
 
 // Plugin requirements
 
-$stripe_checkout_requires = array(
-	'wp'  => '4.0.0',
-	'php' => '5.3.3',
-	'ext' => array( 'curl', 'json', 'mbstring' ),
-);
+require_once 'classes/wp-requirements.php';
 
-if ( ! defined( 'SC_REQUIRES' ) ) {
-	define( 'SC_REQUIRES', serialize( $stripe_checkout_requires ) );
+// Check plugin requirements before loading plugin.
+$this_plugin_checks = new SimPay_WP_Requirements( 'WP Simple Pay Lite for Stripe', plugin_basename( __FILE__ ), array(
+		'PHP'        => '5.3.3',
+		'WordPress'  => '4.0.0',
+		'Extensions' => array(
+			'curl',
+			'json',
+			'mbstring',
+		),
+	) );
+if ( $this_plugin_checks->pass() === false ) {
+	$this_plugin_checks->halt();
+
+	return;
 }
 
-// Check plugin requirements.
-include_once 'stripe-checkout-requirements.php';
-$stripe_checkout_requirements = new Stripe_Checkout_Requirements( $stripe_checkout_requires );
-if ( $stripe_checkout_requirements->pass() === false ) {
-
-	$stripe_checkout_fails = $stripe_checkout_requirements->failures();
-	if ( isset( $stripe_checkout_fails['wp'] ) || isset( $stripe_checkout_fails['php']) ) {
-
-		// Display an admin notice if running old WordPress or PHP.
-		function stripe_checkout_plugin_requirements() {
-			$required = unserialize( SC_REQUIRES );
-			global $wp_version;
-			echo '<div class="error">' .
-			        '<p>'  .
-					     sprintf(
-						     __( 'WP Simple Pay requires PHP %1$s and WordPress %2$s to function properly. PHP version found: %3$s. WordPress installed version: %4$s. Please upgrade to meet the minimum requirements. <a href="http://www.wpupdatephp.com/update/" target=_blank">Read more on why it is important to stay updated.</a>', 'stripe' ),
-						     $required['php'],
-						     $required['wp'],
-						     PHP_VERSION,
-						     $wp_version
-					     ) .
-			        '</p>' .
-			     '</div>';
-		}
-		add_action( 'admin_notices', 'stripe_checkout_plugin_requirements' );
-
-	}
-
-	if ( isset( $stripe_checkout_fails['ext'] ) ) {
-
-		// Display a notice if extensions are not found.
-		function stripe_checkout_plugin_extensions() {
-			$required = unserialize( SC_REQUIRES );
-			$extensions = '<code>' . implode( ', ', $required['ext'] ) . '</code>';
-			echo '<div class="error"><p>' . sprintf( __( 'WP Simple Pay requires the following PHP extensions to work: %s. Please make sure they are installed or contact your host.', 'stripe' ), $extensions ) . '</p></div>';
-		}
-		add_action( 'admin_notices', 'stripe_checkout_plugin_extensions' );
-
-	}
-
-	// Halt the rest of the plugin execution if PHP check fails or extensions not found.
-	if ( isset( $stripe_checkout_fails['php'] ) || isset( $stripe_checkout_fails['ext'] ) ) {
-		return;
-	}
-
-}
-
-// Load the plugin.
+// Load the plugin main class.
 require_once SC_DIR_PATH . 'classes/class-stripe-checkout-shared.php';
 
-// Register hooks that are fired when the plugin is activated, deactivated, and uninstalled, respectively.
+// Register hook that is fired when the plugin is activated.
 register_activation_hook( SC_PLUGIN_FILE, array( 'Stripe_Checkout', 'activate' ) );
 
-// Set up global holding the base class instance so we can easily use it throughout
+// Create a global instance of our main class for this plugin so we can use it throughout all the other classes.
 global $base_class;
 
 // Let's get going finally!
