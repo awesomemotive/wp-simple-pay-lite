@@ -19,7 +19,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 *
 		 * @var     string
 		 */
-		public $version = SIMPAY_VERSION;
+		public $version = null;
 
 		/**
 		 * Unique identifier for your plugin.
@@ -48,6 +48,11 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @since     1.0.0
 		 */
 		public function __construct() {
+
+			// Constant may not be defined when running in context of Pro version.
+			if ( defined( 'SIMPAY_VERSION' ) ) {
+				$this->version = SIMPAY_VERSION;
+			}
 			
 			// Load plugin text domain
 			add_action( 'plugins_loaded', array( $this, 'plugin_textdomain' ) );
