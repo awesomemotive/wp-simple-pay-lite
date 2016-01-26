@@ -62,7 +62,7 @@
 
 #sc-settings-content .tab-content input[type="radio"] + label {
 	display: inline;
-	margin-top: 0px;
+	margin-top: 0;
 	font-weight: normal;
 }
 
@@ -84,7 +84,7 @@ input[type="checkbox"].sc-livemode-onoffswitch-checkbox {
 
 .sc-livemode-onoffswitch-label {
 	display: block; overflow: hidden; cursor: pointer;
-	border: 2px solid #999999; border-radius: 20px;
+	border: 2px solid transparent; border-radius: 20px;
 }
 
 .sc-livemode-onoffswitch-inner {
@@ -100,23 +100,23 @@ input[type="checkbox"].sc-livemode-onoffswitch-checkbox {
 
 .sc-livemode-onoffswitch-inner:before {
 	content: "ON";
-	padding-left: 10px;
-	background-color: #7AD03A; color: #FFFFFF;
+	padding-left: 12px;
+	background-color: #62D493; color: #FFFFFF;
 }
 
 .sc-livemode-onoffswitch-inner:after {
 	content: "OFF";
-	padding-right: 10px;
-	background-color: #CCCCCC; color: #FFFFFF;
+	padding-right: 12px;
+	background-color: #969EA2; color: #FFFFFF;
 	text-align: right;
 }
 
 .sc-livemode-onoffswitch-switch {
-	display: block; width: 18px; margin: 6px;
+	display: block; width: 14px; margin: 8px;
 	background: #FFFFFF;
 	position: absolute; top: 0; bottom: 0;
 	right: 56px;
-	border: 2px solid #999999; border-radius: 20px;
+	border: 2px solid transparent; border-radius: 20px;
 	transition: all 0.3s ease-in 0s;
 }
 
