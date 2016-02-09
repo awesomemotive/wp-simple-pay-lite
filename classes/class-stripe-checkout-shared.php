@@ -82,11 +82,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @since    1.0.0
 		 */
 		public function plugin_textdomain() {
-			load_plugin_textdomain(
-				'stripe',
-				false,
-				SC_DIR_PATH . 'i18n/'
-			);
+			load_plugin_textdomain( 'stripe', false, SC_DIR_PATH . 'i18n/' );
 		}
 
 		/**
