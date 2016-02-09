@@ -159,13 +159,17 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 
 			Stripe_Checkout_Scripts::get_instance();
 			Stripe_Checkout_Shortcodes::get_instance();
-			
+
 			if ( is_admin() ) {
 				Stripe_Checkout_Admin::get_instance();
 
 				Stripe_Checkout_Notices::get_instance();
 				Stripe_Checkout_System_Status::get_instance();
-				Stripe_Checkout_Upgrade_Link::get_instance();
+
+				if ( class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
+					Stripe_Checkout_Upgrade_Link::get_instance();
+				}
+
 			} else {
 				Stripe_Checkout_Misc::get_instance();
 			}
