@@ -25,7 +25,7 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 		public function textbox( $id, $classes = '' ) {
 
 			$html = '<input type="text" class="' . esc_attr( $classes ) . '" name="' . esc_attr( $this->get_setting_id( $id ) ) . '" ' .
-			        'id="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="' . esc_attr( $this->get_setting_value( $id ) ) . '" />';
+			        'id="' . esc_attr( $this->get_setting_id( $id ) ) . '" value="' . sanitize_text_field( $this->get_setting_value( $id ) ) . '" />';
 
 			echo $html;
 		}
@@ -95,11 +95,8 @@ if ( ! class_exists( 'MM_Settings_Output' ) ) {
 			// Return empty string if no options.
 			if ( empty( $options ) ) {
 				if ( current_user_can( 'manage_options' ) ) {
-					echo '<p><strong>Warning:</strong> You have not included any options for this select setting.</p>';
-				} else {
-					echo '';
+					echo '<h6>' . __( 'Admin note: Option attributes are not set for all select controls.', 'stripe' ) . '</h6>';
 				}
-
 				return;
 			}
 
