@@ -1,11 +1,11 @@
 // Admin JS - Shared between SP Lite & Pro
 
-/* global simplePayAdminGlobals */
-
 (function( $ ) {
 	'use strict';
 
 	$( document ).ready( function( $ ) {
+
+		var body = $( document.body );
 
 		// Get the hash fragment (#) (tab id) of the page so we can find out what tab to show.
 		function get_hash_fragment() {
@@ -42,7 +42,8 @@
 			$( '.tab-content' ).hide().removeClass( 'tab-content' );
 			$( '#' + tab_id + '-settings-tab' ).addClass( 'tab-content' ).show();
 
-			updateSubmitButtonText( tab_id );
+			// Trigger custom event passing in tab_id.
+			body.trigger( 'spAdminTabOnChange', [ tab_id ] );
 		} );
 
 		// Set fragment of url (section after hash (#) symbol) so we land back on the right tab.
@@ -51,13 +52,6 @@
 			$( this ).closest( 'form' ).attr( 'action', 'options.php#' + get_hash_fragment() );
 		} );
 
-		// Update submit button text depending on the tab id.
-		function updateSubmitButtonText( tab_id ) {
-			var saveBtnText = ( 'license-keys' == tab_id ) ? simplePayAdminGlobals.licensesTabSaveButton : simplePayAdminGlobals.otherTabsSaveButton;
-			$( '#sc-settings-content form #submit' ).val( saveBtnText );
-		}
-
-		updateSubmitButtonText( get_hash_fragment() );
 	} );
 
 }( jQuery ));
