@@ -1,12 +1,14 @@
-// Lite admin main
+// Admin JS - Shared between SP Lite & Pro
+
+/* global simplePayAdminGlobals */
 
 (function( $ ) {
 	'use strict';
 
 	$( document ).ready( function( $ ) {
 
-		// Get the # of the page so we can find out what tab to show
-		function get_hash() {
+		// Get the hash fragment (#) (tab id) of the page so we can find out what tab to show.
+		function get_hash_fragment() {
 			if ( window.location.hash ) {
 				return window.location.hash.substring( 1 );
 			} else {
@@ -14,38 +16,48 @@
 			}
 		}
 
-		// Show the tab content
-		$( '#' + get_hash() + '-settings-tab' ).addClass( 'tab-content' ).show();
+		// Show the tab content.
+		$( '#' + get_hash_fragment() + '-settings-tab' ).addClass( 'tab-content' ).show();
 
-		// Make the actual tab selected
-		$( '.nav-tab-wrapper' ).children( '.nav-tab' ).each( function( index ) {
-			if ( $( this ).data( 'tab-id' ) == get_hash() ) {
+		// Make the actual tab selected.
+		$( '.nav-tab-wrapper' ).children( '.nav-tab' ).each( function() {
+			if ( $( this ).data( 'tab-id' ) == get_hash_fragment() ) {
 				$( this ).addClass( 'nav-tab-active' );
 			}
 		} );
 
-		// Code to hide/show selected tabs
+		// Tab click event.
 		$( '.sc-nav-tab' ).click( function() {
-			var tab_id = $( this ).data( 'tab-id' );
 
-			$( '.tab-content' ).hide().removeClass( 'tab-content' );
-			$( '#' + tab_id + '-settings-tab' ).addClass( 'tab-content' ).show();
-		} );
-
-		// Active tab stuff
-		$( '.nav-tab' ).click( function() {
-			$( this ).parent().children( '.nav-tab' ).each( function( index ) {
+			// Remove active class from all tabs, then re-add only to the clicked one.
+			$( this ).parent().children( '.nav-tab' ).each( function() {
 				$( this ).removeClass( 'nav-tab-active' );
 			} );
 
 			$( this ).addClass( 'nav-tab-active' );
+
+			var tab_id = $( this ).data( 'tab-id' );
+
+			// Hide content element form all tabs, then re-add only to clicked one.
+			$( '.tab-content' ).hide().removeClass( 'tab-content' );
+			$( '#' + tab_id + '-settings-tab' ).addClass( 'tab-content' ).show();
+
+			updateSubmitButtonText( tab_id );
 		} );
 
-		$( '#sc-settings-content form #submit' ).on( 'click', function() {
-			//event.preventDefault();
-			$( this ).closest( 'form' ).attr( 'action', 'options.php#' + get_hash() );
-			//$(this).closest('form').submit();
+		// Set fragment of url (section after hash (#) symbol) so we land back on the right tab.
+		// Should work for primary settings save button, but also other submit buttons like license deactivation.
+		$( '#sc-settings-content form' ).on( 'submit', function() {
+			$( this ).closest( 'form' ).attr( 'action', 'options.php#' + get_hash_fragment() );
 		} );
 
+		// Update submit button text depending on the tab id.
+		function updateSubmitButtonText( tab_id ) {
+			var saveBtnText = ( 'license-keys' == tab_id ) ? simplePayAdminGlobals.licensesTabSaveButton : simplePayAdminGlobals.otherTabsSaveButton;
+			$( '#sc-settings-content form #submit' ).val( saveBtnText );
+		}
+
+		updateSubmitButtonText( get_hash_fragment() );
 	} );
+
 }( jQuery ));
