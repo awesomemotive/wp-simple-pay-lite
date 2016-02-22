@@ -139,13 +139,10 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 				require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade-link.php' );
 			}
 
-			// upgrade.php included in class-stripe-checkout-share-admin.php upgrade() function
+			// upgrade.php included in class-stripe-checkout-shared-admin.php upgrade() function
 
 			// Public side
 			require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-shared-misc.php' );
-			
-			// Old functions after everything else
-			require_once( SC_DIR_PATH . 'includes/old-functions.php' );
 		}
 
 		/**
