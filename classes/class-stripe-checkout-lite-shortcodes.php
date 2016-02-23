@@ -166,19 +166,19 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-					   data-key="' . esc_attr( $data_key ) . '" ' .
-					   ( ! empty( $image_url ) ? 'data-image="' . esc_attr( $image_url ) . '" ' : '' ) . 
-					   ( ! empty( $name ) ? 'data-name="' . esc_attr( $name ) . '" ' : '' ) .
-					   ( ! empty( $description ) ? 'data-description="' . esc_attr( $description ) . '" ' : '' ) .
-					   ( ! empty( $amount ) ? 'data-amount="' . esc_attr( $amount ) . '" ' : '' ) .
-					   ( ! empty( $currency ) ? 'data-currency="' . esc_attr( $currency ) . '" ' : '' ) .
-					   ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . esc_attr( $checkout_button_label ) . '" ' : '' ) .
-					   ( ! empty( $verify_zip ) ? 'data-zip-code="' . esc_attr( $verify_zip ) . '" ' : '' ) .
-					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . esc_attr( $prefill_email ) . '" ' : '' ) .
-					   ( ! empty( $payment_button_label ) ? 'data-label="' . esc_attr( $payment_button_label ) . '" ' : '' ) .
-					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . esc_attr( $enable_remember ) . '" ' : 'data-allow-remember-me="true" ' ) .
+					   data-key="' . esc_js( $data_key ) . '" ' .
+					   ( ! empty( $image_url ) ? 'data-image="' . esc_js( $image_url ) . '" ' : '' ) .
+					   ( ! empty( $name ) ? 'data-name="' . esc_js( $name ) . '" ' : '' ) .
+					   ( ! empty( $description ) ? 'data-description="' . esc_js( $description ) . '" ' : '' ) .
+					   ( ! empty( $amount ) ? 'data-amount="' . esc_js( $amount ) . '" ' : '' ) .
+					   ( ! empty( $currency ) ? 'data-currency="' . esc_js( $currency ) . '" ' : '' ) .
+					   ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . esc_js( $checkout_button_label ) . '" ' : '' ) .
+					   ( ! empty( $verify_zip ) ? 'data-zip-code="' . $verify_zip . '" ' : '' ) .
+					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . $prefill_email . '" ' : '' ) .
+					   ( ! empty( $payment_button_label ) ? 'data-label="' . esc_js( $payment_button_label ) . '" ' : '' ) .
+					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
 					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
-					   ( ! empty( $billing ) ? 'data-billing-address="' . esc_attr( $billing ) . '" ' : 'data-billing-address="false" ' ) .
+					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
 					   ( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
 					   ( ! empty( $alipay_reusable ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) .
 					   ( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .

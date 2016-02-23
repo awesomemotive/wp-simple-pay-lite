@@ -83,6 +83,7 @@ Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source
 * Tweak: Translations moved from .po/.mo files to official wordpress.org translation packs.
 * Tweak: Always enqueue scripts option removed. Now forced on unless dequeued in code.
 * Tweak: Stop execution of plugin instead of deactivating if Pro version detected.
+* Dev: Harden security by escaping text variables in inline JavaScript with esc_js().
 * Dev: Now using Composer to handle PHP library dependencies (i.e. Stripe PHP).
 
 = 1.4.6 - November 19, 2015 =
