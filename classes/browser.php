@@ -4,7 +4,8 @@
  * Author: Chris Schuld (http://chrisschuld.com/)
  * Last Modified: July 4th, 2014
  *
- *  Modified class name to include in Simple Pay plugins.
+ * Modified class name to include in Simple Pay plugins.
+ * Fixed constructor to use __construct() syntax.
  *
  * @version 1.9
  * @package PegasusPHP
@@ -112,7 +113,7 @@ class SimPay_Browser
 
     const OPERATING_SYSTEM_UNKNOWN = 'unknown';
 
-    public function Browser($userAgent = "")
+    public function __construct($userAgent = "")
     {
         $this->reset();
         if ($userAgent != "") {
