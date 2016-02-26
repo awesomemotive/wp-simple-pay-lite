@@ -535,11 +535,11 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
                          * Client Information
                          * ==================
                          */
-                        if ( ! class_exists( 'Browser' ) ) {
+                        if ( ! class_exists( 'SimPay_Browser' ) ) {
 
-                            include_once( SC_DIR_PATH . 'vendor/cbschuld/browser.php/lib/Browser.php' );
+	                        include_once( SC_DIR_PATH . 'classes/browser.php' );
 
-                            $user_client = new \Browser();
+	                        $user_client = new SimPay_Browser();
 
                             $browser = '<dl>';
                             $browser .= '<dt>' . __( 'Name:', 'stripe' ) . '</dt>';
