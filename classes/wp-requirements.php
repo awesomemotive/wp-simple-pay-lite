@@ -4,6 +4,8 @@
  *
  * Utility to check current PHP version, WordPress version and PHP extensions.
  *
+ * Modified class name to include in Simple Pay plugins.
+ *
  * @package WP_Requirements
  * @version 1.4.0
  * @author  Fulvio Notarstefano <fulvio.notarstefano@gmail.com>
