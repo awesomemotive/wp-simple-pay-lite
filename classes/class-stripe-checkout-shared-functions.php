@@ -161,20 +161,20 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			}
 		}
 
-		/*
+		/**
 		 * Function to show the payment details after the purchase
-		 * 
+		 *
 		 * @since 1.0.0
 		 */
-		public static function show_payment_details( $content ) { 
-			
-			if( in_the_loop() && is_main_query() ) {
+		public static function show_payment_details( $content ) {
+
+			if ( in_the_loop() && is_main_query() ) {
 				global $sc_options;
 
 				$html = '';
 
 				$test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : 'false' );
-				
+
 				$details_placement = ( isset( $_GET['details_placement'] ) ? $_GET['details_placement'] : 'above' );
 
 				$charge_response = null;
@@ -182,7 +182,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 				// Since this is a GET query arg I reset it here in case someone tries to submit it again with their own string written in the URL. 
 				// This helps ensure it can only be set to below or above.
 				$details_placement = ( $details_placement == 'below' ? 'below' : 'above' );
-		
+
 				$is_above = ( $details_placement == 'below' ? 0 : 1 );
 
 				Stripe_Checkout_Functions::set_key( $test_mode );
@@ -212,8 +212,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						}
 
 						$html .= '<br/>' . "\n";
-						$html .= '<strong>' . __( 'Total Paid: ', 'stripe' ) . Stripe_Checkout_Misc::to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' .
-								 strtoupper( $charge_response->currency ) . '</strong>' . "\n";
+						$html .= '<strong>' . __( 'Total Paid: ', 'stripe' ) . Stripe_Checkout_Misc::to_formatted_amount( $charge_response->amount, $charge_response->currency ) . ' ' . strtoupper( $charge_response->currency ) . '</strong>' . "\n";
 
 						$html .= '</p>' . "\n";
 
@@ -234,15 +233,15 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 				} elseif ( isset( $_GET['charge_failed'] ) ) {
 
 					$charge_id = esc_html( $_GET['charge'] );
-			
+
 					$charge = \Stripe\Charge::retrieve( $charge_id );
 					// LITE ONLY: Payment details error included in payment details function.
 
-					$html  = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
+					$html = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
 					$html .= '<p>' . __( 'Sorry, but there has been an error processing your payment.', 'stripe' ) . '</p>' . "\n";
 					$html .= '<p>' . $charge->failure_message . '</p>';
 					$html .= '</div>' . "\n";
-			
+
 					if ( $is_above ) {
 						$content = apply_filters( 'sc_payment_details_error', $html ) . $content;
 					} else {
@@ -252,9 +251,8 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					do_action( 'sc_after_charge', $charge_response );
 				}
 
-
 			}
-			
+
 			return $content;
 		}
 
