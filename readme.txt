@@ -1,8 +1,8 @@
 === WP Simple Pay Lite for Stripe ===
 Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, stripe checkout, payments, simple stripe checkout, ecommerce, e-commerce
-Requires at least: 4.0
-Tested up to: 4.4
+Requires at least: 4.1
+Tested up to: 4.5
 Stable tag: 1.5.0
 License: GPLv2 or later
 
@@ -77,7 +77,7 @@ Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source
 
 == Changelog ==
 
-= 1.5.0 - TODO =
+= 1.5.0 - March 6, 2016 =
 
 * Tweak: Admin toggle switch UI for Test/Live modes updated.
 * Tweak: Translations moved from .po/.mo files to official wordpress.org translation packs.
@@ -85,6 +85,7 @@ Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source
 * Tweak: Stop execution of plugin instead of deactivating if Pro version detected.
 * Dev: Harden security by escaping text variables in inline JavaScript with esc_js().
 * Dev: Now using Composer to handle PHP library dependencies (i.e. Stripe PHP).
+* Dev: Tested up to WordPress 4.5.
 
 = 1.4.6 - November 19, 2015 =
 
