@@ -217,7 +217,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 						$html .= '</p>' . "\n";
 
-						$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'stripe' ), $charge_id ) . '</p>' . "\n";
+						$html .= '<p>' . sprintf( __( 'Your transaction ID is: %s', 'stripe' ), $charge_response->id ) . '</p>' . "\n";
 
 						$html .= '</div>' . "\n";
 
