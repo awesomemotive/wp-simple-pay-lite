@@ -178,7 +178,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $payment_button_label ) ? 'data-label="' . esc_js( $payment_button_label ) . '" ' : '' ) .
 					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : 'data-allow-remember-me="true" ' ) .
 					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
-					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : 'data-billing-address="false" ' ) .
+					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : '' ) .
 					   ( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
 					   ( ! empty( $alipay_reusable ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) .
 					   ( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .
