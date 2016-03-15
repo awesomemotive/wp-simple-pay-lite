@@ -59,14 +59,13 @@ function simpay_pro_active_notice() {
 	echo '<div class="error"><p>' . __( 'Simple Pay Lite and Pro cannot be active simultaneously. Please deactivate one of them to proceed.', 'stripe' ) . '</p></div>';
 }
 
-// Plugin requirements
-
+// Plugin requirements class.
 require_once 'classes/wp-requirements.php';
 
 // Check plugin requirements before loading plugin.
 $this_plugin_checks = new SimPay_WP_Requirements( 'WP Simple Pay Lite for Stripe', plugin_basename( __FILE__ ), array(
 		'PHP'        => '5.3.3',
-		'WordPress'  => '4.0.0',
+		'WordPress'  => '4.1.0',
 		'Extensions' => array(
 			'curl',
 			'json',
