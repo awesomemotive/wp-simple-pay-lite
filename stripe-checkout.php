@@ -65,7 +65,7 @@ require_once 'classes/wp-requirements.php';
 // Check plugin requirements before loading plugin.
 $this_plugin_checks = new SimPay_WP_Requirements( 'WP Simple Pay Lite for Stripe', plugin_basename( __FILE__ ), array(
 		'PHP'        => '5.3.3',
-		'WordPress'  => '4.1.0',
+		'WordPress'  => '4.1',
 		'Extensions' => array(
 			'curl',
 			'json',
