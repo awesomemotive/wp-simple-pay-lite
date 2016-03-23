@@ -14,7 +14,7 @@ global $sc_options;
 ?>
 
 <!-- Default Settings tab HTML -->
-<div class="sc-admin-hidden" id="default-settings-tab">
+<div class="tab-content sc-admin-hidden" id="default-settings-tab">
 	<div>
 		<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'help-link' ); ?>" target="_blank">
 			<?php _e( 'See shortcode options and examples', 'stripe' ); ?>

@@ -14,7 +14,7 @@ global $sc_options;
 ?>
 
 <!-- Stripe Keys tab HTML -->
-<div class="sc-admin-hidden" id="stripe-keys-settings-tab">
+<div class="tab-content sc-admin-hidden" id="stripe-keys-settings-tab">
 	<div class="sc-live-mode-toggle">
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'enable_live_key' ) ); ?>"><?php _e( 'Live Mode', 'stripe' ); ?></label>
 		<?php $sc_options->sc_live_mode_toggle(); ?>
