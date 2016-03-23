@@ -20,7 +20,7 @@
 		$( '#' + get_hash_fragment() + '-settings-tab' ).addClass( 'tab-content' ).show();
 
 		// Make the actual tab selected.
-		$( '.nav-tab-wrapper' ).children( '.nav-tab' ).each( function() {
+		$( '#sc-settings-content .nav-tab-wrapper' ).children( '.nav-tab' ).each( function() {
 			if ( $( this ).data( 'tab-id' ) == get_hash_fragment() ) {
 				$( this ).addClass( 'nav-tab-active' );
 			}
@@ -28,7 +28,6 @@
 
 		// Tab click event.
 		$( '.sc-nav-tab' ).click( function() {
-
 			// Remove active class from all tabs, then re-add only to the clicked one.
 			$( this ).parent().children( '.nav-tab' ).each( function() {
 				$( this ).removeClass( 'nav-tab-active' );
@@ -39,7 +38,7 @@
 			var tab_id = $( this ).data( 'tab-id' );
 
 			// Hide content element form all tabs, then re-add only to clicked one.
-			$( '.tab-content' ).hide().removeClass( 'tab-content' );
+			$( '#sc-settings-content .tab-content' ).hide().removeClass( 'tab-content' );
 			$( '#' + tab_id + '-settings-tab' ).addClass( 'tab-content' ).show();
 
 			// Trigger custom event passing in tab_id.
