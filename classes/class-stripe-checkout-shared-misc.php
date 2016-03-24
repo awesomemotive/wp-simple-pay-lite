@@ -15,16 +15,16 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 		// Class instance variable
 		protected static $instance = null;
 		
-		/*
-		 * Class constructor
+		/**
+		 * Class constructor.
 		 */
 		private function __construct() {
 			// Add filter to fix shortcode spacing issues
 			add_filter( 'the_content', array( $this, 'shortcode_fix' ) );
 		}
 		
-		/*
-		 * Function to turn amount into a readable number with decimal places
+		/**
+		 * Function to turn amount into a readable number with decimal places.
 		 */
 		public static function to_decimal_amount( $amount, $currency ) { 
 
@@ -36,8 +36,8 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return $amount;
 		}
 		
-		/*
-		 * Format the amount
+		/**
+		 * Format the amount.
 		 */
 		public static function to_formatted_amount( $amount, $currency ) { 
 
@@ -50,8 +50,8 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return $formatted_amount;
 		}
 		
-		/*
-		 * Function to find out if there is a shortcode on the page
+		/**
+		 * Function to find out if there is a shortcode on the page.
 		 */
 		public static function has_shortcode() {
 			global $post;
@@ -87,8 +87,8 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return strtr( $content, $array );
 		}
 
-		/*
-		 * Check if currency is a zero decimal currency or not
+		/**
+		 * Check if currency is a zero decimal currency or not.
 		 */
 		private static function is_zero_decimal_currency( $currency ) { 
 			return in_array( strtoupper( $currency ), self::zero_decimal_currencies() );
@@ -105,8 +105,8 @@ if ( ! class_exists( 'Stripe_Checkout_Misc' ) ) {
 			return array( 'BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'MGA', 'PYG', 'RWF', 'VND', 'VUV', 'XAF', 'XOF', 'XPF' );
 		}
 
-		/*
-		 * Return instance of this class
+		/**
+		 * Return instance of this class.
 		 */
 		public static function get_instance() {
 
