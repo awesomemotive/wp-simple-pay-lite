@@ -31,7 +31,8 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			$this->load_library();
 			
 			// Add the filter to show the details
-			add_filter( 'the_content', array( $this, 'show_payment_details' ), 11 );
+			if ( isset( $_GET['charge'] ) )
+				add_filter( 'the_content', array( $this, 'show_payment_details' ), 11 );
 		}
 
 		/*
