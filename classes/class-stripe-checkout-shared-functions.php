@@ -117,6 +117,8 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						)
 					);
 
+					do_action( 'sc_after_charge', $charge );
+
 					// Add Stripe charge ID to querystring.
 					$query_args = array(
 						'charge'     => $charge->id,
@@ -177,8 +179,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				$details_placement = ( isset( $_GET['details_placement'] ) ? $_GET['details_placement'] : 'above' );
 
-				$charge_response = null;
-
 				// Since this is a GET query arg I reset it here in case someone tries to submit it again with their own string written in the URL. 
 				// This helps ensure it can only be set to below or above.
 				$details_placement = ( $details_placement == 'below' ? 'below' : 'above' );
@@ -228,8 +228,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 					}
 
-					do_action( 'sc_after_charge', $charge_response );
-
 				} elseif ( isset( $_GET['charge_failed'] ) ) {
 
 					$charge_id = esc_html( $_GET['charge'] );
@@ -247,8 +245,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					} else {
 						$content = $content . apply_filters( 'sc_payment_details_error', $html );
 					}
-
-					do_action( 'sc_after_charge', $charge_response );
 				}
 
 			}
