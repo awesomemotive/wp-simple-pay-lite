@@ -164,6 +164,9 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   $html  = '<form id="' . esc_attr( $form_id ) . '" method="POST" action="" data-sc-id="' . $sc_id . '" class="sc-checkout-form">';
 
+		   // Apply inner content of shortcode for e.g. adding extra fields
+		   $html .= $content;
+
 		   // Add a filter here to allow developers to hook into the form
 		   $filter_html = '';
 		   $html .= apply_filters( 'sc_before_payment_button', $filter_html );
