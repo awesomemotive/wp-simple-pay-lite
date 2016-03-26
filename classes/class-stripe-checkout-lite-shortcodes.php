@@ -52,6 +52,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'locale'                    => ( null !== $sc_options->get_setting_value( 'locale' ) ? $sc_options->get_setting_value( 'locale' ) : 'auto' ),
 						   'success_redirect_url'      => ( null !== $sc_options->get_setting_value( 'success_redirect_url' ) ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
 						   'failure_redirect_url'      => ( null !== $sc_options->get_setting_value( 'failure_redirect_url' ) ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
+						   'email'                     => '',
 						   'prefill_email'             => 'false',
 						   'verify_zip'                => ( null !== $sc_options->get_setting_value( 'verify_zip' ) ? 'true' : 'false' ),
 						   'test_mode'                 => 'false',
@@ -79,6 +80,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $locale                    = $attr['locale'];
 		   $success_redirect_url      = $attr['success_redirect_url'];
 		   $failure_redirect_url      = $attr['failure_redirect_url'];
+		   $email                     = $attr['email'];
 		   $prefill_email             = $attr['prefill_email'];
 		   $verify_zip                = $attr['verify_zip'];
 		   $test_mode                 = $attr['test_mode'];
@@ -153,12 +155,10 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   return '';
 		   }
 
-		   if ( ! empty( $prefill_email ) && $prefill_email !== 'false' ) {
+		   if ( empty( $email ) && ! empty( $prefill_email ) && $prefill_email !== 'false' ) {
 			   // Get current logged in user email
 			   if ( is_user_logged_in() ) {
-				   $prefill_email = get_userdata( get_current_user_id() )->user_email;
-			   } else { 
-				   $prefill_email = 'false';
+				   $email = get_userdata( get_current_user_id() )->user_email;
 			   }
 		   }
 
@@ -181,7 +181,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $currency ) ? 'data-currency="' . esc_js( $currency ) . '" ' : '' ) .
 					   ( ! empty( $checkout_button_label ) ? 'data-panel-label="' . esc_js( $checkout_button_label ) . '" ' : '' ) .
 					   ( ! empty( $verify_zip ) ? 'data-zip-code="' . $verify_zip . '" ' : '' ) .
-					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . $prefill_email . '" ' : '' ) .
+					   ( ! empty( $email ) ? 'data-email="' . $email . '" ' : '' ) .
 					   ( ! empty( $payment_button_label ) ? 'data-label="' . esc_js( $payment_button_label ) . '" ' : '' ) .
 					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : '' ) .
 					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
