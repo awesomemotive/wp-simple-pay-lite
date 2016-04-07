@@ -9,7 +9,7 @@
  * Text Domain: stripe
  * Domain Path: /i18n
  *
- * @copyright   2015 Moonstone Media/Phil Derksen. All rights reserved.
+ * @copyright   2014-2016 Moonstone Media/Phil Derksen. All rights reserved.
  */
 
 // Exit if accessed directly.
