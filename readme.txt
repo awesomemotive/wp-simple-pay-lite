@@ -77,6 +77,8 @@ Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source
 
 == Changelog ==
 
+= 1.5.1 - TODO =
+
 = 1.5.0 - March 6, 2016 =
 
 * Tweak: Admin toggle switch UI for Test/Live modes updated.
