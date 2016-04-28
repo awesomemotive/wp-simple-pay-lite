@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Represents the view for the Stripe Keys admin tab - Shared between SP Lite & Pro
@@ -18,8 +18,11 @@ global $sc_options;
 	<div class="sc-live-mode-toggle">
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'enable_live_key' ) ); ?>"><?php _e( 'Live Mode', 'stripe' ); ?></label>
 		<?php $sc_options->sc_live_mode_toggle(); ?>
-		<?php $sc_options->description( sprintf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://dashboard.stripe.com/account/apikeys', 
-													__( 'Find your Stripe API keys here', 'stripe' ) ), '' ); ?>
+	</div>
+
+	<div>
+		<?php $sc_options->description( __( 'Switch to OFF while testing. Also make sure Test mode is active in your Stripe dashboard.', 'stripe' ), 'description' ); ?>
+		<?php $sc_options->description( sprintf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://dashboard.stripe.com/account/apikeys', __( 'Find your Stripe API keys here', 'stripe' ) ), '' ); ?>
 	</div>
 
 	<div>
