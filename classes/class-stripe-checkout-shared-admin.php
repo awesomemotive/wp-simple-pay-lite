@@ -23,46 +23,54 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * @var      string
 		 */
 		public $plugin_screen_hook_suffix = null;
-		
+
 		/**
 		 * Class constructor
 		 */
 		private function __construct() {
-			
+
 			global $base_class;
-			
-			// We need to call a priority of 3 here to ensure that $sc_options has already been loaded
+
+			// We need to call a priority of 3 here to ensure that $sc_options has already been loaded.
 			$old = get_option( 'sc_version' );
-		
-			if( version_compare( $old, $base_class->version, '<' ) ) {
+
+			if ( version_compare( $old, $base_class->version, '<' ) ) {
 				delete_option( 'sc_upgrade_has_run' );
 				delete_option( 'sc_had_upgrade' );
-			} 
-				
+			}
+
 			if ( false === get_option( 'sc_set_defaults' ) ) {
 				add_action( 'admin_init', array( $this, 'set_default_settings' ), 12 );
 			}
 
-			if( false === get_option( 'sc_upgrade_has_run' ) ) {
+			if ( false === get_option( 'sc_upgrade_has_run' ) ) {
 				$this->upgrade();
 			}
-			
-			// Set the admin tabs
+
+			// Set the admin tabs.
 			add_action( 'admin_init', array( $this, 'set_admin_tabs' ) );
-			
+
 			// Add the options page and menu item.
 			add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ), 2 );
-			
+
 			// Add plugin listing "Settings" action link.
-			add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array( $this, 'settings_link' ) );
-			
-			// Add upgrade link (if not already in Pro).
+			add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array(
+				$this,
+				'settings_link',
+			) );
+
+			// Add upgrade to Pro link (if not already in Pro).
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array( $this, 'purchase_pro_link' ) );
+				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array(
+					$this,
+					'purchase_pro_link',
+				) );
 			}
 		}
 
-		// SP Lite & Pro have separate upgrade classes
+		/**
+		 * SP Lite & Pro need separate class files for the plugin upgrade processes (not upgrade purchase).
+		 */
 		public function upgrade() {
 
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
@@ -72,7 +80,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			}
 		}
 		
-		/*
+		/**
 		 * Setup the default settings
 		 */
 		public function set_default_settings() {
@@ -90,7 +98,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			}
 		}
 		
-		/*
+		/**
 		 * Set the tabs in the admin area
 		 */
 		public function set_admin_tabs( $tabs ) {
