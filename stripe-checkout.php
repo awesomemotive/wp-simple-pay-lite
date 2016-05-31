@@ -49,10 +49,14 @@ if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 }
 
 // Admin notice and stop execution if Pro plugin found.
-if ( class_exists( 'Stripe_Checkout_Pro' ) || class_exists( 'Simple_Pay_Pro' ) ) {
-	add_action( 'admin_notices', 'simpay_pro_active_notice' );
+add_action( 'plugins_loaded', 'simpay_pro_plugin_check' );
 
-	return;
+function simpay_pro_plugin_check() {
+	if ( class_exists( 'Stripe_Checkout_Pro' ) || class_exists( 'Simple_Pay_Pro' ) ) {
+		add_action( 'admin_notices', 'simpay_pro_active_notice' );
+
+		return;
+	}
 }
 
 function simpay_pro_active_notice() {
