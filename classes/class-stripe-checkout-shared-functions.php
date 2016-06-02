@@ -204,7 +204,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 						if ( ! empty( $charge_response->description ) ) {
 							$html .= __( "Here's what you purchased:", 'stripe' ) . '<br/>' . "\n";
-							$html .= $charge_response->description . '<br/>' . "\n";
+							$html .= esc_html( $charge_response->description ) . '<br/>' . "\n";
 						}
 
 						if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
