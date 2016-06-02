@@ -120,7 +120,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					// Add Stripe charge ID to querystring.
 					$query_args = array(
 						'charge'     => $charge->id,
-						'store_name' => urlencode( $store_name ),
+						'store_name' => sanitize_text_field( $store_name ),
 					);
 
 					$failed = false;
@@ -208,7 +208,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						}
 
 						if ( isset( $_GET['store_name'] ) && ! empty( $_GET['store_name'] ) ) {
-							$html .= 'From: ' . stripslashes( stripslashes( esc_html( $_GET['store_name'] ) ) ) . '<br/>' . "\n";
+							$html .= 'From: ' . esc_html( $_GET['store_name'] ) . '<br/>' . "\n";
 						}
 
 						$html .= '<br/>' . "\n";
