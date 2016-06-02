@@ -79,6 +79,9 @@ Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source
 
 = 1.5.1 - TODO =
 
+* Dev: Improve store name url encoding and escaping for display on payment success page.
+* Dev: Improve product name escaping for display on payment success page.
+
 = 1.5.0 - March 6, 2016 =
 
 * Tweak: Admin toggle switch UI for Test/Live modes updated.
