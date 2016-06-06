@@ -68,6 +68,19 @@ SSL note: Stripe now requires that any page hosting a live checkout form be SSL 
 
 Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq)
 
+= Can I get notified by email of new releases? =
+
+[Subscribe here](https://www.getdrip.com/forms/6606935/submissions/new) to be notified by email of major features or updates.
+
+= How do I contribute to WP Simple Pay Lite? =
+
+We'd love your help! Here's a few things you can do:
+
+* [Rate our plugin](https://wordpress.org/support/view/plugin-reviews/stripe?postform#postform) and help spread the word!
+* Help answer questions in our [community support forum](https://wordpress.org/support/plugin/stripe).
+* Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe).
+* Help add or update a [plugin translation](https://translate.wordpress.org/projects/wp-plugins/stripe).
+
 == Screenshots ==
 
 1. Desktop checkout overlay
