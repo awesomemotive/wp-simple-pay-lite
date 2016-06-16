@@ -92,6 +92,7 @@ We'd love your help! Here's a few things you can do:
 
 = 1.5.1 - TODO =
 
+* Fix: Check for Pro version of WP Simple Pay to prevent fatal error in some cases.
 * Dev: Improve store name url encoding and escaping for display on payment success page.
 * Dev: Improve product name escaping for display on payment success page.
 
