@@ -5,11 +5,14 @@ module.exports = function( grunt ) {
 	console.log( pkg.title + ' - ' + pkg.version );
 
 	// Files to include/exclude in a release.
+	// Stop distributing composer/autoload files with build as they won't commit to SVN for v1.5.1. 6/18/16 PD
 	var distFiles = [
 		'**',
 		'!assets/images/wp/**',
 		'!build/**',
 		'!node_modules/**',
+		'!vendor/autoload.php',
+		'!vendor/composer/**',
 		'!.editorconfig',
 		'!.gitignore',
 		'!composer.json',
