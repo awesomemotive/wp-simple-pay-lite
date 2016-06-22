@@ -97,18 +97,19 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							),
 						);
 
-						// @todo add report information section for current plugin
 						global $sc_options;
+						global $base_class;
 
 						$simple_pay_settings = $sc_options->get_settings();
 
 						$sections['simple_pay'] = array();
 
-						// Show version stored in database
+						// Show version from base class.
 						$sections['simple_pay']['sc_version'] = array(
 							'label'        => __( 'Plugin Version', 'stripe' ),
 							'label_export' => 'Plugin Version',
-							'result'       => get_option( 'sc_version' ),
+							'result'       => $base_class->version,
+							//'result'       => get_option( 'sc_version' ),
 						);
 
 						foreach ( $simple_pay_settings as $key => $value ) {
