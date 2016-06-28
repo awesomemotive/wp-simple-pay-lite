@@ -102,6 +102,18 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		jshint: {
+			options: {
+				ignores: [
+					'**/*.min.js'
+				]
+			},
+			all: [
+				'assets/js/*.js',
+				'gruntfile.js'
+			]
+		},
+
 		uglify: {
 			files: {
 				expand: true,
@@ -135,7 +147,7 @@ module.exports = function( grunt ) {
 	require( 'load-grunt-tasks' )( grunt );
 
 	grunt.registerTask( 'css', [ 'cssmin', 'usebanner:css' ] );
-	grunt.registerTask( 'js', [ 'uglify', 'usebanner:js' ] );
+	grunt.registerTask( 'js', [ 'jshint', 'uglify', 'usebanner:js' ] );
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
 	grunt.registerTask( 'build', [ 'default', 'checktextdomain', 'clean', 'copy', 'compress' ] );
 
