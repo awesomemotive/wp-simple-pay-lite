@@ -15,6 +15,7 @@ module.exports = function( grunt ) {
 		'!vendor/composer/**',
 		'!.editorconfig',
 		'!.gitignore',
+		'!.jshintrc',
 		'!composer.json',
 		'!composer.lock',
 		'!contributing.md',
