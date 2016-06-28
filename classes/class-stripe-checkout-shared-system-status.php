@@ -444,6 +444,12 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 						$php_max_execution_time  = ini_get( 'max_execution_time' );
 						$php_max_input_vars      = ini_get( 'max_input_vars' );
 
+						$curl_info = '';
+
+						if ( function_exists( 'curl_version' ) ) {
+							$curl_info = curl_version();
+						}
+
 						$sections['server'] = array(
 							'host'                => array(
 								'label'        => __( 'Web Server', 'stripe' ),
@@ -505,8 +511,8 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							),
 							'curl_init'           => array(
 								'label'         => 'cURL',
-								'result'        => function_exists( 'curl_init' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
-								'result_export' => function_exists( 'curl_init' ) ? 'Yes' : 'No',
+								'result'        => ! empty( $curl_info ) ? $curl_info['version'] . ', ' . $curl_info['ssl_version'] : __( 'No version found.', 'stripe' ),
+								'result_export' => ! empty( $curl_info ) ? $curl_info['version'] . ', ' . $curl_info['ssl_version'] : 'No version found.',
 							),
 							'soap'                => array(
 								'label'         => 'SOAP',
