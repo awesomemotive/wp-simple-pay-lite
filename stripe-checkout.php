@@ -5,7 +5,7 @@
  * Description: Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
  * Author:      Moonstone Media
  * Author URI:  https://wpsimplepay.com
- * Version:     1.5.1
+ * Version:     1.5.2
  * Text Domain: stripe
  * Domain Path: /i18n
  *
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin version
 if ( ! defined( 'SIMPAY_VERSION' ) ) {
-	define( 'SIMPAY_VERSION', '1.5.1' );
+	define( 'SIMPAY_VERSION', '1.5.2' );
 }
 
 // Plugin folder path
@@ -69,7 +69,7 @@ require_once 'classes/wp-requirements.php';
 // Check plugin requirements before loading plugin.
 $this_plugin_checks = new SimPay_WP_Requirements( 'WP Simple Pay Lite for Stripe', plugin_basename( __FILE__ ), array(
 		'PHP'        => '5.3.3',
-		'WordPress'  => '4.1',
+		'WordPress'  => '4.2',
 		'Extensions' => array(
 			'curl',
 			'json',
