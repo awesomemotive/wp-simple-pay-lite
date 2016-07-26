@@ -97,6 +97,7 @@ We'd love your help! Here's a few things you can do:
 = 1.5.2 - TODO =
 
 * Dev: Tested up to WordPress 4.6.
+* Dev: Tweaks to make compatible with PHP 7.
 
 = 1.5.1 - June 18, 2016 =
 
