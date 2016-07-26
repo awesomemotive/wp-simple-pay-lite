@@ -479,11 +479,6 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 								'result'        => ( ini_get( 'display_errors' ) ) ? __( 'Yes', 'stripe' ) . ' (' . ini_get( 'display_errors' ) . ')' : '-',
 								'result_export' => ( ini_get( 'display_errors' ) ) ? 'Yes' : 'No',
 							),
-							'php_safe_mode'       => array(
-								'label'         => __( 'Safe Mode', 'stripe' ),
-								'result'        => ( ini_get( 'safe_mode' ) ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
-								'result_export' => ( ini_get( 'safe_mode' ) ) ? 'Yes' : 'No',
-							),
 							'php_memory_limit'    => array(
 								'label'  => __( 'Memory Limit', 'stripe' ),
 								'result' => $php_memory_limit ? $php_memory_limit : '-',
