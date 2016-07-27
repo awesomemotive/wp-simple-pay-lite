@@ -30,7 +30,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 			$this->fields   = $this->add_fields();
 		}
 
-		/*
+		/**
 		 * Set the tabs in the admin area
 		 */
 		public function admin_tab( $tabs ) {
@@ -38,6 +38,47 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 			$tabs[ $this->id ] = $this->label;
 
 			return $tabs;
+		}
+
+		/**
+		 * Stripe TLS requirement.
+		 * https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2
+		 */
+		private static function stripe_tls_check( $for_export ) {
+			global $sc_options;
+
+			// Set Stripe API key. Force test key.
+			Stripe_Checkout_Functions::set_key( 'true' );
+
+			$test_key = $sc_options->get_setting_value( 'test_secret_key' );
+
+			// If test key isn't set...
+			if ( empty( $test_key ) ) {
+				if ( $for_export ) {
+					return __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' );
+				} else {
+					return '<mark class="error">' . __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' ) . '</mark>';
+				}
+			}
+
+			\Stripe\Stripe::$apiBase = 'https://api-tls12.stripe.com';
+
+			try {
+				\Stripe\Charge::all();
+
+				if ( $for_export ) {
+					return __( 'TLS 1.2 supported, no action required.', 'stripe' );
+				} else {
+					return '<mark class="ok">' . __( 'TLS 1.2 supported, no action required.', 'stripe' ) . '</mark>';
+				}
+			} catch ( \Stripe\Error\ApiConnection $e ) {
+
+				if ( $for_export ) {
+					return sprintf( __( 'TLS 1.2 is not supported. You will need to upgrade your integration. See %1$s.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' );
+				} else {
+					return '<mark class="error">' . sprintf( __( 'TLS 1.2 is not supported. You will need to upgrade your integration. <a href="%1$s">Please read this</a> for more information.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' ) . '</mark>';
+				}
+			}
 		}
 
 		public static function set_content() {
@@ -109,7 +150,14 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							'label'        => __( 'Plugin Version', 'stripe' ),
 							'label_export' => 'Plugin Version',
 							'result'       => $base_class->version,
-							//'result'       => get_option( 'sc_version' ),
+						);
+
+						// Show Stripe TLS check.
+						$sections['simple_pay']['stripe_tls'] = array(
+							'label'         => __( 'Stripe TLS', 'stripe' ),
+							'label_export'  => 'Stripe TLS',
+							'result'        => self::stripe_tls_check( false ),
+							'result_export' => self::stripe_tls_check( true ),
 						);
 
 						foreach ( $simple_pay_settings as $key => $value ) {
