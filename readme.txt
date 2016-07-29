@@ -94,8 +94,9 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 1.5.2 - TODO =
+= 1.5.2 - July 29, 2016 =
 
+* Fix: Extra TLS compatibilty check via updated Stripe PHP library (v3.19.0).
 * Feature: Added Stripe TLS requirement to system report.
 * Dev: System report tweaks for PHP 7 compatibility.
 * Dev: Tested up to WordPress 4.6.
