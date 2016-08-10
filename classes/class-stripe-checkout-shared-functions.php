@@ -117,6 +117,8 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						)
 					);
 
+					do_action( 'sc_after_charge', $charge );
+
 					// Add Stripe charge ID to querystring.
 					$query_args = array(
 						'charge'     => $charge->id,
@@ -135,7 +137,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					// Add failure indicator to querystring.
 					$query_args = array( 
 						'charge'        => $e['error']['charge'],
-						'charge_failed' => true,
 					);
 
 					$failed = true;
@@ -166,7 +167,11 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
+
 		public static function show_payment_details( $content ) {
+
+			if ( !isset( $_GET['charge'] ) )
+				return $content;
 
 			if ( in_the_loop() && is_main_query() ) {
 				global $sc_options;
@@ -177,8 +182,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				$details_placement = ( isset( $_GET['details_placement'] ) ? $_GET['details_placement'] : 'above' );
 
-				$charge_response = null;
-
 				// Since this is a GET query arg I reset it here in case someone tries to submit it again with their own string written in the URL. 
 				// This helps ensure it can only be set to below or above.
 				$details_placement = ( $details_placement == 'below' ? 'below' : 'above' );
@@ -187,13 +190,13 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				Stripe_Checkout_Functions::set_key( $test_mode );
 
+				$charge_id = esc_html( $_GET['charge'] );
+
+				// https://stripe.com/docs/api/php#charges
+				$charge_response = \Stripe\Charge::retrieve( $charge_id );
+
 				// Successful charge output.
-				if ( isset( $_GET['charge'] ) && ! isset( $_GET['charge_failed'] ) ) {
-
-					$charge_id = esc_html( $_GET['charge'] );
-
-					// https://stripe.com/docs/api/php#charges
-					$charge_response = \Stripe\Charge::retrieve( $charge_id );
+				if ( $charge_response->status == 'succeeded' ) {
 
 					if ( null === $sc_options->get_setting_value( 'disable_success_message' ) ) {
 
@@ -228,18 +231,13 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 					}
 
-					do_action( 'sc_after_charge', $charge_response );
+				} elseif ( $charge_response->status == 'failed' ) {
 
-				} elseif ( isset( $_GET['charge_failed'] ) ) {
-
-					$charge_id = esc_html( $_GET['charge'] );
-
-					$charge = \Stripe\Charge::retrieve( $charge_id );
 					// LITE ONLY: Payment details error included in payment details function.
 
 					$html = '<div class="sc-payment-details-wrap sc-payment-details-error">' . "\n";
 					$html .= '<p>' . __( 'Sorry, but there has been an error processing your payment.', 'stripe' ) . '</p>' . "\n";
-					$html .= '<p>' . $charge->failure_message . '</p>';
+					$html .= '<p>' . $charge_response->failure_message . '</p>';
 					$html .= '</div>' . "\n";
 
 					if ( $is_above ) {
@@ -247,8 +245,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					} else {
 						$content = $content . apply_filters( 'sc_payment_details_error', $html );
 					}
-
-					do_action( 'sc_after_charge', $charge_response );
 				}
 
 			}
