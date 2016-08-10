@@ -164,6 +164,9 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   $html  = '<form id="' . esc_attr( $form_id ) . '" method="POST" action="" data-sc-id="' . $sc_id . '" class="' . $this->get_form_classes() . '">';
 
+		   // Add filter for adding html before payment button.
+		   $html .= apply_filters( 'sc_before_payment_button', '' );
+		   
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 					   data-key="' . esc_js( $data_key ) . '" ' .
@@ -197,10 +200,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   if ( 'true' == $test_mode ) {
 			   $html .= '<input type="hidden" name="sc_test_mode" value="true" />';
 		   }
-
-		   // Add a filter here to allow developers to hook into the form
-		   $filter_html = '';
-		   $html .= apply_filters( 'sc_before_payment_button', $filter_html );
 
 		   $html .= '</form>';
 
