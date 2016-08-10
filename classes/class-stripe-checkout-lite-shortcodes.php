@@ -198,10 +198,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   $html .= '<input type="hidden" name="sc_test_mode" value="true" />';
 		   }
 
-		   // Add a filter here to allow developers to hook into the form
-		   $filter_html = '';
-		   $html .= apply_filters( 'sc_before_payment_button', $filter_html );
-
 		   $html .= '</form>';
 
 		   //Stripe minimum amount allowed.
