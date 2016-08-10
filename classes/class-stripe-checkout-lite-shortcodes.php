@@ -162,8 +162,8 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			   }
 		   }
 
-		   $html  = '<form id="' . esc_attr( $form_id ) . '" method="POST" action="" data-sc-id="' . $sc_id . '" class="sc-checkout-form">';
-		   
+		   $html  = '<form id="' . esc_attr( $form_id ) . '" method="POST" action="" data-sc-id="' . $sc_id . '" class="' . $this->get_form_classes() . '">';
+
 		   $html .= '<script
 					   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 					   data-key="' . esc_js( $data_key ) . '" ' .
@@ -227,8 +227,20 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 
 		   return '';
 	   }
-	   
-	   /**
+
+		// Helper method for adding custom CSS classes to checkout form.
+		public function get_form_classes() {
+			// Set default class.
+			$classes   = array();
+			$classes[] = 'sc-checkout-form';
+
+			// Allow filtering of classes and then return what's left.
+			$classes = apply_filters( 'simpay_form_class', $classes );
+
+			return trim( implode( ' ', array_map( 'trim', array_map( 'sanitize_html_class', array_unique( $classes ) ) ) ) );
+		}
+
+		/**
 		 * Return an instance of this class.
 		 *
 		 * @since     1.0.0
