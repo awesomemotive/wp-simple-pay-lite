@@ -94,6 +94,11 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 1.5.3 - TODO =
+
+* Dev: Add filter for payment form CSS classes.
+* Dev: Move before payment button filter to proper place.
+
 = 1.5.2 - July 29, 2016 =
 
 * Fix: Extra TLS compatibilty check via updated Stripe PHP library (v3.19.0).
