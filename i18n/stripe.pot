@@ -1,0 +1,615 @@
+# Copyright (C) 2016 Moonstone Media Group
+# This file is distributed under the same license as the WP Simple Pay Lite for Stripe package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Simple Pay Lite for Stripe 1.5.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stripe\n"
+"POT-Creation-Date: 2016-08-23 20:23:09+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"Last-Translator: WP Simple Pay <support@wpsimplepay.com>\n"
+"Language-Team: WP Simple Pay <support@wpsimplepay.com>\n"
+
+#: classes/class-mm-settings-output.php:90
+msgid "Admin note: Option attributes are not set for all select controls."
+msgstr ""
+
+#: classes/class-stripe-checkout-lite-shortcodes.php:47
+msgid "Pay with Card"
+msgstr ""
+
+#: classes/class-stripe-checkout-lite-shortcodes.php:150
+msgid ""
+"You must enter your API keys before the Stripe button will show up here."
+msgstr ""
+
+#: classes/class-stripe-checkout-lite-shortcodes.php:215
+msgid ""
+"WP Simple Pay for Stripe requires an amount of %1$s (%2$s %3$s) or larger."
+msgstr ""
+
+#: classes/class-stripe-checkout-lite-upgrade-link.php:39
+#: classes/class-stripe-checkout-lite-upgrade-link.php:40
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-admin.php:112
+msgid "Stripe Keys"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-admin.php:113
+msgid "Default Settings"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-admin.php:131
+#: classes/class-stripe-checkout-shared-admin.php:170
+msgid "Settings"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-admin.php:141
+#: classes/class-stripe-checkout-shared-admin.php:142
+#: classes/class-stripe-checkout-shared-system-status.php:28
+#: classes/class-stripe-checkout-shared-system-status.php:91
+msgid "System Report"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-admin.php:180
+msgid "Purchase Pro"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-functions.php:202
+msgid "Congratulations. Your payment went through!"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-functions.php:206
+msgid "Here's what you purchased:"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-functions.php:211
+msgid "From: "
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-functions.php:215
+msgid "Total Paid: "
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-functions.php:219
+msgid "Your transaction ID is: %s"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-functions.php:241
+msgid "Sorry, but there has been an error processing your payment."
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:58
+#: classes/class-stripe-checkout-shared-system-status.php:60
+msgid ""
+"Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered."
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:70
+#: classes/class-stripe-checkout-shared-system-status.php:72
+msgid "TLS 1.2 supported, no action required."
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:77
+msgid ""
+"TLS 1.2 is not supported. You will need to upgrade your integration. See "
+"%1$s."
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:79
+msgid ""
+"TLS 1.2 is not supported. You will need to upgrade your integration. <a href="
+"\"%1$s\">Please read this</a> for more information."
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:95
+msgid "Please copy and paste this information when contacting support:"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:101
+msgid ""
+"You can also download your information as a text file to attach, or simply "
+"view it below."
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:105
+msgid "Download System Report"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:116
+msgid "WordPress Installation"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:120
+msgid "Simple Pay Settings"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:124
+msgid "Active Theme"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:128
+msgid "Active Plugins"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:132
+msgid "Server Environment"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:136
+msgid "Client Information"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:150
+msgid "Plugin Version"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:157
+msgid "Stripe TLS"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:170
+msgid "(hidden in downloadable report)"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:187
+#: classes/class-stripe-checkout-shared-system-status.php:238
+#: classes/class-stripe-checkout-shared-system-status.php:342
+#: classes/class-stripe-checkout-shared-system-status.php:456
+#: classes/class-stripe-checkout-shared-system-status.php:476
+#: classes/class-stripe-checkout-shared-system-status.php:552
+#: classes/class-stripe-checkout-shared-system-status.php:562
+#: classes/class-stripe-checkout-shared-system-status.php:567
+msgid "No"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:189
+#: classes/class-stripe-checkout-shared-system-status.php:192
+#: classes/class-stripe-checkout-shared-system-status.php:238
+#: classes/class-stripe-checkout-shared-system-status.php:342
+#: classes/class-stripe-checkout-shared-system-status.php:453
+#: classes/class-stripe-checkout-shared-system-status.php:473
+#: classes/class-stripe-checkout-shared-system-status.php:527
+#: classes/class-stripe-checkout-shared-system-status.php:552
+#: classes/class-stripe-checkout-shared-system-status.php:562
+#: classes/class-stripe-checkout-shared-system-status.php:567
+msgid "Yes"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:199
+msgid ""
+"%1$s - It is recommendend to set memory to at least 40MB. See: <a href=\"%2$s"
+"\" target=\"_blank\">Increasing memory allocated to PHP</a>"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:211
+#: views/admin-shared-tab-default.php:26
+msgid "Site Name"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:216
+msgid "Home URL"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:221
+msgid "Site URL"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:226
+#: classes/class-stripe-checkout-shared-system-status.php:304
+#: classes/class-stripe-checkout-shared-system-status.php:324
+#: classes/class-stripe-checkout-shared-system-status.php:397
+msgid "Version"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:231
+msgid "Locale"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:236
+msgid "Multisite"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:242
+msgid "Permalinks"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:248
+msgid "WP Memory Limit"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:253
+msgid "WP Debug Mode"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:294
+#: classes/class-stripe-checkout-shared-system-status.php:386
+msgid "%s is available"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:300
+#: classes/class-stripe-checkout-shared-system-status.php:320
+msgid "Name"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:302
+#: classes/class-stripe-checkout-shared-system-status.php:322
+#: classes/class-stripe-checkout-shared-system-status.php:395
+msgid "Author"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:334
+msgid "Theme Information"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:340
+msgid "Child Theme"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:346
+msgid "Parent Theme"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:419
+msgid ""
+"%1$s - It is recommendend to upgrade at least to PHP version 5.5.19 for "
+"security reasons. <a href=\"%2$s\" target=\"_blank\">Read more</a>"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:439
+msgid "Server default timezone is %s - it should be UTC"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:503
+msgid "Web Server"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:508
+msgid "PHP Version"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:514
+msgid "MySQL Version"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:520
+msgid "Server Timezone"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:526
+msgid "Display Errors"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:531
+msgid "Memory Limit"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:535
+msgid "Upload Max Filesize"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:539
+msgid "Post Max Size"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:543
+msgid "Max Execution Time"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:547
+msgid "Max Input Vars"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:557
+msgid "No version found."
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:571
+msgid "WP Remote POST"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:576
+msgid "WP Remote GET"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:593
+msgid "Name:"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:595
+msgid "Version:"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:597
+#: classes/class-stripe-checkout-shared-system-status.php:608
+msgid "User Agent:"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:599
+msgid "Platform:"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:618
+msgid "IP Address"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared-system-status.php:623
+msgid "Browser"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (WP Simple Pay Lite for Stripe 1.5.2)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: classes/class-stripe-checkout-shared.php:181
+msgid "WP Simple Pay Lite for Stripe"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared.php:185
+msgid "WP Simple Pay Pro for Stripe"
+msgstr ""
+
+#: classes/class-stripe-checkout-shared.php:189
+msgid "Simple Pay Lite"
+msgstr ""
+
+#: stripe-checkout.php:63
+msgid ""
+"Simple Pay Lite and Pro cannot be active simultaneously. Please deactivate "
+"one of them to proceed."
+msgstr ""
+
+#: views/admin-lite-sidebar.php:18
+msgid "Need More Options?"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:22
+msgid "Additional perks you'll get with %s"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:26
+msgid "Let customers enter an amount"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:27
+msgid "Collect data with custom fields"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:28
+msgid "Offer discounts with coupon codes"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:29
+msgid "Subscriptions integration"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:30
+msgid "Stripe add-ons as they're released"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:31
+msgid "Automatic updates & email support"
+msgstr ""
+
+#: views/admin-lite-sidebar.php:37
+msgid "Upgrade to Pro Now"
+msgstr ""
+
+#: views/admin-shared-notice-install.php:25
+msgid " is now installed."
+msgstr ""
+
+#: views/admin-shared-notice-install.php:26
+msgid "Get started by entering your Stripe keys"
+msgstr ""
+
+#: views/admin-shared-notice-install.php:27
+msgid "Hide this"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:20
+msgid "See shortcode options and examples"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:22
+msgid ""
+"Shortcode attributes take precedence and will always override site-wide "
+"default settings."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:29
+msgid "The name of your store or website. Defaults to Site Name."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:34
+msgid "Currency"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:37
+msgid ""
+"Specify a currency using it's <a href=\"%s\" target=\"_blank\">3-letter ISO "
+"Code</a>. Defaults to USD."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:42
+msgid "Image URL"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:45
+msgid ""
+"A URL pointing to a square image of your brand or product. The recommended "
+"minimum size is 128x128px."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:50
+msgid "Checkout Button Label"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:53
+msgid ""
+"The label of the payment button in the checkout form. You can use {{amount}} "
+"to display the amount."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:58
+msgid "Payment Button Label"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:61
+msgid ""
+"Text to display on the default blue button that users click to initiate a "
+"checkout process."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:66
+msgid "Success Redirect URL"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:69
+msgid ""
+"The URL that the user should be redirected to after a successful payment."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:74
+msgid "Disable Success Message"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:76
+msgid ""
+"Disable default success message. Useful if you are redirecting to your own "
+"success page."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:80
+msgid "Failure Redirect URL"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:83
+msgid "The URL that the user should be redirected to after a failed payment."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:88
+msgid "Enable Billing Address"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:90
+msgid "Require the user to enter their billing address during checkout."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:94
+msgid "Verify Zip"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:96
+msgid "Verifies the zip code of the card."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:100
+msgid "Enable Remember"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:102
+msgid ""
+"Adds a \"Remember Me\" option to the checkout form to allow the user to "
+"store their credit card for future use with other sites using Stripe."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:106
+msgid "Enable Bitcoin"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:108
+msgid ""
+"Enable accepting <a href=\"%s\" target=\"_blank\">Bitcoin</a> as a payment "
+"option."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:112
+msgid "Enable Alipay"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:119
+msgid ""
+"Enable accepting <a href=\"%s\" target=\"_blank\">Alipay</a> as a payment "
+"option."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:124
+msgid "Enable Alipay Reusable"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:126
+msgid "Enable reusable access to the customer's account when using Alipay."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:130
+msgid "Set Locale"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:141
+msgid "Disable Plugin CSS"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:143
+msgid ""
+"If this option is checked, this plugin's CSS file will not be referenced."
+msgstr ""
+
+#: views/admin-shared-tab-default.php:147
+msgid "Save Settings"
+msgstr ""
+
+#: views/admin-shared-tab-default.php:149
+msgid ""
+"Save your settings when uninstalling this plugin. Useful when upgrading or "
+"re-installing."
+msgstr ""
+
+#: views/admin-shared-tab-stripe-keys.php:19
+msgid "Live Mode"
+msgstr ""
+
+#: views/admin-shared-tab-stripe-keys.php:24
+msgid ""
+"Switch to OFF while testing. Make sure Test mode is enabled in your Stripe "
+"dashboard to view test transactions."
+msgstr ""
+
+#: views/admin-shared-tab-stripe-keys.php:25
+msgid "Find your Stripe API keys here"
+msgstr ""
+
+#: views/admin-shared-tab-stripe-keys.php:29
+msgid "Test Secret Key"
+msgstr ""
+
+#: views/admin-shared-tab-stripe-keys.php:34
+msgid "Test Publishable Key"
+msgstr ""
+
+#: views/admin-shared-tab-stripe-keys.php:39
+msgid "Live Secret Key"
+msgstr ""
+
+#: views/admin-shared-tab-stripe-keys.php:44
+msgid "Live Publishable Key"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (WP Simple Pay Lite for Stripe 1.5.2)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  plugin.pot (WP Simple Pay Lite for Stripe 1.5.2)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "https://wpsimplepay.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Add high conversion Stripe checkout forms to your WordPress site and start "
+"accepting payments in minutes."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Moonstone Media"
+msgstr ""
