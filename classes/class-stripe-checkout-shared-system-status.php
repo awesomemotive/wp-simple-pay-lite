@@ -415,8 +415,11 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 						 * Server Environment
 						 * ==================
 						 */
-						if ( version_compare( PHP_VERSION, '5.5.19', '<' ) ) {
-							$php = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to upgrade at least to PHP version 5.5.19 for security reasons. <a href="%2$s" target="_blank">Read more</a>', 'stripe' ), PHP_VERSION, 'https://wordpress.org/about/requirements/' ) . '</mark>';
+						if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
+							$php = '<mark>' . PHP_VERSION . ' - ' .
+							       __( 'WordPress.org recommends upgrading to PHP 5.6 or higher for better security.', 'stripe' ) .
+							       ' <a href="https://wordpress.org/about/requirements/" target="_blank">' . __( 'Read more.', 'stripe' ) . '</a>' .
+							       '</mark>';
 						} else {
 							$php = '<mark class="ok">' . PHP_VERSION . '</mark>';
 						}
