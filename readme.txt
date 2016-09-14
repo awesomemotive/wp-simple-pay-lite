@@ -94,8 +94,9 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 1.5.3 - TODO =
+= 1.5.3 - September 14, 2016 =
 
+* Fix: URL encode store name properly so it displays on payment details screen correctly.
 * Dev: Add filter for payment form CSS classes.
 * Dev: Move before payment button filter to proper place.
 
