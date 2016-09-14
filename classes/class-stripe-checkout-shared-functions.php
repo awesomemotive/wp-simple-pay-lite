@@ -118,9 +118,11 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					);
 
 					// Add Stripe charge ID to querystring.
+					// From https://developer.wordpress.org/reference/functions/add_query_arg/:
+					// Values are expected to be encoded appropriately with urlencode() or rawurlencode().
 					$query_args = array(
 						'charge'     => $charge->id,
-						'store_name' => sanitize_text_field( $store_name ),
+						'store_name' => rawurlencode( $store_name ),
 					);
 
 					$failed = false;
@@ -155,7 +157,9 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 
 				self::$token = false;
 
-				wp_redirect( esc_url_raw( add_query_arg( apply_filters( 'sc_redirect_args', $query_args, $charge ), apply_filters( 'sc_redirect', $redirect, $failed ) ) ) );
+				$redirect_url = esc_url_raw( add_query_arg( apply_filters( 'sc_redirect_args', $query_args, $charge ), apply_filters( 'sc_redirect', $redirect, $failed ) ) );
+
+				wp_redirect( $redirect_url );
 
 				exit;
 			}
