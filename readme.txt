@@ -99,6 +99,7 @@ We'd love your help! Here's a few things you can do:
 * Fix: URL encode store name properly so it displays on payment details screen correctly.
 * Dev: Add filter for payment form CSS classes.
 * Dev: Move before payment button filter to proper place.
+* Dev: Updated to Stripe PHP library v3.22.0.
 
 = 1.5.2 - July 29, 2016 =
 
