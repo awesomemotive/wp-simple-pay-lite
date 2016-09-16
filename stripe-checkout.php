@@ -24,6 +24,11 @@ if ( ! defined( 'SIMPAY_VERSION' ) ) {
 	define( 'SIMPAY_VERSION', '1.5.3' );
 }
 
+// Plugin name
+if ( ! defined( 'SIMPAY_NAME' ) ) {
+	define( 'SIMPAY_NAME', 'WP Simple Pay Lite for Stripe' );
+}
+
 // Plugin folder path
 // TODO SIMPAY_PLUGIN_DIR
 if ( ! defined( 'SC_DIR_PATH' ) ) {
@@ -60,14 +65,14 @@ function simpay_pro_plugin_check() {
 }
 
 function simpay_pro_active_notice() {
-	echo '<div class="error"><p>' . __( 'Simple Pay Lite and Pro cannot be active simultaneously. Please deactivate one of them to proceed.', 'stripe' ) . '</p></div>';
+	echo '<div class="error"><p>' . __( 'WP Simple Pay Lite and Pro cannot be active simultaneously. Please deactivate one of them to proceed.', 'stripe' ) . '</p></div>';
 }
 
 // Plugin requirements class.
 require_once 'classes/wp-requirements.php';
 
 // Check plugin requirements before loading plugin.
-$this_plugin_checks = new SimPay_WP_Requirements( 'WP Simple Pay Lite for Stripe', plugin_basename( __FILE__ ), array(
+$this_plugin_checks = new SimPay_WP_Requirements( SIMPAY_NAME, plugin_basename( __FILE__ ), array(
 		'PHP'        => '5.3.3',
 		'WordPress'  => '4.2',
 		'Extensions' => array(

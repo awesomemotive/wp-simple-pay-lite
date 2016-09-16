@@ -178,15 +178,15 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		 * @return    string
 		 */
 		public static function get_plugin_title() {
-			return __( 'WP Simple Pay Lite for Stripe', 'stripe' );
+			return SIMPAY_NAME;
 		}
 
 		public static function get_pro_plugin_title() {
-			return __( 'WP Simple Pay Pro for Stripe', 'stripe' );
+			return 'WP Simple Pay Pro for Stripe';
 		}
 
 		public static function get_plugin_menu_title() {
-			return __( 'Simple Pay Lite', 'stripe' );
+			return 'Simple Pay Lite';
 		}
 	}
 }
