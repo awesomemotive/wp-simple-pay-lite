@@ -70,6 +70,9 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			}
 			
 			\Stripe\Stripe::setApiKey( $key );
+
+			// Send plugin name & version along with API calls.
+			\Stripe\Stripe::setAppInfo( SIMPAY_NAME, SIMPAY_VERSION, SC_WEBSITE_BASE_URL );
 		}
 
 		/**
