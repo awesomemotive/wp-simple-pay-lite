@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin version
 if ( ! defined( 'SIMPAY_VERSION' ) ) {
-	define( 'SIMPAY_VERSION', '1.5.3' );
+	define( 'SIMPAY_VERSION', '1.5.4' );
 }
 
 // Plugin name

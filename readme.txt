@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, stripe checkout, payments, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 4.2
 Tested up to: 4.6
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 
 Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
@@ -93,6 +93,10 @@ We'd love your help! Here's a few things you can do:
 4. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 1.5.4 - TODO =
+
+* Dev: Now sending application info with each Stripe API call to assist Stripe in debugging issues with accounts using the plugin.
 
 = 1.5.3 - September 14, 2016 =
 
