@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<h3 class="wp-ui-primary"><span><?php _e( 'Looking for more?', 'stripe' ); ?></span></h3>
 		<div class="inside">
 			<div class="main">
-				<p class="last-blurb centered">
+				<p class="sidebar-heading centered">
 					<?php printf( __( "Additional features included with %s", 'stripe' ), Stripe_Checkout::get_pro_plugin_title() ); ?>
 				</p>
 
