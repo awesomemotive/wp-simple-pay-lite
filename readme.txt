@@ -44,16 +44,14 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 = PRO VERSION FEATURES =
 
 * *Everything in Lite plus...*
-* **User Entered Amounts** - Allow customers to enter an amount they want to pay.
-* **Coupon Codes** - Setup discount codes in your Stripe dashboard that customers can use.
-* **Custom Fields** - Record additional (meta) data along with each Stripe payment.
-* Optionally gather a separate shipping address during checkout.
-* Customize the payment button style with CSS.
-* **Subscriptions** - Let customers pay and sign up for your Stripe recurring plans (available with a Business license or above).
-* Allow customers to select between one-time or recurring amounts.
-* Charge customers an initial setup fee in addition to enrolling them in a subscription.
-* Automatic easy updates.
-* Access to additional Pro add-ons in development.
+* **Custom Fields** - Add field types to record additional data with each Stripe payment.
+* **Coupon Codes** - Setup Stripe discount codes for use on payment forms.
+* **User Entered Amounts** - Let customers enter the amount they want to pay.
+* **[Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) Integration** - Connect beautiful pricing tables without additional code.
+* **Stripe Subscriptions** - Customers can sign up for your recurring plans.
+* **Subscription Installment Plans** - End recurring payments after a specified time.
+* **Subscription Setup Fees** - Charge an extra fee at purchase in addition to recurring payments.
+* **Subscription Trial Periods** - Delay recurring payments for a specified time for free trials.
 * Priority email support with a 24-hour response time during weekdays backed by a top-notch team.
 
 >**[Get More with WP Simple Pay PRO for Stripe](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
