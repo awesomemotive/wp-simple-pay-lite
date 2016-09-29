@@ -95,6 +95,7 @@ We'd love your help! Here's a few things you can do:
 = 1.5.4 - TODO =
 
 * Dev: Now sending application info with each Stripe API call to assist Stripe in debugging issues with accounts using the plugin.
+* Dev: Updated to Stripe PHP library v4.0.0.
 
 = 1.5.3 - September 14, 2016 =
 
