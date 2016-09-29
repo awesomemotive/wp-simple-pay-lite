@@ -30,12 +30,14 @@ module.exports = function( grunt ) {
 
 		pkg: pkg,
 
+		// Create comment banner to add to the top of minified .js and .css files.
 		banner: '/*! <%= pkg.title %> - <%= pkg.version %>\n' +
 		        ' * <%=pkg.homepage %>\n' +
 		        ' * Copyright (c) Moonstone Media <%= grunt.template.today("yyyy") %>\n' +
 		        ' * Licensed GPLv2+' +
 		        ' */\n',
 
+		// Validate i18n text domain slug throughout.
 		checktextdomain: {
 			options: {
 				text_domain: 'stripe',
@@ -69,10 +71,12 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Wipe out build folder.
 		clean: {
 			main: [ 'build' ]
 		},
 
+		// Build the plugin zip file and place in build folder.
 		compress: {
 			main: {
 				options: {
@@ -85,6 +89,7 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Distribute build files.
 		copy: {
 			main: {
 				expand: true,
@@ -93,6 +98,7 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Minify .css files.
 		cssmin: {
 			files: {
 				expand: true,
@@ -103,6 +109,7 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// JavaScript linting with JSHint.
 		jshint: {
 			options: {
 				ignores: [
@@ -115,6 +122,7 @@ module.exports = function( grunt ) {
 			]
 		},
 
+		// Minify .js files.
 		uglify: {
 			files: {
 				expand: true,
@@ -125,6 +133,7 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Add comment banner to each minified .js and .css file.
 		usebanner: {
 			options: {
 				position: 'top',
