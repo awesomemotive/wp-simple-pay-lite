@@ -73,7 +73,7 @@ module.exports = function( grunt ) {
 
 		// Wipe out build folder.
 		clean: {
-			main: [ 'build' ]
+			build: [ 'build' ]
 		},
 
 		// Build the plugin zip file and place in build folder.
@@ -156,10 +156,10 @@ module.exports = function( grunt ) {
 
 	require( 'load-grunt-tasks' )( grunt );
 
-	grunt.registerTask( 'css', [ 'cssmin', 'usebanner:css' ] );
+	grunt.registerTask( 'css', [ 'copy', 'cssmin', 'usebanner:css' ] );
 	grunt.registerTask( 'js', [ 'jshint', 'uglify', 'usebanner:js' ] );
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
-	grunt.registerTask( 'build', [ 'default', 'checktextdomain', 'clean', 'copy', 'compress' ] );
+	grunt.registerTask( 'build', [ 'default', 'checktextdomain', 'clean:build', 'copy:main', 'compress' ] );
 
 	// TODO Add deploy task
 	//grunt.registerTask( 'deploy',	['build'] );
