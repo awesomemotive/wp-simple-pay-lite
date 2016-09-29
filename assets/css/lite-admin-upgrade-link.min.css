@@ -1,4 +1,4 @@
-/*! WP Simple Pay Lite for Stripe - 1.5.3
+/*! WP Simple Pay Lite for Stripe - 1.5.4
  * https://wordpress.org/plugins/stripe/
  * Copyright (c) Moonstone Media 2016
  * Licensed GPLv2+ */
