@@ -30,6 +30,12 @@ module.exports = function( grunt ) {
 
 		pkg: pkg,
 
+		// Set folder variables.
+		dirs: {
+			css: 'assets/css',
+			js: 'assets/js'
+		},
+
 		// Create comment banner to add to the top of minified .js and .css files.
 		banner: '/*! <%= pkg.title %> - <%= pkg.version %>\n' +
 		        ' * <%=pkg.homepage %>\n' +
@@ -102,9 +108,9 @@ module.exports = function( grunt ) {
 		cssmin: {
 			files: {
 				expand: true,
-				cwd: 'assets/css/',
+				cwd: '<%= dirs.css %>',
 				src: [ '*.css', '!*.min.css', '!vendor/**' ],
-				dest: 'assets/css/',
+				dest: '<%= dirs.css %>',
 				ext: '.min.css'
 			}
 		},
@@ -117,7 +123,7 @@ module.exports = function( grunt ) {
 				]
 			},
 			all: [
-				'assets/js/*.js',
+				'<%= dirs.js %>/*.js',
 				'gruntfile.js'
 			]
 		},
@@ -126,9 +132,9 @@ module.exports = function( grunt ) {
 		uglify: {
 			files: {
 				expand: true,
-				cwd: 'assets/js/',
+				cwd: '<%= dirs.js %>',
 				src: [ '*.js', '!*.min.js', '!vendor/**' ],
-				dest: 'assets/js/',
+				dest: '<%= dirs.js %>',
 				ext: '.min.js'
 			}
 		},
@@ -142,12 +148,12 @@ module.exports = function( grunt ) {
 			},
 			js: {
 				files: {
-					src: [ 'assets/js/*.min.js' ]
+					src: [ '<%= dirs.js %>/*.min.js' ]
 				}
 			},
 			css: {
 				files: {
-					src: [ 'assets/css/*.min.css' ]
+					src: [ '<%= dirs.css %>/*.min.css' ]
 				}
 			}
 		}
