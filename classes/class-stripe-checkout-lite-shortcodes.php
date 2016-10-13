@@ -84,29 +84,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $test_mode                 = $attr['test_mode'];
 		   $id                        = $attr['id'];
 		   $payment_details_placement = $attr['payment_details_placement'];
-		   $test_secret_key           = $attr['test_secret_key'];
-		   $test_publishable_key      = $attr['test_publishable_key'];
-		   $live_secret_key           = $attr['live_secret_key'];
-		   $live_publishable_key      = $attr['live_publishable_key'];
-		   
-		   $sc_options->delete_setting( 'live_secret_key_temp' );
-		   $sc_options->delete_setting( 'test_secret_key_temp' );
-		   
-		   if ( ! empty( $test_secret_key ) ) {
-			   $sc_options->add_setting( 'test_secret_key_temp', $test_secret_key );
-		   }
-		   
-		   if ( ! empty( $test_publishable_key ) ) {
-			   $sc_options->add_setting( 'test_publishable_key_temp', $test_publishable_key );
-		   }
-		   
-		   if ( ! empty( $live_secret_key ) ) {
-			   $sc_options->add_setting( 'live_secret_key_temp', $live_secret_key );
-		   }
-		   
-		   if ( ! empty( $live_publishable_key ) ) {
-			   $sc_options->add_setting( 'live_publishable_key_temp', $live_publishable_key );
-		   }
 
 			// Generate custom form id attribute if one not specified.
 			// Rename var for clarity.
@@ -116,33 +93,22 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 			}
 		   
 		   $test_mode = ( isset( $_GET['test_mode'] ) ? 'true' : $test_mode );
+		   $filter_mode = false;
 
 		   // Check if in test mode or live mode
 		   if ( 0 == $sc_options->get_setting_value( 'enable_live_key' ) || 'true' == $test_mode ) {
+
 			   // Test mode
-			   if ( ! ( null === $sc_options->get_setting_value( 'test_publishable_key_temp' ) ) ) {
-				   $data_key = $sc_options->get_setting_value( 'test_publishable_key_temp' );
-				   $sc_options->delete_setting( 'test_publishable_key_temp' );
-			   } else {
-				   $data_key = ( null !== $sc_options->get_setting_value( 'test_publish_key' ) ? $sc_options->get_setting_value( 'test_publish_key' ) : '' );
-			   }
-			   
-			   if ( null === $sc_options->get_setting_value( 'test_secret_key' ) && null === $sc_options->get_setting_value( 'test_publishable_key_temp' ) ) {
-				   $data_key = '';
-			   }
+			   $filter_mode = true;
+
+			   $data_key = ( null !== $sc_options->get_setting_value( 'test_publish_key' ) ? $sc_options->get_setting_value( 'test_publish_key' ) : '' );
 		   } else {
+
 			   // Live mode
-			   if ( ! ( null === $sc_options->get_setting_value( 'live_publishable_key_temp' ) ) ) {
-				   $data_key = $sc_options->get_setting_value( 'live_publishable_key_temp' );
-				   $sc_options->delete_setting( 'live_publishable_key_temp' );
-			   } else {
-				   $data_key = ( null !== $sc_options->get_setting_value( 'live_publish_key' ) ? $sc_options->get_setting_value( 'live_publish_key' ) : '' );
-			   }
-			   
-			   if ( null === $sc_options->get_setting_value( 'live_secret_key' ) && null === $sc_options->get_setting_value( 'live_publishable_key_temp' ) ) {
-				   $data_key = '';
-			   }
+			   $data_key = ( null !== $sc_options->get_setting_value( 'live_publish_key' ) ? $sc_options->get_setting_value( 'live_publish_key' ) : '' );
 		   }
+
+		   $data_key = apply_filters( 'simpay_publishable_key', $data_key, $filter_mode );
 
 		   if ( empty( $data_key ) ) {
 
