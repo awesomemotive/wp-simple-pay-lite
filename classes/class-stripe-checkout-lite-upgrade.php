@@ -31,6 +31,10 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 				if( version_compare( $old_version, '1.4.0', '<' ) ) {
 					add_action( 'admin_init', array( $this, 'v140_upgrade' ), 11 );
 				}
+
+				if ( version_compare( $old_version, '1.5.4', '<' ) ) {
+					add_action( 'admin_init', array( $this, 'v154_upgrade' ), 12 );
+				}
 			}
 
 			$new_version = $base_class->version;
@@ -38,6 +42,14 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			// TODO This option update is not always getting run.
 			update_option( 'sc_version', $new_version );
 			add_option( 'sc_upgrade_has_run', 1 );
+		}
+
+		public function v154_upgrade() {
+
+			//global $sc_options;
+
+			add_option( 'sc_show_api_notice', 1 );
+
 		}
 		
 		/**
