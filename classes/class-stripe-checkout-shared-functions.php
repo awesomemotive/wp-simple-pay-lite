@@ -24,7 +24,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			// We only want to run the charge if the Token is set
 			if ( isset( $_POST['stripeToken'] ) && isset( $_POST['wp-simple-pay'] ) ) {
 				self::$token = true;
-				add_action( 'init', array( $this, 'charge_card' ) );
+				add_action( 'wp', array( $this, 'charge_card' ) );
 			}
 			
 			// Load Stripe library
