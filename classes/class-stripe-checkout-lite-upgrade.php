@@ -54,6 +54,13 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 			$live_pub = $sc_options->get_setting_value( 'live_publishable_key_temp' );
 
 			if ( isset( $test_sec ) || isset( $test_pub ) || isset( $live_sec ) || isset( $live_pub ) ) {
+
+				// Delete the old options out
+				$sc_options->delete_setting( 'live_secret_key_temp' );
+				$sc_options->delete_setting( 'test_secret_key_temp' );
+				$sc_options->delete_setting( 'live_publishable_key_temp' );
+				$sc_options->delete_setting( 'test_publishable_key_temp' );
+
 				add_option( 'sc_show_api_notice', 1 );
 			}
 		}
