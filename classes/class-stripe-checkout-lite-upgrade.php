@@ -31,10 +31,10 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 				if( version_compare( $old_version, '1.4.0', '<' ) ) {
 					add_action( 'admin_init', array( $this, 'v140_upgrade' ), 11 );
 				}
+			}
 
-				if ( version_compare( $old_version, '1.5.4', '<' ) ) {
-					add_action( 'admin_init', array( $this, 'v154_upgrade' ), 12 );
-				}
+			if ( version_compare( $old_version, '1.5.4', '<' ) ) {
+				add_action( 'admin_init', array( $this, 'v154_upgrade' ), 12 );
 			}
 
 			$new_version = $base_class->version;
@@ -46,10 +46,16 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 
 		public function v154_upgrade() {
 
-			//global $sc_options;
+			global $sc_options;
 
-			add_option( 'sc_show_api_notice', 1 );
+			$test_sec = $sc_options->get_setting_value( 'test_secret_key_temp' );
+			$test_pub = $sc_options->get_setting_value( 'test_publishable_key_temp' );
+			$live_sec = $sc_options->get_setting_value( 'live_secret_key_temp' );
+			$live_pub = $sc_options->get_setting_value( 'live_publishable_key_temp' );
 
+			if ( isset( $test_sec ) || isset( $test_pub ) || isset( $live_sec ) || isset( $live_pub ) ) {
+				add_option( 'sc_show_api_notice', 1 );
+			}
 		}
 		
 		/**
