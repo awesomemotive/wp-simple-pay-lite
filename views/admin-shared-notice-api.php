@@ -13,12 +13,6 @@ global $base_class;
 
 ?>
 
-<style>
-	#sc-api-notice .button-secondary {
-		margin-left: 15px;
-	}
-</style>
-
 <div id="sc-api-notice" class="error">
 	<p>
 		<?php
@@ -26,6 +20,8 @@ global $base_class;
 			echo '<br>';
 			printf( __( 'If you are using this functionality please view the new <a target="_blank" href="%s">documentation</a> ASAP.', 'stripe' ), 'https://wpsimplepay.com/docs/misc/multiple-stripe-api-key-support/' );
 		?>
+	</p>
+	<p>
 		<a href="<?php echo esc_url( add_query_arg( 'sc-dismiss-api-nag', 1 ) ); ?>" class="button-secondary"><?php _e( 'Hide this', 'stripe' ); ?></a>
 	</p>
 </div>
