@@ -64,7 +64,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			}
 
 			// Run upgrade routine after plugins loaded.
-			add_action( 'plugins_loaded', array( $this, 'plugin_upgrade' ) );
+			add_action( 'init', array( $this, 'plugin_upgrade' ) );
 		}
 
 		/**
