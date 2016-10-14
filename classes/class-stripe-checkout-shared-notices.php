@@ -41,7 +41,7 @@ if ( ! class_exists( 'Stripe_Checkout_Notices' ) ) {
 
 			// At this point show install notice. Show it only on the plugin screen.
 			//if( 'plugins' == get_current_screen()->id ) {
-				//include_once( SC_DIR_PATH . 'views/admin-shared-notice-install.php' );
+				include_once( SC_DIR_PATH . 'views/admin-shared-notice-api.php' );
 			//}
 		}
 		
