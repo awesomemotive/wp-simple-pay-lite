@@ -19,6 +19,7 @@ if ( ! isset( $settings['uninstall_save_settings'] ) || 1 != $settings['uninstal
 	delete_option( 'sc_had_upgrade' );
 	delete_option( 'sc_upgrade_has_run' );
 	delete_option( 'sc_show_admin_install_notice' );
+	delete_option( 'sc_show_api_notice' );
 
 	// Remove options that may be hanging around from old versions.
 	delete_option( 'sc_settings_master' );
