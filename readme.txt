@@ -92,9 +92,9 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 1.5.4 - TODO =
+= 1.5.4 - October 17, 2016 =
 
-* Fix: Removed multiple Stripe API Keys support from shortcode attributes. Added it as filters instead.
+* Tweak: Removed alternate Stripe API key support using shortcode attributes due to reliability issues. They must now be added through filters.
 * Dev: Now sending application info with each Stripe API call to assist Stripe in debugging issues with accounts using the plugin.
 * Dev: Updated to Stripe PHP library v4.0.0.
 
