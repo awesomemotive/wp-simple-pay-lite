@@ -52,13 +52,13 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		public static function set_key( $test_mode = 'false' ) { 
 			global $sc_options;
 
-			$key = '';
-
 			// Check first if in live or test mode.
 			if ( $sc_options->get_setting_value( 'enable_live_key' ) == 1 && $test_mode != 'true' ) {
 				$key = $sc_options->get_setting_value( 'live_secret_key' );
+				$test_mode = false;
 			} else {
 				$key = $sc_options->get_setting_value( 'test_secret_key' );
+				$test_mode = true;
 			}
 
 			$key = apply_filters( 'simpay_secret_key', $key, $test_mode );
