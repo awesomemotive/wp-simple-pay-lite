@@ -47,18 +47,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container metabox-holder">
 	<div class="postbox-nobg" style="padding-bottom: 20px;">
 		<div class="inside centered">
-			<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'sidebar-link' ); ?>"
-			   class="button-primary" target="_blank"><?php _e( 'Help & Documenation', 'stripe' ); ?></a>
-		</div>
-	</div>
-</div>
-
-<div class="sidebar-container metabox-holder">
-	<div class="postbox-nobg">
-		<div class="inside centered">
-			<a href="https://stripe.com/" target="_blank">
-				<img src="<?php echo SC_DIR_URL; ?>assets/images/powered-by-stripe.png" />
-			</a>
+			<p>
+				<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'sidebar-link' ); ?>"
+				   class="button-primary" target="_blank"><?php _e( 'Help & Documenation', 'stripe' ); ?></a>
+			</p>
+			<p>
+				<a href="https://dashboard.stripe.com/" target="_blank">
+					<?php _e( 'Your Stripe Dashboard', 'stripe' ); ?></a>
+			</p>
+			<p>&nbsp;</p>
+			<p>
+				<a href="https://stripe.com/" target="_blank">
+					<img src="<?php echo SC_DIR_URL; ?>assets/images/powered-by-stripe.png" />
+				</a>
+			</p>
 		</div>
 	</div>
 </div>
