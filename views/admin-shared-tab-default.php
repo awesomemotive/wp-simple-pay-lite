@@ -16,9 +16,10 @@ global $sc_options;
 <!-- Default Settings tab HTML -->
 <div class="tab-content sc-admin-hidden" id="default-settings-tab">
 	<div>
-		<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'help-link' ); ?>" target="_blank">
-			<?php _e( 'See shortcode options and examples', 'stripe' ); ?>
-		</a>
+		<strong><a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'help-link' ); ?>" target="_blank">
+				<?php _e( 'See shortcode examples and options', 'stripe' ); ?>
+			</a></strong>
+		<br /><br />
 		<?php $sc_options->description( __( 'Shortcode attributes take precedence and will always override site-wide default settings.', 'stripe' ) ); ?>
 	</div>
 
@@ -26,7 +27,7 @@ global $sc_options;
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'name' ) ); ?>"><?php _e( 'Site Name', 'stripe' ); ?></label>
 		<?php 
 			$sc_options->textbox( 'name', 'regular-text' ); 
-			$sc_options->description( __( 'The name of your store or website. Defaults to Site Name.', 'stripe' ) );
+			$sc_options->description( __( 'The name of your store or website. Defaults to Site Title if left blank.', 'stripe' ) );
 		?>
 	</div>
 
@@ -34,7 +35,7 @@ global $sc_options;
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'currency' ) ); ?>"><?php _e( 'Currency', 'stripe' ); ?></label>
 		<?php
 			$sc_options->textbox( 'currency', 'regular-text' );
-			$sc_options->description( sprintf( __( 'Specify a currency using it\'s <a href="%s" target="_blank">3-letter ISO Code</a>. Defaults to USD.', 'stripe' ), 'https://support.stripe.com/questions/which-currencies-does-stripe-support' ) );
+			$sc_options->description( sprintf( __( 'Specify a currency using it\'s <a href="%s" target="_blank">3-letter ISO Code</a>. Defaults to USD if left blank.', 'stripe' ), 'https://support.stripe.com/questions/which-currencies-does-stripe-support' ) );
 		?>
 	</div>
 
@@ -47,18 +48,18 @@ global $sc_options;
 	</div>
 
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'checkout_button_label' ) ); ?>"><?php _e( 'Checkout Button Label', 'stripe' ); ?></label>
-		<?php 
-			$sc_options->textbox( 'checkout_button_label', 'regular-text' );
-			$sc_options->description( __( 'The label of the payment button in the checkout form. You can use {{amount}} to display the amount.', 'stripe' ) );
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'payment_button_label' ) ); ?>"><?php _e( 'Payment Button Label', 'stripe' ); ?></label>
+		<?php
+		$sc_options->textbox( 'payment_button_label', 'regular-text' );
+		$sc_options->description( __( 'Text to display on the default blue button that users click to initiate a checkout process. Defaults to "Pay with Card" if left blank.', 'stripe' ) );
 		?>
 	</div>
 
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'payment_button_label' ) ); ?>"><?php _e( 'Payment Button Label', 'stripe' ); ?></label>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'checkout_button_label' ) ); ?>"><?php _e( 'Checkout Button Label', 'stripe' ); ?></label>
 		<?php 
-			$sc_options->textbox( 'payment_button_label', 'regular-text' );
-			$sc_options->description( __( 'Text to display on the default blue button that users click to initiate a checkout process.', 'stripe' ) );
+			$sc_options->textbox( 'checkout_button_label', 'regular-text' );
+			$sc_options->description( __( 'The label of the payment button in the checkout form. You can use {{amount}} to display the amount. Defaults to "Pay {{amount}}" if left blank.', 'stripe' ) );
 		?>
 	</div>
 
