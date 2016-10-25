@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<p>&nbsp;</p>
 			<p>
 				<a href="https://stripe.com/" target="_blank">
-					<img src="<?php echo SC_DIR_URL; ?>assets/images/powered-by-stripe.png" />
+					<img src="<?php echo SC_DIR_URL; ?>assets/images/powered_by_stripe.png" />
 				</a>
 			</p>
 		</div>
