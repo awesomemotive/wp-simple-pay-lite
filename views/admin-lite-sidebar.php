@@ -47,7 +47,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="sidebar-container metabox-holder">
 	<div class="postbox-nobg" style="padding-bottom: 20px;">
 		<div class="inside centered">
-			<a href="https://wpsimplepay.com/docs/" class="button-primary" target="_blank"><?php _e( 'Help & Documenation', 'stripe' ); ?></a>
+			<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'sidebar-link' ); ?>"
+			   class="button-primary" target="_blank"><?php _e( 'Help & Documenation', 'stripe' ); ?></a>
 		</div>
 	</div>
 </div>
