@@ -45,6 +45,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 </div>
 
 <div class="sidebar-container metabox-holder">
+	<div class="postbox-nobg" style="padding-bottom: 20px;">
+		<div class="inside centered">
+			<a href="https://wpsimplepay.com/docs/" class="button-primary" target="_blank"><?php _e( 'Help & Documenation', 'stripe' ); ?></a>
+		</div>
+	</div>
+</div>
+
+<div class="sidebar-container metabox-holder">
 	<div class="postbox-nobg">
 		<div class="inside centered">
 			<a href="https://stripe.com/" target="_blank">
