@@ -75,11 +75,15 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			// Don't proceed if upgrade flag already set.
 			if ( false === get_option( 'sc_upgrade_has_run' ) ) {
 
+				$upgrade_file = SC_DIR_PATH . 'classes/class-stripe-checkout-pro-upgrade.php';
+
 				// Check for non-existence of Pro-only plugin class.
 				if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-					require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade.php' );
-				} else {
-					require_once( SC_DIR_PATH . 'classes/class-stripe-checkout-pro-upgrade.php' );
+					$upgrade_file = SC_DIR_PATH . 'classes/class-stripe-checkout-lite-upgrade.php';
+				}
+
+				if ( file_exists( $upgrade_file ) ) {
+					require_once $upgrade_file;
 				}
 			}
 		}
