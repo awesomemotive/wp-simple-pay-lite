@@ -11,10 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 	class Stripe_Checkout_Admin {
-		
+
 		// Class instance variable
 		public static $instance = null;
-		
+
 		/**
 		 * Slug of the plugin screen.
 		 *
@@ -87,67 +87,59 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 				}
 			}
 		}
-		
+
 		/**
 		 * Setup the default settings
 		 */
 		public function set_default_settings() {
 			global $sc_options;
-		
+
 			// Check if an upgrade has happened and if not then load default settings since it is a fresh install.
 			if ( false === get_option( 'sc_set_defaults' ) && false === get_option( 'sc_had_upgrade' ) ) {
-				
+
 				$sc_options->add_setting( 'enable_remember', 1 );
 				$sc_options->add_setting( 'uninstall_save_settings', 1 );
-				
+
 				do_action( 'sc_admin_defaults' );
-				
+
 				add_option( 'sc_set_defaults', 1 );
 			}
 		}
-		
+
 		/**
 		 * Set the tabs in the admin area
 		 */
 		public function set_admin_tabs( $tabs ) {
 			global $sc_options;
-			
+
 			$tabs = array(
-				'stripe-keys'    => __( 'Stripe Keys', 'stripe' ),
-				'default'        => __( 'Default Settings', 'stripe' ),
+				'stripe-keys' => __( 'Stripe Keys', 'stripe' ),
+				'default'     => __( 'Default Settings', 'stripe' ),
 			);
-			
+
 			$tabs = apply_filters( 'sc_admin_tabs', $tabs );
-			
+
 			$sc_options->set_tabs( $tabs );
 		}
-		
+
 		/**
 		 * Register the administration menu for this plugin into the WordPress Dashboard menu.
 		 *
 		 * @since    1.0.0
 		 */
 		public function add_plugin_admin_menu() {
-			
-			global $base_class;
-			
-			$this->plugin_screen_hook_suffix[] = add_menu_page(
-				$base_class->get_plugin_title() . ' ' . __( 'Settings', 'stripe' ),
-				$base_class->get_plugin_menu_title(),
-				'manage_options',
-				$base_class->plugin_slug,
-				array( $this, 'display_plugin_admin_page' ),
-				SC_DIR_URL . 'assets/images/icon-16x16.png'
-			);
 
-			$this->plugin_screen_hook_suffix[] = add_submenu_page(
-				$base_class->plugin_slug,
-				__( 'System Report', 'stripe' ),
-				__( 'System Report', 'stripe' ),
-				'manage_options',
-				$base_class->plugin_slug . '-tools',
-				array( 'Stripe_Checkout_System_Status', 'set_content' )
-			);
+			global $base_class;
+
+			$this->plugin_screen_hook_suffix[] = add_menu_page( $base_class->get_plugin_title() . ' ' . __( 'Settings', 'stripe' ), $base_class->get_plugin_menu_title(), 'manage_options', $base_class->plugin_slug, array(
+					$this,
+					'display_plugin_admin_page',
+				), SC_DIR_URL . 'assets/images/icon-16x16.png' );
+
+			$this->plugin_screen_hook_suffix[] = add_submenu_page( $base_class->plugin_slug, __( 'System Report', 'stripe' ), __( 'System Report', 'stripe' ), 'manage_options', $base_class->plugin_slug . '-tools', array(
+					'Stripe_Checkout_System_Status',
+					'set_content',
+				) );
 		}
 
 		/**
@@ -158,25 +150,26 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		public function display_plugin_admin_page() {
 			include_once( SC_DIR_PATH . 'views/admin-shared-main.php' );
 		}
-		
+
 		/**
 		 * Add Settings action link to left of existing action links on plugin listing page.
 		 *
 		 * @since   1.0.0
 		 *
-		 * @param   array  $links  Default plugin action links
+		 * @param   array $links Default plugin action links
+		 *
 		 * @return  array  $links  Amended plugin action links
 		 */
 		public function settings_link( $links ) {
-			
+
 			global $base_class;
-			
+
 			$setting_link = sprintf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'page', $base_class->plugin_slug, admin_url( 'admin.php' ) ) ), __( 'Settings', 'stripe' ) );
 			array_unshift( $links, $setting_link );
 
 			return $links;
 		}
-		
+
 		/**
 		 * Add settings action link for purchasing pro
 		 */
@@ -186,7 +179,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 			return $links;
 		}
-		
+
 		/**
 		 * Check if viewing this plugin's admin page.
 		 *
@@ -204,15 +197,15 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 			return false;
 		}
-		
+
 		/**
 		 * Google Analytics campaign URL.
 		 *
 		 * @since   1.1.1
 		 *
-		 * @param   string  $base_url   Plain URL to navigate to
-		 * @param   string  $content    GA "content" tracking value
-		 * @param   bool    $raw        Use esc_url_raw instead (default = false)
+		 * @param   string $base_url Plain URL to navigate to
+		 * @param   string $content  GA "content" tracking value
+		 * @param   bool   $raw      Use esc_url_raw instead (default = false)
 		 *
 		 * @return  string  $url        Full Google Analytics campaign URL
 		 */
@@ -221,19 +214,19 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			$campaign = ( class_exists( 'Stripe_Checkout_Pro' ) ? 'pro-plugin' : 'free-plugin' );
 
 			$url = add_query_arg( array(
-				'utm_source'   => 'inside-plugin',
-				'utm_medium'   => 'link',
+				'utm_source' => 'inside-plugin',
+				'utm_medium' => 'link',
 				'utm_campaign' => $campaign,
-				'utm_content'  => $content // i.e. 'sidebar-link', 'settings-link'
+				'utm_content' => $content // i.e. 'sidebar-link', 'settings-link'
 			), $base_url );
-			
+
 			if ( $raw ) {
 				return esc_url_raw( $url );
 			}
-			
+
 			return esc_url( $url );
 		}
-		
+
 		/**
 		 * Return an instance of this class.
 		 *
