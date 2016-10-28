@@ -92,7 +92,7 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 1.5.6 - TODO =
+= 1.5.6 - October 27, 2016 =
 
 * Fix: Additional check for Pro version active.
 
