@@ -34,13 +34,16 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 			add_filter( 'the_content', array( $this, 'show_payment_details' ), 11 );
 		}
 
-		/*
-		 * Function to load the Stripe library.
-		 * Include this plugin's Stripe library reference unless another plugin already includes it.
+		/**
+		 * Function to load the Stripe PHP library.
+		 * Include this plugin's Stripe PHP library unless another plugin already includes it.
 		 */
 		public function load_library() {
 			if ( ! class_exists( 'Stripe\Stripe' ) ) {
 				require_once( SC_DIR_PATH . 'vendor/stripe/stripe-php/init.php' );
+
+				// Action hook to run immediately after Stripe PHP library is loaded.
+				do_action( 'simpay_stripe_php_loaded' );
 			}
 		}
 
