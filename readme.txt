@@ -92,9 +92,11 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 1.5.7 - TODO =
+= 1.5.7 - November 11, 2016 =
 
+* Dev: Fix JavaScript type casting console warnings originating from Stripe.
 * Dev: Tested up to WordPress 4.7.
+* Dev: Updated to Stripe PHP library v4.1.1.
 
 = 1.5.6 - October 27, 2016 =
 
