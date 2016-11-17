@@ -149,7 +149,7 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : '' ) .
 					   ( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
-					   ( ! empty( $alipay_reusable ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) .
+					   ( ( ! empty( $alipay_reusable ) && ( 'true' === $alipay ) ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) . // Omit Alipay reusable if Alipay not enabled.
 					   ( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .
 					   '></script>';
 
