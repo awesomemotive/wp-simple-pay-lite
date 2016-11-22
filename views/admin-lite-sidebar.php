@@ -27,11 +27,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon Codes', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'User-Entered Amounts', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Easy Pricing Tables Integration', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Email Support', 'stripe' ); ?></li>
+				</ul>
+
+				<p class="centered">
+					<em><?php _e( 'Included in Business & Elite Licenses:', 'stripe' ); ?></em>
+				</p>
+
+				<ul>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscriptions', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscription Installment Plans', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscription Setup Fees', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscription Trial Periods', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Priority Email Support', 'stripe' ); ?></li>
 				</ul>
 
 				<div class="centered">
