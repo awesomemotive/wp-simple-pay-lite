@@ -415,9 +415,9 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 						 * Server Environment
 						 * ==================
 						 */
-						if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
+						if ( version_compare( PHP_VERSION, '7.0', '<' ) ) {
 							$php = '<mark>' . PHP_VERSION . ' - ' .
-							       __( 'WordPress.org recommends upgrading to PHP 5.6 or higher for better security.', 'stripe' ) .
+							       __( 'WordPress.org recommends upgrading to PHP 7 or higher for better security.', 'stripe' ) .
 							       ' <a href="https://wordpress.org/about/requirements/" target="_blank">' . __( 'Read more.', 'stripe' ) . '</a>' .
 							       '</mark>';
 						} else {
