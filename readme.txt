@@ -92,6 +92,11 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 1.5.8 - TODO =
+
+* Dev: PHP 7 compatibility fixes.
+* Dev: Updated to Stripe PHP library v4.3.0.
+
 = 1.5.7 - November 17, 2016 =
 
 * Dev: Fix JavaScript type casting console warnings originating from Stripe.
