@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, stripe checkout, payments, simple stripe checkout, ecommerce, e-commerce
 Requires at least: 4.3
 Tested up to: 4.7
-Stable tag: 1.5.7
+Stable tag: 1.5.8
 License: GPLv2 or later
 
 Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
@@ -94,7 +94,7 @@ We'd love your help! Here's a few things you can do:
 
 = 1.5.8 - TODO =
 
-* Dev: PHP 7 compatibility fixes.
+* Dev: System report tweaks for PHP 7 compatibility.
 * Dev: Updated to Stripe PHP library v4.3.0.
 
 = 1.5.7 - November 17, 2016 =
