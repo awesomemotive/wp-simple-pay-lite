@@ -427,7 +427,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 						if ( $wpdb->use_mysqli ) {
 							$mysql = @mysqli_get_server_info( $wpdb->dbh );
 						} else {
-							$mysql = @mysql_get_server_info();
+							$mysql = '<mark class="error">' . __( 'Cannot connect to MySQL database.', 'stripe' ) . '</mark>';
 						}
 
 						$host = $_SERVER['SERVER_SOFTWARE'];
