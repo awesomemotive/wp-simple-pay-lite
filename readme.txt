@@ -92,7 +92,7 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 1.5.8 - TODO =
+= 1.5.8 - December 8, 2016 =
 
 * Dev: System report tweaks for PHP 7 compatibility.
 * Dev: Updated to Stripe PHP library v4.3.0.
