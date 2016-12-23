@@ -187,13 +187,13 @@ input[type="checkbox"].sc-livemode-onoffswitch-checkbox {
 }
 
 .sc-system-status-report-panel mark.ok {
-	color: green;
+	color: #46b450;
 }
 
 .sc-system-status-report-panel mark.error {
-	color: red;
+	color: #dc3232;
 }
 
 .sc-system-status-report-panel mark.warning {
-	color: orange;
+	color: #ffb900;
 }
