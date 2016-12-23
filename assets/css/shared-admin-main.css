@@ -193,3 +193,7 @@ input[type="checkbox"].sc-livemode-onoffswitch-checkbox {
 .sc-system-status-report-panel mark.error {
 	color: red;
 }
+
+.sc-system-status-report-panel mark.warning {
+	color: orange;
+}

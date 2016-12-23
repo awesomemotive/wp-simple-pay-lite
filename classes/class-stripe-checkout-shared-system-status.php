@@ -160,6 +160,22 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							'result_export' => self::stripe_tls_check( true ),
 						);
 
+						// Show friendlier Stripe Test/Live mode.
+						$test_or_live_mode = __( 'Test Mode', 'stripe' );
+						$test_or_live_mode_html = '<mark class="warning">' . $test_or_live_mode . '</mark>';
+
+						if  ( isset( $simple_pay_settings['enable_live_key'] ) && 1 == $simple_pay_settings['enable_live_key'] ) {
+							$test_or_live_mode = __( 'Live Mode', 'stripe' );
+							$test_or_live_mode_html = '<mark class="ok">' . $test_or_live_mode . '</mark>';
+						}
+
+						$sections['simple_pay']['stripe_tls'] = array(
+							'label'         => __( 'Test or Live Mode', 'stripe' ),
+							'label_export'  => 'Test or Live Mode',
+							'result'        => $test_or_live_mode_html,
+							'result_export' => $test_or_live_mode,
+						);
+
 						foreach ( $simple_pay_settings as $key => $value ) {
 
 							// Check to see if it's a live key. If it is then we want to hide it in the export.
