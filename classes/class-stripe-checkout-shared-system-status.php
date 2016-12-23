@@ -169,7 +169,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							$test_or_live_mode_html = '<mark class="ok">' . $test_or_live_mode . '</mark>';
 						}
 
-						$sections['simple_pay']['stripe_tls'] = array(
+						$sections['simple_pay']['test_or_live_mode'] = array(
 							'label'         => __( 'Test or Live Mode', 'stripe' ),
 							'label_export'  => 'Test or Live Mode',
 							'result'        => $test_or_live_mode_html,
