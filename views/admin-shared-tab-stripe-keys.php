@@ -21,10 +21,8 @@ global $sc_options;
 	</div>
 
 	<div>
-		<?php $sc_options->description( __( 'Switch to OFF while testing. Make sure Test mode is enabled in your', 'stripe' ) .
-		                                sprintf( ' <a href="%1$s" target="_blank">%2$s</a> ', 'https://dashboard.stripe.com/', __( 'Stripe dashboard', 'stripe' ) ) .
-		                                __( 'to view test transactions.', 'stripe' ), 'description' ); ?>
-		<?php $sc_options->description( sprintf( '<a href="%1$s" target="_blank">%2$s</a>', 'https://dashboard.stripe.com/account/apikeys', __( 'Find your Stripe API keys here', 'stripe' ) ), '' ); ?>
+		<?php $sc_options->description( sprintf( __( 'Switch to OFF while testing. Make sure Test mode is enabled in your <a href="%s" target="_blank">Stripe dashboard</a> to view test transactions.', 'stripe' ), 'https://dashboard.stripe.com/' ) ); ?>
+		<?php $sc_options->description( sprintf( __( '<a href="%s" target="_blank">Find your Stripe API keys here</a>', 'stripe' ), 'https://dashboard.stripe.com/account/apikeys' ) ); ?>
 	</div>
 
 	<div>
