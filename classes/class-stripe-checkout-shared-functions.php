@@ -129,7 +129,8 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					);
 
 					$failed = false;
-
+					do_action( 'sc_after_charge_before_redirect', $charge );
+					
 				} catch( \Stripe\Error\Card $e ) {
 
 					// Catch Stripe errors
