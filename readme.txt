@@ -92,6 +92,10 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 1.5.9 - TODO =
+
+* Dev: Added action hook taking place after a charge but before the page redirect. Props [@ancentz]https://github.com/ancentz)
+
 = 1.5.8 - December 8, 2016 =
 
 * Dev: System report tweaks for PHP 7 compatibility.
