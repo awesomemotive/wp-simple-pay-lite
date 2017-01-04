@@ -129,7 +129,9 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					);
 
 					$failed = false;
-					do_action( 'sc_after_charge_before_redirect', $charge );
+
+					// Fires immediately after Stripe charge object created.
+					do_action( 'simpay_charge_created', $charge );
 					
 				} catch( \Stripe\Error\Card $e ) {
 
