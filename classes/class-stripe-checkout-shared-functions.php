@@ -120,6 +120,9 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 						)
 					);
 
+					// Fires immediately after Stripe charge object created.
+					do_action( 'simpay_charge_created', $charge );
+
 					// Add Stripe charge ID to querystring.
 					// From https://developer.wordpress.org/reference/functions/add_query_arg/:
 					// Values are expected to be encoded appropriately with urlencode() or rawurlencode().
@@ -129,9 +132,6 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 					);
 
 					$failed = false;
-
-					// Fires immediately after Stripe charge object created.
-					do_action( 'simpay_charge_created', $charge );
 					
 				} catch( \Stripe\Error\Card $e ) {
 
