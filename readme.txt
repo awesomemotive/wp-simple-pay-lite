@@ -37,6 +37,7 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Display checkout in several other languages besides English (8 and growing).
 * Enable Bitcoin and/or Alipay payment options.
 * Direct customers to specific pages on your site for successful or failed payments.
+* [AffiliateWP](https://affiliatewp.com/) Integration - Track affiliate referrals using Stripe checkout.
 * Filters and hooks to delight developers.
 * Translation ready, i18n support.
 * Easily toggle between test and live mode until you're ready.
@@ -94,7 +95,7 @@ We'd love your help! Here's a few things you can do:
 
 = 1.5.9 - January 5, 2017 =
 
-* Dev: Added action hook taking place after a charge but before the page redirect. Props [@ancentz]https://github.com/ancentz)
+* Dev: Added action hook taking place after a charge but before the page redirect. Props [@ancentz](https://github.com/ancentz)
 
 = 1.5.8 - December 8, 2016 =
 
