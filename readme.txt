@@ -93,6 +93,10 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 1.6.0 - TODO =
+
+* Dev: System report fix for MySQL connection error output.
+
 = 1.5.9 - January 5, 2017 =
 
 * Dev: Added action hook taking place after a charge but before the page redirect. Props [@ancentz](https://github.com/ancentz)

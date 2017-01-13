@@ -441,9 +441,10 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 						}
 
 						if ( $wpdb->use_mysqli ) {
-							$mysql = @mysqli_get_server_info( $wpdb->dbh );
+							$mysql = $mysql_export = @mysqli_get_server_info( $wpdb->dbh );
 						} else {
-							$mysql = '<mark class="error">' . __( 'Cannot connect to MySQL database.', 'stripe' ) . '</mark>';
+							$mysql_export = __( 'Cannot connect to MySQL database.', 'stripe' );
+							$mysql = '<mark class="error">' . $mysql_export . '</mark>';
 						}
 
 						$host = $_SERVER['SERVER_SOFTWARE'];
@@ -533,7 +534,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 								'label'         => __( 'MySQL Version', 'stripe' ),
 								'label_export'  => 'MySQL Version',
 								'result'        => version_compare( $mysql, '5.5', '>' ) ? '<mark class="ok">' . $mysql . '</mark>' : $mysql,
-								'result_export' => $mysql,
+								'result_export' => $mysql_export,
 							),
 							'server_timezone'     => array(
 								'label'         => __( 'Server Timezone', 'stripe' ),
