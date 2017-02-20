@@ -8,11 +8,11 @@ module.exports = function( grunt ) {
 	// Stop distributing composer/autoload files with build as they won't commit to SVN for v1.5.1. 6/18/16 PD
 	var distFiles = [
 		'**',
-		'!assets/images/wp/**',
 		'!build/**',
 		'!node_modules/**',
 		'!vendor/autoload.php',
 		'!vendor/composer/**',
+		'!wordpress_org_assets',
 		'!.editorconfig',
 		'!.gitignore',
 		'!.jshintrc',
