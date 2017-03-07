@@ -59,7 +59,7 @@ global $sc_options;
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'checkout_button_label' ) ); ?>"><?php _e( 'Checkout Button Label', 'stripe' ); ?></label>
 		<?php 
 			$sc_options->textbox( 'checkout_button_label', 'regular-text' );
-			$sc_options->description( __( 'The label of the payment button in the checkout form. You can use {{amount}} to display the amount. Defaults to "Pay {{amount}}" if left blank.', 'stripe' ) );
+			$sc_options->description( __( 'Text to display on the button within the checkout overlay. Insert {{amount}} where you\'d like to show the amount. If {{amount}} is omitted, it will be appended at the end of the button text unless it is a free trial.', 'stripe' ) );
 		?>
 	</div>
 
