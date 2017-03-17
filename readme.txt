@@ -30,30 +30,33 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 
 = LITE VERSION FEATURES =
 
-* Display a small image of your brand or product on the checkout form.
-* Optionally gather the customer's billing address during checkout.
-* Optionally verify the card's zipcode during checkout.
-* Large and growing list of specific currencies that can be set.
-* Display checkout in several other languages besides English (8 and growing).
-* Enable Bitcoin and/or Alipay payment options.
-* Direct customers to specific pages on your site for successful or failed payments.
-* [AffiliateWP](https://affiliatewp.com/) Integration - Track affiliate referrals using Stripe checkout.
-* Filters and hooks to delight developers.
-* Translation ready, i18n support.
-* Easily toggle between test and live mode until you're ready.
+* Unlimited payment forms
+* Mobile responsive Stripe Checkout overlay
+* Display brand or product image in overlay
+* Optionally collect customer billing address
+* Optionally verify zip/postal code without address
+* Support for 12 languages, 25 countries and 139 currencies
+* Translation ready
+* Bitcoin and Alipay payment options
+* Multiple Stripe API key support
+* [AffiliateWP](https://affiliatewp.com/) integration
+* Specify payment success & failure pages
+* Live/Test mode toggle
+* Filters, hooks and [code snippets](https://github.com/moonstonemedia/WP-Simple-Pay-Snippet-Library) for developers
 
 = PRO VERSION FEATURES =
 
 * *Everything in Lite plus...*
-* **Custom Fields** - Add field types to record additional data with each Stripe payment.
-* **Coupon Codes** - Setup Stripe discount codes for use on payment forms.
-* **User Entered Amounts** - Let customers enter the amount they want to pay.
-* **[Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) Integration** - Connect beautiful pricing tables without additional code.
-* **Stripe Subscriptions** - Customers can sign up for your recurring plans.
-* **Subscription Installment Plans** - End recurring payments after a specified time.
-* **Subscription Setup Fees** - Charge an extra fee at purchase in addition to recurring payments.
-* **Subscription Trial Periods** - Delay recurring payments for a specified time for free trials.
-* Priority email support with a 24-hour response time during weekdays backed by a top-notch team.
+* Custom fields to capture additional data
+* Custom amounts - let customers enter amount to pay
+* Coupon code support
+* Stripe Subscription support
+* Subscription installment plans
+* Subscription setup fees
+* Subscription trial periods
+* [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
+* Optionally collect customer shipping address
+* Priority email support with a 24-hour response time during business days
 
 >**[Get More with WP Simple Pay PRO for Stripe](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
