@@ -1,16 +1,16 @@
-=== WP Simple Pay Lite for Stripe ===
+=== Stripe Payments for WordPress - WP Simple Pay ===
 Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
-Tags: stripe, stripe checkout, payments, simple stripe checkout, ecommerce, e-commerce
+Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.3
 Tested up to: 4.7
 Stable tag: 1.5.9
 License: GPLv2 or later
 
-Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
+Add high conversion Stripe payment forms to your WordPress site in minutes.
 
 == Description ==
 
-In a few simple steps you can add Stripe's beautiful checkout forms to your WordPress site. Stripe's forms are continually tested and optimized to maximize customer conversion.
+In a few simple steps you can start accepting credit card payments with Stripe Checkout on your WordPress site. Stripe continually tests and optimizes their checkout forms to maximize customer conversion.
 
 **What is Stripe Checkout?**
 
