@@ -5,7 +5,7 @@
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author:      Moonstone Media
  * Author URI:  https://wpsimplepay.com
- * Version:     1.5.9
+ * Version:     1.6.0
  * Text Domain: stripe
  * Domain Path: /i18n
  */
@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin version
 if ( ! defined( 'SIMPAY_VERSION' ) ) {
-	define( 'SIMPAY_VERSION', '1.5.9' );
+	define( 'SIMPAY_VERSION', '1.6.0' );
 }
 
 // Plugin name

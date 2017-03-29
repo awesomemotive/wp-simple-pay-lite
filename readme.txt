@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.3
 Tested up to: 4.7
-Stable tag: 1.5.9
+Stable tag: 1.6.0
 License: GPLv2 or later
 
 Add high conversion Stripe payment forms to your WordPress site in minutes.
