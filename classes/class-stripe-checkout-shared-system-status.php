@@ -51,13 +51,17 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 			Stripe_Checkout_Functions::set_key( 'true' );
 
 			$test_key = $sc_options->get_setting_value( 'test_secret_key' );
+			$retval = '';
 
 			// If test key isn't set...
 			if ( empty( $test_key ) ) {
+
+				$retval = __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' );
+
 				if ( $for_export ) {
-					return __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' );
+					return $retval;
 				} else {
-					return '<mark class="error">' . __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' ) . '</mark>';
+					return '<mark class="error">' . $retval . '</mark>';
 				}
 			}
 
@@ -66,17 +70,21 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 			try {
 				\Stripe\Charge::all();
 
+				$retval = __( 'TLS 1.2 supported, no action required.', 'stripe' );
+
 				if ( $for_export ) {
-					return __( 'TLS 1.2 supported, no action required.', 'stripe' );
+					return $retval;
 				} else {
-					return '<mark class="ok">' . __( 'TLS 1.2 supported, no action required.', 'stripe' ) . '</mark>';
+					return '<mark class="ok">' . $retval . '</mark>';
 				}
 			} catch ( \Stripe\Error\ApiConnection $e ) {
 
+				$retval = __( 'TLS 1.2 is not supported. You will need to upgrade your integration.', 'stripe' );
+
 				if ( $for_export ) {
-					return sprintf( __( 'TLS 1.2 is not supported. You will need to upgrade your integration. See %1$s.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' );
+					return $retval . ' ' . sprintf( __( 'See %1$s.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' );
 				} else {
-					return '<mark class="error">' . sprintf( __( 'TLS 1.2 is not supported. You will need to upgrade your integration. <a href="%1$s">Please read this</a> for more information.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' ) . '</mark>';
+					return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s">Please read this</a> for more information.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' ) . '</mark>';
 				}
 			}
 		}
