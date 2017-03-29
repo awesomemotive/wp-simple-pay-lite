@@ -96,9 +96,11 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 1.6.0 - TODO =
+= 1.6.0 - March 29, 2017 =
 
-* Dev: System report fix for MySQL connection error output.
+* Dev: System report: Fix for MySQL connection error output.
+* Dev: System report: Add SSL check.
+* Dev: Updated to Stripe PHP library v4.5.1.
 
 = 1.5.9 - January 5, 2017 =
 
