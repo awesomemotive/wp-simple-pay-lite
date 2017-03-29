@@ -160,6 +160,14 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							'result'       => $base_class->version,
 						);
 
+						// SSL check.
+						$sections['simple_pay']['ssl_enabled'] = array(
+							'label'         => __( 'SSL/HTTPS Enabled', 'stripe' ),
+							'label_export'  => 'SSL/HTTPS Enabled',
+							'result'        => is_ssl() ? '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>' : '<mark class="error">' . __( 'No. SSL is required by Stripe for Live mode.', 'stripe' ) . '</mark>',
+							'result_export' => is_ssl() ? 'Yes' : 'No',
+						);
+
 						// Show Stripe TLS check.
 						$sections['simple_pay']['stripe_tls'] = array(
 							'label'         => __( 'Stripe TLS', 'stripe' ),
