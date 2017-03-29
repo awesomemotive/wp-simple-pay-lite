@@ -262,16 +262,19 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							),
 							'memory_limit' => array(
 								'label'         => __( 'WP Memory Limit', 'stripe' ),
+								'label_export'  => 'WP Memory Limit',
 								'result'        => $memory,
 								'result_export' => $memory_export,
 							),
 							'debug_mode'   => array(
-								'label'  => __( 'WP Debug Mode', 'stripe' ),
-								'result' => $debug_mode,
+								'label'        => __( 'WP Debug Mode', 'stripe' ),
+								'label_export' => 'WP Debug Mode',
+								'result'       => $debug_mode,
 							),
 							'script_debug' => array(
-								'label'  => 'Script Debug',
-								'result' => $script_debug,
+								'label'        => __( 'Script Debug', 'stripe' ),
+								'label_export' => 'Script Debug',
+								'result'       => $script_debug,
 							),
 						);
 
@@ -544,28 +547,34 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							),
 							'display_errors'      => array(
 								'label'         => __( 'Display Errors', 'stripe' ),
+								'label_export'  => 'Display Errors',
 								'result'        => ( ini_get( 'display_errors' ) ) ? __( 'Yes', 'stripe' ) . ' (' . ini_get( 'display_errors' ) . ')' : '-',
 								'result_export' => ( ini_get( 'display_errors' ) ) ? 'Yes' : 'No',
 							),
 							'php_memory_limit'    => array(
-								'label'  => __( 'Memory Limit', 'stripe' ),
-								'result' => $php_memory_limit ? $php_memory_limit : '-',
+								'label'        => __( 'Server PHP Memory Limit', 'stripe' ),
+								'label_export' => 'Server PHP Memory Limit',
+								'result'       => $php_memory_limit ? $php_memory_limit : '-',
 							),
 							'upload_max_filesize' => array(
-								'label'  => __( 'Upload Max Filesize', 'stripe' ),
-								'result' => $php_max_upload_filesize ? $php_max_upload_filesize : '-',
+								'label'        => __( 'Upload Max Filesize', 'stripe' ),
+								'label_export' => 'Upload Max Filesize',
+								'result'       => $php_max_upload_filesize ? $php_max_upload_filesize : '-',
 							),
 							'post_max_size'       => array(
-								'label'  => __( 'Post Max Size', 'stripe' ),
-								'result' => $php_post_max_size ? $php_post_max_size : '-',
+								'label'        => __( 'Post Max Size', 'stripe' ),
+								'label_export' => 'Post Max Size',
+								'result'       => $php_post_max_size ? $php_post_max_size : '-',
 							),
 							'max_execution_time'  => array(
-								'label'  => __( 'Max Execution Time', 'stripe' ),
-								'result' => $php_max_execution_time ? $php_max_execution_time : '-',
+								'label'        => __( 'Max Execution Time', 'stripe' ),
+								'label_export' => 'Max Execution Time',
+								'result'       => $php_max_execution_time ? $php_max_execution_time : '-',
 							),
 							'max_input_vars'      => array(
-								'label'  => __( 'Max Input Vars', 'stripe' ),
-								'result' => $php_max_input_vars ? $php_max_input_vars : '-',
+								'label'        => __( 'Max Input Vars', 'stripe' ),
+								'label_export' => 'Max Input Vars',
+								'result'       => $php_max_input_vars ? $php_max_input_vars : '-',
 							),
 							'fsockopen'           => array(
 								'label'         => 'fsockopen',
@@ -589,11 +598,13 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							),
 							'wp_remote_post'      => array(
 								'label'         => __( 'WP Remote POST', 'stripe' ),
+								'label_export'  => 'WP Remote POST',
 								'result'        => $wp_post,
 								'result_export' => $wp_post_export,
 							),
 							'wp_remote_get'       => array(
 								'label'         => __( 'WP Remote GET', 'stripe' ),
+								'label_export'  => 'WP Remote GET',
 								'result'        => $wp_get,
 								'result_export' => $wp_get_export,
 							),
