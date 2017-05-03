@@ -62,7 +62,24 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 
 == Installation ==
 
-[Plugin installation instructions](https://wpsimplepay.com/docs/getting-started/installing-stripe-checkout-lite/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=installation)
+The easiest way to install WP Simple Pay is to search for it via your site’s Dashboard.
+
+= Step-by-step instructions =
+
+1. Log in to your site’s dashboard (e.g. www.yourdomain.com/wp-admin).
+2. Click on the “Plugins” tab in the left panel, then click “Add New”.
+3. Search for “Stripe” or “WP Simple Pay” and find our plugin near the top. Look for the author “Moonstone Media”.
+4. Install it by clicking the “Install Now” link.
+5. When installation finishes, click “Activate Plugin”.
+6. A new menu item “Simple Pay Lite” should appear in your dashboard.
+
+If you prefer installing manually you can [download the plugin ZIP file here](https://downloads.wordpress.org/plugin/stripe.latest-stable.zip).
+
+= What’s next? =
+
+1. [Review the system requirements](https://wpsimplepay.com/docs/getting-started/system-requirements/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) to make sure your hosting will work with WP Simple Pay. Note that SSL is required on any page that triggers a Stripe Checkout form.
+2. Setup your first Stripe Checkout form using our [shortcode reference and examples](https://wpsimplepay.com/docs/shortcodes/stripe-checkout/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description).
+3. Want more features? [Purchase WP Simple Pay Pro!](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
 
 == Frequently Asked Questions ==
 
