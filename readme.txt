@@ -24,7 +24,7 @@ This is a standalone Stripe checkout plugin.
 
 That's it. **No other plugins required.**
 
->**[Check out our demos & PRO version](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+>**[Check out our demos & Pro version](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
 SSL note: Stripe requires that any page hosting a live checkout form be SSL (they should start with `https://`). [See system requirements.](https://wpsimplepay.com/docs/getting-started/system-requirements/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
 
@@ -58,7 +58,7 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Optionally collect customer shipping address
 * Priority email support with a 24-hour response time during business days
 
->**[Get More with WP Simple Pay PRO for Stripe](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+>**[Get More with WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
 == Installation ==
 
