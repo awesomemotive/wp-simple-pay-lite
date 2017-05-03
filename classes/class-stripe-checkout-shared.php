@@ -182,7 +182,7 @@ if ( ! class_exists( 'Stripe_Checkout' ) ) {
 		}
 
 		public static function get_pro_plugin_title() {
-			return 'WP Simple Pay Pro for Stripe';
+			return 'WP Simple Pay Pro';
 		}
 
 		public static function get_plugin_menu_title() {
