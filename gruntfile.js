@@ -11,6 +11,7 @@ module.exports = function( grunt ) {
 		'!build/**',
 		'!node_modules/**',
 		'!vendor/autoload.php',
+		'!vendor/bin/**',
 		'!vendor/composer/**',
 		'!wordpress_org_assets',
 		'!.editorconfig',
