@@ -552,7 +552,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 							'mysql_version'       => array(
 								'label'         => __( 'MySQL Version', 'stripe' ),
 								'label_export'  => 'MySQL Version',
-								'result'        => version_compare( $mysql, '5.5', '>' ) ? '<mark class="ok">' . $mysql . '</mark>' : $mysql,
+								'result'        => version_compare( $mysql, '5.6', '>' ) ? '<mark class="ok">' . $mysql . '</mark>' : $mysql,
 								'result_export' => $mysql_export,
 							),
 							'server_timezone'     => array(
