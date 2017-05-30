@@ -70,7 +70,7 @@ if ( ! class_exists( 'Stripe_Checkout_System_Status' ) ) {
 			try {
 				\Stripe\Charge::all();
 
-				$retval = __( 'TLS 1.2 supported, no action required.', 'stripe' );
+				$retval = __( 'TLS 1.2 is supported. No action required.', 'stripe' );
 
 				if ( $for_export ) {
 					return $retval;
