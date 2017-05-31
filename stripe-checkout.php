@@ -46,25 +46,21 @@ if ( ! defined( 'SIMPAY_NAME' ) ) {
 }
 
 // Plugin folder path
-// TODO SIMPAY_PLUGIN_DIR
 if ( ! defined( 'SC_DIR_PATH' ) ) {
 	define( 'SC_DIR_PATH', plugin_dir_path( __FILE__ ) );
 }
 
 // Plugin folder URL
-// TODO SIMPAY_PLUGIN_URL
 if ( ! defined( 'SC_DIR_URL' ) ) {
 	define( 'SC_DIR_URL', plugin_dir_url( __FILE__ ) );
 }
 
 // Plugin root file
-// TODO SIMPAY_PLUGIN_FILE
 if ( ! defined( 'SC_PLUGIN_FILE' ) ) {
 	define( 'SC_PLUGIN_FILE', __FILE__ );
 }
 
-// Base URL
-// TODO SIMPAY_BASE_URL
+// Main site base URL
 if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 	define( 'SC_WEBSITE_BASE_URL', 'https://wpsimplepay.com/' );
 }
