@@ -35,7 +35,7 @@ global $sc_options;
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'currency' ) ); ?>"><?php _e( 'Currency', 'stripe' ); ?></label>
 		<?php
 			$sc_options->textbox( 'currency', 'regular-text' );
-			$sc_options->description( sprintf( __( 'Specify a currency using it\'s <a href="%s" target="_blank">3-letter ISO Code</a>. Defaults to USD if left blank.', 'stripe' ), 'https://support.stripe.com/questions/which-currencies-does-stripe-support' ) );
+			$sc_options->description( sprintf( __( 'Specify a currency using it\'s <a href="%s" target="_blank">3-letter ISO Code</a>. Defaults to USD if left blank.', 'stripe' ), 'https://stripe.com/docs/currencies#charge-currencies' ) );
 		?>
 	</div>
 
@@ -117,7 +117,7 @@ global $sc_options;
 												'Enabled' => 'true', 
 												'Auto-Detect' => 'auto' ) 
 									); 
-			$sc_options->description( sprintf( __( 'Enable accepting <a href="%s" target="_blank">Alipay</a> as a payment option.', 'stripe' ), 'https://stripe.com/docs/guides/alipay' ) );
+			$sc_options->description( __( 'Enable accepting Alipay</a> as a payment option.', 'stripe' ) );
 		?>
 	</div>
 	
@@ -134,7 +134,7 @@ global $sc_options;
 			$sc_options->description( sprintf( __( '"auto" is used by default to select a language based on the user\'s browser configuration. '.
 			                                       'To select a particular language, pass the two letter ISO 639-1 code such as "zh" for Chinese. <br/>' .
 			                                       '<a href="%s" target="_blank">See languages supported by Stripe Checkout</a>', 'stripe' ),
-				'https://support.stripe.com/questions/what-languages-does-stripe-checkout-support' ) );
+				'https://stripe.com/docs/checkout#supported-languages' ) );
 		?>
 	</div>
 
