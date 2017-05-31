@@ -95,7 +95,7 @@ Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source
 
 We'd love your help! Here's a few things you can do:
 
-* [Rate our plugin](https://wordpress.org/support/view/plugin-reviews/stripe?postform#postform) and help spread the word!
+* [Rate our plugin](https://wordpress.org/support/plugin/stripe/reviews/#new-post) and help spread the word!
 * Help answer questions in our [community support forum](https://wordpress.org/support/plugin/stripe).
 * Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe).
 * Help add or update a [plugin translation](https://translate.wordpress.org/projects/wp-plugins/stripe).
