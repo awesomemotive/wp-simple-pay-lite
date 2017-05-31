@@ -24,9 +24,9 @@ This is a standalone Stripe checkout plugin.
 
 That's it. **No other plugins required.**
 
->**[Check out our demos & Pro version](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+>**[Check out our demos & Pro version](https://demo.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
-SSL note: Stripe requires that any page hosting a live checkout form be SSL (they should start with `https://`). [See system requirements.](https://wpsimplepay.com/docs/getting-started/system-requirements/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
+SSL note: Stripe requires that any page hosting a live checkout form be SSL (they should start with `https://`). [See system requirements.](https://docs.wpsimplepay.com/articles/system-requirements-wp-simple-pay-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
 
 = LITE VERSION FEATURES =
 
@@ -42,7 +42,7 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
 * Live/Test mode toggle
-* Filters, hooks and [code snippets](https://github.com/moonstonemedia/WP-Simple-Pay-Snippet-Library) for developers
+* Filters, hooks and [code snippets](https://github.com/moonstonemedia/WP-Simple-Pay-Snippet-Library/) for developers
 
 = PRO VERSION FEATURES =
 
@@ -77,19 +77,15 @@ If you prefer installing manually you can [download the plugin ZIP file here](ht
 
 = What’s next? =
 
-1. [Review the system requirements](https://wpsimplepay.com/docs/getting-started/system-requirements/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) to make sure your hosting will work with WP Simple Pay. Note that SSL is required on any page that triggers a Stripe Checkout form.
-2. Setup your first Stripe Checkout form using our [shortcode reference and examples](https://wpsimplepay.com/docs/shortcodes/stripe-checkout/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description).
-3. Want more features? [Purchase WP Simple Pay Pro!](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
+1. [Review the system requirements](https://docs.wpsimplepay.com/articles/system-requirements-wp-simple-pay-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) to make sure your hosting will work with WP Simple Pay. Note that SSL is required on any page that triggers a Stripe Checkout form.
+2. Setup your first Stripe Checkout form using our [shortcode reference and examples](https://docs.wpsimplepay.com/articles/basic-shortcodes-legacy/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description).
+3. Need more features? [Purchase WP Simple Pay Pro!](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
 
 == Frequently Asked Questions ==
 
 = Where's your plugin documentation? =
 
-Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq)
-
-= What are the system requirements? =
-
-SSL is required on live checkout pages, and we recommend staying current with both PHP and WP for security reasons and PCI-DSS compliance. [See system requirements.](https://wpsimplepay.com/docs/getting-started/system-requirements/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
+Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq)
 
 = Can I get notified by email of new releases? =
 
