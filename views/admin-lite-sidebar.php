@@ -55,8 +55,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="postbox-nobg" style="padding-bottom: 20px;">
 		<div class="inside centered">
 			<p>
-				<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'sidebar-link' ); ?>"
-				   class="button-primary" target="_blank"><?php _e( 'Help & Documenation', 'stripe' ); ?></a>
+				<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_DOCS_BASE_URL, 'sidebar-link' ); ?>"
+				   class="button-primary" target="_blank"><?php _e( 'Documentation', 'stripe' ); ?></a>
 			</p>
 			<p>
 				<a href="https://dashboard.stripe.com/" target="_blank">

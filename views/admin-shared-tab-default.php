@@ -16,8 +16,8 @@ global $sc_options;
 <!-- Default Settings tab HTML -->
 <div class="tab-content sc-admin-hidden" id="default-settings-tab">
 	<div>
-		<strong><a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/shortcodes/stripe-checkout/', 'help-link' ); ?>" target="_blank">
-				<?php _e( 'See shortcode examples and options', 'stripe' ); ?>
+		<strong><a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_DOCS_BASE_URL . 'articles/basic-shortcodes-legacy/', 'help-link' ); ?>" target="_blank">
+				<?php _e( 'See shortcode reference & examples.', 'stripe' ); ?>
 			</a></strong>
 		<br /><br />
 		<?php $sc_options->description( __( 'Shortcode attributes take precedence and will always override site-wide default settings.', 'stripe' ) ); ?>

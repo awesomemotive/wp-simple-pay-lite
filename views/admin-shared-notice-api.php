@@ -18,7 +18,7 @@ global $base_class;
 		<?php
 			_e( 'This note is for WP Simple Pay plugin users that have specified multiple Stripe accounts (API keys) throughout a single WordPress site.', 'stripe' );
 			echo '<br>';
-			printf( __( 'If you are using this functionality please view the new <a target="_blank" href="%s">documentation</a> ASAP.', 'stripe' ), 'https://wpsimplepay.com/docs/misc/multiple-stripe-api-key-support/' );
+			printf( __( 'If you are using this functionality please view the new <a target="_blank" href="%s">documentation</a> ASAP.', 'stripe' ), SIMPAY_DOCS_BASE_URL . 'articles/multiple-stripe-account-support-legacy/' );
 		?>
 	</p>
 	<p>

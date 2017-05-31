@@ -24,7 +24,7 @@ global $base_class;
 	<p>
 		<?php echo $base_class->get_plugin_title() . __( ' is now installed.', 'stripe' ); ?>
 		<a href="<?php echo esc_url( add_query_arg( 'page', $base_class->plugin_slug, admin_url( 'admin.php' ) ) ); ?>" class="button-primary"><?php _e( 'Get started by entering your Stripe keys', 'stripe' ); ?></a>
-		<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL . 'docs/', 'activation-notice' ); ?>" class="button-secondary" target="_blank"><?php _e( 'Get help', 'stripe' ); ?></a>
+		<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_DOCS_BASE_URL, 'activation-notice' ); ?>" class="button-secondary" target="_blank"><?php _e( 'Get help', 'stripe' ); ?></a>
 		<a href="<?php echo esc_url( add_query_arg( 'sc-dismiss-install-nag', 1 ) ); ?>" class="button-secondary"><?php _e( 'Hide this', 'stripe' ); ?></a>
 	</p>
 </div>
