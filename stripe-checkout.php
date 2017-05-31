@@ -65,6 +65,11 @@ if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 	define( 'SC_WEBSITE_BASE_URL', 'https://wpsimplepay.com/' );
 }
 
+// Docs site base URL
+if ( ! defined( 'SIMPAY_DOCS_BASE_URL' ) ) {
+	define( 'SIMPAY_DOCS_BASE_URL', 'https://docs.wpsimplepay.com/' );
+}
+
 // Admin notice and stop execution if Pro plugin found.
 // Do this before anything else that uses the plugins_loaded hook runs to avoid conflicts.
 add_action( 'plugins_loaded', 'simpay_pro_plugin_check', 1 );
