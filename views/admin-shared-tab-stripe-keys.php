@@ -26,22 +26,23 @@ global $sc_options;
 	</div>
 
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'test_secret_key' ) ); ?>"><?php _e( 'Test Secret Key', 'stripe' ); ?></label>
-		<?php $sc_options->textbox( 'test_secret_key', 'regular-text' ); ?>
-	</div>
-
-	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'test_publish_key' ) ); ?>"><?php _e( 'Test Publishable Key', 'stripe' ); ?></label>
 		<?php $sc_options->textbox( 'test_publish_key', 'regular-text' ); ?>
 	</div>
 
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'live_secret_key' ) ); ?>"><?php _e( 'Live Secret Key', 'stripe' ); ?></label>
-		<?php $sc_options->textbox( 'live_secret_key', 'regular-text' ); ?>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'test_secret_key' ) ); ?>"><?php _e( 'Test Secret Key', 'stripe' ); ?></label>
+		<?php $sc_options->textbox( 'test_secret_key', 'regular-text' ); ?>
 	</div>
 
 	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'live_publish_key' ) ); ?>"><?php _e( 'Live Publishable Key', 'stripe' ); ?></label>
 		<?php $sc_options->textbox( 'live_publish_key', 'regular-text' ); ?>
 	</div>
+	
+	<div>
+		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'live_secret_key' ) ); ?>"><?php _e( 'Live Secret Key', 'stripe' ); ?></label>
+		<?php $sc_options->textbox( 'live_secret_key', 'regular-text' ); ?>
+	</div>
+
 </div>
