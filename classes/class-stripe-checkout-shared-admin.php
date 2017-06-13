@@ -175,7 +175,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * Add settings action link for purchasing pro
 		 */
 		public function purchase_pro_link( $links ) {
-			$pro_link = sprintf( '<a href="%s" target="_blank">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'free-plugin', 'settings-link' ), __( 'Purchase Pro', 'stripe' ) );
+			$pro_link = sprintf( '<a href="%s" target="_blank">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_PRO_UPGRADE_URL, 'settings-link', true ), __( 'Purchase Pro', 'stripe' ) );
 			array_push( $links, $pro_link );
 
 			return $links;

@@ -65,6 +65,11 @@ if ( ! defined( 'SC_WEBSITE_BASE_URL' ) ) {
 	define( 'SC_WEBSITE_BASE_URL', 'https://wpsimplepay.com/' );
 }
 
+// Main site base URL
+if ( ! defined( 'SIMPAY_PRO_UPGRADE_URL' ) ) {
+	define( 'SIMPAY_PRO_UPGRADE_URL', 'https://wpsimplepay.com/wp-simple-pay-lite-vs-pro/' );
+}
+
 // Docs site base URL
 if ( ! defined( 'SIMPAY_DOCS_BASE_URL' ) ) {
 	define( 'SIMPAY_DOCS_BASE_URL', 'https://docs.wpsimplepay.com/' );

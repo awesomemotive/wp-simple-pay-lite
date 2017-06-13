@@ -58,7 +58,7 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Optionally collect customer shipping address
 * Priority email support with a 24-hour response time during business days
 
->**[Get More with WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+>**[Get More with WP Simple Pay Pro](https://wpsimplepay.com/wp-simple-pay-lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
 == Installation ==
 
@@ -79,7 +79,7 @@ If you prefer installing manually you can [download the plugin ZIP file here](ht
 
 1. [Review the system requirements](https://docs.wpsimplepay.com/articles/system-requirements-wp-simple-pay-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) to make sure your hosting will work with WP Simple Pay. Note that SSL is required on any page that triggers a Stripe Checkout form.
 2. Setup your first Stripe Checkout form using our [shortcode reference and examples](https://docs.wpsimplepay.com/articles/basic-shortcodes-legacy/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description).
-3. Need more features? [Purchase WP Simple Pay Pro!](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
+3. Need more features? [Purchase WP Simple Pay Pro!](https://wpsimplepay.com/wp-simple-pay-lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
 
 == Frequently Asked Questions ==
 

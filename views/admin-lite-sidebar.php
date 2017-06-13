@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</ul>
 
 				<div class="centered">
-					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'sidebar-link' ); ?>"
+					<a href="<?php echo Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_PRO_UPGRADE_URL, 'sidebar-link' ); ?>"
 					   class="button-primary button-large" target="_blank">
 						<?php _e( 'Upgrade to Pro Now', 'stripe' ); ?></a>
 				</div>

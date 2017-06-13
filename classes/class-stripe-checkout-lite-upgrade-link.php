@@ -57,7 +57,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 		 * Set the redirect for the link when clicked
 		 */
 		public function redirect() {
-			wp_redirect( Stripe_Checkout_Admin::ga_campaign_url( SC_WEBSITE_BASE_URL, 'plugin-submenu-link', true ), 301 );
+			wp_redirect( Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_PRO_UPGRADE_URL, 'plugin-submenu-link', true ), 301 );
 			exit();
 		}
 		
