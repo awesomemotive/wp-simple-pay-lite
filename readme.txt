@@ -37,7 +37,7 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Optionally verify zip/postal code without address
 * Support for 12 languages, 25 countries and 139 currencies
 * Translation ready
-* Bitcoin and Alipay payment options
+* Bitcoin support
 * Multiple Stripe API key support
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
