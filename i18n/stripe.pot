@@ -1,613 +1,1008 @@
-# Copyright (C) 2016 Moonstone Media Group
-# This file is distributed under the same license as the WP Simple Pay Lite for Stripe package.
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite for Stripe 1.5.2\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stripe\n"
-"POT-Creation-Date: 2016-08-23 20:23:09+00:00\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: WP Simple Pay Lite for Stripe\n"
+"POT-Creation-Date: 2017-07-07 15:12-0600\n"
+"PO-Revision-Date: 2017-07-07 15:11-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
-"Last-Translator: WP Simple Pay <support@wpsimplepay.com>\n"
-"Language-Team: WP Simple Pay <support@wpsimplepay.com>\n"
+"X-Generator: Poedit 2.0.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: stripe-checkout.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
+#: build/stripe/classes/class-mm-settings-output.php:90
 #: classes/class-mm-settings-output.php:90
 msgid "Admin note: Option attributes are not set for all select controls."
 msgstr ""
 
+#: build/stripe/classes/class-stripe-checkout-lite-shortcodes.php:47
 #: classes/class-stripe-checkout-lite-shortcodes.php:47
 msgid "Pay with Card"
 msgstr ""
 
-#: classes/class-stripe-checkout-lite-shortcodes.php:150
+#: build/stripe/classes/class-stripe-checkout-lite-shortcodes.php:112
+#: classes/class-stripe-checkout-lite-shortcodes.php:112
 msgid ""
 "You must enter your API keys before the Stripe button will show up here."
 msgstr ""
 
-#: classes/class-stripe-checkout-lite-shortcodes.php:215
+#: build/stripe/classes/class-stripe-checkout-lite-shortcodes.php:174
+#: classes/class-stripe-checkout-lite-shortcodes.php:174
+#, php-format
 msgid ""
 "WP Simple Pay for Stripe requires an amount of %1$s (%2$s %3$s) or larger."
 msgstr ""
 
+#: build/stripe/classes/class-stripe-checkout-lite-upgrade-link.php:39
+#: build/stripe/classes/class-stripe-checkout-lite-upgrade-link.php:40
 #: classes/class-stripe-checkout-lite-upgrade-link.php:39
 #: classes/class-stripe-checkout-lite-upgrade-link.php:40
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-admin.php:112
+#: build/stripe/classes/class-stripe-checkout-shared-admin.php:116
+#: classes/class-stripe-checkout-shared-admin.php:116
 msgid "Stripe Keys"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-admin.php:113
+#: build/stripe/classes/class-stripe-checkout-shared-admin.php:117
+#: classes/class-stripe-checkout-shared-admin.php:117
 msgid "Default Settings"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-admin.php:131
-#: classes/class-stripe-checkout-shared-admin.php:170
+#: build/stripe/classes/class-stripe-checkout-shared-admin.php:135
+#: build/stripe/classes/class-stripe-checkout-shared-admin.php:168
+#: classes/class-stripe-checkout-shared-admin.php:135
+#: classes/class-stripe-checkout-shared-admin.php:168
 msgid "Settings"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-admin.php:141
-#: classes/class-stripe-checkout-shared-admin.php:142
+#: build/stripe/classes/class-stripe-checkout-shared-admin.php:140
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:28
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:99
+#: classes/class-stripe-checkout-shared-admin.php:140
 #: classes/class-stripe-checkout-shared-system-status.php:28
-#: classes/class-stripe-checkout-shared-system-status.php:91
+#: classes/class-stripe-checkout-shared-system-status.php:99
 msgid "System Report"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-admin.php:180
+#: build/stripe/classes/class-stripe-checkout-shared-admin.php:178
+#: classes/class-stripe-checkout-shared-admin.php:178
 msgid "Purchase Pro"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-functions.php:202
+#: build/stripe/classes/class-stripe-checkout-shared-functions.php:212
+#: classes/class-stripe-checkout-shared-functions.php:212
 msgid "Congratulations. Your payment went through!"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-functions.php:206
+#: build/stripe/classes/class-stripe-checkout-shared-functions.php:216
+#: classes/class-stripe-checkout-shared-functions.php:216
 msgid "Here's what you purchased:"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-functions.php:211
+#: build/stripe/classes/class-stripe-checkout-shared-functions.php:221
+#: classes/class-stripe-checkout-shared-functions.php:221
 msgid "From: "
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-functions.php:215
+#: build/stripe/classes/class-stripe-checkout-shared-functions.php:225
+#: classes/class-stripe-checkout-shared-functions.php:225
 msgid "Total Paid: "
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-functions.php:219
+#: build/stripe/classes/class-stripe-checkout-shared-functions.php:229
+#: classes/class-stripe-checkout-shared-functions.php:229
+#, php-format
 msgid "Your transaction ID is: %s"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-functions.php:241
+#: build/stripe/classes/class-stripe-checkout-shared-functions.php:251
+#: classes/class-stripe-checkout-shared-functions.php:251
 msgid "Sorry, but there has been an error processing your payment."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:58
-#: classes/class-stripe-checkout-shared-system-status.php:60
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:59
+#: classes/class-stripe-checkout-shared-system-status.php:59
 msgid ""
 "Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:70
-#: classes/class-stripe-checkout-shared-system-status.php:72
-msgid "TLS 1.2 supported, no action required."
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:73
+#: classes/class-stripe-checkout-shared-system-status.php:73
+msgid "TLS 1.2 is supported. No action required."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:77
-msgid ""
-"TLS 1.2 is not supported. You will need to upgrade your integration. See "
-"%1$s."
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:82
+#: classes/class-stripe-checkout-shared-system-status.php:82
+msgid "TLS 1.2 is not supported. You will need to upgrade your integration."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:79
-msgid ""
-"TLS 1.2 is not supported. You will need to upgrade your integration. <a href="
-"\"%1$s\">Please read this</a> for more information."
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:85
+#: classes/class-stripe-checkout-shared-system-status.php:85
+#, php-format
+msgid "See %1$s."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:95
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:87
+#: classes/class-stripe-checkout-shared-system-status.php:87
+#, php-format
+msgid "<a href=\"%s\">Please read this</a> for more information."
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:103
+#: classes/class-stripe-checkout-shared-system-status.php:103
 msgid "Please copy and paste this information when contacting support:"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:101
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:109
+#: classes/class-stripe-checkout-shared-system-status.php:109
 msgid ""
 "You can also download your information as a text file to attach, or simply "
 "view it below."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:105
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:113
+#: classes/class-stripe-checkout-shared-system-status.php:113
 msgid "Download System Report"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:116
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:124
+#: classes/class-stripe-checkout-shared-system-status.php:124
 msgid "WordPress Installation"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:120
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:128
+#: classes/class-stripe-checkout-shared-system-status.php:128
 msgid "Simple Pay Settings"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:124
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:132
+#: classes/class-stripe-checkout-shared-system-status.php:132
 msgid "Active Theme"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:128
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:136
+#: classes/class-stripe-checkout-shared-system-status.php:136
 msgid "Active Plugins"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:132
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:140
+#: classes/class-stripe-checkout-shared-system-status.php:140
 msgid "Server Environment"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:136
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:144
+#: classes/class-stripe-checkout-shared-system-status.php:144
 msgid "Client Information"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:150
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:158
+#: classes/class-stripe-checkout-shared-system-status.php:158
 msgid "Plugin Version"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:157
-msgid "Stripe TLS"
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:165
+#: classes/class-stripe-checkout-shared-system-status.php:165
+msgid "SSL/HTTPS Enabled"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:170
-msgid "(hidden in downloadable report)"
-msgstr ""
-
-#: classes/class-stripe-checkout-shared-system-status.php:187
-#: classes/class-stripe-checkout-shared-system-status.php:238
-#: classes/class-stripe-checkout-shared-system-status.php:342
-#: classes/class-stripe-checkout-shared-system-status.php:456
-#: classes/class-stripe-checkout-shared-system-status.php:476
-#: classes/class-stripe-checkout-shared-system-status.php:552
-#: classes/class-stripe-checkout-shared-system-status.php:562
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:167
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:221
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:224
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:270
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:377
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:492
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:512
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:567
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:597
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:607
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:612
+#: classes/class-stripe-checkout-shared-system-status.php:167
+#: classes/class-stripe-checkout-shared-system-status.php:221
+#: classes/class-stripe-checkout-shared-system-status.php:224
+#: classes/class-stripe-checkout-shared-system-status.php:270
+#: classes/class-stripe-checkout-shared-system-status.php:377
+#: classes/class-stripe-checkout-shared-system-status.php:492
+#: classes/class-stripe-checkout-shared-system-status.php:512
 #: classes/class-stripe-checkout-shared-system-status.php:567
-msgid "No"
-msgstr ""
-
-#: classes/class-stripe-checkout-shared-system-status.php:189
-#: classes/class-stripe-checkout-shared-system-status.php:192
-#: classes/class-stripe-checkout-shared-system-status.php:238
-#: classes/class-stripe-checkout-shared-system-status.php:342
-#: classes/class-stripe-checkout-shared-system-status.php:453
-#: classes/class-stripe-checkout-shared-system-status.php:473
-#: classes/class-stripe-checkout-shared-system-status.php:527
-#: classes/class-stripe-checkout-shared-system-status.php:552
-#: classes/class-stripe-checkout-shared-system-status.php:562
-#: classes/class-stripe-checkout-shared-system-status.php:567
+#: classes/class-stripe-checkout-shared-system-status.php:597
+#: classes/class-stripe-checkout-shared-system-status.php:607
+#: classes/class-stripe-checkout-shared-system-status.php:612
 msgid "Yes"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:199
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:167
+#: classes/class-stripe-checkout-shared-system-status.php:167
+msgid "No. SSL is required by Stripe for Live mode."
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:173
+#: classes/class-stripe-checkout-shared-system-status.php:173
+msgid "Stripe TLS"
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:180
+#: classes/class-stripe-checkout-shared-system-status.php:180
+msgid "Test Mode"
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:184
+#: build/stripe/views/admin-shared-tab-stripe-keys.php:19
+#: classes/class-stripe-checkout-shared-system-status.php:184
+#: views/admin-shared-tab-stripe-keys.php:19
+msgid "Live Mode"
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:189
+#: classes/class-stripe-checkout-shared-system-status.php:189
+msgid "Test or Live Mode"
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:202
+#: classes/class-stripe-checkout-shared-system-status.php:202
+msgid "(hidden in downloadable report)"
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:219
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:270
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:377
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:495
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:515
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:597
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:607
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:612
+#: classes/class-stripe-checkout-shared-system-status.php:219
+#: classes/class-stripe-checkout-shared-system-status.php:270
+#: classes/class-stripe-checkout-shared-system-status.php:377
+#: classes/class-stripe-checkout-shared-system-status.php:495
+#: classes/class-stripe-checkout-shared-system-status.php:515
+#: classes/class-stripe-checkout-shared-system-status.php:597
+#: classes/class-stripe-checkout-shared-system-status.php:607
+#: classes/class-stripe-checkout-shared-system-status.php:612
+msgid "No"
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:231
+#: classes/class-stripe-checkout-shared-system-status.php:231
+#, php-format
 msgid ""
 "%1$s - It is recommendend to set memory to at least 40MB. See: <a href=\"%2$s"
 "\" target=\"_blank\">Increasing memory allocated to PHP</a>"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:211
-#: views/admin-shared-tab-default.php:26
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:243
+#: build/stripe/views/admin-shared-tab-default.php:27
+#: classes/class-stripe-checkout-shared-system-status.php:243
+#: views/admin-shared-tab-default.php:27
 msgid "Site Name"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:216
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:248
+#: classes/class-stripe-checkout-shared-system-status.php:248
 msgid "Home URL"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:221
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:253
+#: classes/class-stripe-checkout-shared-system-status.php:253
 msgid "Site URL"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:226
-#: classes/class-stripe-checkout-shared-system-status.php:304
-#: classes/class-stripe-checkout-shared-system-status.php:324
-#: classes/class-stripe-checkout-shared-system-status.php:397
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:258
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:339
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:359
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:432
+#: classes/class-stripe-checkout-shared-system-status.php:258
+#: classes/class-stripe-checkout-shared-system-status.php:339
+#: classes/class-stripe-checkout-shared-system-status.php:359
+#: classes/class-stripe-checkout-shared-system-status.php:432
 msgid "Version"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:231
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:263
+#: classes/class-stripe-checkout-shared-system-status.php:263
 msgid "Locale"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:236
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:268
+#: classes/class-stripe-checkout-shared-system-status.php:268
 msgid "Multisite"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:242
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:274
+#: classes/class-stripe-checkout-shared-system-status.php:274
 msgid "Permalinks"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:248
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:280
+#: classes/class-stripe-checkout-shared-system-status.php:280
 msgid "WP Memory Limit"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:253
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:286
+#: classes/class-stripe-checkout-shared-system-status.php:286
 msgid "WP Debug Mode"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:294
-#: classes/class-stripe-checkout-shared-system-status.php:386
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:291
+#: classes/class-stripe-checkout-shared-system-status.php:291
+msgid "Script Debug"
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:329
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:421
+#: classes/class-stripe-checkout-shared-system-status.php:329
+#: classes/class-stripe-checkout-shared-system-status.php:421
+#, php-format
 msgid "%s is available"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:300
-#: classes/class-stripe-checkout-shared-system-status.php:320
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:335
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:355
+#: classes/class-stripe-checkout-shared-system-status.php:335
+#: classes/class-stripe-checkout-shared-system-status.php:355
 msgid "Name"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:302
-#: classes/class-stripe-checkout-shared-system-status.php:322
-#: classes/class-stripe-checkout-shared-system-status.php:395
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:337
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:357
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:430
+#: classes/class-stripe-checkout-shared-system-status.php:337
+#: classes/class-stripe-checkout-shared-system-status.php:357
+#: classes/class-stripe-checkout-shared-system-status.php:430
 msgid "Author"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:334
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:369
+#: classes/class-stripe-checkout-shared-system-status.php:369
 msgid "Theme Information"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:340
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:375
+#: classes/class-stripe-checkout-shared-system-status.php:375
 msgid "Child Theme"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:346
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:381
+#: classes/class-stripe-checkout-shared-system-status.php:381
 msgid "Parent Theme"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:419
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:455
+#: classes/class-stripe-checkout-shared-system-status.php:455
 msgid ""
-"%1$s - It is recommendend to upgrade at least to PHP version 5.5.19 for "
-"security reasons. <a href=\"%2$s\" target=\"_blank\">Read more</a>"
+"WordPress.org recommends upgrading to PHP 7 or higher for better security."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:439
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:456
+#: classes/class-stripe-checkout-shared-system-status.php:456
+msgid "Read more."
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:465
+#: classes/class-stripe-checkout-shared-system-status.php:465
+msgid "Cannot connect to MySQL database."
+msgstr ""
+
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:478
+#: classes/class-stripe-checkout-shared-system-status.php:478
+#, php-format
 msgid "Server default timezone is %s - it should be UTC"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:503
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:542
+#: classes/class-stripe-checkout-shared-system-status.php:542
 msgid "Web Server"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:508
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:547
+#: classes/class-stripe-checkout-shared-system-status.php:547
 msgid "PHP Version"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:514
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:553
+#: classes/class-stripe-checkout-shared-system-status.php:553
 msgid "MySQL Version"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:520
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:559
+#: classes/class-stripe-checkout-shared-system-status.php:559
 msgid "Server Timezone"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:526
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:565
+#: classes/class-stripe-checkout-shared-system-status.php:565
 msgid "Display Errors"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:531
-msgid "Memory Limit"
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:571
+#: classes/class-stripe-checkout-shared-system-status.php:571
+msgid "Server PHP Memory Limit"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:535
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:576
+#: classes/class-stripe-checkout-shared-system-status.php:576
 msgid "Upload Max Filesize"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:539
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:581
+#: classes/class-stripe-checkout-shared-system-status.php:581
 msgid "Post Max Size"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:543
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:586
+#: classes/class-stripe-checkout-shared-system-status.php:586
 msgid "Max Execution Time"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:547
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:591
+#: classes/class-stripe-checkout-shared-system-status.php:591
 msgid "Max Input Vars"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:557
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:602
+#: classes/class-stripe-checkout-shared-system-status.php:602
 msgid "No version found."
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:571
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:616
+#: classes/class-stripe-checkout-shared-system-status.php:616
 msgid "WP Remote POST"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:576
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:622
+#: classes/class-stripe-checkout-shared-system-status.php:622
 msgid "WP Remote GET"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:593
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:640
+#: classes/class-stripe-checkout-shared-system-status.php:640
 msgid "Name:"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:595
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:642
+#: classes/class-stripe-checkout-shared-system-status.php:642
 msgid "Version:"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:597
-#: classes/class-stripe-checkout-shared-system-status.php:608
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:644
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:655
+#: classes/class-stripe-checkout-shared-system-status.php:644
+#: classes/class-stripe-checkout-shared-system-status.php:655
 msgid "User Agent:"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:599
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:646
+#: classes/class-stripe-checkout-shared-system-status.php:646
 msgid "Platform:"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:618
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:665
+#: classes/class-stripe-checkout-shared-system-status.php:665
 msgid "IP Address"
 msgstr ""
 
-#: classes/class-stripe-checkout-shared-system-status.php:623
+#: build/stripe/classes/class-stripe-checkout-shared-system-status.php:670
+#: classes/class-stripe-checkout-shared-system-status.php:670
 msgid "Browser"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (WP Simple Pay Lite for Stripe 1.5.2)  #-#-#-#-#
-#. Plugin Name of the plugin/theme
-#: classes/class-stripe-checkout-shared.php:181
-msgid "WP Simple Pay Lite for Stripe"
-msgstr ""
-
-#: classes/class-stripe-checkout-shared.php:185
-msgid "WP Simple Pay Pro for Stripe"
-msgstr ""
-
-#: classes/class-stripe-checkout-shared.php:189
-msgid "Simple Pay Lite"
-msgstr ""
-
-#: stripe-checkout.php:63
+#: build/stripe/stripe-checkout.php:91 stripe-checkout.php:91
 msgid ""
-"Simple Pay Lite and Pro cannot be active simultaneously. Please deactivate "
-"one of them to proceed."
+"WP Simple Pay Lite and Pro cannot be active simultaneously. Please "
+"deactivate one of them to proceed."
 msgstr ""
 
-#: views/admin-lite-sidebar.php:18
-msgid "Need More Options?"
+#: build/stripe/views/admin-lite-sidebar.php:18 views/admin-lite-sidebar.php:18
+msgid "Looking for more?"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:22
-msgid "Additional perks you'll get with %s"
+#: build/stripe/views/admin-lite-sidebar.php:22 views/admin-lite-sidebar.php:22
+#, php-format
+msgid "Additional features included with %s"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:26
-msgid "Let customers enter an amount"
+#: build/stripe/views/admin-lite-sidebar.php:26 views/admin-lite-sidebar.php:26
+msgid "Custom Fields"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:27
-msgid "Collect data with custom fields"
+#: build/stripe/views/admin-lite-sidebar.php:27 views/admin-lite-sidebar.php:27
+msgid "Coupon Codes"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:28
-msgid "Offer discounts with coupon codes"
+#: build/stripe/views/admin-lite-sidebar.php:28 views/admin-lite-sidebar.php:28
+msgid "User-Entered Amounts"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:29
-msgid "Subscriptions integration"
+#: build/stripe/views/admin-lite-sidebar.php:29 views/admin-lite-sidebar.php:29
+msgid "Easy Pricing Tables Integration"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:30
-msgid "Stripe add-ons as they're released"
+#: build/stripe/views/admin-lite-sidebar.php:30 views/admin-lite-sidebar.php:30
+msgid "Email Support"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:31
-msgid "Automatic updates & email support"
+#: build/stripe/views/admin-lite-sidebar.php:34 views/admin-lite-sidebar.php:34
+msgid "Included in Business & Elite Licenses:"
 msgstr ""
 
-#: views/admin-lite-sidebar.php:37
+#: build/stripe/views/admin-lite-sidebar.php:38 views/admin-lite-sidebar.php:38
+msgid "Stripe Subscriptions"
+msgstr ""
+
+#: build/stripe/views/admin-lite-sidebar.php:39 views/admin-lite-sidebar.php:39
+msgid "Subscription Installment Plans"
+msgstr ""
+
+#: build/stripe/views/admin-lite-sidebar.php:40 views/admin-lite-sidebar.php:40
+msgid "Subscription Setup Fees"
+msgstr ""
+
+#: build/stripe/views/admin-lite-sidebar.php:41 views/admin-lite-sidebar.php:41
+msgid "Subscription Trial Periods"
+msgstr ""
+
+#: build/stripe/views/admin-lite-sidebar.php:47 views/admin-lite-sidebar.php:47
 msgid "Upgrade to Pro Now"
 msgstr ""
 
+#: build/stripe/views/admin-lite-sidebar.php:59 views/admin-lite-sidebar.php:59
+msgid "Documentation"
+msgstr ""
+
+#: build/stripe/views/admin-lite-sidebar.php:63 views/admin-lite-sidebar.php:63
+msgid "Your Stripe Dashboard"
+msgstr ""
+
+#: build/stripe/views/admin-shared-notice-api.php:19
+#: views/admin-shared-notice-api.php:19
+msgid ""
+"This note is for WP Simple Pay plugin users that have specified multiple "
+"Stripe accounts (API keys) throughout a single WordPress site."
+msgstr ""
+
+#: build/stripe/views/admin-shared-notice-api.php:21
+#: views/admin-shared-notice-api.php:21
+#, php-format
+msgid ""
+"If you are using this functionality please view the new <a target=\"_blank\" "
+"href=\"%s\">documentation</a> ASAP."
+msgstr ""
+
+#: build/stripe/views/admin-shared-notice-api.php:25
+#: build/stripe/views/admin-shared-notice-install.php:28
+#: views/admin-shared-notice-api.php:25
+#: views/admin-shared-notice-install.php:28
+msgid "Hide this"
+msgstr ""
+
+#: build/stripe/views/admin-shared-notice-install.php:25
 #: views/admin-shared-notice-install.php:25
 msgid " is now installed."
 msgstr ""
 
+#: build/stripe/views/admin-shared-notice-install.php:26
 #: views/admin-shared-notice-install.php:26
 msgid "Get started by entering your Stripe keys"
 msgstr ""
 
+#: build/stripe/views/admin-shared-notice-install.php:27
 #: views/admin-shared-notice-install.php:27
-msgid "Hide this"
+msgid "Get help"
 msgstr ""
 
+#: build/stripe/views/admin-shared-tab-default.php:20
 #: views/admin-shared-tab-default.php:20
-msgid "See shortcode options and examples"
+msgid "See shortcode reference & examples."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:22
+#: build/stripe/views/admin-shared-tab-default.php:23
+#: views/admin-shared-tab-default.php:23
 msgid ""
 "Shortcode attributes take precedence and will always override site-wide "
 "default settings."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:29
-msgid "The name of your store or website. Defaults to Site Name."
+#: build/stripe/views/admin-shared-tab-default.php:30
+#: views/admin-shared-tab-default.php:30
+msgid ""
+"The name of your store or website. Defaults to Site Title if left blank."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:34
+#: build/stripe/views/admin-shared-tab-default.php:35
+#: views/admin-shared-tab-default.php:35
 msgid "Currency"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:37
+#: build/stripe/views/admin-shared-tab-default.php:38
+#: views/admin-shared-tab-default.php:38
+#, php-format
 msgid ""
 "Specify a currency using it's <a href=\"%s\" target=\"_blank\">3-letter ISO "
-"Code</a>. Defaults to USD."
+"Code</a>. Defaults to USD if left blank."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:42
+#: build/stripe/views/admin-shared-tab-default.php:43
+#: views/admin-shared-tab-default.php:43
 msgid "Image URL"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:45
+#: build/stripe/views/admin-shared-tab-default.php:46
+#: views/admin-shared-tab-default.php:46
 msgid ""
 "A URL pointing to a square image of your brand or product. The recommended "
 "minimum size is 128x128px."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:50
-msgid "Checkout Button Label"
-msgstr ""
-
-#: views/admin-shared-tab-default.php:53
-msgid ""
-"The label of the payment button in the checkout form. You can use {{amount}} "
-"to display the amount."
-msgstr ""
-
-#: views/admin-shared-tab-default.php:58
+#: build/stripe/views/admin-shared-tab-default.php:51
+#: views/admin-shared-tab-default.php:51
 msgid "Payment Button Label"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:61
+#: build/stripe/views/admin-shared-tab-default.php:54
+#: views/admin-shared-tab-default.php:54
 msgid ""
 "Text to display on the default blue button that users click to initiate a "
-"checkout process."
+"checkout process. Defaults to \"Pay with Card\" if left blank."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:66
+#: build/stripe/views/admin-shared-tab-default.php:59
+#: views/admin-shared-tab-default.php:59
+msgid "Checkout Button Label"
+msgstr ""
+
+#: build/stripe/views/admin-shared-tab-default.php:62
+#: views/admin-shared-tab-default.php:62
+msgid ""
+"Text to display on the button within the checkout overlay. Insert {{amount}} "
+"where you'd like to show the amount. If {{amount}} is omitted, it will be "
+"appended at the end of the button text unless it is a free trial."
+msgstr ""
+
+#: build/stripe/views/admin-shared-tab-default.php:67
+#: views/admin-shared-tab-default.php:67
 msgid "Success Redirect URL"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:69
+#: build/stripe/views/admin-shared-tab-default.php:70
+#: views/admin-shared-tab-default.php:70
 msgid ""
 "The URL that the user should be redirected to after a successful payment."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:74
+#: build/stripe/views/admin-shared-tab-default.php:75
+#: views/admin-shared-tab-default.php:75
 msgid "Disable Success Message"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:76
+#: build/stripe/views/admin-shared-tab-default.php:77
+#: views/admin-shared-tab-default.php:77
 msgid ""
 "Disable default success message. Useful if you are redirecting to your own "
 "success page."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:80
+#: build/stripe/views/admin-shared-tab-default.php:81
+#: views/admin-shared-tab-default.php:81
 msgid "Failure Redirect URL"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:83
+#: build/stripe/views/admin-shared-tab-default.php:84
+#: views/admin-shared-tab-default.php:84
 msgid "The URL that the user should be redirected to after a failed payment."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:88
+#: build/stripe/views/admin-shared-tab-default.php:89
+#: views/admin-shared-tab-default.php:89
 msgid "Enable Billing Address"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:90
+#: build/stripe/views/admin-shared-tab-default.php:91
+#: views/admin-shared-tab-default.php:91
 msgid "Require the user to enter their billing address during checkout."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:94
+#: build/stripe/views/admin-shared-tab-default.php:95
+#: views/admin-shared-tab-default.php:95
 msgid "Verify Zip"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:96
+#: build/stripe/views/admin-shared-tab-default.php:97
+#: views/admin-shared-tab-default.php:97
 msgid "Verifies the zip code of the card."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:100
+#: build/stripe/views/admin-shared-tab-default.php:101
+#: views/admin-shared-tab-default.php:101
 msgid "Enable Remember"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:102
+#: build/stripe/views/admin-shared-tab-default.php:103
+#: views/admin-shared-tab-default.php:103
 msgid ""
 "Adds a \"Remember Me\" option to the checkout form to allow the user to "
 "store their credit card for future use with other sites using Stripe."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:106
+#: build/stripe/views/admin-shared-tab-default.php:107
+#: views/admin-shared-tab-default.php:107
 msgid "Enable Bitcoin"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:108
+#: build/stripe/views/admin-shared-tab-default.php:109
+#: views/admin-shared-tab-default.php:109
+#, php-format
 msgid ""
 "Enable accepting <a href=\"%s\" target=\"_blank\">Bitcoin</a> as a payment "
 "option."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:112
-msgid "Enable Alipay"
-msgstr ""
-
-#: views/admin-shared-tab-default.php:119
-msgid ""
-"Enable accepting <a href=\"%s\" target=\"_blank\">Alipay</a> as a payment "
-"option."
-msgstr ""
-
-#: views/admin-shared-tab-default.php:124
-msgid "Enable Alipay Reusable"
-msgstr ""
-
-#: views/admin-shared-tab-default.php:126
-msgid "Enable reusable access to the customer's account when using Alipay."
-msgstr ""
-
-#: views/admin-shared-tab-default.php:130
+#: build/stripe/views/admin-shared-tab-default.php:113
+#: views/admin-shared-tab-default.php:113
 msgid "Set Locale"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:141
+#: build/stripe/views/admin-shared-tab-default.php:116
+#: views/admin-shared-tab-default.php:116
+#, php-format
+msgid ""
+"\"auto\" is used by default to select a language based on the user's browser "
+"configuration. To select a particular language, pass the two letter ISO "
+"639-1 code such as \"zh\" for Chinese. <br/><a href=\"%s\" target=\"_blank"
+"\">See languages supported by Stripe Checkout</a>"
+msgstr ""
+
+#: build/stripe/views/admin-shared-tab-default.php:124
+#: views/admin-shared-tab-default.php:124
 msgid "Disable Plugin CSS"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:143
+#: build/stripe/views/admin-shared-tab-default.php:126
+#: views/admin-shared-tab-default.php:126
 msgid ""
 "If this option is checked, this plugin's CSS file will not be referenced."
 msgstr ""
 
-#: views/admin-shared-tab-default.php:147
+#: build/stripe/views/admin-shared-tab-default.php:130
+#: views/admin-shared-tab-default.php:130
 msgid "Save Settings"
 msgstr ""
 
-#: views/admin-shared-tab-default.php:149
+#: build/stripe/views/admin-shared-tab-default.php:132
+#: views/admin-shared-tab-default.php:132
 msgid ""
 "Save your settings when uninstalling this plugin. Useful when upgrading or "
 "re-installing."
 msgstr ""
 
-#: views/admin-shared-tab-stripe-keys.php:19
-msgid "Live Mode"
-msgstr ""
-
+#: build/stripe/views/admin-shared-tab-stripe-keys.php:24
 #: views/admin-shared-tab-stripe-keys.php:24
+#, php-format
 msgid ""
-"Switch to OFF while testing. Make sure Test mode is enabled in your Stripe "
-"dashboard to view test transactions."
+"Switch to OFF while testing. Make sure Test mode is enabled in your <a href="
+"\"%s\" target=\"_blank\">Stripe dashboard</a> to view test transactions."
 msgstr ""
 
+#: build/stripe/views/admin-shared-tab-stripe-keys.php:25
 #: views/admin-shared-tab-stripe-keys.php:25
-msgid "Find your Stripe API keys here"
+#, php-format
+msgid "<a href=\"%s\" target=\"_blank\">Find your Stripe API keys here</a>"
 msgstr ""
 
+#: build/stripe/views/admin-shared-tab-stripe-keys.php:29
 #: views/admin-shared-tab-stripe-keys.php:29
-msgid "Test Secret Key"
-msgstr ""
-
-#: views/admin-shared-tab-stripe-keys.php:34
 msgid "Test Publishable Key"
 msgstr ""
 
-#: views/admin-shared-tab-stripe-keys.php:39
-msgid "Live Secret Key"
+#: build/stripe/views/admin-shared-tab-stripe-keys.php:34
+#: views/admin-shared-tab-stripe-keys.php:34
+msgid "Test Secret Key"
 msgstr ""
 
-#: views/admin-shared-tab-stripe-keys.php:44
+#: build/stripe/views/admin-shared-tab-stripe-keys.php:39
+#: views/admin-shared-tab-stripe-keys.php:39
 msgid "Live Publishable Key"
 msgstr ""
 
-#. #-#-#-#-#  plugin.pot (WP Simple Pay Lite for Stripe 1.5.2)  #-#-#-#-#
+#: build/stripe/views/admin-shared-tab-stripe-keys.php:44
+#: views/admin-shared-tab-stripe-keys.php:44
+msgid "Live Secret Key"
+msgstr ""
+
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:3
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:5
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:9
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:10
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:14
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:15
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:4
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:6
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:10
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:11
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:15
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:16
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:3
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:5
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:9
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:10
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:14
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:15
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:3
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:5
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:9
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:10
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:14
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:15
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:3
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:5
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:9
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:10
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:14
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:15
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:3
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:5
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:9
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:10
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:14
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:15
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:4
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:6
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:10
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:11
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:15
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:16
+msgid "Hello World"
+msgstr ""
+
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:4
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:6
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:11
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:16
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:5
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:7
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:12
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:17
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:4
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:6
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:11
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:16
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:4
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:6
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:11
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:16
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:4
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:6
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:11
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:16
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:4
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:6
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:11
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:16
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:5
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:7
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:12
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:17
+msgctxt "verb"
+msgid "Post"
+msgstr ""
+
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:20
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:24
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:21
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:25
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:20
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:24
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:20
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:24
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:20
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:24
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:20
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:24
+#: node_modules/grunt-checktextdomain/test/fixtures/plurals.php:3
+#: node_modules/grunt-checktextdomain/test/fixtures/plurals.php:8
+#: node_modules/grunt-checktextdomain/test/fixtures/plurals.php:15
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:21
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:25
+#, php-format
+msgid "%d apple"
+msgid_plural "%d apples"
+msgstr[0] ""
+msgstr[1] ""
+
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:21
+#: node_modules/grunt-checktextdomain/test/expected/incorrect-domain-autocorrect.php:25
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:22
+#: node_modules/grunt-checktextdomain/test/expected/variable-domain-autocorrect.php:26
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:21
+#: node_modules/grunt-checktextdomain/test/fixtures/correct-domain.php:25
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:21
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain-autocorrect.php:25
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:21
+#: node_modules/grunt-checktextdomain/test/fixtures/incorrect-domain.php:25
+#: node_modules/grunt-checktextdomain/test/fixtures/missing-domain.php:25
+#: node_modules/grunt-checktextdomain/test/fixtures/plurals.php:4
+#: node_modules/grunt-checktextdomain/test/fixtures/plurals.php:9
+#: node_modules/grunt-checktextdomain/test/fixtures/plurals.php:16
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:22
+#: node_modules/grunt-checktextdomain/test/fixtures/variable-domain-autocorrect.php:26
+#, php-format
+msgctxt "noun, job positions"
+msgid "%d post"
+msgid_plural "%d posts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: node_modules/grunt-wp-i18n/test/fixtures/basic-theme/exclude/file.php:3
+#: node_modules/grunt-wp-i18n/test/fixtures/plugin-include/plugin-include.php:6
+msgid "Exclude"
+msgstr ""
+
+#: node_modules/grunt-wp-i18n/test/fixtures/plugin-include/include/file.php:2
+msgid "Include"
+msgstr ""
+
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/add-domain.php:2
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:2
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:3
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:4
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-domains.php:2
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-domains.php:3
+msgid "String"
+msgstr ""
+
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:6
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:7
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:8
+msgctxt "a string"
+msgid "String"
+msgstr ""
+
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:9
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:10
+#: node_modules/grunt-wp-i18n/test/fixtures/text-domains/update-all-domains.php:11
+#, php-format
+msgid "1 Star"
+msgid_plural "%s Stars"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: A single line translators comment.
+#: node_modules/grunt-wp-i18n/test/fixtures/translator-comments/translator-comments.php:7
+msgid "A"
+msgstr ""
+
+#. translators: A
+#. multiline
+#. translators
+#. comment.
+#.
+#: node_modules/grunt-wp-i18n/test/fixtures/translator-comments/translator-comments.php:15
+msgid "B"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP Simple Pay Lite for Stripe"
+msgstr ""
+
 #. Plugin URI of the plugin/theme
-#. #-#-#-#-#  plugin.pot (WP Simple Pay Lite for Stripe 1.5.2)  #-#-#-#-#
 #. Author URI of the plugin/theme
 msgid "https://wpsimplepay.com"
 msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Add high conversion Stripe checkout forms to your WordPress site and start "
-"accepting payments in minutes."
+"Add high conversion Stripe payment forms to your WordPress site in minutes."
 msgstr ""
 
 #. Author of the plugin/theme
