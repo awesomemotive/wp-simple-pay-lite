@@ -47,8 +47,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'payment_button_label'      => ( null !== $sc_options->get_setting_value( 'payment_button_label' ) ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'stripe' ) ),
 						   'enable_remember'           => ( null !== $sc_options->get_setting_value( 'enable_remember' ) ? 'true' : 'false' ),    // true or false
 						   'bitcoin'                   => ( null !== $sc_options->get_setting_value( 'use_bitcoin' ) ? 'true' : 'false' ),    // true or false
-						   'alipay'                    => ( null !== $sc_options->get_setting_value( 'alipay' ) ? $sc_options->get_setting_value( 'alipay' ) : 'false' ),
-						   'alipay_reusable'           => ( null !== $sc_options->get_setting_value( 'alipay_reusable' ) ? 'true' : 'false' ),
 						   'locale'                    => ( null !== $sc_options->get_setting_value( 'locale' ) ? $sc_options->get_setting_value( 'locale' ) : 'auto' ),
 						   'success_redirect_url'      => ( null !== $sc_options->get_setting_value( 'success_redirect_url' ) ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
 						   'failure_redirect_url'      => ( null !== $sc_options->get_setting_value( 'failure_redirect_url' ) ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
@@ -74,8 +72,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $payment_button_label      = $attr['payment_button_label'];
 		   $enable_remember           = $attr['enable_remember'];
 		   $bitcoin                   = $attr['bitcoin'];
-		   $alipay                    = $attr['alipay'];
-		   $alipay_reusable           = $attr['alipay_reusable'];
 		   $locale                    = $attr['locale'];
 		   $success_redirect_url      = $attr['success_redirect_url'];
 		   $failure_redirect_url      = $attr['failure_redirect_url'];
@@ -148,8 +144,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : '' ) .
 					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : '' ) .
-					   ( ! empty( $alipay ) ? 'data-alipay="' . $alipay . '" ' : '' ) .
-					   ( ( ! empty( $alipay_reusable ) && ( 'true' === $alipay ) ) ? 'data-alipay-reusable="' . $alipay_reusable . '" ' : '' ) . // Omit Alipay reusable if Alipay not enabled.
 					   ( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .
 					   '></script>';
 

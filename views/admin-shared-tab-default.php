@@ -110,24 +110,6 @@ global $sc_options;
 	</div>
 	
 	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay' ) ); ?>"><?php _e( 'Enable Alipay', 'stripe' ); ?></label>
-		<?php 
-			$sc_options->selectbox( 'alipay', array( 
-												'Disabled' => 'false', 
-												'Enabled' => 'true', 
-												'Auto-Detect' => 'auto' ) 
-									); 
-			$sc_options->description( __( 'Enable accepting Alipay</a> as a payment option.', 'stripe' ) );
-		?>
-	</div>
-	
-	<div>
-		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'alipay_reusable' ) ); ?>"><?php _e( 'Enable Alipay Reusable', 'stripe' ); ?></label>
-		<?php $sc_options->checkbox( 'alipay_reusable' ); ?>
-		<span><?php _e( "Enable reusable access to the customer's account when using Alipay.", 'stripe' ); ?></span>
-	</div>
-	
-	<div>
 		<label for="<?php echo esc_attr( $sc_options->get_setting_id( 'locale' ) ); ?>"><?php _e( 'Set Locale', 'stripe' ); ?></label>
 		<?php
 			$sc_options->textbox( 'locale', 'small-text' );
