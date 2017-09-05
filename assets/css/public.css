@@ -1,0 +1,59 @@
+.simpay-clearfix {
+  *zoom: 1; }
+  .simpay-clearfix:before, .simpay-clearfix:after {
+    content: " ";
+    display: table; }
+  .simpay-clearfix:after {
+    clear: both; }
+
+.simpay-form-control {
+  margin-bottom: 15px;
+  *zoom: 1; }
+  .simpay-form-control:before, .simpay-form-control:after {
+    content: " ";
+    display: table; }
+  .simpay-form-control:after {
+    clear: both; }
+  .simpay-form-control p {
+    padding: 0;
+    margin: 0; }
+  .simpay-form-control ul {
+    margin-bottom: 0.5em; }
+  .simpay-form-control ul li {
+    list-style-type: none; }
+  .simpay-form-control label {
+    cursor: pointer; }
+  .simpay-form-control .simpay-field-wrap {
+    *zoom: 1; }
+    .simpay-form-control .simpay-field-wrap:before, .simpay-form-control .simpay-field-wrap:after {
+      content: " ";
+      display: table; }
+    .simpay-form-control .simpay-field-wrap:after {
+      clear: both; }
+
+.simpay-test-mode-badge {
+  background-color: #f7e633;
+  color: #363636;
+  border-radius: 5px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 5px 9px;
+  margin-left: 10px; }
+
+.simpay-error {
+  *zoom: 1;
+  background-color: #f2dede;
+  border: 1px solid #ebcccc;
+  border-radius: .25rem;
+  color: #a94442;
+  margin: 1rem 0;
+  padding: .75rem 1.25rem; }
+  .simpay-error:before, .simpay-error:after {
+    content: " ";
+    display: table; }
+  .simpay-error:after {
+    clear: both; }
+  .simpay-error .simpay-error-item {
+    margin: 0; }

@@ -1,0 +1,11 @@
+// Admin bar test mode active link
+#wpadminbar .simpay-admin-bar-test-mode > .ab-item {
+	background: #fdbc72;
+	font-size: 11px;
+	color: #fff;
+
+	&:hover {
+		background: #e37c4c !important;
+		color: #fff !important;
+	}
+}
