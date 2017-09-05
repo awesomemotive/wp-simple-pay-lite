@@ -1,9 +1,10 @@
 === Stripe Payments for WordPress - WP Simple Pay ===
 Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
-Requires at least: 4.3
-Tested up to: 4.7
-Stable tag: 1.6.0
+Requires at least: 4.7
+Tested up to: 4.8
+Stable tag: 2.0.1
+Requires PHP: 5.3
 License: GPLv2 or later
 
 Add high conversion Stripe payment forms to your WordPress site in minutes.
@@ -24,77 +25,113 @@ This is a standalone Stripe checkout plugin.
 
 That's it. **No other plugins required.**
 
->**[Check out our demos & PRO version](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+>**[Check out our demos & Pro version](https://demo.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
-SSL note: Stripe requires that any page hosting a live checkout form be SSL (they should start with `https://`). [See system requirements.](https://wpsimplepay.com/docs/getting-started/system-requirements/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
+SSL note: Stripe requires that any page hosting a live checkout form be SSL (they should start with `https://`). [See system requirements.](https://docs.wpsimplepay.com/articles/system-requirements-wp-simple-pay-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
 
 = LITE VERSION FEATURES =
 
 * Unlimited payment forms
 * Mobile responsive Stripe Checkout overlay
 * Display brand or product image in overlay
-* Optionally collect customer billing address
+* Optionally collect customer billing & addresses
 * Optionally verify zip/postal code without address
-* Support for 12 languages, 25 countries and 139 currencies
+* Support for 12 languages, 25 countries and 135+ currencies
+* Bitcoin payment option
 * Translation ready
-* Bitcoin and Alipay payment options
 * Multiple Stripe API key support
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
 * Live/Test mode toggle
-* Filters, hooks and [code snippets](https://github.com/moonstonemedia/WP-Simple-Pay-Snippet-Library) for developers
+* [Code snippets](https://github.com/moonstonemedia/WP-Simple-Pay-Snippet-Library/) & [hook reference](https://docs.wpsimplepay.com/articles/action-filter-hooks/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) for developers
 
 = PRO VERSION FEATURES =
 
 * *Everything in Lite plus...*
+* Drag & drop form design controls
 * Custom fields to capture additional data
-* Custom amounts - let customers enter amount to pay
+* Custom amounts - let customers enter an amount to pay
 * Coupon code support
+* Tax rate support
 * Stripe Subscription support
 * Subscription installment plans
 * Subscription setup fees
 * Subscription trial periods
 * [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
-* Optionally collect customer shipping address
 * Priority email support with a 24-hour response time during business days
 
->**[Get More with WP Simple Pay PRO for Stripe](https://wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+>**[Get More with WP Simple Pay Pro](https://wpsimplepay.com/lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
 == Installation ==
 
-[Plugin installation instructions](https://wpsimplepay.com/docs/getting-started/installing-stripe-checkout-lite/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=installation)
+The easiest way to install WP Simple Pay is to search for it via your site’s Dashboard.
+
+= Step-by-step instructions =
+
+1. Log in to your site’s dashboard (e.g. www.yourdomain.com/wp-admin).
+2. Click on the “Plugins” tab in the left panel, then click “Add New”.
+3. Search for “Stripe” or “WP Simple Pay” and find our plugin near the top. Look for the author “Moonstone Media”.
+4. Install it by clicking the “Install Now” link.
+5. When installation finishes, click “Activate Plugin”.
+6. A new menu item “Simple Pay Lite” should appear in your dashboard.
+
+If you prefer installing manually you can [download the plugin ZIP file here](https://downloads.wordpress.org/plugin/stripe.latest-stable.zip).
+
+Additional documentation at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=installation).
 
 == Frequently Asked Questions ==
 
 = Where's your plugin documentation? =
 
-Find our docs at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq)
-
-= What are the system requirements? =
-
-SSL is required on live checkout pages, and we recommend staying current with both PHP and WP for security reasons and PCI-DSS compliance. [See system requirements.](https://wpsimplepay.com/docs/getting-started/system-requirements/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
+Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq).
 
 = Can I get notified by email of new releases? =
 
 [Subscribe here](https://www.getdrip.com/forms/6606935/submissions/new) to be notified by email of major features or updates.
 
-= How do I contribute to WP Simple Pay Lite? =
+= How do I contribute to WP Simple Pay? =
 
 We'd love your help! Here's a few things you can do:
 
-* [Rate our plugin](https://wordpress.org/support/view/plugin-reviews/stripe?postform#postform) and help spread the word!
+* [Rate our plugin](https://wordpress.org/support/plugin/stripe/reviews/#new-post) and help spread the word!
 * Help answer questions in our [community support forum](https://wordpress.org/support/plugin/stripe).
 * Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe).
 * Help add or update a [plugin translation](https://translate.wordpress.org/projects/wp-plugins/stripe).
 
 == Screenshots ==
 
-1. Desktop checkout overlay
-2. Mobile checkout overlay
+1. Desktop checkout overlay example
+2. Mobile checkout overlay example
 3. Settings: Stripe keys
 4. Settings: Site-wide defaults
+5. Settings: Payment confirmation details
+6. Payment forms listing
+7. Payment form settings: One-time amount
+8. Payment form settings: Payment button
+9. Payment form settings: Stripe Checkout overlay display
 
 == Changelog ==
+
+= 2.0.1 - September 5, 2017 =
+
+* Fix: Change plugin main file name so it doesn't deactivate on upgrade.
+
+= 2.0.0 - September 5, 2017 =
+
+* Feature: Payment form settings overhauled to match WP Simple Pay Pro v3 update.
+* Feature: Payment forms can be optionally saved as drafts and previewed.
+* Feature: Button added to post editor for quickly adding payment forms to pages.
+* Feature: Shortcodes for payment forms have been notably simplified.
+* Feature: Shipping information can now be captured in the Stripe Checkout overlay.
+* Feature: Added currency formatting options to settings.
+* Feature: Payment details can now be edited using the standard post editor.
+* Feature: Admin bar now indicates if in test mode.
+* Fix: Removed support for Alipay since it is no longer supported through Stripe Checkout.
+* Dev: Removed POT file since WordPress has better ways of handling translations now.
+* Dev: Now using custom post type to hold individual form settings and to match Pro v3 update.
+* Dev: Add official PHP version requirement check from wordpress.org to readme.txt header.
+* Dev: Tested up to WordPress 4.8.
+* Dev: Updated to Stripe PHP library v5.2.0.
 
 = 1.6.0 - March 29, 2017 =
 
@@ -345,3 +382,11 @@ We'd love your help! Here's a few things you can do:
 = 1.0.0 =
 
 * Initial release.
+
+== Upgrade Notice ==
+
+= 2.0.1 =
+
+The payment form builder has been completely redone, but should be much simpler.
+
+Your existing payment forms using the legacy <code>[stripe]</code> shortcode should continue to work, but it is highly recommended to use the new settings going forward.

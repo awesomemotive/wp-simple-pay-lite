@@ -4,28 +4,27 @@ module.exports = function( grunt ) {
 
 	console.log( pkg.title + ' - ' + pkg.version );
 
-	// Files to include/exclude in a release.
-	// Stop distributing composer/autoload files with build as they won't commit to SVN for v1.5.1. 6/18/16 PD
+	// Set files to include/exclude in a release.
 	var distFiles = [
 		'**',
+		'!bower_components/**',
 		'!build/**',
 		'!node_modules/**',
-		'!vendor/autoload.php',
-		'!vendor/composer/**',
-		'!wordpress_org_assets',
+		'!vendor/bin/**',
+		'!wordpress_org_assets/**',
 		'!.editorconfig',
 		'!.gitignore',
 		'!.jshintrc',
+		'!bower.json',
 		'!composer.json',
 		'!composer.lock',
 		'!contributing.md',
-		'!readme.md',
 		'!gruntfile.js',
 		'!package.json',
+		'!readme.md',
 		'!**/*~'
 	];
 
-	// Project configuration
 	grunt.initConfig( {
 
 		pkg: pkg,
@@ -47,6 +46,7 @@ module.exports = function( grunt ) {
 		checktextdomain: {
 			options: {
 				text_domain: 'stripe',
+				correct_domain: false,
 				keywords: [
 					'__:1,2d',
 					'_e:1,2d',
@@ -66,14 +66,27 @@ module.exports = function( grunt ) {
 			},
 			files: {
 				src: [
-					'classes/**/*.php',
 					'includes/**/*.php',
-					'views/**/*.php',
-					'stripe-checkout.php',
-					'stripe-checkout-requirements.php',
+					'simple-pay.php',
 					'uninstall.php'
 				],
 				expand: true
+			}
+		},
+
+		addtextdomain: {
+			options: {
+				textdomain: 'stripe',    // Project text domain.
+				updateDomains: [ 'simple-pay' ]  // List of text domains to replace.
+			},
+			target: {
+				files: {
+					src: [
+						'includes/**/*.php',
+						'stripe.php',
+						'uninstall.php'
+				    ]
+				}
 			}
 		},
 
@@ -87,7 +100,7 @@ module.exports = function( grunt ) {
 			main: {
 				options: {
 					mode: 'zip',
-					archive: './build/wp-simple-pay-lite-for-stripe-<%= pkg.version %>.zip'
+					archive: './build/stripe-<%= pkg.version %>.zip'
 				},
 				expand: true,
 				src: distFiles,
@@ -95,8 +108,35 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		// Distribute build files.
+		// 'css' & 'js' tasks need to copy vendor-minified assets from bower folder to assets folder (moment, parsley, etc).
+		// Pikaday is a special case as it does NOT include minified assets and DOES include CSS.
+		// 'main' task is for distributing build files.
 		copy: {
+			css: {
+				expand: true,
+				cwd: 'bower_components/',
+				flatten: true,
+				src: [
+					'chosen/chosen.css',
+				    'chosen/chosen-sprite.png',
+					'chosen/chosen-sprite@2x.png'
+				],
+				dest: '<%= dirs.css %>'
+			},
+			js: {
+				expand: true,
+				cwd: 'bower_components/',
+				flatten: true,
+				src: [
+					'!jquery/**',
+					'jquery-validation/dist/jquery.validate.js',
+					'jquery-validation/dist/jquery.validate.min.js',
+				    'chosen/chosen.jquery.js',
+				    'accountingjs/accounting.js',
+				    'accountingjs/accounting.min.js'
+				],
+				dest: '<%= dirs.js %>/vendor/'
+			},
 			main: {
 				expand: true,
 				src: distFiles,
@@ -115,11 +155,21 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Check JavaScript coding standards.
+		jscs: {
+			all: [
+				'<%= dirs.js %>/*.js',
+				'!<%= dirs.js %>/*.min.js',
+			    '!<%= dirs.js %>/vendor/**'
+			]
+		},
+
 		// JavaScript linting with JSHint.
 		jshint: {
 			options: {
 				ignores: [
-					'**/*.min.js'
+					'**/*.min.js',
+					'<%= dirs.js %>/vendor/*'
 				]
 			},
 			all: [
@@ -128,14 +178,34 @@ module.exports = function( grunt ) {
 			]
 		},
 
+		// Compile all .scss files.
+		sass: {
+			options: {
+				precision: 2,
+				sourceMap: false
+			},
+			all: {
+				files: [
+					{
+						expand: true,
+						cwd: '<%= dirs.css %>',
+						src: [ '*.scss' ],
+						dest: '<%= dirs.css %>',
+						ext: '.css'
+					}
+				]
+			}
+		},
+
 		// Minify .js files.
 		uglify: {
 			files: {
 				expand: true,
 				cwd: '<%= dirs.js %>',
-				src: [ '*.js', '!*.min.js', '!vendor/**' ],
+				src: [ '*.js', '!*.min.js', '!vendor/**', 'vendor/chosen.jquery.js' ],
 				dest: '<%= dirs.js %>',
-				ext: '.min.js'
+				ext: '.min.js',
+				extDot: 'last'
 			}
 		},
 
@@ -156,19 +226,24 @@ module.exports = function( grunt ) {
 					src: [ '<%= dirs.css %>/*.min.css' ]
 				}
 			}
+		},
+
+		// .scss to .css file watcher. Run when project is loaded in PhpStorm or other IDE.
+		watch: {
+			css: {
+				files: '**/*.scss',
+				tasks: [ 'sass' ]
+			}
 		}
 
 	} );
 
 	require( 'load-grunt-tasks' )( grunt );
 
-	grunt.registerTask( 'css', [ 'copy', 'cssmin', 'usebanner:css' ] );
-	grunt.registerTask( 'js', [ 'jshint', 'uglify', 'usebanner:js' ] );
+	grunt.registerTask( 'css', [ 'sass', 'copy:css', 'cssmin', 'usebanner:css' ] );
+	grunt.registerTask( 'js', [ 'jshint', 'jscs', 'copy:js', 'uglify', 'usebanner:js' ] );
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
-	grunt.registerTask( 'build', [ 'default', 'checktextdomain', 'clean:build', 'copy:main', 'compress' ] );
-
-	// TODO Add deploy task
-	//grunt.registerTask( 'deploy',	['build'] );
+	grunt.registerTask( 'build', [ 'default', 'addtextdomain', 'checktextdomain', 'clean:build', 'copy:main', 'compress' ] );
 
 	grunt.util.linefeed = '\n';
 };

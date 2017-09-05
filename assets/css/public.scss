@@ -1,0 +1,62 @@
+@import '_mixins';
+
+.simpay-form-control {
+
+	margin-bottom: 15px;
+	@include clearfix();
+
+	p {
+		padding: 0;
+		margin: 0;
+	}
+
+	ul {
+		margin-bottom: 0.5em;
+	}
+
+	ul li {
+		list-style-type: none;
+	}
+
+	label {
+		cursor: pointer;
+	}
+
+	// Entire field wrapper
+	.simpay-field-wrap {
+		@include clearfix();
+	}
+}
+
+// Test mode badge
+
+.simpay-test-mode-badge {
+	background-color: #f7e633;
+	color: #363636;
+	border-radius: 5px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 700;
+	font-size: 11px;
+	text-transform: uppercase;
+	padding: 5px 9px;
+	margin-left: 10px;
+}
+
+// Error messages
+// Styles taken from Bootstrap
+// http://getbootstrap.com/components/#alerts & https://v4-alpha.getbootstrap.com/components/alerts/
+
+.simpay-error {
+	@include clearfix();
+
+	background-color: #f2dede;
+	border: 1px solid #ebcccc;
+	border-radius: .25rem;
+	color: #a94442;
+	margin: 1rem 0;
+	padding: .75rem 1.25rem;
+
+	.simpay-error-item {
+		margin: 0;
+	}
+}
