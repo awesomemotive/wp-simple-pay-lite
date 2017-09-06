@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.8
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires PHP: 5.3
 License: GPLv2 or later
 
@@ -111,6 +111,10 @@ We'd love your help! Here's a few things you can do:
 9. Payment form settings: Stripe Checkout overlay display
 
 == Changelog ==
+
+= 2.0.2 - September 6, 2017 =
+
+* Fix: Check if Pro is activated before running.
 
 = 2.0.1 - September 5, 2017 =
 
