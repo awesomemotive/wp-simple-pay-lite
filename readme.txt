@@ -112,6 +112,10 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 2.0.2 - September 6, 2017 =
+
+* Fix: Check if Pro is activated before running.
+
 = 2.0.1 - September 5, 2017 =
 
 * Fix: Change plugin main file name so it doesn't deactivate on upgrade.
