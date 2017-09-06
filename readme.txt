@@ -60,7 +60,7 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
 * Priority email support with a 24-hour response time during business days
 
->**[Get More with WP Simple Pay Pro](https://wpsimplepay.com/lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+>**[Click here to upgrade to WP Simple Pay Pro](https://wpsimplepay.com/lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
 
 == Installation ==
 
