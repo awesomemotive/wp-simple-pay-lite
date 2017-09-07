@@ -52,7 +52,7 @@ global $sc_options;
 		<div id="sc-settings-sidebar">
 			<?php
 			if ( class_exists( 'Stripe_Checkout_Pro' ) ) {
-				include( SC_DIR_PATH . 'views/admin-pro-sidebar.php' );
+				include( SC_DIR_PATH_PRO . 'views/admin-pro-sidebar.php' );
 			}
 			?>
 		</div>
