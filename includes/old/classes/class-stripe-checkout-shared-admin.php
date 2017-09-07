@@ -57,7 +57,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 			// Add upgrade to Pro link (if not already in Pro).
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				add_filter( 'plugin_action_links_' . plugin_basename( SIMPLE_PAY_PATH . 'stripe-checkout.php' ), array(
+				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array(
 					$this,
 					'purchase_pro_link',
 				) );
