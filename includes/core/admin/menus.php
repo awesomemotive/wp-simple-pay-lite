@@ -185,6 +185,15 @@ class Menus {
 			$page->html();
 		} );
 
+		$page_hook = add_submenu_page( 'simpay', __( 'Upgrade to Pro', 'stripe' ), __( 'Upgrade to Pro', 'stripe' ), 'manage_options', 'simpay_upgrade', function() {
+			wp_redirect( simpay_ga_url( SIMPAY_PRO_UPGRADE_URL, 'plugin-submenu-link', true ), 301 );
+			exit;
+		} );
+
+		add_action( 'load-' . $page_hook , function() {
+			ob_start();
+		} );
+
 		do_action( 'simpay_admin_add_menu_items' );
 	}
 
