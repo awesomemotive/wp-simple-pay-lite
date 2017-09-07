@@ -1,0 +1,5 @@
+a[href="admin.php?page=simpay_upgrade"] {
+  color: #f18500 !important; }
+
+a[href="admin.php?page=simpay_upgrade"]:hover {
+  color: #f29729 !important; }
