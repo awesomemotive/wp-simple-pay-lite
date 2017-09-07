@@ -186,7 +186,7 @@ class Menus {
 		} );
 
 		$page_hook = add_submenu_page( 'simpay', __( 'Upgrade to Pro', 'stripe' ), __( 'Upgrade to Pro', 'stripe' ), 'manage_options', 'simpay_upgrade', function() {
-			wp_redirect( simpay_ga_url( SIMPAY_PRO_UPGRADE_URL, 'plugin-submenu-link', true ), 301 );
+			wp_redirect( simpay_ga_url( simpay_get_url( 'upgrade' ), true ), 301 );
 			exit;
 		} );
 
