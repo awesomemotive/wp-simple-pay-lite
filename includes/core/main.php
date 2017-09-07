@@ -228,6 +228,9 @@ final class SimplePay {
 			case 'docs' :
 				$url = 'https://docs.wpsimplepay.com/';
 				break;
+			case 'upgrade':
+				$url = 'https://wpsimplepay.com/lite-vs-pro/';
+				break;
 			case 'home' :
 			default :
 				$url = self::$homepage;
