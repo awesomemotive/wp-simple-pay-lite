@@ -214,7 +214,9 @@ class Menus {
 			$links             = array();
 			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
 			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
-			$links['upgrade']  = '<a href="' . simpay_get_url( 'upgrade' ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
+			$upgrade_link  = '<a href="' . simpay_get_url( 'upgrade' ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
+
+			array_push( $action_links, $upgrade_link );
 
 			return apply_filters( 'simpay_plugin_action_links', array_merge( $links, $action_links ) );
 		}
