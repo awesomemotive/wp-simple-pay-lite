@@ -35,15 +35,21 @@ class Assets {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_bar_css' ) );
 
 		// Enqueue the upgrade-link on all pages
-		add_action( 'admin_enqueue_scripts', array( $this, 'upgrade_link_css' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'upgrade_link' ) );
 	}
 
 	/**
-	 * Add upgrade link css to all pages
+	 * Add upgrade link css and js to all pages
 	 */
-	public function upgrade_link_css() {
+	public function upgrade_link() {
+
+		// Load the CSS
 		$src = SIMPLE_PAY_ASSETS . 'css/upgrade-link' . $this->min . '.css';
 		wp_enqueue_style( 'simpay-upgrade-link', $src, array(), SIMPLE_PAY_VERSION, 'all' );
+
+		// Load the JS
+		$src = SIMPLE_PAY_ASSETS . 'js/upgrade-link' . $this->min . '.js';
+		wp_enqueue_script( 'simpay-upgrade-link', $src, array( 'jquery' ), SIMPLE_PAY_VERSION, true );
 	}
 
 	/**

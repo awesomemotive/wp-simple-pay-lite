@@ -56,16 +56,7 @@ var spAdmin = {};
 				spAdmin.handleSubmitOnEnter( $( this ) );
 			} );
 
-			// Open upgrade link in a new window.
-			body.find( 'a[href="admin.php?page=simpay_upgrade"]' ).on( 'click', function() {
-				spAdmin.handleUpgradeLink( $( this ) );
-			} );
-
 			body.trigger( 'simpayAdminInit' );
-		},
-
-		handleUpgradeLink: function( elem ) {
-			elem.attr( 'target', '_blank' );
 		},
 
 		handleSubmitOnEnter: function( elem ) {
