@@ -389,8 +389,8 @@ We'd love your help! Here's a few things you can do:
 
 == Upgrade Notice ==
 
-= 2.0.1 =
+= 2.0.0 =
 
-The payment form builder has been completely redone, but should be much simpler.
+The payment form builder has been completely redone and should be much easier to use.
 
-Your existing payment forms using the legacy <code>[stripe]</code> shortcode should continue to work, but it is highly recommended to use the new settings going forward.
+Existing payment forms using the legacy [stripe] shortcode should continue to work.
