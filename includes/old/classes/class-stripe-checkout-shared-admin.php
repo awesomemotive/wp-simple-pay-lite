@@ -57,7 +57,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 
 			// Add upgrade to Pro link (if not already in Pro).
 			if ( ! class_exists( 'Stripe_Checkout_Pro' ) ) {
-				add_filter( 'plugin_action_links_' . plugin_basename( SC_DIR_PATH . 'stripe-checkout.php' ), array(
+				add_filter( 'plugin_action_links_' . plugin_basename( SIMPLE_PAY_PATH . 'stripe-checkout.php' ), array(
 					$this,
 					'purchase_pro_link',
 				) );
@@ -204,7 +204,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 		 * Add settings action link for purchasing pro
 		 */
 		public function purchase_pro_link( $links ) {
-			$pro_link = sprintf( '<a href="%s" target="_blank">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_PRO_UPGRADE_URL, 'settings-link', true ), __( 'Purchase Pro', 'stripe' ) );
+			$pro_link = sprintf( '<a href="%s" target="_blank">%s</a>', Stripe_Checkout_Admin::ga_campaign_url( SIMPAY_PRO_UPGRADE_URL, 'settings-link', true ), __( 'Upgrade to Pro', 'stripe' ) );
 			array_push( $links, $pro_link );
 
 			return $links;
