@@ -148,6 +148,7 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			$arr[] = $submenu['simpay'][4];
 			$arr[] = $submenu['simpay'][1];
 			$arr[] = $submenu['simpay'][5];
+			$arr[] = $submenu['simpay'][6];
 
 			$submenu['simpay'] = $arr;
 

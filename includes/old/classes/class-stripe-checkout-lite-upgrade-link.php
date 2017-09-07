@@ -35,7 +35,7 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade_Link' ) ) {
 			global $base_class;
 			
 			$page_hook = add_submenu_page( 
-					$base_class->plugin_slug, 
+					'simpay',
 					__( 'Upgrade to Pro', 'stripe' ),
 					__( 'Upgrade to Pro', 'stripe' ),
 					'manage_options', 
