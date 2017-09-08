@@ -112,7 +112,7 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 2.0.2 - September 6, 2017 =
+= 2.0.2 - September 8, 2017 =
 
 * Fix: Check if Pro is activated before running.
 
