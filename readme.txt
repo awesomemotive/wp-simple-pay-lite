@@ -114,7 +114,7 @@ We'd love your help! Here's a few things you can do:
 
 = 2.0.2 - September 8, 2017 =
 
-* Fix: Prevent fatal error if WP Simple Pay Pro is active.
+* Fix: Prevent activation when WP Simple Pay Pro is active to avoid a fatal error.
 
 = 2.0.1 - September 5, 2017 =
 
