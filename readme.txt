@@ -389,7 +389,7 @@ We'd love your help! Here's a few things you can do:
 
 == Upgrade Notice ==
 
-= 2.0.0 =
+= 2.0.2 =
 
 The payment form builder has been completely redone and should be much easier to use.
 
