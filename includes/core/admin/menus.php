@@ -186,7 +186,7 @@ class Menus {
 		} );
 
 		$page_hook = add_submenu_page( 'simpay', __( 'Upgrade to Pro', 'stripe' ), __( 'Upgrade to Pro', 'stripe' ), 'manage_options', 'simpay_upgrade', function() {
-			wp_redirect( simpay_ga_url( simpay_get_url( 'upgrade' ), true ), 301 );
+			wp_redirect( simpay_ga_url( simpay_get_url( 'upgrade' ), '',true ), 301 );
 			exit;
 		} );
 
@@ -214,7 +214,7 @@ class Menus {
 			$links             = array();
 			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
 			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
-			$upgrade_link  = '<a href="' . simpay_get_url( 'upgrade' ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
+			$upgrade_link  = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), '',false ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
 
 			array_push( $action_links, $upgrade_link );
 
