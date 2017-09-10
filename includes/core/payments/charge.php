@@ -48,19 +48,6 @@ class Charge {
 		// Fall back to USD if no currency set
 		$currency = $this->payment->get_currency();
 
-		// Check for a tax amount
-		if ( $simpay_form->tax_percent > 0 ) {
-
-			if ( isset ( $_POST['simpay_tax_amount'] ) && ! empty( $_POST['simpay_tax_amount' ] ) ) {
-
-				$simpay_form->tax_amount = html_entity_decode( simpay_formatted_amount( absint( $_POST['simpay_tax_amount'] ) ) );
-
-				// Update the metadata so these values can be displayed somewhere
-				$this->payment->metadata['simpay_tax_amount']  = $simpay_form->tax_amount;
-				$this->payment->metadata['simpay_tax_percent'] = $simpay_form->tax_percent;
-			}
-		}
-
 		// Charge arguments to be sent to Stripe
 		$charge_args = array(
 			'amount'      => $this->payment->amount, // amount in cents, again
