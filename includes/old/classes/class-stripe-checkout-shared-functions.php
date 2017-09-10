@@ -40,7 +40,7 @@ if ( ! class_exists( 'Stripe_Checkout_Functions' ) ) {
 		 */
 		public function load_library() {
 			if ( ! class_exists( 'Stripe\Stripe' ) ) {
-				require_once( SC_DIR_PATH . 'vendor/stripe/stripe-php/init.php' );
+				require_once( SIMPLE_PAY_PATH . 'vendor/stripe/stripe-php/init.php' );
 
 				// Action hook to run immediately after Stripe PHP library is loaded.
 				do_action( 'simpay_stripe_php_loaded' );
