@@ -67,7 +67,7 @@ class Stripe_API {
 		}
 
 		// Send our plugin info over with the API request
-		Stripe::setAppInfo( SIMPLE_PAY_ITEM_NAME, SIMPLE_PAY_VERSION, SIMPLE_PAY_STORE_URL );
+		Stripe::setAppInfo( SIMPLE_PAY_PLUGIN_NAME, SIMPLE_PAY_VERSION, SIMPLE_PAY_STORE_URL );
 
 		// Send the API info over
 		Stripe::setApiVersion( SIMPLE_PAY_STRIPE_API_VERSION );
