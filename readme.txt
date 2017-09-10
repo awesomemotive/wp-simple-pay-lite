@@ -112,6 +112,11 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 2.0.3 - TODO =
+
+* Fix: Change directory path for legacy Stripe PHP library inclusion.
+* Fix: Undefined PHP constant that could sometimes cause a PHP warning.
+
 = 2.0.2 - September 8, 2017 =
 
 * Fix: Prevent activation when WP Simple Pay Pro is active to avoid a fatal error.
