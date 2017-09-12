@@ -115,6 +115,8 @@ class Payment {
 		$this->customer    = new Customer( $this );
 		$this->customer_id = $this->customer->get_id();
 
+		do_action( 'simpay_process_form', $this );
+
 		// Create the charge
 		$this->charge = apply_filters( 'simpay_charge', new Charge( $this ), $this );
 	}
