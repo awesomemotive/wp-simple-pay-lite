@@ -283,7 +283,9 @@ class Pages {
 				<?php
 					$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'promos/views/sidebar.php' );
 
-					include_once( $sidebar );
+					if ( ! empty( $sidebar ) ) {
+						include_once( $sidebar );
+					}
 				?>
 			</div>
 
