@@ -44,10 +44,21 @@ class Setup {
 
 			$id = intval( $_POST['simpay_form_id'] );
 
-			$simpay_form = new Default_Form( $id );
+			$simpay_form = apply_filters( 'simpay_form_view','', $id );
+
+			if ( empty( $simpay_form ) ) {
+				$simpay_form =  new Default_Form( $id );
+			}
 
 			if ( $simpay_form instanceof Form ) {
-				new Payment( $simpay_form, 'charge' );
+
+				$action = 'charge';
+
+				$payment = apply_filters( 'simpay_payment_handler', '', $simpay_form, $action );
+
+				if ( empty( $payment ) ) {
+					new Payment( $simpay_form, $action );
+				}
 			}
 		}
 	}

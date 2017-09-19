@@ -135,8 +135,8 @@ class Assets {
 	 */
 	public function register() {
 
-		$this->styles  = apply_filters( 'simpay_before_register_admin_styles', $this->styles );
-		$this->scripts = apply_filters( 'simpay_before_register_admin_scripts', $this->scripts );
+		$this->styles  = apply_filters( 'simpay_before_register_admin_styles', $this->styles, $this->min );
+		$this->scripts = apply_filters( 'simpay_before_register_admin_scripts', $this->scripts, $this->min );
 
 		if ( ! empty( $this->styles ) && is_array( $this->styles ) ) {
 			foreach ( $this->styles as $style => $values ) {

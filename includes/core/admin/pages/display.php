@@ -119,9 +119,6 @@ class Display extends Admin_Page {
 		$html .= '<p><code>{total-amount}</code> - ' . esc_html__( 'The total price of the payment.', 'stripe' ) . '</p>';
 		$html .= '<p><code>{charge-date}</code> - ' . esc_html__( 'The charge date returned from Stripe.', 'stripe' ) . '</p>';
 		$html .= '<p><code>{charge-id}</code> - ' . esc_html__( 'The unique charge ID returned from Stripe.', 'stripe' ) . '</p>';
-
-		do_action( 'simpay_after_payment_details_tag_descriptions' );
-
 		$html .= '</div>';
 
 		return apply_filters( 'simpay_payment_details_tag_descriptions', $html );

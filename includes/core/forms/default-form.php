@@ -107,7 +107,7 @@ class Default_Form extends Form {
 			}
 		}
 
-		return $html;
+		return apply_filters( 'simpay_custom_fields', $html );
 	}
 
 	/**

@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Payment {
 
 	// Private
-	private $token = null;
-	private $email = null;
+	protected $token = null;
+	protected $email = null;
 
 	// Public
 	public $customer = null;
@@ -118,7 +118,11 @@ class Payment {
 		do_action( 'simpay_process_form', $this );
 
 		// Create the charge
-		$this->charge = apply_filters( 'simpay_charge', new Charge( $this ), $this );
+		$charge = apply_filters( 'simpay_charge', '' );
+
+		if ( empty( $charge ) ) {
+			new Charge( $this );
+		}
 	}
 
 	/**

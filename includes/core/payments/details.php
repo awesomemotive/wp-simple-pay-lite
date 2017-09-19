@@ -153,8 +153,10 @@ class Details {
 		switch ( $type ) {
 			case 'one_time':
 				return isset( $display_options['payment_confirmation_messages']['one_time_payment_details'] ) ? $display_options['payment_confirmation_messages']['one_time_payment_details'] : simpay_get_editor_default( 'one_time' );
+			case has_filter( 'simpay_get_editor_content' ):
+				return apply_filters( 'simpay_get_editor_content', '', $type, $display_options );
 			default:
-				return apply_filters( 'simpay_get_editor_content', '', $display_options );
+				return '';
 		}
 	}
 }

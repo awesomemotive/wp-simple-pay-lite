@@ -115,7 +115,11 @@ class Shortcodes {
 
 			if ( $form_post && 'publish' === $form_post->post_status ) {
 
-				$simpay_form = apply_filters( 'simpay_form_view', new Default_Form( $id ), $id );
+				$simpay_form = apply_filters( 'simpay_form_view','', $id );
+
+				if ( empty( $simpay_form ) ) {
+					$simpay_form =  new Default_Form( $id );
+				}
 
 				if ( $simpay_form instanceof Form ) {
 
@@ -154,7 +158,11 @@ class Shortcodes {
 
 			if ( $form_post && current_user_can( 'manage_options' ) ) {
 
-				$simpay_form = apply_filters( 'simpay_form_view', new Default_Form( $id ), $id );
+				$simpay_form = apply_filters( 'simpay_form_view','', $id );
+
+				if ( empty( $simpay_form ) ) {
+					$simpay_form =  new Default_Form( $id );
+				}
 
 				if ( $simpay_form instanceof Form ) {
 
@@ -180,11 +188,12 @@ class Shortcodes {
 		$charge_id       = Session::get( 'charge_id' );
 		$customer_id     = Session::get( 'customer_id' );
 
-		if ( empty( $charge_id ) ) {
+		// TODO: We need to find a better place for this
+		/*if ( empty( $charge_id ) ) {
 			echo '<p>' . esc_html__( 'An error occurred, but your charge may have went through. Please contact the site admin.', 'stripe' ) . '</p>';
 
 			return '';
-		}
+		}*/
 
 		global $simpay_form;
 
@@ -194,13 +203,22 @@ class Shortcodes {
 			return '';
 		}
 
-		$payment = new Payment( $simpay_form );
+		$action = '';
+		$payment = apply_filters( 'simpay_payment_handler', '', $simpay_form, $action );
 
-		$payment->set_charge( $charge_id );
+		if ( empty( $payment ) ) {
+			$payment = new Payment( $simpay_form, $action );
+		}
+
+		if ( ! empty( $charge_id ) ) {
+			$payment->set_charge( $charge_id );
+		}
 
 		if ( $customer_id ) {
 			$payment->set_customer( $customer_id );
 		}
+
+		do_action( 'simpay_payment_receipt_html', $payment );
 
 		$html = new Payments\Details( $payment );
 

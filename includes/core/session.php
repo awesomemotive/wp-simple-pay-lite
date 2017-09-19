@@ -158,9 +158,7 @@ class Session {
 		global $wp_session;
 
 		// Our custom list of sessions to remove
-		$wp_session['simpay_multi_plan_setup_fee'] = '';
 		$wp_session['customer_id']                 = '';
-		$wp_session['subscription_id']             = '';
 		$wp_session['charge_id']                   = '';
 		$wp_session['simpay_form']                 = '';
 		unset( $wp_session['simpay_errors'] );
