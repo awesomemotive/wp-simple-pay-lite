@@ -3,7 +3,7 @@
  * Plugin Name: WP Simple Pay Lite
  * Plugin URI:  https://wpsimplepay.com
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes. **Lite Version**
- * Author: Moonstone Media
+ * Author: WP Simple Pay
  * URI:  https://wpsimplepay.com
  * Version: 2.0.3
  * Text Domain: simple-pay
