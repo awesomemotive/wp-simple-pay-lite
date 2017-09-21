@@ -247,24 +247,20 @@
 
 #simpay-global-settings .simpay-upgrade-btn,
 #simpay-form-settings .simpay-upgrade-btn {
-  background-color: #5cb85c;
+  background-color: #428bca;
+  border: 1px solid #2d6ca2;
   border-radius: 5px;
   color: #fff;
   display: inline-block;
-  font-family: sans-serif;
-  font-size: 1em;
-  font-weight: bold;
-  padding: 5px;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 5px 10px;
   text-decoration: none;
   white-space: nowrap; }
   #simpay-global-settings .simpay-upgrade-btn:hover,
   #simpay-form-settings .simpay-upgrade-btn:hover {
-    background-color: #449d44; }
-  #simpay-global-settings .simpay-upgrade-btn.simpay-upgrade-btn-large,
-  #simpay-form-settings .simpay-upgrade-btn.simpay-upgrade-btn-large {
-    font-weight: normal;
-    font-size: 14px;
-    padding: 7px 15px; }
+    background-color: #037ad0;
+    border: 1px solid #025794; }
 
 #simpay-get-shortcode input.simpay-shortcode {
   border: 1px solid #ddd; }
