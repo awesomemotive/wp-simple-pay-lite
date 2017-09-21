@@ -662,12 +662,12 @@ function simpay_get_editor_default( $editor ) {
 			$template .= '<strong>' . esc_html__( 'Purchased From:', 'stripe' ) . '</strong>' . ' {company-name}' . "\n";
 			$template .= '<strong>' . esc_html__( 'Payment Date:', 'stripe' ) . '</strong>' . ' {charge-date}' . "\n";
 			$template .= '<strong>' . esc_html__( 'Payment Amount: ', 'stripe' ) . '</strong>' . '{total-amount}' . "\n";
-			break;
-		default:
 			return $template;
+		case has_filter( 'simpay_editor_template' ):
+			return apply_filters( 'simpay_editor_template', '', $editor );
+		default:
+			return '';
 	}
-
-	return apply_filters( 'simpay_editor_template', $template, $editor );
 }
 
 /**
