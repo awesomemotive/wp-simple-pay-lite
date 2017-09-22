@@ -75,7 +75,7 @@ class Settings {
 				<div id="subscription-options-settings-panel" class="simpay-panel simpay-panel-hidden">
 					<?php
 
-					$subscription_options_template = apply_filters( 'simpay_subscription_options_template', 'views/tabs/tab-subscription-options.php' );
+					$subscription_options_template = apply_filters( 'simpay_subscription_options_template', SIMPLE_PAY_INC . 'core/admin/metaboxes/views/tabs/tab-subscription-options.php' );
 
 					include_once( $subscription_options_template );
 
