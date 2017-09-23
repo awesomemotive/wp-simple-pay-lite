@@ -256,7 +256,7 @@ function simpay_ga_url( $base_url, $content, $raw = false ) {
  */
 function simpay_pro_upgrade_url( $content ) {
 
-	return simpay_ga_url( SIMPLE_PAY_STORE_URL . 'lite-vs-pro/', $content );
+	return apply_filters( 'simpay_upgrade_link', simpay_ga_url(SIMPLE_PAY_STORE_URL . 'lite-vs-pro/', $content ) );
 }
 
 /**
