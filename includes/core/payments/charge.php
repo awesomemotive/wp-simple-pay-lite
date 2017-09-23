@@ -78,7 +78,7 @@ class Charge {
 
 		if ( false !== $this->charge ) {
 			// Fires immediately after Stripe charge object created.
-			do_action( 'simpay_charge_created', $this->charge );
+			do_action( 'simpay_charge_created', $this->charge, $this->payment->metadata );
 
 			// Update WP Session variables to store the form ID and the charge ID
 			Session::add( 'form_id', $simpay_form->id );
