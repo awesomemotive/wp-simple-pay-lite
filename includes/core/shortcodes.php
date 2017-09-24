@@ -188,12 +188,13 @@ class Shortcodes {
 		$charge_id       = Session::get( 'charge_id' );
 		$customer_id     = Session::get( 'customer_id' );
 
-		// TODO: We need to find a better place for this
-		/*if ( empty( $charge_id ) ) {
+		$session_error = apply_filters( 'simpay_session_error', ( empty( $charge_id ) ? true : false ) );
+
+		if ( $session_error ) {
 			echo '<p>' . esc_html__( 'An error occurred, but your charge may have went through. Please contact the site admin.', 'stripe' ) . '</p>';
 
 			return '';
-		}*/
+		}
 
 		global $simpay_form;
 
