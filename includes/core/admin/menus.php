@@ -212,11 +212,14 @@ class Menus {
 		if ( self::$plugin == $file ) {
 
 			$links             = array();
-			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
-			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
-			$upgrade_link      = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" style="color:#3db634;" target="_blank">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
+			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'simple-pay' ) . '</a>';
+			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'simple-pay' ) . '</a>';
 
-			array_push( $action_links, $upgrade_link );
+			if ( ! defined( 'SIMPLE_PAY_ITEM_NAME' ) ) {
+				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'simple-pay' ) . '</a>';
+
+				array_push( $action_links, $upgrade_link );
+			}
 
 			return apply_filters( 'simpay_plugin_action_links', array_merge( $links, $action_links ) );
 		}
