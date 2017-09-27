@@ -212,11 +212,11 @@ class Menus {
 		if ( self::$plugin == $file ) {
 
 			$links             = array();
-			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'simple-pay' ) . '</a>';
-			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'simple-pay' ) . '</a>';
+			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
+			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
 
 			if ( ! defined( 'SIMPLE_PAY_ITEM_NAME' ) ) {
-				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'simple-pay' ) . '</a>';
+				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
 
 				array_push( $action_links, $upgrade_link );
 			}

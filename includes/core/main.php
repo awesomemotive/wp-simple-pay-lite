@@ -4,6 +4,7 @@ namespace SimplePay\Core;
 
 use SimplePay\Core\Forms\Preview;
 use SimplePay\Core\Payments\Setup;
+use SimplePay\Core\Payments\Stripe_API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -147,6 +148,8 @@ final class SimplePay {
 
 		require_once( 'functions/shared.php' );
 
+		new Stripe_API();
+
 		global $wp_session;
 
 		// Load WP Session
@@ -230,6 +233,9 @@ final class SimplePay {
 				break;
 			case 'upgrade':
 				$url = 'https://wpsimplepay.com/lite-vs-pro/';
+				break;
+			case 'my-account':
+				$url = 'https://wpsimplepay.com/my-account/';
 				break;
 			case 'home' :
 			default :

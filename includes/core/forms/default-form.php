@@ -103,11 +103,14 @@ class Default_Form extends Form {
 					case 'payment_button':
 						$html .= Fields\Payment_Button::html( $v );
 						break;
+					case has_filter( 'simpay_custom_fields' ):
+						$html .= apply_filters( 'simpay_custom_fields', $html, $v );
+						break;
 				}
 			}
 		}
 
-		return apply_filters( 'simpay_custom_fields', $html );
+		return $html;
 	}
 
 	/**
@@ -157,8 +160,6 @@ class Default_Form extends Form {
 
 		$integers['integers'] = array(
 			'amount'            => round( $this->amount ),
-			'feePercent'        => floatval( apply_filters( 'simpay_fee_percent', 0 ) ),
-			'feeAmount'         => floatval( apply_filters( 'simpay_fee_amount', 0 ) ),
 		);
 
 		$strings['strings'] = array(

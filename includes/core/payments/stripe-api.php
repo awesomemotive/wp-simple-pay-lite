@@ -27,6 +27,12 @@ class Stripe_API {
 	 */
 	public function __construct() {
 
+		// Send our plugin info over with the API request
+		Stripe::setAppInfo( SIMPLE_PAY_PLUGIN_NAME, SIMPLE_PAY_VERSION, SIMPLE_PAY_STORE_URL );
+
+		// Send the API info over
+		Stripe::setApiVersion( SIMPLE_PAY_STRIPE_API_VERSION );
+
 	}
 
 	/**
@@ -65,12 +71,6 @@ class Stripe_API {
 		if ( ! self::$api_set ) {
 			self::set_api_key();
 		}
-
-		// Send our plugin info over with the API request
-		Stripe::setAppInfo( SIMPLE_PAY_PLUGIN_NAME, SIMPLE_PAY_VERSION, SIMPLE_PAY_STORE_URL );
-
-		// Send the API info over
-		Stripe::setApiVersion( SIMPLE_PAY_STRIPE_API_VERSION );
 
 		try {
 

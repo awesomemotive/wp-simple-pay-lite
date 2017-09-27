@@ -34,12 +34,12 @@ class Payment_Button extends Custom_Field {
 
 		// Get the button style from the global display settings
 		$general_options = get_option( 'simpay_settings_general' );
-		$button_style    = isset( $general_options['styles']['payment_button_style'] ) && 'stripe' === $general_options['styles']['payment_button_style'] ? 'stripe-button-el' : '';
+		$button_style    = isset( $general_options['styles']['payment_button_style'] ) && 'stripe' === $general_options['styles']['payment_button_style'] ? 'stripe-button-el' : 'none';
 
 		$id = simpay_dashify( $id );
 
 		$html .= '<div class="simpay-form-control">';
-		$html .= '<button id="' . esc_attr( $id ) . '" class="simpay-payment-btn ' . esc_attr( $button_style ) . '"><span>' . esc_html( $text ) . '</span></button>';
+		$html .= '<button id="' . esc_attr( $id ) . '" class="' . self::get_payment_button_classes( $button_style ) . '"><span>' . esc_html( $text ) . '</span></button>';
 
 		// Test mode badge placement
 		if ( simpay_is_test_mode() ) {
@@ -49,5 +49,22 @@ class Payment_Button extends Custom_Field {
 		$html .= '</div>';
 
 		return $html;
+	}
+
+	// Helper method for adding custom CSS classes to payment button.
+	public static function get_payment_button_classes( $button_style ) {
+		// Set default class from plugin.
+		$classes   = array();
+		$classes[] = 'simpay-payment-btn';
+
+		// Also add default CSS class from Stripe unless option set to "none".
+		if ( 'none' != $button_style ) {
+			$classes[] = 'stripe-button-el';
+		}
+
+		// Allow filtering of classes and then return what's left.
+		$classes = apply_filters( 'simpay_payment_button_class', $classes );
+
+		return trim( implode( ' ', array_map( 'trim', array_map( 'sanitize_html_class', array_unique( $classes ) ) ) ) );
 	}
 }
