@@ -48,7 +48,7 @@ class Settings {
 				</div>
 
 				<!-- General Options Tab -->
-				<div id="general-options-settings-panel" class="simpay-panel">
+				<div id="general-options-settings-panel" class="simpay-panel simpay-panel-hidden">
 					<?php
 
 					$general_options_template = apply_filters( 'simpay_general_options_template', 'views/tabs/tab-general-options.php' );
