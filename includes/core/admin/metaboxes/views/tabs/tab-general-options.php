@@ -20,9 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<td>
 				<?php
 
-				// Classes
-				$classes = array();
-
 				simpay_print_field( array(
 					'type'        => 'radio',
 					'name'        => '_success_redirect_type',
@@ -46,10 +43,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				simpay_print_field( array(
 					'type'        => 'select',
+					'page_select' => 'page_select',
 					'name'        => '_success_redirect_page',
 					'id'          => '_success_redirect_page',
-					'class'       => $classes,
-					'options'     => array( 'test' => 'test' ),
 				) );
 
 				?>
