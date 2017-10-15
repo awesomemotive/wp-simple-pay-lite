@@ -26,12 +26,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'id'          => '_success_redirect_type',
 					'class'       => array(),
 					'options'     => array(
-						'default' => __( 'Default', 'stripe' ),
+						'default'  => __( 'Default', 'stripe' ),
 						'page'     => __( 'Page', 'stripe' ),
 						'redirect' => __( 'Redirect', 'stripe' ),
 					),
 					'inline'      => 'inline',
-					'default'     => 'page',
+					'default'     => 'default',
+					'value'       => 'default', // TODO: Don't hardcode this in.
 				) );
 				?>
 			</td>
