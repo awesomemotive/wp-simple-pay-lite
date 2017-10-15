@@ -47,6 +47,20 @@ class Settings {
 					?>
 				</div>
 
+				<!-- General Options Tab -->
+				<div id="general-options-settings-panel" class="simpay-panel">
+					<?php
+
+					$general_options_template = apply_filters( 'simpay_general_options_template', 'views/tabs/tab-general-options.php' );
+
+					if ( ! empty( $general_options_template ) ) {
+						include_once( $general_options_template );
+					}
+
+					do_action( 'simpay_form_settings_meta_general_options_panel', $post->ID );
+					?>
+				</div>
+
 				<!-- On-Page Form Display Options Tab -->
 				<div id="form-display-settings-panel" class="simpay-panel simpay-panel-hidden">
 					<?php
@@ -104,6 +118,12 @@ class Settings {
 				'label'  => esc_html__( 'Payment Options', 'stripe' ),
 				'target' => 'payment-options-settings-panel',
 				'class'  => array( 'active' ),
+				'icon'   => '',
+			),
+			'general_options' => array(
+				'label'  => esc_html__( 'General Options', 'stripe' ),
+				'target' => 'general-options-settings-panel',
+				'class'  => array(),
 				'icon'   => '',
 			),
 			'form_display'         => array(
