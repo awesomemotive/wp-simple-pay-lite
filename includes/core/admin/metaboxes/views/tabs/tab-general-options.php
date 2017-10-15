@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					),
 					'inline'      => 'inline',
 					'default'     => 'default',
-					'value'       => 'default', // TODO: Don't hardcode this in.
+					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_type', 'default' ),
 				) );
 				?>
 			</td>
@@ -48,6 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'page_select' => 'page_select',
 					'name'        => '_success_redirect_page',
 					'id'          => '_success_redirect_page',
+					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_page', '' ),
 				) );
 
 				?>
@@ -64,8 +65,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'subtype'     => 'text',
 					'name'        => '_success_redirect_url',
 					'id'          => '_success_redirect_url',
-					'class'       => $classes,
-					'options'     => array(),
+					'class'       => array(),
+					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_url', '' ),
 				) );
 
 				?>

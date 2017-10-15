@@ -215,6 +215,20 @@ class Settings {
 		}
 		update_post_meta( $post_id, '_amount', $amount );
 
+		/** General Options **/
+
+		// Success Redirect Type
+		$success_redirect_type = isset( $_POST['_success_redirect_type'] ) ? esc_attr( $_POST['_success_redirect_type'] ) : 'default';
+		update_post_meta( $post_id, '_success_redirect_type', $success_redirect_type );
+
+		// Success Redirect Page
+		$success_redirect_page = isset( $_POST['_success_redirect_page'] ) ? esc_attr( $_POST['_success_redirect_page'] ) : '';
+		update_post_meta( $post_id, '_success_redirect_page', $success_redirect_page );
+
+		// Success Redirect URL
+		$success_redirect_url = isset( $_POST['_success_redirect_url'] ) ? esc_url( $_POST['_success_redirect_url'] ) : '';
+		update_post_meta( $post_id, '_success_redirect_url', $success_redirect_url );
+
 		// Verify Zip/Postal Code
 		$verify_zip = isset( $_POST['_verify_zip'] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_verify_zip', $verify_zip );
