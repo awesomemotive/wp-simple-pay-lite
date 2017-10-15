@@ -108,6 +108,7 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
+							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>pk_test</code>',
 						),
 						'secret_key'      => array(
 							'title'   => esc_html__( 'Test Secret Key', 'stripe' ),
@@ -119,6 +120,7 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
+							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>sk_test</code>',
 						),
 					);
 				} elseif ( 'live_keys' == $section ) {
@@ -134,6 +136,7 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
+							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>pk_live</code>',
 						),
 						'secret_key'      => array(
 							'title'   => esc_html__( 'Live Secret Key', 'stripe' ),
@@ -145,6 +148,7 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
+							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>sk_live</code>',
 						),
 					);
 				}

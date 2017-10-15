@@ -287,7 +287,13 @@ class WP_List_Table {
 			$args['total_pages'] = ceil( $args['total_items'] / $args['per_page'] );
 
 		// Redirect if page number is invalid and headers are not already sent.
-		if ( ! headers_sent() && ! wp_doing_ajax() && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
+		if ( function_exists( 'wp_doing_ajax' ) ) {
+			$doing_ajax = wp_doing_ajax();
+		} else {
+			$doing_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
+		}
+
+		if ( ! headers_sent() && ! $doing_ajax && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
 			wp_redirect( add_query_arg( 'paged', $args['total_pages'] ) );
 			exit;
 		}

@@ -31,7 +31,6 @@ class Default_Form extends Form {
 		// Construct our base form from the parent class
 		parent::__construct( $id );
 
-		// Set our script variables for this form last
 		add_action( 'wp_footer', array( $this, 'set_script_variables' ), 0 );
 	}
 
@@ -46,6 +45,8 @@ class Default_Form extends Form {
 				'amount' => $this->total_amount,
 			), $this->get_stripe_script_variables() ),
 		);
+
+		$temp = apply_filters( 'simpay_form_' . absint( $this->id ) . '_script_variables', $temp, $this->id );
 
 		// Add this temp script variables to our assets so if multiple forms are on the page they will all be loaded at once and be specific to each form
 		Assets::get_instance()->script_variables( $temp );
@@ -168,6 +169,6 @@ class Default_Form extends Form {
 
 		$form_variables = array_merge( $integers, $strings );
 
-		return apply_filters( 'simpay_form_script_variables', $form_variables );
+		return $form_variables;
 	}
 }

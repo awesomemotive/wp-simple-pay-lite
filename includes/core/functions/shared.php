@@ -288,8 +288,7 @@ function simpay_get_secret_key() {
 	$test_mode = simpay_is_test_mode();
 
 	if ( ! empty( $simpay_form ) ) {
-		$test_secret_key = $simpay_form->test_secret_key;
-		$live_secret_key = $simpay_form->live_secret_key;
+		return $simpay_form->secret_key;
 	} else {
 
 		$settings = get_option( 'simpay_settings_keys' );
@@ -319,8 +318,7 @@ function simpay_get_publishable_key() {
 	$test_mode = simpay_is_test_mode();
 
 	if ( ! empty( $simpay_form ) ) {
-		$test_publishable_key = $simpay_form->test_publishable_key;
-		$live_publishable_key = $simpay_form->live_publishable_key;
+		return $simpay_form->publishable_key;
 	} else {
 
 		$settings = get_option( 'simpay_settings_keys' );
