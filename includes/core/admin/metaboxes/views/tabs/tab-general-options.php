@@ -24,8 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'type'        => 'radio',
 					'name'        => '_success_redirect_type',
 					'id'          => '_success_redirect_type',
-					'class'       => $classes,
+					'class'       => array(),
 					'options'     => array(
+						'default' => __( 'Default', 'stripe' ),
 						'page'     => __( 'Page', 'stripe' ),
 						'redirect' => __( 'Redirect', 'stripe' ),
 					),
