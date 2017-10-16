@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_success_redirect_type"><?php esc_html_e( 'Confirmation Type', 'stripe' ); ?></label>
+				<label for="_success_redirect_type"><?php esc_html_e( 'Payment Success Page', 'stripe' ); ?></label>
 			</th>
 			<td>
 				<?php
@@ -51,6 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'name'        => '_success_redirect_page',
 					'id'          => '_success_redirect_page',
 					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_page', '' ),
+					'description' => __( 'Choose a page from your site to redirect to after a successful transaction.', 'stripe' ),
 				) );
 
 				?>
@@ -67,8 +68,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'subtype'     => 'text',
 					'name'        => '_success_redirect_url',
 					'id'          => '_success_redirect_url',
-					'class'       => array(),
+					'class'       => array(
+						'simpay-field-text',
+					),
 					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_url', '' ),
+					'description' => __( 'Enter a custom redirect URL for successful transactions.', 'stripe' ),
 				) );
 
 				?>
