@@ -82,3 +82,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tbody>
 	</table>
 
+<?php do_action( 'simpay_admin_after_general_options' );
