@@ -182,7 +182,7 @@ class Payment {
 
 		// With the way our Stripe API error catching works if we made it this far then we should be successful.
 
-		if ( has_filter( 'simpay_form_' . $simpay_form->id . '_payment_success_page' ) ) {
+		if ( has_filter( 'simpay_form_' . $simpay_form->id . '_payment_success_page' ) || 'redirect' === simpay_get_saved_meta( $simpay_form->id, '_success_redirect_type' ) ) {
 			wp_redirect( $simpay_form->payment_success_page );
 			exit;
 		} else {

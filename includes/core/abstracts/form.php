@@ -182,7 +182,7 @@ abstract class Form {
 
 		// Failure Page
 		$payment_failure_page       = simpay_get_global_setting( 'failure_page' );
-		$this->payment_failure_page = simpay_get_filtered( 'payment_failure_page', $this->get_redirect_url( $payment_failure_page ), $this->id );
+		$this->payment_failure_page = simpay_get_filtered( 'payment_failure_page', $this->get_redirect_url( $payment_failure_page, true ), $this->id );
 
 		$this->locale      = simpay_get_filtered( 'locale', simpay_get_global_setting( 'locale' ), $this->id );
 
@@ -249,8 +249,20 @@ abstract class Form {
 	 *
 	 * @return false|string
 	 */
-	public function get_redirect_url( $page_id ) {
+	public function get_redirect_url( $page_id, $failure_page = false ) {
 
+		// If we are getting success page then check the form settings first
+		if ( ! $failure_page ) {
+			$success_redirect_type = simpay_get_saved_meta( $this->id, '_success_redirect_type' );
+
+			if ( 'page' === $success_redirect_type ) {
+				$page_id = simpay_get_saved_meta( $this->id, '_success_redirect_page' );
+			} elseif ( 'redirect' === $success_redirect_type ) {
+				return esc_url( simpay_get_saved_meta( $this->id, '_success_redirect_url' ) );
+			}
+		}
+
+		// Fallback for using default global setting and for getting the failure page URL
 		if ( empty( $page_id ) ) {
 			return '';
 		}
