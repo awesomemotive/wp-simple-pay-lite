@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'options'     => array(
 						'default'  => __( 'Default', 'stripe' ),
 						'page'     => __( 'Page', 'stripe' ),
-						'redirect' => __( 'Redirect', 'stripe' ),
+						'redirect' => __( 'URL', 'stripe' ),
 					),
 					'inline'      => 'inline',
 					'default'     => 'default',
