@@ -56,6 +56,10 @@ var spAdmin = {};
 				spAdmin.handleSubmitOnEnter( $( this ) );
 			} );
 
+			spFormSettings.on( 'change.simpayMultiToggle', '.simpay-multi-toggle input[type="radio"]', function() {
+				spAdmin.initMultiToggle( $( this ) );
+			} );
+
 			body.trigger( 'simpayAdminInit' );
 		},
 
@@ -243,6 +247,21 @@ var spAdmin = {};
 			} else {
 				elem.closest( '.simpay-panel-field' ).parent().find( showElem ).hide();
 			}
+		},
+
+		initMultiToggle: function( elem ) {
+
+			var selectedId = elem.attr( 'id' );
+
+			// Hide all options first. This allows us to show multiple sections with the classes
+			elem.closest( '.simpay-field-radios-inline' ).find( 'input[type="radio"]' ).each( function( currIndex ) {
+
+				// $( this ) in this context is the current iteration, not what is set to elem. so we need to keep it here
+				spFormSettings.find( '.toggle-' + $( this ).attr( 'id' ) ).hide();
+			} );
+
+			// Show elements that have the correct class
+			spFormSettings.find( '.toggle-' + selectedId ).show();
 		}
 	};
 

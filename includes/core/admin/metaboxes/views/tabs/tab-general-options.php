@@ -15,16 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_amount"><?php esc_html_e( 'Confirmation Type', 'stripe' ); ?></label>
+				<label for="_success_redirect_type"><?php esc_html_e( 'Confirmation Type', 'stripe' ); ?></label>
 			</th>
 			<td>
 				<?php
+
+				$success_redirect_type = simpay_get_saved_meta( $post->ID, '_success_redirect_type', 'default' );
 
 				simpay_print_field( array(
 					'type'        => 'radio',
 					'name'        => '_success_redirect_type',
 					'id'          => '_success_redirect_type',
-					'class'       => array(),
+					'class'       => array( 'simpay-multi-toggle' ),
 					'options'     => array(
 						'default'  => __( 'Default', 'stripe' ),
 						'page'     => __( 'Page', 'stripe' ),
@@ -32,13 +34,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 					),
 					'inline'      => 'inline',
 					'default'     => 'default',
-					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_type', 'default' ),
+					'value'       => $success_redirect_type,
 				) );
 				?>
 			</td>
 		</tr>
 
-		<tr class="simpay-panel-field">
+		<tr class="simpay-panel-field toggle-_success_redirect_type-page <?php echo 'page' !== $success_redirect_type ? 'simpay-panel-hidden' : ''; ?>">
 			<th>&nbsp;</th>
 			<td>
 				<?php
@@ -55,7 +57,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 
-		<tr class="simpay-panel-field">
+		<tr class="simpay-panel-field toggle-_success_redirect_type-redirect <?php echo 'redirect' !== $success_redirect_type ? 'simpay-panel-hidden' : ''; ?>">
 			<th>&nbsp;</th>
 			<td>
 				<?php
