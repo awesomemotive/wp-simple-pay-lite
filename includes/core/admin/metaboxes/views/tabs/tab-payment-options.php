@@ -86,9 +86,9 @@ $position = simpay_get_currency_position();
 					'id'          => '_success_redirect_type',
 					'class'       => array( 'simpay-multi-toggle' ),
 					'options'     => array(
-						'default'  => __( 'Default', 'stripe' ),
-						'page'     => __( 'Page', 'stripe' ),
-						'redirect' => __( 'URL', 'stripe' ),
+						'default'  => __( 'Global Setting', 'stripe' ),
+						'page'     => __( 'Specific Page', 'stripe' ),
+						'redirect' => __( 'Redirect URL', 'stripe' ),
 					),
 					'inline'      => 'inline',
 					'default'     => 'default',
