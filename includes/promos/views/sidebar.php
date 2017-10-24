@@ -1,6 +1,6 @@
 <div class="sidebar-container metabox-holder">
 	<div class="postbox" style="margin-bottom: 0;">
-		<h3 class="wp-ui-primary"><span><?php _e( 'Need to customize further?', 'stripe' ); ?></span></h3>
+		<h3 class="wp-ui-primary"><span><?php _e( 'Upgrade your Payment Forms', 'stripe' ); ?></span></h3>
 		<div class="inside">
 			<div class="main">
 				<p class="sidebar-heading centered">
