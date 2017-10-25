@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 Requires PHP: 5.3
 License: GPLv2 or later
 
@@ -112,7 +112,7 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 2.0.4 - TODO =
+= 2.0.4 - October 25, 2017 =
 
 * Feature: Added option to set the payment success page (or redirect URL) per payment form.
 * Dev: Various structure related improvements.
