@@ -332,7 +332,7 @@ abstract class Form {
 	public function get_stripe_script_variables() {
 
 		// Key is required so we always include it
-		$strings['strings']['key'] = simpay_get_publishable_key();
+		$strings['strings']['key'] = $this->publishable_key;
 
 		// Boolean/dropdown options
 		$bools = array(
