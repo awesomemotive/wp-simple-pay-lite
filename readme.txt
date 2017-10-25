@@ -116,6 +116,7 @@ We'd love your help! Here's a few things you can do:
 
 * Feature: Added option to set the payment success page (or redirect URL) per payment form.
 * Dev: Various structure related improvements.
+* Dev: Better handling of alternate Stripe API keys.
 
 = 2.0.3 - September 10, 2017 =
 
