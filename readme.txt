@@ -114,7 +114,7 @@ We'd love your help! Here's a few things you can do:
 
 = 2.0.4 - TODO =
 
-* Feature: Add form specific options for redirect URLs.
+* Feature: Added option to set the payment success page (or redirect URL) per payment form.
 * Dev: Various structure related improvements.
 
 = 2.0.3 - September 10, 2017 =
