@@ -112,6 +112,10 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 2.0.4 - TODO =
+
+* 
+
 = 2.0.3 - September 10, 2017 =
 
 * Fix: Change directory path for legacy Stripe PHP library inclusion.
