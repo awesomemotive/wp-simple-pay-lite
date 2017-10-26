@@ -93,8 +93,18 @@ $position = simpay_get_currency_position();
 					'inline'      => 'inline',
 					'default'     => 'default',
 					'value'       => $success_redirect_type,
+					// Description set below
 				) );
 				?>
+			</td>
+		</tr>
+
+		<tr class="simpay-panel-field toggle-_success_redirect_type-default <?php echo 'default' !== $success_redirect_type ? 'simpay-panel-hidden' : ''; ?>">
+			<th></th>
+			<td>
+				<p class="description">
+					<?php _e( 'By default, the payment success page indicated in Simple Pay > Settings > General will be used. This option allows you to specify an alternate page or URL for this payment form only.', 'simple-pay' ); ?>
+				</p>
 			</td>
 		</tr>
 
