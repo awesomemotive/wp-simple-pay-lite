@@ -94,6 +94,7 @@ class General extends Admin_Page {
 							'value'       => $this->get_option_value( $section, 'success_page' ),
 							'page_select' => 'page_select',
 							'default'     => $success_default,
+							'class'       => array( 'simpay-chosen-search' ),
 							'description' => sprintf( esc_html__( 'The page customers are sent to after completing a payment. The shortcode %s needs to be on this page. Output configured in the Payment Confirmation settings. This page should be excluded from any site caching.', 'stripe' ), '<code>[simpay_payment_receipt]</code>' ),
 						),
 						'failure_page' => array(
@@ -103,6 +104,7 @@ class General extends Admin_Page {
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-failure-page',
 							'value'       => $this->get_option_value( $section, 'failure_page' ),
 							'page_select' => 'page_select',
+							'class'       => array( 'simpay-chosen-search' ),
 							'default'     => $failure_default,
 							'description' => esc_html__( 'The page customers are sent to after a failed payment.', 'stripe' ),
 						),

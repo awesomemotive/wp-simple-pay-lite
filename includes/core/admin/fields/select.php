@@ -48,6 +48,8 @@ class Select extends Field {
 	 */
 	private $allow_void = false;
 
+	public $class = '';
+
 	/**
 	 * Construct.
 	 *
@@ -76,11 +78,21 @@ class Select extends Field {
 			$this->page_select = true;
 		}
 
+		$classes = isset( $field['class'] ) ? $field['class'] : '';
+		if ( ! empty( $classes ) ) {
+			if ( is_array( $classes ) ) {
+				foreach( $classes as $class ) {
+					$class .= ' ' . $class;
+				}
+			}
+		}
+
+
 		if ( isset( $field['default'] ) ) {
 			$this->default = $field['default'];
 		}
 
-		$this->type_class = $class;
+		$this->class = $class;
 
 		$allow_void       = isset( $field['allow_void'] ) ? $field['allow_void'] : '';
 		$this->allow_void = 'allow_void' == $allow_void ? true : false;
@@ -161,7 +173,7 @@ class Select extends Field {
 			'echo'                  => 1,
 			'name'                  => $this->name,
 			'id'                    => $this->id,
-			'class'                 => 'simpay-chosen-search', // string
+			'class'                 => $this->class, // string
 			'show_option_none'      => null, // string
 			'show_option_no_change' => null, // string
 			'option_none_value'     => null, // string
