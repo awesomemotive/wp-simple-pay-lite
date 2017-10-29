@@ -56,6 +56,11 @@ var spAdmin = {};
 				spAdmin.handleSubmitOnEnter( $( this ) );
 			} );
 
+			// Multi Toggles (like a radio button with multiple-options)
+			spFormSettings.find( '.simpay-multi-toggle input[type="radio"]:checked' ).each( function() {
+				spAdmin.initMultiToggle( $( this ) );
+			} );
+
 			spFormSettings.on( 'change.simpayMultiToggle', '.simpay-multi-toggle input[type="radio"]', function() {
 				spAdmin.initMultiToggle( $( this ) );
 			} );
