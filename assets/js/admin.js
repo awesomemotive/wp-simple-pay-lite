@@ -205,6 +205,9 @@ var spAdmin = {};
 				// Assign current tab element to var from link href attribute.
 				var currentTabEl = $( $( this ).attr( 'href' ) );
 
+				// Set the hash in the URL so after saving we get the same tab
+				location.hash = $( this ).attr( 'href' );
+
 				e.preventDefault();
 
 				// Remove active class from all tabs.
@@ -224,6 +227,11 @@ var spAdmin = {};
 
 			// Auto open tab if in url hash.
 			if ( location.hash.length ) {
+
+				// This prevents the hash being used like an anchor
+				setTimeout( function() {
+					window.scrollTo( 0, 0 );
+				}, 1 );
 
 				activeTabLink = $( 'ul.simpay-tabs a[href="' + location.hash + '"]' );
 
