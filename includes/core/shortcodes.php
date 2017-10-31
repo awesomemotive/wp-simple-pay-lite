@@ -193,7 +193,7 @@ class Shortcodes {
 		if ( $session_error ) {
 			$session_error_message = '<p>' . esc_html__( 'An error occurred, but your charge may have gone through. Please contact the site admin.', 'stripe' ) . '</p>';
 
-			echo apply_filters( 'simpay_maybe_charge_error_message', $session_error_message );
+			echo apply_filters( 'simpay_charge_error_message', $session_error_message );
 
 			return '';
 		}
