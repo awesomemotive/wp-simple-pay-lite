@@ -67,9 +67,9 @@ module.exports = function( grunt ) {
 			files: {
 				src: [
 					'includes/**/*.php',
+					'!includes/core/admin/wp-list-table.php', // Included from core for our use. See https://codex.wordpress.org/Class_Reference/WP_List_Table
 					'stripe-checkout.php',
-					'uninstall.php',
-					'!includes/core/admin/wp-list-table.php' // Include from core for our use. See https://codex.wordpress.org/Class_Reference/WP_List_Table
+					'uninstall.php'
 				],
 				expand: true
 			}
@@ -83,6 +83,7 @@ module.exports = function( grunt ) {
 				files: {
 					src: [
 						'includes/**/*.php',
+						'!includes/core/admin/wp-list-table.php',
 						'stripe-checkout.php',
 						'uninstall.php'
 				    ]
