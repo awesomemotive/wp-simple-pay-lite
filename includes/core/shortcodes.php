@@ -191,7 +191,7 @@ class Shortcodes {
 		$session_error = apply_filters( 'simpay_session_error', ( empty( $charge_id ) ? true : false ) );
 
 		if ( $session_error ) {
-			echo '<p>' . esc_html__( 'An error occurred, but your charge may have went through. Please contact the site admin.', 'stripe' ) . '</p>';
+			echo '<p>' . esc_html__( 'An error occurred, but your charge may have gone through. Please contact the site admin.', 'stripe' ) . '</p>';
 
 			return '';
 		}
