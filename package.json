@@ -10,19 +10,19 @@
     "url": "https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "1.x",
     "grunt-banner": "0.x",
     "grunt-checktextdomain": "1.x",
     "grunt-contrib-clean": "1.x",
     "grunt-contrib-compress": "1.x",
     "grunt-contrib-copy": "1.x",
-    "grunt-contrib-cssmin": "1.x",
+    "grunt-contrib-cssmin": "2.x",
     "grunt-contrib-jshint": "1.x",
-    "grunt-contrib-uglify": "2.x",
+    "grunt-contrib-uglify": "3.x",
     "grunt-contrib-watch": "1.x",
     "grunt-jscs": "3.x",
     "grunt-sass": "2.x",
-    "grunt-wp-i18n": "^1.0.0",
+    "grunt-wp-i18n": "1.x",
     "load-grunt-tasks": "3.x"
   }
 }
