@@ -103,7 +103,7 @@ $position = simpay_get_currency_position();
 			<th></th>
 			<td>
 				<p class="description">
-					<?php _e( 'By default, the payment success page indicated in Simple Pay > Settings > General will be used. This option allows you to specify an alternate page or URL for this payment form only.', 'simple-pay' ); ?>
+					<?php _e( 'By default, the payment success page indicated in Simple Pay > Settings > General will be used. This option allows you to specify an alternate page or URL for this payment form only.', 'stripe' ); ?>
 				</p>
 			</td>
 		</tr>

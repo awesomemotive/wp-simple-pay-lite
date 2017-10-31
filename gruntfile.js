@@ -67,9 +67,9 @@ module.exports = function( grunt ) {
 			files: {
 				src: [
 					'includes/**/*.php',
-					'stripe-checkout.php', // TODO This needed and/or correct?
+					'stripe-checkout.php',
 					'uninstall.php',
-					'!includes/admin/wp-list-table.php' // TODO This needed and/or correct?
+					'!includes/admin/wp-list-table.php'
 				],
 				expand: true
 			}
@@ -77,15 +77,13 @@ module.exports = function( grunt ) {
 
 		addtextdomain: {
 			options: {
-				textdomain: 'stripe',    // Project text domain.
-				// TODO This correct?
-				updateDomains: [ 'simple-pay' ]  // List of text domains to replace.
+				textdomain: 'stripe'    // Project text domain.
 			},
 			target: {
 				files: {
 					src: [
 						'includes/**/*.php',
-						'stripe-checkout.php', // TODO This correct?
+						'stripe-checkout.php',
 						'uninstall.php'
 				    ]
 				}
