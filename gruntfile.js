@@ -69,7 +69,7 @@ module.exports = function( grunt ) {
 					'includes/**/*.php',
 					'stripe-checkout.php',
 					'uninstall.php',
-					'!includes/admin/wp-list-table.php'
+					'!includes/core/admin/wp-list-table.php' // Include from core for our use. See https://codex.wordpress.org/Class_Reference/WP_List_Table
 				],
 				expand: true
 			}
