@@ -30,16 +30,19 @@
 
 // Test mode badge
 
-.simpay-test-mode-badge {
-	background-color: #f7e633;
-	color: #363636;
-	border-radius: 5px;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: 700;
-	font-size: 11px;
-	text-transform: uppercase;
-	padding: 5px 9px;
-	margin-left: 10px;
+.simpay-test-mode-badge-container {
+	padding-top: 10px;
+
+	.simpay-test-mode-badge {
+		background-color: #f7e633;
+		color: #363636;
+		border-radius: 5px;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-weight: 700;
+		font-size: 11px;
+		text-transform: uppercase;
+		padding: 5px 9px;
+	}
 }
 
 // Error messages

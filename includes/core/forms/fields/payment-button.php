@@ -43,7 +43,9 @@ class Payment_Button extends Custom_Field {
 
 		// Test mode badge placement
 		if ( simpay_is_test_mode() ) {
+			$html .= '<div class="simpay-test-mode-badge-container">';
 			$html .= '<span class="simpay-test-mode-badge">' . esc_html__( 'Test Mode', 'stripe' ) . '</span>';
+			$html .= '</div>';
 		}
 
 		$html .= '</div>';
