@@ -1,4 +1,4 @@
-/* global simplePayForms, spGeneral */
+/* global simplePayForms, spGeneral, jQuery */
 
 var simpayApp = {};
 

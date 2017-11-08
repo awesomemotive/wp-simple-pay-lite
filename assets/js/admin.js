@@ -1,19 +1,17 @@
-/* global spGeneral */
+/* global spGeneral, jQuery */
 
 var spAdmin = {};
 
 (function( $ ) {
 	'use strict';
 
-	var body,
-		spFormSettings;
+	var body = $( document.body );
+	var spFormSettings;
 
 	spAdmin = {
 
 		init: function() {
 
-			// We need to set these in here because this is when the page is ready to grab this info.
-			body = $( document.body );
 			spFormSettings = body.find( '#simpay-form-settings' );
 
 			// Use chosen for select fields

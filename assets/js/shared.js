@@ -1,17 +1,15 @@
-/* global spGeneral */
+/* global spGeneral, jQuery  */
 
 var spShared = {};
 
 (function( $ ) {
 	'use strict';
 
-	var body;
+	var body = $( document.body );
 
 	spShared = {
 
 		init: function() {
-
-			body = $( document.body );
 
 			// Format currency inputs after they lose focus
 			body.find( '.simpay-currency-format' ).on( 'blur.simpayCurrencyFormat', function( e ) {

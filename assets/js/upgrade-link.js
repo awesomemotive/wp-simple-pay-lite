@@ -1,3 +1,5 @@
+/* global jQuery */
+
 // Lite admin upgrade link
 
 ( function( $ ) {
