@@ -246,11 +246,7 @@ var simpayApp = {};
 
 	$( document ).ready( function( $ ) {
 
-		spShared.debugLog( 'before simpayApp.init' );
-
 		simpayApp.init();
-
-		spShared.debugLog( 'after simpayApp.init' );
 	} );
 
 }( jQuery ) );
