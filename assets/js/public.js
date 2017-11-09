@@ -80,12 +80,8 @@ var simpayApp = {};
 				token: handleStripeToken,
 
 				opened: function() {
-
-					// TODO: simpayApp.debugLog( 'checkout opened event fired' );
 				},
 				closed: function() {
-
-					// TODO: simpayApp.debugLog( 'checkout closed event fired' );
 				}
 			} );
 
