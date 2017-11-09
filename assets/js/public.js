@@ -5,7 +5,7 @@ var simpayApp = {};
 (function( $ ) {
 	'use strict';
 
-	var body = $( document.body );
+	var body;
 
 	simpayApp = {
 
@@ -19,6 +19,9 @@ var simpayApp = {};
 		spStripeData: {},
 
 		init: function() {
+
+			// Set main vars on init.
+			body = $( document.body );
 
 			this.spFormElList = body.find( '.simpay-checkout-form' );
 

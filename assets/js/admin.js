@@ -5,13 +5,15 @@ var spAdmin = {};
 (function( $ ) {
 	'use strict';
 
-	var body = $( document.body );
-	var spFormSettings;
+	var body,
+		spFormSettings;
 
 	spAdmin = {
 
 		init: function() {
 
+			// Set main vars on init.
+			body = $( document.body );
 			spFormSettings = body.find( '#simpay-form-settings' );
 
 			// Use chosen for select fields

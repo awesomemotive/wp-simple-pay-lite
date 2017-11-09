@@ -5,11 +5,14 @@ var spShared = {};
 (function( $ ) {
 	'use strict';
 
-	var body = $( document.body );
+	var body;
 
 	spShared = {
 
 		init: function() {
+
+			// Set main vars on init.
+			body = $( document.body );
 
 			// Format currency inputs after they lose focus
 			body.find( '.simpay-currency-format' ).on( 'blur.simpayCurrencyFormat', function( e ) {
