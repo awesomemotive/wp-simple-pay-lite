@@ -112,6 +112,10 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 2.0.5 - TODO =
+
+* Fix: Custom fields filter adjustment.
+
 = 2.0.4 - October 25, 2017 =
 
 * Feature: Added option to set the payment success page (or redirect URL) per payment form.
