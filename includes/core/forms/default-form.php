@@ -105,7 +105,7 @@ class Default_Form extends Form {
 						$html .= Fields\Payment_Button::html( $v );
 						break;
 					case has_filter( 'simpay_custom_fields' ):
-						$html .= apply_filters( 'simpay_custom_fields', $v );
+						$html .= apply_filters( 'simpay_custom_fields', $html, $v );
 						break;
 				}
 			}
