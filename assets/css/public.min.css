@@ -1,6 +1,6 @@
-/*! WP Simple Pay Lite for Stripe - 2.0.4
+/*! WP Simple Pay Lite for Stripe - 2.0.5
  * https://wpsimplepay.com/
- * Copyright (c) Moonstone Media 2017
+ * Copyright (c) Moonstone Media Group 2017
  * Licensed GPLv2+ */
 
 .simpay-clearfix:after,.simpay-clearfix:before{content:" ";display:table}.simpay-clearfix:after{clear:both}.simpay-form-control{margin-bottom:15px}.simpay-form-control:after,.simpay-form-control:before{content:" ";display:table}.simpay-form-control:after{clear:both}.simpay-form-control p{padding:0;margin:0}.simpay-form-control ul{margin-bottom:.5em}.simpay-form-control ul li{list-style-type:none}.simpay-form-control label{cursor:pointer}.simpay-form-control .simpay-field-wrap:after,.simpay-form-control .simpay-field-wrap:before{content:" ";display:table}.simpay-form-control .simpay-field-wrap:after{clear:both}.simpay-test-mode-badge-container{padding-top:10px}.simpay-test-mode-badge-container .simpay-test-mode-badge{background-color:#f7e633;color:#363636;border-radius:5px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;padding:5px 9px}.simpay-error{background-color:#f2dede;border:1px solid #ebcccc;border-radius:.25rem;color:#a94442;margin:1rem 0;padding:.75rem 1.25rem}.simpay-error:after,.simpay-error:before{content:" ";display:table}.simpay-error:after{clear:both}.simpay-error .simpay-error-item{margin:0}
