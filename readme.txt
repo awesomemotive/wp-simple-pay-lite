@@ -114,6 +114,10 @@ We'd love your help! Here's a few things you can do:
 
 = 2.0.5 - TODO =
 
+* Fix: Session handling updated to work across various managed hosts. Now usees code from WP Native PHP Sessions (https://github.com/pantheon-systems/wp-native-php-sessions) over previously used WP Session Manager (https://github.com/ericmann/wp-session-manager).
+* Fix: Payment receipt session error message produced by a shortcode was improperly appearing in WP admin.
+* Dev: Updated to Stripe PHP library v5.7.0.
+
 = 2.0.4 - October 25, 2017 =
 
 * Feature: Added option to set the payment success page (or redirect URL) per payment form.
