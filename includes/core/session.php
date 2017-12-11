@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * WP Simple Pay Session Class
+ *
+ * This is a wrapper class for WP Native PHP Sessions by Pantheon
+ * (https://github.com/pantheon-systems/wp-native-php-sessions) and handles storage of sessions within WP Simple Pay.
+ */
+
 namespace SimplePay\Core;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -9,14 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Session {
 
 	/**
-	 * Session constructor.
+	 * Session index prefix
+	 *
+	 * @access private
+	 *
+	 * @var    string
 	 */
-	public function __construct() {
-
-		if ( ! defined( 'WP_SESSION_COOKIE' ) ) {
-			define( 'WP_SESSION_COOKIE', 'simpay_wp_session' );
-		}
-	}
+	private static $prefix = 'simpay_';
 
 	/**
 	 * Add an item to our session
@@ -25,9 +31,8 @@ class Session {
 	 * @param $value
 	 */
 	public static function add( $id, $value ) {
-		global $wp_session;
 
-		$wp_session[ $id ] = $value;
+		$_SESSION[ self::$prefix . $id ] = $value;
 	}
 
 	/**
@@ -40,10 +45,8 @@ class Session {
 	 */
 	public static function get( $id, $default = '' ) {
 
-		global $wp_session;
-
-		if ( isset( $wp_session[ $id ] ) && ! empty( $wp_session[ $id ] ) ) {
-			return $wp_session[ $id ];
+		if ( isset( $_SESSION[ self::$prefix . $id ] ) && ! empty( $_SESSION[ self::$prefix . $id ] ) ) {
+			return $_SESSION[ self::$prefix . $id ];
 		}
 
 		if ( ! empty( $default ) ) {
@@ -61,14 +64,12 @@ class Session {
 	 */
 	public static function add_error( $id, $error ) {
 
-		global $wp_session;
-
 		$id = sanitize_key( $id );
 
-		if ( is_array( $wp_session['simpay_errors'] ) ) {
-			$wp_session['simpay_errors'] = array_merge( $wp_session['simpay_errors'], array( $id => $error ) );
+		if ( is_array( $_SESSION[ self::$prefix . 'errors' ] ) ) {
+			$_SESSION[ self::$prefix . 'errors' ] = array_merge( $_SESSION[ self::$prefix . 'errors' ], array( $id => $error ) );
 		} else {
-			$wp_session['simpay_errors'] = array( $id => $error );
+			$_SESSION[ self::$prefix . 'errors' ] = array( $id => $error );
 		}
 	}
 
@@ -81,15 +82,13 @@ class Session {
 	 */
 	public static function get_error( $id ) {
 
-		global $wp_session;
-
 		$id = sanitize_key( $id );
 
-		if ( isset( $wp_session['simpay_errors'][ $id ] ) ) {
-			return $wp_session['simpay_errors'][ $id ];
+		if ( isset( $_SESSION[ self::$prefix . 'errors' ][ $id ] ) ) {
+			return $_SESSION[ self::$prefix . 'errors' ][ $id ];
+		} else {
+			return '';
 		}
-
-		return '';
 	}
 
 	/**
@@ -98,9 +97,8 @@ class Session {
 	 * @return bool
 	 */
 	public static function has_errors() {
-		global $wp_session;
 
-		return isset( $wp_session['simpay_errors'] ) && ! empty( $wp_session['simpay_errors'] ) ? true : false;
+		return isset( $_SESSION[ self::$prefix . 'errors' ] ) && ! empty( $_SESSION[ self::$prefix . 'errors' ] ) ? true : false;
 	}
 
 	/**
@@ -110,14 +108,12 @@ class Session {
 	 */
 	public static function print_all_errors() {
 
-		global $wp_session;
-
 		// Check if simpay_errors is set and if it is then we have errors so let's display them all
 		if ( self::has_errors() ) {
 
 			$html = '<p><strong>' . esc_html__( 'Error Details:', 'stripe' ) . '</strong></p>' . "\n";
 
-			foreach ( $wp_session['simpay_errors'] as $error => $message ) {
+			foreach ( $_SESSION[ self::$prefix . 'errors' ] as $error => $message ) {
 				$html .= '<p class="simpay-error-item ' . esc_attr( $error ) . '">' . esc_html( $message ) . '</p>' . "\n";
 			}
 
@@ -131,9 +127,8 @@ class Session {
 	 * Clear all the error session values
 	 */
 	public static function clear_errors() {
-		global $wp_session;
 
-		unset( $wp_session['simpay_errors'] );
+		unset( $_SESSION[ self::$prefix . 'errors' ] );
 	}
 
 	/**
@@ -143,10 +138,8 @@ class Session {
 	 */
 	public static function clear( $id ) {
 
-		global $wp_session;
-
 		if ( self::get( $id ) ) {
-			unset( $wp_session[ $id ] );
+			unset( $_SESSION[ self::$prefix . $id ] );
 		}
 	}
 
@@ -155,13 +148,12 @@ class Session {
 	 */
 	public static function clear_all() {
 
-		global $wp_session;
-
 		// Our custom list of sessions to remove
-		$wp_session['customer_id']                 = '';
-		$wp_session['charge_id']                   = '';
-		$wp_session['simpay_form']                 = '';
-		unset( $wp_session['simpay_errors'] );
+		$_SESSION[ self::$prefix . 'customer_id'] = '';
+		$_SESSION[ self::$prefix . 'charge_id']   = '';
+		$_SESSION[ self::$prefix . 'simpay_form'] = '';
+
+		self::clear_errors();
 
 		do_action( 'simpay_clear_sessions' );
 	}

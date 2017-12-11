@@ -151,27 +151,12 @@ final class SimplePay {
 
 		new Stripe_API();
 
-		global $wp_session;
+		// Include WP Native PHP Sessions plugin code by Pantheon so we can use $_SESSION the native way.
+		// This includes session_start() just like non-WP PHP apps would.
+		require_once( 'libraries/wp-native-php-sessions/pantheon-sessions.php' );
+		require_once( 'session.php' );
 
-		// Load WP Session
-		if ( ! defined( 'WP_SESSION_COOKIE' ) ) {
-			define( 'WP_SESSION_COOKIE', '_wp_session' );
-		}
-
-		if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
-			include_once( 'libraries/wp-session/class-recursive-arrayaccess.php' );
-		}
-
-		if ( ! class_exists( 'WP_Session_Utils' ) ) {
-			include_once( 'libraries/wp-session/class-wp-session-utils.php' );
-		}
-
-		if ( ! class_exists( 'WP_Session' ) ) {
-			include_once( 'libraries/wp-session/class-wp-session.php' );
-			include_once( 'libraries/wp-session/wp-session.php' );
-		}
-
-		$wp_session = \WP_Session::get_instance();
+		session_start();
 
 		$this->objects = new Objects();
 
