@@ -116,6 +116,7 @@ We'd love your help! Here's a few things you can do:
 
 * Fix: Session handling updated to work across various managed hosts. Now usees code from WP Native PHP Sessions (https://github.com/pantheon-systems/wp-native-php-sessions) over previously used WP Session Manager (https://github.com/ericmann/wp-session-manager).
 * Fix: Payment receipt session error message produced by a shortcode was improperly appearing in WP admin.
+* Dev: Added action hook for adding metabox setting panel content.
 * Dev: Updated to Stripe PHP library v5.7.0.
 
 = 2.0.4 - October 25, 2017 =
