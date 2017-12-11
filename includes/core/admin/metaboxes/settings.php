@@ -78,7 +78,7 @@ class Settings {
 
 					include_once( $subscription_options_template );
 
-					do_action( 'simpay_settings_meta_subscription_options_panel', $post->ID );
+					do_action( 'simpay_form_settings_meta_subscription_display_panel', $post->ID );
 					?>
 				</div>
 
