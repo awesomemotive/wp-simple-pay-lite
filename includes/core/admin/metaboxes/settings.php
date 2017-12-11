@@ -30,7 +30,6 @@ class Settings {
 
 			<ul class="simpay-tabs">
 				<?php self::settings_tabs( $post ); ?>
-				<?php //do_action( 'simcal_settings_meta_tabs' ); ?>
 			</ul>
 
 			<div class="simpay-panels">

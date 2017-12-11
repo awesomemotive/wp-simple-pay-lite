@@ -58,7 +58,7 @@ final class SimplePay {
 	 *
 	 * Ensures only one instance of Simple Pay is loaded or can be loaded.
 	 */
-	public static function get_instance() {
+	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
@@ -127,7 +127,7 @@ final class SimplePay {
 			if ( $form ) {
 				update_option( 'simpay_preview_form_id', $form );
 			} else {
-				wp_die( 'An error has occurred with preview.' );
+				wp_die( 'An error occurred with preview.' );
 			}
 		}
 
@@ -146,6 +146,7 @@ final class SimplePay {
 	 */
 	public function load() {
 
+		// Load core shared back-end & front-end functions.
 		require_once( 'functions/shared.php' );
 
 		new Stripe_API();
@@ -172,7 +173,6 @@ final class SimplePay {
 
 		$wp_session = \WP_Session::get_instance();
 
-		// Load objects
 		$this->objects = new Objects();
 
 		if ( is_admin() ) {
@@ -182,10 +182,8 @@ final class SimplePay {
 			new Cache_Helper();
 		}
 
-		// CPT
 		new Post_Types();
 
-		// Shortcode
 		new Shortcodes();
 	}
 
@@ -194,7 +192,7 @@ final class SimplePay {
 	 */
 	public function load_admin() {
 
-		// Back end only functions.
+		// Load core back-end only functions.
 		require_once( 'functions/admin.php' );
 
 		new Admin\Assets();
@@ -248,8 +246,8 @@ final class SimplePay {
  *
  * @return SimplePay
  */
-function plugin() {
-	return SimplePay::get_instance();
+function SimplePay() {
+	return SimplePay::instance();
 }
 
-plugin();
+SimplePay();

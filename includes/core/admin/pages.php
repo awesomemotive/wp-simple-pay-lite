@@ -52,7 +52,7 @@ class Pages {
 	public function __construct( $page = 'settings' ) {
 
 		$this->page     = $page;
-		$settings_pages = ! is_null( \SimplePay\Core\plugin()->objects ) ? simpay_get_admin_pages() : '';
+		$settings_pages = ! is_null( \SimplePay\Core\SimplePay()->objects ) ? simpay_get_admin_pages() : '';
 
 		$settings_page_tabs = array();
 		$tabs               = isset( $settings_pages[ $page ] ) ? $settings_pages[ $page ] : false;

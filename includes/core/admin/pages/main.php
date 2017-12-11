@@ -86,7 +86,7 @@ class Main {
 				default:
 					// Default to error message
 					$class   = 'error';
-					$message = 'An error has occurred.';
+					$message = 'An error occurred.';
 			}
 
 			echo '<div id="message" class="' . esc_attr( $class ) . '"><p>' . $message . '</p></div>';

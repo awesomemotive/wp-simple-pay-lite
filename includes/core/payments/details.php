@@ -15,6 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Details {
 
+	public $payment = null;
+
 	// The available tags that can be used in the Payment Confirmation text editor setting
 	public $tags = array();
 

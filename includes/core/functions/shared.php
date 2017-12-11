@@ -179,7 +179,7 @@ function simpay_get_total( $formatted = true ) {
  * @return string
  */
 function simpay_get_url( $url ) {
-	return \SimplePay\Core\plugin()->get_url( $url );
+	return \SimplePay\Core\SimplePay()->get_url( $url );
 }
 
 /**
@@ -217,7 +217,7 @@ function simpay_admin_error( $message, $echo = true ) {
  * @return null|\SimplePay\Core\Abstracts\Form
  */
 function simpay_get_form( $object ) {
-	$objects = \SimplePay\Core\plugin()->objects;
+	$objects = \SimplePay\Core\SimplePay()->objects;
 
 	return $objects instanceof \SimplePay\Core\Objects ? $objects->get_form( $object ) : null;
 }
@@ -233,7 +233,7 @@ function simpay_get_form( $object ) {
  * @return null|\SimplePay\Core\Abstracts\Field
  */
 function simpay_get_field( $args, $name = '' ) {
-	$objects = \SimplePay\Core\plugin()->objects;
+	$objects = \SimplePay\Core\SimplePay()->objects;
 
 	return $objects instanceof \SimplePay\Core\Objects ? $objects->get_field( $args, $name ) : null;
 }
