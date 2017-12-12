@@ -140,7 +140,7 @@ function simpay_get_admin_pages() {
  *
  * @param  string $page
  *
- * @return null|\SimplePay\Abstracts\Admin_Page
+ * @return null|\SimplePay\Core\Abstracts\Admin_Page
  */
 function simpay_get_admin_page( $page ) {
 	$objects = \SimplePay\Core\SimplePay()->objects;

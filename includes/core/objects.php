@@ -2,8 +2,6 @@
 
 namespace SimplePay\Core;
 
-use SimplePay\Core\Abstracts as Object;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
