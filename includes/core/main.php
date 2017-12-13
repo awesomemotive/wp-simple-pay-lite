@@ -101,7 +101,7 @@ final class SimplePay {
 		// Upon plugin loaded action hook.
 		do_action( 'simpay_loaded' );
 
-		add_filter( 'init', array( $this, 'setup_preview_form' ) );
+		add_action( 'init', array( $this, 'setup_preview_form' ) );
 	}
 
 	/**
