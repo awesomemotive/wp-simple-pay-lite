@@ -156,7 +156,10 @@ final class SimplePay {
 		require_once( 'libraries/wp-native-php-sessions/pantheon-sessions.php' );
 		require_once( 'session.php' );
 
-		session_start();
+		// Check for session already started.
+		if ( ! session_id() && ! headers_sent() ) {
+			session_start();
+		}
 
 		$this->objects = new Objects();
 
