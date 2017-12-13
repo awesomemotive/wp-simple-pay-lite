@@ -39,7 +39,6 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Support for 12 languages, 25 countries and 135+ currencies
 * Bitcoin payment option
 * Translation ready
-* Multiple Stripe API key support
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
 * Live/Test mode toggle
