@@ -112,6 +112,10 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 2.0.6 - December 12, 2017 =
+
+* Fix: Check for an existing session before starting a new one.
+
 = 2.0.5 - December 12, 2017 =
 
 * Fix: Session handling updated to work across various managed hosts. Now uses code from WP Native PHP Sessions (https://github.com/pantheon-systems/wp-native-php-sessions) over previously used WP Session Manager (https://github.com/ericmann/wp-session-manager).
