@@ -188,24 +188,7 @@ class Pantheon_Sessions {
 		}
 	}
 
-	/**
-	 * Force the plugin to be the first loaded
-	 *
-	 */
-	static public function force_first_load()
-	{
-
-		$path = str_replace( WP_PLUGIN_DIR . '/', '', __FILE__ );
-		if ( $plugins = get_option( 'active_plugins' ) ) {
-			if ( $key = array_search( $path, $plugins ) ) {
-				array_splice( $plugins, $key, 1 );
-				array_unshift( $plugins, $path );
-				update_option( 'active_plugins', $plugins );
-			}
-		}
-
-		return;
-	}
+	// ***SIMPLE PAY EDIT***: Removed force_first_load() function as it won't be called.
 
 }
 
@@ -216,7 +199,9 @@ function Pantheon_Sessions() {
 	return Pantheon_Sessions::get_instance();
 }
 
-add_action( 'activated_plugin', 'Pantheon_Sessions::force_first_load');
+// ***SIMPLE PAY EDIT***: Don't use this method to force first load.
+// Should only be used for original plugin.
+//add_action( 'activated_plugin', 'Pantheon_Sessions::force_first_load');
 
 Pantheon_Sessions();
 
