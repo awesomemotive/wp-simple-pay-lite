@@ -147,7 +147,7 @@ final class SimplePay {
 	public function load() {
 
 		// Load core shared back-end & front-end functions.
-		require_once( 'functions/shared.php' );
+		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
 
 		new Stripe_API();
 
@@ -181,7 +181,7 @@ final class SimplePay {
 	public function load_admin() {
 
 		// Load core back-end only functions.
-		require_once( 'functions/admin.php' );
+		require_once( SIMPLE_PAY_INC . 'core/functions/admin.php' );
 
 		new Admin\Assets();
 
