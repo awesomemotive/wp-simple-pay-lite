@@ -36,17 +36,12 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 	define( 'SIMPLE_PAY_VERSION', '2.0.6' );
 
-	// Plugin constants.
-	$this_plugin_path = trailingslashit( dirname( __FILE__ ) );
-	$this_plugin_dir  = plugin_dir_url( __FILE__ );
-
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay' );
 	}
 
+	// Stripe API version should be in 'YYYY-MM-DD' format.
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-
-		// Set the API Version from Stripe 'YYYY-MM-DD' format
 		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2017-08-15' );
 	}
 
@@ -55,19 +50,19 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_URL' ) ) {
-		define( 'SIMPLE_PAY_URL', $this_plugin_dir );
+		define( 'SIMPLE_PAY_URL', plugin_dir_url( __FILE__ ) );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_ASSETS' ) ) {
-		define( 'SIMPLE_PAY_ASSETS', $this_plugin_dir . 'assets/' );
+		define( 'SIMPLE_PAY_ASSETS', plugin_dir_url( __FILE__ ) . 'assets/' );
 	}
 
-	if ( ! defined( 'SIMPLE_PAY_PATH' ) ) {
-		define( 'SIMPLE_PAY_PATH', $this_plugin_path );
+	if ( ! defined( 'SIMPLE_PAY_DIR' ) ) {
+		define( 'SIMPLE_PAY_DIR', plugin_dir_path( __FILE__ ) );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_INC' ) ) {
-		define( 'SIMPLE_PAY_INC', $this_plugin_path . 'includes/' );
+		define( 'SIMPLE_PAY_INC', plugin_dir_path( __FILE__ ) . 'includes/' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_STORE_URL' ) ) {
@@ -84,7 +79,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 
 	/**
-	 * Show an error message for PHP < 5.3 and don't load the plugin
+	 * Show an error message for PHP < 5.3 and don't load the plugin.
 	 */
 	function simpay_admin_php_notice() {
 		?>
@@ -98,18 +93,21 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		<?php
 	}
 
-	include_once( 'vendor/autoload.php' );
-	include_once( 'includes/autoload.php' );
+	// Autoloader
+	require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
+	require_once( SIMPLE_PAY_INC . 'autoload.php' );
 
-	// Load new plugin.
-	include_once( 'includes/core/main.php' );
+	// Core plugin (new)
+	require_once( SIMPLE_PAY_INC . 'core/main.php' );
 
-	// Load the promos
-	include_once( 'includes/promos/promo-loader.php' );
+	// Upgrade promos
+	require_once( SIMPLE_PAY_INC . 'promos/promo-loader.php' );
 
-	// Load old plugin
-	include_once( 'includes/old/stripe-checkout.php' );
+	// Core plugin (legacy)
+	require_once( SIMPLE_PAY_INC . 'old/stripe-checkout.php' );
+
 } else {
+
 	deactivate_plugins( plugin_basename(SIMPLE_PAY_MAIN_FILE ) );
 }
 
