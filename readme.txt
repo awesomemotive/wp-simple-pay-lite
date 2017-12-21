@@ -111,7 +111,7 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 3.1.13 - TODO =
+= 2.0.7 - December 21, 2017 =
 
 * Fix: (Better) session handling to work across various hosts. Back to using the current version of WP Session Manager (https://github.com/ericmann/wp-session-manager) (2.0.2).
 * Dev: Updated to Stripe PHP library v5.8.0.
