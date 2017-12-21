@@ -3,8 +3,8 @@
   "license": "GPL-2.0+",
   "private": true,
   "devDependencies": {
-    "jquery-validation": "1.16.x",
-    "chosen": "1.6.x",
+    "jquery-validation": "1.17.x",
+    "chosen": "1.8.x",
     "accountingjs": "0.x"
   }
 }

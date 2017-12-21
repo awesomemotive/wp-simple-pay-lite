@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 Requires PHP: 5.3
 License: GPLv2 or later
 
@@ -110,6 +110,11 @@ We'd love your help! Here's a few things you can do:
 9. Payment form settings: Stripe Checkout overlay display
 
 == Changelog ==
+
+= 3.1.13 - TODO =
+
+* Fix: (Better) session handling to work across various hosts. Back to using the current version of WP Session Manager (https://github.com/ericmann/wp-session-manager) (2.0.2).
+* Dev: Updated to Stripe PHP library v5.8.0.
 
 = 2.0.6 - December 12, 2017 =
 
