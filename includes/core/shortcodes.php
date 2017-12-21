@@ -26,20 +26,17 @@ class Shortcodes {
 	public function __construct() {
 
 		// Add shortcodes.
-		add_action( 'init', array( $this, 'register' ) );
+		add_action( 'init', array( $this, 'register_shortcodes' ) );
 	}
 
 	/**
 	 * Register shortcodes.
 	 */
-	public function register() {
+	public function register_shortcodes() {
 
 		add_shortcode( 'simpay', array( $this, 'print_form' ) );
-
 		add_shortcode( 'simpay_payment_receipt', array( $this, 'print_payment_receipt' ) );
-
 		add_shortcode( 'simpay_preview', array( $this, 'print_preview_form' ) );
-
 		add_shortcode( 'simpay_error', array( $this, 'print_errors' ) );
 
 		do_action( 'simpay_add_shortcodes' );
@@ -61,6 +58,7 @@ class Shortcodes {
 		$access_level = strtolower( $args['show_to'] );
 
 		$show = false;
+		$html = '';
 
 		switch ( $access_level ) {
 			case 'registered':
@@ -80,12 +78,13 @@ class Shortcodes {
 		}
 
 		if ( $show ) {
-			if ( Session::has_errors() ) {
-				return '<div class="simpay-error">' . Session::print_all_errors() . '</div>';
-			}
+
+			$html = Errors::get_error_html();
 		}
 
-		return '';
+		Errors::clear_errors();
+
+		return $html;
 	}
 
 	/**
@@ -101,7 +100,7 @@ class Shortcodes {
 
 		global $simpay_form;
 
-		Session::clear_all();
+		// TODO Double check if there's any sensitive data being passed?
 
 		$args = shortcode_atts( array(
 			'id' => null,
@@ -185,8 +184,8 @@ class Shortcodes {
 	 */
 	public function print_payment_receipt() {
 
-		$charge_id       = Session::get( 'charge_id' );
-		$customer_id     = Session::get( 'customer_id' );
+		$charge_id       = SimplePay()->session->get( 'charge_id' );
+		$customer_id     = SimplePay()->session->get( 'customer_id' );
 
 		$session_error = apply_filters( 'simpay_session_error', ( empty( $charge_id ) ? true : false ) );
 
@@ -198,7 +197,7 @@ class Shortcodes {
 
 		global $simpay_form;
 
-		$simpay_form = Session::get( 'simpay_form' );
+		$simpay_form = SimplePay()->session->get( 'simpay_form' );
 
 		if ( ! ( $simpay_form instanceof Form ) ) {
 			return '';

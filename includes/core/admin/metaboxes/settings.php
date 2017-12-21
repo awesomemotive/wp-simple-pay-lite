@@ -82,7 +82,7 @@ class Settings {
 					?>
 				</div>
 
-				<?php do_action( 'simpay_form_settings_meta_options_panel', $post->ID ); ?>
+		    <?php do_action( 'simpay_form_settings_meta_options_panel', $post->ID ); ?>
 
 			</div>
 

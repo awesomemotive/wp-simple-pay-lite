@@ -2,7 +2,6 @@
 
 namespace SimplePay\Core\Payments;
 
-use SimplePay\Core\Session;
 use SimplePay\Core\Abstracts\Form;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -38,6 +37,8 @@ class Payment {
 	public $form = null;
 	public $success = false;
 
+	// TODO DRY/Simplify contructor logic between core & pro.
+
 	/**
 	 * Payment constructor.
 	 *
@@ -52,16 +53,15 @@ class Payment {
 		// If the Form object is not set then we want to skip any processing
 		if ( 'charge' === $action ) {
 
-			// Process this form
+			// Fire action before processing form.
+			do_action( 'simpay_pre_process_form' );
+
+			// Process CORE form
 			$this->process_form();
 
-			// Set any Session variables we need
-			$this->set_session_variables();
-
-			// Using init here to make sure get_permalink() is available.
-			add_filter( 'init', array( $this, 'handle_redirect' ) );
+			$this->set_payment_session();
+			$this->handle_redirect();
 		}
-
 	}
 
 	/**
@@ -75,13 +75,11 @@ class Payment {
 		$this->currency       = $simpay_form->currency;
 		$this->decimal_places = simpay_get_decimal_places();
 
-
 		// Set store name and locale from general settings
 		$this->company_name = $simpay_form->company_name;
 		$this->locale       = $simpay_form->locale;
 
 		do_action( 'simpay_payment_attributes', $this );
-
 	}
 
 	/**
@@ -154,7 +152,6 @@ class Payment {
 			$meta['shipping_state'] = sanitize_text_field( $_POST['simpay_shipping_state'] );
 		}
 
-
 		if ( isset( $_POST['simpay_shipping_city'] ) && ! empty( $_POST['simpay_shipping_city'] ) ) {
 			$meta['shipping_city'] = sanitize_text_field( $_POST['simpay_shipping_city'] );
 		}
@@ -163,14 +160,16 @@ class Payment {
 	}
 
 	/**
-	 * Set any WP Session variables we need
+	 * Store payment data in sessions.
 	 */
-	public function set_session_variables() {
+	public function set_payment_session() {
 
 		global $simpay_form;
 
-		// Send along the form ID so we can use it's attributes if we need to
-		Session::add( 'simpay_form', $simpay_form );
+		// TODO Convert form object to array and clean recursively before saving to session?
+		// TODO Cast using `(array)` or use get_object_vars() ?
+		\SimplePay\Core\SimplePay()->session->set( 'simpay_form', $simpay_form );
+		//\SimplePay\Core\SimplePay()->session->set( 'simpay_form', (array) simpay_clean( $simpay_form ) );
 	}
 
 	/**
@@ -183,9 +182,11 @@ class Payment {
 		// With the way our Stripe API error catching works if we made it this far then we should be successful.
 
 		if ( has_filter( 'simpay_form_' . $simpay_form->id . '_payment_success_page' ) || 'redirect' === simpay_get_saved_meta( $simpay_form->id, '_success_redirect_type' ) ) {
+
 			wp_redirect( $simpay_form->payment_success_page );
 			exit;
 		} else {
+
 			wp_safe_redirect( $simpay_form->payment_success_page );
 			exit;
 		}
@@ -244,15 +245,6 @@ class Payment {
 	 */
 	public function get_metadata() {
 		return apply_filters( 'simpay_payment_metadata', $this->metadata );
-	}
-
-	/**
-	 * Clear all the stored session data
-	 */
-	public static function clear_session_data() {
-
-		Session::clear_all();
-
 	}
 }
 

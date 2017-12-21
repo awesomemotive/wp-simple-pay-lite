@@ -12,6 +12,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use SimplePay\Core\Abstracts\Form;
 
+// TODO Need function simpay_clean?
+
+/**
+ * Clean variables using sanitize_text_field. Arrays are cleaned recursively.
+ * Non-scalar values are ignored.
+ *
+ * @since  3.0
+ * @param  string|array $var
+ *
+ * @return string|array
+ */
+function simpay_clean( $var ) {
+	if ( is_array( $var ) ) {
+		return array_map( 'simpay_clean', $var );
+	} else {
+		return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
+	}
+}
+
 /**
  * Get a Simple Pay setting. It will check for both a form setting or a global setting option.
  *

@@ -3,11 +3,19 @@
 /**
  * WP Simple Pay Session Class
  *
- * This is a wrapper class for WP Native PHP Sessions by Pantheon
- * (https://github.com/pantheon-systems/wp-native-php-sessions) and handles storage of sessions within WP Simple Pay.
+ * Handles the storage of sessions within WP Simple Pay.
+ * This is a wrapper class WP Session Manager
+ * https://github.com/ericmann/wp-session-manager/
+ * Using version 2.0.1
+ *
+ * Currently not offering option for using native PHP $_SESSION due to issues.
+ * Taking session logic from EDD, Give & Ninja Forms.
  */
 
 namespace SimplePay\Core;
+
+use WP_Session;
+use WP_Session_Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,145 +24,219 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Session {
 
 	/**
-	 * Session index prefix
+	 * Holds our session data
 	 *
+	 * @since  3.0
 	 * @access private
 	 *
-	 * @var    string
+	 * @var    WP_Session/array
 	 */
-	private static $prefix = 'simpay_';
+	private $session;
 
 	/**
-	 * Add an item to our session
+	 * Class Constructor
 	 *
-	 * @param $id
-	 * @param $value
+	 * Defines our session constants, includes the necessary libraries and retrieves the session instance.
+	 *
+	 * @since  3.0
+	 * @access public
 	 */
-	public static function add( $id, $value ) {
+	public function __construct() {
 
-		$_SESSION[ self::$prefix . $id ] = $value;
-	}
-
-	/**
-	 * Get a specific item from our session
-	 *
-	 * @param        $id
-	 * @param string $default
-	 *
-	 * @return bool|string
-	 */
-	public static function get( $id, $default = '' ) {
-
-		if ( isset( $_SESSION[ self::$prefix . $id ] ) && ! empty( $_SESSION[ self::$prefix . $id ] ) ) {
-			return $_SESSION[ self::$prefix . $id ];
+		// Use WP_Session.
+		// Let users change the session cookie name.
+		if ( ! defined( 'WP_SESSION_COOKIE' ) ) {
+			define( 'WP_SESSION_COOKIE', 'simpay_wp_session' );
 		}
 
-		if ( ! empty( $default ) ) {
-			return $default;
+		if ( ! class_exists( 'Recursive_ArrayAccess' ) ) {
+			require_once( SIMPLE_PAY_INC . 'core/libraries/wp-session/class-recursive-arrayaccess.php' );
 		}
 
-		return false;
-	}
-
-	/**
-	 * Add an error to our session
-	 *
-	 * @param $id
-	 * @param $error
-	 */
-	public static function add_error( $id, $error ) {
-
-		$id = sanitize_key( $id );
-
-		if ( is_array( $_SESSION[ self::$prefix . 'errors' ] ) ) {
-			$_SESSION[ self::$prefix . 'errors' ] = array_merge( $_SESSION[ self::$prefix . 'errors' ], array( $id => $error ) );
-		} else {
-			$_SESSION[ self::$prefix . 'errors' ] = array( $id => $error );
+		// Include utilities class.
+		// Skip including WP_CLI class.
+		if ( ! class_exists( 'WP_Session_Utils' ) ) {
+			require_once SIMPLE_PAY_INC . 'core/libraries/wp-session/class-wp-session-utils.php';
 		}
-	}
 
-	/**
-	 * Get a specific error from our session
-	 *
-	 * @param $id
-	 *
-	 * @return string
-	 */
-	public static function get_error( $id ) {
-
-		$id = sanitize_key( $id );
-
-		if ( isset( $_SESSION[ self::$prefix . 'errors' ][ $id ] ) ) {
-			return $_SESSION[ self::$prefix . 'errors' ][ $id ];
-		} else {
-			return '';
+		// Only include the functionality if it's not pre-defined.
+		if ( ! class_exists( 'WP_Session' ) ) {
+			require_once( SIMPLE_PAY_INC . 'core/libraries/wp-session/class-wp-session.php' );
+			require_once( SIMPLE_PAY_INC . 'core/libraries/wp-session/wp-session.php' );
 		}
+
+		// TODO Init WP_Session immediately instead of on init hook (Give uses hook).
+		self::init();
+		//add_action( 'init', array( $this, 'init' ), - 1 );
+
+		add_filter( 'wp_session_expiration_variant', array( $this, 'set_expiration_variant_time' ), 99999 );
+		add_filter( 'wp_session_expiration', array( $this, 'set_expiration_time' ), 99999 );
+
+		add_action( 'admin_init', array( $this, 'create_sm_sessions_table' ) );
+		add_action( 'wp_session_init', array( $this, 'create_sm_sessions_table' ) );
 	}
 
 	/**
-	 * Check if we have errors or not
+	 * Session Init
 	 *
-	 * @return bool
+	 * Setup the Session instance.
+	 *
+	 * @since  3.0
+	 * @access public
+	 *
+	 * @return WP_Session/array instance
 	 */
-	public static function has_errors() {
+	public function init() {
 
-		return isset( $_SESSION[ self::$prefix . 'errors' ] ) && ! empty( $_SESSION[ self::$prefix . 'errors' ] ) ? true : false;
+		$this->session = WP_Session::get_instance();
+
+		return $this->session;
 	}
 
 	/**
-	 * Print all the errors found in HTML
+	 * Get Session ID
 	 *
-	 * @return string
+	 * Retrieve session ID.
+	 *
+	 * @since  3.0
+	 * @access public
+	 *
+	 * @return string Session ID.
 	 */
-	public static function print_all_errors() {
+	public function get_id() {
 
-		// Check if simpay_errors is set and if it is then we have errors so let's display them all
-		if ( self::has_errors() ) {
+		return $this->session->session_id;
+	}
 
-			$html = '<p><strong>' . esc_html__( 'Error Details:', 'stripe' ) . '</strong></p>' . "\n";
+	/**
+	 * Get Session
+	 *
+	 * Retrieve session variable for a given session key.
+	 *
+	 * @since  3.0
+	 * @access public
+	 *
+	 * @param  string $key Session key
+	 *
+	 * @return string|array      Session variable
+	 */
+	public function get( $key ) {
 
-			foreach ( $_SESSION[ self::$prefix . 'errors' ] as $error => $message ) {
-				$html .= '<p class="simpay-error-item ' . esc_attr( $error ) . '">' . esc_html( $message ) . '</p>' . "\n";
+		$key    = sanitize_key( $key );
+		$return = false;
+
+		if ( isset( $this->session[ $key ] ) && ! empty( $this->session[ $key ] ) ) {
+
+			// TODO EDD & Give use regext matching & JSON decoding when retrieving session values.
+			$return = maybe_unserialize( $this->session[ $key ] );
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Set Session
+	 *
+	 * Create a new session.
+	 *
+	 * @since  3.0
+	 * @access public
+	 *
+	 * @param  string $key   Session key
+	 * @param  mixed  $value Session variable
+	 *
+	 * @return string        Session variable
+	 */
+	public function set( $key, $value ) {
+
+		// TODO Manually set cookie (like Give & NF)?
+		//$this->session->set_cookie();
+
+		$key = sanitize_key( $key );
+
+		// TODO Set & retrieve JSON instead of full objects (like Give)?
+		// Currently we're passing various value types including strings, arrays & objects.
+		// i.e. The Payment Form object ('simpay_form') is sent here.
+		$this->session[ $key ] = $value;
+
+		return $this->session[ $key ];
+	}
+
+	/**
+	 * Set Cookie Variant Time
+	 *
+	 * Force the cookie expiration variant time to 23 minutes.
+	 *
+	 * @since  3.0
+	 * @access public
+	 *
+	 * @return int
+	 */
+	public function set_expiration_variant_time() {
+
+		return ( 60 * 23 );
+	}
+
+	/**
+	 * Set Cookie Expiration
+	 *
+	 * Force the cookie expiration time to 24 minutes.
+	 *
+	 * @since  3.0
+	 * @access public
+	 *
+	 * @return int
+	 */
+	public function set_expiration_time() {
+
+		return ( 60 * 24 );
+	}
+
+	/**
+	 * Create table to hold session data.
+	 *
+	 * Create the new table for housing session data if we're not still using
+	 * the legacy options mechanism. This code should be invoked before
+	 * instantiating the singleton session manager to ensure the table exists
+	 * before trying to use it.
+	 *
+	 * @see    https://github.com/ericmann/wp-session-manager/issues/55
+	 *
+	 * @since  3.0
+	 * @access private
+	 */
+	public function create_sm_sessions_table() {
+
+		if ( defined( 'WP_SESSION_USE_OPTIONS' ) && WP_SESSION_USE_OPTIONS ) {
+			return;
+		}
+
+		$current_db_version = '0.1';
+		$created_db_version = get_option( 'sm_session_db_version', '0.0' );
+
+		if ( version_compare( $created_db_version, $current_db_version, '<' ) ) {
+			global $wpdb;
+
+			$collate = '';
+			if ( $wpdb->has_cap( 'collation' ) ) {
+				$collate = $wpdb->get_charset_collate();
 			}
 
-			return $html;
+			$table = "CREATE TABLE {$wpdb->prefix}sm_sessions (
+		  session_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+		  session_key char(32) NOT NULL,
+		  session_value LONGTEXT NOT NULL,
+		  session_expiry BIGINT(20) UNSIGNED NOT NULL,
+		  PRIMARY KEY  (session_key),
+		  UNIQUE KEY session_id (session_id)
+		) $collate;";
+
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $table );
+
+			add_option( 'sm_session_db_version', '0.1', '', 'no' );
+
+			WP_Session_Utils::delete_all_sessions_from_options();
 		}
-
-		return '';
-	}
-
-	/**
-	 * Clear all the error session values
-	 */
-	public static function clear_errors() {
-
-		unset( $_SESSION[ self::$prefix . 'errors' ] );
-	}
-
-	/**
-	 * Clear out a specific item from our session
-	 *
-	 * @param $id
-	 */
-	public static function clear( $id ) {
-
-		if ( self::get( $id ) ) {
-			unset( $_SESSION[ self::$prefix . $id ] );
-		}
-	}
-
-	/**
-	 * Completely clear our session
-	 */
-	public static function clear_all() {
-
-		// Our custom list of sessions to remove
-		$_SESSION[ self::$prefix . 'customer_id'] = '';
-		$_SESSION[ self::$prefix . 'charge_id']   = '';
-		$_SESSION[ self::$prefix . 'simpay_form'] = '';
-
-		self::clear_errors();
-
-		do_action( 'simpay_clear_sessions' );
 	}
 }

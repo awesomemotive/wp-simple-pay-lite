@@ -2,9 +2,10 @@
 
 namespace SimplePay\Core\Payments;
 
-use SimplePay\Core\Session;
-use Stripe\Stripe;
+use SimplePay\Core\Errors;
+
 use Stripe\Error;
+use Stripe\Stripe;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -80,7 +81,7 @@ class Stripe_API {
 		} catch ( Error\Card $e ) {
 
 			// Too many requests made to the API too quickly
-			Session::add_error( 'card_error', 'Card Error: ' . $e->getMessage() );
+			Errors::set( 'card_error', 'Card Error: ' . $e->getMessage() );
 
 			if ( ! is_admin() ) {
 				wp_redirect( $simpay_form->payment_failure_page );
@@ -92,7 +93,7 @@ class Stripe_API {
 		} catch ( Error\RateLimit $e ) {
 
 			// Too many requests made to the API too quickly
-			Session::add_error( 'rate_limit', 'Rate Limit Error: ' . $e->getMessage() );
+			Errors::set( 'rate_limit', 'Rate Limit Error: ' . $e->getMessage() );
 
 			if ( ! is_admin() ) {
 				wp_redirect( $simpay_form->payment_failure_page );
@@ -104,7 +105,7 @@ class Stripe_API {
 		} catch ( Error\InvalidRequest $e ) {
 
 			// Invalid parameters were supplied to Stripe's API
-			Session::add_error( 'invalid_request', 'Invalid Request Error: ' . $e->getMessage() );
+			Errors::set( 'invalid_request', 'Invalid Request Error: ' . $e->getMessage() );
 
 			if ( ! is_admin() ) {
 				wp_redirect( $simpay_form->payment_failure_page );
@@ -117,7 +118,7 @@ class Stripe_API {
 
 			// Authentication with Stripe's API failed
 			// (maybe you changed API keys recently)
-			Session::add_error( 'authentication', 'Authentication Error: ' . $e->getMessage() );
+			Errors::set( 'authentication', 'Authentication Error: ' . $e->getMessage() );
 
 			if ( ! is_admin() ) {
 				wp_redirect( $simpay_form->payment_failure_page );
@@ -129,7 +130,7 @@ class Stripe_API {
 		} catch ( Error\ApiConnection $e ) {
 
 			// Network communication with Stripe failed
-			Session::add_error( 'api_connection', 'API Connection Error: ' . $e->getMessage() );
+			Errors::set( 'api_connection', 'API Connection Error: ' . $e->getMessage() );
 
 			if ( ! is_admin() ) {
 				wp_redirect( $simpay_form->payment_failure_page );
@@ -142,7 +143,7 @@ class Stripe_API {
 
 			// Display a very generic error to the user, and maybe send
 			// yourself an email
-			Session::add_error( 'generic', 'Error: ' . $e->getMessage() );
+			Errors::set( 'generic', 'Error: ' . $e->getMessage() );
 
 			if ( ! is_admin() ) {
 				wp_redirect( $simpay_form->payment_failure_page );
@@ -154,7 +155,7 @@ class Stripe_API {
 		} catch ( \Exception $e ) {
 
 			// Something else happened, completely unrelated to Stripe
-			Session::add_error( 'non_stripe', 'Non-Stripe Error: ' . $e->getMessage() );
+			Errors::set( 'non_stripe', 'Non-Stripe Error: ' . $e->getMessage() );
 
 			if ( ! is_admin() ) {
 				wp_redirect( $simpay_form->payment_failure_page );

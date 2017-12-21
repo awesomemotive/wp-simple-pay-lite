@@ -27,9 +27,7 @@ class Installation {
 		update_option( 'simpay_dismiss_ssl', false );
 
 		self::create_pages();
-
 		self::create_options();
-
 
 		do_action( 'simpay_activated' );
 	}
