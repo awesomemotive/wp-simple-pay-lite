@@ -120,6 +120,7 @@ We'd love your help! Here's a few things you can do:
 
 * Fix: (Better) session handling to work across various hosts. Back to using the current version of WP Session Manager (https://github.com/ericmann/wp-session-manager) (2.0.2).
 * Dev: Updated to Stripe PHP library v5.8.0.
+* Dev: Updated jQuery Validation & Chosen JS libraries.
 
 = 2.0.6 - December 12, 2017 =
 
