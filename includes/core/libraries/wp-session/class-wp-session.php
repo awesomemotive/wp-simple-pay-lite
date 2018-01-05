@@ -15,14 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * TODO Modifications that Give & NF do.
- *
- * Remove `set_cookie()` from constructor
- * Give `set_cookie()` public access
- * Manually call `set_cookie()` on form submission
- */
-
-/**
  * WordPress Session class for managing user session data.
  *
  * @package WordPress
@@ -116,9 +108,6 @@ final class WP_Session extends Recursive_ArrayAccess {
 
         $this->read_data();
 
-	    /**
-	     * TODO MODIFICATION: Only set the cookie manually. (Give & NF do)
-	     */
 	    $this->set_cookie();
     }
 
@@ -145,9 +134,6 @@ final class WP_Session extends Recursive_ArrayAccess {
 		$this->expires = time() + (int) apply_filters( 'wp_session_expiration', 30 * 60 );
 	}
 
-	/**
-	 * TODO Give/NF MODIFICATION: Change access to public for manually setting cookie. (Give & NF do)
-	 */
 	/**
 	 * Set the session cookie
 	 *

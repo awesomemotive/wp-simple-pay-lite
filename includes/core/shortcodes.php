@@ -1,7 +1,4 @@
 <?php
-/**
- * Shortcodes
- */
 
 namespace SimplePay\Core;
 
@@ -14,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Shortcodes.
+ * Core Shortcodes Class
  *
  * Register and handle custom shortcodes.
  */
@@ -142,6 +139,8 @@ class Shortcodes {
 	 * @return string
 	 */
 	public function print_preview_form( $attributes ) {
+
+		// TODO DRY/combine print_form & print_preview_form functions.
 
 		global $simpay_form;
 

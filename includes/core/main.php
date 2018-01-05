@@ -118,7 +118,12 @@ final class SimplePay {
 		// Load core shared back-end & front-end functions.
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
 
+		// TODO Can check for admin once retrieving trial status is optimized.
+		// We don't need sessions in admin.
+		//if ( ! is_admin() ) {
 		$this->session = new Session();
+		//}
+
 		$this->objects = new Objects();
 
 		new Errors();

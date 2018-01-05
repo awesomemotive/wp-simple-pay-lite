@@ -39,9 +39,6 @@ class Setup {
 		// Only setup everything if a Stripe Token has been submitted (meaning the Form has been submitted for processing)
 		if ( isset( $_POST['simpay_stripe_token'] ) && ! empty( $_POST['simpay_stripe_token'] ) ) {
 
-			// TODO Need to clear session here?
-			// Clear all our session values since the payment is complete.
-
 			$id = intval( $_POST['simpay_form_id'] );
 
 			$simpay_form = apply_filters( 'simpay_form_view', '', $id );

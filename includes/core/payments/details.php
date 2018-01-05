@@ -7,11 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Details
+ * Core Payment Details Class
  *
- * @package SimplePay\Payments
- *
- *  A class to handle all of the payment details output after a transaction.
+ * Handles all of the payment details output after a transaction.
  */
 class Details {
 
@@ -96,6 +94,10 @@ class Details {
 		// Add filters to allow modification of opening and closing HTML elements around the payment details content
 		$before_html = apply_filters( 'simpay_before_payment_details', '<div class="simpay-payment-receipt-wrap">' );
 		$after_html  = apply_filters( 'simpay_after_payment_details', '</div>' );
+
+		// Clear out session vars here.
+		// Shortcodes->print_payment_details() will have been processed by this point.
+		\SimplePay\Core\SimplePay()->session->clear();
 
 		// Determine if we need to echo the output or just return it
 		if ( $echo ) {

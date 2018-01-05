@@ -101,7 +101,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'type'  => 'checkbox',
 					'name'  => '_enable_remember_me',
 					'id'    => '_enable_remember_me',
-					'value' => simpay_get_saved_meta( $post->ID, '_enable_remember_me', 'yes' ),
+					'value' => simpay_get_saved_meta( $post->ID, '_enable_remember_me', 'no' ),
 				) );
 				?>
 			</td>

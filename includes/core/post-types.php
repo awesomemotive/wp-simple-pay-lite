@@ -35,7 +35,7 @@ class Post_Types {
 
 		do_action( 'simpay_register_post_types' );
 
-		if ( ! post_type_exists( 'simple-pay' ) ) {
+		if ( ! post_type_exists( 'stripe' ) ) {
 
 			$args = array(
 				'capability_type' => 'post',
