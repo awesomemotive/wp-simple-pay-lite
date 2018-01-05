@@ -111,6 +111,11 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 2.0.8 - January 5, 2018 =
+
+* Fix: Add option of switching to native PHP sessions.
+* Fix: Force use of native PHP sessions when hosting with Pantheon.
+
 = 2.0.7 - December 21, 2017 =
 
 * Fix: (Better) session handling to work across various hosts. Back to using the current version of WP Session Manager (https://github.com/ericmann/wp-session-manager) (2.0.2).
