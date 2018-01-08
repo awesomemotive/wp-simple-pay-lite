@@ -233,12 +233,7 @@ class Session {
 		if ( $this->use_php_sessions ) {
 			unset( $_SESSION[ 'simpay' . $this->prefix ] );
 		} else {
-
-			// TODO Proper way to reset WP_Session instance?
-
-			//$this->session = array();
 			$this->session->reset();
-			//wp_session_unset();
 		}
 	}
 
@@ -339,13 +334,6 @@ class Session {
 			if ( false !== strpos( $uri, 'feed=' ) ) {
 				$start_session = false;
 			}
-
-			// TODO Check if in admin here instead of main.php?
-			/*
-			if ( is_admin() ) {
-				$start_session = false;
-			}
-			*/
 		}
 
 		return apply_filters( 'simpay_start_session', $start_session );
