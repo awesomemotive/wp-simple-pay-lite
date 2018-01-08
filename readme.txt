@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 Requires PHP: 5.3
 License: GPLv2 or later
 
@@ -110,6 +110,10 @@ We'd love your help! Here's a few things you can do:
 9. Payment form settings: Stripe Checkout overlay display
 
 == Changelog ==
+
+= 2.0.9 - TODO =
+
+* Dev: Don't load custom sessions class in admin.
 
 = 2.0.8 - January 5, 2018 =
 
