@@ -69,12 +69,16 @@ final class SimplePay {
 	public function __construct() {
 
 		// Load plugin.
-		$this->locale = apply_filters( 'plugin_locale', get_locale(), 'stripe' );
 		$this->load();
 
 		// Installation hooks.
 		register_activation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'activate' ) );
 		register_deactivation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'deactivate' ) );
+
+		// TODO Move locale setting.
+		// Own file for easier transferring to Lite?
+		// On plugins_loaded action?
+		$this->locale = apply_filters( 'plugin_locale', get_locale(), 'simple-pay' );
 
 		add_action( 'init', array( $this, 'setup_preview_form' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ), 5 );
@@ -83,28 +87,12 @@ final class SimplePay {
 	}
 
 	/**
-	 * Load the preview class if we need to.
+	 * Load the preview class.
 	 */
 	public function setup_preview_form() {
 
 		if ( ! isset( $_GET['simpay-preview'] ) ) {
 			return '';
-		}
-
-		// Create the preview form we will use to store preview data
-		$preview_form_id = get_option( 'simpay_preview_form_id' );
-
-		if ( ! $preview_form_id ) {
-			$form = wp_insert_post( array(
-				'post_type'   => 'simple-pay',
-				'post_status' => 'private',
-			) );
-
-			if ( $form ) {
-				update_option( 'simpay_preview_form_id', $form );
-			} else {
-				wp_die( 'An error occurred with preview.' );
-			}
 		}
 
 		new Preview();

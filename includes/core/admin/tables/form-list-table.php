@@ -24,7 +24,6 @@ class Form_List_Table extends WP_List_Table {
 	 */
 	public function __construct() {
 
-		$this->preview_form_id = get_option( 'simpay_preview_form_id' );
 		$this->admin_page_url  = admin_url( 'admin.php?page=simpay' );
 
 		parent::__construct( array(
