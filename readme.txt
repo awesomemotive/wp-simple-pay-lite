@@ -114,6 +114,7 @@ We'd love your help! Here's a few things you can do:
 = 2.0.9 - TODO =
 
 * Dev: Don't load custom sessions class in admin.
+* Fix: Fix and simplify payment form previews.
 
 = 2.0.8 - January 5, 2018 =
 
