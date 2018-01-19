@@ -15,11 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class SimplePay {
 
 	/**
-	 * Locale
-	 */
-	public $locale = 'en_US';
-
-	/**
 	 * Objects factory
 	 */
 	public $objects = null;
@@ -68,17 +63,10 @@ final class SimplePay {
 	 */
 	public function __construct() {
 
-		// Load plugin.
 		$this->load();
 
-		// Installation hooks.
 		register_activation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'activate' ) );
 		register_deactivation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'deactivate' ) );
-
-		// TODO Move locale setting.
-		// Own file for easier transferring to Lite?
-		// On plugins_loaded action?
-		$this->locale = apply_filters( 'plugin_locale', get_locale(), 'simple-pay' );
 
 		add_action( 'init', array( $this, 'setup_preview_form' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ), 5 );
