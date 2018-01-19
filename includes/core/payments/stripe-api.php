@@ -3,7 +3,6 @@
 namespace SimplePay\Core\Payments;
 
 use SimplePay\Core\Errors;
-
 use Stripe\Error;
 use Stripe\Stripe;
 
@@ -24,7 +23,7 @@ class Stripe_API {
 	public static $api_set = false;
 
 	/**
-	 * Stripe_API constructor.
+	 * Stripe_API constructor
 	 */
 	public function __construct() {
 
@@ -66,7 +65,10 @@ class Stripe_API {
 	 */
 	public static function request( $class, $function, $args ) {
 
-		global $simpay_form;
+		/**
+		 * https://stripe.com/docs/api/php#errors
+		 * https://stripe.com/docs/api/php#error_handling
+		 */
 
 		// If the API has not been set already we need to set the key here
 		if ( ! self::$api_set ) {
@@ -74,95 +76,63 @@ class Stripe_API {
 		}
 
 		try {
-
-			// Call the Stripe API request from our parameters.
-			return call_user_func( array( '\Stripe\\' . $class, $function ), $args );
+			// Call the Stripe API request from our parameters
+			$retval = call_user_func( array( '\Stripe\\' . $class, $function ), $args );
+			return $retval;
 
 		} catch ( Error\Card $e ) {
-
-			// Too many requests made to the API too quickly
-			Errors::set( 'card_error', 'Card Error: ' . $e->getMessage() );
-
-			if ( ! is_admin() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return false;
-			}
+			// Card declined
+			return self::error_handler( 'card_error', esc_html__( 'Card Error', 'stripe' ) . ': ' . $e->getMessage() );
 
 		} catch ( Error\RateLimit $e ) {
-
 			// Too many requests made to the API too quickly
-			Errors::set( 'rate_limit', 'Rate Limit Error: ' . $e->getMessage() );
-
-			if ( ! is_admin() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return false;
-			}
+			return self::error_handler( 'rate_limit', esc_html__( 'Rate Limit Error', 'stripe' ) . ': ' . $e->getMessage() );
 
 		} catch ( Error\InvalidRequest $e ) {
-
 			// Invalid parameters were supplied to Stripe's API
-			Errors::set( 'invalid_request', 'Invalid Request Error: ' . $e->getMessage() );
-
-			if ( ! is_admin() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return false;
-			}
+			return self::error_handler( 'invalid_request', esc_html__( 'Invalid Request Error', 'stripe' ) . ': ' . $e->getMessage() );
 
 		} catch ( Error\Authentication $e ) {
-
 			// Authentication with Stripe's API failed
 			// (maybe you changed API keys recently)
-			Errors::set( 'authentication', 'Authentication Error: ' . $e->getMessage() );
-
-			if ( ! is_admin() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return false;
-			}
+			return self::error_handler( 'authentication', esc_html__( 'Authentication Error', 'stripe' ) . ': ' . $e->getMessage() );
 
 		} catch ( Error\ApiConnection $e ) {
-
 			// Network communication with Stripe failed
-			Errors::set( 'api_connection', 'API Connection Error: ' . $e->getMessage() );
-
-			if ( ! is_admin() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return false;
-			}
+			return self::error_handler( 'api_connection', esc_html__( 'Stripe API Connection Error', 'stripe' ) . ': ' . $e->getMessage() );
 
 		} catch ( Error\Base $e ) {
-
 			// Display a very generic error to the user, and maybe send
 			// yourself an email
-			Errors::set( 'generic', 'Error: ' . $e->getMessage() );
-
-			if ( ! is_admin() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return false;
-			}
+			return self::error_handler( 'generic', esc_html__( 'Stripe Error', 'stripe' ) . ': ' . $e->getMessage() );
 
 		} catch ( \Exception $e ) {
-
 			// Something else happened, completely unrelated to Stripe
-			Errors::set( 'non_stripe', 'Non-Stripe Error: ' . $e->getMessage() );
+			return self::error_handler( 'non_stripe', esc_html__( 'General Error', 'stripe' ) . ': ' . $e->getMessage() );
+		}
+	}
 
-			if ( ! is_admin() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return false;
-			}
+	/**
+	 * Generic Stripe API error handler
+	 */
+	private static function error_handler( $error_id, $error_message ) {
+
+		global $simpay_form;
+
+		// TODO Fallback for users running < WP 4.7. Maybe just use wp_doing_ajax() eventually.
+		if ( function_exists( 'wp_doing_ajax' ) ) {
+			$simpay_doing_ajax = wp_doing_ajax();
+		} else {
+			$simpay_doing_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
+		}
+
+		// Don't save error to session if calling via ajax (i.e. coupon codes) or in admin.
+		if ( ! is_admin() && ! $simpay_doing_ajax ) {
+			Errors::set( $error_id, $error_message );
+			wp_redirect( $simpay_form->payment_failure_page );
+			exit;
+		} else {
+			return false;
 		}
 	}
 }
