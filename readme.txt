@@ -115,6 +115,7 @@ We'd love your help! Here's a few things you can do:
 
 * Dev: Don't load custom sessions class in admin.
 * Fix: Fix and simplify payment form previews.
+* Fix: Detection and warning about PHP 5.3 requirement.
 
 = 2.0.8 - January 5, 2018 =
 
