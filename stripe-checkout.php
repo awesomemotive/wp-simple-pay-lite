@@ -69,15 +69,6 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
 	}
 
-	// PHP minimum requirement check.
-	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
-		add_action( 'admin_notices', 'simpay_admin_php_notice' );
-
-		return;
-	}
-
-
-
 	/**
 	 * Show an error message for PHP < 5.3 and don't load the plugin.
 	 */
@@ -91,6 +82,12 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		</div>
 
 		<?php
+	}
+
+	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
+		add_action( 'admin_notices', 'simpay_admin_php_notice' );
+
+		return;
 	}
 
 	// Autoloader
