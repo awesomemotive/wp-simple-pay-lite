@@ -7,7 +7,7 @@
 
 # Grunt
 /node_modules
-/package-lock.json
+package-lock.json
 
 # Bower
 /bower_components
