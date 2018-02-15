@@ -179,8 +179,8 @@ class Menus {
 			$page->html();
 		} );
 
-		// System status page
-		add_submenu_page( 'simpay', __( 'System Status', 'stripe' ), __( 'System Status', 'stripe' ), 'manage_options', 'simpay_system_status', function () {
+		// System Report (aka System Status) page
+		add_submenu_page( 'simpay', __( 'System Report', 'stripe' ), __( 'System Report', 'stripe' ), 'manage_options', 'simpay_system_status', function () {
 			$page = new System_Status();
 			$page->html();
 		} );
