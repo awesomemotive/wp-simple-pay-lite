@@ -3,9 +3,6 @@
 namespace SimplePay\Core\Admin\Pages;
 
 use SimplePay\Core\Abstracts\Admin_Page;
-use SimplePay\Core\Payments\Stripe_API;
-use SimplePay\Core\SimplePay;
-
 /**
  * System Status class
  *
@@ -45,7 +42,6 @@ class System_Status extends Admin_Page {
 
 
 		$test_key = simpay_get_setting( 'secret_key' );
-		$retval   = '';
 
 		// If test key isn't set...
 		if ( empty( $test_key ) ) {
