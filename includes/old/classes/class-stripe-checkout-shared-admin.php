@@ -66,6 +66,8 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			// Run upgrade routine after plugins loaded.
 			add_action( 'plugins_loaded', array( $this, 'plugin_upgrade' ) );
 
+			add_filter( 'custom_menu_order', array( $this, 'set_menu_order' ) );
+
 			add_filter( 'admin_footer_text', array( $this, 'add_footer_text' ) );
 		}
 
@@ -133,6 +135,24 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			$tabs = apply_filters( 'sc_admin_tabs', $tabs );
 
 			$sc_options->set_tabs( $tabs );
+		}
+
+		/*Change menu-order*/
+		public function set_menu_order( $menu_order )
+		{
+			global $submenu;
+
+			$arr = array();
+			$arr[] = $submenu['simpay'][2];
+			$arr[] = $submenu['simpay'][3];
+			$arr[] = $submenu['simpay'][4];
+			$arr[] = $submenu['simpay'][1];
+			$arr[] = $submenu['simpay'][5];
+			$arr[] = $submenu['simpay'][6];
+
+			$submenu['simpay'] = $arr;
+
+			return $menu_order;
 		}
 
 		/**
