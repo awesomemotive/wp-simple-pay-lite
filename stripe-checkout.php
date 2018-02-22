@@ -7,7 +7,6 @@
  * Author URI:  https://wpsimplepay.com
  * Version: 2.0.9
  * Text Domain: stripe
- * Domain Path: /i18n
  */
 
 /**
