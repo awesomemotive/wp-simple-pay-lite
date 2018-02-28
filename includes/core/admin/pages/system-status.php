@@ -144,10 +144,16 @@ class System_Status extends Admin_Page {
 
 					$sections['simpay'] = array();
 
+					// Add "Lite" to plugin name if not Pro.
+					$plugin_name = SIMPLE_PAY_PLUGIN_NAME;
+					if ( ! class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
+						$plugin_name .= ' Lite';
+					}
+
 					// Show version from base class.
 					$sections['simpay']['version'] = array(
-						'label'        => sprintf( __( '%s Version', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ),
-						'label_export' => SIMPLE_PAY_PLUGIN_NAME . ' Version',
+						'label'        => sprintf( __( '%s Version', 'simple-pay' ), $plugin_name ),
+						'label_export' => $plugin_name . ' Version',
 						'result'       => SIMPLE_PAY_VERSION,
 					);
 
