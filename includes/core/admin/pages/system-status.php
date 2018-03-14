@@ -152,7 +152,7 @@ class System_Status extends Admin_Page {
 
 					// Show version from base class.
 					$sections['simpay']['version'] = array(
-						'label'        => sprintf( __( '%s Version', 'simple-pay' ), $plugin_name ),
+						'label'        => sprintf( __( '%s Version', 'stripe' ), $plugin_name ),
 						'label_export' => $plugin_name . ' Version',
 						'result'       => SIMPLE_PAY_VERSION,
 					);
@@ -504,10 +504,10 @@ class System_Status extends Admin_Page {
 					$php_max_execution_time  = ini_get( 'max_execution_time' );
 					$php_max_input_vars      = ini_get( 'max_input_vars' );
 
-					$curl_info = '';
-
+					$curl_version = '';
 					if ( function_exists( 'curl_version' ) ) {
-						$curl_info = curl_version();
+						$curl_version = curl_version();
+						$curl_version = $curl_version['version'] . ', ' . $curl_version['ssl_version'];
 					}
 
 					$sections['server'] = array(
@@ -565,15 +565,25 @@ class System_Status extends Admin_Page {
 							'label_export' => 'Max Input Vars',
 							'result'       => $php_max_input_vars ? $php_max_input_vars : '-',
 						),
+						'curl_init'           => array(
+							'label'         => __( 'cURL Enabled', 'stripe' ),
+							'result'        => function_exists( 'curl_init' ) ? '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>' : '<mark class="error">' . __( 'No', 'stripe' ) . '</mark>',
+							'result_export' => function_exists( 'curl_init' ) ? 'Yes' : 'No',
+						),
+						'curl_version'         => array(
+							'label'         => __( 'cURL Version', 'stripe' ),
+							'result'        => $curl_version,
+							'result_export' => $curl_version,
+						),
+						'mbstring'             => array(
+							'label'         => 'mbstring (' . __( 'Multibyte String', 'stripe' ) . ') ' . __( 'Enabled', 'stripe' ),
+							'result'        => extension_loaded( 'mbstring' ) ? '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>' : '<mark class="error">' . __( 'No', 'stripe' ) . '</mark>',
+							'result_export' => extension_loaded( 'mbstring' ) ? 'Yes' : 'No',
+						),
 						'fsockopen'           => array(
 							'label'         => 'fsockopen',
 							'result'        => function_exists( 'fsockopen' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
 							'result_export' => function_exists( 'fsockopen' ) ? 'Yes' : 'No',
-						),
-						'curl_init'           => array(
-							'label'         => 'cURL',
-							'result'        => ! empty( $curl_info ) ? $curl_info['version'] . ', ' . $curl_info['ssl_version'] : __( 'No version found.', 'stripe' ),
-							'result_export' => ! empty( $curl_info ) ? $curl_info['version'] . ', ' . $curl_info['ssl_version'] : 'No version found.',
 						),
 						'soap'                => array(
 							'label'         => 'SOAP',

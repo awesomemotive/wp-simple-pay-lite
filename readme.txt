@@ -116,6 +116,7 @@ We'd love your help! Here's a few things you can do:
 * Fix: Fix and simplify payment form previews.
 * Fix: Detection and warning about PHP 5.3 requirement.
 * Fix: Dequeue legacy public CSS in addition to main public CSS when "Default Plugin Styles" option is disabled.
+* Dev: System report: Add mbstring (Multibyte String) check.
 * Dev: Updated to Stripe PHP library v5.9.2.
 
 = 2.0.8 - January 5, 2018 =
