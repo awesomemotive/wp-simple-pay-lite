@@ -36,8 +36,6 @@ class Notices {
 			$this->api_keys_error();
 			$this->ssl_error();
 
-			$this->dropping_php53_bitcoin();
-
 			do_action( 'simpay_admin_notices', $this->is_admin_screen );
 		}
 	}
@@ -126,18 +124,5 @@ class Notices {
 		$notice = get_option( 'simpay_dismiss_' . $notice );
 
 		return $notice;
-	}
-
-	/**
-	 * Notice for dropping PHP 5.3 & Bitcoin soon.
-	 */
-	public function dropping_php53_bitcoin() {
-
-		if ( ! $this->check_if_dismissed( 'dropping_php53_bitcoin' ) ) {
-
-			$notice_message = __( 'WP Simple Pay and Stripe are ending support for Bitcoin and PHP 5.3 soon. Please make the necessary changes before updating WP Simple Pay after April 1, 2018.', 'stripe' );
-
-			self::print_notice( $notice_message, 'warning', 'dropping_php53_bitcoin' );
-		}
 	}
 }

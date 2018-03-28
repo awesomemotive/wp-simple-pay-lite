@@ -214,10 +214,6 @@ class Settings {
 		$verify_zip = isset( $_POST['_verify_zip'] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_verify_zip', $verify_zip );
 
-		// Enable Bitcoin
-		$enable_bitcoin = isset( $_POST['_enable_bitcoin'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_enable_bitcoin', $enable_bitcoin );
-
 		/** Checkout Overlay Display */
 
 		// Company name

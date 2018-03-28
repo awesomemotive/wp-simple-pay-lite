@@ -77,7 +77,6 @@ abstract class Form {
 	public $verify_zip = '';
 	public $enable_billing_address = '';
 	public $enable_shipping_address = '';
-	public $enable_bitcoin = '';
 
 	/*****
 	 *
@@ -239,7 +238,6 @@ abstract class Form {
 		$this->verify_zip              = simpay_get_filtered( 'verify_zip', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_verify_zip' ) ), $this->id );
 		$this->enable_billing_address  = simpay_get_filtered( 'enable_billing_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_billing_address' ) ), $this->id );
 		$this->enable_shipping_address = simpay_get_filtered( 'enable_shipping_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_shipping_address' ) ), $this->id );
-		$this->enable_bitcoin          = simpay_get_filtered( 'enable_bitcoin', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_bitcoin' ) ), $this->id );
 	}
 
 	/**
@@ -352,10 +350,6 @@ abstract class Form {
 
 		if ( $this->verify_zip ) {
 			$bools['bools']['zipCode'] = true;
-		}
-
-		if ( $this->enable_bitcoin ) {
-			$bools['bools']['bitcoin'] = true;
 		}
 
 		// Optional params if set in the settings only
