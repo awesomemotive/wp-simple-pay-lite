@@ -89,6 +89,22 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		return;
 	}
 
+	/**
+	 * Show inline plugin update message from remote Readme's [Upgrade Notice] section.
+	 */
+	function simpay_plugin_update_message( $data, $response ) {
+		//printf( '<div class="update-message"><p><strong>%s</strong></p></div>', 'Lite v999 is a recommended update' );
+
+		//printf( $data );
+		//printf( $response );
+
+		if ( isset( $data['upgrade_notice'] ) ) {
+			printf( '<div class="update-message">%s</div>', wpautop( $data['upgrade_notice'] ) );
+		}
+	}
+
+	add_action( 'in_plugin_update_message-' . plugin_basename( SIMPLE_PAY_MAIN_FILE ), 'simpay_plugin_update_message', 10, 2 );
+
 	// Autoloader
 	require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
 	require_once( SIMPLE_PAY_INC . 'autoload.php' );
