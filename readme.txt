@@ -37,7 +37,6 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Optionally collect customer billing & addresses
 * Optionally verify zip/postal code without address
 * Support for 12 languages, 25 countries and 135+ currencies
-* Bitcoin payment option
 * Translation ready
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
@@ -117,6 +116,7 @@ We'd love your help! Here's a few things you can do:
 * Fix: Detection and warning about PHP 5.3 requirement.
 * Fix: Dequeue legacy public CSS in addition to main public CSS when "Default Plugin Styles" option is disabled.
 * Fix: Error when activating plugin with WP-CLI.
+* Tweak: Removed Bitcoin support inline with Stripe (https://stripe.com/blog/ending-bitcoin-support).
 * Dev: System report: Add mbstring (Multibyte String) check.
 * Dev: Updated to Stripe PHP library v5.9.2.
 
