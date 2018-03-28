@@ -105,7 +105,7 @@ final class SimplePay {
 		new Shortcodes();
 		new Stripe_API();
 
-		if ( is_admin() ) {
+		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			$this->load_admin();
 		} else {
 			Assets::get_instance();
@@ -130,7 +130,7 @@ final class SimplePay {
 	 * Register plugin settings.
 	 */
 	public function register_settings() {
-		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) && ! defined( 'DOING_AJAX' ) ) {
 			$settings = new Admin\Pages();
 			$settings->register_settings( $settings->get_settings() );
 		}
