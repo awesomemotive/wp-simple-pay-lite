@@ -113,7 +113,7 @@ We'd love your help! Here's a few things you can do:
 = 2.0.9 - TODO =
 
 * Fix: Fix and simplify payment form previews.
-* Fix: Detection and warning about PHP 5.3 requirement.
+* Fix: Detection and warning about upcoming PHP 5.4 requirement.
 * Fix: Dequeue legacy public CSS in addition to main public CSS when "Default Plugin Styles" option is disabled.
 * Fix: Error when activating plugin with WP-CLI.
 * Tweak: Removed Bitcoin support inline with Stripe (https://stripe.com/blog/ending-bitcoin-support).
