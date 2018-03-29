@@ -120,7 +120,7 @@
 			}
 		}
 
-		&:after {
+		&::after {
 			background-color: #fafafa;
 			border-right: 1px solid #eee;
 			bottom: -9999em;
@@ -185,7 +185,7 @@
 				cursor: pointer;
 				background-color: #fff;
 
-				&:before {
+				&::before {
 					font-size: 22px;
 					line-height: 26px;
 				}

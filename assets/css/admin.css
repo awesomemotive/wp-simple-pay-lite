@@ -1,9 +1,9 @@
 .simpay-clearfix {
   *zoom: 1; }
-  .simpay-clearfix:before, .simpay-clearfix:after {
+  .simpay-clearfix::before, .simpay-clearfix::after {
     content: " ";
     display: table; }
-  .simpay-clearfix:after {
+  .simpay-clearfix::after {
     clear: both; }
 
 .simpay-metabox-title {
@@ -76,7 +76,7 @@
       text-decoration: none; }
       #simpay-form-settings .simpay-tabs li .simpay-tab-item:focus {
         box-shadow: none; }
-  #simpay-form-settings .simpay-tabs:after {
+  #simpay-form-settings .simpay-tabs::after {
     background-color: #fafafa;
     border-right: 1px solid #eee;
     bottom: -9999em;
@@ -124,7 +124,7 @@
     left: -15px;
     cursor: pointer;
     background-color: #fff; }
-    #simpay-form-settings .simpay-panel-field .simpay-image-preview-wrap .simpay-remove-image-preview:before {
+    #simpay-form-settings .simpay-panel-field .simpay-image-preview-wrap .simpay-remove-image-preview::before {
       font-size: 22px;
       line-height: 26px; }
   #simpay-form-settings .simpay-panel-field .simpay-image-preview-wrap .simpay-image-preview {

@@ -432,9 +432,3 @@ We'd love your help! Here's a few things you can do:
 * Initial release.
 
 == Upgrade Notice ==
-
-= 2.0.2 =
-
-The payment form builder has been completely redone and should be much easier to use.
-
-Existing payment forms using the legacy [stripe] shortcode should continue to work.
