@@ -140,7 +140,7 @@ class Notices {
 		$new_version = $response->new_version;
 		$upgrade_notice = $this->get_upgrade_notice( $new_version );
 
-		echo apply_filters( 'simpay_in_plugin_update_message', $upgrade_notice ? '</p>' . wp_kses_post( $upgrade_notice ) . '<p class="dummy">' : '' ); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		echo apply_filters( 'simpay_in_plugin_update_message', $upgrade_notice ? '</p>' . wp_kses_post( $upgrade_notice ) . '<p class="dummmy" style="display: none;">' : '' ); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -205,13 +205,13 @@ class Notices {
 			$upgrade_notice_version = trim( $matches[1] );
 
 			if ( version_compare( SIMPLE_PAY_VERSION, $upgrade_notice_version, '<' ) ) {
-				$upgrade_notice .= '<p class="simpay_plugin_upgrade_notice">';
+				$upgrade_notice .= '<div class="simpay-plugin-upgrade-notice">';
 
 				foreach ( $notices as $index => $line ) {
 					$upgrade_notice .= preg_replace( '~\[([^\]]*)\]\(([^\)]*)\)~', '<a href="${2}">${1}</a>', $line );
 				}
 
-				$upgrade_notice .= '</p>';
+				$upgrade_notice .= '</div>';
 			}
 		}
 
