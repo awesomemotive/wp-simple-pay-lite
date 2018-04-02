@@ -110,7 +110,7 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
-= 2.0.9 - TODO =
+= 2.0.9 - April 2, 2018 =
 
 * Fix: Fix and simplify payment form previews.
 * Fix: Detection and warning about upcoming PHP 5.4 requirement.
