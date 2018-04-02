@@ -194,24 +194,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 
-		<tr class="simpay-panel-field">
-			<th>
-				<label for="_enable_bitcoin"><?php esc_html_e( 'Enable Bitcoin', 'stripe' ); ?></label>
-			</th>
-			<td>
-				<?php
-
-				$enable_bitcoin = simpay_get_saved_meta( $post->ID, '_enable_bitcoin', 'no' );
-
-				simpay_print_field( array(
-					'type'  => 'checkbox',
-					'name'  => '_enable_bitcoin',
-					'id'    => '_enable_bitcoin',
-					'value' => $enable_bitcoin,
-				) );
-				?>
-			</td>
-		</tr>
 		</tbody>
 	</table>
 

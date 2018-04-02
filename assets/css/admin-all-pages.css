@@ -1,0 +1,28 @@
+#wpadminbar .simpay-admin-bar-test-mode > .ab-item {
+  background: #fdbc72;
+  font-size: 11px;
+  color: #fff; }
+  #wpadminbar .simpay-admin-bar-test-mode > .ab-item:hover {
+    background: #e37c4c !important;
+    color: #fff !important; }
+
+a[href="admin.php?page=simpay_upgrade"] {
+  color: #3db634 !important; }
+
+.simpay-plugin-upgrade-notice {
+  font-weight: 400;
+  color: #fff;
+  background: #d54d21;
+  padding: 1em;
+  margin: 9px 0; }
+  .simpay-plugin-upgrade-notice::before {
+    content: '\f348';
+    display: inline-block;
+    font: 400 18px/1 dashicons;
+    speak: none;
+    margin: 0 8px 0 -2px;
+    vertical-align: top; }
+
+#stripe-update .updating-message .simpay-plugin-upgrade-notice,
+#simple-pay-update .updating-message .simpay-plugin-upgrade-notice {
+  display: none; }

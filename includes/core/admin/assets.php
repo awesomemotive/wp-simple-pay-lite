@@ -22,7 +22,7 @@ class Assets {
 
 		$this->set_minified();
 
-		// Load admin scripts only on our own admin pages
+		// Load admin scripts & styles only on our own admin pages.
 		if ( false !== simpay_is_admin_screen() ) {
 
 			$this->setup();
@@ -31,33 +31,23 @@ class Assets {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		}
 
-		// Enqueue our admin-bar css which needs to be on all admin pages
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_bar_css' ) );
-
-		// Enqueue the upgrade-link on all pages
-		add_action( 'admin_enqueue_scripts', array( $this, 'upgrade_link' ) );
+		// Load admin scripts & styles on all admin pages.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_on_all_admin_pages' ) );
 	}
 
 	/**
-	 * Add upgrade link css and js to all pages
+	 * Enqueue JS & CSS file to run on all admin pages (in our own settings or not).
+	 * Admin bar, upgrade link, inline plugin update message, etc.
 	 */
-	public function upgrade_link() {
+	public function enqueue_on_all_admin_pages() {
 
-		// Load the CSS
-		$src = SIMPLE_PAY_ASSETS . 'css/upgrade-link' . $this->min . '.css';
-		wp_enqueue_style( 'simpay-upgrade-link', $src, array(), SIMPLE_PAY_VERSION, 'all' );
+		// CSS
+		$src = SIMPLE_PAY_ASSETS . 'css/admin-all-pages' . $this->min . '.css';
+		wp_enqueue_style( 'simpay-admin-all-pages', $src, array(), SIMPLE_PAY_VERSION, 'all' );
 
-		// Load the JS
+		// JS
 		$src = SIMPLE_PAY_ASSETS . 'js/upgrade-link' . $this->min . '.js';
 		wp_enqueue_script( 'simpay-upgrade-link', $src, array( 'jquery' ), SIMPLE_PAY_VERSION, true );
-	}
-
-	/**
-	 * Add admin bar to all admin pages so
-	 */
-	public function admin_bar_css() {
-		$src = SIMPLE_PAY_ASSETS . 'css/admin-bar' . $this->min . '.css';
-		wp_enqueue_style( 'simpay-admin-bar', $src, array(), SIMPLE_PAY_VERSION, 'all' );
 	}
 
 	public function set_minified() {

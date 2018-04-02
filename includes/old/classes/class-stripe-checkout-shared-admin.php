@@ -137,20 +137,24 @@ if ( ! class_exists( 'Stripe_Checkout_Admin' ) ) {
 			$sc_options->set_tabs( $tabs );
 		}
 
-		/*Change menu-order*/
-		public function set_menu_order( $menu_order )
-		{
+		/**
+		 * Change menu-order
+		 */
+		public function set_menu_order( $menu_order ) {
 			global $submenu;
+			
+			if ( isset( $submenu['simpay'] ) && ! empty( $submenu['simpay'] ) ) {
 
-			$arr = array();
-			$arr[] = $submenu['simpay'][2];
-			$arr[] = $submenu['simpay'][3];
-			$arr[] = $submenu['simpay'][4];
-			$arr[] = $submenu['simpay'][1];
-			$arr[] = $submenu['simpay'][5];
-			$arr[] = $submenu['simpay'][6];
+				$arr   = array();
+				$arr[] = $submenu['simpay'][2];
+				$arr[] = $submenu['simpay'][3];
+				$arr[] = $submenu['simpay'][4];
+				$arr[] = $submenu['simpay'][1];
+				$arr[] = $submenu['simpay'][5];
+				$arr[] = $submenu['simpay'][6];
 
-			$submenu['simpay'] = $arr;
+				$submenu['simpay'] = $arr;
+			}
 
 			return $menu_order;
 		}

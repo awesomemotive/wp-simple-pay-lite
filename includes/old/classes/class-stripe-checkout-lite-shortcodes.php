@@ -46,7 +46,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 						   'billing'                   => ( null !== $sc_options->get_setting_value( 'billing' ) ? 'true' : 'false' ),    // true or false
 						   'payment_button_label'      => ( null !== $sc_options->get_setting_value( 'payment_button_label' ) ? $sc_options->get_setting_value( 'payment_button_label' ) : __( 'Pay with Card', 'stripe' ) ),
 						   'enable_remember'           => ( null !== $sc_options->get_setting_value( 'enable_remember' ) ? 'true' : 'false' ),    // true or false
-						   'bitcoin'                   => ( null !== $sc_options->get_setting_value( 'use_bitcoin' ) ? 'true' : 'false' ),    // true or false
 						   'locale'                    => ( null !== $sc_options->get_setting_value( 'locale' ) ? $sc_options->get_setting_value( 'locale' ) : 'auto' ),
 						   'success_redirect_url'      => ( null !== $sc_options->get_setting_value( 'success_redirect_url' ) ? $sc_options->get_setting_value( 'success_redirect_url' ) : get_permalink() ),
 						   'failure_redirect_url'      => ( null !== $sc_options->get_setting_value( 'failure_redirect_url' ) ? $sc_options->get_setting_value( 'failure_redirect_url' ) : get_permalink() ),
@@ -71,7 +70,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 		   $billing                   = $attr['billing'];
 		   $payment_button_label      = $attr['payment_button_label'];
 		   $enable_remember           = $attr['enable_remember'];
-		   $bitcoin                   = $attr['bitcoin'];
 		   $locale                    = $attr['locale'];
 		   $success_redirect_url      = $attr['success_redirect_url'];
 		   $failure_redirect_url      = $attr['failure_redirect_url'];
@@ -142,7 +140,6 @@ if ( ! class_exists( 'Stripe_Checkout_Shortcodes' ) ) {
 					   ( ! empty( $prefill_email ) && 'false' != $prefill_email ? 'data-email="' . $prefill_email . '" ' : '' ) .
 					   ( ! empty( $payment_button_label ) ? 'data-label="' . esc_js( $payment_button_label ) . '" ' : '' ) .
 					   ( ! empty( $enable_remember ) ? 'data-allow-remember-me="' . $enable_remember . '" ' : '' ) .
-					   ( ! empty( $bitcoin ) ? 'data-bitcoin="' . $bitcoin . '" ' : '' ) .
 					   ( ! empty( $billing ) ? 'data-billing-address="' . $billing . '" ' : '' ) .
 					   ( ! empty( $locale ) ? 'data-locale="' . $locale . '" ' : '' ) .
 					   '></script>';

@@ -176,45 +176,48 @@ class Main {
 	public static function get_form_settings( $action ) {
 
 		switch ( $action ) {
-			case 'edit': {
-				$id   = absint( $_GET['form_id'] );
-				$form = get_post( $id );
+			case 'edit':
+				{
+					$id   = absint( $_GET['form_id'] );
+					$form = get_post( $id );
 
-				$form_action = '';
+					$form_action = '';
 
-				self::get_title( esc_html__( 'Edit Payment Form', 'stripe' ) );
+					self::get_title( esc_html__( 'Edit Payment Form', 'stripe' ) );
 
-				break;
-			}
-			case 'create': {
+					break;
+				}
+			case 'create':
+				{
 
-				// Create post object
-				$form_args = array(
-					'post_title'   => '',
-					'post_content' => '',
-					'post_status'  => 'draft',
-					'post_type'    => 'simple-pay',
-				);
+					// Create post object
+					$form_args = array(
+						'post_title'   => '',
+						'post_content' => '',
+						'post_status'  => 'draft',
+						'post_type'    => 'simple-pay',
+					);
 
-				// Insert the post into the database
-				$form = wp_insert_post( $form_args );
+					// Insert the post into the database
+					$form = wp_insert_post( $form_args );
 
-				$form = get_post( $form );
+					$form = get_post( $form );
 
-				$form_action = esc_url( add_query_arg( array(
-					'action'  => 'edit',
-					'form_id' => $form->ID,
-				), admin_url( 'admin.php?page=simpay' ) ) );
+					$form_action = esc_url( add_query_arg( array(
+						'action'  => 'edit',
+						'form_id' => $form->ID,
+					), admin_url( 'admin.php?page=simpay' ) ) );
 
-				self::get_title( esc_html__( 'Add New Payment Form', 'stripe' ) );
+					self::get_title( esc_html__( 'Add New Payment Form', 'stripe' ) );
 
-				break;
-			}
-			default: {
-				self::main_page();
+					break;
+				}
+			default:
+				{
+					self::main_page();
 
-				return '';
-			}
+					return '';
+				}
 		}
 
 		global $post;
@@ -306,12 +309,13 @@ class Main {
 								// Build the preview link
 								$preview_link = add_query_arg( array(
 									'simpay-preview' => $form->ID,
-									'src'            => 'btn',
 								), site_url() );
 								?>
-								<input type="submit" value="<?php esc_attr_e( 'Preview', 'stripe' ); ?>" id="simpay-preview-button" class="simpay-button button" data-action="<?php echo esc_url( $preview_link ); ?>" />
+								<input type="submit" value="<?php esc_attr_e( 'Preview', 'stripe' ); ?>" id="simpay-preview-button" class="simpay-button button"
+								       title="<?php esc_html_e( 'Preview saved changes', 'stripe' ); ?>" data-action="<?php echo esc_url( $preview_link ); ?>" />
 							</div>
 							<div class="clear"></div>
+
 						</div><!-- #minor-publishing-actions -->
 
 						<div id="misc-publishing-actions">

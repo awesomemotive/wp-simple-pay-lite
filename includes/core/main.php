@@ -15,11 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class SimplePay {
 
 	/**
-	 * Locale
-	 */
-	public $locale = 'en_US';
-
-	/**
 	 * Objects factory
 	 */
 	public $objects = null;
@@ -68,11 +63,8 @@ final class SimplePay {
 	 */
 	public function __construct() {
 
-		// Load plugin.
-		$this->locale = apply_filters( 'plugin_locale', get_locale(), 'stripe' );
 		$this->load();
 
-		// Installation hooks.
 		register_activation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'activate' ) );
 		register_deactivation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'deactivate' ) );
 
@@ -83,28 +75,12 @@ final class SimplePay {
 	}
 
 	/**
-	 * Load the preview class if we need to.
+	 * Load the preview class.
 	 */
 	public function setup_preview_form() {
 
 		if ( ! isset( $_GET['simpay-preview'] ) ) {
 			return '';
-		}
-
-		// Create the preview form we will use to store preview data
-		$preview_form_id = get_option( 'simpay_preview_form_id' );
-
-		if ( ! $preview_form_id ) {
-			$form = wp_insert_post( array(
-				'post_type'   => 'simple-pay',
-				'post_status' => 'private',
-			) );
-
-			if ( $form ) {
-				update_option( 'simpay_preview_form_id', $form );
-			} else {
-				wp_die( 'An error occurred with preview.' );
-			}
 		}
 
 		new Preview();
@@ -118,11 +94,8 @@ final class SimplePay {
 		// Load core shared back-end & front-end functions.
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
 
-		// TODO Can check for admin once retrieving trial status is optimized.
-		// We don't need sessions in admin.
-		//if ( ! is_admin() ) {
+		// TODO Don't load sessions in admin after Pro multi-plan setup fee set/get is refactored.
 		$this->session = new Session();
-		//}
 
 		$this->objects = new Objects();
 
@@ -132,7 +105,7 @@ final class SimplePay {
 		new Shortcodes();
 		new Stripe_API();
 
-		if ( is_admin() ) {
+		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			$this->load_admin();
 		} else {
 			Assets::get_instance();
@@ -157,7 +130,7 @@ final class SimplePay {
 	 * Register plugin settings.
 	 */
 	public function register_settings() {
-		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) && ! defined( 'DOING_AJAX' ) ) {
 			$settings = new Admin\Pages();
 			$settings->register_settings( $settings->get_settings() );
 		}

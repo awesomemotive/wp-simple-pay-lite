@@ -39,7 +39,6 @@ if ( ! class_exists( 'Stripe_Checkout_Upgrade' ) ) {
 
 			$new_version = $base_class->version;
 
-			// TODO This option update is not always getting run.
 			update_option( 'sc_version', $new_version );
 			add_option( 'sc_upgrade_has_run', 1 );
 		}

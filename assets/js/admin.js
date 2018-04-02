@@ -26,7 +26,7 @@ var spAdmin = {};
 			this.handleMetaboxTabClick();
 
 			// Init internal link to tab clicks.
-			spFormSettings.find( '.simpay-tab-link' ).on( 'click.simpayTabLink', function( e ) {
+			spFormSettings.on( 'click.simpayTabLink', '.simpay-tab-link', function( e ) {
 				e.preventDefault();
 				spAdmin.handleInternalLinkToTabClicks( $( this ) );
 			} );

@@ -31,9 +31,9 @@ class Shortcodes {
 	 */
 	public function register_shortcodes() {
 
-		add_shortcode( 'simpay', array( $this, 'print_form' ) );
-		add_shortcode( 'simpay_payment_receipt', array( $this, 'print_payment_receipt' ) );
+		add_shortcode( 'simpay', array( $this, 'print_public_form' ) );
 		add_shortcode( 'simpay_preview', array( $this, 'print_preview_form' ) );
+		add_shortcode( 'simpay_payment_receipt', array( $this, 'print_payment_receipt' ) );
 		add_shortcode( 'simpay_error', array( $this, 'print_errors' ) );
 
 		do_action( 'simpay_add_shortcodes' );
@@ -85,7 +85,7 @@ class Shortcodes {
 	}
 
 	/**
-	 * Print a form.
+	 * Shortcode to render public paymetn form
 	 *
 	 * @since  3.0.0
 	 *
@@ -93,9 +93,7 @@ class Shortcodes {
 	 *
 	 * @return string
 	 */
-	public function print_form( $attributes ) {
-
-		global $simpay_form;
+	public function print_public_form( $attributes ) {
 
 		// TODO Double check if there's any sensitive data being passed?
 
@@ -110,21 +108,7 @@ class Shortcodes {
 			$form_post = get_post( $id );
 
 			if ( $form_post && 'publish' === $form_post->post_status ) {
-
-				$simpay_form = apply_filters( 'simpay_form_view','', $id );
-
-				if ( empty( $simpay_form ) ) {
-					$simpay_form =  new Default_Form( $id );
-				}
-
-				if ( $simpay_form instanceof Form ) {
-
-					ob_start();
-
-					$simpay_form->html();
-
-					return ob_get_clean();
-				}
+				return self::form_html( $id );
 			}
 		}
 
@@ -132,17 +116,13 @@ class Shortcodes {
 	}
 
 	/**
-	 * Shortcode to show preview output
+	 * Shortcode to render payment form preview
 	 *
 	 * @param $attributes
 	 *
 	 * @return string
 	 */
 	public function print_preview_form( $attributes ) {
-
-		// TODO DRY/combine print_form & print_preview_form functions.
-
-		global $simpay_form;
 
 		$args = shortcode_atts( array(
 			'id' => null,
@@ -155,25 +135,42 @@ class Shortcodes {
 			$form_post = get_post( $id );
 
 			if ( $form_post && current_user_can( 'manage_options' ) ) {
-
-				$simpay_form = apply_filters( 'simpay_form_view','', $id );
-
-				if ( empty( $simpay_form ) ) {
-					$simpay_form =  new Default_Form( $id );
-				}
-
-				if ( $simpay_form instanceof Form ) {
-
-					ob_start();
-
-					$simpay_form->html();
-
-					return ob_get_clean();
-				}
+				return self::form_html( $id );
 			}
 		}
 
 		return '';
+	}
+
+	/**
+	 * Private function for returning payment form html common between public & preview modes.
+	 *
+	 * @param $form_id int
+	 *
+	 * @return string
+	 */
+	private function form_html( $form_id ) {
+
+		global $simpay_form;
+
+		// Hook allows Pro forms to override the core default form here.
+		$simpay_form = apply_filters( 'simpay_form_view','', $form_id );
+
+		if ( empty( $simpay_form ) ) {
+
+			$simpay_form =  new Default_Form( $form_id );
+		}
+
+		if ( $simpay_form instanceof Form ) {
+
+			ob_start();
+
+			$simpay_form->html();
+
+			return ob_get_clean();
+		} else {
+			return '';
+		}
 	}
 
 	/**

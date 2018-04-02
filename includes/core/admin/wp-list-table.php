@@ -286,7 +286,9 @@ class WP_List_Table {
 		if ( !$args['total_pages'] && $args['per_page'] > 0 )
 			$args['total_pages'] = ceil( $args['total_items'] / $args['per_page'] );
 
-		// TODO Fallback for users running < WP 4.7. Maybe remove eventually.
+		/** Modified for WP Simple Pay */
+		// TODO Fallback for users running < WP 4.7. Maybe just use wp_doing_ajax() eventually.
+
 		if ( function_exists( 'wp_doing_ajax' ) ) {
 			$simpay_doing_ajax = wp_doing_ajax();
 		} else {
@@ -294,7 +296,6 @@ class WP_List_Table {
 		}
 
 		// Redirect if page number is invalid and headers are not already sent.
-		//if ( ! headers_sent() && ! wp_doing_ajax() && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
 		if ( ! headers_sent() && ! $simpay_doing_ajax && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
 			wp_redirect( add_query_arg( 'paged', $args['total_pages'] ) );
 			exit;

@@ -2,8 +2,6 @@
 
 namespace SimplePay\Core\Forms;
 
-use SimplePay\Core\Admin\Metaboxes\Settings;
-
 /**
  * Class to handle the preview output of a form in progress
  *
@@ -18,20 +16,7 @@ class Preview {
 	 */
 	public function __construct() {
 
-		if ( isset( $_GET['src'] ) && 'btn' == $_GET['src'] ) {
-			// Set the id to the saved post id for previewing
-			$this->preview_form_id = get_option( 'simpay_preview_form_id' );
-
-			$post = get_post( $this->preview_form_id );
-
-			Settings::save( $this->preview_form_id, $post );
-
-			// We don't want a warning about resubmitting post data when refreshing the page so we redirect with our new data and remove the btn src arg
-			wp_redirect( add_query_arg( 'simpay-preview', $this->preview_form_id, site_url() ) );
-			exit;
-		} else {
-			$this->preview_form_id = absint( $_GET['simpay-preview'] );
-		}
+		$this->preview_form_id = absint( $_GET['simpay-preview'] );
 
 		if ( empty( $this->preview_form_id ) ) {
 			return;

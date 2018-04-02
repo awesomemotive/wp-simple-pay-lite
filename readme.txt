@@ -3,7 +3,7 @@ Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 Requires PHP: 5.3
 License: GPLv2 or later
 
@@ -37,7 +37,6 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Optionally collect customer billing & addresses
 * Optionally verify zip/postal code without address
 * Support for 12 languages, 25 countries and 135+ currencies
-* Bitcoin payment option
 * Translation ready
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
@@ -111,6 +110,16 @@ We'd love your help! Here's a few things you can do:
 
 == Changelog ==
 
+= 2.0.9 - April 2, 2018 =
+
+* Fix: Fix and simplify payment form previews.
+* Fix: Detection and warning about upcoming PHP 5.4 requirement.
+* Fix: Dequeue legacy public CSS in addition to main public CSS when "Default Plugin Styles" option is disabled.
+* Fix: Error when activating plugin with WP-CLI.
+* Tweak: Removed Bitcoin support inline with Stripe (https://stripe.com/blog/ending-bitcoin-support).
+* Dev: System report: Add mbstring (Multibyte String) check.
+* Dev: Updated to Stripe PHP library v5.9.2.
+
 = 2.0.8 - January 5, 2018 =
 
 * Fix: Add option of switching to native PHP sessions.
@@ -119,6 +128,7 @@ We'd love your help! Here's a few things you can do:
 = 2.0.7 - December 21, 2017 =
 
 * Fix: (Better) session handling to work across various hosts. Back to using the current version of WP Session Manager (https://github.com/ericmann/wp-session-manager) (2.0.2).
+* Fix: Force use of native PHP sessions when hosting with Pantheon and using their native PHP sessions plugin.
 * Dev: Updated to Stripe PHP library v5.8.0.
 * Dev: Updated jQuery Validation & Chosen JS libraries.
 
@@ -422,9 +432,3 @@ We'd love your help! Here's a few things you can do:
 * Initial release.
 
 == Upgrade Notice ==
-
-= 2.0.2 =
-
-The payment form builder has been completely redone and should be much easier to use.
-
-Existing payment forms using the legacy [stripe] shortcode should continue to work.

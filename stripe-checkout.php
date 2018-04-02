@@ -5,9 +5,8 @@
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author: WP Simple Pay
  * Author URI:  https://wpsimplepay.com
- * Version: 2.0.8
+ * Version: 2.0.9
  * Text Domain: stripe
- * Domain Path: /i18n
  */
 
 /**
@@ -25,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright 2014-2017 Moonstone Media Group. All rights reserved.
+ * Copyright 2014-2018 Moonstone Media Group. All rights reserved.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
-	define( 'SIMPLE_PAY_VERSION', '2.0.8' );
+	define( 'SIMPLE_PAY_VERSION', '2.0.9' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay' );
@@ -42,7 +41,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 	// Stripe API version should be in 'YYYY-MM-DD' format.
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2017-12-14' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2018-02-28' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_MAIN_FILE' ) ) {
@@ -69,15 +68,6 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
 	}
 
-	// PHP minimum requirement check.
-	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
-		add_action( 'admin_notices', 'simpay_admin_php_notice' );
-
-		return;
-	}
-
-
-
 	/**
 	 * Show an error message for PHP < 5.3 and don't load the plugin.
 	 */
@@ -91,6 +81,12 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		</div>
 
 		<?php
+	}
+
+	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
+		add_action( 'admin_notices', 'simpay_admin_php_notice' );
+
+		return;
 	}
 
 	// Autoloader

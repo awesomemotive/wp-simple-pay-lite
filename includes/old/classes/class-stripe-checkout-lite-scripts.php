@@ -45,8 +45,8 @@ if ( ! class_exists( 'Stripe_Checkout_Scripts' ) ) {
 
 			global $base_class, $sc_options;
 
-			// First check for disable CSS option
-			if ( null !== $sc_options->get_setting_value( 'disable_css' ) ) {
+			// First check for disable CSS option (legacy & v2 options).
+			if ( ( null !== $sc_options->get_setting_value( 'disable_css' ) ) || ( 'disabled' === simpay_get_global_setting( 'default_plugin_styles' ) ) ) {
 				return;
 			}
 
