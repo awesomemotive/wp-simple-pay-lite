@@ -21,6 +21,7 @@ module.exports = function( grunt ) {
 		'!contributing.md',
 		'!gruntfile.js',
 		'!package.json',
+		'!package-lock.json',
 		'!readme.md',
 		'!**/*~'
 	];
