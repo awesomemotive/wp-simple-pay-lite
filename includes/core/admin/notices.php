@@ -41,15 +41,18 @@ class Notices {
 			$this->api_keys_error();
 			$this->ssl_error();
 
+			// TODO Maybe reuse this for upcoming PHP 5.6 requirement.
+			/*
 			// Show non-dismissable notice for dropping PHP 5.3 next update.
 			if ( version_compare( PHP_VERSION, '5.4', '<' ) ) {
 
-				$notice_message = __( 'WP Simple Pay and Stripe are ending compatibility with PHP 5.3 in the next update. Please update PHP before updating WP Simple Pay.', 'stripe' ) . '<br/>' .
-				                  __( 'We strongly recommend PHP 7.0 or higher.', 'stripe' ) .
-				                  ' <a href="https://wordpress.org/about/requirements/" target="_blank">' . __( 'Click here for more details and a letter you can send to your host.', 'stripe' ) . '</a> ';
+				$notice_message = __( 'WP Simple Pay and Stripe are ending compatibility with PHP 5.3 in the next update. Please update PHP before updating WP Simple Pay.', 'simple-pay' ) . '<br/>' .
+				                  __( 'We strongly recommend PHP 7.0 or higher.', 'simple-pay' ) .
+				                  ' <a href="https://wordpress.org/about/requirements/" target="_blank">' . __( 'Click here for more details and a letter you can send to your host.', 'simple-pay' ) . '</a> ';
 
 				self::print_notice( $notice_message );
 			}
+			*/
 
 			do_action( 'simpay_admin_notices', $this->is_admin_screen );
 		}
