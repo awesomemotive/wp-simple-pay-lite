@@ -33,9 +33,10 @@ class ProductTest extends TestCase
             'post',
             '/v1/products'
         );
-        $resource = Product::create(array(
-            'name' => 'name'
-        ));
+        $resource = Product::create([
+            'name' => 'name',
+            'type' => 'good'
+        ]);
         $this->assertInstanceOf("Stripe\\Product", $resource);
     }
 
@@ -45,7 +46,7 @@ class ProductTest extends TestCase
         $resource->metadata["key"] = "value";
         $this->expectsRequest(
             'post',
-            '/v1/products/' . self::TEST_RESOURCE_ID
+            '/v1/products/' . $resource->id
         );
         $resource->save();
         $this->assertInstanceOf("Stripe\\Product", $resource);
@@ -57,9 +58,9 @@ class ProductTest extends TestCase
             'post',
             '/v1/products/' . self::TEST_RESOURCE_ID
         );
-        $resource = Product::update(self::TEST_RESOURCE_ID, array(
-            "metadata" => array("key" => "value"),
-        ));
+        $resource = Product::update(self::TEST_RESOURCE_ID, [
+            "metadata" => ["key" => "value"],
+        ]);
         $this->assertInstanceOf("Stripe\\Product", $resource);
     }
 
@@ -68,7 +69,7 @@ class ProductTest extends TestCase
         $resource = Product::retrieve(self::TEST_RESOURCE_ID);
         $this->expectsRequest(
             'delete',
-            '/v1/products/' . self::TEST_RESOURCE_ID
+            '/v1/products/' . $resource->id
         );
         $resource->delete();
         $this->assertInstanceOf("Stripe\\Product", $resource);

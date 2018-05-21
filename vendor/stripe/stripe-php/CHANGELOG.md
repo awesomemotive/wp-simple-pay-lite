@@ -1,5 +1,62 @@
 # Changelog
 
+## 6.7.1 - 2018-05-13
+* [#468](https://github.com/stripe/stripe-php/pull/468) Update fields in PHP docs for accuracy
+
+## 6.7.0 - 2018-05-09
+* [#466](https://github.com/stripe/stripe-php/pull/466) Add support for issuer fraud records
+
+## 6.6.0 - 2018-04-11
+* [#460](https://github.com/stripe/stripe-php/pull/460) Add support for flexible billing primitives
+
+## 6.5.0 - 2018-04-05
+* [#461](https://github.com/stripe/stripe-php/pull/461) Don't zero keys on non-`metadata` subobjects
+
+## 6.4.2 - 2018-03-17
+* [#458](https://github.com/stripe/stripe-php/pull/458) Add PHPDoc for `account` on `\Stripe\Event`
+
+## 6.4.1 - 2018-03-02
+* [#455](https://github.com/stripe/stripe-php/pull/455) Fix namespaces in PHPDoc
+* [#456](https://github.com/stripe/stripe-php/pull/456) Fix namespaces for some exceptions
+
+## 6.4.0 - 2018-02-28
+* [#453](https://github.com/stripe/stripe-php/pull/453) Add constants for `reason` (`REASON_*`) and `status` (`STATUS_*`) on `\Stripe\Dispute`
+
+## 6.3.2 - 2018-02-27
+* [#452](https://github.com/stripe/stripe-php/pull/452) Add PHPDoc for `amount_paid` and `amount_remaining` on `\Stripe\Invoice`
+
+## 6.3.1 - 2018-02-26
+* [#443](https://github.com/stripe/stripe-php/pull/443) Add event types as constants to `\Stripe\Event` class
+
+## 6.3.0 - 2018-02-23
+* [#450](https://github.com/stripe/stripe-php/pull/450) Add support for `code` attribute on all Stripe exceptions
+
+## 6.2.0 - 2018-02-21
+* [#440](https://github.com/stripe/stripe-php/pull/440) Add support for topups
+* [#442](https://github.com/stripe/stripe-php/pull/442) Fix PHPDoc for `\Stripe\Error\SignatureVerification`
+
+## 6.1.0 - 2018-02-12
+* [#435](https://github.com/stripe/stripe-php/pull/435) Fix header persistence on `Collection` objects
+* [#436](https://github.com/stripe/stripe-php/pull/436) Introduce new `Idempotency` error class
+
+## 6.0.0 - 2018-02-07
+Major version release. List of backwards incompatible changes to watch out for:
++ The minimum PHP version is now 5.4.0. If you're using PHP 5.3 or older, consider upgrading to a more recent version.
+* `\Stripe\AttachedObject` no longer exists. Attributes that used to be instances of `\Stripe\AttachedObject` (such as `metadata`) are now instances of `\Stripe\StripeObject`.
++ Attributes that used to be PHP arrays (such as `legal_entity->additional_owners` on `\Stripe\Account` instances) are now instances of `\Stripe\StripeObject`, except when they are empty. `\Stripe\StripeObject` has array semantics so this should not be an issue unless you are actively checking types.
+* `\Stripe\Collection` now derives from `\Stripe\StripeObject` rather than from `\Stripe\ApiResource`.
+
+Pull requests included in this release:
+* [#410](https://github.com/stripe/stripe-php/pull/410) Drop support for PHP 5.3
+* [#411](https://github.com/stripe/stripe-php/pull/411) Use traits for common API operations
+* [#414](https://github.com/stripe/stripe-php/pull/414) Use short array syntax
+* [#404](https://github.com/stripe/stripe-php/pull/404) Fix serialization logic
+* [#417](https://github.com/stripe/stripe-php/pull/417) Remove `ExternalAccount` class
+* [#418](https://github.com/stripe/stripe-php/pull/418) Increase test coverage
+* [#421](https://github.com/stripe/stripe-php/pull/421) Update CA bundle and add script for future updates
+* [#422](https://github.com/stripe/stripe-php/pull/422) Use vendored CA bundle for all requests
+* [#428](https://github.com/stripe/stripe-php/pull/428) Support for automatic request retries
+
 ## 5.9.2 - 2018-02-07
 * [#431](https://github.com/stripe/stripe-php/pull/431) Update PHPDoc @property tags for latest API version
 
@@ -8,6 +65,7 @@
 
 ## 5.9.0 - 2018-01-17
 * [#421](https://github.com/stripe/stripe-php/pull/421) Updated bundled CA certificates
+* [#423](https://github.com/stripe/stripe-php/pull/423) Escape unsanitized input in OAuth example
 
 ## 5.8.0 - 2017-12-20
 * [#403](https://github.com/stripe/stripe-php/pull/403) Add `__debugInfo()` magic method to `StripeObject`

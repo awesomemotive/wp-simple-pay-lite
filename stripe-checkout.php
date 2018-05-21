@@ -68,22 +68,28 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
 	}
 
-	/**
-	 * Show an error message for PHP < 5.3 and don't load the plugin.
-	 */
-	function simpay_admin_php_notice() {
-		?>
-
-		<div class="error">
-			<p>
-				<?php printf( esc_html__( '%s requires PHP 5.3 or higher.', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ); ?>
-			</p>
-		</div>
-
-		<?php
+	if ( ! defined( 'SIMPLE_PAY_MIN_PHP_VER' ) ) {
+		define( 'SIMPLE_PAY_MIN_PHP_VER', '5.4' );
 	}
 
-	if ( version_compare( PHP_VERSION, '5.3', '<' ) ) {
+	/**
+	 * Show an error message for PHP version < SIMPLE_PAY_MIN_PHP_VER and don't load the plugin.
+	 */
+	if ( ! function_exists( 'simpay_admin_php_notice' ) ) {
+		function simpay_admin_php_notice() {
+			?>
+
+			<div class="error">
+				<p>
+					<?php printf( esc_html__( '%1$s requires %2$s or higher.', 'stripe' ), SIMPLE_PAY_ITEM_NAME, 'PHP ' . SIMPLE_PAY_MIN_PHP_VER ); ?>
+				</p>
+			</div>
+
+			<?php
+		}
+	}
+
+	if ( version_compare( PHP_VERSION, SIMPLE_PAY_MIN_PHP_VER, '<' ) ) {
 		add_action( 'admin_notices', 'simpay_admin_php_notice' );
 
 		return;

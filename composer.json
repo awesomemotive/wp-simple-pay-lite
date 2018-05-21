@@ -1,10 +1,10 @@
 {
   "require": {
-    "php": ">=5.3.3",
+    "php": ">=5.4",
     "ext-curl": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
     "composer/installers": "1.x",
-    "stripe/stripe-php": "5.x"
+    "stripe/stripe-php": "6.x"
   }
 }

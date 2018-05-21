@@ -4,7 +4,7 @@ Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
 Stable tag: 2.0.9
-Requires PHP: 5.3
+Requires PHP: 5.4
 License: GPLv2 or later
 
 Add high conversion Stripe payment forms to your WordPress site in minutes.
