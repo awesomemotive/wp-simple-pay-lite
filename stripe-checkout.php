@@ -81,7 +81,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 			<div class="error">
 				<p>
-					<?php printf( esc_html__( '%1$s requires %2$s or higher.', 'stripe' ), SIMPLE_PAY_ITEM_NAME, 'PHP ' . SIMPLE_PAY_MIN_PHP_VER ); ?>
+					<?php printf( esc_html__( '%1$s requires %2$s or higher.', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME, 'PHP ' . SIMPLE_PAY_MIN_PHP_VER ); ?>
 				</p>
 			</div>
 
