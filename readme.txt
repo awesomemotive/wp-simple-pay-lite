@@ -11,23 +11,21 @@ Add high conversion Stripe payment forms to your WordPress site in minutes.
 
 == Description ==
 
-In a few simple steps you can start accepting credit card payments with Stripe Checkout on your WordPress site. Stripe continually tests and optimizes their checkout forms to maximize customer conversion.
+In a few simple steps you can start accepting credit card payments with Stripe Checkout on your WordPress site.
 
 **What is Stripe Checkout?**
 
 *"Stripe Checkout is an embeddable payment form for desktop, tablet, and mobile devices. It works within your site—customers can pay instantly, without being redirected away to complete the transaction."*
 
-If accepting credit card payments quickly and painlessly with little setup time is what you're looking for, this plugin is for you.
+If accepting credit card payments quickly and painlessly is what you're looking for, this plugin is for you.
 
-WP Simple Pay is not designed to integrate with more complex shopping cart, form builder or membership site plugins. Many of those plugins already have their own Stripe integrations.
+Stripe Checkout is continually optimized across millions of transactions to maximize customer conversions.
 
-This is a standalone Stripe checkout plugin.
+WP Simple Pay is a standalone Stripe Checkout plugin. No complex shopping cart, form builder or membership site plugin needed.
 
-That's it. **No other plugins required.**
+That's it. *No other plugins required.*
 
 >**[Check out our demos & Pro version](https://demo.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
-
-SSL note: Stripe requires that any page hosting a live checkout form be SSL (they should start with `https://`). [See system requirements.](https://docs.wpsimplepay.com/articles/system-requirements-wp-simple-pay-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)
 
 = LITE VERSION FEATURES =
 
@@ -56,6 +54,7 @@ SSL note: Stripe requires that any page hosting a live checkout form be SSL (the
 * Subscription setup fees
 * Subscription trial periods
 * [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
+* [MemberPress](https://memberpress.com/) integration
 * Priority email support with a 24-hour response time during business days
 
 >**[Click here to upgrade to WP Simple Pay Pro](https://wpsimplepay.com/lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
@@ -89,7 +88,7 @@ Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source
 
 = How do I contribute to WP Simple Pay? =
 
-We'd love your help! Here's a few things you can do:
+We'd love your help! Here are a few things you can do:
 
 * [Rate our plugin](https://wordpress.org/support/plugin/stripe/reviews/#new-post) and help spread the word!
 * Help answer questions in our [community support forum](https://wordpress.org/support/plugin/stripe).
