@@ -109,6 +109,12 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
+= 2.0.11 - TODO =
+
+* Tweak: Various updates from Pro version.
+* Dev: Updated to Stripe PHP library v6.10.2.
+* Dev: Updated Accounting JS & Chosen JS libraries.
+
 = 2.0.10 - May 21, 2018 =
 
 * Tweak: PHP 5.4 or higher now required.

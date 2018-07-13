@@ -92,7 +92,7 @@ class Payment {
 		// Set the amount for the Payment to the same as the form amount
 		if ( isset( $_POST['simpay_amount'] ) && ! empty( $_POST['simpay_amount'] ) ) {
 			// Get the total set on the form (if changes were made using JS)
-			$this->amount = intval( $_POST['simpay_amount'] );
+			$this->amount = floatval( $_POST['simpay_amount'] );
 		} else {
 			// Fallback to our set total amount
 			$this->amount = $simpay_form->total_amount;

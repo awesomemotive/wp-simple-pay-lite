@@ -54,7 +54,7 @@ $position = simpay_get_currency_position();
 					'value'       => $amount,
 					'attributes'  => $attr,
 					'class'       => $classes,
-					'placeholder' => simpay_formatted_amount( '100', simpay_get_setting( 'currency' ), false ),
+					'placeholder' => simpay_formatted_amount( '100', '', false ),
 				) );
 				?>
 

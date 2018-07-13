@@ -74,8 +74,18 @@ class Display extends Admin_Page {
 					$one_time_details_template = simpay_get_editor_default( 'one_time' );
 					$one_time_details_value    = $this->get_option_value( $section, 'one_time_payment_details' );
 
-					// Add one-time payment editor field.
+					$custom_html = '<div>';
+					$custom_html .= __( 'Configure your payment confirmation <em>page</em> below.', 'stripe' );
+					$custom_html .= ' <a href="' . simpay_docs_link( '', 'email-receipts-stripe', '', true ) . '" target="_blank">' . esc_html__( 'See how to configure email receipts in Stripe.', 'stripe' ) . '</a></p>';
+					$custom_html .= '</div>';
+
 					$fields[ $section ] = array(
+						'note_html'                => array(
+							'type' => 'custom-html',
+							'html' => $custom_html,
+							'name' => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][note_html]',
+							'id'   => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-note-html',
+						),
 						'one_time_payment_details' => array(
 							'title'       => esc_html__( 'One-Time Payment', 'stripe' ),
 							'type'        => 'editor',

@@ -238,7 +238,7 @@ var simpayApp = {};
 			if ( spGeneral.booleans.isZeroDecimal ) {
 				return amount;
 			} else {
-				return ( amount * 100 );
+				return ( amount * 100 ).toFixed( 2 );
 			}
 		}
 	};

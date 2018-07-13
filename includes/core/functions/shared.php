@@ -637,7 +637,7 @@ function simpay_formatted_amount( $amount, $currency = '', $show_symbol = true, 
 	if ( simpay_is_zero_decimal( $currency ) ) {
 		$amount = number_format( intval( $amount ), 0, simpay_get_decimal_separator(), simpay_get_thousand_separator() );
 	} else {
-		$amount = number_format( intval( $amount ) / 100, simpay_get_decimal_places(), simpay_get_decimal_separator(), simpay_get_thousand_separator() );
+		$amount = number_format( floatval( $amount ) / 100, simpay_get_decimal_places(), simpay_get_decimal_separator(), simpay_get_thousand_separator() );
 	}
 
 	$amount = apply_filters( 'simpay_formatted_amount', $amount, $amount );
