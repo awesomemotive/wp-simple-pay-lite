@@ -41,6 +41,9 @@ namespace Stripe;
  */
 class Account extends ApiResource
 {
+
+    const OBJECT_NAME = "account";
+
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;
@@ -116,7 +119,7 @@ class Account extends ApiResource
             'client_id' => $clientId,
             'stripe_user_id' => $this->id,
         ];
-        OAuth::deauthorize($params, $opts);
+        return OAuth::deauthorize($params, $opts);
     }
 
     /**

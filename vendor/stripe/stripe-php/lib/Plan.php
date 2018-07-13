@@ -9,6 +9,7 @@ namespace Stripe;
  *
  * @property string $id
  * @property string $object
+ * @property bool $active
  * @property string $aggregate_usage
  * @property int $amount
  * @property string $billing_scheme
@@ -28,6 +29,9 @@ namespace Stripe;
  */
 class Plan extends ApiResource
 {
+
+    const OBJECT_NAME = "plan";
+
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;

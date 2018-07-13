@@ -20,6 +20,9 @@ namespace Stripe;
  */
 class Event extends ApiResource
 {
+
+    const OBJECT_NAME = "event";
+
      /**
      * Possible string representations of event types.
      * @link https://stripe.com/docs/api#event_types
@@ -34,6 +37,7 @@ class Event extends ApiResource
     const APPLICATION_FEE_REFUND_UPDATED       = 'application_fee.refund.updated';
     const BALANCE_AVAILABLE                    = 'balance.available';
     const CHARGE_CAPTURED                      = 'charge.captured';
+    const CHARGE_EXPIRED                       = 'charge.expired';
     const CHARGE_FAILED                        = 'charge.failed';
     const CHARGE_PENDING                       = 'charge.pending';
     const CHARGE_REFUNDED                      = 'charge.refunded';

@@ -14,7 +14,7 @@ namespace Stripe;
  * @property string $default_source
  * @property bool $delinquent
  * @property string $description
- * @property mixed $discount
+ * @property Discount $discount
  * @property string $email
  * @property string $invoice_prefix
  * @property bool $livemode
@@ -27,6 +27,9 @@ namespace Stripe;
  */
 class Customer extends ApiResource
 {
+
+    const OBJECT_NAME = "customer";
+
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;
