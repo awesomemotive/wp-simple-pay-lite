@@ -58,8 +58,6 @@ class System_Status extends Admin_Page {
 		// Set Stripe API key. Force test key.
 		\Stripe\Stripe::setApiKey( $test_key );
 
-		\Stripe\Stripe::$apiBase = 'https://api-tls12.stripe.com';
-
 		try {
 			\Stripe\Charge::all();
 
@@ -77,7 +75,7 @@ class System_Status extends Admin_Page {
 			if ( $for_export ) {
 				return $retval . ' ' . sprintf( __( 'See %1$s.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' );
 			} else {
-				return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s">Please read this</a> for more information.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' ) . '</mark>';
+				return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s" target="_blank">Please read this</a> for more information.', 'stripe' ), 'https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2' ) . '</mark>';
 			}
 		}
 	}
