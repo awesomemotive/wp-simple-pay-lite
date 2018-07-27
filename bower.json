@@ -5,6 +5,6 @@
   "devDependencies": {
     "jquery-validation": "1.17.x",
     "chosen": "1.8.x",
-    "accountingjs": "0.x"
+    "accountingjs": "master"
   }
 }
