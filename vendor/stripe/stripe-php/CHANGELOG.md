@@ -1,5 +1,14 @@
 # Changelog
 
+## 6.11.0 - 2018-07-26
+* [#500](https://github.com/stripe/stripe-php/pull/500) Add support for Stripe Issuing
+
+## 6.10.4 - 2018-07-19
+* [#498](https://github.com/stripe/stripe-php/pull/498) Internal improvements to the `\Stripe\ApiResource.classUrl()` method
+
+## 6.10.3 - 2018-07-16
+* [#497](https://github.com/stripe/stripe-php/pull/497) Use HTTP/2 only for HTTPS requests
+
 ## 6.10.2 - 2018-07-11
 * [#494](https://github.com/stripe/stripe-php/pull/494) Enable HTTP/2 support
 
