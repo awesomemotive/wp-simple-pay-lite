@@ -109,11 +109,12 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
-= 2.0.11 - TODO =
+= 2.0.11 - July 27, 2018 =
 
 * Tweak: Various updates from Pro version.
-* Dev: Updated to Stripe PHP library v6.10.2.
 * Dev: Updated Accounting JS & Chosen JS libraries.
+* Dev: System report: Update Stripe API endpoint for the TLS 1.2 compatibility check.
+* Dev: Updated to Stripe PHP library v6.11.0.
 
 = 2.0.10 - May 21, 2018 =
 
