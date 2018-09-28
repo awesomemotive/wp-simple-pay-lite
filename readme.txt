@@ -39,7 +39,7 @@ That's it. *No other plugins required.*
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
 * Live/Test mode toggle
-* [Code snippets](https://github.com/moonstonemedia/WP-Simple-Pay-Snippet-Library/) & [hook reference](https://docs.wpsimplepay.com/articles/action-filter-hooks/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) for developers
+* [Code snippets](https://github.com/wpsimplepay/WP-Simple-Pay-Snippet-Library/) & [hook reference](https://docs.wpsimplepay.com/articles/action-filter-hooks/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) for developers
 
 = PRO VERSION FEATURES =
 
@@ -92,7 +92,7 @@ We'd love your help! Here are a few things you can do:
 
 * [Rate our plugin](https://wordpress.org/support/plugin/stripe/reviews/#new-post) and help spread the word!
 * Help answer questions in our [community support forum](https://wordpress.org/support/plugin/stripe).
-* Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe).
+* Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/wpsimplepay/WP-Simple-Pay-Lite-for-Stripe).
 * Help add or update a [plugin translation](https://translate.wordpress.org/projects/wp-plugins/stripe).
 
 == Screenshots ==
