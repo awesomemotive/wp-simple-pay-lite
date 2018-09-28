@@ -1,5 +1,5 @@
 === Stripe Payments for WordPress - WP Simple Pay ===
-Contributors: moonstonemedia, pderksen, nickyoung87, nekojira
+Contributors: pderksen, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
@@ -67,7 +67,7 @@ The easiest way to install WP Simple Pay is to search for it via your site’s D
 
 1. Log in to your site’s dashboard (e.g. www.yourdomain.com/wp-admin).
 2. Click on the “Plugins” tab in the left panel, then click “Add New”.
-3. Search for “Stripe” or “WP Simple Pay” and find our plugin near the top. Look for the author “Moonstone Media”.
+3. Search for “Stripe” or “WP Simple Pay” and find our plugin near the top.
 4. Install it by clicking the “Install Now” link.
 5. When installation finishes, click “Activate Plugin”.
 6. A new menu item “Simple Pay Lite” should appear in your dashboard.
