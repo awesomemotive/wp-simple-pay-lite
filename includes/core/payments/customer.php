@@ -47,10 +47,10 @@ class Customer {
 		if ( empty( $customer_id ) ) {
 
 			// Create and save a new customer with the appropriate data
-			$this->customer = Stripe_API::request( 'Customer', 'create', array(
+			$this->customer = Stripe_API::request( 'Customer', 'create', apply_filters( 'simpay_stripe_customer_args', array(
 				'email' => $this->payment->get_email(),
 				'card'  => $this->payment->get_token(),
-			) );
+			) ) );
 		} else {
 			// Retrieve a customer if one already exists
 			$this->customer = Stripe_API::request( 'Customer', 'retrieve', $customer_id );

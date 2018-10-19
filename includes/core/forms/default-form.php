@@ -60,7 +60,10 @@ class Default_Form extends Form {
 		$html = '';
 		$id   = 'simpay-form-' . $this->id;
 
-		$html .= '<form action="" method="POST" class="simpay-checkout-form ' . esc_attr( $id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '">';
+		// Can add additional form tag attributes here using a filter.
+		$more_form_atts = apply_filters( 'simpay_more_form_attributes', '' );
+
+		$html .= '<form action="" method="post" class="simpay-checkout-form ' . esc_attr( $id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '" ' . esc_attr( $more_form_atts ) . '>';
 
 		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
 			$html .= $this->print_custom_fields();
