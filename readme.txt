@@ -109,6 +109,12 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
+= 2.0.12 - TODO =
+
+* Dev: Added filter hook to add or modify arguments when a Stripe customer is created.
+* Dev: Added filter hook to allow additional attributes to be added to the payment form tag.
+* Dev: Updated to Stripe PHP library v6.19.5.
+
 = 2.0.11 - July 27, 2018 =
 
 * Tweak: Various updates from Pro version.
