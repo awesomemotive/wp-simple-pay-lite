@@ -70,15 +70,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
      *   exhaustive. If null, headers are not checked.
      * @param bool $hasFile Whether the request parameters contains a file.
      *   Defaults to false.
+     * @param string|null $base base URL (e.g. 'https://api.stripe.com')
      */
     protected function expectsRequest(
         $method,
         $path,
         $params = null,
         $headers = null,
-        $hasFile = false
+        $hasFile = false,
+        $base = null
     ) {
-        $this->prepareRequestMock($method, $path, $params, $headers, $hasFile)
+        $this->prepareRequestMock($method, $path, $params, $headers, $hasFile, $base)
             ->will($this->returnCallback(
                 function ($method, $absUrl, $headers, $params, $hasFile) {
                     $curlClient = HttpClient\CurlClient::instance();
