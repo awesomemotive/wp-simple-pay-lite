@@ -5,6 +5,7 @@ require(dirname(__FILE__) . '/lib/Stripe.php');
 
 // Utilities
 require(dirname(__FILE__) . '/lib/Util/AutoPagingIterator.php');
+require(dirname(__FILE__) . '/lib/Util/CaseInsensitiveArray.php');
 require(dirname(__FILE__) . '/lib/Util/LoggerInterface.php');
 require(dirname(__FILE__) . '/lib/Util/DefaultLogger.php');
 require(dirname(__FILE__) . '/lib/Util/RandomGenerator.php');
@@ -75,6 +76,8 @@ require(dirname(__FILE__) . '/lib/Dispute.php');
 require(dirname(__FILE__) . '/lib/EphemeralKey.php');
 require(dirname(__FILE__) . '/lib/Event.php');
 require(dirname(__FILE__) . '/lib/ExchangeRate.php');
+require(dirname(__FILE__) . '/lib/File.php');
+require(dirname(__FILE__) . '/lib/FileLink.php');
 require(dirname(__FILE__) . '/lib/FileUpload.php');
 require(dirname(__FILE__) . '/lib/Invoice.php');
 require(dirname(__FILE__) . '/lib/InvoiceItem.php');
@@ -97,17 +100,24 @@ require(dirname(__FILE__) . '/lib/Product.php');
 require(dirname(__FILE__) . '/lib/Recipient.php');
 require(dirname(__FILE__) . '/lib/RecipientTransfer.php');
 require(dirname(__FILE__) . '/lib/Refund.php');
+require(dirname(__FILE__) . '/lib/Reporting/ReportRun.php');
+require(dirname(__FILE__) . '/lib/Reporting/ReportType.php');
 require(dirname(__FILE__) . '/lib/SKU.php');
+require(dirname(__FILE__) . '/lib/Sigma/ScheduledQueryRun.php');
 require(dirname(__FILE__) . '/lib/Source.php');
 require(dirname(__FILE__) . '/lib/SourceTransaction.php');
 require(dirname(__FILE__) . '/lib/Subscription.php');
 require(dirname(__FILE__) . '/lib/SubscriptionItem.php');
+require(dirname(__FILE__) . '/lib/Terminal/ConnectionToken.php');
+require(dirname(__FILE__) . '/lib/Terminal/Location.php');
+require(dirname(__FILE__) . '/lib/Terminal/Reader.php');
 require(dirname(__FILE__) . '/lib/ThreeDSecure.php');
 require(dirname(__FILE__) . '/lib/Token.php');
 require(dirname(__FILE__) . '/lib/Topup.php');
 require(dirname(__FILE__) . '/lib/Transfer.php');
 require(dirname(__FILE__) . '/lib/TransferReversal.php');
 require(dirname(__FILE__) . '/lib/UsageRecord.php');
+require(dirname(__FILE__) . '/lib/UsageRecordSummary.php');
 
 // OAuth
 require(dirname(__FILE__) . '/lib/OAuth.php');

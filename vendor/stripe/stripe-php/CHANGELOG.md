@@ -1,5 +1,50 @@
 # Changelog
 
+## 6.19.5 - 2018-10-17
+* [#539](https://github.com/stripe/stripe-php/pull/539) Fix methods on `\Stripe\PaymentIntent` to properly pass arguments to the API.
+
+## 6.19.4 - 2018-10-11
+* [#534](https://github.com/stripe/stripe-php/pull/534) Fix PSR-4 autoloading for `\Stripe\FileUpload` class alias
+
+## 6.19.3 - 2018-10-09
+* [#530](https://github.com/stripe/stripe-php/pull/530) Add constants for `flow` (`FLOW_*`), `status` (`STATUS_*`) and `usage` (`USAGE_*`) on `\Stripe\Source`
+
+## 6.19.2 - 2018-10-08
+* [#531](https://github.com/stripe/stripe-php/pull/531) Store HTTP response headers in case-insensitive array
+
+## 6.19.1 - 2018-09-25
+* [#526](https://github.com/stripe/stripe-php/pull/526) Ignore null values in request parameters
+
+## 6.19.0 - 2018-09-24
+* [#523](https://github.com/stripe/stripe-php/pull/523) Add support for Stripe Terminal
+
+## 6.18.0 - 2018-09-24
+* [#520](https://github.com/stripe/stripe-php/pull/520) Rename `\Stripe\FileUpload` to `\Stripe\File`
+
+## 6.17.2 - 2018-09-18
+* [#522](https://github.com/stripe/stripe-php/pull/522) Fix warning when adding a new additional owner to an existing array
+
+## 6.17.1 - 2018-09-14
+* [#517](https://github.com/stripe/stripe-php/pull/517) Integer-index encode all sequential arrays
+
+## 6.17.0 - 2018-09-05
+* [#514](https://github.com/stripe/stripe-php/pull/514) Add support for reporting resources
+
+## 6.16.0 - 2018-08-23
+* [#509](https://github.com/stripe/stripe-php/pull/509) Add support for usage record summaries
+
+## 6.15.0 - 2018-08-03
+* [#504](https://github.com/stripe/stripe-php/pull/504) Add cancel support for topups
+
+## 6.14.0 - 2018-08-02
+* [#505](https://github.com/stripe/stripe-php/pull/505) Add support for file links
+
+## 6.13.0 - 2018-07-31
+* [#502](https://github.com/stripe/stripe-php/pull/502) Add `isDeleted()` method to `\Stripe\StripeObject`
+
+## 6.12.0 - 2018-07-28
+* [#501](https://github.com/stripe/stripe-php/pull/501) Add support for scheduled query runs (`\Stripe\Sigma\ScheduledQueryRun`) for Sigma
+
 ## 6.11.0 - 2018-07-26
 * [#500](https://github.com/stripe/stripe-php/pull/500) Add support for Stripe Issuing
 

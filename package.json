@@ -7,7 +7,7 @@
   "homepage": "https://wpsimplepay.com/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/moonstonemedia/WP-Simple-Pay-Lite-for-Stripe"
+    "url": "https://github.com/wpsimplepay/WP-Simple-Pay-Lite-for-Stripe"
   },
   "devDependencies": {
     "grunt": "1.x",

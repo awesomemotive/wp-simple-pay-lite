@@ -10,9 +10,14 @@ class SubscriptionItemTest extends TestCase
     {
         $this->expectsRequest(
             'get',
-            '/v1/subscription_items'
+            '/v1/subscription_items',
+            [
+                "subscription" => "sub_123"
+            ]
         );
-        $resources = SubscriptionItem::all();
+        $resources = SubscriptionItem::all([
+            "subscription" => "sub_123"
+        ]);
         $this->assertTrue(is_array($resources->data));
         $this->assertInstanceOf("Stripe\\SubscriptionItem", $resources->data[0]);
     }
@@ -73,5 +78,17 @@ class SubscriptionItemTest extends TestCase
         );
         $resource->delete();
         $this->assertInstanceOf("Stripe\\SubscriptionItem", $resource);
+    }
+
+    public function testCanListUsageRecordSummaries()
+    {
+        $resource = SubscriptionItem::retrieve(self::TEST_RESOURCE_ID);
+        $this->expectsRequest(
+            'get',
+            '/v1/subscription_items/' . $resource->id . "/usage_record_summaries"
+        );
+        $resources = $resource->usageRecordSummaries();
+        $this->assertTrue(is_array($resources->data));
+        $this->assertInstanceOf("Stripe\\UsageRecordSummary", $resources->data[0]);
     }
 }
