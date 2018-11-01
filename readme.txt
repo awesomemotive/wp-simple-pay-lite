@@ -1,9 +1,9 @@
 === Stripe Payments for WordPress - WP Simple Pay ===
-Contributors: pderksen, nickyoung87, nekojira, mordauk, cklosows, sdavis2702, dgoldak
+Contributors: pderksen, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 2.0.11
+Stable tag: 2.0.12
 Requires PHP: 5.4
 License: GPLv2 or later
 

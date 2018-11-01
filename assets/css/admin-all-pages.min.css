@@ -1,4 +1,4 @@
-/*! WP Simple Pay Lite for Stripe - 2.0.11
+/*! WP Simple Pay Lite for Stripe - 2.0.12
  * https://wpsimplepay.com/
  * Copyright (c) Moonstone Media Group 2018
  * Licensed GPLv2+ */
