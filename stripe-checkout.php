@@ -41,7 +41,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 	// Stripe API version should be in 'YYYY-MM-DD' format.
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2018-05-21' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2018-10-31' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_MAIN_FILE' ) ) {
