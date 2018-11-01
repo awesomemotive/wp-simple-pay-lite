@@ -1,5 +1,5 @@
 === Stripe Payments for WordPress - WP Simple Pay ===
-Contributors: pderksen, nickyoung87, nekojira
+Contributors: pderksen, nickyoung87, nekojira, mordauk, cklosows, sdavis2702, dgoldak
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.7
 Tested up to: 4.9
@@ -21,7 +21,7 @@ If accepting credit card payments quickly and painlessly is what you're looking 
 
 Stripe Checkout is continually optimized across millions of transactions to maximize customer conversions.
 
-WP Simple Pay is a standalone Stripe Checkout plugin. No complex shopping cart, form builder or membership site plugin needed.
+WP Simple Pay is a standalone Stripe Checkout plugin built by [Sandhills Development](http://sandhillsdev.com). No complex shopping cart, form builder or membership site plugin needed.
 
 That's it. *No other plugins required.*
 
