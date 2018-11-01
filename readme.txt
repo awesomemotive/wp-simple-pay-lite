@@ -109,7 +109,7 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
-= 2.0.12 - TODO =
+= 2.0.12 - November 1, 2018 =
 
 * Dev: Added filter hook to add or modify arguments when a Stripe customer is created.
 * Dev: Added filter hook to allow additional attributes to be added to the payment form tag.
