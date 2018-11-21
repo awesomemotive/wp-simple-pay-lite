@@ -25,6 +25,7 @@ if ( ! isset( $general['general_misc']['save_settings'] ) ) {
 
 	// Remove misc options
 	delete_option( 'simpay_dismiss_ssl' );
+	delete_option( 'simpay_dismiss_dropping_php53_bitcoin' );
 	delete_option( 'simpay_preview_form_id' );
 
 	// Remove settings options
@@ -32,6 +33,9 @@ if ( ! isset( $general['general_misc']['save_settings'] ) ) {
 	delete_option( 'simpay_settings_keys' );
 	delete_option( 'simpay_settings_display' );
 	delete_option( 'simpay_settings_shipping_billing' );
+
+	// Remove legacy options
+	delete_option( 'simpay_preview_form_id' );
 
 	// Delete form posts.
 	$wpdb->query( "DELETE FROM {$wpdb->posts} WHERE post_type IN ( 'simple-pay' );" );
