@@ -24,9 +24,9 @@ if ( ! isset( $general['general_misc']['save_settings'] ) ) {
 	delete_option( 'simpay_settings' );
 
 	// Remove misc options
+	delete_option( 'simpay_use_php_sessions' );
 	delete_option( 'simpay_dismiss_ssl' );
 	delete_option( 'simpay_dismiss_dropping_php53_bitcoin' );
-	delete_option( 'simpay_preview_form_id' );
 
 	// Remove settings options
 	delete_option( 'simpay_settings_general' );
