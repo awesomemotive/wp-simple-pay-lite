@@ -54,7 +54,6 @@ That's it. *No other plugins required.*
 * Subscription setup fees
 * Subscription trial periods
 * [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
-* [MemberPress](https://memberpress.com/) integration
 * Priority email support with a 24-hour response time during business days
 
 >**[Click here to upgrade to WP Simple Pay Pro](https://wpsimplepay.com/lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
