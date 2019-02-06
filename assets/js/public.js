@@ -243,7 +243,7 @@ var simpayApp = {};
 		}
 	};
 
-	$( document ).ready( function( $ ) {
+	$( document ).ready( function() {
 
 		simpayApp.init();
 	} );

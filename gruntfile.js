@@ -157,26 +157,15 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		// Check JavaScript coding standards.
-		jscs: {
-			all: [
+		// Check JavaScript coding standards and linting
+		eslint: {
+			options: {
+				configFile: '.eslint.json',
+			},
+			target: [
 				'<%= dirs.js %>/*.js',
 				'!<%= dirs.js %>/*.min.js',
-			    '!<%= dirs.js %>/vendor/**'
-			]
-		},
-
-		// JavaScript linting with JSHint.
-		jshint: {
-			options: {
-				ignores: [
-					'**/*.min.js',
-					'<%= dirs.js %>/vendor/*'
-				]
-			},
-			all: [
-				'<%= dirs.js %>/*.js',
-				'gruntfile.js'
+				'!<%= dirs.js %>/vendor/**'
 			]
 		},
 
@@ -243,7 +232,7 @@ module.exports = function( grunt ) {
 	require( 'load-grunt-tasks' )( grunt );
 
 	grunt.registerTask( 'css', [ 'sass', 'copy:css', 'cssmin', 'usebanner:css' ] );
-	grunt.registerTask( 'js', [ 'jshint', 'jscs', 'copy:js', 'uglify', 'usebanner:js' ] );
+	grunt.registerTask( 'js', [ 'eslint', 'copy:js', 'uglify', 'usebanner:js' ] );
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
 	grunt.registerTask( 'build', [ 'default', 'addtextdomain', 'checktextdomain', 'clean:build', 'copy:main', 'compress' ] );
 

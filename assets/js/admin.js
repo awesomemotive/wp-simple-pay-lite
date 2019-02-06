@@ -37,12 +37,12 @@ var spAdmin = {};
 			} );
 
 			// Section toggles
-			spFormSettings.find( '.simpay-panel-field' ).on( 'click.simpaySectionToggle', '.simpay-section-toggle', function( e ) {
+			spFormSettings.find( '.simpay-panel-field' ).on( 'click.simpaySectionToggle', '.simpay-section-toggle', function() {
 				spAdmin.initSectionToggle( $( this ) );
 			} );
 
 			// Show spinner for button clicks
-			body.find( '.simpay-button' ).on( 'click.simpayShowSpinner', function( e ) {
+			body.find( '.simpay-button' ).on( 'click.simpayShowSpinner', function() {
 				spAdmin.showSpinner( $( this ) );
 			} );
 
@@ -52,7 +52,7 @@ var spAdmin = {};
 			} );
 
 			// Handle the submit when they press enter
-			body.find( '#post' ).on( 'keypress.simpaySubmitOnEnter', function( e ) {
+			body.find( '#post' ).on( 'keypress.simpaySubmitOnEnter', function() {
 				spAdmin.handleSubmitOnEnter( $( this ) );
 			} );
 
@@ -87,7 +87,7 @@ var spAdmin = {};
 				publishButton = form.find( '#publish' );
 
 				// If there is a draft button found click it otherwise use the publish button.
-				if ( draftButton.length > 0 ) {
+				if ( 0 < draftButton.length ) {
 					draftButton.click();
 				} else {
 					publishButton.click();
@@ -267,7 +267,7 @@ var spAdmin = {};
 			var selectedId = elem.attr( 'id' );
 
 			// Hide all options first. This allows us to show multiple sections with the classes
-			elem.closest( '.simpay-field-radios-inline' ).find( 'input[type="radio"]' ).each( function( currIndex ) {
+			elem.closest( '.simpay-field-radios-inline' ).find( 'input[type="radio"]' ).each( function() {
 
 				// $( this ) in this context is the current iteration, not what is set to elem. so we need to keep it here
 				spFormSettings.find( '.toggle-' + $( this ).attr( 'id' ) ).hide();
@@ -278,7 +278,7 @@ var spAdmin = {};
 		}
 	};
 
-	$( document ).ready( function( $ ) {
+	$( document ).ready( function() {
 
 		spAdmin.init();
 	} );

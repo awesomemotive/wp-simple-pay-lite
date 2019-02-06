@@ -17,12 +17,11 @@
     "grunt-contrib-compress": "1.x",
     "grunt-contrib-copy": "1.x",
     "grunt-contrib-cssmin": "3.x",
-    "grunt-contrib-jshint": "2.x",
     "grunt-contrib-uglify": "4.x",
     "grunt-contrib-watch": "1.x",
-    "grunt-jscs": "3.x",
+    "grunt-eslint": "21.x",
     "grunt-sass": "2.x",
-    "grunt-wp-i18n": "1.x",
+    "grunt-wp-i18n": "^1.0.3",
     "load-grunt-tasks": "4.x"
   }
 }

@@ -15,12 +15,12 @@ var spShared = {};
 			body = $( document.body );
 
 			// Format currency inputs after they lose focus
-			body.find( '.simpay-currency-format' ).on( 'blur.simpayCurrencyFormat', function( e ) {
+			body.find( '.simpay-currency-format' ).on( 'blur.simpayCurrencyFormat', function() {
 				spShared.formatCurrencyField( $( this ) );
 			} );
 
 			// Validate amount fields
-			body.find( '.simpay-amount-input' ).on( 'blur.simpayValidateAmount', function( e ) {
+			body.find( '.simpay-amount-input' ).on( 'blur.simpayValidateAmount', function() {
 				spShared.validateAmount( $( this ) );
 			} );
 
@@ -91,7 +91,7 @@ var spShared = {};
 		}
 	};
 
-	$( document ).ready( function( $ ) {
+	$( document ).ready( function() {
 
 		spShared.init();
 	} );
