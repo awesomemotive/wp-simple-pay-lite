@@ -68,6 +68,10 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
 	}
 
+	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
+		define( 'SIMPLE_PAY_STRIPE_PARTNER_ID', 'pp_partner_DKkf27LbiCjOYt' );
+	}
+
 	if ( ! defined( 'SIMPLE_PAY_MIN_PHP_VER' ) ) {
 		define( 'SIMPLE_PAY_MIN_PHP_VER', '5.4' );
 	}
