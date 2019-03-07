@@ -932,3 +932,31 @@ function simpay_get_currency_symbol( $currency = '' ) {
 
 	return apply_filters( 'simpay_currency_symbol', $currency_symbol, $currency );
 }
+
+/**
+ * Insert an array key/value pair after a certain point in an existing associative array.
+ *
+ * @since 3.4.0
+ *
+ * @param $new_key  string The new key to use for $fields[ $section ][ $new_key ]
+ * @param $value    array The array that holds the information for this settings array
+ * @param $needle   string The key to find in the current array of fields
+ * @param $haystack array The current array to search
+ * @return array
+ */
+function simpay_add_to_array_after( $new_key, $value, $needle, $haystack ) {
+	$split = array(); // The split off portion of the array after the key we want to insert after
+	$new   = array(); // The new array will consist of the opposite of the split + the new element we want to add
+
+	if ( array_key_exists( $needle, $haystack ) ) {
+		$offset = array_search( $needle, array_keys( $haystack ) );
+
+		$split = array_slice( $haystack, $offset + 1 );
+		$new   = array_slice( $haystack, 0, $offset + 1 );
+
+		// Add the new element to the bottom
+		$new[ $new_key ] = $value;
+	}
+
+	return $new + $split;
+}

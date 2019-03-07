@@ -40,9 +40,8 @@ class Default_Form extends Form {
 	 *
 	 */
 	public function register_hooks() {
-
 		add_action( 'wp_footer', array( $this, 'set_script_variables' ), 0 );
-
+		add_filter( 'simpay_form_' . $this->id . '_custom_fields', array( $this, 'get_custom_fields_html' ), 10, 2 );
 	}
 
 	/**
@@ -207,5 +206,26 @@ class Default_Form extends Form {
 		$form_variables = array_merge( $integers, $strings );
 
 		return $form_variables;
+	}
+
+	/**
+	 * Default custom fields handler.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string $html Form HTML.
+	 * @param object $form The current form.
+	 * @return string $html Form HTML.
+	 */
+	public function get_custom_fields_html( $html, $form ) {
+		foreach ( $this->custom_fields as $key => $value ) {
+			switch ( $value['type'] ) {
+				case 'payment_button':
+					$html .= Fields\Payment_Button::html( $value );
+					break;
+			}
+		}
+
+		return $html;
 	}
 }
