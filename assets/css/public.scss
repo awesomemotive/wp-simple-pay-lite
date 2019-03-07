@@ -1,9 +1,9 @@
-@import '_mixins';
+@import 'mixins';
+@import 'variables';
 
 .simpay-form-control {
-
-	margin-bottom: 15px;
 	@include clearfix();
+	margin-bottom: 15px;
 
 	p {
 		padding: 0;
@@ -11,15 +11,25 @@
 	}
 
 	ul {
-		margin-bottom: 0.5em;
-	}
+		margin: 0 0 0.5em 0;
 
-	ul li {
-		list-style-type: none;
+		li {
+			list-style-type: none;
+
+			label {
+				display: block;
+				margin: 0 0 0.5em 0;
+
+				input[type="radio"], input[type="checkbox"] {
+					margin-right: 0.5em;
+				}
+			}
+		}
 	}
 
 	label {
 		cursor: pointer;
+		display: block;
 	}
 
 	// Entire field wrapper
@@ -28,38 +38,26 @@
 	}
 }
 
+// Error messages container
+
+.simpay-errors {
+	//@include clearfix();
+	color: $error-text-color;
+	margin-bottom: 15px;
+}
+
 // Test mode badge
 
 .simpay-test-mode-badge-container {
-	padding-top: 10px;
 
 	.simpay-test-mode-badge {
 		background-color: #f7e633;
-		color: #363636;
+		color: $base-text-color;
 		border-radius: 5px;
 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		font-weight: 700;
 		font-size: 11px;
 		text-transform: uppercase;
 		padding: 5px 9px;
-	}
-}
-
-// Error messages
-// Styles taken from Bootstrap
-// http://getbootstrap.com/components/#alerts & https://v4-alpha.getbootstrap.com/components/alerts/
-
-.simpay-error {
-	@include clearfix();
-
-	background-color: #f2dede;
-	border: 1px solid #ebcccc;
-	border-radius: .25rem;
-	color: #a94442;
-	margin: 1rem 0;
-	padding: .75rem 1.25rem;
-
-	.simpay-error-item {
-		margin: 0;
 	}
 }

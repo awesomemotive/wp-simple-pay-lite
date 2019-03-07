@@ -41,13 +41,6 @@ class Payment_Button extends Custom_Field {
 		$html .= '<div class="simpay-form-control">';
 		$html .= '<button id="' . esc_attr( $id ) . '" class="' . self::get_payment_button_classes( $button_style ) . '"><span>' . esc_html( $text ) . '</span></button>';
 
-		// Test mode badge placement
-		if ( simpay_is_test_mode() ) {
-			$html .= '<div class="simpay-test-mode-badge-container">';
-			$html .= '<span class="simpay-test-mode-badge">' . esc_html__( 'Test Mode', 'stripe' ) . '</span>';
-			$html .= '</div>';
-		}
-
 		$html .= '</div>';
 
 		return $html;

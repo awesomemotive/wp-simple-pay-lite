@@ -19,6 +19,9 @@ class Settings {
 	 */
 	public static function html( $post ) {
 
+		// @todo Don't use a static method and allow this class to properly register hooks.
+		add_action( 'simpay_admin_before_stripe_checkout_rows', array( __CLASS__, 'add_company_info_settings' ) );
+
 		// @see Meta_Boxes::save_meta_boxes()
 		wp_nonce_field( 'simpay_save_data', 'simpay_meta_nonce' );
 
@@ -38,35 +41,57 @@ class Settings {
 				<div id="payment-options-settings-panel" class="simpay-panel">
 					<?php
 
-					$payment_options_template = apply_filters( 'simpay_payment_options_template', 'views/tabs/tab-payment-options.php' );
+					$payment_options_template = apply_filters( 'simpay_payment_options_template', SIMPLE_PAY_INC . 'core/admin/metaboxes/views/tabs/tab-payment-options.php' );
 
-					include_once( $payment_options_template );
+					if ( file_exists( $payment_options_template ) ) {
+						include_once( $payment_options_template );
+					}
 
 					do_action( 'simpay_form_settings_meta_payment_options_panel', $post->ID );
+
 					?>
 				</div>
 
-				<!-- On-Page Form Display Options Tab -->
-				<div id="form-display-settings-panel" class="simpay-panel simpay-panel-hidden">
+				<!-- Form Display Options Tab -->
+				<div id="form-display-options-settings-panel" class="simpay-panel simpay-panel-hidden">
 					<?php
 
-					$form_display_template = apply_filters( 'simpay_form_display_template', 'views/tabs/tab-form-display.php' );
+					$form_display_options_template = apply_filters( 'simpay_form_options_template', '' );
 
-					include_once( $form_display_template );
+					if ( file_exists( $form_display_options_template ) ) {
+						include( $form_display_options_template );
+					}
+
+					?>
+				</div>
+
+				<!-- Custom Form Fields Options Tab -->
+				<div id="custom-form-fields-settings-panel" class="simpay-panel simpay-panel-hidden">
+					<?php
+
+					$form_display_template = apply_filters( 'simpay_form_display_template', SIMPLE_PAY_INC . 'core/admin/metaboxes/views/tabs/tab-custom-form-fields.php' );
+
+					if ( file_exists( $form_display_template ) ) {
+						include_once( $form_display_template );
+					}
 
 					do_action( 'simpay_form_settings_meta_form_display_panel', $post->ID );
+
 					?>
 				</div>
 
-				<!-- Checkout Overlay Display Options Tab -->
-				<div id="overlay-display-settings-panel" class="simpay-panel simpay-panel-hidden">
+				<!-- Stripe Checkout Display Options Tab -->
+				<div id="stripe-checkout-settings-panel" class="simpay-panel simpay-panel-hidden">
 					<?php
 
-					$overlay_display_template = apply_filters( 'simpay_overlay_display_template', 'views/tabs/tab-overlay-display.php' );
+					$stripe_checkout_template = apply_filters( 'simpay_stripe_checkout_template', SIMPLE_PAY_INC . 'core/admin/metaboxes/views/tabs/tab-stripe-checkout.php' );
 
-					include_once( $overlay_display_template );
+					if ( file_exists( $stripe_checkout_template ) ) {
+						include_once( $stripe_checkout_template );
+					}
 
-					do_action( 'simpay_form_settings_meta_overlay_display_panel', $post->ID );
+					do_action( 'simpay_form_settings_meta_stripe_checkout_panel', $post->ID );
+
 					?>
 				</div>
 
@@ -76,7 +101,9 @@ class Settings {
 
 					$subscription_options_template = apply_filters( 'simpay_subscription_options_template', SIMPLE_PAY_INC . 'core/admin/metaboxes/views/tabs/tab-subscription-options.php' );
 
-					include_once( $subscription_options_template );
+					if ( file_exists( $subscription_options_template ) ) {
+						include_once( $subscription_options_template );
+					}
 
 					do_action( 'simpay_form_settings_meta_subscription_display_panel', $post->ID );
 					?>
@@ -108,15 +135,15 @@ class Settings {
 				'icon'   => '',
 			),
 			'form_display'         => array(
-				'label'  => esc_html__( 'On-Page Form Display', 'stripe' ),
-				'target' => 'form-display-settings-panel',
+				'label'  => esc_html__( 'Custom Form Fields', 'stripe' ),
+				'target' => 'custom-form-fields-settings-panel',
 				'class'  => array(),
 				'icon'   => '',
 			),
-			'overlay_display'      => array(
-				'label'  => esc_html__( 'Checkout Overlay Display', 'stripe' ),
-				'target' => 'overlay-display-settings-panel',
-				'class'  => array(),
+			'stripe_checkout'      => array(
+				'label'  => esc_html__( 'Stripe Checkout Display', 'stripe' ),
+				'target' => 'stripe-checkout-settings-panel',
+				'class'  => array( 'toggle-_form_display_type-stripe_checkout' ),
 				'icon'   => '',
 			),
 			'subscription_options' => array(
@@ -178,22 +205,17 @@ class Settings {
 			return;
 		}
 
-		// See what type of currency we are dealing with so we know how to save the values
-		$is_zero_decimal = simpay_is_zero_decimal();
-
-
 		/** Payment Options */
 
 		// Amount Type
 		$amount_type = isset( $_POST['_amount_type'] ) ? esc_attr( $_POST['_amount_type'] ) : 'one_time_set';
 		update_post_meta( $post_id, '_amount_type', $amount_type );
 
+		// TODO Rewrite. Hard to read.
+
 		// Amount
-		if ( $is_zero_decimal ) {
-			$amount = isset( $_POST['_amount'] ) ? sanitize_text_field( $_POST['_amount'] ) : ( false !== get_post_meta( $post_id, '_amount', true ) ? get_post_meta( $post_id, '_amount', true ) : '100' );
-		} else {
-			$amount = isset( $_POST['_amount'] ) ? sanitize_text_field( $_POST['_amount'] ) : ( false !== get_post_meta( $post_id, '_amount', true ) ? get_post_meta( $post_id, '_amount', true ) : '1' );
-		}
+		$amount = isset( $_POST['_amount'] ) ? sanitize_text_field( $_POST['_amount'] ) : ( false !== get_post_meta( $post_id, '_amount', true ) ? get_post_meta( $post_id, '_amount', true ) : simpay_global_minimum_amount() );
+
 		update_post_meta( $post_id, '_amount', $amount );
 
 		/** General Options **/
@@ -210,27 +232,38 @@ class Settings {
 		$success_redirect_url = isset( $_POST['_success_redirect_url'] ) ? esc_url( $_POST['_success_redirect_url'] ) : '';
 		update_post_meta( $post_id, '_success_redirect_url', $success_redirect_url );
 
-		// Verify Zip/Postal Code
-		$verify_zip = isset( $_POST['_verify_zip'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_verify_zip', $verify_zip );
+		/** Form Display Options **/
 
-		/** Checkout Overlay Display */
+
+		// Form Display Type
+		$form_display_type = isset( $_POST['_form_display_type'] ) ? sanitize_text_field( $_POST['_form_display_type'] ) : '';
+		update_post_meta( $post_id, '_form_display_type', $form_display_type );
+
+		/** Stripe Checkout Display */
 
 		// Company name
 		$company_name = isset( $_POST['_company_name'] ) ? sanitize_text_field( $_POST['_company_name'] ) : '';
 		update_post_meta( $post_id, '_company_name', $company_name );
 
-		// Image URL
-		$image_url = isset( $_POST['_image_url'] ) ? sanitize_text_field( $_POST['_image_url'] ) : '';
-		update_post_meta( $post_id, '_image_url', $image_url );
-
 		// Item Description
 		$item_description = isset( $_POST['_item_description'] ) ? sanitize_text_field( $_POST['_item_description'] ) : '';
 		update_post_meta( $post_id, '_item_description', $item_description );
 
+		// Image URL
+		$image_url = isset( $_POST['_image_url'] ) ? sanitize_text_field( $_POST['_image_url'] ) : '';
+		update_post_meta( $post_id, '_image_url', $image_url );
+
 		// Enable Remember Me
 		$enable_remember_me = isset( $_POST['_enable_remember_me'] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_enable_remember_me', $enable_remember_me );
+
+		// Checkout Button Text
+		$checkout_button_text = isset( $_POST['_checkout_button_text'] ) ? sanitize_text_field( $_POST['_checkout_button_text'] ) : '';
+		update_post_meta( $post_id, '_checkout_button_text', $checkout_button_text );
+
+		// Verify Zip/Postal Code
+		$verify_zip = isset( $_POST['_verify_zip'] ) ? 'yes' : 'no';
+		update_post_meta( $post_id, '_verify_zip', $verify_zip );
 
 		// Enable Billing Address
 		$enable_billing_address = isset( $_POST['_enable_billing_address'] ) ? 'yes' : 'no';
@@ -239,10 +272,6 @@ class Settings {
 		// Enable Shipping Address
 		$enable_shipping_address = isset( $_POST['_enable_shipping_address'] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_enable_shipping_address', $enable_shipping_address );
-
-		// Checkout Button Text
-		$checkout_button_text = isset( $_POST['_checkout_button_text'] ) ? sanitize_text_field( $_POST['_checkout_button_text'] ) : '';
-		update_post_meta( $post_id, '_checkout_button_text', $checkout_button_text );
 
 		// Save custom fields
 		$fields = isset( $_POST['_simpay_custom_field'] ) ? $_POST['_simpay_custom_field'] : array();
@@ -293,5 +322,14 @@ class Settings {
 		}
 
 		return $arr;
+	}
+
+	/**
+	 * Output Company Info settings in the Stripe Checkout tab.
+	 *
+	 * @since 3.4.0
+	 */
+	public static function add_company_info_settings() {
+		include_once SIMPLE_PAY_INC . 'core/admin/metaboxes/views/partials/company-info-settings.php';
 	}
 }

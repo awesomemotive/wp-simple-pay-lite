@@ -28,7 +28,12 @@ class Stripe_API {
 	public function __construct() {
 
 		// Send our plugin info over with the API request
-		Stripe::setAppInfo( SIMPLE_PAY_PLUGIN_NAME, SIMPLE_PAY_VERSION, SIMPLE_PAY_STORE_URL );
+		Stripe::setAppInfo(
+			sprintf( 'WordPress %s', SIMPLE_PAY_PLUGIN_NAME ),
+			SIMPLE_PAY_VERSION,
+			SIMPLE_PAY_STORE_URL,
+			SIMPLE_PAY_STRIPE_PARTNER_ID
+		);
 
 		// Send the API info over
 		Stripe::setApiVersion( SIMPLE_PAY_STRIPE_API_VERSION );
@@ -129,8 +134,13 @@ class Stripe_API {
 		// Don't save error to session if calling via ajax (i.e. coupon codes) or in admin.
 		if ( ! is_admin() && ! $simpay_doing_ajax ) {
 			Errors::set( $error_id, $error_message );
-			wp_redirect( $simpay_form->payment_failure_page );
-			exit;
+
+			if ( ! headers_sent() ) {
+				wp_redirect( $simpay_form->payment_failure_page );
+				exit;
+			} else {
+				return $error_message;
+			}
 		} else {
 			return false;
 		}

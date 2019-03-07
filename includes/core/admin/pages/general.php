@@ -131,7 +131,7 @@ class General extends Admin_Page {
 
 					$saved_currency_symbol = simpay_get_currency_symbol( $this->get_option_value( $section, 'currency' ) );
 
-					$formatted_amount = simpay_formatted_amount( 499, '', false );
+					$formatted_amount = simpay_format_currency( ( simpay_is_zero_decimal() ? 499 : 4.99 ), '', false );
 
 					$fields[ $section ] = array(
 						'currency'          => array(

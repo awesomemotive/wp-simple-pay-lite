@@ -14,7 +14,7 @@ class Notices {
 	 * Notices constructor.
 	 */
 	public function __construct() {
-		
+
 		add_action( 'admin_notices', array( $this, 'show_notices' ) );
 
 		add_action( 'in_plugin_update_message-' . plugin_basename( SIMPLE_PAY_MAIN_FILE ), array(
@@ -38,7 +38,7 @@ class Notices {
 				$this->dismiss_notice( $notice );
 			}
 
-			$this->api_keys_error();
+			$this->stripe_connect_notice();
 			$this->ssl_error();
 
 			// TODO Maybe reuse this for upcoming PHP 5.6 requirement.
@@ -73,17 +73,25 @@ class Notices {
 	}
 
 	/**
-	 * Function to display error messages for missing API Keys.
+	 * Function to display an alert to installs that have not authorized through Stripe Connect
 	 */
-	public function api_keys_error() {
+	public function stripe_connect_notice() {
+		if( 'simpay_settings' === $this->is_admin_screen && isset( $_GET['tab'] ) && 'keys' === $_GET['tab'] ) {
+			return;
+		}
 
-		if ( ! simpay_check_keys_exist() && ( ( false !== $this->is_admin_screen && ( 'simpay_settings' === $this->is_admin_screen && isset( $_GET['tab'] ) && 'keys' !== $_GET['tab'] && 'license' !== $_GET['tab'] ) || 'simpay' === $this->is_admin_screen ) ) ) {
+		if( $this->check_if_dismissed( 'stripe-connect' ) ) {
+			return;
+		}
 
-			/* Translators: 1. "test Stripe API keys" OR "live Stripe API keys" 2. Plugin name */
-			$notice_message = sprintf( __( 'Your %1$s Stripe API Keys for %2$s have not been entered.', 'stripe' ), ( simpay_is_test_mode() ? _x( 'test', 'Your test Stripe API keys...', 'stripe' ) : _x( 'live', 'Your live Stripe API keys...', 'stripe' ) ), SIMPLE_PAY_PLUGIN_NAME );
-			$notice_message .= ' <a href="' . admin_url( 'admin.php?page=simpay_settings&tab=keys' ) . '">' . esc_html__( 'Enter them here.', 'stripe' ) . '</a>';
+		if ( ! simpay_get_account_id() ) {
 
-			self::print_notice( $notice_message, 'error' );
+			$notice_message = sprintf(
+				__( 'WP Simple Pay now supports Stripe Connect for easier setup and improved security. <a href="%s">Click here</a> to connect your Stripe account.', 'stripe' ),
+				admin_url( 'admin.php?page=simpay_settings&tab=keys' )
+			);
+
+			self::print_notice( $notice_message, 'info', 'stripe-connect' );
 		}
 	}
 
