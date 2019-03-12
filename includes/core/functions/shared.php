@@ -12,25 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use SimplePay\Core\Abstracts\Form;
 
-// TODO Need function simpay_clean?
-
-/**
- * Clean variables using sanitize_text_field. Arrays are cleaned recursively.
- * Non-scalar values are ignored.
- *
- * @since  3.0
- * @param  string|array $var
- *
- * @return string|array
- */
-function simpay_clean( $var ) {
-	if ( is_array( $var ) ) {
-		return array_map( 'simpay_clean', $var );
-	} else {
-		return is_scalar( $var ) ? sanitize_text_field( $var ) : $var;
-	}
-}
-
 /**
  * Get a Simple Pay setting. It will check for both a form setting or a global setting option.
  *
@@ -170,7 +151,7 @@ function simpay_get_filtered( $filter, $value, $form_id = null ) {
 	if ( $use_form_filter ) {
 		return apply_filters( $form_filter, $value );
 	} else {
-		return apply_filters( 'simpay_' . $filter, $value );
+		return apply_filters( 'simpay_' . $filter, $value, $form_id );
 	}
 }
 
@@ -184,7 +165,7 @@ function simpay_get_filtered( $filter, $value, $form_id = null ) {
 function simpay_get_total( $formatted = true ) {
 
 	if ( $formatted ) {
-		return simpay_formatted_amount( simpay_get_setting( 'amount' ) );
+		return simpay_format_currency( simpay_get_setting( 'amount' ) );
 	}
 
 	return simpay_get_setting( 'amount' );
@@ -236,6 +217,11 @@ function simpay_admin_error( $message, $echo = true ) {
  * @return null|\SimplePay\Core\Abstracts\Form
  */
 function simpay_get_form( $object ) {
+
+	if( is_numeric( $object ) ) {
+		$object = get_post( $object );
+	}
+
 	$objects = \SimplePay\Core\SimplePay()->objects;
 
 	return $objects instanceof \SimplePay\Core\Objects ? $objects->get_form( $object ) : null;
@@ -295,6 +281,47 @@ function simpay_is_test_mode() {
 	$settings = get_option( 'simpay_settings_keys' );
 
 	return ( isset( $settings['mode']['test_mode'] ) && 'enabled' === $settings['mode']['test_mode'] );
+}
+
+/**
+ * Return test mode badge html if in test mode.
+ *
+ * @return string
+ */
+function simpay_get_test_mode_badge() {
+	$html = '';
+
+	if ( simpay_is_test_mode() ) {
+		$html .= '<div class="simpay-test-mode-badge-container">';
+		$html .= '<span class="simpay-test-mode-badge">' . esc_html__( 'Test Mode', 'stripe' ) . '</span>';
+		$html .= '</div>';
+	}
+
+	return $html;
+}
+
+/**
+ * Get the stored account ID
+ */
+function simpay_get_account_id() {
+
+	global $simpay_form;
+
+	$test_mode = simpay_is_test_mode();
+
+	if ( ! empty( $simpay_form ) ) {
+
+		return $simpay_form->account_id;
+
+	} else {
+
+		$account_id = get_option( 'simpay_stripe_connect_account_id' );
+
+	}
+
+	// Return account ID by default
+	return trim( $account_id );
+
 }
 
 /**
@@ -444,13 +471,13 @@ function simpay_shared_script_variables() {
 	);
 
 	$i18n['i18n'] = array(
-		'mediaTitle'                      => esc_html__( 'Insert Media', 'stripe' ),
-		'mediaButtonText'                 => esc_html__( 'Use Image', 'stripe' ),
+		'mediaTitle'      => esc_html__( 'Insert Media', 'stripe' ),
+		'mediaButtonText' => esc_html__( 'Use Image', 'stripe' ),
 	);
 
 	$integers['integers'] = array(
 		'decimalPlaces' => simpay_get_decimal_places(),
-	    'minAmount'     => simpay_get_stripe_minimum_amount(),
+		'minAmount'     => simpay_global_minimum_amount(),
 	);
 
 	$final = apply_filters( 'simpay_shared_script_variables', array_merge( $strings, $bools, $i18n, $integers ) );
@@ -501,34 +528,6 @@ function simpay_is_zero_decimal( $currency = '' ) {
 	}
 
 	return false;
-}
-
-/**
- * Convert an amount to cents.
- *
- * @param        $amount
- * @param string $decimal_separator
- * @param string $thousand_separator
- *
- * @return float|int
- */
-function simpay_convert_amount_to_cents( $amount, $decimal_separator = '', $thousand_separator = '' ) {
-
-	$decimal_separator  = ( ! empty( $decimal_separator ) ? $decimal_separator : simpay_get_decimal_separator() );
-	$thousand_separator = ( ! empty( $thousand_separator ) ? $thousand_separator : simpay_get_thousand_separator() );
-
-	// Remove thousand separator
-	$amount = str_replace( $thousand_separator, '', $amount );
-
-	// Now replace decimal separator with an actual decimal point for processing purposes
-	$amount = str_replace( $decimal_separator, '.', $amount );
-
-	if ( simpay_is_zero_decimal() ) {
-		return intval( $amount );
-	} else {
-		return floatval( $amount ) * 100;
-	}
-
 }
 
 /**
@@ -595,52 +594,113 @@ function simpay_get_decimal_places() {
 }
 
 /**
- * Get the Stripe minimum amount
+ * Return amount as number value.
+ * Uses global (or filtered) decimal separator setting ("." or ",") & thousand separator setting.
+ * Like accounting.unformat removes formatting/cruft first.
+ * Respects decimal separator, but ignores zero decimal currency setting.
+ * Also prevent negative values.
+ * Similar to JS function unformatCurrency.
  *
- * @param bool $cents
+ * @param string|float $amount
  *
  * @return float
  */
-function simpay_get_stripe_minimum_amount( $cents = false ) {
+function simpay_unformat_currency( $amount ) {
 
-	// Check if we want the number in cents or a formatted amount based on the zero decimal amount
-	if ( $cents ) {
-		$minimum = '50';
-	} else {
-		$minimum = simpay_is_zero_decimal() ? '50' : '.50';
-	}
+	// Remove thousand separator.
+	$amount = str_replace( simpay_get_thousand_separator(), '', $amount );
 
-	return floatval( apply_filters( 'simpay_stripe_minimum_amount', $minimum ) );
+	// Replace decimal separator with an actual decimal point to allow converting to float.
+	$amount = str_replace( simpay_get_decimal_separator(), '.', $amount );
+
+	return abs( floatval( $amount ) );
 }
 
 /**
- * Return the formatted amount.
+ * Convert from dollars to cents (in USD).
+ * Leaves zero decimal currencies alone.
+ * Similar to JS function convertToCents.
+ *
+ * @param string|float $amount
+ *
+ * @return int
+ */
+function simpay_convert_amount_to_cents( $amount ) {
+
+	$amount = simpay_unformat_currency( $amount );
+
+	if ( simpay_is_zero_decimal() ) {
+		return intval( $amount );
+	} else {
+		return intval( $amount * 100 );
+	}
+}
+
+/**
+ * Convert from cents to dollars (in USD).
+ * Uses global zero decimal currency setting.
+ * Leaves zero decimal currencies alone.
+ * Similar to JS function convertToDollars.
+ *
+ * @param string|int $amount
+ *
+ * @return int|float
+ */
+function simpay_convert_amount_to_dollars( $amount ) {
+
+	$amount = simpay_unformat_currency( $amount );
+
+	if ( ! simpay_is_zero_decimal() ) {
+		$amount = round( intval( $amount ) / 100, simpay_get_decimal_places() );
+	}
+
+	return $amount;
+}
+
+/**
+ * Get the global system-wide minimum amount. Stripe dictates minimum USD is 50 cents, but set to 100 cents/currency
+ * units as it can vary from currency to currency.
+ *
+ * @return int
+ */
+function simpay_global_minimum_amount() {
+
+	// Initially set to 1.00 for non-zero decimal currencies (i.e. $1.00 USD).
+	$amount = 1;
+
+	if ( simpay_is_zero_decimal() ) {
+		$amount = 100;
+	}
+
+	return floatval( apply_filters( 'simpay_global_minimum_amount', $amount ) );
+}
+
+/**
+ * Return amount as formatted string.
+ * With or without currency symbol.
+ * Used for labels & amount inputs in admin & front-end.
+ * Uses global (or filtered) decimal separator setting ("." or ",") & thousand separator setting.
+ * Similar to JS function formatCurrency.
  *
  * @param        $amount
  * @param string $currency
  * @param bool   $show_symbol
- * @param string $separator
  *
  * @return string
  */
-function simpay_formatted_amount( $amount, $currency = '', $show_symbol = true, $separator = '' ) {
+function simpay_format_currency( $amount, $currency = '', $show_symbol = true ) {
 
 	if ( empty( $currency ) ) {
-		$symbol = simpay_get_currency_symbol( simpay_get_setting( 'currency' ) );
-	} else {
-		$symbol = simpay_get_currency_symbol( $currency );
+		$currency = simpay_get_setting( 'currency' );
 	}
+
+	$symbol = simpay_get_currency_symbol( $currency );
 
 	$position = simpay_get_setting( 'currency_position' );
 
-	// Non-zero
-	if ( simpay_is_zero_decimal( $currency ) ) {
-		$amount = number_format( intval( $amount ), 0, simpay_get_decimal_separator(), simpay_get_thousand_separator() );
-	} else {
-		$amount = number_format( floatval( $amount ) / 100, simpay_get_decimal_places(), simpay_get_decimal_separator(), simpay_get_thousand_separator() );
-	}
+	$amount = number_format( floatval( $amount ), simpay_get_decimal_places(), simpay_get_decimal_separator(), simpay_get_thousand_separator() );
 
-	$amount = apply_filters( 'simpay_formatted_amount', $amount, $amount );
+	$amount = apply_filters( 'simpay_formatted_amount', $amount );
 
 	if ( $show_symbol ) {
 		if ( 'left' === $position ) {
@@ -679,6 +739,7 @@ function simpay_get_editor_default( $editor ) {
 			$template .= '<strong>' . esc_html__( 'Purchased From:', 'stripe' ) . '</strong>' . ' {company-name}' . "\n";
 			$template .= '<strong>' . esc_html__( 'Payment Date:', 'stripe' ) . '</strong>' . ' {charge-date}' . "\n";
 			$template .= '<strong>' . esc_html__( 'Payment Amount: ', 'stripe' ) . '</strong>' . '{total-amount}' . "\n";
+
 			return $template;
 		case has_filter( 'simpay_editor_template' ):
 			return apply_filters( 'simpay_editor_template', '', $editor );
@@ -870,4 +931,32 @@ function simpay_get_currency_symbol( $currency = '' ) {
 	$currency_symbol = isset( $symbols[ $currency ] ) ? $symbols[ $currency ] : '';
 
 	return apply_filters( 'simpay_currency_symbol', $currency_symbol, $currency );
+}
+
+/**
+ * Insert an array key/value pair after a certain point in an existing associative array.
+ *
+ * @since 3.4.0
+ *
+ * @param $new_key  string The new key to use for $fields[ $section ][ $new_key ]
+ * @param $value    array The array that holds the information for this settings array
+ * @param $needle   string The key to find in the current array of fields
+ * @param $haystack array The current array to search
+ * @return array
+ */
+function simpay_add_to_array_after( $new_key, $value, $needle, $haystack ) {
+	$split = array(); // The split off portion of the array after the key we want to insert after
+	$new   = array(); // The new array will consist of the opposite of the split + the new element we want to add
+
+	if ( array_key_exists( $needle, $haystack ) ) {
+		$offset = array_search( $needle, array_keys( $haystack ) );
+
+		$split = array_slice( $haystack, $offset + 1 );
+		$new   = array_slice( $haystack, 0, $offset + 1 );
+
+		// Add the new element to the bottom
+		$new[ $new_key ] = $value;
+	}
+
+	return $new + $split;
 }

@@ -14,8 +14,9 @@ class Notices {
 	 * Notices constructor.
 	 */
 	public function __construct() {
-		
+
 		add_action( 'admin_notices', array( $this, 'show_notices' ) );
+		add_action( 'admin_notices', array( $this, 'show_upgrade_php_version_notice' ) );
 
 		add_action( 'in_plugin_update_message-' . plugin_basename( SIMPLE_PAY_MAIN_FILE ), array(
 			$this,
@@ -38,21 +39,8 @@ class Notices {
 				$this->dismiss_notice( $notice );
 			}
 
-			$this->api_keys_error();
+			$this->stripe_connect_notice();
 			$this->ssl_error();
-
-			// TODO Maybe reuse this for upcoming PHP 5.6 requirement.
-			/*
-			// Show non-dismissable notice for dropping PHP 5.3 next update.
-			if ( version_compare( PHP_VERSION, '5.4', '<' ) ) {
-
-				$notice_message = __( 'WP Simple Pay and Stripe are ending compatibility with PHP 5.3 in the next update. Please update PHP before updating WP Simple Pay.', 'simple-pay' ) . '<br/>' .
-				                  __( 'We strongly recommend PHP 7.0 or higher.', 'simple-pay' ) .
-				                  ' <a href="https://wordpress.org/about/requirements/" target="_blank">' . __( 'Click here for more details and a letter you can send to your host.', 'simple-pay' ) . '</a> ';
-
-				self::print_notice( $notice_message );
-			}
-			*/
 
 			do_action( 'simpay_admin_notices', $this->is_admin_screen );
 		}
@@ -73,18 +61,53 @@ class Notices {
 	}
 
 	/**
-	 * Function to display error messages for missing API Keys.
+	 * Function to display an alert to installs that have not authorized through Stripe Connect
 	 */
-	public function api_keys_error() {
-
-		if ( ! simpay_check_keys_exist() && ( ( false !== $this->is_admin_screen && ( 'simpay_settings' === $this->is_admin_screen && isset( $_GET['tab'] ) && 'keys' !== $_GET['tab'] && 'license' !== $_GET['tab'] ) || 'simpay' === $this->is_admin_screen ) ) ) {
-
-			/* Translators: 1. "test Stripe API keys" OR "live Stripe API keys" 2. Plugin name */
-			$notice_message = sprintf( __( 'Your %1$s Stripe API Keys for %2$s have not been entered.', 'stripe' ), ( simpay_is_test_mode() ? _x( 'test', 'Your test Stripe API keys...', 'stripe' ) : _x( 'live', 'Your live Stripe API keys...', 'stripe' ) ), SIMPLE_PAY_PLUGIN_NAME );
-			$notice_message .= ' <a href="' . admin_url( 'admin.php?page=simpay_settings&tab=keys' ) . '">' . esc_html__( 'Enter them here.', 'stripe' ) . '</a>';
-
-			self::print_notice( $notice_message, 'error' );
+	public function stripe_connect_notice() {
+		if( 'simpay_settings' === $this->is_admin_screen && isset( $_GET['tab'] ) && 'keys' === $_GET['tab'] ) {
+			return;
 		}
+
+		if( $this->check_if_dismissed( 'stripe-connect' ) ) {
+			return;
+		}
+
+		if ( ! simpay_get_account_id() ) {
+
+			$notice_message = sprintf(
+				__( 'WP Simple Pay now supports Stripe Connect for easier setup and improved security. <a href="%s">Click here</a> to connect your Stripe account.', 'stripe' ),
+				admin_url( 'admin.php?page=simpay_settings&tab=keys' )
+			);
+
+			self::print_notice( $notice_message, 'info', 'stripe-connect' );
+		}
+	}
+
+	/**
+	 * Output the PHP requirement notice.
+	 *
+	 * This warns users that the plugin will not be able to function in their
+	 * environment after a future update.
+	 *
+	 * @since 3.4.0
+	 */
+	public function show_upgrade_php_version_notice() {
+		$future_required_version = 5.6;
+
+		if ( ! version_compare( PHP_VERSION, $future_required_version, '<' ) ) {
+			return;
+		}
+
+		$notice_message = '<p><strong>' . __( 'WP Simple Pay is increasing its PHP version requirement.', 'stripe' ) . '</strong></p>';
+		$notice_message .= '<p>' . sprintf( __( 'WP Simple Pay will be increasing its PHP requirement to version <code>%1$s</code> or higher in an upcoming release. It looks like you\'re using version <code>%2$s</code>, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%3$s" target="_blank">no longer receives security updates</a>, which is another great reason to update.', 'stripe' ), $future_required_version, PHP_VERSION, 'http://php.net/eol.php' ) . '</p>';
+
+		$notice_message .= '<p><strong>' . __( 'Which version should I upgrade to?', 'stripe' ) . '</strong></p>';
+		$notice_message .= '<p>' . sprintf( __( 'In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to <code>%1$s</code>, <code>7.0</code>, <code>7.1</code>, or <code>7.2</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>7.1</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>7.x</code>, so more testing may be required.', 'stripe' ), $future_required_version ) . '</p>';
+
+		$notice_message .= '<p><strong>' . __( 'Need help upgrading? Ask your web host!', 'stripe' ) . '</strong></p>';
+		$notice_message .= '<p>' . sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see <a href="%s" target="_blank">our hosting recommendations</a>.', 'stripe' ), 'https://wpsimplepay.com/recommended-wordpress-hosting/' ) . '</p>';
+
+		self::print_notice( $notice_message );
 	}
 
 	/**

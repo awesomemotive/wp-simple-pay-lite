@@ -106,6 +106,8 @@ class Errors {
 	 *
 	 * @return string
 	 */
+
+	// TODO Used? Remove?
 	public static function get_error_html() {
 
 		$errors = self::get();

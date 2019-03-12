@@ -32,17 +32,18 @@ class Objects {
 	/**
 	 * Get a specific form
 	 *
-	 * @param $object
+	 * @param $object Post ID or post object
 	 *
 	 * @return false|null|Object
 	 */
 	public function get_form( $object ) {
 
 		if ( is_int( $object ) ) {
-			$post = get_post( $object );
-			if ( $post ) {
-				return $this->get_object( apply_filters( 'simpay_form_object_type', 'default-form' ), 'form', $post );
-			}
+			$object = get_post( $object );
+		}
+	
+		if ( $object ) {
+			return $this->get_object( apply_filters( 'simpay_form_object_type', 'default-form' ), 'form', $object );
 		}
 
 		return null;
