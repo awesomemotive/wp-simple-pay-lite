@@ -10,7 +10,8 @@
   border: 1px solid #eee; }
 
 #simpay-global-settings {
-  margin-right: 310px; }
+  /* Should be 40px more than #simpay-settings-sidebar-right below. */
+  margin-right: 350px; }
   @media (max-width: 768px) {
     #simpay-global-settings {
       margin-right: 0; } }
@@ -23,8 +24,10 @@
     width: 100%; }
   #simpay-global-settings #simpay-settings-sidebar-right {
     float: right;
-    width: 270px;
-    margin-right: -290px; }
+    /* Move width down to 270px if extra space not needed. */
+    width: 310px;
+    /* margin-right should be negative of width and subtract another 20px. */
+    margin-right: -330px; }
     @media (max-width: 768px) {
       #simpay-global-settings #simpay-settings-sidebar-right {
         float: left;

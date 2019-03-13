@@ -4,18 +4,16 @@
 		<div class="inside">
 			<div class="main">
 				<p class="sidebar-heading centered">
-					<?php _e( "Additional features included in WP Simple Pay Pro", 'stripe' ); ?>
+					<?php _e( "Additional features included in<br />WP Simple Pay Pro", 'stripe' ); ?>
 				</p>
 
 				<ul>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Custom Fields', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Unlimited Custom Fields', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'User-Entered Amounts', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon Codes', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Tax Rate Support', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscriptions', 'stripe' ); ?>*</li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscription Installment Plans', 'stripe' ); ?>*</li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscription Setup Fees', 'stripe' ); ?>*</li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Subscription Trial Periods', 'stripe' ); ?>*</li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & Overlay Custom Forms', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Apple & Google Pay (coming March 2019)', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription Support', 'stripe' ); ?>*</li>
 				</ul>
 
 				<div class="centered">

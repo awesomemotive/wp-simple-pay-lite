@@ -7,7 +7,8 @@
 // Global settings pages
 #simpay-global-settings {
 
-	margin-right: 310px;
+	/* Should be 40px more than #simpay-settings-sidebar-right below. */
+	margin-right: 350px;
 
 	// Remove right margin for sidebar promo on mobile.
 	@media (max-width: 768px) {
@@ -33,8 +34,11 @@
 	#simpay-settings-sidebar-right {
 
 		float: right;
-		width: 270px;
-		margin-right: -290px;
+
+		/* Move width down to 270px if extra space not needed. */
+		width: 310px;
+		/* margin-right should be negative of width and subtract another 20px. */
+		margin-right: -330px;
 
 		// Move sidebar promo below other settings on mobile.
 		@media (max-width: 768px) {
