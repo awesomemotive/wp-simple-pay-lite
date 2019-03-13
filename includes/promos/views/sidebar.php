@@ -4,7 +4,7 @@
 		<div class="inside">
 			<div class="main">
 				<p class="sidebar-heading centered">
-					<?php _e( "Additional features included in WP Simple Pay Pro", 'stripe' ); ?>
+					<?php _e( "Additional features included in<br />WP Simple Pay Pro", 'stripe' ); ?>
 				</p>
 
 				<ul>
