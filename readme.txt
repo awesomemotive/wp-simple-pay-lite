@@ -115,8 +115,11 @@ We'd love your help! Here are a few things you can do:
 * New: You can now easily connect your Stripe account with Stripe Connect. See your settings page for more details.
 * New: Enable ZIP/Postal Code verification by default on new forms.
 * New: Allow "Company Name" value to be blank.
+* New: Add "Country" setting in Stripe Setup settings to send with Stripe API requests.
 * Fix: Delete extraneous options on uninstall routine.
+* Fix: Prefix Stripe API request from library with "WordPress".
 * Dev: Updated to Stripe PHP library v6.30.4.
+* Dev: Remove unused files.
 
 = 2.0.12 - November 1, 2018 =
 
