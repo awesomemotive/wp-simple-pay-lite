@@ -1,9 +1,9 @@
 === Stripe Payments for WordPress - WP Simple Pay ===
-Contributors: pderksen, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
+Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
-Requires at least: 4.7
-Tested up to: 4.9
-Stable tag: 2.0.12
+Requires at least: 4.9
+Tested up to: 5.1
+Stable tag: 2.1.0
 Requires PHP: 5.4
 License: GPLv2 or later
 
@@ -35,6 +35,7 @@ That's it. *No other plugins required.*
 * Optionally collect customer billing & addresses
 * Optionally verify zip/postal code without address
 * Support for 12 languages, 25 countries and 135+ currencies
+* Stripe Connect support for easier setup and improved security
 * Translation ready
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
@@ -45,10 +46,11 @@ That's it. *No other plugins required.*
 
 * *Everything in Lite plus...*
 * Drag & drop form design controls
-* Custom fields to capture additional data
+* Unlimited custom fields to capture additional data
 * Custom amounts - let customers enter an amount to pay
 * Coupon code support
-* Tax rate support
+* Embedded & Overlay custom forms
+* Apple & Google Pay (coming March 2019)
 * Stripe Subscription support
 * Subscription installment plans
 * Subscription setup fees
@@ -107,6 +109,17 @@ We'd love your help! Here are a few things you can do:
 9. Payment form settings: Stripe Checkout overlay display
 
 == Changelog ==
+
+= 2.1.0 - March 15, 2018 =
+
+* New: You can now easily connect your Stripe account with Stripe Connect. See your settings page for more details.
+* New: Enable ZIP/Postal Code verification by default on new forms.
+* New: Allow "Company Name" value to be blank.
+* New: Add "Country" setting in Stripe Setup settings to send with Stripe API requests.
+* Fix: Delete extraneous options on uninstall routine.
+* Fix: Prefix Stripe API request from library with "WordPress".
+* Dev: Updated to Stripe PHP library v6.30.4.
+* Dev: Remove unused files.
 
 = 2.0.12 - November 1, 2018 =
 
