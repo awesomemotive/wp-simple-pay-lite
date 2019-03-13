@@ -301,30 +301,6 @@ function simpay_get_test_mode_badge() {
 }
 
 /**
- * Get the stored account ID
- */
-function simpay_get_account_id() {
-
-	global $simpay_form;
-
-	$test_mode = simpay_is_test_mode();
-
-	if ( ! empty( $simpay_form ) ) {
-
-		return $simpay_form->account_id;
-
-	} else {
-
-		$account_id = get_option( 'simpay_stripe_connect_account_id' );
-
-	}
-
-	// Return account ID by default
-	return trim( $account_id );
-
-}
-
-/**
  * Get the stored API Secret Key
  */
 function simpay_get_secret_key() {

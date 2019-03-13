@@ -64,16 +64,20 @@ class Notices {
 	 * Function to display an alert to installs that have not authorized through Stripe Connect
 	 */
 	public function stripe_connect_notice() {
-		if( 'simpay_settings' === $this->is_admin_screen && isset( $_GET['tab'] ) && 'keys' === $_GET['tab'] ) {
+		// If they are forced to use Stripe Connect they do not need to be notified about the functionality.
+		if ( ! simpay_can_site_manage_stripe_keys() ) {
 			return;
 		}
 
-		if( $this->check_if_dismissed( 'stripe-connect' ) ) {
+		if ( 'simpay_settings' === $this->is_admin_screen && isset( $_GET['tab'] ) && 'keys' === $_GET['tab'] ) {
+			return;
+		}
+
+		if ( $this->check_if_dismissed( 'stripe-connect' ) ) {
 			return;
 		}
 
 		if ( ! simpay_get_account_id() ) {
-
 			$notice_message = sprintf(
 				__( 'WP Simple Pay now supports Stripe Connect for easier setup and improved security. <a href="%s">Click here</a> to connect your Stripe account.', 'stripe' ),
 				admin_url( 'admin.php?page=simpay_settings&tab=keys' )

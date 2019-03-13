@@ -113,8 +113,10 @@ class Keys extends Admin_Page {
 					
 					}
 
-					$html .= '<p id="wpsp-api-keys-row-reveal">' . __( '<a href="#">Click here</a> to manage your API keys manually.', 'stripe' ) . '</p>';
-					$html .= '<p id="wpsp-api-keys-row-hide">' . __( '<a href="#">Click here</a> to hide your API keys.', 'stripe' ) . '</p>';
+					if ( simpay_can_site_manage_stripe_keys() ) {
+						$html .= '<p id="wpsp-api-keys-row-reveal">' . __( '<a href="#">Click here</a> to manage your API keys manually.', 'stripe' ) . '</p>';
+						$html .= '<p id="wpsp-api-keys-row-hide">' . __( '<a href="#">Click here</a> to hide your API keys.', 'stripe' ) . '</p>';
+					}
 
 					$fields[ $section ] = array(
 						'test_mode' => array(
