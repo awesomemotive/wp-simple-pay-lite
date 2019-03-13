@@ -8,7 +8,7 @@
 				</p>
 
 				<ul>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Custom Fields', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Unlimited Custom Fields', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'User-Entered Amounts', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon Codes', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & Overlay Custom Forms', 'stripe' ); ?></li>
