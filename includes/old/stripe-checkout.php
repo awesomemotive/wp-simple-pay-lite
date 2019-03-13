@@ -91,5 +91,32 @@ register_activation_hook( SC_PLUGIN_FILE, array( 'Stripe_Checkout', 'activate' )
 // Create a global instance of our main class for this plugin so we can use it throughout all the other classes.
 global $base_class;
 
+/**
+ * Show a deprecation notice about 1.x shortcode/settings.
+ */
+function simpay_lite_deprecation_notice() {
+
+	$settings_1 = get_option( 'sc_settings' );
+	$settings_2 = get_option( 'simpay_settings_keys' );
+
+	$key_1 = isset( $settings_1['live_publish_key'] ) ? $settings_1['live_publish_key'] : false;
+	$key_2 = isset( $settings_2['live_keys']['secret_key'] ) ? $settings_2['live_keys']['secret_key'] : false;
+
+	// Try Stripe Connect.
+	if ( ! $key_2 ) {
+		$key_2 = simpay_get_account_id();
+	}
+
+	// If there is no API settings in 2.x and there are in 1.x, show a message to update.
+	if ( $key_1 && ! $key_2 ) {
+		$notice_message = '<p><strong>' . __( 'An update to your settings is required!', 'simple-pay' ) . '</strong></p>';
+		$notice_message .= '<p>' . __( 'It looks like you may still be relying on the legacy settings of this plugin. These settings will no longer work in the next update of Stripe Payments for WordPress.', 'simple-pay' ) . '</p>';
+		$notice_message .= '<p>' . sprintf( __( 'Please %2$supdate your settings%1$s then %3$screate a new form%1$s to generate an updated shortcode to use on your pages.', 'simple-pay' ), '</a>', '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">', '<a href="' . admin_url( 'admin.php?page=simpay&action=create' ) . '">' ) . '</p>';
+
+		SimplePay\Core\Admin\Notices::print_notice( $notice_message );
+	}
+}
+add_action( 'admin_notices', 'simpay_lite_deprecation_notice' );
+
 // Let's get going finally!
 $base_class = Stripe_Checkout::get_instance();
