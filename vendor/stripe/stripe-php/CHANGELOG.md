@@ -1,5 +1,70 @@
 # Changelog
 
+## 6.30.4 - 2019-02-27
+* [#602](https://github.com/stripe/stripe-php/pull/602) Add `subscription_schedule` to `Subscription` for PHPDoc.
+
+## 6.30.3 - 2019-02-26
+* [#603](https://github.com/stripe/stripe-php/pull/603) Improve PHPDoc on the `Source` object to cover all types of Sources currently supported.
+
+## 6.30.2 - 2019-02-25
+* [#601](https://github.com/stripe/stripe-php/pull/601) Fix PHPDoc across multiple resources and add support for new events.
+
+## 6.30.1 - 2019-02-16
+* [#599](https://github.com/stripe/stripe-php/pull/599) Fix PHPDoc for `SubscriptionSchedule` and `SubscriptionScheduleRevision`
+
+## 6.30.0 - 2019-02-12
+* [#590](https://github.com/stripe/stripe-php/pull/590) Add support for `SubscriptionSchedule` and `SubscriptionScheduleRevision`
+
+## 6.29.3 - 2019-01-31
+* [#592](https://github.com/stripe/stripe-php/pull/592) Some more PHPDoc fixes
+
+## 6.29.2 - 2019-01-31
+* [#591](https://github.com/stripe/stripe-php/pull/591) Fix PHPDoc for nested resources
+
+## 6.29.1 - 2019-01-25
+* [#566](https://github.com/stripe/stripe-php/pull/566) Fix dangling message contents
+* [#586](https://github.com/stripe/stripe-php/pull/586) Don't overwrite `CURLOPT_HTTP_VERSION` option
+
+## 6.29.0 - 2019-01-23
+* [#579](https://github.com/stripe/stripe-php/pull/579) Rename `CheckoutSession` to `Session` and move it under the `Checkout` namespace. This is a breaking change, but we've reached out to affected merchants and all new merchants would use the new approach.
+
+## 6.28.1 - 2019-01-21
+* [#580](https://github.com/stripe/stripe-php/pull/580) Properly serialize `individual` on `Account` objects
+
+## 6.28.0 - 2019-01-03
+* [#576](https://github.com/stripe/stripe-php/pull/576) Add support for iterating directly over `Collection` instances
+
+## 6.27.0 - 2018-12-21
+* [#571](https://github.com/stripe/stripe-php/pull/571) Add support for the `CheckoutSession` resource
+
+## 6.26.0 - 2018-12-11
+* [#568](https://github.com/stripe/stripe-php/pull/568) Enable persistent connections
+
+## 6.25.0 - 2018-12-10
+* [#567](https://github.com/stripe/stripe-php/pull/567) Add support for account links
+
+## 6.24.0 - 2018-11-28
+* [#562](https://github.com/stripe/stripe-php/pull/562) Add support for the Review resource
+* [#564](https://github.com/stripe/stripe-php/pull/564) Add event name constants for subscription schedule aborted/expiring
+
+## 6.23.0 - 2018-11-27
+* [#542](https://github.com/stripe/stripe-php/pull/542) Add support for `ValueList` and `ValueListItem` for Radar 
+
+## 6.22.1 - 2018-11-20
+* [#561](https://github.com/stripe/stripe-php/pull/561) Add cast and some docs to telemetry introduced in 6.22.0/#549
+
+## 6.22.0 - 2018-11-15
+* [#549](https://github.com/stripe/stripe-php/pull/549) Add support for client telemetry
+
+## 6.21.1 - 2018-11-12
+* [#548](https://github.com/stripe/stripe-php/pull/548) Don't mutate `Exception` class properties from `OAuthBase` error
+
+## 6.21.0 - 2018-11-08
+* [#537](https://github.com/stripe/stripe-php/pull/537) Add new API endpoints for the `Invoice` resource.
+
+## 6.20.1 - 2018-11-07
+* [#546](https://github.com/stripe/stripe-php/pull/546) Drop files from the Composer package that aren't needed in the release
+
 ## 6.20.0 - 2018-10-30
 * [#536](https://github.com/stripe/stripe-php/pull/536) Add support for the `Person` resource
 * [#541](https://github.com/stripe/stripe-php/pull/541) Add support for the `WebhookEndpoint` resource

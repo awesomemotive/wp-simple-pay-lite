@@ -10,6 +10,7 @@ namespace Stripe;
  * @property float $application_fee_percent
  * @property string $billing
  * @property int $billing_cycle_anchor
+ * @property mixed $billing_thresholds
  * @property bool $cancel_at_period_end
  * @property int $canceled_at
  * @property int $created
@@ -17,13 +18,16 @@ namespace Stripe;
  * @property int $current_period_start
  * @property string $customer
  * @property int $days_until_due
+ * @property string $default_source
  * @property Discount $discount
  * @property int $ended_at
  * @property Collection $items
+ * @property string $latest_invoice
  * @property boolean $livemode
  * @property StripeObject $metadata
  * @property Plan $plan
  * @property int $quantity
+ * @property SubscriptionSchedule $schedule
  * @property int $start
  * @property string $status
  * @property float $tax_percent

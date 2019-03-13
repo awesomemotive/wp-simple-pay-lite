@@ -71,6 +71,7 @@ abstract class Util
 
             // business objects
             \Stripe\Account::OBJECT_NAME => 'Stripe\\Account',
+            \Stripe\AccountLink::OBJECT_NAME => 'Stripe\\AccountLink',
             \Stripe\AlipayAccount::OBJECT_NAME => 'Stripe\\AlipayAccount',
             \Stripe\ApplePayDomain::OBJECT_NAME => 'Stripe\\ApplePayDomain',
             \Stripe\ApplicationFee::OBJECT_NAME => 'Stripe\\ApplicationFee',
@@ -81,6 +82,7 @@ abstract class Util
             \Stripe\BitcoinTransaction::OBJECT_NAME => 'Stripe\\BitcoinTransaction',
             \Stripe\Card::OBJECT_NAME => 'Stripe\\Card',
             \Stripe\Charge::OBJECT_NAME => 'Stripe\\Charge',
+            \Stripe\Checkout\Session::OBJECT_NAME => 'Stripe\\Checkout\\Session',
             \Stripe\CountrySpec::OBJECT_NAME => 'Stripe\\CountrySpec',
             \Stripe\Coupon::OBJECT_NAME => 'Stripe\\Coupon',
             \Stripe\Customer::OBJECT_NAME => 'Stripe\\Customer',
@@ -112,17 +114,22 @@ abstract class Util
             \Stripe\Person::OBJECT_NAME => 'Stripe\\Person',
             \Stripe\Plan::OBJECT_NAME => 'Stripe\\Plan',
             \Stripe\Product::OBJECT_NAME => 'Stripe\\Product',
+            \Stripe\Radar\ValueList::OBJECT_NAME => 'Stripe\\Radar\\ValueList',
+            \Stripe\Radar\ValueListItem::OBJECT_NAME => 'Stripe\\Radar\\ValueListItem',
             \Stripe\Recipient::OBJECT_NAME => 'Stripe\\Recipient',
             \Stripe\RecipientTransfer::OBJECT_NAME => 'Stripe\\RecipientTransfer',
             \Stripe\Refund::OBJECT_NAME => 'Stripe\\Refund',
             \Stripe\Reporting\ReportRun::OBJECT_NAME => 'Stripe\\Reporting\\ReportRun',
             \Stripe\Reporting\ReportType::OBJECT_NAME => 'Stripe\\Reporting\\ReportType',
+            \Stripe\Review::OBJECT_NAME => 'Stripe\\Review',
             \Stripe\SKU::OBJECT_NAME => 'Stripe\\SKU',
             \Stripe\Sigma\ScheduledQueryRun::OBJECT_NAME => 'Stripe\\Sigma\\ScheduledQueryRun',
             \Stripe\Source::OBJECT_NAME => 'Stripe\\Source',
             \Stripe\SourceTransaction::OBJECT_NAME => 'Stripe\\SourceTransaction',
             \Stripe\Subscription::OBJECT_NAME => 'Stripe\\Subscription',
             \Stripe\SubscriptionItem::OBJECT_NAME => 'Stripe\\SubscriptionItem',
+            \Stripe\SubscriptionSchedule::OBJECT_NAME => 'Stripe\\SubscriptionSchedule',
+            \Stripe\SubscriptionScheduleRevision::OBJECT_NAME => 'Stripe\\SubscriptionScheduleRevision',
             \Stripe\ThreeDSecure::OBJECT_NAME => 'Stripe\\ThreeDSecure',
             \Stripe\Terminal\ConnectionToken::OBJECT_NAME => 'Stripe\\Terminal\\ConnectionToken',
             \Stripe\Terminal\Location::OBJECT_NAME => 'Stripe\\Terminal\\Location',
@@ -332,5 +339,15 @@ abstract class Util
             $params = [];
         }
         return [$id, $params];
+    }
+
+    /**
+     * Returns UNIX timestamp in milliseconds
+     *
+     * @return integer current time in millis
+     */
+    public static function currentTimeMillis()
+    {
+        return (int) round(microtime(true) * 1000);
     }
 }
