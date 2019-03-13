@@ -30,6 +30,7 @@ abstract class Form {
 	public $live_publishable_key = '';
 
 	/* Ambiguous Keys */
+	public $account_id = '';
 	public $secret_key = '';
 	public $publishable_key = '';
 
@@ -39,6 +40,7 @@ abstract class Form {
 	public $payment_success_page = '';
 	public $payment_failure_page = '';
 	public $locale = '';
+	public $country = '';
 
 	/* Currency Options */
 	public $currency = '';
@@ -67,7 +69,7 @@ abstract class Form {
 	// Statement descriptor setting
 	public $statement_descriptor = '';
 
-	/** CHECKOUT OVERLAY DISPLAY **/
+	/** STRIPE CHECKOUT DISPLAY **/
 
 	public $company_name = '';
 	public $item_description = '';
@@ -117,8 +119,41 @@ abstract class Form {
 		// Set global form object to this instance
 		$simpay_form = $this;
 
+		$this->maybe_register_hooks();
+
 		do_action( 'simpay_form_loaded' );
 	}
+
+	/**
+	 * Determine if hooks should be registered.
+	 *
+	 * Hooks get run once per form instance. See https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
+	 *
+	 */
+	public function maybe_register_hooks() {
+
+		global $simpay_displayed_form_ids;
+
+		if( ! is_array( $simpay_displayed_form_ids ) ) {
+			$simpay_displayed_form_ids = array();
+		}
+
+		// Collect any form IDs we've displayed already so we can avoid duplicate IDs
+		if ( ! isset( $simpay_displayed_form_ids[ $this->id ] ) ) {
+		    $this->register_hooks();
+
+		    $simpay_displayed_form_ids[ $this->id ] = true;
+		}
+
+	}
+
+	/**
+	 * Add hooks and filters for this form instance.
+	 *
+	 * Hooks get run once per form instance. See https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
+	 *
+	 */
+	public function register_hooks() {}
 
 	/**
 	 * Setup the post object for this form
@@ -170,6 +205,7 @@ abstract class Form {
 		/* Final ambiguous keys */
 		$this->secret_key      = simpay_get_filtered( 'secret_key', simpay_is_test_mode() ? $this->test_secret_key : $this->live_secret_key, $this->id );
 		$this->publishable_key = simpay_get_filtered( 'publishable_key', simpay_is_test_mode() ? $this->test_publishable_key : $this->live_publishable_key, $this->id );
+		$this->account_id      = simpay_get_filtered( 'account_id', $this->account_id, $this->id );
 
 		/** GENERAL **/
 
@@ -184,6 +220,7 @@ abstract class Form {
 		$this->payment_failure_page = simpay_get_filtered( 'payment_failure_page', $this->get_redirect_url( $payment_failure_page, true ), $this->id );
 
 		$this->locale      = simpay_get_filtered( 'locale', simpay_get_global_setting( 'locale' ), $this->id );
+		$this->country     = simpay_get_filtered( 'country', simpay_get_global_setting( 'country' ), $this->id );
 
 		/* Currency Options */
 		$this->currency          = simpay_get_filtered( 'currency', simpay_get_global_setting( 'currency' ), $this->id );
@@ -221,12 +258,12 @@ abstract class Form {
 
 		/* one-time payment options */
 
-		$this->amount = simpay_convert_amount_to_cents( simpay_get_filtered( 'amount', simpay_get_saved_meta( $this->id, '_amount', '100' ), $this->id ) );
+		$this->amount = simpay_get_filtered( 'amount', simpay_get_saved_meta( $this->id, '_amount', simpay_global_minimum_amount() ), $this->id );
 
 		// Statement descriptor
 		$this->statement_descriptor = simpay_get_filtered( 'statement_descriptor', simpay_get_saved_meta( $this->id, '_statement_descriptor', '' ), $this->id );
 
-		/** CHECKOUT OVERLAY DISPLAY **/
+		/** STRIPE CHECKOUT DISPLAY **/
 
 		$this->company_name = simpay_get_filtered( 'company_name', simpay_get_saved_meta( $this->id, '_company_name' ), $this->id );
 
@@ -367,6 +404,11 @@ abstract class Form {
 		// Locale
 		if ( ! empty( $this->locale ) ) {
 			$strings['strings']['locale'] = $this->locale;
+		}
+
+		// Country
+		if ( ! empty( $this->country ) ) {
+			$strings['strings']['country'] = $this->country;
 		}
 
 		// Currency

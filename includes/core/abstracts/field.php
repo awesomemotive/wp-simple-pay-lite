@@ -279,7 +279,6 @@ abstract class Field {
 
 		$classes    = '';
 		$type_class = '';
-		$error      = '';
 
 		if ( ! empty( $class ) && is_array( $class ) ) {
 			$classes = implode( ' ', array_map( 'esc_attr', $class ) );
@@ -287,11 +286,8 @@ abstract class Field {
 		if ( ! empty( $this->type_class ) ) {
 			$type_class = esc_attr( $this->type_class );
 		}
-		if ( true !== $this->validation && ! empty( $this->validation ) ) {
-			$error = 'simpay-field-error ';
-		}
 
-		$this->class = trim( $error . 'simpay-field ' . $type_class . ' ' . $classes );
+		$this->class = trim( 'simpay-field ' . $type_class . ' ' . $classes );
 	}
 
 	/**

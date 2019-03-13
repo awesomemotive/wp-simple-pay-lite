@@ -93,6 +93,11 @@ final class SimplePay {
 
 		// Load core shared back-end & front-end functions.
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
+		require_once( SIMPLE_PAY_INC . 'core/functions/countries.php' );
+
+		// Stripe Connect functionality.
+		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/functions.php' );
+		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/admin.php' );
 
 		// TODO Don't load sessions in admin after Pro multi-plan setup fee set/get is refactored.
 		$this->session = new Session();

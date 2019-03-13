@@ -2,7 +2,7 @@
 
 var simpayApp = {};
 
-(function( $ ) {
+( function( $ ) {
 	'use strict';
 
 	var body;
@@ -15,122 +15,183 @@ var simpayApp = {};
 		// Internal organized collection of all form data
 		spFormData: {},
 
-		// Stripe Data?
-		spStripeData: {},
-
 		init: function() {
 
 			// Set main vars on init.
 			body = $( document.body );
 
-			this.spFormElList = body.find( '.simpay-checkout-form' );
+			simpayApp.spFormElList = body.find( '.simpay-checkout-form' );
 
-			this.spFormElList.each( function() {
+			simpayApp.spFormElList.each( function() {
 
 				var spFormElem = $( this );
-				simpayApp.processForm( spFormElem );
+				simpayApp.setupCoreForm( spFormElem );
 
-				body.trigger( 'simpayProcessFormElements', [ spFormElem ] );
+				body.trigger( 'simpaySetupCoreForm', [ spFormElem ] );
 			} );
-
-			body.trigger( 'simpayLoaded' );
 		},
 
-		processForm: function( spFormElem ) {
+		// Does this payment form use the Stripe Checkout overlay?
+		isStripeCheckoutForm: function( formData ) {
 
-			// Set the form ID
+			return ( undefined === formData.formDisplayType ) || ( 'stripe_checkout' === formData.formDisplayType );
+		},
+
+		setupCoreForm: function( spFormElem ) {
+
 			var formId = spFormElem.data( 'simpay-form-id' );
 
-			// Grab the localized data for this form ID
+			// Grab the localized data for this form ID.
 			var localizedFormData = simplePayForms[ formId ];
 
-			// Set a local variable to hold all of the form information.
-			var formData = this.spFormData[ formId ];
-
-			// Variable to hold the Stripe configuration
-			var stripeHandler = null;
-
 			// Set formData array index of the current form ID to match the localized data passed over for form settings.
-			formData = $.extend( {},  localizedFormData.form.integers, localizedFormData.form.bools, localizedFormData.form.strings );
+			var formData = $.extend( {}, localizedFormData.form.bools, localizedFormData.form.integers, localizedFormData.form.i18n, localizedFormData.form.strings );
 
+			// Set form ID from data attribute.
 			formData.formId = formId;
 
-			// Set a finalAmount setting so that we can perform all the actions on this. That way if we need to reverse anything we leave the base amount untouched and can revert to it.
+			// Set a finalAmount setting so that we can perform all the actions on this.
+			// That way if we need to reverse anything we leave the base amount untouched and can revert to it.
+			// .amount & .finalAmount prop values = 1 for $1.00 USD, 100 if a zero decimal currency.
 			formData.finalAmount = formData.amount;
 
-			// Set the default quantity to 1
+			// Set the default quantity to 1.
 			formData.quantity = 1;
 
 			// Add a new object called stripeParams to the spFormData object. This contains only the stripeParams that need to be sent. This is so we don't have to manually set all the stripeParams
 			// And we can just use what was passed from PHP so we only include the minimum needed and let Stripe defaults take care of anything that's missing here.
 			formData.stripeParams = $.extend( {}, localizedFormData.stripe.strings, localizedFormData.stripe.bools );
 
-			// Set a fallback button label
-			formData.oldPanelLabel = undefined !== formData.stripeParams.panelLabel ? formData.stripeParams.panelLabel : '';
+			// Set a fallback button label.
+			formData.oldPanelLabel = ( undefined !== formData.stripeParams.panelLabel ) ? formData.stripeParams.panelLabel : '';
 
-			body.trigger( 'simpayFormVarsInitialized', [ spFormElem, formData ] );
+			// Set button element class that will trigger payment form submit.
+			// Different for Pro custom forms implementation.
+			formData.submitBtnClass = 'simpay-payment-btn';
 
-			// Stripe Checkout handler configuration.
-			// Only token callback function set here. All other params set in stripeParams.
-			// Chrome on iOS needs handler set before click event or else checkout won't open in a new tab.
-			// See "How do I prevent the Checkout popup from being blocked?"
-			// Full docs: https://stripe.com/docs/checkout#integration-custom
-			stripeHandler = StripeCheckout.configure( {
+			body.trigger( 'simpayCoreFormVarsInitialized', [ spFormElem, formData ] );
 
-				// Key param MUST be sent here instead of stripeHandler.open(). Discovered 8/11/16.
-				key: formData.stripeParams.key,
+			if ( simpayApp.isStripeCheckoutForm( formData ) ) {
+				simpayApp.setupStripeCheckout( spFormElem, formData );
+			}
 
-				token: handleStripeToken,
+			simpayApp.spFormData[ formId ] = formData;
 
-				opened: function() {
-				},
-				closed: function() {
+			body.trigger( 'simpayBindCoreFormEventsAndTriggers', [ spFormElem, formData ] );
+		},
+
+		setupStripeCheckout: function( spFormElem, formData ) {
+
+			var submitBtn = spFormElem.find( '.' + formData.submitBtnClass );
+
+			// Variable to hold the Stripe configuration.
+			var stripeHandler = null;
+
+			if ( submitBtn.length ) {
+
+				// Stripe Checkout handler configuration.
+				// Only token callback function set here. All other params set in stripeParams.
+				// Chrome on iOS needs handler set before click event or else checkout won't open in a new tab.
+				// See "How do I prevent the Checkout popup from being blocked?"
+				// Full docs: https://stripe.com/docs/checkout#integration-custom
+				stripeHandler = StripeCheckout.configure( {
+
+					// Key param MUST be sent here instead of stripeHandler.open().
+					key: formData.stripeParams.key,
+					token: function( token, args ) {
+						handleStripeCheckoutToken( token, args );
+					},
+					opened: function() {
+					},
+					closed: function() {
+					}
+				} );
+			}
+
+			/** Form submitted through checkout button click or Enter key. */
+
+			function submitCoreForm() {
+
+				// Init flag for form validation state.
+				formData.isValid = true;
+
+				// Trigger custom event right before executing payment.
+				// For Pro version client-side validation and other client-side changes.
+				spFormElem.trigger( 'simpayBeforeStripePayment', [ spFormElem, formData ] );
+
+				// Now check validation state flag before continuing.
+				// There are no validation checks in the Lite version natively.
+				// But this is needed for Pro and/or custom code.
+				if ( !formData.isValid ) {
+					return;
 				}
-			} );
 
-			// Internal Strike token callback function for StripeCheckout.configure
-			function handleStripeToken( token, args ) {
+				simpayApp.setCoreFinalAmount( spFormElem, formData );
 
-				// At this point the Stripe Checkout overlay is validated and submitted.
-				// Set values to hidden elements to pass via POST when submitting the form for payment.
-				spFormElem.find( '.simpay-stripe-token' ).val( token.id );
-				spFormElem.find( '.simpay-stripe-email' ).val( token.email );
+				// Send the final amount to Stripe params.
+				// Stripe expects amounts in cents (100 for $1.00 USD / no decimals), so convert here.
+				formData.stripeParams.amount = spShared.convertToCents( formData.finalAmount );
 
-				// Handle args
-				simpayApp.handleStripeArgs( spFormElem, args );
+				// Set the same cents value to the hidden input for submitting form for processing.
+				spFormElem.find( '.simpay-amount' ).val( formData.stripeParams.amount );
 
-				// Disable original payment button and change text for UI feedback while POST-ing to Stripe.
-				spFormElem.find( '.simpay-payment-btn' )
+				stripeHandler.open( formData.stripeParams );
+			}
+
+			/**
+			 * Stripe Checkout token handler
+			 *
+			 * https://stripe.com/docs/checkout#integration-custom
+			 *
+			 * @param token Stripe Token object - https://stripe.com/docs/api#tokens
+			 * @param args Object containing the billing and shipping addresses, if enabled.
+			 */
+
+			function handleStripeCheckoutToken( token, args ) {
+
+				var submitBtn = spFormElem.find( '.' + formData.submitBtnClass );
+
+				// Append hidden inputs to hold Stripe Checkout token values to sumbit with form POST.
+
+				$( '<input>' ).attr( {
+					type: 'hidden',
+					name: 'simpay_stripe_token',
+					value: token.id
+				} ).appendTo( spFormElem );
+
+				$( '<input>' ).attr( {
+					type: 'hidden',
+					name: 'simpay_stripe_email',
+					value: token.email
+				} ).appendTo( spFormElem );
+
+				// Handle extra (shipping) args.
+				if ( args ) {
+					simpayApp.handleStripeShippingArgs( spFormElem, args );
+				}
+
+				// Disable original form submit button and change text for UI feedback while POST-ing to Stripe.
+				submitBtn
 					.prop( 'disabled', true )
 					.find( 'span' )
 					.text( formData.loadingText );
 
-				// Unbind original form submit trigger before calling again to "reset" it and submit normally.
-				spFormElem.unbind( 'submit', [ spFormElem, formData ] );
-
+				// Reset form submit handler to prevent an infinite loop.
+				// Then finally submit the form.
+				spFormElem.off( 'submit' );
 				spFormElem.submit();
 			}
 
-			// Page-level initial payment button clicked. Use over form submit for more control/validation.
-			spFormElem.find( '.simpay-payment-btn' ).on( 'click.simpayPaymentBtn', function( e ) {
+			/** Original form submit handler */
+
+			spFormElem.on( 'submit', function( e ) {
 				e.preventDefault();
-
-				// Trigger custom event right before executing payment
-				spFormElem.trigger( 'simpayBeforeStripePayment', [ spFormElem, formData ] );
-
-				simpayApp.submitPayment( spFormElem, formData, stripeHandler );
+				submitCoreForm();
 			} );
-
-			this.spFormData[ formId ] = formData;
-
-			/** Event handlers for form elements **/
-
-			body.trigger( 'simpayBindEventsAndTriggers', [ spFormElem, formData ] );
 		},
 
-		handleStripeArgs: function( spFormElem, args ) {
-
-			// Check and add only the ones that are found
+		// Check & add extra shipping values if found.
+		handleStripeShippingArgs: function( spFormElem, args ) {
 
 			if ( args.shipping_name ) {
 				spFormElem.find( '.simpay-shipping-name' ).val( args.shipping_name );
@@ -157,94 +218,18 @@ var simpayApp = {};
 			}
 		},
 
-		submitPayment: function( spFormElem, formData, stripeHandler ) {
+		// Set the internal final amount property value as well as the hidden form field.
+		// .amount & .finalAmount prop values = 1 for $1.00 USD, 100 if a zero decimal currency.
+		setCoreFinalAmount: function( spFormElem, formData ) {
 
-			simpayApp.setFinalAmount( spFormElem, formData );
+			formData.finalAmount = formData.amount;
 
-			// Add in the final amount to Stripe params
-			formData.stripeParams.amount = parseInt( formData.finalAmount );
-
-			// If everything checks out then let's open the form
-			if ( spFormElem.valid() ) {
-
-				body.trigger( 'simpaySubmitPayment', [ spFormElem, formData ] );
-
-				spShared.debugLog( 'stripeParams', formData.stripeParams );
-
-				stripeHandler.open( formData.stripeParams );
-			}
-		},
-
-		// Run this to process and get the final amount when the payment button is clicked
-		setFinalAmount: function( spFormElem, formData ) {
-
-			var finalAmount = formData.amount;
-
-			formData.finalAmount = finalAmount.toFixed( 0 );
-
-			body.trigger( 'simpayFinalizeAmount', [ spFormElem, formData ] );
-
-			// Update hidden amount field for processing
-			spFormElem.find( '.simpay-amount' ).val( formData.finalAmount );
-
-		},
-
-		formatMoney: function( amount ) {
-
-			// Default format is to the left with no space
-			var format = '%s%v';
-			var options;
-
-			// Convert our amount from cents to a formatted amount
-			amount = simpayApp.convertFromCents( amount );
-
-			// Set currency position based on settings
-			if ( 'left_space' === spGeneral.strings.currencyPosition ) {
-
-				//1 Left with a space
-				format = '%s %v';
-			} else if ( 'right' === spGeneral.strings.currencyPosition ) {
-
-				// Right side no space
-				format = '%v%s';
-			} else if ( 'right_space' === spGeneral.strings.currencyPosition ) {
-
-				// Right side with space
-				format = '%v %s';
-			}
-
-			options = {
-				symbol: spGeneral.strings.currencySymbol,
-				decimal: spGeneral.strings.decimalSeparator,
-				thousand: spGeneral.strings.thousandSeparator,
-				precision: spGeneral.integers.decimalPlaces,
-				format: format
-			};
-
-			return accounting.formatMoney( amount, options );
-		},
-
-		convertFromCents: function( amount ) {
-
-			if ( spGeneral.booleans.isZeroDecimal ) {
-				return amount;
-			} else {
-				return ( amount / 100 ).toFixed( 2 );
-			}
-		},
-
-		convertToCents: function( amount ) {
-
-			if ( spGeneral.booleans.isZeroDecimal ) {
-				return amount;
-			} else {
-				return ( amount * 100 ).toFixed( 2 );
-			}
+			// Fire trigger to do additional calculations in Pro.
+			body.trigger( 'simpayFinalizeCoreAmount', [ spFormElem, formData ] );
 		}
 	};
 
 	$( document ).ready( function( $ ) {
-
 		simpayApp.init();
 	} );
 

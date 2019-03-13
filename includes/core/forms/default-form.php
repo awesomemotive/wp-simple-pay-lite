@@ -31,7 +31,17 @@ class Default_Form extends Form {
 		// Construct our base form from the parent class
 		parent::__construct( $id );
 
+	}
+
+	/**
+	 * Add hooks and filters for this form instance.
+	 *
+	 * Hooks get run once per form instance. See https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
+	 *
+	 */
+	public function register_hooks() {
 		add_action( 'wp_footer', array( $this, 'set_script_variables' ), 0 );
+		add_filter( 'simpay_form_' . $this->id . '_custom_fields', array( $this, 'get_custom_fields_html' ), 10, 2 );
 	}
 
 	/**
@@ -57,38 +67,60 @@ class Default_Form extends Form {
 	 */
 	public function html() {
 
-		$html = '';
-		$id   = 'simpay-form-' . $this->id;
+		$id                = 'simpay-form-' . $this->id;
+		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type' );
 
-		// Can add additional form tag attributes here using a filter.
-		$more_form_atts = apply_filters( 'simpay_more_form_attributes', '' );
+		do_action( 'simpay_before_form_display', $this );
 
-		$html .= '<form action="" method="post" class="simpay-checkout-form ' . esc_attr( $id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '" ' . esc_attr( $more_form_atts ) . '>';
+		echo '<div id="simpay-' . $form_display_type . '-form-wrap-' . $this->id . '" class="simpay-' . $form_display_type . '-form-wrap simpay-form-wrap">';
 
-		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
-			$html .= $this->print_custom_fields();
-		}
+			do_action( 'simpay_form_' . absint( $this->id ) . '_before_payment_form', $this );
 
-		$html .= '<input type="hidden" name="simpay_stripe_token" value="" class="simpay-stripe-token" />';
-		$html .= '<input type="hidden" name="simpay_stripe_email" value="" class="simpay-stripe-email" />';
-		$html .= '<input type="hidden" class="simpay_form_id" name="simpay_form_id" value="' . esc_attr( $this->id ) . '" />';
+			// Can add additional form tag attributes here using a filter.
+			$more_form_atts = apply_filters( 'simpay_more_form_attributes', '' );
 
-		$html .= '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
+			echo '<form action="" method="post" class="' . $this->get_form_classes( $this->id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '" ' . esc_attr( $more_form_atts ) . '>';
 
-		if ( $this->enable_shipping_address ) {
-			$html .= $this->shipping_fields();
-		}
+				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_top', $this );
 
-		do_action( 'simpay_before_form_display' );
+				if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
+					echo $this->print_custom_fields();
+				}
 
-		echo $html;
+				// Hidden inputs to hold the Stripe token properties (id & email) appended to the form in public.js.
 
-		do_action( 'simpay_before_form_close' );
+				// TODO Append these hidden inputs to form in public.js?
+				echo '<input type="hidden" name="simpay_form_id" value="' . esc_attr( $this->id ) . '" />';
+				echo '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
 
-		// We echo the </form> instead of appending it so that the action hook can work correctly if they try to output something before the form close.
-		echo  '</form>';
+				if ( $this->enable_shipping_address ) {
+					echo $this->shipping_fields();
+				}
 
-		do_action( 'simpay_after_form_display' );
+				// Form validation error message container
+				echo '<div class="simpay-errors" id="' . esc_attr( $id ) . '-error"></div>';
+
+				echo simpay_get_test_mode_badge();
+
+				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', $this );
+
+			// We echo the </form> instead of appending it so that the action hook can work correctly if they try to output something before the form close.
+			echo '</form>';
+
+			do_action( 'simpay_form_' . absint( $this->id ) . '_after_form_display', $this );
+
+		echo '</div>'; // .simpay-{$form_display_type}-form-wrap
+	}
+
+	private function get_form_classes( $id ) {
+
+		$classes = apply_filters( 'simpay_form_' . absint( $this->id ) . '_classes', array(
+			'simpay-checkout-form',
+			'simpay-form-' . absint( $this->id ),
+		) );
+
+		return trim( implode( ' ', array_map( 'trim', array_map( 'sanitize_html_class', array_unique( $classes ) ) ) ) );
+
 	}
 
 	/**
@@ -101,18 +133,19 @@ class Default_Form extends Form {
 		$html = '';
 
 		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
-			foreach ( $this->custom_fields as $k => $v ) {
 
-				switch ( $v['type'] ) {
-					case 'payment_button':
-						$html .= Fields\Payment_Button::html( $v );
-						break;
-					case has_filter( 'simpay_custom_fields' ):
-						$html .= apply_filters( 'simpay_custom_fields', $html, $v );
-						break;
-				}
+			foreach ( $this->custom_fields as $k => $v ) {
+	
+				/*
+				 * These filters are deprecated but still here for backwards compatibility
+				 */
+				$html = apply_filters( 'simpay_custom_field_html', $html, $v );
+				$html = apply_filters( 'simpay_custom_fields', $html, $v );
 			}
 		}
+
+		$html = apply_filters( 'simpay_form_' . absint( $this->id ) . '_custom_fields', $html, $this );
+		$html = apply_filters( 'simpay_form_custom_fields', $html, $this );
 
 		return $html;
 	}
@@ -163,15 +196,36 @@ class Default_Form extends Form {
 		}
 
 		$integers['integers'] = array(
-			'amount'            => round( $this->amount ),
+			'amount' => floatval( $this->amount ),
 		);
 
 		$strings['strings'] = array(
-		    'loadingText' => $loading_text,
+			'loadingText' => $loading_text,
 		);
 
 		$form_variables = array_merge( $integers, $strings );
 
 		return $form_variables;
+	}
+
+	/**
+	 * Default custom fields handler.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param string $html Form HTML.
+	 * @param object $form The current form.
+	 * @return string $html Form HTML.
+	 */
+	public function get_custom_fields_html( $html, $form ) {
+		foreach ( $this->custom_fields as $key => $value ) {
+			switch ( $value['type'] ) {
+				case 'payment_button':
+					$html .= Fields\Payment_Button::html( $value );
+					break;
+			}
+		}
+
+		return $html;
 	}
 }

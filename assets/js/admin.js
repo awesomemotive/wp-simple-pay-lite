@@ -2,7 +2,7 @@
 
 var spAdmin = {};
 
-(function( $ ) {
+( function( $ ) {
 	'use strict';
 
 	var body,
@@ -25,6 +25,8 @@ var spAdmin = {};
 			// Init admin metabox tab clicks.
 			this.handleMetaboxTabClick();
 
+			this.stripeConnect();
+
 			// Init internal link to tab clicks.
 			spFormSettings.on( 'click.simpayTabLink', '.simpay-tab-link', function( e ) {
 				e.preventDefault();
@@ -36,8 +38,8 @@ var spAdmin = {};
 				spAdmin.handleRemoveImagePreviewClick( e );
 			} );
 
-			// Section toggles
-			spFormSettings.find( '.simpay-panel-field' ).on( 'click.simpaySectionToggle', '.simpay-section-toggle', function( e ) {
+			// Checkbox section toggles
+			spFormSettings.find( '.simpay-panel-field' ).on( 'change.simpaySectionToggle', '.simpay-section-toggle', function( e ) {
 				spAdmin.initSectionToggle( $( this ) );
 			} );
 
@@ -53,7 +55,7 @@ var spAdmin = {};
 
 			// Handle the submit when they press enter
 			body.find( '#post' ).on( 'keypress.simpaySubmitOnEnter', function( e ) {
-				spAdmin.handleSubmitOnEnter( $( this ) );
+				spAdmin.handleSubmitOnEnter( $( this ), e );
 			} );
 
 			// Multi Toggles (like a radio button with multiple-options)
@@ -65,10 +67,16 @@ var spAdmin = {};
 				spAdmin.initMultiToggle( $( this ) );
 			} );
 
+			// Trigger focus out (blur) for all amount input fields on page load.
+			// Should only need for admin. Used to be in shared.js.
+			body.find( '.simpay-amount-input' ).trigger( 'blur.validateAndUpdateAmount' );
+
 			body.trigger( 'simpayAdminInit' );
 		},
 
-		handleSubmitOnEnter: function( elem ) {
+		// TODO This working or needed now?
+
+		handleSubmitOnEnter: function( el, e ) {
 
 			var keyCode,
 				form,
@@ -76,12 +84,12 @@ var spAdmin = {};
 				publishButton;
 
 			// Get the keycode
-			keyCode = ( event.keyCode ? event.keyCode : event.which );
+			keyCode = ( e.keyCode ? e.keyCode : e.which );
 
 			// Check if the enter button was pressed
 			if ( 13 === keyCode ) {
 
-				form = elem.closest( 'form' );
+				form = el.closest( 'form' );
 
 				draftButton = form.find( '#save-post' );
 				publishButton = form.find( '#publish' );
@@ -95,7 +103,7 @@ var spAdmin = {};
 			}
 		},
 
-		handlePreviewButton: function( elem, e ) {
+		handlePreviewButton: function( el, e ) {
 
 			var prevFormAction,
 				formElem;
@@ -103,13 +111,13 @@ var spAdmin = {};
 			e.preventDefault();
 
 			// Get the form this button belongs to
-			formElem = elem.closest( 'form' );
+			formElem = el.closest( 'form' );
 
 			// Get the form action we need to fall back to
 			prevFormAction = formElem.attr( 'action' );
 
 			// Temporarily change the action of our form to point to the preview page
-			formElem.attr( 'action', elem.data( 'action' ) );
+			formElem.attr( 'action', el.data( 'action' ) );
 			formElem.attr( 'target', '_blank' );
 
 			formElem.submit();
@@ -119,8 +127,8 @@ var spAdmin = {};
 			formElem.attr( 'target', '' );
 		},
 
-		showSpinner: function( elem ) {
-			elem.parent().find( '.spinner' ).css( 'visibility', 'visible' );
+		showSpinner: function( el ) {
+			el.parent().find( '.spinner' ).css( 'visibility', 'visible' );
 		},
 
 		handleRemoveImagePreviewClick: function( e ) {
@@ -241,33 +249,50 @@ var spAdmin = {};
 			}
 		},
 
+		stripeConnect: function() {
+			$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().hide().next().hide();
+			$( '#wpsp-api-keys-row-reveal a' ).click( function() {
+				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().show().next().show();
+				$( '#wpsp-api-keys-row-hide' ).show();
+				$( this ).parent().hide();
+			} );
+			$( '#wpsp-api-keys-row-hide a' ).click( function() {
+				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().hide().next().hide();
+				$( '#wpsp-api-keys-row-reveal' ).show();
+				$( this ).parent().hide();
+			} );
+		},
+
 		// Handle links within tab content to other tabs.
 		// When one is clicked, trigger the corresponding tab link click.
-		handleInternalLinkToTabClicks: function( elem ) {
+		handleInternalLinkToTabClicks: function( el ) {
 
-			var tabToShowId = elem.data( 'show-tab' ),
+			var tabToShowId = el.data( 'show-tab' ),
 				tabToShowLinkEl = body.find( '.' + tabToShowId + '-tab a' );
 
 			tabToShowLinkEl.click();
 		},
 
-		initSectionToggle: function( elem ) {
+		initSectionToggle: function( el ) {
 
-			var showElem = elem.data( 'show' );
+			// TODO DRY
+			//var sectionElem = el.closest( '.simpay-panel-field' ).parent().find( showElem );
 
-			if ( elem.is( ':checked' ) ) {
-				elem.closest( '.simpay-panel-field' ).parent().find( showElem ).show();
+			var showElem = el.data( 'show' );
+
+			if ( el.is( ':checked' ) ) {
+				el.closest( '.simpay-panel-field' ).parent().find( showElem ).show();
 			} else {
-				elem.closest( '.simpay-panel-field' ).parent().find( showElem ).hide();
+				el.closest( '.simpay-panel-field' ).parent().find( showElem ).hide();
 			}
 		},
 
-		initMultiToggle: function( elem ) {
+		initMultiToggle: function( el ) {
 
-			var selectedId = elem.attr( 'id' );
+			var selectedId = el.attr( 'id' );
 
 			// Hide all options first. This allows us to show multiple sections with the classes
-			elem.closest( '.simpay-field-radios-inline' ).find( 'input[type="radio"]' ).each( function( currIndex ) {
+			el.closest( '.simpay-field-radios-inline' ).find( 'input[type="radio"]' ).each( function( i ) {
 
 				// $( this ) in this context is the current iteration, not what is set to elem. so we need to keep it here
 				spFormSettings.find( '.toggle-' + $( this ).attr( 'id' ) ).hide();
@@ -279,7 +304,6 @@ var spAdmin = {};
 	};
 
 	$( document ).ready( function( $ ) {
-
 		spAdmin.init();
 	} );
 

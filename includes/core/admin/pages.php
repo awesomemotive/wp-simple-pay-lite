@@ -73,11 +73,6 @@ class Pages {
 		// The first tab is the default tab when opening a page.
 		$this->tab = isset( $tabs[0] ) ? $tabs[0] : '';
 
-		// Remove the Save Changes button from the license page
-		add_filter( 'simpay_admin_page_settings_license_submit', function () {
-			return false;
-		} );
-
 		add_filter( 'admin_footer_text', array( $this, 'add_footer_text' ) );
 
 		do_action( 'simpay_admin_pages', $page );

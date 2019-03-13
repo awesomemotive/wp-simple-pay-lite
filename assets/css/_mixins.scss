@@ -1,4 +1,25 @@
-// Clearfix
+// Fonts
+
+@mixin antialias() {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@mixin font-checkout() {
+	// Font to use in embedded & overlay checkout (text & fields)
+	// Repeated in Elements JS
+	// For Card/Postal fields: https://stripe.com/docs/stripe-js/reference#the-elements-object
+
+	font-family: Roboto, 'Open Sans', Segoe UI, sans-serif;
+	@include antialias();
+}
+
+@mixin font-system() {
+	// System fonts like WordPress admin
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+// Misc
 
 @mixin clearfix() {
 	*zoom: 1;
@@ -18,18 +39,15 @@
 	@include clearfix();
 }
 
-// Box Sizing
-
 @mixin box-sizing($box-model) {
 	-webkit-box-sizing: $box-model; // Safari <= 5
 	-moz-box-sizing: $box-model; // Firefox <= 19
 	box-sizing: $box-model;
 }
 
-// CSS3 Easing
-
 @mixin easing-transition() {
 	-moz-transition: 0.2s all linear;
 	-o-transition: 0.2s all linear;
 	transition: 0.2s all linear;
 }
+

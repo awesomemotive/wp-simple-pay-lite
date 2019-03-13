@@ -71,6 +71,12 @@ class Charge {
 			$charge_args['statement_descriptor'] = $descriptor;
 		}
 
+		$stripe_account_id = simpay_get_account_id();
+
+		if ( $stripe_account_id ) {
+			$charge_args['stripe_account'] = $stripe_account_id;
+		}
+
 		// Save our charge response
 		$this->charge = Stripe_API::request( 'Charge', 'create', $charge_args );
 

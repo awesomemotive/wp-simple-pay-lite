@@ -46,6 +46,8 @@ class Shortcodes {
 	 *
 	 * @return string
 	 */
+
+	// TODO Used? Remove?
 	public function print_errors( $attributes ) {
 
 		$args = shortcode_atts( array(
