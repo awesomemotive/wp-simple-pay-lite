@@ -108,6 +108,14 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
+= 2.1.0 - March 15, 2018 =
+
+* New: You can now easily connect your Stripe account with Stripe Connect. See your settings page for more details.
+* New: Enable ZIP/Postal Code verification by default on new forms.
+* New: Allow "Company Name" value to be blank.
+* Fix: Delete extraneous options on uninstall routine.
+* Dev: Updated to Stripe PHP library v6.30.4.
+
 = 2.0.12 - November 1, 2018 =
 
 * Dev: Added filter hook to add or modify arguments when a Stripe customer is created.
