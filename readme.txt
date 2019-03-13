@@ -35,6 +35,7 @@ That's it. *No other plugins required.*
 * Optionally collect customer billing & addresses
 * Optionally verify zip/postal code without address
 * Support for 12 languages, 25 countries and 135+ currencies
+* Stripe Connect support for easier setup and improved security
 * Translation ready
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
@@ -45,10 +46,11 @@ That's it. *No other plugins required.*
 
 * *Everything in Lite plus...*
 * Drag & drop form design controls
-* Custom fields to capture additional data
+* Unlimited custom fields to capture additional data
 * Custom amounts - let customers enter an amount to pay
 * Coupon code support
-* Tax rate support
+* Embedded & Overlay custom forms
+* Apple & Google Pay (coming March 2019)
 * Stripe Subscription support
 * Subscription installment plans
 * Subscription setup fees
