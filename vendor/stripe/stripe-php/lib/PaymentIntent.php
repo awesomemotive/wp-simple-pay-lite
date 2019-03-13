@@ -7,13 +7,13 @@ namespace Stripe;
  *
  * @property string $id
  * @property string $object
- * @property string[] $allowed_source_types
  * @property int $amount
  * @property int $amount_capturable
  * @property int $amount_received
  * @property string $application
- * @property int $application_fee
+ * @property int $application_fee_amount
  * @property int $canceled_at
+ * @property string $cancellation_reason
  * @property string $capture_method
  * @property Collection $charges
  * @property string $client_secret
@@ -22,12 +22,13 @@ namespace Stripe;
  * @property string $currency
  * @property string $customer
  * @property string $description
+ * @property mixed $last_payment_error
  * @property bool $livemode
  * @property StripeObject $metadata
- * @property mixed $next_source_action
+ * @property mixed $next_action
  * @property string $on_behalf_of
+ * @property string[] $payment_method_types
  * @property string $receipt_email
- * @property string $return_url
  * @property string $review
  * @property mixed $shipping
  * @property string $source

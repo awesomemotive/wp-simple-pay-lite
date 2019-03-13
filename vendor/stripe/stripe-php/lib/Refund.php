@@ -12,12 +12,15 @@ namespace Stripe;
  * @property string $charge
  * @property int $created
  * @property string $currency
+ * @property string $description
  * @property string $failure_balance_transaction
  * @property string $failure_reason
  * @property StripeObject $metadata
- * @property mixed $reason
- * @property mixed $receipt_number
+ * @property string $reason
+ * @property string $receipt_number
+ * @property string $source_transfer_reversal
  * @property string $status
+ * @property string $transfer_reversal
  *
  * @package Stripe
  */
