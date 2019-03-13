@@ -10,7 +10,8 @@
   border: 1px solid #eee; }
 
 #simpay-global-settings {
-  margin-right: 310px; }
+  /* Should be 40px more than #simpay-settings-sidebar-right below. */
+  margin-right: 350px; }
   @media (max-width: 768px) {
     #simpay-global-settings {
       margin-right: 0; } }
