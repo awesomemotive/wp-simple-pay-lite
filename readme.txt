@@ -119,6 +119,7 @@ We'd love your help! Here are a few things you can do:
 * Fix: Delete extraneous options on uninstall routine.
 * Fix: Prefix Stripe API request from library with "WordPress".
 * Dev: Updated to Stripe PHP library v6.30.4.
+* Dev: Updated to use Stripe API version 2019-02-19.
 * Dev: Remove unused files.
 
 = 2.0.12 - November 1, 2018 =
