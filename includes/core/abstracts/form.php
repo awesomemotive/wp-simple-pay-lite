@@ -261,7 +261,7 @@ abstract class Form {
 		$this->amount = simpay_get_filtered( 'amount', simpay_get_saved_meta( $this->id, '_amount', simpay_global_minimum_amount() ), $this->id );
 
 		// Statement descriptor
-		$this->statement_descriptor = simpay_get_filtered( 'statement_descriptor', simpay_get_saved_meta( $this->id, '_statement_descriptor', '' ), $this->id );
+		$this->statement_descriptor = simpay_get_filtered( 'statement_descriptor', null, $this->id );
 
 		/** STRIPE CHECKOUT DISPLAY **/
 

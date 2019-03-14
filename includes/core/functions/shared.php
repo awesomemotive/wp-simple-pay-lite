@@ -652,6 +652,29 @@ function simpay_global_minimum_amount() {
 }
 
 /**
+ * Validate a statement subscription for a charge or plan.
+ *
+ * @since 3.4.0
+ *
+ * @param string $statement_description Statement description to validate.
+ * @return mixed Description or null.
+ */
+function simpay_validate_statement_descriptor( $statement_descripor ) {
+	$illegal = array( '<', '>', '"', "'", '*', '\\' );
+
+	// Remove slashes
+	$descriptor = stripslashes( $statement_descripor );
+
+	// Remove illegal characters
+	$descriptor = str_replace( $illegal, '', $descriptor );
+
+	// Trim to 22 characters max
+	$descriptor = substr( $descriptor, 0, 22 );
+
+	return $descriptor;
+}
+
+/**
  * Return amount as formatted string.
  * With or without currency symbol.
  * Used for labels & amount inputs in admin & front-end.

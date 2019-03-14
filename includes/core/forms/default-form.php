@@ -52,7 +52,8 @@ class Default_Form extends Form {
 		$temp[ $this->id ] = array(
 			'form'   => $this->get_form_script_variables(),
 			'stripe' => array_merge( array(
-				'amount' => $this->total_amount,
+				'amount'  => $this->total_amount,
+				'country' => $this->country,
 			), $this->get_stripe_script_variables() ),
 		);
 

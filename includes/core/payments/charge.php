@@ -55,20 +55,8 @@ class Charge {
 			'metadata'    => $this->payment->get_metadata(),
 		);
 
-		if ( ! empty( $simpay_form->statement_descriptor ) ) {
-
-			$illegal = array( '<', '>', '"', "'" );
-
-			// Remove slashes
-			$descriptor = stripslashes( $simpay_form->statement_descriptor );
-
-			// Remove illegal characters
-			$descriptor = str_replace( $illegal, '', $descriptor );
-
-			// Trim to 22 characters max
-			$descriptor = substr( $descriptor, 0, 22 );
-
-			$charge_args['statement_descriptor'] = $descriptor;
+		if ( $simpay_form->statement_descriptor ) {
+			$charge_args['statement_descriptor'] = simpay_validate_statement_descriptor( $simpay_form->statement_descriptor );
 		}
 
 		$stripe_account_id = simpay_get_account_id();
