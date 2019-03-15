@@ -175,6 +175,8 @@ class Main {
 	 */
 	public static function get_form_settings( $action ) {
 
+		global $post;
+
 		switch ( $action ) {
 			case 'edit':
 				{
@@ -187,8 +189,10 @@ class Main {
 
 					break;
 				}
+
 			case 'create':
 				{
+					// Add New is actually creating the payment form CPT record here.
 
 					// Create post object
 					$form_args = array(
@@ -197,11 +201,13 @@ class Main {
 						'post_status'  => 'draft',
 						'post_type'    => 'simple-pay',
 					);
-
+					
 					// Insert the post into the database
-					$form = wp_insert_post( $form_args );
+					$form_id = wp_insert_post( $form_args );
 
-					$form = get_post( $form );
+					$form = get_post( $form_id );
+
+					do_action( 'simpay_form_created', $form->ID );
 
 					$form_action = esc_url( add_query_arg( array(
 						'action'  => 'edit',
@@ -212,6 +218,7 @@ class Main {
 
 					break;
 				}
+
 			default:
 				{
 					self::main_page();
@@ -220,13 +227,11 @@ class Main {
 				}
 		}
 
-		global $post;
-
 		$post = $form;
 
 		setup_postdata( $post );
-
 		?>
+
 		<form id="post" method="post" action="<?php echo esc_attr( $form_action ); ?>">
 			<div id="poststuff">
 

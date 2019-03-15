@@ -8,7 +8,6 @@ namespace Stripe;
  * @property string $id
  * @property string $object
  * @property int $account_balance
- * @property string $business_vat_id
  * @property string $created
  * @property string $currency
  * @property string $default_source
@@ -17,6 +16,7 @@ namespace Stripe;
  * @property Discount $discount
  * @property string $email
  * @property string $invoice_prefix
+ * @property mixed $invoice_settings
  * @property bool $livemode
  * @property StripeObject $metadata
  * @property mixed $shipping
@@ -141,7 +141,7 @@ class Customer extends ApiResource
     }
 
     /**
-     * @param array|null $id The ID of the customer on which to create the source.
+     * @param string|null $id The ID of the customer on which to create the source.
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -153,8 +153,8 @@ class Customer extends ApiResource
     }
 
     /**
-     * @param array|null $id The ID of the customer to which the source belongs.
-     * @param array|null $sourceId The ID of the source to retrieve.
+     * @param string|null $id The ID of the customer to which the source belongs.
+     * @param string|null $sourceId The ID of the source to retrieve.
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -166,8 +166,8 @@ class Customer extends ApiResource
     }
 
     /**
-     * @param array|null $id The ID of the customer to which the source belongs.
-     * @param array|null $sourceId The ID of the source to update.
+     * @param string|null $id The ID of the customer to which the source belongs.
+     * @param string|null $sourceId The ID of the source to update.
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -179,8 +179,8 @@ class Customer extends ApiResource
     }
 
     /**
-     * @param array|null $id The ID of the customer to which the source belongs.
-     * @param array|null $sourceId The ID of the source to delete.
+     * @param string|null $id The ID of the customer to which the source belongs.
+     * @param string|null $sourceId The ID of the source to delete.
      * @param array|null $params
      * @param array|string|null $opts
      *
@@ -192,7 +192,7 @@ class Customer extends ApiResource
     }
 
     /**
-     * @param array|null $id The ID of the customer on which to retrieve the sources.
+     * @param string|null $id The ID of the customer on which to retrieve the sources.
      * @param array|null $params
      * @param array|string|null $opts
      *

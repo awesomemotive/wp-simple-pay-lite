@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: WP Simple Pay (Lite Version)
+ * Plugin Name: WP Simple Pay Lite
  * Plugin URI:  https://wpsimplepay.com
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author: WP Simple Pay
  * Author URI:  https://wpsimplepay.com
- * Version: 2.0.12
+ * Version: 2.1.0
  * Text Domain: stripe
  */
 
@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright 2014-2018 Moonstone Media Group. All rights reserved.
+ * Copyright 2014-2019 Moonstone Media Group. All rights reserved.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,15 +33,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
-	define( 'SIMPLE_PAY_VERSION', '2.0.12' );
+	define( 'SIMPLE_PAY_VERSION', '2.1.0' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
-		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay' );
+		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );
 	}
 
 	// Stripe API version should be in 'YYYY-MM-DD' format.
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2018-10-31' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2019-02-19' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_MAIN_FILE' ) ) {
@@ -66,6 +66,10 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 	if ( ! defined( 'SIMPLE_PAY_STORE_URL' ) ) {
 		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
+	}
+
+	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
+		define( 'SIMPLE_PAY_STRIPE_PARTNER_ID', 'pp_partner_DKkf27LbiCjOYt' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_MIN_PHP_VER' ) ) {

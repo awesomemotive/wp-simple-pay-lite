@@ -32,19 +32,11 @@ $position = simpay_get_currency_position();
 				$classes = array(
 					'simpay-field-tiny',
 					'simpay-amount-input',
+					'simpay-minimum-amount-required',
 				);
 
-				// Attributes
-				$attr = array(
-					'min' => simpay_get_stripe_minimum_amount(),
-				);
-
-				// Check saved currency and set default to 100 or 1 accordingly and set steps and class
-				if ( simpay_is_zero_decimal() ) {
-					$amount = simpay_get_saved_meta( $post->ID, '_amount', '100' );
-				} else {
-					$amount = simpay_get_saved_meta( $post->ID, '_amount', '1' );
-				}
+				// Check saved currency and set default to 100 or 1 accordingly and set steps and class.
+				$amount = simpay_get_saved_meta( $post->ID, '_amount', simpay_global_minimum_amount() );
 
 				simpay_print_field( array(
 					'type'        => 'standard',
@@ -52,10 +44,10 @@ $position = simpay_get_currency_position();
 					'name'        => '_amount',
 					'id'          => '_amount',
 					'value'       => $amount,
-					'attributes'  => $attr,
 					'class'       => $classes,
-					'placeholder' => simpay_formatted_amount( '100', '', false ),
+					'placeholder' => simpay_format_currency( simpay_global_minimum_amount(), simpay_get_setting( 'currency' ), false ),
 				) );
+
 				?>
 
 				<?php if ( 'right' === $position || 'right_space' === $position ) { ?>

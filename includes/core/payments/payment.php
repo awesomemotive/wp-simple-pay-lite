@@ -95,15 +95,15 @@ class Payment {
 			$this->amount = floatval( $_POST['simpay_amount'] );
 		} else {
 			// Fallback to our set total amount
-			$this->amount = $simpay_form->total_amount;
+			$this->amount = $simpay_form->amount;
 		}
 
 		// Set the description
 		$this->description = get_post_meta( $simpay_form->id, '_item_description', true );
 
 		// Set token and email needed for charges
-		$this->token = $_POST['simpay_stripe_token'];
-		$this->email = $_POST['simpay_stripe_email'];
+		$this->token = sanitize_text_field( $_POST['simpay_stripe_token'] );
+		$this->email = sanitize_text_field( $_POST['simpay_stripe_email'] );
 
 		if ( $simpay_form->enable_shipping_address ) {
 			$this->process_shipping_meta();
@@ -166,10 +166,7 @@ class Payment {
 
 		global $simpay_form;
 
-		// TODO Convert form object to array and clean recursively before saving to session?
-		// TODO Cast using `(array)` or use get_object_vars() ?
 		\SimplePay\Core\SimplePay()->session->set( 'simpay_form', $simpay_form );
-		//\SimplePay\Core\SimplePay()->session->set( 'simpay_form', (array) simpay_clean( $simpay_form ) );
 	}
 
 	/**

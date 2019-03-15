@@ -30,7 +30,9 @@ class Details {
 	}
 
 	/**
-	 * Setup all the tags available in the Payment Confirmation editor
+	 * Setup all the tags available in the Payment Confirmation editor.
+	 * Convert all amounts from cents to dollars (100 = $1.00 USD) before displaying.
+	 * Values will be coming from Stripe in cents (non-decimal) format.
 	 */
 	public function set_tags() {
 
@@ -69,7 +71,7 @@ class Details {
 
 			'total-amount' => array(
 				'type'  => array( 'all' ),
-				'value' => isset( $this->payment->charge->amount ) ? simpay_formatted_amount( $this->payment->charge->amount, $this->payment->get_currency() ) : '',
+				'value' => isset( $this->payment->charge->amount ) ? simpay_format_currency( simpay_convert_amount_to_dollars( $this->payment->charge->amount ), $this->payment->get_currency() ) : '',
 			),
 		), $this->payment );
 	}

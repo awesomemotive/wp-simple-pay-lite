@@ -20,7 +20,7 @@ if ( ! class_exists( 'Promo_Loader' ) ) {
 			add_action( 'simpay_form_settings_meta_form_display_panel', array( $this, 'form_display_tab' ) );
 
 			// Checkout Overlay tab
-			add_action( 'simpay_form_settings_meta_overlay_display_panel', array( $this, 'checkout_overlay_tab' ) );
+			add_action( 'simpay_admin_after_stripe_checkout', array( $this, 'checkout_overlay_tab' ) );
 		}
 
 		public static function get_instance() {

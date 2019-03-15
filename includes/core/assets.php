@@ -60,7 +60,7 @@ class Assets {
 	}
 
 	/**
-	 * Setup arrays for both styles and scripts
+	 * Setup arrays for both scripts & styles.
 	 */
 	public function setup() {
 
@@ -72,12 +72,6 @@ class Assets {
 				'src'    => 'https://checkout.stripe.com/checkout.js',
 				'deps'   => array(),
 				'ver'    => null,
-				'footer' => true,
-			),
-			'simpay-jquery-validate' => array(
-				'src'    => $js_path . 'vendor/jquery.validate' . $this->min . '.js',
-				'deps'   => array( 'jquery' ),
-				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),
 			'simpay-accounting'      => array(
@@ -96,7 +90,6 @@ class Assets {
 				'src'    => $js_path . 'public' . $this->min . '.js',
 				'deps'   => array(
 					'jquery',
-					'simpay-jquery-validate',
 					'simpay-accounting',
 					'simpay-shared',
 				),
@@ -109,15 +102,21 @@ class Assets {
 		if ( 'disabled' !== simpay_get_global_setting( 'default_plugin_styles' ) ) {
 
 			$this->styles = array(
-				'stripe-checkout-button'     => array(
+				'google-font-roboto'     => array(
+					'src'   => 'https://fonts.googleapis.com/css?family=Roboto',
+					'deps'  => array(),
+					'ver'   => null,
+					'media' => 'all',
+				),
+				'stripe-checkout-button' => array(
 					'src'   => 'https://checkout.stripe.com/v3/checkout/button.css',
 					'deps'  => array(),
 					'ver'   => null,
 					'media' => 'all',
 				),
-				'simpay-public'              => array(
+				'simpay-public'          => array(
 					'src'   => $css_path . 'public' . $this->min . '.css',
-					'deps'  => array( 'stripe-checkout-button' ),
+					'deps'  => array( 'google-font-roboto', 'stripe-checkout-button' ),
 					'ver'   => SIMPLE_PAY_VERSION,
 					'media' => 'all',
 				),
@@ -126,7 +125,7 @@ class Assets {
 	}
 
 	/**
-	 * Register the scripts and styles
+	 * Register scripts & styles
 	 */
 	public function register() {
 
@@ -153,7 +152,7 @@ class Assets {
 	}
 
 	/**
-	 * Enqueue the scripts and styles
+	 * Enqueue registered scripts & styles
 	 */
 	public function enqueue() {
 
