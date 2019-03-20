@@ -136,7 +136,7 @@ class Default_Form extends Form {
 		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
 
 			foreach ( $this->custom_fields as $k => $v ) {
-	
+
 				/*
 				 * These filters are deprecated but still here for backwards compatibility
 				 */
@@ -197,7 +197,7 @@ class Default_Form extends Form {
 		}
 
 		$integers['integers'] = array(
-			'amount' => floatval( $this->amount ),
+			'amount' => $this->amount,
 		);
 
 		$strings['strings'] = array(

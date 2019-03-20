@@ -258,7 +258,7 @@ abstract class Form {
 
 		/* one-time payment options */
 
-		$this->amount = simpay_get_filtered( 'amount', simpay_get_saved_meta( $this->id, '_amount', simpay_global_minimum_amount() ), $this->id );
+		$this->amount = simpay_unformat_currency( simpay_get_filtered( 'amount', simpay_get_saved_meta( $this->id, '_amount', simpay_global_minimum_amount() ), $this->id ) );
 
 		// Statement descriptor
 		$this->statement_descriptor = simpay_get_filtered( 'statement_descriptor', null, $this->id );
