@@ -50,7 +50,7 @@ That's it. *No other plugins required.*
 * Custom amounts - let customers enter an amount to pay
 * Coupon code support
 * Embedded & Overlay custom forms
-* Apple & Google Pay (coming March 2019)
+* Apple, Microsoft, and Google Pay
 * Stripe Subscription support
 * Subscription installment plans
 * Subscription setup fees
