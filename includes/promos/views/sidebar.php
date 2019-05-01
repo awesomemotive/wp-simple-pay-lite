@@ -31,7 +31,7 @@
 	<div class="postbox-nobg" style="padding-bottom: 20px;">
 		<div class="inside">
 			<p>
-				*<?php _e( 'Business license required', 'stripe' ); ?>
+				*<?php _e( 'Plus or higher license required', 'stripe' ); ?>
 			</p>
 			<p>
 				<a href="<?php echo simpay_ga_url( simpay_get_url( 'docs' ), 'sidebar-link' ); ?>"
