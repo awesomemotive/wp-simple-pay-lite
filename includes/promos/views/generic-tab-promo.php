@@ -10,5 +10,5 @@
 	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon Codes', 'stripe' ); ?></li>
 	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & Overlay Custom Forms', 'stripe' ); ?></li>
 	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Apple Pay & Google Pay', 'stripe' ); ?></li>
-	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription Support (Business license required)', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription Support (Plus license required)', 'stripe' ); ?></li>
 </ul>
