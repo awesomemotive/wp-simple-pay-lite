@@ -9,6 +9,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Generate a filepath for a class according to the WordPress coding standards.
+ *
+ * @since 2.1.2
+ *
+ * @param string $class Unprefixed PHP class name.
+ * @return string $filepath Full file path and filename.
+ */
+function simpay_lite_autoload_wp_standard_class_filepath( $class ) {
+	$filename = explode( '\\', $class );
+	$filename = end( $filename );
+
+	$filepath = str_replace(
+		array(
+			'\\',
+			$filename,
+		),
+		array(
+			DIRECTORY_SEPARATOR,
+			'',
+		),
+		$class
+	);
+
+	return dirname( __FILE__ ) . $filepath . 'class-' . $filename . '.php';
+}
+
 if ( ! function_exists( 'SimplePay_Autoload' ) ) {
 
 	/**
@@ -42,6 +69,14 @@ if ( ! function_exists( 'SimplePay_Autoload' ) ) {
 
 		//echo $file_path . '<br>';
 		//echo $file . '<br>';
+
+		// Look for files with the WordPress standard `class-` prefix.
+		$with_filename_class_prefix = simpay_lite_autoload_wp_standard_class_filepath( $unprefixed );
+
+		if ( file_exists( $with_filename_class_prefix ) ) {
+			return require $with_filename_class_prefix;
+		}
+
 
 		if ( file_exists( $file ) ) {
 			require $file;
