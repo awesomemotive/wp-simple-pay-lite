@@ -109,9 +109,6 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	// Upgrade promos
 	require_once( SIMPLE_PAY_INC . 'promos/promo-loader.php' );
 
-	// Core plugin (legacy)
-	require_once( SIMPLE_PAY_INC . 'old/stripe-checkout.php' );
-
 } else {
 
 	deactivate_plugins( plugin_basename(SIMPLE_PAY_MAIN_FILE ) );

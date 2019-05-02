@@ -1,9 +1,0 @@
-/* Lite admin upgrade link */
-
-a[href="admin.php?page=stripe-checkout-upgrade"] {
-	color: #f18500 !important;
-}
-
-a[href="admin.php?page=stripe-checkout-upgrade"]:hover {
-	color: #f29729 !important;
-}
