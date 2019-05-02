@@ -24,7 +24,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright 2014-2019 Moonstone Media Group. All rights reserved.
+ * Copyright 2014-2019 Sandhills Development, LLC. All rights reserved.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
