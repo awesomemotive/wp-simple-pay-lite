@@ -169,6 +169,7 @@ module.exports = function( grunt ) {
 			options: {
 				ignores: [
 					'**/*.min.js',
+					'<%= dirs.js %>/admin.js',
 					'<%= dirs.js %>/vendor/*'
 				]
 			},
@@ -202,7 +203,13 @@ module.exports = function( grunt ) {
 			files: {
 				expand: true,
 				cwd: '<%= dirs.js %>',
-				src: [ '*.js', '!*.min.js', '!vendor/**', 'vendor/chosen.jquery.js' ],
+				src: [ 
+					'*.js',
+					'!*.min.js',
+					'!admin.js',
+					'!vendor/**',
+					'vendor/chosen.jquery.js'
+				],
 				dest: '<%= dirs.js %>',
 				ext: '.min.js',
 				extDot: 'last'
