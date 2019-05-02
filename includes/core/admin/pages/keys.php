@@ -81,13 +81,6 @@ class Keys extends Admin_Page {
 				$section = sanitize_key( $section );
 
 				if ( 'connect' == $section ) {
-
-					$stripe_connect_url = add_query_arg( array(
-						'live_mode' => (int) ! simpay_is_test_mode(),
-						'state' => str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ),
-						'customer_site_url' => admin_url( 'admin.php?page=simpay_settings&tab=keys' ),
-					), 'https://wpsimplepay.com/?wpsp_gateway_connect_init=stripe_connect' );
-
 					$show_connect_button = false;
 
 					$mode = simpay_is_test_mode() ? __( 'test', 'stripe' ) : __( 'live', 'stripe' );
@@ -103,19 +96,31 @@ class Keys extends Admin_Page {
 					}
 
 					if( $show_connect_button ) {
-
-						$html = '<a href="'. esc_url( $stripe_connect_url ) .'" class="wpsp-stripe-connect"><span>' . __( 'Connect with Stripe', 'stripe' ) . '</span></a>';
-						$html .= '<p>' . sprintf( __( 'Have questions about connecting with Stripe? See the <a href="%s" target="_blank" rel="noopener noreferrer">documentation</a>.', 'stripe' ), simpay_get_url( 'docs' ) . 'articles/stripe-setup/' ) . '</p>';
-						
+						$html = '<a href="'. esc_url( simpay_get_stripe_connect_url() ) .'" class="wpsp-stripe-connect"><span>' . __( 'Connect with Stripe', 'stripe' ) . '</span></a>';
 					} else {
-
-						$html = sprintf( __( 'Your Stripe account is connected in %s mode. If you need to reconnect in %s mode, <a href="%s">click here</a>.', 'stripe' ), '<strong>' . $mode . '</strong>', $mode, esc_url( $stripe_connect_url ) );
-					
+						$html = '<p>' . sprintf(
+							/* translators: %1$s Stripe payment mode. %2$s Opening anchor tag for reconnecting to Stripe, do not translate. %3$s Opening anchor tag for disconnecting Stripe, do not translate. %4$s Closing anchor tag, do not translate. */
+							__( 'Your Stripe account is connected in %1$s mode. %2$sReconnect in %1$s mode%4$s, or %3$sdisconnect this account%4$s.', 'stripe' ),
+							'<strong>' . $mode . '</strong>',
+							'<a href="' . esc_url( simpay_get_stripe_connect_url() ) . '">',
+							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">',
+							'</a>'
+						) . '</p>';
 					}
 
+					$html .= '<p class="simpay-stripe-connect-help description">';
+					$html .= '<span class="dashicons dashicons-editor-help"></span><span>';
+					$html .= sprintf(
+						/* translators: %1$s Opening anchor tag for Stripe Connect documentation, do not translate. %2$s Closing anchor tag, do not translate. */
+						__( 'Have questions about connecting with Stripe? See the %1$sdocumentation%2$s.', 'stripe' ),
+						'<a href="' . simpay_get_url( 'docs' ) . 'articles/stripe-setup/" target="_blank" rel="noopener noreferrer">',
+						'</a>'
+					);
+					$html .= '</span></p>';
+
 					if ( simpay_can_site_manage_stripe_keys() ) {
-						$html .= '<p id="wpsp-api-keys-row-reveal">' . __( '<a href="#">Click here</a> to manage your API keys manually.', 'stripe' ) . '</p>';
-						$html .= '<p id="wpsp-api-keys-row-hide">' . __( '<a href="#">Click here</a> to hide your API keys.', 'stripe' ) . '</p>';
+						$html .= '<p id="wpsp-api-keys-row-reveal"><button type="button" class="button button-small">' . __( 'Manage API Keys Manually', 'stripe' ) . '</button></p>';
+						$html .= '<p id="wpsp-api-keys-row-hide"><button type="button" class="button button-small">' . __( 'Hide API Keys', 'stripe' ) . '</button></p>';
 					}
 
 					$fields[ $section ] = array(
@@ -128,6 +133,24 @@ class Keys extends Admin_Page {
 						),
 					);
 				} elseif  ( 'mode' == $section ) {
+					$dashboard_message = sprintf(
+						/* translators: %1$s Opening anchor tag to Stripe Dashboard, do not translate. %2$s Closing anchor tag, do not translate. */
+						__( 'While in test mode no live payments are processed. Make sure Test mode is enabled in your %1$sStripe dashboard%2$s to view your test transactions.', 'stripe' ),
+						'<a href="https://dashboard.stripe.com" target="_blank">',
+						'</a>'
+					);
+
+					$toggle_notice = sprintf(
+						'<div id="simpay-test-mode-toggle-notice" style="display: none;"><p>%1$s</p><p>%2$s</p></div>',
+						esc_html__( 'You just toggled payment modes. You may be required to reconnect to Stripe when your settings are saved.', 'stripe' ),
+						sprintf(
+							/* translators: %1$s Stripe account mode. %2$s Link to Stripe dashboard. */
+							__( 'Please also ensure you have the correct subscription, coupon, and webhook settings in your %1$s %2$s.', 'stripe' ),
+							'<span id="simpay-toggle-notice-status" data-live="' . esc_attr( _x( 'live', 'Stripe account status', 'stripe' ) ) .'" data-test="' . esc_attr( _x( 'test', 'Stripe account status', 'stripe' ) ) . '"></span>',
+							'<a id="simpay-toggle-notice-status-link" data-live="https://dashboard.stripe.com/live/dashboard" data-test="https://dashboard.stripe.com/test/dashboard" target="_blank">' . __( 'Stripe account', 'stripe' ) . '</a>'
+						)
+					);
+
 					$fields[ $section ] = array(
 						'test_mode' => array(
 							'title'       => esc_html__( 'Test Mode', 'stripe' ),
@@ -137,13 +160,17 @@ class Keys extends Admin_Page {
 								'enabled'  => esc_html__( 'Enabled', 'stripe' ),
 								'disabled' => esc_html__( 'Disabled', 'stripe' ),
 							),
-							'value'       => $this->get_option_value( $section, 'test_mode' ),						
+							'value'       => $this->get_option_value( $section, 'test_mode' ),
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][test_mode]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-test-mode',
 							'inline'      => 'inline',
-							'description' => sprintf( wp_kses( __( 'While in test mode no live payments are processed. Make sure Test mode is enabled in your <a href="%1$s" target="_blank">Stripe dashboard</a> to view your test transactions.', 'stripe' ), array(
-									'a' => array( 'href' => array(), 'target' => array() ),
-								) ), esc_url( 'https://dashboard.stripe.com/' ) )
+							'description' => $dashboard_message,
+						),
+						'test_mode_toggle' => array(
+							'title' => '',
+							'id'    => 'simpay-test-mode-toggle',
+							'type'  => 'custom-html',
+							'html'  => $toggle_notice,
 						),
 					);
 				} elseif ( 'test_keys' == $section ) {
@@ -212,7 +239,7 @@ class Keys extends Admin_Page {
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][country]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-country',
 							'value'       => $this->get_option_value( $section, 'country' ),
-							'description' => esc_html__( 'The country associated with the connected Stripe account.', 'stripe' ) . '<br />' . '<a href="https://dashboard.stripe.com/account">' . esc_html__( 'View your account settings', 'stripe' ),
+							'description' => esc_html__( 'The country associated with the connected Stripe account.', 'stripe' ) . '<br />' . '<a href="https://dashboard.stripe.com/account" target="_blank">' . esc_html__( 'View your Stripe account settings', 'stripe' ),
 						),
 					);
 

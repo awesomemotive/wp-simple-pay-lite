@@ -34,7 +34,7 @@ namespace SimplePay\Core;
  * http://apptools.com/phptools/browser/
  *
  *
- * Modified Version by Moonstone Media
+ * Modified Version by Sandhills Development, LLC
  *
  * Changelog:
  * - Changed class constructor from Browser() to __construct()

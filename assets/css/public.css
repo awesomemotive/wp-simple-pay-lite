@@ -6,6 +6,9 @@
   .simpay-clearfix::after {
     clear: both; }
 
+.simpay-total-amount-value {
+  font-style: normal; }
+
 .simpay-form-control {
   *zoom: 1;
   margin-bottom: 15px; }

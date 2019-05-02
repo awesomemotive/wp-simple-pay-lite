@@ -208,8 +208,10 @@ class Pages {
 		$current_tab = empty( $_GET['tab'] ) ? $this->tab : sanitize_title( $_GET['tab'] );
 		$this->tab   = $current_tab;
 
+		$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'promos/views/sidebar.php' );
+
 		?>
-		<div class="wrap" id="simpay-global-settings">
+		<div id="simpay-global-settings" class="wrap <?php echo ! empty( $sidebar ) ? 'simpay-global-settings--hassidebar' : null; ?>">
 			<h1><?php echo get_admin_page_title(); ?></h1>
 
 			<div id="simpay-settings-left">
@@ -276,8 +278,6 @@ class Pages {
 
 			<div id="simpay-settings-sidebar-right">
 				<?php
-					$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'promos/views/sidebar.php' );
-
 					if ( ! empty( $sidebar ) ) {
 						include_once( $sidebar );
 					}

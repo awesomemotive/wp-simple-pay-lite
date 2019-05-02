@@ -1,6 +1,10 @@
 @import 'mixins';
 @import 'variables';
 
+.simpay-total-amount-value {
+	font-style: normal;
+}
+
 .simpay-form-control {
 	@include clearfix();
 	margin-bottom: 15px;

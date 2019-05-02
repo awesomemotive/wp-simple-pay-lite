@@ -96,9 +96,6 @@ class Shortcodes {
 	 * @return string
 	 */
 	public function print_public_form( $attributes ) {
-
-		// TODO Double check if there's any sensitive data being passed?
-
 		$args = shortcode_atts( array(
 			'id' => null,
 		), $attributes );
@@ -152,6 +149,29 @@ class Shortcodes {
 	 * @return string
 	 */
 	private function form_html( $form_id ) {
+		$has_keys = simpay_check_keys_exist();
+
+		// Show a notice to admins if they have not setup Stripe.
+		if ( ! $has_keys && current_user_can( 'manage_options' ) ) {
+			return wp_kses_post( sprintf(
+				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+				__( 'Please complete your %1$sStripe Setup%2$s to view the payment form.', 'stripe' ),
+				sprintf(
+					'<a href="%s">',
+					add_query_arg(
+						array(
+							'page' => 'simpay_settings',
+							'tab'  => 'keys',
+						),
+						admin_url( 'admin.php' )
+					)
+				),
+				'</a>'
+			) );
+		// Show nothing to guests if Stripe is not setup.
+		} else if ( ! $has_keys && ! current_user_can( 'manage_options' ) ) {
+			return '';
+		}
 
 		global $simpay_form;
 

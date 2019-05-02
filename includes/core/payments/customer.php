@@ -27,7 +27,6 @@ class Customer {
 	 * @param Payment $payment The Payment object to identify this customer object with.
 	 */
 	public function __construct( Payment $payment ) {
-
 		// Set our class payment variable to the Payment object passed in
 		$this->payment = $payment;
 
@@ -46,11 +45,23 @@ class Customer {
 		// Create new customer unless there's an existing customer ID set through filters.
 		if ( empty( $customer_id ) ) {
 
-			// Create and save a new customer with the appropriate data
-			$this->customer = Stripe_API::request( 'Customer', 'create', array(
+			$customer_args = array(
 				'source' => $this->payment->get_token(),
 				'email'  => $this->payment->get_email(),
-			) );
+			);
+
+			/**
+			 * Filter the arguments passed to customer creation in Stripe.
+			 *
+			 * @since 3.5.0
+			 *
+			 * @param array $customer_args Arguments passed to customer creation in Stripe.
+			 * @param Customer $this Customer object.
+			 */
+			$customer_args = apply_filters( 'simpay_stripe_customer_args', $customer_args, $this );
+
+			// Create and save a new customer with the appropriate data
+			$this->customer = Stripe_API::request( 'Customer', 'create', $customer_args );
 		} else {
 
 			// Retrieve a customer if one already exists

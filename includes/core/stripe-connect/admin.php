@@ -11,6 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Output Connect CSS on Keys page.
+ *
+ * @since 3.5.0
+ */
+add_action( 'simpay_admin_page_settings_keys_start', 'simpay_stripe_connect_button_css' );
+
+/**
  * Listens for Stripe Connect completion requests and saves the Stripe API keys.
  *
  * @since 2.6.14
@@ -71,3 +78,55 @@ function simpay_process_gateway_connect_completion() {
 	exit;
 }
 add_action( 'admin_init', 'simpay_process_gateway_connect_completion' );
+
+/**
+ * Listen for a disconnect URL.
+ *
+ * Clears out the `simpay_stripe_connect_account_id` and the API keys.
+ *
+ * @since 3.5.0
+ */
+function simpay_process_stripe_disconnect() {
+	// Current user cannot handle this request.
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	// Do not need to handle this request, bail.
+	if (
+		! ( isset( $_GET['page'] ) && 'simpay_settings' === $_GET['page'] ) ||
+		! isset( $_GET['simpay-stripe-disconnect'] )
+	) {
+		return;
+	}
+
+	$test = simpay_is_test_mode();
+	$keys = get_option( 'simpay_settings_keys' );
+
+	// Only clear keys for current mode.
+	if ( $test ) {
+		$keys['test_keys'] = array(
+			'secret_key'      => '',
+			'publishable_key' => '',
+		);
+	} else {
+		$keys['live_keys'] = array(
+			'secret_key'      => '',
+			'publishable_key' => '',
+		);
+	}
+
+	update_option( 'simpay_settings_keys', $keys );
+	update_option( 'simpay_stripe_connect_account_id', false );
+
+	$redirect = add_query_arg(
+		array(
+			'page' => 'simpay_settings',
+			'tab'  => 'keys',
+		),
+		admin_url( 'admin.php' )
+	);
+
+	return wp_redirect( esc_url_raw( $redirect ) );
+}
+add_action( 'admin_init', 'simpay_process_stripe_disconnect' );

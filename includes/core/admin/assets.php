@@ -48,6 +48,15 @@ class Assets {
 		// JS
 		$src = SIMPLE_PAY_ASSETS . 'js/upgrade-link' . $this->min . '.js';
 		wp_enqueue_script( 'simpay-upgrade-link', $src, array( 'jquery' ), SIMPLE_PAY_VERSION, true );
+
+		// Notices.
+		wp_enqueue_script(
+			'simpay-notices',
+			SIMPLE_PAY_ASSETS . 'js/simpay-admin-notices.min.js',
+			array( 'wp-util', 'underscore' ),
+			SIMPLE_PAY_VERSION,
+			true
+		);
 	}
 
 	public function set_minified() {
@@ -85,12 +94,13 @@ class Assets {
 				'footer' => false,
 			),
 			'simpay-admin'           => array(
-				'src'    => $js_path . 'admin' . $this->min . '.js',
+				'src'    => $js_path . 'admin.min.js',
 				'deps'   => array(
 					'jquery',
 					'simpay-chosen',
 					'simpay-accounting',
 					'simpay-shared',
+					'wp-util',
 				),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => false,

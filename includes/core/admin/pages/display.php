@@ -76,7 +76,7 @@ class Display extends Admin_Page {
 
 					$custom_html = '<div>';
 					$custom_html .= __( 'Configure your payment confirmation <em>page</em> below.', 'stripe' );
-					$custom_html .= ' <a href="' . simpay_docs_link( '', 'email-receipts-stripe', '', true ) . '" target="_blank">' . esc_html__( 'See how to configure email receipts in Stripe.', 'stripe' ) . '</a></p>';
+					$custom_html .= ' <a href="' . simpay_docs_link( '', 'email-receipts-stripe', 'global-settings', true ) . '" target="_blank">' . esc_html__( 'See how to configure email receipts in Stripe.', 'stripe' ) . '</a></p>';
 					$custom_html .= '</div>';
 
 					$fields[ $section ] = array(

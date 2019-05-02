@@ -30,7 +30,6 @@ class Charge {
 	 * @param Payment $payment The Payment object to identify this charge object with.
 	 */
 	public function __construct( Payment $payment ) {
-
 		$this->payment = $payment;
 
 		$this->charge();
@@ -64,6 +63,16 @@ class Charge {
 		if ( $stripe_account_id ) {
 			$charge_args['stripe_account'] = $stripe_account_id;
 		}
+
+		/**
+		 * Filter the arguments passed to charge creation in Stripe.
+		 *
+		 * @since 3.5.0
+		 *
+		 * @param array   $charge_args Arguments passed to charge creation in Stripe.
+		 * @param Payment $this Payment object.
+		 */
+		$charge_args = apply_filters( 'simpay_stripe_charge_args', $charge_args, $this );
 
 		// Save our charge response
 		$this->charge = Stripe_API::request( 'Charge', 'create', $charge_args );
