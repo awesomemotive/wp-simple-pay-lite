@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "229ecc063534be9029c37b54ee73506d",
+    "content-hash": "c1af197be093b225605425106235a75a",
     "packages": [
         {
             "name": "stripe/stripe-php",
-            "version": "v6.30.4",
+            "version": "v6.34.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "0d9e2773b1df27d4f0c590b15bed3a1433e0414c"
+                "reference": "60335d5dad000fb4b08aa7176b832a59d13d0420"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/0d9e2773b1df27d4f0c590b15bed3a1433e0414c",
-                "reference": "0d9e2773b1df27d4f0c590b15bed3a1433e0414c",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/60335d5dad000fb4b08aa7176b832a59d13d0420",
+                "reference": "60335d5dad000fb4b08aa7176b832a59d13d0420",
                 "shasum": ""
             },
             "require": {
@@ -60,7 +60,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2019-02-27T18:07:30+00:00"
+            "time": "2019-04-26T18:30:55+00:00"
         }
     ],
     "packages-dev": [],
