@@ -141,15 +141,18 @@ class Keys extends Admin_Page {
 					);
 
 					$toggle_notice = sprintf(
-						'<div id="simpay-test-mode-toggle-notice" style="display: none;"><p>%1$s</p><p>%2$s</p></div>',
-						esc_html__( 'You just toggled payment modes. You may be required to reconnect to Stripe when your settings are saved.', 'stripe' ),
-						sprintf(
-							/* translators: %1$s Stripe account mode. %2$s Link to Stripe dashboard. */
-							__( 'Please also ensure you have the correct subscription, coupon, and webhook settings in your %1$s %2$s.', 'stripe' ),
-							'<span id="simpay-toggle-notice-status" data-live="' . esc_attr( _x( 'live', 'Stripe account status', 'stripe' ) ) .'" data-test="' . esc_attr( _x( 'test', 'Stripe account status', 'stripe' ) ) . '"></span>',
-							'<a id="simpay-toggle-notice-status-link" data-live="https://dashboard.stripe.com/live/dashboard" data-test="https://dashboard.stripe.com/test/dashboard" target="_blank">' . __( 'Stripe account', 'stripe' ) . '</a>'
-						)
+						'<p>%1$s</p>',
+						esc_html__( 'You just toggled payment modes. You may be required to reconnect to Stripe when your settings are saved.', 'stripe' )
 					);
+
+					/**
+					 * Filter the notice to be displayed when switching payment mode from Live to Test (or opposite).
+					 *
+					 * @since 3.5.0
+					 *
+					 * @param string $toggle_notice Toggle notice inner HTML.
+					 */
+					$toggle_notice = apply_filters( 'simpay_payment_mode_toggle_notice', $toggle_notice );
 
 					$fields[ $section ] = array(
 						'test_mode' => array(
@@ -170,7 +173,7 @@ class Keys extends Admin_Page {
 							'title' => '',
 							'id'    => 'simpay-test-mode-toggle',
 							'type'  => 'custom-html',
-							'html'  => $toggle_notice,
+							'html'  => '<div id="simpay-test-mode-toggle-notice" style="display: none;">' . $toggle_notice . '</div>',
 						),
 					);
 				} elseif ( 'test_keys' == $section ) {

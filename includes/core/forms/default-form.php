@@ -70,7 +70,7 @@ class Default_Form extends Form {
 	public function html() {
 
 		$id                = 'simpay-form-' . $this->id;
-		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type' );
+		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type', 'stripe_checkout' );
 
 		do_action( 'simpay_before_form_display', $this );
 
@@ -179,7 +179,7 @@ class Default_Form extends Form {
 	 * @since unknown
 	 */
 	public function output_address_fields() {
-		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type' );
+		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type', 'stripe_checkout' );
 
 		if ( 'stripe_checkout' !== $form_display_type ) {
 			return;

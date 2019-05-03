@@ -13,10 +13,14 @@ export default function toggleStripeConnectNotice( newMode, oldMode ) {
 	const statusText = document.getElementById( 'simpay-toggle-notice-status' );
 	const statusLink = document.getElementById( 'simpay-toggle-notice-status-link' );
 
-	statusText.innerHTML = '<strong>' + statusText.dataset[ newMode ] + '</strong>';
-	statusLink.href = statusLink.dataset[ newMode ];
-
 	notice.classList.add( 'notice' );
 	notice.classList.add( 'notice-warning' );
 	notice.style.display = 'block';
+
+	if ( ! statusText || ! statusLink ) {
+		return;
+	}
+
+	statusText.innerHTML = '<strong>' + statusText.dataset[ newMode ] + '</strong>';
+	statusLink.href = statusLink.dataset[ newMode ];
 }
