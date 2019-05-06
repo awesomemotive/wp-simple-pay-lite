@@ -22,6 +22,9 @@ class Settings {
 		// @todo Don't use a static method and allow this class to properly register hooks.
 		add_action( 'simpay_admin_before_stripe_checkout_rows', array( __CLASS__, 'add_company_info_settings' ) );
 
+		// Add link back to Custom Form Fields in the Stripe Checkout Display tab.
+		add_action( 'simpay_after_checkout_button_text', array( __CLASS__, 'add_custom_form_fields_link' ), 5 );
+
 		// @see Meta_Boxes::save_meta_boxes()
 		wp_nonce_field( 'simpay_save_data', 'simpay_meta_nonce' );
 
@@ -135,7 +138,7 @@ class Settings {
 				'icon'   => '',
 			),
 			'form_display'         => array(
-				'label'  => esc_html__( 'Custom Form Fields', 'stripe' ),
+				'label'  => esc_html__( 'On-Page Form Display', 'stripe' ),
 				'target' => 'custom-form-fields-settings-panel',
 				'class'  => array(),
 				'icon'   => '',
@@ -273,6 +276,11 @@ class Settings {
 		$enable_shipping_address = isset( $_POST['_enable_shipping_address'] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_enable_shipping_address', $enable_shipping_address );
 
+		// Payment button style.
+		if ( isset( $_POST['_payment_button_style'] ) ) {
+			update_post_meta( $post_id, '_payment_button_style', $_POST['_payment_button_style'] );
+		}
+
 		// Save custom fields
 		$fields = isset( $_POST['_simpay_custom_field'] ) ? $_POST['_simpay_custom_field'] : array();
 
@@ -331,5 +339,33 @@ class Settings {
 	 */
 	public static function add_company_info_settings() {
 		include_once SIMPLE_PAY_INC . 'core/admin/metaboxes/views/partials/company-info-settings.php';
+	}
+
+	/**
+	 * Output a link back to "Custom Form Fields" under the "Checkout Button Text" field.
+	 *
+	 * @since 3.5.0
+	 */
+	public static function add_custom_form_fields_link() {
+?>
+
+<tr class="simpay-panel-field">
+	<th></th>
+	<td>
+		<p class="description">
+			<?php
+			echo wp_kses_post(
+				sprintf(
+					__( 'Configure the on-page Payment Button in the %1$sCustom Form Fields%2$s options.', 'stripe' ),
+					'<a href="#" class="simpay-tab-link" data-show-tab="simpay-form_display">',
+					'</a>'
+				)
+			);
+			?>
+		</p>
+	</td>
+</tr>
+
+<?php
 	}
 }

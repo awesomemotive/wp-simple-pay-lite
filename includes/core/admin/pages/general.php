@@ -115,7 +115,7 @@ class General extends Admin_Page {
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][locale]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-locale',
 							'value'       => $this->get_option_value( $section, 'locale' ),
-							'description' => esc_html__( "Specify auto-detect to display Stripe Checkout in the user's preferred language, if available. English will be used by default.", 'stripe' ) . '<br/><a href="https://stripe.com/docs/checkout#supported-languages" target="_blank">' . esc_html__( 'Stripe Checkout supported languages', 'stripe' ) . '</a>',
+							'description' => esc_html__( "Specify auto-detect to display Stripe Checkout in the user's preferred language, if available. English will be used by default.", 'stripe' ) . '<br/><a href="https://stripe.com/docs/checkout#supported-languages" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Stripe Checkout supported languages', 'stripe' ) . '</a>',
 						),
 					);
 
@@ -180,19 +180,6 @@ class General extends Admin_Page {
 				} elseif ( 'styles' == $section ) {
 
 					$fields[ $section ] = array(
-						'payment_button_style'  => array(
-							'title'   => esc_html__( 'Payment Button Style', 'stripe' ),
-							'type'    => 'radio',
-							'name'    => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][payment_button_style]',
-							'id'      => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-payment-button-style',
-							'value'   => $this->get_option_value( $section, 'payment_button_style' ),
-							'options' => array(
-								'stripe' => esc_html__( 'Stripe blue', 'stripe' ),
-								'none'   => esc_html__( 'None (inherit from theme)', 'stripe' ),
-							),
-							'default' => 'stripe',
-							'inline'  => 'inline',
-						),
 						'default_plugin_styles' => array(
 							'title'       => esc_html__( 'Default Plugin Styles', 'stripe' ),
 							'type'        => 'radio',

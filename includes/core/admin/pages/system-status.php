@@ -75,7 +75,7 @@ class System_Status extends Admin_Page {
 			if ( $for_export ) {
 				return $retval . ' ' . sprintf( __( 'See %1$s.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' );
 			} else {
-				return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s" target="_blank">Please read this</a> for more information.', 'stripe' ), 'https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2' ) . '</mark>';
+				return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s" target="_blank" rel="noopener noreferrer">Please read this</a> for more information.', 'stripe' ), 'https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2' ) . '</mark>';
 			}
 		}
 	}
@@ -195,7 +195,7 @@ class System_Status extends Admin_Page {
 					$memory_export = size_format( $memory );
 
 					if ( $memory < 41943040 ) {
-						$memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 40MB. See: <a href="%2$s" target="_blank">Increasing memory allocated to PHP</a>', 'stripe' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
+						$memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 40MB. See: <a href="%2$s" target="_blank" rel="noopener noreferrer">Increasing memory allocated to PHP</a>', 'stripe' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
 					} else {
 						$memory = '<mark class="ok">' . $memory_export . '</mark>';
 					}
@@ -276,13 +276,13 @@ class System_Status extends Admin_Page {
 
 					if ( version_compare( $wp_version, '3.4', '<' ) ) {
 						$active_theme  = get_theme_data( get_stylesheet_directory() . '/style.css' );
-						$theme_name    = '<a href="' . $active_theme['URI'] . '" target="_blank">' . $active_theme['Name'] . '</a>';
+						$theme_name    = '<a href="' . $active_theme['URI'] . '" target="_blank" rel="noopener noreferrer">' . $active_theme['Name'] . '</a>';
 						$theme_version = $active_theme['Version'];
-						$theme_author  = '<a href="' . $active_theme['AuthorURI'] . '" target="_blank">' . $active_theme['Author'] . '</a>';
+						$theme_author  = '<a href="' . $active_theme['AuthorURI'] . '" target="_blank" rel="noopener noreferrer">' . $active_theme['Author'] . '</a>';
 						$theme_export  = $active_theme['Name'] . ' - ' . $theme_version;
 					} else {
 						$active_theme  = wp_get_theme();
-						$theme_name    = '<a href="' . $active_theme->ThemeURI . '" target="_blank">' . $active_theme->Name . '</a>';
+						$theme_name    = '<a href="' . $active_theme->ThemeURI . '" target="_blank" rel="noopener noreferrer">' . $active_theme->Name . '</a>';
 						$theme_version = $active_theme->Version;
 						$theme_author  = $active_theme->Author;
 						$theme_export  = $active_theme->Name . ' - ' . $theme_version;
@@ -425,7 +425,7 @@ class System_Status extends Admin_Page {
 					 * ==================
 					 */
 					if ( version_compare( PHP_VERSION, '7.0', '<' ) ) {
-						$php = '<mark>' . PHP_VERSION . ' - ' . __( 'WordPress.org recommends upgrading to PHP 7 or higher for better security.', 'stripe' ) . ' <a href="https://wordpress.org/about/requirements/" target="_blank">' . __( 'Read more.', 'stripe' ) . '</a>' . '</mark>';
+						$php = '<mark>' . PHP_VERSION . ' - ' . __( 'WordPress.org recommends upgrading to PHP 7 or higher for better security.', 'stripe' ) . ' <a href="https://wordpress.org/about/requirements/" target="_blank" rel="noopener noreferrer">' . __( 'Read more.', 'stripe' ) . '</a>' . '</mark>';
 					} else {
 						$php = '<mark class="ok">' . PHP_VERSION . '</mark>';
 					}

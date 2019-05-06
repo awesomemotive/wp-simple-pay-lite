@@ -125,34 +125,42 @@ function simpay_get_global_setting( $setting, $raw = false ) {
 }
 
 /**
- * This will get a filtered setting. If a form specific filter is found it will use that one as higher priority over a
- * general setting filter.
+ * Create an run a validated filter on arbitrary data.
  *
- * @param      $filter
- * @param      $value
- * @param null $form_id
+ * @since unknown
  *
+ * @param string $filter The name of the filter.
+ * @param mixed  $value The value to filter.
+ * @param mixed  $form_id If the data is form-specicific, provide the ID of
+ *                        the form the data is being accessed through.
  * @return mixed
  */
 function simpay_get_filtered( $filter, $value, $form_id = null ) {
-
-	$use_form_filter = false;
-	$form_filter     = '';
+	/**
+	 * Filter an arbitrary form value.
+	 *
+	 * @since unknown
+	 *
+	 * @param mixed $value Value to filter.
+	 * @param mixed $form_id ID of the form the data is being accessed through. Null if no form is available.
+	 */
+	$value = apply_filters( 'simpay_' . $filter, $value, $form_id );
 
 	if ( $form_id ) {
-
-		$form_filter = 'simpay_form_' . $form_id . '_' . $filter;
-
-		if ( has_filter( $form_filter ) ) {
-			$use_form_filter = true;
-		}
+		/**
+		 * Filter an arbitrary form value.
+		 *
+		 * Since 3.5.0 the form ID is passed as an additional parameter.
+		 *
+		 * @since unknown
+		 *
+		 * @param mixed $value Value to filter.
+		 * @param int   $form_id ID of the form the data is being accessed through.
+		 */
+		$value = apply_filters( 'simpay_form_' . $form_id . '_' . $filter, $value, $form_id );
 	}
 
-	if ( $use_form_filter ) {
-		return apply_filters( $form_filter, $value );
-	} else {
-		return apply_filters( 'simpay_' . $filter, $value, $form_id );
-	}
+	return $value;
 }
 
 /**
@@ -958,4 +966,38 @@ function simpay_add_to_array_after( $new_key, $value, $needle, $haystack ) {
 	}
 
 	return $new + $split;
+}
+
+/**
+ * Generate a shipping object containing the required fields for the Stripe API.
+ *
+ * @param string $type The type of address (billing or shipping).
+ * @param array  $fields The field data list. Assumes data is coming from a payment form.
+ * @return array
+ */
+function simpay_get_form_address_data( $type, $fields ) {
+	$prefix = 'billing' === $type ? 'simpay_billing_address_' : 'simpay_shipping_address_';
+
+	// No address field is filled out, bail.
+	if ( ! isset( $fields[ $prefix . 'line1' ] ) || '' === $fields[ $prefix . 'line1' ] ) {
+		return array();
+	}
+
+	$address        = array();
+	$address_fields = array(
+		'line1',
+		'city',
+		'state',
+		'postal_code',
+		'country',
+	);
+
+	// Add field to address object.
+	foreach ( $address_fields as $field ) {
+		$value = isset( $fields[ $prefix . $field ] ) ? $fields[ $prefix . $field ] : null;
+
+		$address[ $field ] = sanitize_text_field( $value );
+	}
+
+	return array_filter( $address );
 }

@@ -5,7 +5,7 @@
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author: WP Simple Pay
  * Author URI:  https://wpsimplepay.com
- * Version: 2.1.1
+ * Version: 2.2.0
  * Text Domain: stripe
  */
 
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
-	define( 'SIMPLE_PAY_VERSION', '2.1.1' );
+	define( 'SIMPLE_PAY_VERSION', '2.2.0' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );
@@ -41,7 +41,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 	// Stripe API version should be in 'YYYY-MM-DD' format.
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2019-02-19' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2019-03-14' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_MAIN_FILE' ) ) {

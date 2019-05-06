@@ -1,4 +1,19 @@
-/* global spGeneral, jQuery */
+/* global spGeneral, jQuery, wpspHooks */
+
+/**
+ * WordPress dependencies
+ */
+import { createHooks } from '@wordpress/hooks';
+
+/**
+ * Internal dependencies.
+ */
+import 'admin/settings/test-mode.js';
+import toggleStripeConnectNotice from 'admin/settings/stripe-connect.js';
+
+// Since we rely on WordPress 4.9 and package our own copy of @wordpress/hooks
+// it is up to us to create a hooks instance to use in our app.
+window.wpspHooks = createHooks();
 
 var spAdmin = {};
 
@@ -11,6 +26,10 @@ var spAdmin = {};
 	spAdmin = {
 
 		init: function() {
+
+			// Wait to do this here due to weird loading order of scripts.
+			// @todo Redo script dependency management.
+			wpspHooks.addAction( 'settings.toggleTestMode', 'wpsp/settings/stripe-connect', toggleStripeConnectNotice );
 
 			// Set main vars on init.
 			body = $( document.body );
@@ -251,12 +270,18 @@ var spAdmin = {};
 
 		stripeConnect: function() {
 			$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().hide().next().hide();
-			$( '#wpsp-api-keys-row-reveal a' ).click( function() {
+
+			$( '#wpsp-api-keys-row-reveal button' ).click( function( e ) {
+				e.preventDefault();
+
 				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().show().next().show();
 				$( '#wpsp-api-keys-row-hide' ).show();
 				$( this ).parent().hide();
 			} );
-			$( '#wpsp-api-keys-row-hide a' ).click( function() {
+
+			$( '#wpsp-api-keys-row-hide button' ).click( function( e ) {
+				e.preventDefault();
+
 				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().hide().next().hide();
 				$( '#wpsp-api-keys-row-reveal' ).show();
 				$( this ).parent().hide();

@@ -83,7 +83,7 @@ class Pages {
 		if ( simpay_is_admin_screen() ) {
 			/* Translators: 1. The plugin name */
 			$footer_text = sprintf( __( 'If you like <strong>%1$s</strong> please leave us a %2$s rating. A huge thanks in advance!', 'stripe' ),
-			SIMPLE_PAY_PLUGIN_NAME, '<a href="https://wordpress.org/support/plugin/stripe/reviews?rate=5#new-post" target="_blank" class="simpay-rating-link" data-rated="' .
+			SIMPLE_PAY_PLUGIN_NAME, '<a href="https://wordpress.org/support/plugin/stripe/reviews?rate=5#new-post" rel="noopener noreferrer" target="_blank" class="simpay-rating-link" data-rated="' .
 			esc_attr__( 'Thanks :)', 'stripe' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>' );
 		}
 
@@ -208,8 +208,10 @@ class Pages {
 		$current_tab = empty( $_GET['tab'] ) ? $this->tab : sanitize_title( $_GET['tab'] );
 		$this->tab   = $current_tab;
 
+		$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'promos/views/sidebar.php' );
+
 		?>
-		<div class="wrap" id="simpay-global-settings">
+		<div id="simpay-global-settings" class="wrap <?php echo ! empty( $sidebar ) ? 'simpay-global-settings--has-sidebar' : null; ?>">
 			<h1><?php echo get_admin_page_title(); ?></h1>
 
 			<div id="simpay-settings-left">
@@ -276,8 +278,6 @@ class Pages {
 
 			<div id="simpay-settings-sidebar-right">
 				<?php
-					$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'promos/views/sidebar.php' );
-
 					if ( ! empty( $sidebar ) ) {
 						include_once( $sidebar );
 					}

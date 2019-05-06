@@ -92,8 +92,11 @@ final class SimplePay {
 	public function load() {
 
 		// Load core shared back-end & front-end functions.
+		require_once( SIMPLE_PAY_INC . 'core/functions/template.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/countries.php' );
+		require_once( SIMPLE_PAY_INC . 'core/functions/charge.php' );
+		require_once( SIMPLE_PAY_INC . 'core/functions/customer.php' );
 
 		// Stripe Connect functionality.
 		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/functions.php' );
@@ -125,10 +128,12 @@ final class SimplePay {
 
 		// Load core back-end only functions.
 		require_once( SIMPLE_PAY_INC . 'core/functions/admin.php' );
+		require_once( SIMPLE_PAY_INC . 'core/admin/functions/notices.php' );
+		require_once( SIMPLE_PAY_INC . 'core/admin/functions/plugin-upgrade-notice.php' );
 
 		new Admin\Assets();
 		new Admin\Menus();
-		new Admin\Notices();
+		new Admin\Notice_Manager();
 	}
 
 	/**

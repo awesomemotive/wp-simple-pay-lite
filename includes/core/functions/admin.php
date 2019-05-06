@@ -287,7 +287,7 @@ function simpay_docs_link( $text, $slug, $ga_content, $plain = false ) {
 
 		$html = '';
 		$html .= '<div class="simpay-docs-link-wrap">';
-		$html .= '<a href="' . simpay_ga_url( $url, $ga_content, true ) . '" target="_blank">' . esc_html( $text );
+		$html .= '<a href="' . simpay_ga_url( $url, $ga_content, true ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $text );
 		$html .= '<span class="dashicons dashicons-editor-help"></span>';
 		$html .= '</a>';
 		$html .= '</div>';

@@ -26,20 +26,18 @@ class Payment_Button extends Custom_Field {
 	 * @return string
 	 */
 	public static function print_html( $settings ) {
+		global $simpay_form;
 
 		$html = '';
 
-		$id   = isset( $settings['id'] ) ? $settings['id'] : '';
-		$text = isset( $settings['text'] ) && ! empty( $settings['text'] ) ? $settings['text'] : esc_html__( 'Pay with Card', 'stripe' );
-
-		// Get the button style from the global display settings
-		$general_options = get_option( 'simpay_settings_general' );
-		$button_style    = isset( $general_options['styles']['payment_button_style'] ) && 'stripe' === $general_options['styles']['payment_button_style'] ? 'stripe-button-el' : 'none';
+		$id    = isset( $settings['id'] ) ? $settings['id'] : '';
+		$text  = isset( $settings['text'] ) && ! empty( $settings['text'] ) ? $settings['text'] : esc_html__( 'Pay with Card', 'stripe' );
+		$style = isset( $settings['style'] ) ? $settings['style'] : simpay_get_global_setting( 'payment_button_style' );
 
 		$id = simpay_dashify( $id );
 
 		$html .= '<div class="simpay-form-control">';
-		$html .= '<button id="' . esc_attr( $id ) . '" class="' . self::get_payment_button_classes( $button_style ) . '"><span>' . esc_html( $text ) . '</span></button>';
+		$html .= '<button id="' . esc_attr( $id ) . '" class="' . self::get_payment_button_classes( $style ) . '"><span>' . esc_html( $text ) . '</span></button>';
 
 		$html .= '</div>';
 
