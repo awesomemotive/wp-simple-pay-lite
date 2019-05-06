@@ -151,7 +151,7 @@ function php_version_56() {
 </p>
 
 <p>
-	<?php echo sprintf( __( 'WP Simple Pay will be increasing its PHP requirement to version <code>%1$s</code> or higher in an upcoming release. It looks like you\'re using version <code>%2$s</code>, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%3$s" target="_blank">no longer receives security updates</a>, which is another great reason to update.', 'stripe' ), $future_required_version, PHP_VERSION, 'http://php.net/eol.php' ); ?>
+	<?php echo sprintf( __( 'WP Simple Pay will be increasing its PHP requirement to version <code>%1$s</code> or higher in an upcoming release. It looks like you\'re using version <code>%2$s</code>, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%3$s" target="_blank" rel="noopener noreferrer">no longer receives security updates</a>, which is another great reason to update.', 'stripe' ), $future_required_version, PHP_VERSION, 'http://php.net/eol.php' ); ?>
 </p>
 
 <p>
@@ -167,7 +167,7 @@ function php_version_56() {
 </p>
 
 <p>
-	<?php echo sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see <a href="%s" target="_blank">our hosting recommendations</a>.', 'stripe' ), 'https://wpsimplepay.com/recommended-wordpress-hosting/' ); ?>
+	<?php echo sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see <a href="%s" target="_blank" rel="noopener noreferrer">our hosting recommendations</a>.', 'stripe' ), 'https://wpsimplepay.com/recommended-wordpress-hosting/' ); ?>
 </p>
 
 <?php

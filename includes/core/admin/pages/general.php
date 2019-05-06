@@ -115,7 +115,7 @@ class General extends Admin_Page {
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][locale]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-locale',
 							'value'       => $this->get_option_value( $section, 'locale' ),
-							'description' => esc_html__( "Specify auto-detect to display Stripe Checkout in the user's preferred language, if available. English will be used by default.", 'stripe' ) . '<br/><a href="https://stripe.com/docs/checkout#supported-languages" target="_blank">' . esc_html__( 'Stripe Checkout supported languages', 'stripe' ) . '</a>',
+							'description' => esc_html__( "Specify auto-detect to display Stripe Checkout in the user's preferred language, if available. English will be used by default.", 'stripe' ) . '<br/><a href="https://stripe.com/docs/checkout#supported-languages" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Stripe Checkout supported languages', 'stripe' ) . '</a>',
 						),
 					);
 

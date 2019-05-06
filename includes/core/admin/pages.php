@@ -83,7 +83,7 @@ class Pages {
 		if ( simpay_is_admin_screen() ) {
 			/* Translators: 1. The plugin name */
 			$footer_text = sprintf( __( 'If you like <strong>%1$s</strong> please leave us a %2$s rating. A huge thanks in advance!', 'stripe' ),
-			SIMPLE_PAY_PLUGIN_NAME, '<a href="https://wordpress.org/support/plugin/stripe/reviews?rate=5#new-post" target="_blank" class="simpay-rating-link" data-rated="' .
+			SIMPLE_PAY_PLUGIN_NAME, '<a href="https://wordpress.org/support/plugin/stripe/reviews?rate=5#new-post" rel="noopener noreferrer" target="_blank" class="simpay-rating-link" data-rated="' .
 			esc_attr__( 'Thanks :)', 'stripe' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>' );
 		}
 

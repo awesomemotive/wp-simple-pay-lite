@@ -113,7 +113,7 @@ class Keys extends Admin_Page {
 					$html .= sprintf(
 						/* translators: %1$s Opening anchor tag for Stripe Connect documentation, do not translate. %2$s Closing anchor tag, do not translate. */
 						__( 'Have questions about connecting with Stripe? See the %1$sdocumentation%2$s.', 'stripe' ),
-						'<a href="' . simpay_get_url( 'docs' ) . 'articles/stripe-setup/" target="_blank" rel="noopener noreferrer">',
+						'<a href="' . simpay_docs_link( '', 'stripe-setup', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer">',
 						'</a>'
 					);
 					$html .= '</span></p>';
@@ -136,7 +136,7 @@ class Keys extends Admin_Page {
 					$dashboard_message = sprintf(
 						/* translators: %1$s Opening anchor tag to Stripe Dashboard, do not translate. %2$s Closing anchor tag, do not translate. */
 						__( 'While in test mode no live payments are processed. Make sure Test mode is enabled in your %1$sStripe dashboard%2$s to view your test transactions.', 'stripe' ),
-						'<a href="https://dashboard.stripe.com" target="_blank">',
+						'<a href="https://dashboard.stripe.com" target="_blank" rel="noopener noreferrer">',
 						'</a>'
 					);
 
@@ -242,7 +242,7 @@ class Keys extends Admin_Page {
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][country]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-country',
 							'value'       => $this->get_option_value( $section, 'country' ),
-							'description' => esc_html__( 'The country associated with the connected Stripe account.', 'stripe' ) . '<br />' . '<a href="https://dashboard.stripe.com/account" target="_blank">' . esc_html__( 'View your Stripe account settings', 'stripe' ),
+							'description' => esc_html__( 'The country associated with the connected Stripe account.', 'stripe' ) . '<br />' . '<a href="https://dashboard.stripe.com/account" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View your Stripe account settings', 'stripe' ),
 						),
 					);
 
