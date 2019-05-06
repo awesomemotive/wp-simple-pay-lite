@@ -211,7 +211,7 @@ class Pages {
 		$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'promos/views/sidebar.php' );
 
 		?>
-		<div id="simpay-global-settings" class="wrap <?php echo ! empty( $sidebar ) ? 'simpay-global-settings--hassidebar' : null; ?>">
+		<div id="simpay-global-settings" class="wrap <?php echo ! empty( $sidebar ) ? 'simpay-global-settings--has-sidebar' : null; ?>">
 			<h1><?php echo get_admin_page_title(); ?></h1>
 
 			<div id="simpay-settings-left">
