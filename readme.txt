@@ -119,7 +119,6 @@ We'd love your help! Here are a few things you can do:
 * New: Add helpful hint about additional fields available while using Stripe Checkout.
 * New: Add option to disconnect from Stripe.
 * New: Show site administrators a notice when Stripe API keys are missing.
-* New: Add viewport tag to <head> for Stripe Elements.
 * Fix: Avoid Javascript error in Internet Explorer 11.
 * Fix: Do not pass `country` to Stripe Checkout configuration.
 * Dev: Update company name throughout files.
