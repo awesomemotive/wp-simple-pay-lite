@@ -3,7 +3,7 @@ Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702,
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.9
 Tested up to: 5.2
-Stable tag: 2.2.0-beta-1
+Stable tag: 2.2.0
 Requires PHP: 5.4
 License: GPLv2 or later
 
@@ -110,7 +110,7 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
-= 2.2.0 - May 7, 2019 =
+= 2.2.0 - May 9, 2019 =
 
 * New: Save Billing Address data to Stripe Charge record.
 * New: Save Shipping Address data to Stripe Customer record.
