@@ -1,5 +1,49 @@
 # Changelog
 
+## 6.34.2 - 2019-04-26
+* [#642](https://github.com/stripe/stripe-php/pull/642) Fix an issue where existing idempotency keys would be overwritten when using automatic retries
+
+## 6.34.1 - 2019-04-25
+* [#640](https://github.com/stripe/stripe-php/pull/640) Add missing phpdocs 
+
+## 6.34.0 - 2019-04-24
+* [#626](https://github.com/stripe/stripe-php/pull/626) Add support for the `TaxRate` resource and APIs
+* [#639](https://github.com/stripe/stripe-php/pull/639) Fix multiple phpdoc issues
+
+## 6.33.0 - 2019-04-22
+* [#630](https://github.com/stripe/stripe-php/pull/630) Add support for the `TaxId` resource and APIs
+
+## 6.32.1 - 2019-04-19
+* [#636](https://github.com/stripe/stripe-php/pull/636) Correct type of `$personId` in PHPDoc
+
+## 6.32.0 - 2019-04-18
+* [#621](https://github.com/stripe/stripe-php/pull/621) Add support for `CreditNote`
+
+## 6.31.5 - 2019-04-12
+* [#628](https://github.com/stripe/stripe-php/pull/628) Add constants for `person.*` event types
+* [#628](https://github.com/stripe/stripe-php/pull/628) Add missing constants for `Account` and `Person`
+
+## 6.31.4 - 2019-04-05
+* [#624](https://github.com/stripe/stripe-php/pull/624) Fix encoding of nested parameters in multipart requests
+
+## 6.31.3 - 2019-04-02
+* [#623](https://github.com/stripe/stripe-php/pull/623) Only use HTTP/2 with curl >= 7.60.0
+
+## 6.31.2 - 2019-03-25
+* [#619](https://github.com/stripe/stripe-php/pull/619) Fix PHPDoc return types for list methods for nested resources
+
+## 6.31.1 - 2019-03-22
+* [#612](https://github.com/stripe/stripe-php/pull/612) Add a lot of constants
+* [#614](https://github.com/stripe/stripe-php/pull/614) Add missing subscription status constants
+
+## 6.31.0 - 2019-03-18
+* [#600](https://github.com/stripe/stripe-php/pull/600) Add support for the `PaymentMethod` resource and APIs
+* [#606](https://github.com/stripe/stripe-php/pull/606) Add support for retrieving a Checkout `Session`
+* [#611](https://github.com/stripe/stripe-php/pull/611) Add support for deleting a Terminal `Location` and `Reader`
+
+## 6.30.5 - 2019-03-11
+* [#607](https://github.com/stripe/stripe-php/pull/607) Correctly handle case where a metadata key is called `metadata`
+
 ## 6.30.4 - 2019-02-27
 * [#602](https://github.com/stripe/stripe-php/pull/602) Add `subscription_schedule` to `Subscription` for PHPDoc.
 

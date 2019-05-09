@@ -50,11 +50,6 @@ abstract class Form {
 	public $decimal_separator = '';
 	public $thousand_separator = '';
 
-	/** DISPLAY **/
-
-	/* Front-end Styles */
-	public $payment_button_style = '';
-
 	/*****
 	 *
 	 * FORM SETTINGS
@@ -222,6 +217,11 @@ abstract class Form {
 		$this->locale      = simpay_get_filtered( 'locale', simpay_get_global_setting( 'locale' ), $this->id );
 		$this->country     = simpay_get_filtered( 'country', simpay_get_global_setting( 'country' ), $this->id );
 
+		// Stripe needs something, so default to US if settings haven't been saved.
+		if ( ! $this->country ) {
+			$this->country = 'US';
+		}
+
 		/* Currency Options */
 		$this->currency          = simpay_get_filtered( 'currency', simpay_get_global_setting( 'currency' ), $this->id );
 		$this->currency_position = simpay_get_filtered( 'currency_position', simpay_get_global_setting( 'currency_position' ), $this->id );
@@ -233,11 +233,6 @@ abstract class Form {
 		// Thousand separator
 		$thousand_separator       = ( true === $this->set_bool_value( simpay_get_global_setting( 'separator' ) ) ? '.' : ',' );
 		$this->thousand_separator = simpay_get_filtered( 'thousand_separator', $thousand_separator, $this->id );
-
-		/** DISPLAY **/
-
-		/* Front-end Styles */
-		$this->payment_button_style = simpay_get_filtered( 'payment_button_style', simpay_get_global_setting( 'payment_button_style' ), $this->id );
 	}
 
 	/**
@@ -257,7 +252,6 @@ abstract class Form {
 		/** PAYMENT OPTIONS **/
 
 		/* one-time payment options */
-
 		$this->amount = simpay_unformat_currency( simpay_get_filtered( 'amount', simpay_get_saved_meta( $this->id, '_amount', simpay_global_minimum_amount() ), $this->id ) );
 
 		// Statement descriptor

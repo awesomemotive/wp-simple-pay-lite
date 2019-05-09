@@ -184,7 +184,7 @@ abstract class Field {
 			$this->text = $field['text'];
 		}
 		if ( isset( $field['html'] ) ) {
-			$this->custom_html = wp_kses_post( $field['html'] );
+			$this->custom_html = $field['html'];
 		}
 
 		// Escaping.

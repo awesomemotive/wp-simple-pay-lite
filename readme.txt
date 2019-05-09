@@ -2,8 +2,8 @@
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.9
-Tested up to: 5.1.1
-Stable tag: 2.1.1
+Tested up to: 5.2
+Stable tag: 2.2.0
 Requires PHP: 5.4
 License: GPLv2 or later
 
@@ -110,11 +110,26 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
-= 2.1.1 - March 20, 2018 =
+= 2.2.0 - May 9, 2019 =
+
+* New: Save Billing Address data to Stripe Charge record.
+* New: Save Shipping Address data to Stripe Customer record.
+* New: Improve onboarding notices and alerts.
+* New: Run `simpay_{$filter}` alongside all usage of `simpay_form_{$form_id}_{$filter}`
+* New: Add helpful hint about additional fields available while using Stripe Checkout.
+* New: Add option to disconnect from Stripe.
+* New: Show site administrators a notice when Stripe API keys are missing.
+* Fix: Avoid Javascript error in Internet Explorer 11.
+* Fix: Do not pass `country` to Stripe Checkout configuration.
+* Dev: Update company name throughout files.
+* Dev: Updated to Stripe PHP library v6.34.2.
+* Dev: Updated to use Stripe API version 2019-03-14.
+
+= 2.1.1 - March 20, 2019 =
 
 * Fix: Ensure values over 999 are properly processed in Stripe Checkout.
 
-= 2.1.0 - March 15, 2018 =
+= 2.1.0 - March 15, 2019 =
 
 * New: You can now easily connect your Stripe account with Stripe Connect. See your settings page for more details.
 * New: Enable ZIP/Postal Code verification by default on new forms.

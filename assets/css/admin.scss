@@ -7,9 +7,6 @@
 // Global settings pages
 #simpay-global-settings {
 
-	/* Should be 40px more than #simpay-settings-sidebar-right below. */
-	margin-right: 350px;
-
 	// Remove right margin for sidebar promo on mobile.
 	@media (max-width: 768px) {
 		margin-right: 0;
@@ -34,11 +31,8 @@
 	#simpay-settings-sidebar-right {
 
 		float: right;
-
-		/* Move width down to 270px if extra space not needed. */
-		width: 310px;
-		/* margin-right should be negative of width and subtract another 20px. */
-		margin-right: -330px;
+		width: 270px;
+		margin-right: -290px;
 
 		// Move sidebar promo below other settings on mobile.
 		@media (max-width: 768px) {
@@ -49,7 +43,7 @@
 		h3 {
 			padding: 10px 12px;
 		}
-		
+
 		.centered {
 			text-align: center;
 		}
@@ -73,6 +67,10 @@
 			margin-bottom: 0;
 		}
 	}
+}
+
+.simpay-global-settings--has-sidebar {
+	margin-right: 310px;
 }
 
 // Form settings tabs/pages
@@ -400,6 +398,17 @@
 	}
 }
 
+// Stripe Connect help information.
+.form-table td .simpay-stripe-connect-help {
+	margin: 15px 0;
+	display: flex;
+	align-items: center;
+
+	.dashicons {
+		margin-right: 4px;
+	}
+}
+
 // This is for the section where users can easily copy the shortcode
 #simpay-get-shortcode {
 
@@ -491,7 +500,7 @@
  #wpsp-api-keys-row-hide {
   display:none;
  }
- 
+
 .wpsp-stripe-connect {
 	display: inline-block;
 	margin-bottom: 1px;
@@ -596,3 +605,4 @@ only screen and (min-device-pixel-ratio: 1.5) {
 }
 
 /* End of Stripe Connect */
+

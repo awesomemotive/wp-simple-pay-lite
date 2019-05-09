@@ -39,6 +39,15 @@ class Transfer extends ApiResource
     const PATH_REVERSALS = '/reversals';
 
     /**
+     * Possible string representations of the source type of the transfer.
+     * @link https://stripe.com/docs/api/transfers/object#transfer_object-source_type
+     */
+    const SOURCE_TYPE_ALIPAY_ACCOUNT = 'alipay_account';
+    const SOURCE_TYPE_BANK_ACCOUNT   = 'bank_account';
+    const SOURCE_TYPE_CARD           = 'card';
+    const SOURCE_TYPE_FINANCING      = 'financing';
+
+    /**
      * @return TransferReversal The created transfer reversal.
      */
     public function reverse($params = null, $opts = null)
@@ -103,7 +112,7 @@ class Transfer extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return TransferReversal
+     * @return Collection The list of reversals.
      */
     public static function allReversals($id, $params = null, $opts = null)
     {

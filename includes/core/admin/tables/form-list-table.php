@@ -228,7 +228,7 @@ class Form_List_Table extends WP_List_Table {
 
 		$url = add_query_arg( 'simpay-preview', $id, site_url() );
 
-		return '<a href="' . esc_attr( $url ) . '" target="_blank">' . esc_html__( 'Preview', 'stripe' ) . '</a>';
+		return '<a href="' . esc_attr( $url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Preview', 'stripe' ) . '</a>';
 	}
 
 	/**

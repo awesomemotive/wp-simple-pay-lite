@@ -35,11 +35,15 @@ a[href="admin.php?page=simpay_upgrade"] {
 }
 
 // Hide inline plugin update message when updating (Lite & Pro)
-#stripe-update,
-#simple-pay-update {
+#stripe-update {
 	.updating-message {
 		.simpay-plugin-upgrade-notice {
 			display: none;
 		}
 	}
+}
+
+// Remove border on plugin list when there is no license, but there is an update.
+.plugins .plugin-update-tr.simpay-plugin-update-license td {
+	box-shadow: none;
 }

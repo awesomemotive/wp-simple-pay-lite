@@ -132,7 +132,7 @@ class Stripe_API {
 		}
 
 		// Don't save error to session if calling via ajax (i.e. coupon codes) or in admin.
-		if ( ! is_admin() && ! $simpay_doing_ajax ) {
+		if ( ! is_admin() && ! $simpay_doing_ajax && ! defined( 'REST_REQUEST' ) ) {
 			Errors::set( $error_id, $error_message );
 
 			if ( ! headers_sent() ) {

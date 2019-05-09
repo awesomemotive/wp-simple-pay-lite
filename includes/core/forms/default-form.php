@@ -42,6 +42,7 @@ class Default_Form extends Form {
 	public function register_hooks() {
 		add_action( 'wp_footer', array( $this, 'set_script_variables' ), 0 );
 		add_filter( 'simpay_form_' . $this->id . '_custom_fields', array( $this, 'get_custom_fields_html' ), 10, 2 );
+		add_filter( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', array( $this, 'output_address_fields' ) );
 	}
 
 	/**
@@ -69,7 +70,7 @@ class Default_Form extends Form {
 	public function html() {
 
 		$id                = 'simpay-form-' . $this->id;
-		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type' );
+		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type', 'stripe_checkout' );
 
 		do_action( 'simpay_before_form_display', $this );
 
@@ -84,6 +85,16 @@ class Default_Form extends Form {
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_top', $this );
 
+				/**
+				 * Allow additional output at the top of all forms.
+				 *
+				 * @since 3.5.0
+				 *
+				 * @param int    $form_id Current form ID.
+				 * @param object $this Current form object.
+				 */
+				do_action( 'simpay_form_before_form_top', $this->id, $this );
+
 				if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
 					echo $this->print_custom_fields();
 				}
@@ -94,16 +105,22 @@ class Default_Form extends Form {
 				echo '<input type="hidden" name="simpay_form_id" value="' . esc_attr( $this->id ) . '" />';
 				echo '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
 
-				if ( $this->enable_shipping_address ) {
-					echo $this->shipping_fields();
-				}
-
 				// Form validation error message container
 				echo '<div class="simpay-errors" id="' . esc_attr( $id ) . '-error"></div>';
 
 				echo simpay_get_test_mode_badge();
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', $this );
+
+				/**
+				 * Allow additional output at the bottom of all forms.
+				 *
+				 * @since 3.5.0
+				 *
+				 * @param int    $form_id Current form ID.
+				 * @param object $this Current form object.
+				 */
+				do_action( 'simpay_form_before_form_bottom', $this->id, $this );
 
 			// We echo the </form> instead of appending it so that the action hook can work correctly if they try to output something before the form close.
 			echo '</form>';
@@ -152,22 +169,43 @@ class Default_Form extends Form {
 	}
 
 	/**
-	 * Output hidden fields to capture shipping information if enabled
+	 * Output hidden fields to capture address information if enabled.
 	 *
-	 * @return string
+	 * Stripe doesn't map the collected billing information to the Customer object,
+	 * which we want, so we need to track it here.
+	 *
+	 * @link https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/506
+	 *
+	 * @since unknown
 	 */
-	public function shipping_fields() {
+	public function output_address_fields() {
+		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type', 'stripe_checkout' );
+
+		if ( 'stripe_checkout' !== $form_display_type ) {
+			return;
+		}
 
 		$html = '';
 
-		$html .= '<input type="hidden" name="simpay_shipping_name" class="simpay-shipping-name" />';
-		$html .= '<input type="hidden" name="simpay_shipping_country" class="simpay-shipping-country" />';
-		$html .= '<input type="hidden" name="simpay_shipping_zip" class="simpay-shipping-zip" />';
-		$html .= '<input type="hidden" name="simpay_shipping_state" class="simpay-shipping-state" />';
-		$html .= '<input type="hidden" name="simpay_shipping_address_line1" class="simpay-shipping-address-line1" />';
-		$html .= '<input type="hidden" name="simpay_shipping_city" class="simpay-shipping-city" />';
+		if ( $this->enable_billing_address ) {
+			$html .= '<input type="hidden" name="simpay_billing_customer_name" class="simpay-customer-name" />';
+			$html .= '<input type="hidden" name="simpay_billing_address_country" class="simpay-billing-country" />';
+			$html .= '<input type="hidden" name="simpay_billing_address_postal_code" class="simpay-billing-zip" />';
+			$html .= '<input type="hidden" name="simpay_billing_address_state" class="simpay-billing-state" />';
+			$html .= '<input type="hidden" name="simpay_billing_address_line1" class="simpay-billing-address-line1" />';
+			$html .= '<input type="hidden" name="simpay_billing_address_city" class="simpay-billing-city" />';
+		}
 
-		return $html;
+		if ( $this->enable_shipping_address ) {
+			$html .= '<input type="hidden" name="simpay_shipping_customer_name" class="simpay-customer-name" />';
+			$html .= '<input type="hidden" name="simpay_shipping_address_country" class="simpay-shipping-country" />';
+			$html .= '<input type="hidden" name="simpay_shipping_address_postal_code" class="simpay-shipping-zip" />';
+			$html .= '<input type="hidden" name="simpay_shipping_address_state" class="simpay-shipping-state" />';
+			$html .= '<input type="hidden" name="simpay_shipping_address_line1" class="simpay-shipping-address-line1" />';
+			$html .= '<input type="hidden" name="simpay_shipping_address_city" class="simpay-shipping-city" />';
+		}
+
+		echo $html;
 	}
 
 	/**

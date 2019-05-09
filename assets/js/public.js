@@ -9,6 +9,8 @@ var simpayApp = {};
 
 	simpayApp = {
 
+		formCount: 0,
+
 		// Collection of DOM elements of all payment forms
 		spFormElList: {},
 
@@ -27,6 +29,9 @@ var simpayApp = {};
 				var spFormElem = $( this );
 				simpayApp.setupCoreForm( spFormElem );
 
+				// Bump current form output.
+				simpayApp.formCount++;
+
 				body.trigger( 'simpaySetupCoreForm', [ spFormElem ] );
 			} );
 		},
@@ -38,6 +43,8 @@ var simpayApp = {};
 		},
 
 		setupCoreForm: function( spFormElem ) {
+			// Add a unique identifier to the form for unique selectors.
+			spFormElem.attr( 'data-simpay-form-instance', simpayApp.formCount );
 
 			var formId = spFormElem.data( 'simpay-form-id' );
 
@@ -46,6 +53,9 @@ var simpayApp = {};
 
 			// Set formData array index of the current form ID to match the localized data passed over for form settings.
 			var formData = $.extend( {}, localizedFormData.form.bools, localizedFormData.form.integers, localizedFormData.form.i18n, localizedFormData.form.strings );
+
+			// Track the number this form is on the page.
+			formData.formInstance = simpayApp.formCount;
 
 			// Set form ID from data attribute.
 			formData.formId = formId;
@@ -135,7 +145,11 @@ var simpayApp = {};
 				// Set the same cents value to the hidden input for submitting form for processing.
 				spFormElem.find( '.simpay-amount' ).val( formData.stripeParams.amount );
 
-				stripeHandler.open( formData.stripeParams );
+				// Stripe doesn't like when `country` exists in the configuration.
+				var paramsNoCountry = formData.stripeParams;
+				delete paramsNoCountry.country;
+
+				stripeHandler.open( paramsNoCountry );
 			}
 
 			/**
@@ -167,7 +181,7 @@ var simpayApp = {};
 
 				// Handle extra (shipping) args.
 				if ( args ) {
-					simpayApp.handleStripeShippingArgs( spFormElem, args );
+					simpayApp.handleStripeAddressArgs( spFormElem, args );
 				}
 
 				// Disable original form submit button and change text for UI feedback while POST-ing to Stripe.
@@ -190,32 +204,42 @@ var simpayApp = {};
 			} );
 		},
 
-		// Check & add extra shipping values if found.
-		handleStripeShippingArgs: function( spFormElem, args ) {
-
+		// Check & add extra address values if found.
+		handleStripeAddressArgs: function( spFormElem, args ) {
+			// Map customer name.
 			if ( args.shipping_name ) {
-				spFormElem.find( '.simpay-shipping-name' ).val( args.shipping_name );
+				spFormElem.find( '[name="simpay_shipping_customer_name"]' ).val( args.shipping_name );
 			}
 
-			if ( args.shipping_address_country ) {
-				spFormElem.find( '.simpay-shipping-country' ).val( args.shipping_address_country );
+			if ( args.billing_name ) {
+				spFormElem.find( '[name="simpay_billing_customer_name"]' ).val( args.billing_name );
 			}
 
-			if ( args.shipping_address_zip ) {
-				spFormElem.find( '.simpay-shipping-zip' ).val( args.shipping_address_zip );
-			}
+			// Map address fields.
+			var addressFields = [
+				'line1',
+				'city',
+				'state',
+				'postal_code',
+				'country',
+			];
 
-			if ( args.shipping_address_state ) {
-				spFormElem.find( '.simpay-shipping-state' ).val( args.shipping_address_state );
-			}
+			$.each( addressFields, function( i, field ) {
+				var argName = field;
 
-			if ( args.shipping_address_line1 ) {
-				spFormElem.find( '.simpay-shipping-address-line1' ).val( args.shipping_address_line1 );
-			}
+				// Lack of consistency...
+				if ( 'postal_code' === field ) {
+					argName = 'zip';
+				}
 
-			if ( args.shipping_address_city ) {
-				spFormElem.find( '.simpay-shipping-city' ).val( args.shipping_address_city );
-			}
+				if ( args[ 'shipping_address_' + argName ] ) {
+					spFormElem.find( '[name="simpay_shipping_address_' + field + '"]' ).val( args[ 'shipping_address_' + argName ] );
+				}
+
+				if ( args[ 'billing_address_' + argName ] ) {
+					spFormElem.find( '[name="simpay_billing_address_' + field + '"]' ).val( args[ 'billing_address_' + argName ] );
+				}
+			} );
 		},
 
 		// Set the internal final amount property value as well as the hidden form field.

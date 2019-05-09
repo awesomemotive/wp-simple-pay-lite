@@ -105,10 +105,6 @@ class Payment {
 		$this->token = sanitize_text_field( $_POST['simpay_stripe_token'] );
 		$this->email = sanitize_text_field( $_POST['simpay_stripe_email'] );
 
-		if ( $simpay_form->enable_shipping_address ) {
-			$this->process_shipping_meta();
-		}
-
 		// Create a new Customer object
 		$this->customer    = new Customer( $this );
 		$this->customer_id = $this->customer->get_id();
@@ -121,42 +117,6 @@ class Payment {
 		if ( empty( $charge ) ) {
 			new Charge( $this );
 		}
-	}
-
-	/**
-	 * Process shipping meta
-	 */
-	public function process_shipping_meta() {
-
-		$meta = array();
-
-		// Check all of these and only add ones that are added
-
-		if ( isset( $_POST['simpay_shipping_name'] ) && ! empty( $_POST['simpay_shipping_name'] ) ) {
-			$meta['shipping_name'] = sanitize_text_field( $_POST['simpay_shipping_name'] );
-		}
-
-		if ( isset( $_POST['simpay_shipping_address_line1'] ) && ! empty( $_POST['simpay_shipping_address_line1'] ) ) {
-			$meta['shipping_address_line1'] = sanitize_text_field( $_POST['simpay_shipping_address_line1'] );
-		}
-
-		if ( isset( $_POST['simpay_shipping_country'] ) && ! empty( $_POST['simpay_shipping_country'] ) ) {
-			$meta['shipping_country'] = sanitize_text_field( $_POST['simpay_shipping_country'] );
-		}
-
-		if ( isset( $_POST['simpay_shipping_zip'] ) && ! empty( $_POST['simpay_shipping_zip'] ) ) {
-			$meta['shipping_postal_code'] = sanitize_text_field( $_POST['simpay_shipping_zip'] );
-		}
-
-		if ( isset( $_POST['simpay_shipping_state'] ) && ! empty( $_POST['simpay_shipping_state'] ) ) {
-			$meta['shipping_state'] = sanitize_text_field( $_POST['simpay_shipping_state'] );
-		}
-
-		if ( isset( $_POST['simpay_shipping_city'] ) && ! empty( $_POST['simpay_shipping_city'] ) ) {
-			$meta['shipping_city'] = sanitize_text_field( $_POST['simpay_shipping_city'] );
-		}
-
-		$this->metadata = array_merge( $meta, $this->metadata );
 	}
 
 	/**

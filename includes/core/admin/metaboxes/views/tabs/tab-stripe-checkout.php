@@ -59,23 +59,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_enable_remember_me"><?php esc_html_e( 'Enable Remember Me', 'stripe' ); ?></label>
-			</th>
-			<td>
-				<?php
-
-				simpay_print_field( array(
-					'type'  => 'checkbox',
-					'name'  => '_enable_remember_me',
-					'id'    => '_enable_remember_me',
-					'value' => simpay_get_saved_meta( $post->ID, '_enable_remember_me', 'no' ),
-				) );
-				?>
-			</td>
-		</tr>
-
-		<tr class="simpay-panel-field">
-			<th>
 				<label for="_checkout_button_text"><?php esc_html_e( 'Checkout Button Text', 'stripe' ); ?></label>
 			</th>
 			<td>
@@ -99,6 +82,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tr>
 
 		<?php do_action( 'simpay_after_checkout_button_text' ); ?>
+
+		<tr class="simpay-panel-field">
+			<th>
+				<label for="_enable_remember_me"><?php esc_html_e( 'Enable Remember Me', 'stripe' ); ?></label>
+			</th>
+			<td>
+				<?php
+
+				simpay_print_field( array(
+					'type'  => 'checkbox',
+					'name'  => '_enable_remember_me',
+					'id'    => '_enable_remember_me',
+					'value' => simpay_get_saved_meta( $post->ID, '_enable_remember_me', 'no' ),
+				) );
+				?>
+			</td>
+		</tr>
 
 		<tr class="simpay-panel-field">
 			<th>

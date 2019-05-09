@@ -173,11 +173,30 @@ class Menus {
 		add_submenu_page( 'simpay', 'Simple Pay', __( 'Add New', 'stripe' ), 'manage_options', 'simpay&action=create', function () {
 		} );
 
+		/**
+		 * Filter the name used for the "Settings" submenu item.
+		 *
+		 * @since 3.5.0
+		 *
+		 * @param string
+		 */
+		$settings_menu_name = apply_filters(
+			'simpay_settings_menu_name',
+			__( 'Settings', 'stripe' )
+		);
+
 		// Settings menu link
-		add_submenu_page( 'simpay', sprintf( __( '%s Settings', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ), __( 'Settings', 'stripe' ), 'manage_options', 'simpay_settings', function () {
-			$page = new Pages( 'settings' );
-			$page->html();
-		} );
+		add_submenu_page(
+			'simpay',
+			sprintf( __( '%s Settings', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ),
+			$settings_menu_name,
+			'manage_options',
+			'simpay_settings',
+			function() {
+				$page = new Pages( 'settings' );
+				$page->html();
+			}
+		);
 
 		// System Report (aka System Status) page
 		add_submenu_page( 'simpay', __( 'System Report', 'stripe' ), __( 'System Report', 'stripe' ), 'manage_options', 'simpay_system_status', function () {
@@ -216,7 +235,7 @@ class Menus {
 			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
 
 			if ( ! defined( 'SIMPLE_PAY_ITEM_NAME' ) ) {
-				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
+				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
 
 				array_push( $action_links, $upgrade_link );
 			}

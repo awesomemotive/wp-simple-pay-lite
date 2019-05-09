@@ -9,44 +9,45 @@
 .simpay-metabox-title {
   border: 1px solid #eee; }
 
-#simpay-global-settings {
-  /* Should be 40px more than #simpay-settings-sidebar-right below. */
-  margin-right: 350px; }
+@media (max-width: 768px) {
+  #simpay-global-settings {
+    margin-right: 0; } }
+
+#simpay-global-settings .form-table .payment-details-description-tag {
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.07);
+  padding: 0 3px; }
+
+#simpay-global-settings #simpay-settings-left {
+  float: left;
+  width: 100%; }
+
+#simpay-global-settings #simpay-settings-sidebar-right {
+  float: right;
+  width: 270px;
+  margin-right: -290px; }
   @media (max-width: 768px) {
-    #simpay-global-settings {
+    #simpay-global-settings #simpay-settings-sidebar-right {
+      float: left;
       margin-right: 0; } }
-  #simpay-global-settings .form-table .payment-details-description-tag {
-    display: inline-block;
-    background: rgba(0, 0, 0, 0.07);
-    padding: 0 3px; }
-  #simpay-global-settings #simpay-settings-left {
-    float: left;
-    width: 100%; }
-  #simpay-global-settings #simpay-settings-sidebar-right {
-    float: right;
-    /* Move width down to 270px if extra space not needed. */
-    width: 310px;
-    /* margin-right should be negative of width and subtract another 20px. */
-    margin-right: -330px; }
-    @media (max-width: 768px) {
-      #simpay-global-settings #simpay-settings-sidebar-right {
-        float: left;
-        margin-right: 0; } }
-    #simpay-global-settings #simpay-settings-sidebar-right h3 {
-      padding: 10px 12px; }
-    #simpay-global-settings #simpay-settings-sidebar-right .centered {
-      text-align: center; }
-    #simpay-global-settings #simpay-settings-sidebar-right .button-large {
-      font-size: 17px;
-      line-height: 30px;
-      height: 32px; }
-    #simpay-global-settings #simpay-settings-sidebar-right .sidebar-heading {
-      font-size: 17px; }
-    #simpay-global-settings #simpay-settings-sidebar-right .postbox-nobg {
-      position: relative;
-      min-width: 255px; }
-    #simpay-global-settings #simpay-settings-sidebar-right .sidebar-container .postbox .inside {
-      margin-bottom: 0; }
+  #simpay-global-settings #simpay-settings-sidebar-right h3 {
+    padding: 10px 12px; }
+  #simpay-global-settings #simpay-settings-sidebar-right .centered {
+    text-align: center; }
+  #simpay-global-settings #simpay-settings-sidebar-right .button-large {
+    font-size: 17px;
+    line-height: 30px;
+    height: 32px; }
+  #simpay-global-settings #simpay-settings-sidebar-right .sidebar-heading {
+    font-size: 17px; }
+  #simpay-global-settings #simpay-settings-sidebar-right .postbox-nobg {
+    position: relative;
+    min-width: 255px; }
+  #simpay-global-settings #simpay-settings-sidebar-right .sidebar-container .postbox .inside {
+    margin-bottom: 0; }
+
+.simpay-global-settings--has-sidebar {
+  margin-right: 310px; }
 
 #simpay-form-settings .inside {
   margin: 0;
@@ -268,6 +269,13 @@
   #simpay-form-settings .simpay-upgrade-btn:hover {
     background-color: #037ad0;
     border: 1px solid #025794; }
+
+.form-table td .simpay-stripe-connect-help {
+  margin: 15px 0;
+  display: flex;
+  align-items: center; }
+  .form-table td .simpay-stripe-connect-help .dashicons {
+    margin-right: 4px; }
 
 #simpay-get-shortcode input.simpay-shortcode {
   border: 1px solid #ddd; }

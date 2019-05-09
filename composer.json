@@ -4,6 +4,6 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
-    "stripe/stripe-php": "6.30.4"
+    "stripe/stripe-php": "6.34.2"
   }
 }
