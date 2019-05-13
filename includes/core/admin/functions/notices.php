@@ -95,7 +95,7 @@ function stripe_checkout() {
 	$link = sprintf(
 		/* translators: %1$s Opening anchor tag for Stripe Checkout documentation, do not translate. %2$s Closing anchor tag, do not translate. */
 		' ' . __( 'View the %1$sdocumentation%2$s to learn more.', 'stripe' ),
-		'<a href="' . simpay_get_url( 'docs' ) . 'articles/stripe-checkout/" target="_blank" rel="noopener noreferrer">',
+		'<a href="' . simpay_get_url( 'docs' ) . 'articles/new-stripe-checkout/" target="_blank" rel="noopener noreferrer">',
 		'</a>'
 	);
 
