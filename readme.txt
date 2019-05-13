@@ -110,7 +110,7 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
-= 2.2.0 - May 9, 2019 =
+= 2.2.0 - May 13, 2019 =
 
 * New: Save Billing Address data to Stripe Charge record.
 * New: Save Shipping Address data to Stripe Customer record.
