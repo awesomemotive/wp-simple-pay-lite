@@ -50,7 +50,8 @@ That's it. *No other plugins required.*
 * Custom amounts - let customers enter an amount to pay
 * Coupon code support
 * Embedded & Overlay custom forms
-* Accept payments using Apple Pay, Microsoft Pay, and Google Pay
+* Accept payments with Apple Pay & Google Pay
+* reCAPTCHA v3 invisible verification support
 * Stripe Subscription support
 * Subscription installment plans
 * Subscription setup fees
