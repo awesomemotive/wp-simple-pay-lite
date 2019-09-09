@@ -1,9 +1,13 @@
 {
-  "require": {
-    "php": ">=5.4",
-    "ext-curl": "*",
-    "ext-json": "*",
-    "ext-mbstring": "*",
-    "stripe/stripe-php": "6.34.2"
-  }
+	"name": "wpsimplepay/wp-simple-pay-lite",
+	"description": "Add high conversion Stripe Checkout forms to your WordPress site and start accepting payments in minutes.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=5.6",
+		"ext-curl": "*",
+		"ext-json": "*",
+		"ext-mbstring": "*",
+		"stripe/stripe-php": "6.43.0"
+	}
 }
