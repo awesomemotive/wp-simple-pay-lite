@@ -47,7 +47,7 @@ module.exports = function( grunt ) {
 		checktextdomain: {
 			options: {
 				text_domain: 'stripe',
-				correct_domain: false,
+				correct_domain: true,
 				keywords: [
 					'__:1,2d',
 					'_e:1,2d',
@@ -226,7 +226,7 @@ module.exports = function( grunt ) {
 	grunt.registerTask( 'css', [ 'sass', 'copy:css', 'cssmin', 'usebanner:css' ] );
 	grunt.registerTask( 'js', [ 'copy:js', 'uglify', 'usebanner:js' ] );
 	grunt.registerTask( 'default', [ 'css', 'js' ] );
-	grunt.registerTask( 'build', [ 'default', 'addtextdomain', 'checktextdomain', 'clean:build', 'copy:main', 'compress' ] );
+	grunt.registerTask( 'build', [ 'checktextdomain', 'clean:build', 'copy:main', 'compress' ] );
 
 	grunt.util.linefeed = '\n';
 };
