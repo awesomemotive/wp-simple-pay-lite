@@ -1,33 +1,33 @@
 <?php
+/**
+ * Stripe API.
+ *
+ * @link https://github.com/stripe/stripe-php
+ *
+ * @since unknown
+ */
 
 namespace SimplePay\Core\Payments;
 
-use SimplePay\Core\Errors;
-use Stripe\Error;
 use Stripe\Stripe;
 
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Class Stripe_API
- *
- * @package SimplePay\Payments
- *
- * Wrapper class to allow us to make Stripe API requests all in one place and not scattered throughout the code.
+ * Class Stripe_API.
  */
 class Stripe_API {
 
-	// Variable to make sure the API keys are set
-	public static $api_set = false;
-
 	/**
-	 * Stripe_API constructor
+	 * Sets application information.
+	 *
+	 * @since 3.6.0
 	 */
-	public function __construct() {
-
-		// Send our plugin info over with the API request
+	public static function set_app_info() {
+		// Send our plugin info over with the API request.
 		Stripe::setAppInfo(
 			sprintf( 'WordPress %s', SIMPLE_PAY_PLUGIN_NAME ),
 			SIMPLE_PAY_VERSION,
@@ -35,114 +35,54 @@ class Stripe_API {
 			SIMPLE_PAY_STRIPE_PARTNER_ID
 		);
 
-		// Send the API info over
+		// Send the API info over.
 		Stripe::setApiVersion( SIMPLE_PAY_STRIPE_API_VERSION );
-
 	}
 
 	/**
-	 * Set the API Keys
+	 * Sets the API Keys
+	 *
+	 * @since unknown
 	 */
 	public static function set_api_key() {
-
-		// Set the API keys if they exist
-		if ( simpay_check_keys_exist() ) {
-
-			$key = simpay_get_secret_key();
-
-			Stripe::setApiKey( $key );
-
-			self::$api_set = true;
-
-		} else {
-			// TODO: Need some sort of error class or a way to handle errors that need to be output.
+		if ( ! simpay_check_keys_exist() ) {
+			return;
 		}
+
+		Stripe::setApiKey( simpay_get_secret_key() );
 	}
 
 	/**
-	 * Function we use to create a Stripe API request
+	 * Wraps the Stripe API PHP bindings.
 	 *
-	 * @param $class    - The Stripe API class we need to use
-	 * @param $function - The function of the $class we need
-	 * @param $args     - The arguments to pass into the $function
+	 * @since unknown
 	 *
-	 * @return mixed Stripe API object if successful
+	 * @param string       $class Unqualified Stripe API PHP binding class name.
+	 * @param string       $function Function to call.
+	 * @param string|array $id_or_args ID of a resource to update, or arguments for request, default empty.
+	 * @param array        $args Arguments for request, default empty.
+	 * @param array        $opts Per-request options, default empty.
 	 */
-	public static function request( $class, $function, $args ) {
+	public static function request( $class, $function, $id_or_args = array(), $args = array(), $opts = array() ) {
+		// Enure app information is set.
+		self::set_app_info();
 
-		/**
-		 * https://stripe.com/docs/api/php#errors
-		 * https://stripe.com/docs/api/php#error_handling
-		 */
+		$default_opts = array(
+			'api_key' => simpay_get_secret_key(),
+		);
 
-		// If the API has not been set already we need to set the key here
-		if ( ! self::$api_set ) {
-			self::set_api_key();
-		}
-
-		try {
-			// Call the Stripe API request from our parameters
-			$retval = call_user_func( array( '\Stripe\\' . $class, $function ), $args );
-			return $retval;
-
-		} catch ( Error\Card $e ) {
-			// Card declined
-			return self::error_handler( 'card_error', esc_html__( 'Card Error', 'stripe' ) . ': ' . $e->getMessage() );
-
-		} catch ( Error\RateLimit $e ) {
-			// Too many requests made to the API too quickly
-			return self::error_handler( 'rate_limit', esc_html__( 'Rate Limit Error', 'stripe' ) . ': ' . $e->getMessage() );
-
-		} catch ( Error\InvalidRequest $e ) {
-			// Invalid parameters were supplied to Stripe's API
-			return self::error_handler( 'invalid_request', esc_html__( 'Invalid Request Error', 'stripe' ) . ': ' . $e->getMessage() );
-
-		} catch ( Error\Authentication $e ) {
-			// Authentication with Stripe's API failed
-			// (maybe you changed API keys recently)
-			return self::error_handler( 'authentication', esc_html__( 'Authentication Error', 'stripe' ) . ': ' . $e->getMessage() );
-
-		} catch ( Error\ApiConnection $e ) {
-			// Network communication with Stripe failed
-			return self::error_handler( 'api_connection', esc_html__( 'Stripe API Connection Error', 'stripe' ) . ': ' . $e->getMessage() );
-
-		} catch ( Error\Base $e ) {
-			// Display a very generic error to the user, and maybe send
-			// yourself an email
-			return self::error_handler( 'generic', esc_html__( 'Stripe Error', 'stripe' ) . ': ' . $e->getMessage() );
-
-		} catch ( \Exception $e ) {
-			// Something else happened, completely unrelated to Stripe
-			return self::error_handler( 'non_stripe', esc_html__( 'General Error', 'stripe' ) . ': ' . $e->getMessage() );
-		}
-	}
-
-	/**
-	 * Generic Stripe API error handler
-	 */
-	private static function error_handler( $error_id, $error_message ) {
-
-		global $simpay_form;
-
-		// TODO Fallback for users running < WP 4.7. Maybe just use wp_doing_ajax() eventually.
-		if ( function_exists( 'wp_doing_ajax' ) ) {
-			$simpay_doing_ajax = wp_doing_ajax();
+		// Move per request arguments up if not empty, and request arguments are.
+		if ( empty( $args )  ) {
+			$args = wp_parse_args( $opts, $default_opts );
 		} else {
-			$simpay_doing_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
+			$opts = wp_parse_args( $opts, $default_opts );
 		}
 
-		// Don't save error to session if calling via ajax (i.e. coupon codes) or in admin.
-		if ( ! is_admin() && ! $simpay_doing_ajax && ! defined( 'REST_REQUEST' ) ) {
-			Errors::set( $error_id, $error_message );
-
-			if ( ! headers_sent() ) {
-				wp_redirect( $simpay_form->payment_failure_page );
-				exit;
-			} else {
-				return $error_message;
-			}
-		} else {
-			return false;
-		}
+		return call_user_func(
+			array( '\Stripe\\' . $class, $function ),
+			$id_or_args,
+			$args,
+			$opts
+		);
 	}
 }

@@ -26,8 +26,8 @@ class Display extends Admin_Page {
 
 		$this->id           = 'display';
 		$this->option_group = 'settings';
-		$this->label        = esc_html__( 'Payment Confirmation', 'stripe' );
-		$this->link_text    = esc_html__( 'Help docs for Payment Confirmation Settings', 'stripe' );
+		$this->label        = esc_html__( 'Payment Confirmation', 'simple-pay' );
+		$this->link_text    = esc_html__( 'Help docs for Payment Confirmation Settings', 'simple-pay' );
 		$this->link_slug    = '';
 		$this->ga_content   = 'general-settings';
 
@@ -46,7 +46,7 @@ class Display extends Admin_Page {
 
 		return apply_filters( 'simpay_add_' . $this->option_group . '_' . $this->id . '_sections', array(
 			'payment_confirmation_messages' => array(
-				'title' => esc_html__( 'Payment Confirmation Messages', 'stripe' ),
+				'title' => esc_html__( 'Payment Confirmation Messages', 'simple-pay' ),
 			),
 		) );
 	}
@@ -75,8 +75,8 @@ class Display extends Admin_Page {
 					$one_time_details_value    = $this->get_option_value( $section, 'one_time_payment_details' );
 
 					$custom_html = '<div>';
-					$custom_html .= __( 'Configure your payment confirmation <em>page</em> below.', 'stripe' );
-					$custom_html .= ' <a href="' . simpay_docs_link( '', 'email-receipts-stripe', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'See how to configure email receipts in Stripe.', 'stripe' ) . '</a></p>';
+					$custom_html .= __( 'Configure your payment confirmation <em>page</em> below.', 'simple-pay' );
+					$custom_html .= ' <a href="' . simpay_docs_link( '', 'email-receipts-stripe', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'See how to configure email receipts in Stripe.', 'simple-pay' ) . '</a></p>';
 					$custom_html .= '</div>';
 
 					$fields[ $section ] = array(
@@ -87,7 +87,7 @@ class Display extends Admin_Page {
 							'id'   => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-note-html',
 						),
 						'one_time_payment_details' => array(
-							'title'       => esc_html__( 'One-Time Payment', 'stripe' ),
+							'title'       => esc_html__( 'One-Time Payment', 'simple-pay' ),
 							'type'        => 'editor',
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][one_time_payment_details]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-one-time-payment-details',
@@ -122,13 +122,13 @@ class Display extends Admin_Page {
 	public function one_time_payment_details_description() {
 
 		$html = '<div class="simpay-payment-details-description">';
-		$html .= '<p class="description">' . esc_html__( 'Enter what your customers will see after a successful one-time payment.', 'stripe' ) . '</p>';
-		$html .= '<p><strong>' . esc_html__( 'Available template tags:', 'stripe' ) . '</strong></p>';
-		$html .= '<p><code>{item-description}</code> - ' . esc_html__( "The form's Item Description value.", 'stripe' ) . '</p>';
-		$html .= '<p><code>{company-name}</code> - ' . esc_html__( "The form's Company Name value.", 'stripe' ) . '</p>';
-		$html .= '<p><code>{total-amount}</code> - ' . esc_html__( 'The total price of the payment.', 'stripe' ) . '</p>';
-		$html .= '<p><code>{charge-date}</code> - ' . esc_html__( 'The charge date returned from Stripe.', 'stripe' ) . '</p>';
-		$html .= '<p><code>{charge-id}</code> - ' . esc_html__( 'The unique charge ID returned from Stripe.', 'stripe' ) . '</p>';
+		$html .= '<p class="description">' . esc_html__( 'Enter what your customers will see after a successful one-time payment.', 'simple-pay' ) . '</p>';
+		$html .= '<p><strong>' . esc_html__( 'Available template tags:', 'simple-pay' ) . '</strong></p>';
+		$html .= '<p><code>{item-description}</code> - ' . esc_html__( "The form's Item Description value.", 'simple-pay' ) . '</p>';
+		$html .= '<p><code>{company-name}</code> - ' . esc_html__( "The form's Company Name value.", 'simple-pay' ) . '</p>';
+		$html .= '<p><code>{total-amount}</code> - ' . esc_html__( 'The total price of the payment.', 'simple-pay' ) . '</p>';
+		$html .= '<p><code>{charge-date}</code> - ' . esc_html__( 'The charge date returned from Stripe.', 'simple-pay' ) . '</p>';
+		$html .= '<p><code>{charge-id}</code> - ' . esc_html__( 'The unique charge ID returned from Stripe.', 'simple-pay' ) . '</p>';
 		$html .= '</div>';
 
 		return apply_filters( 'simpay_payment_details_tag_descriptions', $html );

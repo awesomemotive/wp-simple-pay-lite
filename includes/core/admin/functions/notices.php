@@ -38,7 +38,7 @@ function no_ssl() {
  */
 echo apply_filters(
 	'simpay_ssl_admin_notice_message',
-	__( 'SSL (HTTPS) is not enabled. You will not be able to process live Stripe transactions until SSL is enabled.', 'stripe' )
+	__( 'SSL (HTTPS) is not enabled. You will not be able to process live Stripe transactions until SSL is enabled.', 'simple-pay' )
 );
 ?>
 </p>
@@ -53,11 +53,6 @@ echo apply_filters(
  * @return string
  */
 function stripe_connect() {
-	// If they are forced to use Stripe Connect they do not need to be notified about the functionality.
-	if ( ! simpay_can_site_manage_stripe_keys() ) {
-		return false;
-	}
-
 	if ( simpay_is_admin_screen() && isset( $_GET['tab'] ) && 'keys' === $_GET['tab'] ) {
 		return false;
 	}
@@ -72,12 +67,12 @@ function stripe_connect() {
 ?>
 
 <p>
-	<?php _e( 'WP Simple Pay supports Stripe Connect for easier setup and improved security. Connect now to start accepting payments instantly.', 'stripe' ); ?>
+	<?php _e( 'WP Simple Pay supports Stripe Connect for easier setup and improved security. Connect now to start accepting payments instantly.', 'simple-pay' ); ?>
 </p>
 
 <p>
 	<a href="<?php echo esc_url( simpay_get_stripe_connect_url() ); ?>" class="wpsp-stripe-connect"><span>
-		<?php esc_html_e( 'Connect with Stripe', 'stripe' ); ?>
+		<?php esc_html_e( 'Connect with Stripe', 'simple-pay' ); ?>
 	</span></a>
 </p>
 
@@ -94,7 +89,7 @@ function stripe_checkout() {
 
 	$link = sprintf(
 		/* translators: %1$s Opening anchor tag for Stripe Checkout documentation, do not translate. %2$s Closing anchor tag, do not translate. */
-		' ' . __( 'View the %1$sdocumentation%2$s to learn more.', 'stripe' ),
+		' ' . __( 'View the %1$sdocumentation%2$s to learn more.', 'simple-pay' ),
 		'<a href="' . simpay_get_url( 'docs' ) . 'articles/new-stripe-checkout/" target="_blank" rel="noopener noreferrer">',
 		'</a>'
 	);
@@ -104,7 +99,7 @@ function stripe_checkout() {
 
 <p>
 	<?php
-	esc_html_e( 'Stripe Checkout is changing soon. This will impact the appearance of your payment forms.', 'stripe' );
+	esc_html_e( 'Stripe Checkout is changing soon. This will impact the appearance of your payment forms.', 'simple-pay' );
 	echo wp_kses_post( $link );
 	?>
 </p>
@@ -115,7 +110,7 @@ function stripe_checkout() {
 
 <p>
 	<?php
-	esc_html_e( 'Stripe Checkout is changing soon. This will impact the appearance of your payment forms using this display type.', 'stripe' );
+	esc_html_e( 'Stripe Checkout is changing soon. This will impact the appearance of your payment forms using this display type.', 'simple-pay' );
 	echo wp_kses_post( $link );
 	?>
 </p>
@@ -147,27 +142,27 @@ function php_version_56() {
 ?>
 
 <p>
-	<strong><?php esc_html_e( 'WP Simple Pay is increasing its PHP version requirement.', 'stripe' ); ?></strong>
+	<strong><?php esc_html_e( 'WP Simple Pay is increasing its PHP version requirement.', 'simple-pay' ); ?></strong>
 </p>
 
 <p>
-	<?php echo sprintf( __( 'WP Simple Pay will be increasing its PHP requirement to version <code>%1$s</code> or higher in an upcoming release. It looks like you\'re using version <code>%2$s</code>, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%3$s" target="_blank" rel="noopener noreferrer">no longer receives security updates</a>, which is another great reason to update.', 'stripe' ), $future_required_version, PHP_VERSION, 'http://php.net/eol.php' ); ?>
+	<?php echo sprintf( __( 'WP Simple Pay will be increasing its PHP requirement to version <code>%1$s</code> or higher in an upcoming release. It looks like you\'re using version <code>%2$s</code>, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%3$s" target="_blank" rel="noopener noreferrer">no longer receives security updates</a>, which is another great reason to update.', 'simple-pay' ), $future_required_version, PHP_VERSION, 'http://php.net/eol.php' ); ?>
 </p>
 
 <p>
-	<strong><?php esc_html_e( 'Which version should I upgrade to?', 'stripe' ); ?></strong>
+	<strong><?php esc_html_e( 'Which version should I upgrade to?', 'simple-pay' ); ?></strong>
 </p>
 
 <p>
-	<?php echo sprintf( __( 'In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to <code>%1$s</code>, <code>7.0</code>, <code>7.1</code>, or <code>7.2</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>7.1</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>7.x</code>, so more testing may be required.', 'stripe' ), $future_required_version ); ?>
+	<?php echo sprintf( __( 'In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to <code>%1$s</code>, <code>7.0</code>, <code>7.1</code>, or <code>7.2</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>7.1</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>7.x</code>, so more testing may be required.', 'simple-pay' ), $future_required_version ); ?>
 </p>
 
 <p>
-	<strong><?php esc_html_e( 'Need help upgrading? Ask your web host!', 'stripe' ); ?></strong>
+	<strong><?php esc_html_e( 'Need help upgrading? Ask your web host!', 'simple-pay' ); ?></strong>
 </p>
 
 <p>
-	<?php echo sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see <a href="%s" target="_blank" rel="noopener noreferrer">our hosting recommendations</a>.', 'stripe' ), 'https://wpsimplepay.com/recommended-wordpress-hosting/' ); ?>
+	<?php echo sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see <a href="%s" target="_blank" rel="noopener noreferrer">our hosting recommendations</a>.', 'simple-pay' ), 'https://wpsimplepay.com/recommended-wordpress-hosting/' ); ?>
 </p>
 
 <?php

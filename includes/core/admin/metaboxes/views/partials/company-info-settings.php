@@ -19,7 +19,7 @@ $form_display_type = simpay_get_saved_meta( $post->ID, '_form_display_type', 'em
 
 <tr class="simpay-panel-field">
 	<th>
-		<label for="_company_name"><?php esc_html_e( 'Company Name', 'stripe' ); ?></label>
+		<label for="_company_name"><?php esc_html_e( 'Company Name', 'simple-pay' ); ?></label>
 	</th>
 	<td>
 		<?php
@@ -34,7 +34,7 @@ $form_display_type = simpay_get_saved_meta( $post->ID, '_form_display_type', 'em
 			'class'   => array(
 				'simpay-field-text',
 			),
-			'description' => __( 'Also used for the form heading.', 'stripe' ),
+			'description' => __( 'Also used for the form heading.', 'simple-pay' ),
 		) );
 		?>
 	</td>
@@ -42,7 +42,7 @@ $form_display_type = simpay_get_saved_meta( $post->ID, '_form_display_type', 'em
 
 <tr class="simpay-panel-field">
 	<th>
-		<label for="_item_description"><?php esc_html_e( 'Item Description', 'stripe' ); ?></label>
+		<label for="_item_description"><?php esc_html_e( 'Item Description', 'simple-pay' ); ?></label>
 	</th>
 	<td>
 		<?php
@@ -56,7 +56,7 @@ $form_display_type = simpay_get_saved_meta( $post->ID, '_form_display_type', 'em
 			'class'   => array(
 				'simpay-field-text',
 			),
-			'description' => __( 'Also used for the form subheading.', 'stripe' ),) );
+			'description' => __( 'Also used for the form subheading.', 'simple-pay' ),) );
 		?>
 	</td>
 </tr>
@@ -65,7 +65,7 @@ $form_display_type = simpay_get_saved_meta( $post->ID, '_form_display_type', 'em
 	<th></th>
 	<td>
 		<p class="description">
-			<?php printf( wp_kses( __( 'Configure your Stripe Checkout form in the <a href="%1$s" class="%2$s" data-show-tab="%3$s">Stripe Checkout Display</a> options.', 'stripe' ), array(
+			<?php printf( wp_kses( __( 'Configure your Stripe Checkout form in the <a href="%1$s" class="%2$s" data-show-tab="%3$s">Stripe Checkout Display</a> options.', 'simple-pay' ), array(
 				'a' => array(
 					'href'          => array(),
 					'class'         => array(),

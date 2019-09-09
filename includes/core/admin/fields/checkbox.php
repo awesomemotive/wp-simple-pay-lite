@@ -83,7 +83,7 @@ class Checkbox extends Field {
 				       class="simpay-field simpay-field-checkbox <?php echo $this->class; ?>"
 				       value="yes"
 					<?php checked( $this->value, 'yes', true ); ?>
-					<?php echo $this->attributes; ?>/><?php echo( ! empty( $this->text ) ? $this->text : esc_html__( 'Yes', 'stripe' ) ); ?>
+					<?php echo $this->attributes; ?>/><?php echo( ! empty( $this->text ) ? $this->text : esc_html__( 'Yes', 'simple-pay' ) ); ?>
 			</span>
 			<?php
 

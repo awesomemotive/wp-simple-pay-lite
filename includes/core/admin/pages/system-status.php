@@ -46,7 +46,7 @@ class System_Status extends Admin_Page {
 		// If test key isn't set...
 		if ( empty( $test_key ) ) {
 
-			$retval = __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' );
+			$retval = __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'simple-pay' );
 
 			if ( $for_export ) {
 				return $retval;
@@ -61,7 +61,7 @@ class System_Status extends Admin_Page {
 		try {
 			\Stripe\Charge::all();
 
-			$retval = __( 'TLS 1.2 is supported. No action required.', 'stripe' );
+			$retval = __( 'TLS 1.2 is supported. No action required.', 'simple-pay' );
 
 			if ( $for_export ) {
 				return $retval;
@@ -70,12 +70,12 @@ class System_Status extends Admin_Page {
 			}
 		} catch ( \Stripe\Error\ApiConnection $e ) {
 
-			$retval = __( 'TLS 1.2 is not supported. You will need to upgrade your integration.', 'stripe' );
+			$retval = __( 'TLS 1.2 is not supported. You will need to upgrade your integration.', 'simple-pay' );
 
 			if ( $for_export ) {
-				return $retval . ' ' . sprintf( __( 'See %1$s.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' );
+				return $retval . ' ' . sprintf( __( 'See %1$s.', 'simple-pay' ), 'https://stripe.com/blog/upgrading-tls' );
 			} else {
-				return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s" target="_blank" rel="noopener noreferrer">Please read this</a> for more information.', 'stripe' ), 'https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2' ) . '</mark>';
+				return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s" target="_blank" rel="noopener noreferrer">Please read this</a> for more information.', 'simple-pay' ), 'https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2' ) . '</mark>';
 			}
 		}
 	}
@@ -90,21 +90,21 @@ class System_Status extends Admin_Page {
 			<div id="simpay-settings">
 				<div id="simpay-settings-content">
 
-					<h1><?php _e( 'System Report', 'stripe' ); ?></h1>
+					<h1><?php _e( 'System Report', 'simple-pay' ); ?></h1>
 
 					<div id="simpay-system-status-report">
 						<p>
-							<?php _e( 'Please copy and paste this information when contacting support:', 'stripe' ); ?>
+							<?php _e( 'Please copy and paste this information when contacting support:', 'simple-pay' ); ?>
 						</p>
 
 						<textarea readonly="readonly" onclick="this.select();"></textarea>
 
 						<p>
-							<?php _e( 'You can also download your information as a text file to attach, or simply view it below.', 'stripe' ); ?>
+							<?php _e( 'You can also download your information as a text file to attach, or simply view it below.', 'simple-pay' ); ?>
 						</p>
 						<p>
 							<a href="#" id="simpay-system-status-report-download"
-							   class="button button-primary"><?php _e( 'Download System Report', 'stripe' ); ?></a>
+							   class="button button-primary"><?php _e( 'Download System Report', 'simple-pay' ); ?></a>
 						</p>
 					</div>
 					<hr>
@@ -115,27 +115,27 @@ class System_Status extends Admin_Page {
 					$sections = array();
 					$panels   = array(
 						'wordpress' => array(
-							'label'  => __( 'WordPress Installation', 'stripe' ),
+							'label'  => __( 'WordPress Installation', 'simple-pay' ),
 							'export' => 'WordPress Installation',
 						),
 						'simpay'    => array(
-							'label'  => sprintf( __( '%s Settings', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ),
+							'label'  => sprintf( __( '%s Settings', 'simple-pay' ), SIMPLE_PAY_PLUGIN_NAME ),
 							'export' => SIMPLE_PAY_PLUGIN_NAME . ' Settings',
 						),
 						'theme'     => array(
-							'label'  => __( 'Active Theme', 'stripe' ),
+							'label'  => __( 'Active Theme', 'simple-pay' ),
 							'export' => 'Active Theme',
 						),
 						'plugins'   => array(
-							'label'  => __( 'Active Plugins', 'stripe' ),
+							'label'  => __( 'Active Plugins', 'simple-pay' ),
 							'export' => 'Active Plugins',
 						),
 						'server'    => array(
-							'label'  => __( 'Server Environment', 'stripe' ),
+							'label'  => __( 'Server Environment', 'simple-pay' ),
 							'export' => 'Server Environment',
 						),
 						'client'    => array(
-							'label'  => __( 'Client Information', 'stripe' ),
+							'label'  => __( 'Client Information', 'simple-pay' ),
 							'export' => 'Client Information',
 						),
 					);
@@ -150,30 +150,30 @@ class System_Status extends Admin_Page {
 
 					// Show version from base class.
 					$sections['simpay']['version'] = array(
-						'label'        => sprintf( __( '%s Version', 'stripe' ), $plugin_name ),
+						'label'        => sprintf( __( '%s Version', 'simple-pay' ), $plugin_name ),
 						'label_export' => $plugin_name . ' Version',
 						'result'       => SIMPLE_PAY_VERSION,
 					);
 
 					// Show Stripe TLS check.
 					$sections['simpay']['stripe_tls'] = array(
-						'label'         => __( 'Stripe TLS', 'stripe' ),
+						'label'         => __( 'Stripe TLS', 'simple-pay' ),
 						'label_export'  => 'Stripe TLS',
 						'result'        => self::stripe_tls_check( false ),
 						'result_export' => self::stripe_tls_check( true ),
 					);
 
 					// Show friendlier Stripe Test/Live mode.
-					$test_or_live_mode      = __( 'Test Mode', 'stripe' );
+					$test_or_live_mode      = __( 'Test Mode', 'simple-pay' );
 					$test_or_live_mode_html = '<mark class="warning">' . $test_or_live_mode . '</mark>';
 
 					if ( ! simpay_is_test_mode() ) {
-						$test_or_live_mode      = __( 'Live Mode', 'stripe' );
+						$test_or_live_mode      = __( 'Live Mode', 'simple-pay' );
 						$test_or_live_mode_html = '<mark class="ok">' . $test_or_live_mode . '</mark>';
 					}
 
 					$sections['simpay']['test_or_live_mode'] = array(
-						'label'         => __( 'Simple Pay Test or Live Mode', 'stripe' ),
+						'label'         => __( 'Simple Pay Test or Live Mode', 'simple-pay' ),
 						'label_export'  => 'Simple Pay Test or Live Mode',
 						'result'        => $test_or_live_mode_html,
 						'result_export' => $test_or_live_mode,
@@ -183,19 +183,19 @@ class System_Status extends Admin_Page {
 					 * WordPress Installation
 					 * ======================
 					 */
-					$debug_mode = $script_debug = __( 'No', 'stripe' );
+					$debug_mode = $script_debug = __( 'No', 'simple-pay' );
 					if ( defined( 'WP_DEBUG' ) ) {
-						$debug_mode = ( true === WP_DEBUG ? __( 'Yes', 'stripe' ) : $debug_mode );
+						$debug_mode = ( true === WP_DEBUG ? __( 'Yes', 'simple-pay' ) : $debug_mode );
 					}
 					if ( defined( 'SCRIPT_DEBUG' ) ) {
-						$script_debug = ( true === SCRIPT_DEBUG ? __( 'Yes', 'stripe' ) : $script_debug );
+						$script_debug = ( true === SCRIPT_DEBUG ? __( 'Yes', 'simple-pay' ) : $script_debug );
 					}
 
 					$memory        = self::let_to_num( WP_MEMORY_LIMIT );
 					$memory_export = size_format( $memory );
 
 					if ( $memory < 41943040 ) {
-						$memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 40MB. See: <a href="%2$s" target="_blank" rel="noopener noreferrer">Increasing memory allocated to PHP</a>', 'stripe' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
+						$memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 40MB. See: <a href="%2$s" target="_blank" rel="noopener noreferrer">Increasing memory allocated to PHP</a>', 'simple-pay' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
 					} else {
 						$memory = '<mark class="ok">' . $memory_export . '</mark>';
 					}
@@ -207,62 +207,62 @@ class System_Status extends Admin_Page {
 
 					$sections['wordpress'] = array(
 						'name'         => array(
-							'label'        => __( 'Site Name', 'stripe' ),
+							'label'        => __( 'Site Name', 'simple-pay' ),
 							'label_export' => 'Site Name',
 							'result'       => get_bloginfo( 'name' ),
 						),
 						'home_url'     => array(
-							'label'        => __( 'Home URL', 'stripe' ),
+							'label'        => __( 'Home URL', 'simple-pay' ),
 							'label_export' => 'Home URL',
 							'result'       => home_url(),
 						),
 						'site_url'     => array(
-							'label'        => __( 'Site URL', 'stripe' ),
+							'label'        => __( 'Site URL', 'simple-pay' ),
 							'label_export' => 'Site URL',
 							'result'       => site_url(),
 						),
 						// SSL check.
 						'ssl_enabled'  => array(
-							'label'         => __( 'SSL/HTTPS Enabled', 'stripe' ),
+							'label'         => __( 'SSL/HTTPS Enabled', 'simple-pay' ),
 							'label_export'  => 'SSL/HTTPS Enabled',
-							'result'        => is_ssl() ? '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>' : '<mark class="error">' . __( 'No. SSL is required by Stripe for Live mode.', 'stripe' ) . '</mark>',
+							'result'        => is_ssl() ? '<mark class="ok">' . __( 'Yes', 'simple-pay' ) . '</mark>' : '<mark class="error">' . __( 'No. SSL is required by Stripe for Live mode.', 'simple-pay' ) . '</mark>',
 							'result_export' => is_ssl() ? 'Yes' : 'No',
 						),
 						'version'      => array(
-							'label'        => __( 'Version', 'stripe' ),
+							'label'        => __( 'Version', 'simple-pay' ),
 							'label_export' => 'Version',
 							'result'       => $wp_version,
 						),
 						'locale'       => array(
-							'label'        => __( 'Locale', 'stripe' ),
+							'label'        => __( 'Locale', 'simple-pay' ),
 							'label_export' => 'Locale',
 							'result'       => get_locale(),
 						),
 						'multisite'    => array(
-							'label'         => __( 'Multisite', 'stripe' ),
+							'label'         => __( 'Multisite', 'simple-pay' ),
 							'label_export'  => 'Multisite',
-							'result'        => $is_multisite ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
+							'result'        => $is_multisite ? __( 'Yes', 'simple-pay' ) : __( 'No', 'simple-pay' ),
 							'result_export' => $is_multisite ? 'Yes' : 'No',
 						),
 						'permalink'    => array(
-							'label'         => __( 'Permalinks', 'stripe' ),
+							'label'         => __( 'Permalinks', 'simple-pay' ),
 							'label_export'  => 'Permalinks',
 							'result'        => '<code>' . $permalinks . '</code>',
 							'result_export' => $permalinks,
 						),
 						'memory_limit' => array(
-							'label'         => __( 'WP Memory Limit', 'stripe' ),
+							'label'         => __( 'WP Memory Limit', 'simple-pay' ),
 							'label_export'  => 'WP Memory Limit',
 							'result'        => $memory,
 							'result_export' => $memory_export,
 						),
 						'debug_mode'   => array(
-							'label'        => __( 'WP Debug Mode', 'stripe' ),
+							'label'        => __( 'WP Debug Mode', 'simple-pay' ),
 							'label_export' => 'WP Debug Mode',
 							'result'       => $debug_mode,
 						),
 						'script_debug' => array(
-							'label'        => __( 'Script Debug', 'stripe' ),
+							'label'        => __( 'Script Debug', 'simple-pay' ),
 							'label_export' => 'Script Debug',
 							'result'       => $script_debug,
 						),
@@ -300,17 +300,17 @@ class System_Status extends Admin_Page {
 					}
 
 					if ( version_compare( $theme_version, $theme_update_version, '<' ) ) {
-						$theme_version = '<mark class="error">' . $theme_version . ' (' . sprintf( __( '%s is available', 'stripe' ), esc_html( $theme_update_version ) ) . '</mark>';
+						$theme_version = '<mark class="error">' . $theme_version . ' (' . sprintf( __( '%s is available', 'simple-pay' ), esc_html( $theme_update_version ) ) . '</mark>';
 					} else {
 						$theme_version = '<mark class="ok">' . $theme_version . '</mark>';
 					}
 
 					$theme = '<dl>';
-					$theme .= '<dt>' . __( 'Name', 'stripe' ) . '</dt>';
+					$theme .= '<dt>' . __( 'Name', 'simple-pay' ) . '</dt>';
 					$theme .= '<dd>' . $theme_name . '</dd>';
-					$theme .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
+					$theme .= '<dt>' . __( 'Author', 'simple-pay' ) . '</dt>';
 					$theme .= '<dd>' . $theme_author . '</dd>';
-					$theme .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
+					$theme .= '<dt>' . __( 'Version', 'simple-pay' ) . '</dt>';
 					$theme .= '<dd>' . $theme_version . '</dd>';
 					$theme .= '</dl>';
 
@@ -326,11 +326,11 @@ class System_Status extends Admin_Page {
 
 							$parent       = wp_get_theme( $active_theme->Template );
 							$parent_theme = '<dl>';
-							$parent_theme .= '<dt>' . __( 'Name', 'stripe' ) . '</dt>';
+							$parent_theme .= '<dt>' . __( 'Name', 'simple-pay' ) . '</dt>';
 							$parent_theme .= '<dd>' . $parent->Name . '</dd>';
-							$parent_theme .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
+							$parent_theme .= '<dt>' . __( 'Author', 'simple-pay' ) . '</dt>';
 							$parent_theme .= '<dd>' . $parent->Author . '</dd>';
-							$parent_theme .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
+							$parent_theme .= '<dt>' . __( 'Version', 'simple-pay' ) . '</dt>';
 							$parent_theme .= '<dd>' . $parent->Version . '</dd>';
 							$parent_theme .= '</dl>';
 
@@ -340,19 +340,19 @@ class System_Status extends Admin_Page {
 
 					$sections['theme'] = array(
 						'theme'        => array(
-							'label'         => __( 'Theme Information', 'stripe' ),
+							'label'         => __( 'Theme Information', 'simple-pay' ),
 							'label_export'  => 'Theme',
 							'result'        => $theme,
 							'result_export' => $theme_export,
 						),
 						'theme_child'  => array(
-							'label'         => __( 'Child Theme', 'stripe' ),
+							'label'         => __( 'Child Theme', 'simple-pay' ),
 							'label_export'  => 'Child Theme',
-							'result'        => $is_child_theme ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
+							'result'        => $is_child_theme ? __( 'Yes', 'simple-pay' ) : __( 'No', 'simple-pay' ),
 							'result_export' => $is_child_theme ? 'Yes' : 'No',
 						),
 						'theme_parent' => array(
-							'label'         => __( 'Parent Theme', 'stripe' ),
+							'label'         => __( 'Parent Theme', 'simple-pay' ),
 							'label_export'  => 'Parent Theme',
 							'result'        => $parent_theme,
 							'result_export' => $parent_theme_export,
@@ -392,7 +392,7 @@ class System_Status extends Admin_Page {
 									if ( ! empty ( $api->version ) ) {
 										$plugin_update_version = $api->version;
 										if ( version_compare( $plugin_version, $plugin_update_version, '<' ) ) {
-											$plugin_version = '<mark class="error">' . $plugin_version . ' (' . sprintf( __( '%s is available', 'stripe' ), esc_html( $plugin_update_version ) ) . '</mark>';
+											$plugin_version = '<mark class="error">' . $plugin_version . ' (' . sprintf( __( '%s is available', 'simple-pay' ), esc_html( $plugin_update_version ) ) . '</mark>';
 										} else {
 											$plugin_version = '<mark class="ok">' . $plugin_version . '</mark>';
 										}
@@ -401,9 +401,9 @@ class System_Status extends Admin_Page {
 							}
 
 							$plugin = '<dl>';
-							$plugin .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
+							$plugin .= '<dt>' . __( 'Author', 'simple-pay' ) . '</dt>';
 							$plugin .= '<dd>' . $plugin_author . '</dd>';
-							$plugin .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
+							$plugin .= '<dt>' . __( 'Version', 'simple-pay' ) . '</dt>';
 							$plugin .= '<dd>' . $plugin_version . '</dd>';
 							$plugin .= '</dl>';
 
@@ -425,7 +425,7 @@ class System_Status extends Admin_Page {
 					 * ==================
 					 */
 					if ( version_compare( PHP_VERSION, '7.0', '<' ) ) {
-						$php = '<mark>' . PHP_VERSION . ' - ' . __( 'WordPress.org recommends upgrading to PHP 7 or higher for better security.', 'stripe' ) . ' <a href="https://wordpress.org/about/requirements/" target="_blank" rel="noopener noreferrer">' . __( 'Read more.', 'stripe' ) . '</a>' . '</mark>';
+						$php = '<mark>' . PHP_VERSION . ' - ' . __( 'WordPress.org recommends upgrading to PHP 7 or higher for better security.', 'simple-pay' ) . ' <a href="https://wordpress.org/about/requirements/" target="_blank" rel="noopener noreferrer">' . __( 'Read more.', 'simple-pay' ) . '</a>' . '</mark>';
 					} else {
 						$php = '<mark class="ok">' . PHP_VERSION . '</mark>';
 					}
@@ -433,7 +433,7 @@ class System_Status extends Admin_Page {
 					if ( $wpdb->use_mysqli ) {
 						$mysql = $mysql_export = @mysqli_get_server_info( $wpdb->dbh );
 					} else {
-						$mysql_export = __( 'Cannot connect to MySQL database.', 'stripe' );
+						$mysql_export = __( 'Cannot connect to MySQL database.', 'simple-pay' );
 						$mysql        = '<mark class="error">' . $mysql_export . '</mark>';
 					}
 
@@ -446,7 +446,7 @@ class System_Status extends Admin_Page {
 
 					$default_timezone = $server_timezone_export = date_default_timezone_get();
 					if ( 'UTC' !== $default_timezone ) {
-						$server_timezone = '<mark class="error">' . sprintf( __( 'Server default timezone is %s - it should be UTC', 'stripe' ), $default_timezone ) . '</mark>';
+						$server_timezone = '<mark class="error">' . sprintf( __( 'Server default timezone is %s - it should be UTC', 'simple-pay' ), $default_timezone ) . '</mark>';
 					} else {
 						$server_timezone = '<mark class="ok">UTC</mark>';
 					}
@@ -460,10 +460,10 @@ class System_Status extends Admin_Page {
 					) );
 					if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
 						$wp_post_export = 'Yes';
-						$wp_post        = '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>';
+						$wp_post        = '<mark class="ok">' . __( 'Yes', 'simple-pay' ) . '</mark>';
 					} else {
 						$wp_post_export = 'No';
-						$wp_post        = '<mark class="error">' . __( 'No', 'stripe' );
+						$wp_post        = '<mark class="error">' . __( 'No', 'simple-pay' );
 						if ( is_wp_error( $response ) ) {
 							$error          = ' (' . $response->get_error_message() . ')';
 							$wp_post        .= $error;
@@ -480,10 +480,10 @@ class System_Status extends Admin_Page {
 					$response = wp_safe_remote_get( get_home_url( '/?p=1' ) );
 					if ( ! is_wp_error( $response ) && $response['response']['code'] >= 200 && $response['response']['code'] < 300 ) {
 						$wp_get_export = 'Yes';
-						$wp_get        = '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>';
+						$wp_get        = '<mark class="ok">' . __( 'Yes', 'simple-pay' ) . '</mark>';
 					} else {
 						$wp_get_export = 'No';
-						$wp_get        = '<mark class="error">' . __( 'No', 'stripe' );
+						$wp_get        = '<mark class="error">' . __( 'No', 'simple-pay' );
 						if ( is_wp_error( $response ) ) {
 							$error         = ' (' . $response->get_error_message() . ')';
 							$wp_get        .= $error;
@@ -510,97 +510,97 @@ class System_Status extends Admin_Page {
 
 					$sections['server'] = array(
 						'host'                => array(
-							'label'        => __( 'Web Server', 'stripe' ),
+							'label'        => __( 'Web Server', 'simple-pay' ),
 							'label_export' => 'Web Server',
 							'result'       => $host,
 						),
 						'php_version'         => array(
-							'label'         => __( 'PHP Version', 'stripe' ),
+							'label'         => __( 'PHP Version', 'simple-pay' ),
 							'label_export'  => 'PHP Version',
 							'result'        => $php,
 							'result_export' => PHP_VERSION,
 						),
 						'mysql_version'       => array(
-							'label'         => __( 'MySQL Version', 'stripe' ),
+							'label'         => __( 'MySQL Version', 'simple-pay' ),
 							'label_export'  => 'MySQL Version',
 							'result'        => version_compare( $mysql, '5.5', '>' ) ? '<mark class="ok">' . $mysql . '</mark>' : $mysql,
 							'result_export' => $mysql_export,
 						),
 						'server_timezone'     => array(
-							'label'         => __( 'Server Timezone', 'stripe' ),
+							'label'         => __( 'Server Timezone', 'simple-pay' ),
 							'label_export'  => 'Server Timezone',
 							'result'        => $server_timezone,
 							'result_export' => $server_timezone_export,
 						),
 						'display_errors'      => array(
-							'label'         => __( 'Display Errors', 'stripe' ),
+							'label'         => __( 'Display Errors', 'simple-pay' ),
 							'label_export'  => 'Display Errors',
-							'result'        => ( ini_get( 'display_errors' ) ) ? __( 'Yes', 'stripe' ) . ' (' . ini_get( 'display_errors' ) . ')' : '-',
+							'result'        => ( ini_get( 'display_errors' ) ) ? __( 'Yes', 'simple-pay' ) . ' (' . ini_get( 'display_errors' ) . ')' : '-',
 							'result_export' => ( ini_get( 'display_errors' ) ) ? 'Yes' : 'No',
 						),
 						'php_memory_limit'    => array(
-							'label'        => __( 'Server PHP Memory Limit', 'stripe' ),
+							'label'        => __( 'Server PHP Memory Limit', 'simple-pay' ),
 							'label_export' => 'Server PHP Memory Limit',
 							'result'       => $php_memory_limit ? $php_memory_limit : '-',
 						),
 						'upload_max_filesize' => array(
-							'label'        => __( 'Upload Max Filesize', 'stripe' ),
+							'label'        => __( 'Upload Max Filesize', 'simple-pay' ),
 							'label_export' => 'Upload Max Filesize',
 							'result'       => $php_max_upload_filesize ? $php_max_upload_filesize : '-',
 						),
 						'post_max_size'       => array(
-							'label'        => __( 'Post Max Size', 'stripe' ),
+							'label'        => __( 'Post Max Size', 'simple-pay' ),
 							'label_export' => 'Post Max Size',
 							'result'       => $php_post_max_size ? $php_post_max_size : '-',
 						),
 						'max_execution_time'  => array(
-							'label'        => __( 'Max Execution Time', 'stripe' ),
+							'label'        => __( 'Max Execution Time', 'simple-pay' ),
 							'label_export' => 'Max Execution Time',
 							'result'       => $php_max_execution_time ? $php_max_execution_time : '-',
 						),
 						'max_input_vars'      => array(
-							'label'        => __( 'Max Input Vars', 'stripe' ),
+							'label'        => __( 'Max Input Vars', 'simple-pay' ),
 							'label_export' => 'Max Input Vars',
 							'result'       => $php_max_input_vars ? $php_max_input_vars : '-',
 						),
 						'curl_init'           => array(
-							'label'         => __( 'cURL Enabled', 'stripe' ),
-							'result'        => function_exists( 'curl_init' ) ? '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>' : '<mark class="error">' . __( 'No', 'stripe' ) . '</mark>',
+							'label'         => __( 'cURL Enabled', 'simple-pay' ),
+							'result'        => function_exists( 'curl_init' ) ? '<mark class="ok">' . __( 'Yes', 'simple-pay' ) . '</mark>' : '<mark class="error">' . __( 'No', 'simple-pay' ) . '</mark>',
 							'result_export' => function_exists( 'curl_init' ) ? 'Yes' : 'No',
 						),
 						'curl_version'         => array(
-							'label'         => __( 'cURL Version', 'stripe' ),
+							'label'         => __( 'cURL Version', 'simple-pay' ),
 							'result'        => $curl_version,
 							'result_export' => $curl_version,
 						),
 						'mbstring'             => array(
-							'label'         => 'mbstring (' . __( 'Multibyte String', 'stripe' ) . ') ' . __( 'Enabled', 'stripe' ),
-							'result'        => extension_loaded( 'mbstring' ) ? '<mark class="ok">' . __( 'Yes', 'stripe' ) . '</mark>' : '<mark class="error">' . __( 'No', 'stripe' ) . '</mark>',
+							'label'         => 'mbstring (' . __( 'Multibyte String', 'simple-pay' ) . ') ' . __( 'Enabled', 'simple-pay' ),
+							'result'        => extension_loaded( 'mbstring' ) ? '<mark class="ok">' . __( 'Yes', 'simple-pay' ) . '</mark>' : '<mark class="error">' . __( 'No', 'simple-pay' ) . '</mark>',
 							'result_export' => extension_loaded( 'mbstring' ) ? 'Yes' : 'No',
 						),
 						'fsockopen'           => array(
 							'label'         => 'fsockopen',
-							'result'        => function_exists( 'fsockopen' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
+							'result'        => function_exists( 'fsockopen' ) ? __( 'Yes', 'simple-pay' ) : __( 'No', 'simple-pay' ),
 							'result_export' => function_exists( 'fsockopen' ) ? 'Yes' : 'No',
 						),
 						'soap'                => array(
 							'label'         => 'SOAP',
-							'result'        => class_exists( 'SoapClient' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
+							'result'        => class_exists( 'SoapClient' ) ? __( 'Yes', 'simple-pay' ) : __( 'No', 'simple-pay' ),
 							'result_export' => class_exists( 'SoapClient' ) ? 'Yes' : 'No',
 						),
 						'suhosin'             => array(
 							'label'         => 'SUHOSIN',
-							'result'        => extension_loaded( 'suhosin' ) ? __( 'Yes', 'stripe' ) : __( 'No', 'stripe' ),
+							'result'        => extension_loaded( 'suhosin' ) ? __( 'Yes', 'simple-pay' ) : __( 'No', 'simple-pay' ),
 							'result_export' => extension_loaded( 'suhosin' ) ? 'Yes' : 'No',
 						),
 						'wp_remote_post'      => array(
-							'label'         => __( 'WP Remote POST', 'stripe' ),
+							'label'         => __( 'WP Remote POST', 'simple-pay' ),
 							'label_export'  => 'WP Remote POST',
 							'result'        => $wp_post,
 							'result_export' => $wp_post_export,
 						),
 						'wp_remote_get'       => array(
-							'label'         => __( 'WP Remote GET', 'stripe' ),
+							'label'         => __( 'WP Remote GET', 'simple-pay' ),
 							'label_export'  => 'WP Remote GET',
 							'result'        => $wp_get,
 							'result_export' => $wp_get_export,
@@ -616,13 +616,13 @@ class System_Status extends Admin_Page {
 
 
 					$browser = '<dl>';
-					$browser .= '<dt>' . __( 'Name:', 'stripe' ) . '</dt>';
+					$browser .= '<dt>' . __( 'Name:', 'simple-pay' ) . '</dt>';
 					$browser .= '<dd>' . $user_client->getBrowser() . '</dd>';
-					$browser .= '<dt>' . __( 'Version:', 'stripe' ) . '</dt>';
+					$browser .= '<dt>' . __( 'Version:', 'simple-pay' ) . '</dt>';
 					$browser .= '<dd>' . $user_client->getVersion() . '</dd>';
-					$browser .= '<dt>' . __( 'User Agent:', 'stripe' ) . '</dt>';
+					$browser .= '<dt>' . __( 'User Agent:', 'simple-pay' ) . '</dt>';
 					$browser .= '<dd>' . $user_client->getUserAgent() . '</dd>';
-					$browser .= '<dt>' . __( 'Platform:', 'stripe' ) . '</dt>';
+					$browser .= '<dt>' . __( 'Platform:', 'simple-pay' ) . '</dt>';
 					$browser .= '<dd>' . $user_client->getPlatform() . '</dd>';
 					$browser .= '</dl>';
 
@@ -631,12 +631,12 @@ class System_Status extends Admin_Page {
 
 					$sections['client'] = array(
 						'user_ip' => array(
-							'label'        => __( 'IP Address', 'stripe' ),
+							'label'        => __( 'IP Address', 'simple-pay' ),
 							'label_export' => 'IP Address',
 							'result'       => $_SERVER['SERVER_ADDR'],
 						),
 						'browser' => array(
-							'label'         => __( 'Browser', 'stripe' ),
+							'label'         => __( 'Browser', 'simple-pay' ),
 							'result'        => $browser,
 							'result_export' => $browser_export,
 						),

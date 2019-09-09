@@ -1,12 +1,13 @@
 <?php
 /**
  * Plugin Name: WP Simple Pay Lite
- * Plugin URI:  https://wpsimplepay.com
+ * Plugin URI: https://wpsimplepay.com
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
- * Author: WP Simple Pay
- * Author URI:  https://wpsimplepay.com
- * Version: 2.2.0
+ * Author: Sandhills Development, LLC
+ * Author URI: https://sandhillsdev.com
+ * Version: 2.3.0-beta-1
  * Text Domain: stripe
+ * Domain Path: /languages
  */
 
 /**
@@ -31,19 +32,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Don't run if Pro has been installed.
 if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
-	define( 'SIMPLE_PAY_VERSION', '2.2.0' );
+	//
+	// Lite/Pro-specific.
+	//
+	define( 'SIMPLE_PAY_VERSION', '2.3.0-beta-1' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );
 	}
 
-	// Stripe API version should be in 'YYYY-MM-DD' format.
+	//
+	// Stripe.
+	//
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2019-03-14' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2019-08-14' );
 	}
 
+	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
+		define( 'SIMPLE_PAY_STRIPE_PARTNER_ID', 'pp_partner_DKkf27LbiCjOYt' );
+	}
+
+	//
+	// Helpers.
+	//
 	if ( ! defined( 'SIMPLE_PAY_MAIN_FILE' ) ) {
 		define( 'SIMPLE_PAY_MAIN_FILE', __FILE__ );
 	}
@@ -68,49 +82,23 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
 	}
 
-	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_PARTNER_ID', 'pp_partner_DKkf27LbiCjOYt' );
+	// Compatibility files.
+	require_once( SIMPLE_PAY_DIR . 'includes/core/boostrap/compatibility.php' );
+
+	if ( SimplePay\Core\Bootstrap\Compatibility\server_requirements_met() ) {
+		// Autoloader.
+		require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
+		require_once( SIMPLE_PAY_DIR . 'includes/autoload.php' );
+
+		// Core & Pro main plugin files.
+		require_once( SIMPLE_PAY_DIR . 'includes/core/main.php' );
+
+		// Upgrade promos.
+		require_once( SIMPLE_PAY_INC . 'promos/promo-loader.php' );
+	} else {
+		SimplePay\Core\Bootstrap\Compatibility\show_admin_notices();
 	}
-
-	if ( ! defined( 'SIMPLE_PAY_MIN_PHP_VER' ) ) {
-		define( 'SIMPLE_PAY_MIN_PHP_VER', '5.4' );
-	}
-
-	/**
-	 * Show an error message for PHP version < SIMPLE_PAY_MIN_PHP_VER and don't load the plugin.
-	 */
-	if ( ! function_exists( 'simpay_admin_php_notice' ) ) {
-		function simpay_admin_php_notice() {
-			?>
-
-			<div class="error">
-				<p>
-					<?php printf( esc_html__( '%1$s requires %2$s or higher.', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME, 'PHP ' . SIMPLE_PAY_MIN_PHP_VER ); ?>
-				</p>
-			</div>
-
-			<?php
-		}
-	}
-
-	if ( version_compare( PHP_VERSION, SIMPLE_PAY_MIN_PHP_VER, '<' ) ) {
-		add_action( 'admin_notices', 'simpay_admin_php_notice' );
-
-		return;
-	}
-
-	// Autoloader
-	require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
-	require_once( SIMPLE_PAY_INC . 'autoload.php' );
-
-	// Core plugin (new)
-	require_once( SIMPLE_PAY_INC . 'core/main.php' );
-
-	// Upgrade promos
-	require_once( SIMPLE_PAY_INC . 'promos/promo-loader.php' );
 
 } else {
-
-	deactivate_plugins( plugin_basename(SIMPLE_PAY_MAIN_FILE ) );
+	deactivate_plugins( plugin_basename( SIMPLE_PAY_MAIN_FILE ) );
 }
-

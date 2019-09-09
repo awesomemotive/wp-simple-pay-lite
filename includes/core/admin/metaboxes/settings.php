@@ -132,25 +132,25 @@ class Settings {
 		// Hook to add more tabs.
 		$tabs = apply_filters( 'simpay_form_settings_meta_tabs_li', array(
 			'payment_options'      => array(
-				'label'  => esc_html__( 'Payment Options', 'stripe' ),
+				'label'  => esc_html__( 'Payment Options', 'simple-pay' ),
 				'target' => 'payment-options-settings-panel',
 				'class'  => array( 'active' ),
 				'icon'   => '',
 			),
 			'form_display'         => array(
-				'label'  => esc_html__( 'On-Page Form Display', 'stripe' ),
+				'label'  => esc_html__( 'On-Page Form Display', 'simple-pay' ),
 				'target' => 'custom-form-fields-settings-panel',
 				'class'  => array(),
 				'icon'   => '',
 			),
 			'stripe_checkout'      => array(
-				'label'  => esc_html__( 'Stripe Checkout Display', 'stripe' ),
+				'label'  => esc_html__( 'Stripe Checkout Display', 'simple-pay' ),
 				'target' => 'stripe-checkout-settings-panel',
 				'class'  => array( 'toggle-_form_display_type-stripe_checkout' ),
 				'icon'   => '',
 			),
 			'subscription_options' => array(
-				'label'  => esc_html__( 'Subscription Options', 'stripe' ),
+				'label'  => esc_html__( 'Subscription Options', 'simple-pay' ),
 				'target' => 'subscription-options-settings-panel',
 				'class'  => array(),
 				'icon'   => '',
@@ -256,25 +256,9 @@ class Settings {
 		$image_url = isset( $_POST['_image_url'] ) ? sanitize_text_field( $_POST['_image_url'] ) : '';
 		update_post_meta( $post_id, '_image_url', $image_url );
 
-		// Enable Remember Me
-		$enable_remember_me = isset( $_POST['_enable_remember_me'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_enable_remember_me', $enable_remember_me );
-
-		// Checkout Button Text
-		$checkout_button_text = isset( $_POST['_checkout_button_text'] ) ? sanitize_text_field( $_POST['_checkout_button_text'] ) : '';
-		update_post_meta( $post_id, '_checkout_button_text', $checkout_button_text );
-
-		// Verify Zip/Postal Code
-		$verify_zip = isset( $_POST['_verify_zip'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_verify_zip', $verify_zip );
-
 		// Enable Billing Address
 		$enable_billing_address = isset( $_POST['_enable_billing_address'] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_enable_billing_address', $enable_billing_address );
-
-		// Enable Shipping Address
-		$enable_shipping_address = isset( $_POST['_enable_shipping_address'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_enable_shipping_address', $enable_shipping_address );
 
 		// Payment button style.
 		if ( isset( $_POST['_payment_button_style'] ) ) {
@@ -356,7 +340,7 @@ class Settings {
 			<?php
 			echo wp_kses_post(
 				sprintf(
-					__( 'Configure the on-page Payment Button in the %1$sCustom Form Fields%2$s options.', 'stripe' ),
+					__( 'Configure the on-page Payment Button in the %1$sCustom Form Fields%2$s options.', 'simple-pay' ),
 					'<a href="#" class="simpay-tab-link" data-show-tab="simpay-form_display">',
 					'</a>'
 				)

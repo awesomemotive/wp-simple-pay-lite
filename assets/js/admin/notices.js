@@ -6,6 +6,11 @@
 import domReady from '@wordpress/dom-ready';
 
 /**
+ * Internal dependencies.
+ */
+import './settings/usage-tracking.js';
+
+/**
  * Handle AJAX dismissal of notices.
  */
 domReady( () => {

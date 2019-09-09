@@ -69,11 +69,7 @@ abstract class Form {
 	public $company_name = '';
 	public $item_description = '';
 	public $image_url = '';
-	public $enable_remember_me = '';
-	public $checkout_button_text = '';
-	public $verify_zip = '';
 	public $enable_billing_address = '';
-	public $enable_shipping_address = '';
 
 	/*****
 	 *
@@ -172,6 +168,17 @@ abstract class Form {
 	}
 
 	/**
+	 * Determine the display type of the form.
+	 *
+	 * @since 3.6.0
+	 *
+	 * @return string
+	 */
+	public function get_display_type() {
+		return simpay_get_saved_meta( $this->id, '_form_display_type', 'stripe_checkout' );
+	}
+
+	/**
 	 * Set the global settings options to the form attributes.
 	 */
 	public function set_global_settings() {
@@ -214,7 +221,21 @@ abstract class Form {
 		$payment_failure_page       = simpay_get_global_setting( 'failure_page' );
 		$this->payment_failure_page = simpay_get_filtered( 'payment_failure_page', $this->get_redirect_url( $payment_failure_page, true ), $this->id );
 
-		$this->locale      = simpay_get_filtered( 'locale', simpay_get_global_setting( 'locale' ), $this->id );
+		// Locale backwards compatibility.
+		// Can't search for the global setting key because it exists in both options now.
+		$keys   = get_option( 'simpay_settings_keys' );
+		$locale = isset( $keys['locale']['locale'] ) ? $keys['locale']['locale'] : 'auto';
+
+		$fallback = get_option( 'simpay_settings_general' );
+		$fallback = isset( $fallback['general']['locale'] ) ? $fallback['general']['locale'] : 'auto';
+
+		// Previously an empty value was English. Force that to `en` to avoid errors.
+		if ( '' === $locale ) {
+			$locale = 'en';
+		}
+
+		$this->locale = ! empty( $locale ) ? $locale : $fallback;
+
 		$this->country     = simpay_get_filtered( 'country', simpay_get_global_setting( 'country' ), $this->id );
 
 		// Stripe needs something, so default to US if settings haven't been saved.
@@ -259,16 +280,14 @@ abstract class Form {
 
 		/** STRIPE CHECKOUT DISPLAY **/
 
+		$this->checkout_button_text    = simpay_get_filtered( 'checkout_button_text', simpay_get_saved_meta( $this->id, '_checkout_button_text', sprintf( esc_html__( 'Pay %s', 'simple-pay' ), '{{amount}}' ) ), $this->id );
+
 		$this->company_name = simpay_get_filtered( 'company_name', simpay_get_saved_meta( $this->id, '_company_name' ), $this->id );
 
 		$this->item_description = simpay_get_filtered( 'item_description', simpay_get_saved_meta( $this->id, '_item_description' ), $this->id );
 
 		$this->image_url               = simpay_get_filtered( 'image_url', simpay_get_saved_meta( $this->id, '_image_url' ), $this->id );
-		$this->enable_remember_me      = simpay_get_filtered( 'enable_remember_me', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_remember_me' ) ), $this->id );
-		$this->checkout_button_text    = simpay_get_filtered( 'checkout_button_text', simpay_get_saved_meta( $this->id, '_checkout_button_text', sprintf( esc_html__( 'Pay %s', 'stripe' ), '{{amount}}' ) ), $this->id );
-		$this->verify_zip              = simpay_get_filtered( 'verify_zip', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_verify_zip' ) ), $this->id );
 		$this->enable_billing_address  = simpay_get_filtered( 'enable_billing_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_billing_address' ) ), $this->id );
-		$this->enable_shipping_address = simpay_get_filtered( 'enable_shipping_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_shipping_address' ) ), $this->id );
 	}
 
 	/**
@@ -363,24 +382,17 @@ abstract class Form {
 		// Key is required so we always include it
 		$strings['strings']['key'] = $this->publishable_key;
 
+		// Redirect URLs.
+		$strings['strings']['success_url'] = $this->payment_success_page;
+		$strings['strings']['error_url']   = $this->payment_failure_page;
+
 		// Boolean/dropdown options
 		$bools = array(
-			'bools' => array(
-				'allowRememberMe' => ( $this->enable_remember_me ? true : false ),
-			),
+			'bools' => array(),
 		);
 
 		if ( $this->enable_billing_address ) {
 			$bools['bools']['billingAddress'] = true;
-
-			// Stripe doesn't like shipping being enabled unless Billing is
-			if ( $this->enable_shipping_address ) {
-				$bools['bools']['shippingAddress'] = true;
-			}
-		}
-
-		if ( $this->verify_zip ) {
-			$bools['bools']['zipCode'] = true;
 		}
 
 		// Optional params if set in the settings only
@@ -408,11 +420,6 @@ abstract class Form {
 		// Currency
 		if ( ! empty( $this->currency ) ) {
 			$strings['strings']['currency'] = $this->currency;
-		}
-
-		// Checkout button label (overlay)
-		if ( ! empty( $this->checkout_button_text ) ) {
-			$strings['strings']['panelLabel'] = $this->checkout_button_text;
 		}
 
 		// Item description

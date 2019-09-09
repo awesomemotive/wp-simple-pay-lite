@@ -31,6 +31,9 @@ class Default_Form extends Form {
 		// Construct our base form from the parent class
 		parent::__construct( $id );
 
+		// Shim a few properties that are referenced later without checking existence.
+		// @todo Update implementation of these properties to check validitiy.
+		$this->is_one_time_custom_amount = false;
 	}
 
 	/**
@@ -42,7 +45,6 @@ class Default_Form extends Form {
 	public function register_hooks() {
 		add_action( 'wp_footer', array( $this, 'set_script_variables' ), 0 );
 		add_filter( 'simpay_form_' . $this->id . '_custom_fields', array( $this, 'get_custom_fields_html' ), 10, 2 );
-		add_filter( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', array( $this, 'output_address_fields' ) );
 	}
 
 	/**
@@ -121,6 +123,8 @@ class Default_Form extends Form {
 				 * @param object $this Current form object.
 				 */
 				do_action( 'simpay_form_before_form_bottom', $this->id, $this );
+
+				wp_nonce_field( 'simpay_payment_form' );
 
 			// We echo the </form> instead of appending it so that the action hook can work correctly if they try to output something before the form close.
 			echo '</form>';
@@ -215,23 +219,32 @@ class Default_Form extends Form {
 	 */
 	public function get_form_script_variables() {
 
+		/**
+		 * @todo Use `$this->extract_custom_field_setting`
+		 *
+		 * Not switching now, because I'm not confident $this->custom_fields is always correctly accessed.
+		 *
+		 * @link https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/860
+		 */
 		$custom_fields = simpay_get_saved_meta( $this->id, '_custom_fields' );
-		$loading_text  = '';
 
+		$payment_text          = __( 'Pay with Card', 'simple-pay' );
+		$payment_loading_text  = __( 'Please Wait...', 'simple-pay' );
+
+		// Payment Button (Embed + Stripe Checkout)
 		if ( isset( $custom_fields['payment_button'] ) && is_array( $custom_fields['payment_button'] ) ) {
+			// There can only be one Checkout Button, but it's saved in an array.
+			$payment_button = current( $custom_fields['payment_button'] );
 
-			foreach ( $custom_fields['payment_button'] as $k => $v ) {
-				if ( is_array( $v ) && array_key_exists( 'processing_text', $v ) ) {
-					if ( isset( $v['processing_text'] ) && ! empty( $v['processing_text'] ) ) {
-						$loading_text = $v['processing_text'];
-						break;
-					}
-				}
+			// Base.
+			if ( ! empty( $payment_button['text'] ) ) {
+				$payment_text = $payment_button['text'];
 			}
-		}
 
-		if ( empty( $loading_text ) ) {
-			$loading_text = esc_html__( 'Please wait...', 'stripe' );
+			// Processing.
+			if ( ! empty( $payment_button['processing_text'] ) ) {
+				$payment_loading_text = $payment_button['processing_text'];
+			}
 		}
 
 		$integers['integers'] = array(
@@ -239,7 +252,8 @@ class Default_Form extends Form {
 		);
 
 		$strings['strings'] = array(
-			'loadingText' => $loading_text,
+			'paymentButtonText'        => esc_html( $payment_text ),
+			'paymentButtonLoadingText' => esc_html( $payment_loading_text ),
 		);
 
 		$form_variables = array_merge( $integers, $strings );
@@ -266,5 +280,16 @@ class Default_Form extends Form {
 		}
 
 		return $html;
+	}
+
+	/**
+	 * Check if this form has subscriptions enabled or not.
+	 *
+	 * @since unknown
+	 *
+	 * @return bool
+	 */
+	public function is_subscription() {
+		return false;
 	}
 }

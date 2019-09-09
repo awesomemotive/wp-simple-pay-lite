@@ -301,7 +301,7 @@ function simpay_get_test_mode_badge() {
 
 	if ( simpay_is_test_mode() ) {
 		$html .= '<div class="simpay-test-mode-badge-container">';
-		$html .= '<span class="simpay-test-mode-badge">' . esc_html__( 'Test Mode', 'stripe' ) . '</span>';
+		$html .= '<span class="simpay-test-mode-badge">' . esc_html__( 'Test Mode', 'simple-pay' ) . '</span>';
 		$html .= '</div>';
 	}
 
@@ -455,8 +455,8 @@ function simpay_shared_script_variables() {
 	);
 
 	$i18n['i18n'] = array(
-		'mediaTitle'      => esc_html__( 'Insert Media', 'stripe' ),
-		'mediaButtonText' => esc_html__( 'Use Image', 'stripe' ),
+		'mediaTitle'      => esc_html__( 'Insert Media', 'simple-pay' ),
+		'mediaButtonText' => esc_html__( 'Use Image', 'simple-pay' ),
 	);
 
 	$integers['integers'] = array(
@@ -476,21 +476,21 @@ function simpay_shared_script_variables() {
 function simpay_get_zero_decimal_currencies() {
 
 	return apply_filters( 'simpay_zero_decimal_currencies', array(
-		'bif' => esc_html__( 'Burundian Franc', 'stripe' ),
-		'clp' => esc_html__( 'Chilean Peso', 'stripe' ),
-		'djf' => esc_html__( 'Djiboutian Franc', 'stripe' ),
-		'gnf' => esc_html__( 'Guinean Franc', 'stripe' ),
-		'jpy' => esc_html__( 'Japanese Yen', 'stripe' ),
-		'kmf' => esc_html__( 'Comorian Franc', 'stripe' ),
-		'krw' => esc_html__( 'South Korean Won', 'stripe' ),
-		'mga' => esc_html__( 'Malagasy Ariary', 'stripe' ),
-		'pyg' => esc_html__( 'Paraguayan Guaraní', 'stripe' ),
-		'rwf' => esc_html__( 'Rwandan Franc', 'stripe' ),
-		'vnd' => esc_html__( 'Vietnamese Dong', 'stripe' ),
-		'vuv' => esc_html__( 'Vanuatu Vatu', 'stripe' ),
-		'xaf' => esc_html__( 'Central African Cfa Franc', 'stripe' ),
-		'xof' => esc_html__( 'West African Cfa Franc', 'stripe' ),
-		'xpf' => esc_html__( 'Cfp Franc', 'stripe' ),
+		'bif' => esc_html__( 'Burundian Franc', 'simple-pay' ),
+		'clp' => esc_html__( 'Chilean Peso', 'simple-pay' ),
+		'djf' => esc_html__( 'Djiboutian Franc', 'simple-pay' ),
+		'gnf' => esc_html__( 'Guinean Franc', 'simple-pay' ),
+		'jpy' => esc_html__( 'Japanese Yen', 'simple-pay' ),
+		'kmf' => esc_html__( 'Comorian Franc', 'simple-pay' ),
+		'krw' => esc_html__( 'South Korean Won', 'simple-pay' ),
+		'mga' => esc_html__( 'Malagasy Ariary', 'simple-pay' ),
+		'pyg' => esc_html__( 'Paraguayan Guaraní', 'simple-pay' ),
+		'rwf' => esc_html__( 'Rwandan Franc', 'simple-pay' ),
+		'vnd' => esc_html__( 'Vietnamese Dong', 'simple-pay' ),
+		'vuv' => esc_html__( 'Vanuatu Vatu', 'simple-pay' ),
+		'xaf' => esc_html__( 'Central African Cfa Franc', 'simple-pay' ),
+		'xof' => esc_html__( 'West African Cfa Franc', 'simple-pay' ),
+		'xpf' => esc_html__( 'Cfp Franc', 'simple-pay' ),
 	) );
 }
 
@@ -741,11 +741,11 @@ function simpay_get_editor_default( $editor ) {
 
 	switch ( $editor ) {
 		case 'one_time':
-			$template .= __( 'Thanks for your purchase. Here are the details of your payment:', 'stripe' ) . "\n\n";
-			$template .= '<strong>' . esc_html__( 'Item:', 'stripe' ) . '</strong>' . ' {item-description}' . "\n";
-			$template .= '<strong>' . esc_html__( 'Purchased From:', 'stripe' ) . '</strong>' . ' {company-name}' . "\n";
-			$template .= '<strong>' . esc_html__( 'Payment Date:', 'stripe' ) . '</strong>' . ' {charge-date}' . "\n";
-			$template .= '<strong>' . esc_html__( 'Payment Amount: ', 'stripe' ) . '</strong>' . '{total-amount}' . "\n";
+			$template .= __( 'Thanks for your purchase. Here are the details of your payment:', 'simple-pay' ) . "\n\n";
+			$template .= '<strong>' . esc_html__( 'Item:', 'simple-pay' ) . '</strong>' . ' {item-description}' . "\n";
+			$template .= '<strong>' . esc_html__( 'Purchased From:', 'simple-pay' ) . '</strong>' . ' {company-name}' . "\n";
+			$template .= '<strong>' . esc_html__( 'Payment Date:', 'simple-pay' ) . '</strong>' . ' {charge-date}' . "\n";
+			$template .= '<strong>' . esc_html__( 'Payment Amount: ', 'simple-pay' ) . '</strong>' . '{total-amount}' . "\n";
 
 			return $template;
 		case has_filter( 'simpay_editor_template' ):

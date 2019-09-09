@@ -50,7 +50,9 @@ class Notice_Manager {
 	 */
 	public function __construct() {
 		add_action( 'admin_notices', array( __CLASS__, 'show_notices' ) );
-		add_action( 'wp_ajax_simpay_dismiss_admin_notice', array( __CLASS__, 'dismiss_notice' ) );
+		add_action( 'wp_ajax_simpay_dismiss_admin_notice', array( __CLASS__, 'ajax_dismiss_notice' ) );
+
+		add_action( 'admin_init', array( __CLASS__, 'link_dismiss_notice' ), 0 );
 	}
 
 	/**
@@ -93,18 +95,23 @@ class Notice_Manager {
 	 * Dismiss a notice.
 	 *
 	 * @since 3.5.0
+	 * @since 3.6.0 Directly dismisses notice, instead of an AJAX response.
+	 *
+	 * @param string $notice_id Notice ID.
 	 */
-	public static function dismiss_notice() {
-		$notice_id = isset( $_POST['notice_id'] ) ? sanitize_text_field( $_POST['notice_id'] ) : false;
-		$nonce     = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : false;
-
-		if ( ! wp_verify_nonce( $nonce, 'simpay-dismiss-notice-' . $notice_id ) ) {
-			return wp_send_json_error();
-		}
-
+	public static function dismiss_notice( $notice_id ) {
 		update_option( 'simpay_dismiss_' . $notice_id, true );
+	}
 
-		wp_send_json_success();
+	/**
+	 * Undismisses a notice.
+	 *
+	 * @since 3.6.0
+	 *
+	 * @param string $notice_id Notice ID.
+	 */
+	public static function undismiss_notice( $notice_id ) {
+		delete_option( 'simpay_dismiss_' . $notice_id );
 	}
 
 	/**
@@ -112,7 +119,7 @@ class Notice_Manager {
 	 *
 	 * @since 3.5.0
 	 *
-	 * @param int $notice_id Notice ID.
+	 * @param string $notice_id Notice ID.
 	 */
 	public static function is_notice_dismissed( $notice_id ) {
 		return get_option( 'simpay_dismiss_' . $notice_id, false );
@@ -124,6 +131,10 @@ class Notice_Manager {
 	 * @since 3.5.0
 	 */
 	public static function show_notices() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		$notices = self::get_notices();
 
 		foreach ( $notices as $notice_id => $notice_args ) {
@@ -137,6 +148,49 @@ class Notice_Manager {
 				self::print_notice( $notice, $notice_id, $notice_args );
 			}
 		}
+	}
+
+	/**
+	 * Dismisses a notice via AJAX.
+	 *
+	 * @since 3.6.0
+	 */
+	public static function ajax_dismiss_notice() {
+		$notice_id = isset( $_POST['notice_id'] ) ? sanitize_text_field( $_POST['notice_id'] ) : false;
+		$nonce     = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : false;
+
+		if ( ! wp_verify_nonce( $nonce, 'simpay-dismiss-notice-' . $notice_id ) ) {
+			return wp_send_json_error();
+		}
+
+		self::dismiss_notice( $notice_id );
+
+		wp_send_json_success();
+	}
+
+	/**
+	 * Dismisses a notice via a URL.
+	 *
+	 * @since 3.6.0
+	 */
+	public static function link_dismiss_notice() {
+		$notice_id = isset( $_GET['simpay_dismiss_notice_id'] )
+			? sanitize_text_field( $_GET['simpay_dismiss_notice_id'] )
+			: false;
+
+		$nonce = isset( $_GET['simpay_dismiss_notice_nonce'] )
+			? sanitize_text_field( $_GET['simpay_dismiss_notice_nonce'] )
+			: false;
+
+		if ( ! ( $notice_id && $nonce ) ) {
+			return;
+		}
+
+		if ( ! wp_verify_nonce( $nonce, 'simpay-dismiss-notice-' . $notice_id ) ) {
+			return;
+		}
+
+		self::dismiss_notice( $notice_id );
 	}
 
 	/**

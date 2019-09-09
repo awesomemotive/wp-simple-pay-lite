@@ -16,13 +16,13 @@ $field = isset( $fields['payment_button'][0] ) ? $fields['payment_button'][0] : 
 	<table>
 		<thead>
 		<tr>
-			<th colspan="2"><?php esc_html_e( 'On-Page Form Display', 'stripe' ); ?></th>
+			<th colspan="2"><?php esc_html_e( 'On-Page Form Display', 'simple-pay' ); ?></th>
 		</tr>
 		</thead>
 		<tbody class="simpay-panel-section">
 			<tr class="simpay-panel-field">
 				<th>
-					<label for="<?php echo 'simpay-payment-button-text-' . $counter; ?>"><?php esc_html_e( 'Payment Button Text', 'stripe' ); ?></label>
+					<label for="<?php echo 'simpay-payment-button-text-' . $counter; ?>"><?php esc_html_e( 'Payment Button Text', 'simple-pay' ); ?></label>
 				</th>
 				<td>
 					<?php
@@ -40,7 +40,7 @@ $field = isset( $fields['payment_button'][0] ) ? $fields['payment_button'][0] : 
 						'attributes'  => array(
 							'data-field-key' => $counter,
 						),
-						'placeholder' => esc_attr__( 'Pay with Card', 'stripe' ),
+						'placeholder' => esc_attr__( 'Pay with Card', 'simple-pay' ),
 					) );
 
 					?>
@@ -49,7 +49,7 @@ $field = isset( $fields['payment_button'][0] ) ? $fields['payment_button'][0] : 
 
 			<tr class="simpay-panel-field">
 				<th>
-					<label for="<?php echo 'simpay-processing-button-text' . $counter; ?>"><?php esc_html_e( 'Payment Button Processing Text', 'stripe' ); ?></label>
+					<label for="<?php echo 'simpay-processing-button-text' . $counter; ?>"><?php esc_html_e( 'Payment Button Processing Text', 'simple-pay' ); ?></label>
 				</th>
 				<td>
 					<?php
@@ -67,7 +67,7 @@ $field = isset( $fields['payment_button'][0] ) ? $fields['payment_button'][0] : 
 						'attributes'  => array(
 							'data-field-key' => $counter,
 						),
-						'placeholder' => esc_attr__( 'Please Wait...', 'stripe' ),
+						'placeholder' => esc_attr__( 'Please Wait...', 'simple-pay' ),
 					) );
 
 					?>
@@ -76,7 +76,7 @@ $field = isset( $fields['payment_button'][0] ) ? $fields['payment_button'][0] : 
 
 			<tr class="simpay-panel-field">
 				<th>
-					<label for="<?php echo esc_attr( 'simpay-payment-button-style-' . $counter ); ?>"><?php esc_html_e( 'Payment Button Style', 'stripe' ); ?></label>
+					<label for="<?php echo esc_attr( 'simpay-payment-button-style-' . $counter ); ?>"><?php esc_html_e( 'Payment Button Style', 'simple-pay' ); ?></label>
 				</th>
 				<td>
 					<?php
@@ -87,8 +87,8 @@ $field = isset( $fields['payment_button'][0] ) ? $fields['payment_button'][0] : 
 						'value'   => isset( $field['style'] ) ? $field['style' ] : ( simpay_get_global_setting( 'payment_button_style' ) ? simpay_get_global_setting( 'payment_button_style' ) : 'stripe' ),
 						'class'   => array( 'simpay-multi-toggle' ),
 						'options' => array(
-							'stripe' => esc_html__( 'Stripe blue', 'stripe' ),
-							'none'   => esc_html__( 'Default', 'stripe' ),
+							'stripe' => esc_html__( 'Stripe blue', 'simple-pay' ),
+							'none'   => esc_html__( 'Default', 'simple-pay' ),
 						),
 						'inline' => 'inline',
 					) );

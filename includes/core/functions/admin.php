@@ -13,6 +13,31 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 /**
+ * Stripe Checkout supported locales.
+ *
+ * @since 3.6.0
+ *
+ * @return array
+ */
+function simpay_get_stripe_checkout_locales() {
+	return array(
+		'auto' => esc_html__( 'Auto-detect', 'simple-pay' ),
+		'zh'   => esc_html__( 'Chinese (Simplified) (zh)', 'simple-pay' ),
+		'da'   => esc_html__( 'Danish (da)', 'simple-pay' ),
+		'nl'   => esc_html__( 'Dutch (nl)', 'simple-pay' ),
+		''     => esc_html__( 'English (en)', 'simple-pay' ),
+		'fi'   => esc_html__( 'Finnish (fi)', 'simple-pay' ),
+		'fr'   => esc_html__( 'French (fr)', 'simple-pay' ),
+		'de'   => esc_html__( 'German (de)', 'simple-pay' ),
+		'it'   => esc_html__( 'Italian (it)', 'simple-pay' ),
+		'ja'   => esc_html__( 'Japanese (ja)', 'simple-pay' ),
+		'no'   => esc_html__( 'Norwegian (no)', 'simple-pay' ),
+		'es'   => esc_html__( 'Spanish (es)', 'simple-pay' ),
+		'sv'   => esc_html__( 'Swedish (sv)', 'simple-pay' ),
+	);
+}
+
+/**
  * Get the svg icon URL
  *
  * @return string
@@ -42,7 +67,7 @@ function simpay_insert_form_button() {
 
 		// TODO Remove image & use SVG icon eventually.
 
-		$output = '<a href="#TB_inline?height=300&inlineId=simpay-insert-form" title="' . esc_attr__( 'Insert Payment Form', 'stripe' ) . '" class="thickbox button simpay-thickbox">' . $icon . esc_html__( 'Insert Payment Form', 'stripe' ) . '</a>';
+		$output = '<a href="#TB_inline?height=300&inlineId=simpay-insert-form" title="' . esc_attr__( 'Insert Payment Form', 'simple-pay' ) . '" class="thickbox button simpay-thickbox">' . $icon . esc_html__( 'Insert Payment Form', 'simple-pay' ) . '</a>';
 	}
 
 	echo $output;
@@ -75,13 +100,13 @@ function simpay_admin_footer_insert_form() {
 
 		<div id="simpay-insert-form" style="display: none;">
 			<div class="wrap">
-				<p><?php esc_html_e( 'Select a payment form to add to your post or page.', 'stripe' ); ?></p>
+				<p><?php esc_html_e( 'Select a payment form to add to your post or page.', 'simple-pay' ); ?></p>
 				<div>
 					<?php echo simpay_get_forms_list(); ?>
 				</div>
 				<p class="submit">
-					<input type="button" id="simpay-insert-form" class="button-primary" value="<?php esc_attr_e( 'Insert Payment Form', 'stripe' ); ?>" onclick="insertSimpayForm();" />
-					<a id="simpay-cancel-insert-form" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'stripe' ); ?></a>
+					<input type="button" id="simpay-insert-form" class="button-primary" value="<?php esc_attr_e( 'Insert Payment Form', 'simple-pay' ); ?>" onclick="insertSimpayForm();" />
+					<a id="simpay-cancel-insert-form" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'simple-pay' ); ?></a>
 				</p>
 			</div>
 		</div>
@@ -113,7 +138,7 @@ function simpay_get_forms_list() {
 	if ( ! empty( $forms ) ) {
 		foreach ( $forms as $k => $v ) {
 			/* translators: (no title) is the default placed in the dropdown for the form list button on posts/pages if the form was not named */
-			$options .= '<option value="' . esc_attr( $v->ID ) . '">' . ( ! empty( $v->post_title ) ? $v->post_title : esc_html__( '(no title)', 'stripe' ) ) . '</option>';
+			$options .= '<option value="' . esc_attr( $v->ID ) . '">' . ( ! empty( $v->post_title ) ? $v->post_title : esc_html__( '(no title)', 'simple-pay' ) ) . '</option>';
 		}
 	}
 
@@ -304,7 +329,7 @@ function simpay_print_shortcode_tip( $post_id ) {
 
 	$cmd = 'Ctrl&#43;C (&#8984;&#43;C on Mac)';
 
-	$shortcut  = sprintf( esc_attr__( 'Click to select. Then press %s to copy.', 'stripe' ), $cmd );
+	$shortcut  = sprintf( esc_attr__( 'Click to select. Then press %s to copy.', 'simple-pay' ), $cmd );
 	$shortcode = sprintf( '[simpay id="%s"]', $post_id );
 
 	echo "<input readonly='readonly' id='simpay-shortcode' class='simpay-shortcode simpay-form-shortcode simpay-shortcode-tip' title='" . esc_attr( $shortcut ) . "' " . "onclick='this.select();' value='" . esc_attr( $shortcode ) . "' />";
