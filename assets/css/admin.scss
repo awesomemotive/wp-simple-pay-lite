@@ -4,6 +4,18 @@
 	border: 1px solid #eee;
 }
 
+.simpay-stripe-account-info {
+	display: flex;
+	align-items: center;
+	margin-bottom: 8px;
+
+	.spinner {
+		float: none;
+		margin-top: 0;
+		margin-left: 0;
+	}
+}
+
 // Global settings pages
 #simpay-global-settings {
 
