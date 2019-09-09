@@ -92,7 +92,7 @@ class Customer_Controller extends Controller {
 		try {
 			// Locate form.
 			if ( ! isset( $request['form_id'] ) ) {
-				throw new \Exception( __( 'Unable to locate payment form.', 'simple-pay' ) );
+				throw new \Exception( __( 'Unable to locate payment form.', 'stripe' ) );
 			}
 
 			// Gather Payment Method information.

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<table>
 		<thead>
 		<tr>
-			<th colspan="2"><?php esc_html_e( 'Stripe Checkout Display', 'simple-pay' ); ?></th>
+			<th colspan="2"><?php esc_html_e( 'Stripe Checkout Display', 'stripe' ); ?></th>
 		</tr>
 		</thead>
 
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_image_url"><?php esc_html_e( 'Logo/Image URL', 'simple-pay' ); ?></label>
+				<label for="_image_url"><?php esc_html_e( 'Logo/Image URL', 'stripe' ); ?></label>
 			</th>
 			<td>
 				<?php
@@ -43,15 +43,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 					// Description set below so the add image button doesn't break to below the description
 				) );
 				?>
-				<a class="simpay-media-uploader button"><?php esc_html_e( 'Add or Upload Image', 'simple-pay' ); ?></a>
+				<a class="simpay-media-uploader button"><?php esc_html_e( 'Add or Upload Image', 'stripe' ); ?></a>
 
 				<p class="description">
-					<?php esc_html_e( 'Upload or select a square image of your brand or product to show on on the Checkout page.', 'simple-pay' ); ?>
+					<?php esc_html_e( 'Upload or select a square image of your brand or product to show on on the Checkout page.', 'stripe' ); ?>
 				</p>
 
 				<!-- Image preview -->
 				<div class="simpay-image-preview-wrap <?php echo( empty( $image_url ) ? 'simpay-panel-hidden' : '' ); ?>">
-					<a href="#" class="simpay-remove-image-preview simpay-remove-icon" aria-label="<?php esc_attr_e( 'Remove image', 'simple-pay' ); ?>" title="<?php esc_attr_e( 'Remove image', 'simple-pay' ); ?>"></a>
+					<a href="#" class="simpay-remove-image-preview simpay-remove-icon" aria-label="<?php esc_attr_e( 'Remove image', 'stripe' ); ?>" title="<?php esc_attr_e( 'Remove image', 'stripe' ); ?>"></a>
 					<img src="<?php echo esc_attr( $image_url ); ?>" class="simpay-image-preview" />
 				</div>
 			</td>
@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_enable_billing_address"><?php esc_html_e( 'Collect Full Billing Address', 'simple-pay' ); ?></label>
+				<label for="_enable_billing_address"><?php esc_html_e( 'Collect Full Billing Address', 'stripe' ); ?></label>
 			</th>
 			<td>
 				<?php
@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'class'       => array(
 						'simpay-section-toggle',
 					),
-					'description' => esc_html__( 'Collect full payment method Billing Address on the Checkout page.', 'simple-pay' ),
+					'description' => esc_html__( 'Collect full payment method Billing Address on the Checkout page.', 'stripe' ),
 				) );
 				?>
 			</td>

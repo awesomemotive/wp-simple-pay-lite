@@ -9,7 +9,7 @@ $position = simpay_get_currency_position();
 	<table>
 		<thead>
 		<tr>
-			<th colspan="2"><?php esc_html_e( 'Payment Options', 'simple-pay' ); ?></th>
+			<th colspan="2"><?php esc_html_e( 'Payment Options', 'stripe' ); ?></th>
 		</tr>
 		</thead>
 		<tbody class="simpay-panel-section">
@@ -18,7 +18,7 @@ $position = simpay_get_currency_position();
 		
 		<tr class="simpay-panel-field <?php echo apply_filters( 'simpay_amount_options_classes', '' ); ?> toggle-_amount_type-one_time_set">
 			<th>
-				<label for="_amount"><?php esc_html_e( 'One-Time Amount', 'simple-pay' ); ?></label>
+				<label for="_amount"><?php esc_html_e( 'One-Time Amount', 'stripe' ); ?></label>
 			</th>
 			<td>
 
@@ -65,7 +65,7 @@ $position = simpay_get_currency_position();
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_success_redirect_type"><?php esc_html_e( 'Payment Success Page', 'simple-pay' ); ?></label>
+				<label for="_success_redirect_type"><?php esc_html_e( 'Payment Success Page', 'stripe' ); ?></label>
 			</th>
 			<td>
 				<?php
@@ -78,9 +78,9 @@ $position = simpay_get_currency_position();
 					'id'          => '_success_redirect_type',
 					'class'       => array( 'simpay-multi-toggle' ),
 					'options'     => array(
-						'default'  => __( 'Global Setting', 'simple-pay' ),
-						'page'     => __( 'Specific Page', 'simple-pay' ),
-						'redirect' => __( 'Redirect URL', 'simple-pay' ),
+						'default'  => __( 'Global Setting', 'stripe' ),
+						'page'     => __( 'Specific Page', 'stripe' ),
+						'redirect' => __( 'Redirect URL', 'stripe' ),
 					),
 					'inline'      => 'inline',
 					'default'     => 'default',
@@ -95,7 +95,7 @@ $position = simpay_get_currency_position();
 			<th></th>
 			<td>
 				<p class="description">
-					<?php _e( 'By default, the payment success page indicated in Simple Pay > Settings > General will be used. This option allows you to specify an alternate page or URL for this payment form only.', 'simple-pay' ); ?>
+					<?php _e( 'By default, the payment success page indicated in Simple Pay > Settings > General will be used. This option allows you to specify an alternate page or URL for this payment form only.', 'stripe' ); ?>
 				</p>
 			</td>
 		</tr>
@@ -111,7 +111,7 @@ $position = simpay_get_currency_position();
 					'name'        => '_success_redirect_page',
 					'id'          => '_success_redirect_page',
 					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_page', '' ),
-					'description' => __( 'Choose a page from your site to redirect to after a successful transaction.', 'simple-pay' ),
+					'description' => __( 'Choose a page from your site to redirect to after a successful transaction.', 'stripe' ),
 				) );
 
 				?>
@@ -132,7 +132,7 @@ $position = simpay_get_currency_position();
 						'simpay-field-text',
 					),
 					'value'       => simpay_get_saved_meta( $post->ID, '_success_redirect_url', '' ),
-					'description' => __( 'Enter a custom redirect URL for successful transactions.', 'simple-pay' ),
+					'description' => __( 'Enter a custom redirect URL for successful transactions.', 'stripe' ),
 				) );
 
 				?>

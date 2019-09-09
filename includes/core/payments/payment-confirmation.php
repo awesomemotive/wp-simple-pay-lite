@@ -58,7 +58,7 @@ function get_content() {
  * @return string
  */
 function get_error() {
-	$message = wpautop( esc_html__( 'Unable to locate payment record.', 'simple-pay' ) );
+	$message = wpautop( esc_html__( 'Unable to locate payment record.', 'stripe' ) );
 
 	/**
 	 * Filter the error message shown when a Payment Confirmation cannot be created.

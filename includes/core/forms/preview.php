@@ -54,7 +54,7 @@ class Preview {
 			return $title;
 		}
 
-		return __( 'Simple Pay Preview', 'simple-pay' );
+		return __( 'Simple Pay Preview', 'stripe' );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Preview {
 	 */
 	public function the_content( $content ) {
 		if ( ! is_user_logged_in() ) {
-			return __( 'You must be logged in to preview a form.', 'simple-pay' );
+			return __( 'You must be logged in to preview a form.', 'stripe' );
 		}
 
 		if ( in_the_loop() ) {

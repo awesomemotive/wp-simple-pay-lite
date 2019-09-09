@@ -280,7 +280,7 @@ abstract class Form {
 
 		/** STRIPE CHECKOUT DISPLAY **/
 
-		$this->checkout_button_text    = simpay_get_filtered( 'checkout_button_text', simpay_get_saved_meta( $this->id, '_checkout_button_text', sprintf( esc_html__( 'Pay %s', 'simple-pay' ), '{{amount}}' ) ), $this->id );
+		$this->checkout_button_text    = simpay_get_filtered( 'checkout_button_text', simpay_get_saved_meta( $this->id, '_checkout_button_text', sprintf( esc_html__( 'Pay %s', 'stripe' ), '{{amount}}' ) ), $this->id );
 
 		$this->company_name = simpay_get_filtered( 'company_name', simpay_get_saved_meta( $this->id, '_company_name' ), $this->id );
 

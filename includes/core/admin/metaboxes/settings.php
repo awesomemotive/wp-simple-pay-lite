@@ -132,25 +132,25 @@ class Settings {
 		// Hook to add more tabs.
 		$tabs = apply_filters( 'simpay_form_settings_meta_tabs_li', array(
 			'payment_options'      => array(
-				'label'  => esc_html__( 'Payment Options', 'simple-pay' ),
+				'label'  => esc_html__( 'Payment Options', 'stripe' ),
 				'target' => 'payment-options-settings-panel',
 				'class'  => array( 'active' ),
 				'icon'   => '',
 			),
 			'form_display'         => array(
-				'label'  => esc_html__( 'On-Page Form Display', 'simple-pay' ),
+				'label'  => esc_html__( 'On-Page Form Display', 'stripe' ),
 				'target' => 'custom-form-fields-settings-panel',
 				'class'  => array(),
 				'icon'   => '',
 			),
 			'stripe_checkout'      => array(
-				'label'  => esc_html__( 'Stripe Checkout Display', 'simple-pay' ),
+				'label'  => esc_html__( 'Stripe Checkout Display', 'stripe' ),
 				'target' => 'stripe-checkout-settings-panel',
 				'class'  => array( 'toggle-_form_display_type-stripe_checkout' ),
 				'icon'   => '',
 			),
 			'subscription_options' => array(
-				'label'  => esc_html__( 'Subscription Options', 'simple-pay' ),
+				'label'  => esc_html__( 'Subscription Options', 'stripe' ),
 				'target' => 'subscription-options-settings-panel',
 				'class'  => array(),
 				'icon'   => '',
@@ -340,7 +340,7 @@ class Settings {
 			<?php
 			echo wp_kses_post(
 				sprintf(
-					__( 'Configure the on-page Payment Button in the %1$sCustom Form Fields%2$s options.', 'simple-pay' ),
+					__( 'Configure the on-page Payment Button in the %1$sCustom Form Fields%2$s options.', 'stripe' ),
 					'<a href="#" class="simpay-tab-link" data-show-tab="simpay-form_display">',
 					'</a>'
 				)

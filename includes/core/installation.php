@@ -52,7 +52,7 @@ class Installation {
 		if ( false === $options || ! array_key_exists( 'confirmation_pages', $options ) ) {
 
 			$charge_confirmation = wp_insert_post( array(
-				'post_title'     => __( 'Payment Confirmation', 'simple-pay' ),
+				'post_title'     => __( 'Payment Confirmation', 'stripe' ),
 				'post_content'   => '[simpay_payment_receipt]',
 				'post_status'    => 'publish',
 				'post_author'    => 1,
@@ -61,9 +61,9 @@ class Installation {
 			) );
 
 			$charge_failed = wp_insert_post( array(
-				'post_title'     => __( 'Payment Failed', 'simple-pay' ),
+				'post_title'     => __( 'Payment Failed', 'stripe' ),
 				/* translators: %s: The [simpay_errors] shortcode */
-				'post_content'   => sprintf( __( "%sWe're sorry, but your transaction failed to process. Please try again or contact site support.", 'simple-pay' ), '[simpay_error show_to="admin"]' . "\n\n" ),
+				'post_content'   => sprintf( __( "%sWe're sorry, but your transaction failed to process. Please try again or contact site support.", 'stripe' ), '[simpay_error show_to="admin"]' . "\n\n" ),
 				'post_status'    => 'publish',
 				'post_author'    => 1,
 				'post_type'      => 'page',

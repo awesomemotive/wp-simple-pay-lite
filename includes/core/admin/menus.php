@@ -77,7 +77,7 @@ class Menus {
 			'id'     => 'simpay-admin-bar-test-mode',
 			'href'   => admin_url( 'admin.php?page=simpay_settings&tab=keys' ),
 			'parent' => 'top-secondary',
-			'title'  => __( 'Simple Pay Test Mode Active', 'simple-pay' ),
+			'title'  => __( 'Simple Pay Test Mode Active', 'stripe' ),
 			'meta'   => array( 'class' => 'simpay-admin-bar-test-mode' ),
 		) );
 	}
@@ -106,7 +106,7 @@ class Menus {
 	 */
 	public function add_main_menu_page() {
 
-		$title = apply_filters( 'simpay_menu_title', __( 'Simple Pay Lite', 'simple-pay' ) );
+		$title = apply_filters( 'simpay_menu_title', __( 'Simple Pay Lite', 'stripe' ) );
 
 		$hook = add_menu_page( $title, $title, 'manage_options', 'simpay', array(
 			'SimplePay\Core\Admin\Pages\Main',
@@ -139,7 +139,7 @@ class Menus {
 
 		$option = 'per_page';
 		$args   = array(
-			'label'   => __( 'Forms', 'simple-pay' ),
+			'label'   => __( 'Forms', 'stripe' ),
 			'default' => 20,
 			'option'  => 'forms_per_page',
 		);
@@ -166,11 +166,11 @@ class Menus {
 	public static function add_menu_items() {
 
 		// All Payment Forms menu link
-		add_submenu_page( 'simpay', 'Simple Pay', __( 'Payment Forms', 'simple-pay' ), 'manage_options', 'simpay', function () {
+		add_submenu_page( 'simpay', 'Simple Pay', __( 'Payment Forms', 'stripe' ), 'manage_options', 'simpay', function () {
 		} );
 
 		// Add New menu link
-		add_submenu_page( 'simpay', 'Simple Pay', __( 'Add New', 'simple-pay' ), 'manage_options', 'simpay&action=create', function () {
+		add_submenu_page( 'simpay', 'Simple Pay', __( 'Add New', 'stripe' ), 'manage_options', 'simpay&action=create', function () {
 		} );
 
 		/**
@@ -182,13 +182,13 @@ class Menus {
 		 */
 		$settings_menu_name = apply_filters(
 			'simpay_settings_menu_name',
-			__( 'Settings', 'simple-pay' )
+			__( 'Settings', 'stripe' )
 		);
 
 		// Settings menu link
 		add_submenu_page(
 			'simpay',
-			sprintf( __( '%s Settings', 'simple-pay' ), SIMPLE_PAY_PLUGIN_NAME ),
+			sprintf( __( '%s Settings', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ),
 			$settings_menu_name,
 			'manage_options',
 			'simpay_settings',
@@ -199,12 +199,12 @@ class Menus {
 		);
 
 		// System Report (aka System Status) page
-		add_submenu_page( 'simpay', __( 'System Report', 'simple-pay' ), __( 'System Report', 'simple-pay' ), 'manage_options', 'simpay_system_status', function () {
+		add_submenu_page( 'simpay', __( 'System Report', 'stripe' ), __( 'System Report', 'stripe' ), 'manage_options', 'simpay_system_status', function () {
 			$page = new System_Status();
 			$page->html();
 		} );
 
-		$page_hook = add_submenu_page( 'simpay', __( 'Upgrade to Pro', 'simple-pay' ), __( 'Upgrade to Pro', 'simple-pay' ), 'manage_options', 'simpay_upgrade', function() {
+		$page_hook = add_submenu_page( 'simpay', __( 'Upgrade to Pro', 'stripe' ), __( 'Upgrade to Pro', 'stripe' ), 'manage_options', 'simpay_upgrade', function() {
 			wp_redirect( simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-submenu-link',true ), 301 );
 			exit;
 		} );
@@ -231,11 +231,11 @@ class Menus {
 		if ( self::$plugin == $file ) {
 
 			$links             = array();
-			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'simple-pay' ) . '</a>';
-			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'simple-pay' ) . '</a>';
+			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
+			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
 
 			if ( ! defined( 'SIMPLE_PAY_ITEM_NAME' ) ) {
-				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Upgrade to Pro', 'simple-pay' ) . '</a>';
+				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
 
 				array_push( $action_links, $upgrade_link );
 			}

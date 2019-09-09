@@ -96,12 +96,12 @@ class Checkout_Session_Controller extends Controller {
 			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : false;
 
 			if ( ! $customer_id ) {
-				throw new \Exception( __( 'A customer must be provided.', 'simple-pay' ) );
+				throw new \Exception( __( 'A customer must be provided.', 'stripe' ) );
 			}
 
 			// Locate form.
 			if ( ! isset( $request['form_id'] ) ) {
-				throw new \Exception( __( 'Unable to locate payment form.', 'simple-pay' ) );
+				throw new \Exception( __( 'Unable to locate payment form.', 'stripe' ) );
 			}
 
 			// Gather <form> information.

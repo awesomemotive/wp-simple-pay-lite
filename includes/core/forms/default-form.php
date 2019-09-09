@@ -228,8 +228,8 @@ class Default_Form extends Form {
 		 */
 		$custom_fields = simpay_get_saved_meta( $this->id, '_custom_fields' );
 
-		$payment_text          = __( 'Pay with Card', 'simple-pay' );
-		$payment_loading_text  = __( 'Please Wait...', 'simple-pay' );
+		$payment_text          = __( 'Pay with Card', 'stripe' );
+		$payment_loading_text  = __( 'Please Wait...', 'stripe' );
 
 		// Payment Button (Embed + Stripe Checkout)
 		if ( isset( $custom_fields['payment_button'] ) && is_array( $custom_fields['payment_button'] ) ) {

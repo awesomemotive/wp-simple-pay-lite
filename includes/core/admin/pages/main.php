@@ -76,11 +76,11 @@ class Main {
 			switch ( self::$post_status ) {
 
 				case 'updated':
-					$message = __( 'Form Updated.', 'simple-pay' );
+					$message = __( 'Form Updated.', 'stripe' );
 					$class   = 'updated';
 					break;
 				case 'draft':
-					$message = __( 'Draft saved.', 'simple-pay' );
+					$message = __( 'Draft saved.', 'stripe' );
 					$class   = 'updated';
 					break;
 				default:
@@ -143,7 +143,7 @@ class Main {
 
 		?>
 		<h1 id="simpay-forms" class="wp-heading-inline"><?php echo $title; ?></h1>
-		<a href="<?php echo esc_attr( $url ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'simple-pay' ); ?></a>
+		<a href="<?php echo esc_attr( $url ); ?>" class="page-title-action"><?php esc_html_e( 'Add New', 'stripe' ); ?></a>
 		<hr class="wp-header-end">
 		<?php
 	}
@@ -153,7 +153,7 @@ class Main {
 	 */
 	public static function main_page() {
 
-		self::get_title( esc_html__( 'Payment Forms', 'simple-pay' ) );
+		self::get_title( esc_html__( 'Payment Forms', 'stripe' ) );
 
 		echo '<form method="get">';
 		// Get our form table to output form CPT posts
@@ -185,7 +185,7 @@ class Main {
 
 					$form_action = '';
 
-					self::get_title( esc_html__( 'Edit Payment Form', 'simple-pay' ) );
+					self::get_title( esc_html__( 'Edit Payment Form', 'stripe' ) );
 
 					break;
 				}
@@ -214,7 +214,7 @@ class Main {
 						'form_id' => $form->ID,
 					), admin_url( 'admin.php?page=simpay' ) ) );
 
-					self::get_title( esc_html__( 'Add New Payment Form', 'simple-pay' ) );
+					self::get_title( esc_html__( 'Add New Payment Form', 'stripe' ) );
 
 					break;
 				}
@@ -241,8 +241,8 @@ class Main {
 					<div id="post-body-content">
 						<div id="titlediv">
 							<div id="titlewrap">
-								<label class="screen-reader-text" id="title-prompt-text" for="title"><?php esc_html_e( 'Enter title here', 'simple-pay' ); ?></label>
-								<input type="text" name="post_title" size="30" id="title" value="<?php echo esc_attr( $form->post_title ); ?>" spellcheck="true" autocomplete="off" placeholder="<?php esc_attr_e( 'Enter title here', 'simple-pay' ); ?>">
+								<label class="screen-reader-text" id="title-prompt-text" for="title"><?php esc_html_e( 'Enter title here', 'stripe' ); ?></label>
+								<input type="text" name="post_title" size="30" id="title" value="<?php echo esc_attr( $form->post_title ); ?>" spellcheck="true" autocomplete="off" placeholder="<?php esc_attr_e( 'Enter title here', 'stripe' ); ?>">
 							</div>
 							<br class="clear">
 						</div>
@@ -285,9 +285,9 @@ class Main {
 		$button_text = '';
 
 		if ( 'create' === $action ) {
-			$button_text = esc_html__( 'Create', 'simple-pay' );
+			$button_text = esc_html__( 'Create', 'stripe' );
 		} elseif ( 'edit' === $action ) {
-			$button_text = esc_html__( 'Update', 'simple-pay' );
+			$button_text = esc_html__( 'Update', 'stripe' );
 		}
 
 		$is_draft = ( 'draft' === get_post_status( $form->ID ) ? true : false );
@@ -316,8 +316,8 @@ class Main {
 									'simpay-preview' => $form->ID,
 								), site_url() );
 								?>
-								<input type="submit" value="<?php esc_attr_e( 'Preview', 'simple-pay' ); ?>" id="simpay-preview-button" class="simpay-button button"
-								       title="<?php esc_html_e( 'Preview saved changes', 'simple-pay' ); ?>" data-action="<?php echo esc_url( $preview_link ); ?>" />
+								<input type="submit" value="<?php esc_attr_e( 'Preview', 'stripe' ); ?>" id="simpay-preview-button" class="simpay-button button"
+								       title="<?php esc_html_e( 'Preview saved changes', 'stripe' ); ?>" data-action="<?php echo esc_url( $preview_link ); ?>" />
 							</div>
 							<div class="clear"></div>
 
@@ -326,7 +326,7 @@ class Main {
 						<div id="misc-publishing-actions">
 
 							<div class="misc-pub-section misc-pub-post-status">
-								<?php esc_html_e( 'Status:', 'simple-pay' ); ?>
+								<?php esc_html_e( 'Status:', 'stripe' ); ?>
 								<span id="post-status-display"><?php echo self::get_readable_post_status( $form ); ?></span>
 							</div><!-- .misc-pub-section -->
 
@@ -349,7 +349,7 @@ class Main {
 								'_wpnonce'    => $delete_nonce,
 							), admin_url( 'admin.php?page=simpay&action=trash' ) );
 							?>
-							<a class="submitdelete deletion" href="<?php echo esc_url( $delete_link ); ?>"><?php esc_html_e( 'Move to Trash', 'simple-pay' ); ?></a>
+							<a class="submitdelete deletion" href="<?php echo esc_url( $delete_link ); ?>"><?php esc_html_e( 'Move to Trash', 'stripe' ); ?></a>
 						</div>
 
 						<div id="publishing-action">
@@ -373,7 +373,7 @@ class Main {
 		?>
 		<!-- Form Shortcode Box -->
 		<div id="simpay-get-shortcode">
-			<label for="simpay-shortcode"><?php esc_html_e( 'Payment Form Shortcode', 'simple-pay' ); ?>:</label>
+			<label for="simpay-shortcode"><?php esc_html_e( 'Payment Form Shortcode', 'stripe' ); ?>:</label>
 			<?php simpay_print_shortcode_tip( $form->ID ); ?>
 		</div> <!-- End form shortcode metabox -->
 		<?php
@@ -392,9 +392,9 @@ class Main {
 
 		switch ( $status ) {
 			case 'draft':
-				return esc_html__( 'Draft', 'simple-pay' );
+				return esc_html__( 'Draft', 'stripe' );
 			case 'publish':
-				return esc_html__( 'Published', 'simple-pay' );
+				return esc_html__( 'Published', 'stripe' );
 			default:
 				return '';
 		}

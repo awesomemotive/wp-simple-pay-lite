@@ -110,7 +110,7 @@ class Custom_Fields {
 
 		return apply_filters( 'simpay_custom_field_options', array(
 			'payment_button'          => array(
-				'label' => esc_html__( 'Payment Button', 'simple-pay' ),
+				'label' => esc_html__( 'Payment Button', 'stripe' ),
 				'type'  => 'payment_button',
 			),
 		) );

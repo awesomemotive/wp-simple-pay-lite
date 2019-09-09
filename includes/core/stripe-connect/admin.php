@@ -58,7 +58,7 @@ function simpay_process_gateway_connect_completion() {
 	$response = wp_remote_get( esc_url_raw( $wpsp_credentials_url ) );
 
 	if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-		$message = '<p>' . sprintf( __( 'There was an error getting your Stripe credentials. Please <a href="%s">try again</a>. If you continue to have this problem, please contact support.', 'simple-pay' ), esc_url( admin_url( 'admin.php?page=simpay_settings&tab=keys' ) ) ) . '</p>';
+		$message = '<p>' . sprintf( __( 'There was an error getting your Stripe credentials. Please <a href="%s">try again</a>. If you continue to have this problem, please contact support.', 'stripe' ), esc_url( admin_url( 'admin.php?page=simpay_settings&tab=keys' ) ) ) . '</p>';
 
 		wp_die( $message );
 	}
@@ -148,19 +148,19 @@ add_action( 'admin_init', 'simpay_process_stripe_disconnect' );
  */
 function simpay_stripe_connect_account_information() {
 	$unknown_error = array(
-		'message' => esc_html__( 'Unable to retrieve account information.', 'simple-pay' ),
+		'message' => esc_html__( 'Unable to retrieve account information.', 'stripe' ),
 	);
 
 	$dev_account_error = array(
 		'message' => (
-			esc_html__( 'You are currently connected to an unsaved Stripe account.', 'simple-pay' ) . ' ' .
+			esc_html__( 'You are currently connected to an unsaved Stripe account.', 'stripe' ) . ' ' .
 			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate */
 			sprintf(
-				esc_html__( 'Please %1$ssave your account in Stripe%2$s to see more information.', 'simple-pay' ),
+				esc_html__( 'Please %1$ssave your account in Stripe%2$s to see more information.', 'stripe' ),
 				'<a href="https://dashboard.stripe.com/account/details" target="_blank" rel="noopener noreferrer">',
 				'</a>'
 			) . '<br />' .
-			'<strong>' . esc_html__( 'You will not be able to reconnect to this account unless it is saved.', 'simple-pay' ) . '</strong>'
+			'<strong>' . esc_html__( 'You will not be able to reconnect to this account unless it is saved.', 'stripe' ) . '</strong>'
 		),
 		'actions'  => 'simpay-stripe-unactivated-account-actions',
 	);
@@ -205,15 +205,15 @@ function simpay_stripe_connect_account_information() {
 			) );
 		} catch( \Stripe\Error\Authentication $e ) {
 			return wp_send_json_error( array(
-				'message' => esc_html__( 'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys.', 'simple-pay' ),
+				'message' => esc_html__( 'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys.', 'stripe' ),
 				'actions' => 'simpay-stripe-auth-error-account-actions',
 			) );
 		} catch( \Exception $e ) {
 			return wp_send_json_error( $unknown_error );
 		}
 	} else {
-		$mode = simpay_is_test_mode() ? __( 'test', 'simple-pay' ) : __( 'live', 'simple-pay' );
-		$connect = esc_html__( 'It is highly recommended to Connect with Stripe for easier setup and improved security.', 'simple-pay' );
+		$mode = simpay_is_test_mode() ? __( 'test', 'stripe' ) : __( 'live', 'stripe' );
+		$connect = esc_html__( 'It is highly recommended to Connect with Stripe for easier setup and improved security.', 'stripe' );
 
 		try {
 			// @todo remove when API wrapper throws errors.
@@ -224,7 +224,7 @@ function simpay_stripe_connect_account_information() {
 				'message' => (
 					sprintf(
 						/* translators: %1$s Stripe payment mode.*/
-						__( 'Your manually managed %1$s mode API keys are valid.', 'simple-pay' ),
+						__( 'Your manually managed %1$s mode API keys are valid.', 'stripe' ),
 						'<strong>' . $mode . '</strong>'
 					) . '<br />' .
 					$connect
@@ -236,7 +236,7 @@ function simpay_stripe_connect_account_information() {
 					'<span style="color: red;">' .
 						sprintf(
 							/* translators: %1$s Stripe payment mode.*/
-							__( 'Your manually managed %1$s mode API keys are invalid.', 'simple-pay' ),
+							__( 'Your manually managed %1$s mode API keys are invalid.', 'stripe' ),
 							'<strong>' . $mode . '</strong>'
 						)
 					. '</span><br />' . 

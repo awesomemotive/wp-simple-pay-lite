@@ -102,7 +102,7 @@ function show_admin_notices() {
 				esc_html__(
 					/* translators: %1$s Plugin name, do not translate. %2$s Requirement name, do not translate. %3$s Requirement version, do not translate. */
 					'%1$s requires %2$s version %3$s or higher.',
-					'simple-pay'
+					'stripe'
 				),
 				SIMPLE_PAY_ITEM_NAME,
 				'<code>' . esc_html( $requirement['name'] ) . '</code>',
@@ -118,7 +118,7 @@ function show_admin_notices() {
 				esc_html__(
 					/* translators: %1$s Plugin name, do not translate. %2$s Requirement name, do not translate. */
 					'%1$s requires %2$s to be installed.',
-					'simple-pay'
+					'stripe'
 				),
 				SIMPLE_PAY_ITEM_NAME,
 				'<code>' . esc_html( $requirement['name'] ) . '</code>'
@@ -131,7 +131,7 @@ function show_admin_notices() {
 	?>
 	</p>
 
-	<p><strong><?php _e( 'Need help with your server? Ask your web host!', 'simple-pay' ); ?></strong></p>
+	<p><strong><?php _e( 'Need help with your server? Ask your web host!', 'stripe' ); ?></strong></p>
 	<p>
 	<?php
 	$hosting_url = add_query_arg(
@@ -148,7 +148,7 @@ function show_admin_notices() {
 		sprintf(
 			__(
 				'Many web hosts can give you instructions on how/where to upgrade your server through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s.',
-				'simple-pay'
+				'stripe'
 			),
 			'<a href="' . esc_url( $hosting_url ) .'" target="_blank" rel="noopener noreferrer">',
 			'</a>'

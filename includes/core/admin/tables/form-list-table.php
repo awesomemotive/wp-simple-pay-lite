@@ -27,8 +27,8 @@ class Form_List_Table extends WP_List_Table {
 		$this->admin_page_url  = admin_url( 'admin.php?page=simpay' );
 
 		parent::__construct( array(
-			'singular' => esc_html__( 'Payment Form', 'simple-pay' ),
-			'plural'   => esc_html__( 'Payment Forms', 'simple-pay' ),
+			'singular' => esc_html__( 'Payment Form', 'stripe' ),
+			'plural'   => esc_html__( 'Payment Forms', 'stripe' ),
 			'ajax'     => false,
 		) );
 	}
@@ -46,7 +46,7 @@ class Form_List_Table extends WP_List_Table {
 		// All link
 		$class = ( 'all' === $current ? ' class="current"' : '' );
 		//$all_url      = remove_query_arg( 'status' );
-		$views['all'] = '<a href="' . esc_url( $this->admin_page_url ) . '" ' . $class . '>' . esc_html__( 'All', 'simple-pay' ) . ' <span class="count">(' . $this->get_total_forms( array(
+		$views['all'] = '<a href="' . esc_url( $this->admin_page_url ) . '" ' . $class . '>' . esc_html__( 'All', 'stripe' ) . ' <span class="count">(' . $this->get_total_forms( array(
 				'publish',
 				'draft',
 			) ) . ')</span></a>';
@@ -54,17 +54,17 @@ class Form_List_Table extends WP_List_Table {
 		// Published Link
 		$class              = ( 'published' === $current ? ' class="current"' : '' );
 		$published_url      = add_query_arg( 'status', 'published', $this->admin_page_url );
-		$views['published'] = '<a href="' . esc_url( $published_url ) . '" ' . $class . '>' . esc_html__( 'Published', 'simple-pay' ) . ' <span class="count">(' . $this->get_total_forms( 'publish' ) . ')</span></a>';
+		$views['published'] = '<a href="' . esc_url( $published_url ) . '" ' . $class . '>' . esc_html__( 'Published', 'stripe' ) . ' <span class="count">(' . $this->get_total_forms( 'publish' ) . ')</span></a>';
 
 		// Draft Link
 		$class          = ( 'draft' === $current ? ' class="current"' : '' );
 		$draft_url      = add_query_arg( 'status', 'draft', $this->admin_page_url );
-		$views['draft'] = '<a href="' . esc_url( $draft_url ) . '" ' . $class . '>' . esc_html__( 'Draft', 'simple-pay' ) . ' <span class="count">(' . $this->get_total_forms( 'draft' ) . ')</span></a>';
+		$views['draft'] = '<a href="' . esc_url( $draft_url ) . '" ' . $class . '>' . esc_html__( 'Draft', 'stripe' ) . ' <span class="count">(' . $this->get_total_forms( 'draft' ) . ')</span></a>';
 
 		// Trash Link
 		$class          = ( 'trash' === $current ? ' class="current"' : '' );
 		$trash_url      = add_query_arg( 'status', 'trash', $this->admin_page_url );
-		$views['trash'] = '<a href="' . esc_url( $trash_url ) . '" ' . $class . '>' . esc_html__( 'Trash', 'simple-pay' ) . ' <span class="count">(' . $this->get_total_forms( 'trash' ) . ')</span></a>';
+		$views['trash'] = '<a href="' . esc_url( $trash_url ) . '" ' . $class . '>' . esc_html__( 'Trash', 'stripe' ) . ' <span class="count">(' . $this->get_total_forms( 'trash' ) . ')</span></a>';
 
 		return $views;
 	}
@@ -189,7 +189,7 @@ class Form_List_Table extends WP_List_Table {
 		), $this->admin_page_url );
 
 		$link = '<a href="' . $url . '">';
-		$link .= esc_html__( 'Trash', 'simple-pay' );
+		$link .= esc_html__( 'Trash', 'stripe' );
 		$link .= '</a>';
 
 		return $link;
@@ -206,7 +206,7 @@ class Form_List_Table extends WP_List_Table {
 	public function get_edit_link( $id, $link_text = '' ) {
 
 		if ( empty( $link_text ) ) {
-			$link_text = __( 'Edit', 'simple-pay' );
+			$link_text = __( 'Edit', 'stripe' );
 		}
 
 		$url = add_query_arg( array(
@@ -228,7 +228,7 @@ class Form_List_Table extends WP_List_Table {
 
 		$url = add_query_arg( 'simpay-preview', $id, site_url() );
 
-		return '<a href="' . esc_attr( $url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Preview', 'simple-pay' ) . '</a>';
+		return '<a href="' . esc_attr( $url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Preview', 'stripe' ) . '</a>';
 	}
 
 	/**
@@ -249,7 +249,7 @@ class Form_List_Table extends WP_List_Table {
 		) );
 
 		$link = '<a href="' . esc_url( $url ) . '">';
-		$link .= esc_html__( 'Restore', 'simple-pay' );
+		$link .= esc_html__( 'Restore', 'stripe' );
 		$link .= '</a>';
 
 		return $link;
@@ -273,7 +273,7 @@ class Form_List_Table extends WP_List_Table {
 		) );
 
 		$link = '<a href="' . esc_url( $url ) . '" class="submitdelete">';
-		$link .= esc_html__( 'Permanently Delete', 'simple-pay' );
+		$link .= esc_html__( 'Permanently Delete', 'stripe' );
 		$link .= '</a>';
 
 		return $link;
@@ -295,7 +295,7 @@ class Form_List_Table extends WP_List_Table {
 			'_wpnonce'    => $nonce,
 		) );
 
-		$link = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Duplicate', 'simple-pay' ) . '</a>';
+		$link = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Duplicate', 'stripe' ) . '</a>';
 
 		return $link;
 	}
@@ -393,11 +393,11 @@ class Form_List_Table extends WP_List_Table {
 			}
 
 			// Show an admin message
-			$this->display_admin_message( esc_html__( 'Form duplicated.', 'simple-pay' ) );
+			$this->display_admin_message( esc_html__( 'Form duplicated.', 'stripe' ) );
 		} else {
 
 			// Show an admin message about the error
-			$this->display_admin_message( esc_html__( 'An error occurred while trying to duplicate. Please try again.', 'simple-pay' ), 'error' );
+			$this->display_admin_message( esc_html__( 'An error occurred while trying to duplicate. Please try again.', 'stripe' ), 'error' );
 		}
 	}
 
@@ -469,7 +469,7 @@ class Form_List_Table extends WP_List_Table {
 	public function untrash_form( $id ) {
 		wp_untrash_post( $id );
 
-		$this->display_admin_message( __( 'Form restored from the Trash.', 'simple-pay' ) );
+		$this->display_admin_message( __( 'Form restored from the Trash.', 'stripe' ) );
 	}
 
 	/**
@@ -488,7 +488,7 @@ class Form_List_Table extends WP_List_Table {
 			}
 		}
 
-		$this->display_admin_message( sprintf( _n( '%d form restored from the Trash.', '%d forms restored from the Trash.', $total, 'simple-pay' ), $total ) );
+		$this->display_admin_message( sprintf( _n( '%d form restored from the Trash.', '%d forms restored from the Trash.', $total, 'stripe' ), $total ) );
 	}
 
 	/**
@@ -499,7 +499,7 @@ class Form_List_Table extends WP_List_Table {
 	public function trash_form( $id ) {
 		wp_trash_post( $id );
 
-		$this->display_admin_message( __( 'Form moved to the Trash.', 'simple-pay' ) );
+		$this->display_admin_message( __( 'Form moved to the Trash.', 'stripe' ) );
 	}
 
 	/**
@@ -518,7 +518,7 @@ class Form_List_Table extends WP_List_Table {
 			}
 		}
 
-		$this->display_admin_message( sprintf( _n( '%d form moved to the Trash.', '%d forms moved to the Trash.', $total, 'simple-pay' ), $total ) );
+		$this->display_admin_message( sprintf( _n( '%d form moved to the Trash.', '%d forms moved to the Trash.', $total, 'stripe' ), $total ) );
 	}
 
 	/**
@@ -529,7 +529,7 @@ class Form_List_Table extends WP_List_Table {
 	public function permanently_delete_form( $id ) {
 		wp_delete_post( $id );
 
-		$this->display_admin_message( __( 'Form permanently deleted.', 'simple-pay' ) );
+		$this->display_admin_message( __( 'Form permanently deleted.', 'stripe' ) );
 	}
 
 	/**
@@ -548,7 +548,7 @@ class Form_List_Table extends WP_List_Table {
 			}
 		}
 
-		$this->display_admin_message( sprintf( _n( '%d form permanently delted.', '%d forms permanently deleted.', $total, 'simple-pay' ), $total ) );
+		$this->display_admin_message( sprintf( _n( '%d form permanently delted.', '%d forms permanently deleted.', $total, 'stripe' ), $total ) );
 	}
 
 	/**
@@ -569,14 +569,14 @@ class Form_List_Table extends WP_List_Table {
 			}
 		}
 
-		$this->display_admin_message( sprintf( _n( '%d form permanently deleted.', '%d forms permanently deleted.', $total, 'simple-pay' ), $total ) );
+		$this->display_admin_message( sprintf( _n( '%d form permanently deleted.', '%d forms permanently deleted.', $total, 'stripe' ), $total ) );
 	}
 
 	/**
 	 * When no forms are found
 	 */
 	public function no_items() {
-		esc_html_e( 'No forms found.', 'simple-pay' );
+		esc_html_e( 'No forms found.', 'stripe' );
 	}
 
 	/**
@@ -588,13 +588,13 @@ class Form_List_Table extends WP_List_Table {
 	 */
 	public function column_title( $item ) {
 
-		$title = ! empty( $item['title'] ) ? $item['title'] : __( '(no title)', 'simple-pay' );
+		$title = ! empty( $item['title'] ) ? $item['title'] : __( '(no title)', 'stripe' );
 
 		$form   = get_post( $item['id'] );
 		$status = '';
 
 		if ( 'draft' === $form->post_status ) {
-			$status = ' — <span class="post-state">' . esc_html__( 'Draft', 'simple-pay' ) . '</span>';
+			$status = ' — <span class="post-state">' . esc_html__( 'Draft', 'stripe' ) . '</span>';
 		}
 
 		$title = '<strong>' . $this->get_edit_link( $item['id'], $title ) . $status . '</strong>';
@@ -630,7 +630,7 @@ class Form_List_Table extends WP_List_Table {
 			?>
 
 			<?php
-			$this->search_box( __( 'Search', 'simple-pay' ), 'simpay-search' );
+			$this->search_box( __( 'Search', 'stripe' ), 'simpay-search' );
 
 			$value = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : '';
 			?>
@@ -653,7 +653,7 @@ class Form_List_Table extends WP_List_Table {
 			?>
 
 			<div class="alignleft actions" style="overflow: visible;">
-				<input type="submit" name="empty_trash" id="delete_all" value="<?php esc_attr_e( 'Empty Trash', 'simple-pay' ); ?>" class="button apply" />
+				<input type="submit" name="empty_trash" id="delete_all" value="<?php esc_attr_e( 'Empty Trash', 'stripe' ); ?>" class="button apply" />
 			</div>
 
 			<?php
@@ -701,9 +701,9 @@ class Form_List_Table extends WP_List_Table {
 
 		switch ( $status ) {
 			case 'draft':
-				return __( 'Draft', 'simple-pay' );
+				return __( 'Draft', 'stripe' );
 			case 'publish':
-				return __( 'Published', 'simple-pay' );
+				return __( 'Published', 'stripe' );
 			default:
 				return '';
 		}
@@ -746,9 +746,9 @@ class Form_List_Table extends WP_List_Table {
 	function get_columns() {
 		$columns = array(
 			'cb'        => '<input type="checkbox" />',
-			'title'     => __( 'Title', 'simple-pay' ),
-			'shortcode' => __( 'Shortcode', 'simple-pay' ),
-			'date'      => __( 'Date', 'simple-pay' ),
+			'title'     => __( 'Title', 'stripe' ),
+			'shortcode' => __( 'Shortcode', 'stripe' ),
+			'date'      => __( 'Date', 'stripe' ),
 		);
 
 		return $columns;
@@ -779,14 +779,14 @@ class Form_List_Table extends WP_List_Table {
 		if ( isset( $_REQUEST['status'] ) && 'trash' === $_REQUEST['status'] ) {
 
 			$actions = array(
-				'bulk_untrash' => esc_html__( 'Restore', 'simple-pay' ),
-				'bulk_delete'  => esc_html__( 'Permanently Delete', 'simple-pay' ),
+				'bulk_untrash' => esc_html__( 'Restore', 'stripe' ),
+				'bulk_delete'  => esc_html__( 'Permanently Delete', 'stripe' ),
 			);
 
 		} else {
 
 			$actions = array(
-				'bulk_trash' => esc_html__( 'Move to Trash', 'simple-pay' ),
+				'bulk_trash' => esc_html__( 'Move to Trash', 'stripe' ),
 			);
 		}
 
@@ -855,7 +855,7 @@ class Form_List_Table extends WP_List_Table {
 			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
 			if ( ! wp_verify_nonce( $nonce, 'simpay_trash_form' ) ) {
-				die( esc_html__( 'Not authorized', 'simple-pay' ) );
+				die( esc_html__( 'Not authorized', 'stripe' ) );
 			} else {
 				$this->trash_form( absint( $_GET['simpay_form'] ) );
 			}
@@ -865,7 +865,7 @@ class Form_List_Table extends WP_List_Table {
 			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
 			if ( ! wp_verify_nonce( $nonce, 'simpay_untrash_form' ) ) {
-				die( esc_html__( 'Not Authorized', 'simple-pay' ) );
+				die( esc_html__( 'Not Authorized', 'stripe' ) );
 			} else {
 				$this->untrash_form( absint( $_GET['simpay_form'] ) );
 			}
@@ -874,7 +874,7 @@ class Form_List_Table extends WP_List_Table {
 			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
 			if ( ! wp_verify_nonce( $nonce, 'simpay_permanent_delete_form' ) ) {
-				die ( esc_html__( 'Not Authorized', 'simple-pay' ) );
+				die ( esc_html__( 'Not Authorized', 'stripe' ) );
 			} else {
 				$this->permanently_delete_form( absint( $_GET['simpay_form'] ) );
 			}
@@ -883,7 +883,7 @@ class Form_List_Table extends WP_List_Table {
 			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
 			if ( ! wp_verify_nonce( $nonce, 'simpay_duplicate_form' ) ) {
-				die ( esc_html__( 'Not Authorized', 'simple-pay' ) );
+				die ( esc_html__( 'Not Authorized', 'stripe' ) );
 			} else {
 				$this->duplicate_form( absint( $_GET['simpay_form'] ) );
 			}

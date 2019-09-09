@@ -36,7 +36,7 @@ class Cron {
 	public function add_schedules( $schedules ) {
 		$schedules['weekly'] = array(
 			'interval' => 604800,
-			'display'  => __( 'Once Weekly', 'simple-pay' ),
+			'display'  => __( 'Once Weekly', 'stripe' ),
 		);
 
 		return $schedules;

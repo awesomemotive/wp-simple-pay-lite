@@ -31,7 +31,7 @@ class Payment_Button extends Custom_Field {
 		$html = '';
 
 		$id    = isset( $settings['id'] ) ? $settings['id'] : '';
-		$text  = isset( $settings['text'] ) && ! empty( $settings['text'] ) ? $settings['text'] : esc_html__( 'Pay with Card', 'simple-pay' );
+		$text  = isset( $settings['text'] ) && ! empty( $settings['text'] ) ? $settings['text'] : esc_html__( 'Pay with Card', 'stripe' );
 		$style = isset( $settings['style'] ) ? $settings['style'] : ( simpay_get_global_setting( 'payment_button_style' ) ? simpay_get_global_setting( 'payment_button_style' ) : 'stripe' );
 
 		$id = simpay_dashify( $id );

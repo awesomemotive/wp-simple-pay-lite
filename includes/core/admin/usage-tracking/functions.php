@@ -194,14 +194,14 @@ function get_optin_notice() {
 	);
 ?>
 
-<p style="margin-top: 0.75em;"><strong><?php esc_html_e( 'Save 10% on WP Simple Pay Pro', 'simple-pay' ); ?></strong></p>
+<p style="margin-top: 0.75em;"><strong><?php esc_html_e( 'Save 10% on WP Simple Pay Pro', 'stripe' ); ?></strong></p>
 
 <p>
 <?php
 echo wp_kses(
 	sprintf(
 		/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. %1$s Opening <a> tag, do not translate. %4$s Closing <a> tag, do not translate. */
-		esc_html__( 'Enable usage analytics and subscribe to our newsletter to save %1$s10&#37;%2$s when you %3$supgrade to %1$sWP Simple Pay Pro%2$s%4$s with a coupon delivered directly to your inbox.', 'simple-pay' ),
+		esc_html__( 'Enable usage analytics and subscribe to our newsletter to save %1$s10&#37;%2$s when you %3$supgrade to %1$sWP Simple Pay Pro%2$s%4$s with a coupon delivered directly to your inbox.', 'stripe' ),
 		'<strong>',
 		'</strong>',
 		'<a href="" target="_blank" rel="noopener noreferrer">',
@@ -218,7 +218,7 @@ echo wp_kses(
 );
 ?></p>
 
-<p><?php esc_html_e( 'Allowing your website to be considered as we evaluate new features ensures you get the most out of each and every update to WP Simple Pay. No sensitive data is ever collected or stored.', 'simple-pay' ); ?></p>
+<p><?php esc_html_e( 'Allowing your website to be considered as we evaluate new features ensures you get the most out of each and every update to WP Simple Pay. No sensitive data is ever collected or stored.', 'stripe' ); ?></p>
 
 <form
 	id="simpay-usage-tracking-nag"
@@ -228,7 +228,7 @@ echo wp_kses(
 	action="https://wpsimplepay.com/subscribe/"
 >
 	<p>
-		<label for="simpay-usage-tracking-email"><?php esc_html_e( 'Email address', 'simple-pay' ); ?>:</label><br />
+		<label for="simpay-usage-tracking-email"><?php esc_html_e( 'Email address', 'stripe' ); ?>:</label><br />
 		<input type="text" name="email" id="simpay-usage-tracking-email" class="regular-text" value="<?php echo bloginfo( 'admin_email' ); ?>" />
 		<input type="hidden" name="utm_source" value="inside-plugin" />
 		<input type="hidden" name="utm_medium" value="form" />
@@ -237,8 +237,8 @@ echo wp_kses(
 		<?php wp_nonce_field( 'simpay-usage-tracking-optin-nag', 'simpay-usage-tracking-optin-nag' ); ?>
 	</p>
 	<p>
-		<button type="submit" name="submit" class="button button-primary"><?php esc_html_e( 'Enable and Subscribe', 'simple-pay' ); ?></button>
-		<a href="<?php echo esc_url( $dismiss_url ); ?>" class="button-link" style="margin-left: 5px;"><?php esc_html_e( 'No thanks', 'simple-pay' ); ?></a>
+		<button type="submit" name="submit" class="button button-primary"><?php esc_html_e( 'Enable and Subscribe', 'stripe' ); ?></button>
+		<a href="<?php echo esc_url( $dismiss_url ); ?>" class="button-link" style="margin-left: 5px;"><?php esc_html_e( 'No thanks', 'stripe' ); ?></a>
 	</p>
 </form>
 
@@ -260,14 +260,14 @@ function add_admin_setting( $fields ) {
 	$section = 'general_misc';
 
 	$fields[ $section ]['usage_tracking_opt_in'] = array(
-		'title'       => esc_html__( 'Usage Tracking', 'simple-pay' ),
-		'text'        => esc_html__( 'Allow', 'simple-pay' ),
+		'title'       => esc_html__( 'Usage Tracking', 'stripe' ),
+		'text'        => esc_html__( 'Allow', 'stripe' ),
 		'type'        => 'checkbox',
 		'name'        => 'simpay_' . $id . '_' . $group . '[' . $section . '][usage_tracking_opt_in]',
 		'id'          => 'simpay-' . $id . '-' . $group . '-' . $section . '-usage-tracking-opt-in',
 		'value'       => simpay_get_global_setting( 'usage_tracking_opt_in' ),
 		'default'     => 'no',
-		'description' => esc_html__( 'Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked.', 'simple-pay' ),
+		'description' => esc_html__( 'Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked.', 'stripe' ),
 	);
 
 	return $fields;

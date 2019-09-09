@@ -112,19 +112,19 @@ class PaymentIntent_Controller extends Controller {
 			$payment_method_id = isset( $request['payment_method_id'] ) ? $request['payment_method_id'] : false;
 
 			if ( ! $payment_method_id ) {
-				throw new \Exception( __( 'A payment method is required.', 'simple-pay' ) );
+				throw new \Exception( __( 'A payment method is required.', 'stripe' ) );
 			}
 
 			// Gather customer information.
 			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : false;
 
 			if ( ! $customer_id ) {
-				throw new \Exception( __( 'A customer must be provided.', 'simple-pay' ) );
+				throw new \Exception( __( 'A customer must be provided.', 'stripe' ) );
 			}
 
 			// Locate form.
 			if ( ! isset( $request['form_id'] ) ) {
-				throw new \Exception( __( 'Unable to locate payment form.', 'simple-pay' ) );
+				throw new \Exception( __( 'Unable to locate payment form.', 'stripe' ) );
 			}
 
 			// Gather <form> information.
@@ -221,14 +221,14 @@ class PaymentIntent_Controller extends Controller {
 			$paymentintent_id = isset( $request['payment_intent_id'] ) ? $request['payment_intent_id'] : false;
 
 			if ( ! $paymentintent_id ) {
-				throw new \Exception( __( 'Unable to locate PaymentIntent', 'simple-pay' ) );
+				throw new \Exception( __( 'Unable to locate PaymentIntent', 'stripe' ) );
 			}
 
 			// Gather customer information.
 			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : false;
 
 			if ( ! $customer_id ) {
-				throw new \Exception( __( 'A customer must be provided.', 'simple-pay' ) );
+				throw new \Exception( __( 'A customer must be provided.', 'stripe' ) );
 			}
 
 			// Gather <form> information.
@@ -285,7 +285,7 @@ class PaymentIntent_Controller extends Controller {
 		} else {
 			$response = new \WP_REST_Response(
 				array(
-					'error' => __( 'Invalid PaymentIntent status', 'simple-pay' ),
+					'error' => __( 'Invalid PaymentIntent status', 'stripe' ),
 				),
 				500
 			);
