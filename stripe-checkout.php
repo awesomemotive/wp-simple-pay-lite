@@ -36,12 +36,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 	//
+	// Shared
+	//
+	if ( ! defined( 'SIMPLE_PAY_STORE_URL' ) ) {
+		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
+	}
+
+	//
 	// Lite/Pro-specific.
 	//
 	define( 'SIMPLE_PAY_VERSION', '2.3.0-beta-1' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );
+	}
+
+	if ( ! defined( 'SIMPLE_PAY_ITEM_NAME' ) ) {
+		define( 'SIMPLE_PAY_ITEM_NAME', 'WP Simple Pay Lite' );
 	}
 
 	//
@@ -76,10 +87,6 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 	if ( ! defined( 'SIMPLE_PAY_INC' ) ) {
 		define( 'SIMPLE_PAY_INC', plugin_dir_path( __FILE__ ) . 'includes/' );
-	}
-
-	if ( ! defined( 'SIMPLE_PAY_STORE_URL' ) ) {
-		define( 'SIMPLE_PAY_STORE_URL', 'https://wpsimplepay.com/' );
 	}
 
 	// Compatibility files.
