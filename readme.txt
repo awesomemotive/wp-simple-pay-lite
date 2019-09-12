@@ -3,7 +3,7 @@ Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702,
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.9
 Tested up to: 5.2.3
-Stable tag: 2.3.0-beta-2
+Stable tag: 2.3.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -111,7 +111,7 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
-= 2.3.0 - September XX, 2019 =
+= 2.3.0 - September 12, 2019 =
 
 * New: Strong Customer Authentication (SCA) support.
 * New: Support Stripe's off-site Checkout pages.
