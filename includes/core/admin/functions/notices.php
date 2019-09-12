@@ -82,46 +82,6 @@ function stripe_connect() {
 }
 
 /**
- * Function to display an alert to installs that Stripe Checkout is changing.
- */
-function stripe_checkout() {
-	ob_start();
-
-	$link = sprintf(
-		/* translators: %1$s Opening anchor tag for Stripe Checkout documentation, do not translate. %2$s Closing anchor tag, do not translate. */
-		' ' . __( 'View the %1$sdocumentation%2$s to learn more.', 'stripe' ),
-		'<a href="' . simpay_get_url( 'docs' ) . 'articles/new-stripe-checkout/" target="_blank" rel="noopener noreferrer">',
-		'</a>'
-	);
-
-	if ( ! class_exists( 'SimplePayPro' ) ) {
-?>
-
-<p>
-	<?php
-	esc_html_e( 'Stripe Checkout is changing soon. This will impact the appearance of your payment forms.', 'stripe' );
-	echo wp_kses_post( $link );
-	?>
-</p>
-
-<?php
-	} else {
-?>
-
-<p>
-	<?php
-	esc_html_e( 'Stripe Checkout is changing soon. This will impact the appearance of your payment forms using this display type.', 'stripe' );
-	echo wp_kses_post( $link );
-	?>
-</p>
-
-<?php
-	}
-
-	return ob_get_clean();
-}
-
-/**
  * Output the PHP requirement notice.
  *
  * This warns users that the plugin will not be able to function in their

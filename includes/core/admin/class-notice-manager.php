@@ -29,11 +29,6 @@ class Notice_Manager {
 			'type'        => 'info',
 			'callback'    => 'SimplePay\Core\Admin\Notices\stripe_connect',
 		),
-		'stripe_checkout' => array(
-			'dismissible' => true,
-			'type'        => 'info',
-			'callback'    => 'SimplePay\Core\Admin\Notices\stripe_checkout',
-		),
 	);
 
 	/**

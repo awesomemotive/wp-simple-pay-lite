@@ -132,6 +132,8 @@ class Default_Form extends Form {
 			do_action( 'simpay_form_' . absint( $this->id ) . '_after_form_display', $this );
 
 		echo '</div>'; // .simpay-{$form_display_type}-form-wrap
+
+		do_action( 'simpay_after_form_display', $this );
 	}
 
 	private function get_form_classes( $id ) {
