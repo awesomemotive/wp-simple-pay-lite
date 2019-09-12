@@ -269,12 +269,22 @@ var spAdmin = {};
 		},
 
 		stripeConnect: function() {
-			$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().hide().next().hide();
+			if ( 
+				// If there is a toggle to manage keys, hide them initially.
+				0 !== $( '#wpsp-api-keys-row-reveal' ).length ||
+				// (Hacky) If we are on Pro, hide them initially.
+				(
+					0 === $( '#wpsp-api-keys-row-reveal' ).length ||
+					0 === $( '#simpay-settings-keys-elements-locale' ).length
+				)
+			) {
+				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().hide().prev().hide();
+			}
 
 			$( '#wpsp-api-keys-row-reveal button' ).click( function( e ) {
 				e.preventDefault();
 
-				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().show().next().show();
+				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().show().prev().show();
 				$( '#wpsp-api-keys-row-hide' ).show();
 				$( this ).parent().hide();
 			} );
@@ -282,7 +292,7 @@ var spAdmin = {};
 			$( '#wpsp-api-keys-row-hide button' ).click( function( e ) {
 				e.preventDefault();
 
-				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).next().hide().next().hide();
+				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().hide().prev().hide();
 				$( '#wpsp-api-keys-row-reveal' ).show();
 				$( this ).parent().hide();
 			} );

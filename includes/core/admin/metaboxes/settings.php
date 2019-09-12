@@ -256,25 +256,9 @@ class Settings {
 		$image_url = isset( $_POST['_image_url'] ) ? sanitize_text_field( $_POST['_image_url'] ) : '';
 		update_post_meta( $post_id, '_image_url', $image_url );
 
-		// Enable Remember Me
-		$enable_remember_me = isset( $_POST['_enable_remember_me'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_enable_remember_me', $enable_remember_me );
-
-		// Checkout Button Text
-		$checkout_button_text = isset( $_POST['_checkout_button_text'] ) ? sanitize_text_field( $_POST['_checkout_button_text'] ) : '';
-		update_post_meta( $post_id, '_checkout_button_text', $checkout_button_text );
-
-		// Verify Zip/Postal Code
-		$verify_zip = isset( $_POST['_verify_zip'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_verify_zip', $verify_zip );
-
 		// Enable Billing Address
 		$enable_billing_address = isset( $_POST['_enable_billing_address'] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_enable_billing_address', $enable_billing_address );
-
-		// Enable Shipping Address
-		$enable_shipping_address = isset( $_POST['_enable_shipping_address'] ) ? 'yes' : 'no';
-		update_post_meta( $post_id, '_enable_shipping_address', $enable_shipping_address );
 
 		// Payment button style.
 		if ( isset( $_POST['_payment_button_style'] ) ) {

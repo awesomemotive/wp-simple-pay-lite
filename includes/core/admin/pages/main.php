@@ -304,7 +304,7 @@ class Main {
 
 							<?php if ( $is_draft ) { // Show only if this is already a draft ?>
 								<div id="save-action">
-									<input type="submit" name="save_draft" id="save-post" value="<?php esc_attr_e( 'Save Draft', 'stripe' ); ?>" class="simpay-button button">
+									<input type="submit" name="save_draft" id="save-post" value="<?php esc_attr_e( 'Save Draft', 'simple-pay' ); ?>" class="simpay-button button">
 									<span class="spinner"></span>
 								</div>
 							<?php } ?>

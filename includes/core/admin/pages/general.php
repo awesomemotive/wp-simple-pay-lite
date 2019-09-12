@@ -55,7 +55,7 @@ class General extends Admin_Page {
 				'title' => esc_html__( 'Styles', 'stripe' ),
 			),
 			'general_misc'     => array(
-				'title' => esc_html__( 'Misc', 'stripe' ),
+				'title' => esc_html__( 'Other', 'stripe' ),
 			),
 		) );
 	}
@@ -107,15 +107,6 @@ class General extends Admin_Page {
 							'class'       => array( 'simpay-chosen-search' ),
 							'default'     => $failure_default,
 							'description' => esc_html__( 'The page customers are sent to after a failed payment.', 'stripe' ),
-						),
-						'locale'       => array(
-							'title'       => esc_html__( 'Stripe Checkout Locale', 'stripe' ),
-							'type'        => 'select',
-							'options'     => $this->get_locales(),
-							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][locale]',
-							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-locale',
-							'value'       => $this->get_option_value( $section, 'locale' ),
-							'description' => esc_html__( "Specify auto-detect to display Stripe Checkout in the user's preferred language, if available. English will be used by default.", 'stripe' ) . '<br/><a href="https://stripe.com/docs/checkout#supported-languages" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Stripe Checkout supported languages', 'stripe' ) . '</a>',
 						),
 					);
 
@@ -358,30 +349,6 @@ class General extends Admin_Page {
 			'YER' => esc_html__( 'Yemeni Rial', 'stripe' ),
 			'ZAR' => esc_html__( 'South African Rand', 'stripe' ),
 			'ZMW' => esc_html__( 'Zambian Kwacha', 'stripe' ),
-		);
-	}
-
-	/**
-	 * Get the available locales that Stripe can use
-	 *
-	 * @return array
-	 */
-	public function get_locales() {
-
-		return array(
-			''     => esc_html__( 'English (en) (default)', 'stripe' ),
-			'auto' => esc_html__( 'Auto-detect locale', 'stripe' ),
-			'zh'   => esc_html__( 'Simplified Chinese (zh)', 'stripe' ),
-			'da'   => esc_html__( 'Danish (da)', 'stripe' ),
-			'nl'   => esc_html__( 'Dutch (nl)', 'stripe' ),
-			'fi'   => esc_html__( 'Finnish (fi)', 'stripe' ),
-			'fr'   => esc_html__( 'French (fr)', 'stripe' ),
-			'de'   => esc_html__( 'German (de)', 'stripe' ),
-			'it'   => esc_html__( 'Italian (it)', 'stripe' ),
-			'ja'   => esc_html__( 'Japanese (ja)', 'stripe' ),
-			'no'   => esc_html__( 'Norwegian (no)', 'stripe' ),
-			'es'   => esc_html__( 'Spanish (es)', 'stripe' ),
-			'sv'   => esc_html__( 'Swedish (sv)', 'stripe' ),
 		);
 	}
 }

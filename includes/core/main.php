@@ -22,9 +22,12 @@ final class SimplePay {
 	/**
 	 * Session object
 	 *
+	 * @since uknown
+	 * @since 3.6.0 No longer used.
+	 *
 	 * @var Session object
 	 */
-	public $session;
+	public $session = null;
 
 	/**
 	 * The single instance of this class
@@ -95,23 +98,37 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/functions/template.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/countries.php' );
-		require_once( SIMPLE_PAY_INC . 'core/functions/charge.php' );
-		require_once( SIMPLE_PAY_INC . 'core/functions/customer.php' );
+
+		// Payments/Purchase Flow.
+		require_once( SIMPLE_PAY_INC . 'core/payments/customer.php' );
+		require_once( SIMPLE_PAY_INC . 'core/payments/paymentintent.php' );
+		require_once( SIMPLE_PAY_INC . 'core/payments/payment-confirmation.php' );
+		require_once( SIMPLE_PAY_INC . 'core/payments/payment-confirmation-template-tags.php' );
+
+		// REST API.
+		new REST_API();
+		require_once( SIMPLE_PAY_INC . 'core/rest-api/functions.php' );
+
+		// Stripe Checkout functionality.
+		require_once( SIMPLE_PAY_INC . 'core/payments/stripe-checkout/functions.php' );
+		require_once( SIMPLE_PAY_INC . 'core/payments/stripe-checkout/session.php' );
 
 		// Stripe Connect functionality.
 		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/functions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/admin.php' );
 
-		// TODO Don't load sessions in admin after Pro multi-plan setup fee set/get is refactored.
-		$this->session = new Session();
+		// Legacy.
+		require_once( SIMPLE_PAY_INC . 'core/legacy/hooks.php' );
+		require_once( SIMPLE_PAY_INC . 'core/legacy/class-payment-form.php' );
+
+		// Cron functionality.
+		$cron = new Cron();
+		$cron->schedule_events();
 
 		$this->objects = new Objects();
 
-		new Errors();
-		new Payments\Setup();
 		new Post_Types();
 		new Shortcodes();
-		new Stripe_API();
 
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			$this->load_admin();
@@ -130,6 +147,9 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/functions/admin.php' );
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/notices.php' );
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/plugin-upgrade-notice.php' );
+
+		// Usage tracking functionality.
+		require_once( SIMPLE_PAY_INC . 'core/admin/usage-tracking/functions.php' );
 
 		new Admin\Assets();
 		new Admin\Menus();

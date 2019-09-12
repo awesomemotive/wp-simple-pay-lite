@@ -13,6 +13,31 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 /**
+ * Stripe Checkout supported locales.
+ *
+ * @since 3.6.0
+ *
+ * @return array
+ */
+function simpay_get_stripe_checkout_locales() {
+	return array(
+		'auto' => esc_html__( 'Auto-detect', 'stripe' ),
+		'zh'   => esc_html__( 'Chinese (Simplified) (zh)', 'stripe' ),
+		'da'   => esc_html__( 'Danish (da)', 'stripe' ),
+		'nl'   => esc_html__( 'Dutch (nl)', 'stripe' ),
+		''     => esc_html__( 'English (en)', 'stripe' ),
+		'fi'   => esc_html__( 'Finnish (fi)', 'stripe' ),
+		'fr'   => esc_html__( 'French (fr)', 'stripe' ),
+		'de'   => esc_html__( 'German (de)', 'stripe' ),
+		'it'   => esc_html__( 'Italian (it)', 'stripe' ),
+		'ja'   => esc_html__( 'Japanese (ja)', 'stripe' ),
+		'no'   => esc_html__( 'Norwegian (no)', 'stripe' ),
+		'es'   => esc_html__( 'Spanish (es)', 'stripe' ),
+		'sv'   => esc_html__( 'Swedish (sv)', 'stripe' ),
+	);
+}
+
+/**
  * Get the svg icon URL
  *
  * @return string

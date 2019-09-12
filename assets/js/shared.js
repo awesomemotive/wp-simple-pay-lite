@@ -1,4 +1,4 @@
-/* global spGeneral, jQuery */
+/* global spGeneral, jQuery, accounting */
 
 var spShared = {};
 
@@ -10,8 +10,6 @@ var spShared = {};
 	spShared = {
 
 		init: function() {
-
-			// Set main vars on init.
 			body = $( document.body );
 
 			// Validate & update amount input fields on focus out (blur).
@@ -85,8 +83,7 @@ var spShared = {};
 		 * @returns number
 		 */
 		convertToDollars: function( amount ) {
-
-			if ( !spGeneral.booleans.isZeroDecimal ) {
+			if ( ! spGeneral.booleans.isZeroDecimal ) {
 				amount = accounting.toFixed( amount / 100, 2 );
 			}
 
@@ -100,8 +97,7 @@ var spShared = {};
 		 * @returns number
 		 */
 		convertToCents: function( amount ) {
-
-			if ( !spGeneral.booleans.isZeroDecimal ) {
+			if ( ! spGeneral.booleans.isZeroDecimal ) {
 				amount = Number( accounting.toFixed( amount * 100, 0 ) );
 			}
 
@@ -113,9 +109,10 @@ var spShared = {};
 		 * Some fields display blank instead of "0.00" or "0".
 		 * Some fields require a minimum of "1.00" or "100" (100 currency units).
 		 * Invalid characters and the negative symbol will be removed.
+		 *
+		 * @param {jQuery} Input to validate.
 		 */
 		validateAndUpdateAmountInput: function( el ) {
-
 			// Amount is intially a string.
 			var amount = el.val();
 

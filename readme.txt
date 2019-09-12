@@ -2,9 +2,9 @@
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.9
-Tested up to: 5.2
-Stable tag: 2.2.0
-Requires PHP: 5.4
+Tested up to: 5.2.3
+Stable tag: 2.3.0
+Requires PHP: 5.6
 License: GPLv2 or later
 
 Add high conversion Stripe payment forms to your WordPress site in minutes.
@@ -110,6 +110,19 @@ We'd love your help! Here are a few things you can do:
 9. Payment form settings: Stripe Checkout overlay display
 
 == Changelog ==
+
+= 2.3.0 - September 12, 2019 =
+
+* New: Strong Customer Authentication (SCA) support.
+* New: Support Stripe's off-site Checkout pages.
+* New: Improve Stripe connected account information in admin settings.
+* New: Help WP Simple Pay improve by reporting usage analytics.
+* Fix: Remove extra apostrophe escaping from meta in the Stripe Dashboard.
+* Dev: Update to v6.43.0 of Stripe's PHP API library.
+* Dev: Remove WP_Session library.
+* Dev: Enforce Stripe's PHP library `cURL` requirement.
+* Dev: Deprecated many hooks/filters that no longer apply to the new payment flows.
+       Please review any custom snippets that may change functionality.
 
 = 2.2.0 - May 13, 2019 =
 

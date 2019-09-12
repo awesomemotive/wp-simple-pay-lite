@@ -48,16 +48,19 @@ class Keys extends Admin_Page {
 			'connect'      => array(
 				'title' => '',
 			),
-			'mode'      => array(
-				'title' => '',
-			),
 			'test_keys' => array(
 				'title' => '',
 			),
 			'live_keys' => array(
 				'title' => '',
 			),
+			'mode'      => array(
+				'title' => '',
+			),
 			'country' => array(
+				'title' => '',
+			),
+			'locale'  => array(
 				'title' => '',
 			),
 		) );
@@ -67,6 +70,9 @@ class Keys extends Admin_Page {
 	 * Add fields.
 	 *
 	 * @since  3.0.0
+	 *
+	 * @todo An extreme amount of markup soup is happening here.
+	 * Settings API needs to be utilized better with custom fields being managed elsewhere.
 	 *
 	 * @return array
 	 */
@@ -81,28 +87,39 @@ class Keys extends Admin_Page {
 				$section = sanitize_key( $section );
 
 				if ( 'connect' == $section ) {
-					$show_connect_button = false;
-
+					$html = '';
 					$mode = simpay_is_test_mode() ? __( 'test', 'stripe' ) : __( 'live', 'stripe' );
 
-					if( simpay_is_test_mode() && ! simpay_check_keys_exist() ) {
-
-						$show_connect_button = true;
-
-					} elseif( ! simpay_check_keys_exist() ) {
-
-						$show_connect_button = true;
-
+					// Need some sort of key (from a Connect account or manual) to check status.
+					if ( simpay_check_keys_exist() ) {
+						$html .= '<div id="simpay-stripe-account-info" class="simpay-stripe-account-info" data-account-id="' . simpay_get_account_id() . '" data-nonce="' . wp_create_nonce( 'simpay-stripe-connect-information' ) . '"><p><span class="spinner is-active"></span> <em>' . esc_html__( 'Retrieving account information...', 'stripe' ) . '</em></p></div>';
 					}
 
-					if( $show_connect_button ) {
-						$html = '<a href="'. esc_url( simpay_get_stripe_connect_url() ) .'" class="wpsp-stripe-connect"><span>' . __( 'Connect with Stripe', 'stripe' ) . '</span></a>';
+					if ( false === simpay_get_account_id() || ! simpay_check_keys_exist() ) {
+						$html .= '<a href="'. esc_url( simpay_get_stripe_connect_url() ) .'" class="wpsp-stripe-connect"><span>' . __( 'Connect with Stripe', 'stripe' ) . '</span></a>';
 					} else {
-						$html = '<p>' . sprintf(
+						$html .= '<p id="simpay-stripe-auth-error-account-actions" style="display: none;">' . sprintf(
+							/* translators: %1$s Stripe payment mode. %2$s Opening anchor tag for reconnecting to Stripe, do not translate. %3$s Opening anchor tag for disconnecting Stripe, do not translate. %4$s Closing anchor tag, do not translate. */
+							__( '%2$sReconnect in %1$s mode%4$s, or %3$sdisconnect this account%4$s.', 'stripe' ),
+							'<strong>' . $mode . '</strong>',
+							'<a href="' . esc_url( simpay_get_stripe_connect_url() ) . '">',
+							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">',
+							'</a>'
+						) . '</p>';
+
+						$html .= '<p id="simpay-stripe-activated-account-actions" style="display: none;">' . sprintf(
 							/* translators: %1$s Stripe payment mode. %2$s Opening anchor tag for reconnecting to Stripe, do not translate. %3$s Opening anchor tag for disconnecting Stripe, do not translate. %4$s Closing anchor tag, do not translate. */
 							__( 'Your Stripe account is connected in %1$s mode. %2$sReconnect in %1$s mode%4$s, or %3$sdisconnect this account%4$s.', 'stripe' ),
 							'<strong>' . $mode . '</strong>',
 							'<a href="' . esc_url( simpay_get_stripe_connect_url() ) . '">',
+							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">',
+							'</a>'
+						) . '</p>';
+
+						$html .= '<p id="simpay-stripe-unactivated-account-actions" style="display: none;">' . sprintf(
+							/* translators: %1$s Stripe payment mode. %2$s Opening anchor tag for disconnecting Stripe, do not translate. %3$s Closing anchor tag, do not translate. */
+							__( 'Your unsaved account is connected in %1$s mode. %2$sConnect to another account%3$s', 'stripe' ),
+							'<strong>' . $mode . '</strong>',
 							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">',
 							'</a>'
 						) . '</p>';
@@ -118,9 +135,13 @@ class Keys extends Admin_Page {
 					);
 					$html .= '</span></p>';
 
-					if ( simpay_can_site_manage_stripe_keys() ) {
-						$html .= '<p id="wpsp-api-keys-row-reveal"><button type="button" class="button button-small">' . __( 'Manage API Keys Manually', 'stripe' ) . '</button></p>';
-						$html .= '<p id="wpsp-api-keys-row-hide"><button type="button" class="button button-small">' . __( 'Hide API Keys', 'stripe' ) . '</button></p>';
+					$is_managing_keys = false === simpay_get_account_id() && simpay_check_keys_exist();
+
+					// Only show buttons if we are managing keys, but none exist.
+					// Otherwise the fields are auto shown.
+					if ( simpay_can_site_manage_stripe_keys() && ! $is_managing_keys ) {
+						$html .= '<p id="wpsp-api-keys-row-reveal"><button type="button" class="button-link"><small>' . __( 'Manage API keys manually', 'stripe' ) . '</small></button></p>';
+						$html .= '<p id="wpsp-api-keys-row-hide"><button type="button" class="button-link"><small>' . __( 'Hide API keys', 'stripe' ) . '</small></button></p>';
 					}
 
 					$fields[ $section ] = array(
@@ -189,7 +210,6 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
-							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>pk_test</code>',
 						),
 						'secret_key'      => array(
 							'title'   => esc_html__( 'Test Secret Key', 'stripe' ),
@@ -201,7 +221,6 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
-							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>sk_test</code>',
 						),
 					);
 				} elseif ( 'live_keys' == $section ) {
@@ -217,7 +236,6 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
-							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>pk_live</code>',
 						),
 						'secret_key'      => array(
 							'title'   => esc_html__( 'Live Secret Key', 'stripe' ),
@@ -229,7 +247,6 @@ class Keys extends Admin_Page {
 							'class'   => array(
 								'regular-text',
 							),
-							'description' => esc_html__( 'Starts with', 'stripe' ) . ' <code>sk_live</code>',
 						),
 					);
 				} elseif ( 'country' == $section ) {
@@ -242,10 +259,26 @@ class Keys extends Admin_Page {
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][country]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-country',
 							'value'       => $this->get_option_value( $section, 'country' ),
-							'description' => esc_html__( 'The country associated with the connected Stripe account.', 'stripe' ) . '<br />' . '<a href="https://dashboard.stripe.com/account" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View your Stripe account settings', 'stripe' ),
+							'description' => esc_html__( 'The country associated with the connected Stripe account.', 'stripe' ),
 						),
 					);
 
+				} elseif ( 'locale' === $section ) {
+					$value = $this->get_option_value( $section, 'locale' );
+					$fallback = get_option( 'simpay_settings_general' );
+					$fallback = isset( $fallback['general']['locale'] ) ? $fallback['general']['locale'] : '';
+
+					$fields[ $section ] = array(
+						'locale' => array(
+							'title'       => esc_html__( 'Stripe Checkout Locale', 'stripe' ),
+							'type'        => 'select',
+							'options'     => simpay_get_stripe_checkout_locales(),
+							'name'        => 'simpay_' . $this->option_group . '_keys[locale][locale]',
+							'id'          => 'simpay-' . $this->option_group . '-keys-locale-locale',
+							'value'       => '' !== $value ? $value : $fallback,
+							'description' => esc_html__( 'Specify "Auto-detect" to display Stripe Checkout in the user\'s preferred language, if available.', 'stripe' ),
+						),
+					);
 				}
 
 			}

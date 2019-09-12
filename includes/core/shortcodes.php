@@ -5,6 +5,10 @@ namespace SimplePay\Core;
 use SimplePay\Core\Abstracts\Form;
 use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Payments\Payment;
+use SimplePay\Core\Payments\Payment_Confirmation;
+use SimplePay\Core\Payments\Stripe_API;
+
+use function SimplePay\Core\SimplePay;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -33,7 +37,9 @@ class Shortcodes {
 
 		add_shortcode( 'simpay', array( $this, 'print_public_form' ) );
 		add_shortcode( 'simpay_preview', array( $this, 'print_preview_form' ) );
-		add_shortcode( 'simpay_payment_receipt', array( $this, 'print_payment_receipt' ) );
+		add_shortcode( 'simpay_payment_receipt', array( $this, 'print_payment_receipt' ), 10, 2 );
+
+		// Deprecated.
 		add_shortcode( 'simpay_error', array( $this, 'print_errors' ) );
 
 		do_action( 'simpay_add_shortcodes' );
@@ -42,48 +48,13 @@ class Shortcodes {
 	/**
 	 * Error message shortcode
 	 *
-	 * @param $attributes
+	 * @since unknown
+	 * @since 3.6.0 Deprecated. Prints nothing.
 	 *
 	 * @return string
 	 */
-
-	// TODO Used? Remove?
-	public function print_errors( $attributes ) {
-
-		$args = shortcode_atts( array(
-			'show_to' => 'admin',
-		), $attributes );
-
-		$access_level = strtolower( $args['show_to'] );
-
-		$show = false;
-		$html = '';
-
-		switch ( $access_level ) {
-			case 'registered':
-				if ( is_user_logged_in() ) {
-					$show = true;
-				}
-				break;
-			case 'all':
-				$show = true;
-				break;
-			default:
-				// Admin is the default access level
-				if ( current_user_can( 'manage_options' ) ) {
-					$show = true;
-				}
-				break;
-		}
-
-		if ( $show ) {
-
-			$html = Errors::get_error_html();
-		}
-
-		Errors::clear_errors();
-
-		return $html;
+	public function print_errors() {
+		return '';
 	}
 
 	/**
@@ -173,75 +144,178 @@ class Shortcodes {
 			return '';
 		}
 
-		global $simpay_form;
+		try {
 
-		// Hook allows Pro forms to override the core default form here.
-		$simpay_form = apply_filters( 'simpay_form_view','', $form_id );
+			/**
+			 * Filter the form type used to generate a Stripe PaymentIntent.
+			 *
+			 * @since unknown
+			 *
+			 * @param string $form_instance Form instance. Blank by default to load Default_Form.
+			 * @param int    $form_id Form ID.
+			 */
+			$simpay_form = apply_filters( 'simpay_form_view', '', $form_id );
 
-		if ( empty( $simpay_form ) ) {
+			if ( empty( $simpay_form ) ) {
+				$simpay_form =  new Default_Form( $form_id );
+			}
 
-			$simpay_form =  new Default_Form( $form_id );
-		}
+			if ( $simpay_form instanceof Form ) {
 
-		if ( $simpay_form instanceof Form ) {
+				ob_start();
 
-			ob_start();
+				$simpay_form->html();
 
-			$simpay_form->html();
-
-			return ob_get_clean();
-		} else {
-			return '';
+				return ob_get_clean();
+			} else {
+				return '';
+			}
+		} catch( \Exception $e ) {
+			return $e->getMessage();
 		}
 	}
 
 	/**
-	 * Shortcode to print the payment details
+	 * Prints payment details.
 	 *
-	 * @return Payments\Details|string
+	 * Since 3.6.0 the shortcode can be a wrapped shortcode with content inside
+	 * that will be parsed like the content in Settings > Payment Confirmation.
+	 *
+	 * @todo Maybe split out some of grunt work involved in collecting the necessary information.
+	 * @todo Try to expand any available objects to reduce extra API calls.
+	 *
+	 * @since unknown
+	 *
+	 * @param array  $atts Shortcode attributes.
+	 * @param string $content Shortcode content.
+	 * @return string
 	 */
-	public function print_payment_receipt() {
+	public function print_payment_receipt( $atts = array(), $content = '' ) {
+		$atts = shortcode_atts(
+			array(),
+			$atts,
+			'simpay_payment_confirmation'
+		);
 
-		$charge_id       = SimplePay()->session->get( 'charge_id' );
-		$customer_id     = SimplePay()->session->get( 'customer_id' );
+		// Check for a Checkout Session ID or Customer ID.
+		// This area blurs the lines between Lite/Pro code since Lite can only use Checkout Session.
+		$session_id  = isset( $_GET['session_id'] ) ? esc_attr( $_GET['session_id' ] ) : false;
+		$customer_id = isset( $_GET['customer_id'] ) ? esc_attr( $_GET['customer_id' ] ) : false;
 
-		$session_error = apply_filters( 'simpay_session_error', ( empty( $charge_id ) ? true : false ) );
-
-		if ( $session_error ) {
-			$session_error_message = '<p>' . esc_html__( 'An error occurred, but your charge may have gone through. Please contact the site admin.', 'stripe' ) . '</p>';
-
-			return apply_filters( 'simpay_charge_error_message', $session_error_message );
+		// Do nothing if we can't find a Checkout Session or Customer to reference.
+		if ( ! ( $session_id || $customer_id ) ) {
+			return Payment_Confirmation\get_error();
 		}
 
-		global $simpay_form;
+		try {
+			// Using the available identifier, find the relevant customer.
+			if ( $session_id ) {
+				$session = Stripe_API::request( 'Checkout\Session', 'retrieve', array(
+					'id'     => $session_id,
+					'expand' => array(
+						'customer',
+						'payment_intent',
+						'subscription',
+					)
+				) );
 
-		$simpay_form = SimplePay()->session->get( 'simpay_form' );
+				$customer = $session->customer;
+			} else {
+				$customer = Stripe_API::request( 'Customer', 'retrieve', $customer_id );
+			}
 
-		if ( ! ( $simpay_form instanceof Form ) ) {
-			return '';
+			// Find the used Payment Form.
+			$form_id = $customer->metadata->simpay_form_id;
+
+			if ( ! $form_id ) {
+				return Payment_Confirmation\get_error();
+			}
+
+			/** This filter is documented in includes/core/shortcodes.php */
+			$form = apply_filters( 'simpay_form_view', '', $form_id );
+
+			if ( empty( $form ) ) {
+				$form = new Default_Form( $form_id );
+			}
+
+			// Retrieve the PaymentIntent the Customer is linked to.
+			$paymentintents = Stripe_API::request(
+				'PaymentIntent',
+				'all',
+				array(
+					'customer' => $customer->id,
+					'limit'    => 1,
+					'expand'   => array(
+						'data.payment_method',
+					)
+				)
+			);
+
+			$payment_confirmation_data = array(
+				'form'           => $form,
+				'customer'       => $customer,
+				'paymentintents' => $paymentintents->data,
+			);
+
+			/**
+			 * Filters the payment confirmation data.
+			 *
+			 * @since 3.6.0
+			 *
+			 * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation template tags.
+			 */
+			$payment_confirmation_data = apply_filters( 'simpay_payment_confirmation_data', $payment_confirmation_data );
+
+			// Retrieve default content if nothing has been passed to the shortcode.
+			if ( '' === $content ) {
+				$content = Payment_Confirmation\get_content();
+			}
+
+			/**
+			 * Filters the content of the confirmation shortcode.
+			 *
+			 * This allows different form types to parse the confirmation template tags differently.
+			 *
+			 * @since 3.6.0
+			 *
+			 * @param string                         $content Payment confirmation shortcode content.
+			 * @param \SimplePay\Core\Abstracts\Form $form Payment form.
+			 * @param \Stripe\Customer               $customer Stripe Customer.
+			 */
+			$content = apply_filters( 'simpay_payment_confirmation_content', $content, $payment_confirmation_data );
+
+			$content = Payment_Confirmation\Template_Tags\parse_content( $content, $payment_confirmation_data );
+
+			/**
+			 * Internal hook to allow legacy hooks that rely on "complete" payments.
+			 */
+			do_action( '_simpay_payment_confirmation', $payment_confirmation_data, $form, $_GET );
+		} catch ( \Exception $e ) {
+			if ( current_user_can( 'manage_options' ) ) {
+				$content = $e->getMessage();
+			} else {
+				$content = Payment_Confirmation\get_error();
+			}
 		}
 
-		$action = '';
-		$payment = apply_filters( 'simpay_payment_handler', '', $simpay_form, $action );
+		/**
+		 * Filters the HTML output before the payment confirmation.
+		 *
+		 * @since unknown
+		 *
+		 * @param string
+		 */
+		$before_html = apply_filters( 'simpay_before_payment_details', '<div class="simpay-payment-receipt-wrap">' );
 
-		if ( empty( $payment ) ) {
-			$payment = new Payment( $simpay_form, $action );
-		}
+		/**
+		 * Filters the HTML output after the payment confirmation.
+		 *
+		 * @since unknown
+		 *
+		 * @param string
+		 */
+		$after_html = apply_filters( 'simpay_after_payment_details', '</div>' );
 
-		if ( ! empty( $charge_id ) ) {
-			$payment->set_charge( $charge_id );
-		}
-
-		if ( $customer_id ) {
-			$payment->set_customer( $customer_id );
-		}
-
-		do_action( 'simpay_payment_receipt_html', $payment );
-
-		$html = new Payments\Details( $payment );
-
-		$html = $html->html( false );
-
-		return $html;
+		return $before_html . wpautop( $content ) . $after_html;
 	}
 }

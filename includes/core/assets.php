@@ -68,8 +68,8 @@ class Assets {
 		$js_path  = SIMPLE_PAY_ASSETS . 'js/';
 
 		$this->scripts = array(
-			'stripe-checkout'        => array(
-				'src'    => 'https://checkout.stripe.com/checkout.js',
+			'simpay-stripe-js-v3'    => array(
+				'src'    => 'https://js.stripe.com/v3/',
 				'deps'   => array(),
 				'ver'    => null,
 				'footer' => true,
@@ -87,9 +87,10 @@ class Assets {
 				'footer' => true,
 			),
 			'simpay-public'    => array(
-				'src'    => $js_path . 'public' . $this->min . '.js',
+				'src'    => $js_path . 'public.min.js',
 				'deps'   => array(
 					'jquery',
+					'wp-api',
 					'simpay-accounting',
 					'simpay-shared',
 				),

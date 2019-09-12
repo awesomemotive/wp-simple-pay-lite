@@ -53,11 +53,6 @@ echo apply_filters(
  * @return string
  */
 function stripe_connect() {
-	// If they are forced to use Stripe Connect they do not need to be notified about the functionality.
-	if ( ! simpay_can_site_manage_stripe_keys() ) {
-		return false;
-	}
-
 	if ( simpay_is_admin_screen() && isset( $_GET['tab'] ) && 'keys' === $_GET['tab'] ) {
 		return false;
 	}

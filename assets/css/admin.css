@@ -9,6 +9,15 @@
 .simpay-metabox-title {
   border: 1px solid #eee; }
 
+.simpay-stripe-account-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; }
+  .simpay-stripe-account-info .spinner {
+    float: none;
+    margin-top: 0;
+    margin-left: 0; }
+
 @media (max-width: 768px) {
   #simpay-global-settings {
     margin-right: 0; } }
