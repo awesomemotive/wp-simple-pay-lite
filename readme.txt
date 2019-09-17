@@ -111,6 +111,11 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
+= 2.3.1 - September 17, 2019 =
+
+* Fix: Stripe Checkout - only generate a Customer record when collecting Customer-specific data.
+* Fix: Stripe Checkout - update available locales (add Polish, Portuguese).
+
 = 2.3.0 - September 12, 2019 =
 
 * New: Strong Customer Authentication (SCA) support.
