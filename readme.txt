@@ -15,7 +15,7 @@ In a few simple steps you can start accepting credit card payments with Stripe C
 
 **What is Stripe Checkout?**
 
-*"Stripe Checkout is a drop-in payment flow for desktop, tablet, and mobile devices. Rely on a checkout page that’s continuously tested and updated to offer a frictionless payments experience. Comply with PCI DSS and new regulatory requirements like SCA—without any changes to your website."*
+*"Stripe Checkout is a drop-in payment flow for desktop, tablet, and mobile devices. Rely on a checkout page that’s continuously tested and updated to offer a frictionless payments experience. PCI DSS and SCA—ready without any changes to your website."*
 
 If accepting credit card payments quickly and painlessly is what you're looking for, this plugin is for you.
 
