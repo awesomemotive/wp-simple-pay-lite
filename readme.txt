@@ -15,7 +15,7 @@ In a few simple steps you can start accepting credit card payments with Stripe C
 
 **What is Stripe Checkout?**
 
-*"Stripe Checkout is an embeddable payment form for desktop, tablet, and mobile devices. It works within your site—customers can pay instantly, without being redirected away to complete the transaction."*
+*"Stripe Checkout is a drop-in payment flow for desktop, tablet, and mobile devices. Rely on a checkout page that’s continuously tested and updated to offer a frictionless payments experience. Comply with PCI DSS and new regulatory requirements like SCA—without any changes to your website."*
 
 If accepting credit card payments quickly and painlessly is what you're looking for, this plugin is for you.
 
@@ -30,8 +30,8 @@ That's it. *No other plugins required.*
 = LITE VERSION FEATURES =
 
 * Unlimited payment forms
-* Mobile responsive Stripe Checkout overlay
-* Display brand or product image in overlay
+* Mobile responsive Stripe Checkout pages
+* Display brand or product image in Stripe Checkout page
 * Optionally collect customer billing & addresses
 * Optionally verify zip/postal code without address
 * Support for 12 languages, 25 countries and 135+ currencies
@@ -99,15 +99,15 @@ We'd love your help! Here are a few things you can do:
 
 == Screenshots ==
 
-1. Desktop checkout overlay example
-2. Mobile checkout overlay example
+1. Desktop Stripe Checkout example
+2. Mobile Stripe Checkout example
 3. Settings: Stripe keys
 4. Settings: Site-wide defaults
 5. Settings: Payment confirmation details
 6. Payment forms listing
 7. Payment form settings: One-time amount
 8. Payment form settings: Payment button
-9. Payment form settings: Stripe Checkout overlay display
+9. Payment form settings: Stripe Checkout display
 
 == Changelog ==
 
