@@ -34,8 +34,9 @@ That's it. *No other plugins required.*
 * Display brand or product image in Stripe Checkout page
 * Optionally collect customer billing & addresses
 * Optionally verify zip/postal code without address
-* Support for 12 languages, 25 countries and 135+ currencies
+* Support for 14 languages, 30+ countries and 135+ currencies
 * Stripe Connect support for easier setup and improved security
+* PCI DSS and SCA—ready
 * Translation ready
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
