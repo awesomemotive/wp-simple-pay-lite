@@ -94,7 +94,12 @@ function get_args_from_payment_form_request( $form, $form_data, $form_values, $c
 	$paymentintent_args = array(
 		'amount'      => $amount,
 		'currency'    => $form->currency,
-		'metadata'    => Legacy\Hooks\simpay_payment_metadata( $form, $form_data, $form_values, $customer_id ),
+		'metadata'    => array_merge(
+			array(
+				'simpay_form_id' => $form->id,
+			),
+			Legacy\Hooks\simpay_payment_metadata( $form, $form_data, $form_values, $customer_id )
+		),
 		'description' => Legacy\Hooks\simpay_payment_description( $form, $form_data, $form_values, $customer_id ),
 	);
 

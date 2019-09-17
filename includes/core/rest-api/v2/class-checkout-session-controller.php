@@ -93,11 +93,7 @@ class Checkout_Session_Controller extends Controller {
 	public function create_item( $request ) {
 		try {
 			// Gather customer information.
-			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : false;
-
-			if ( ! $customer_id ) {
-				throw new \Exception( __( 'A customer must be provided.', 'stripe' ) );
-			}
+			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : '';
 
 			// Locate form.
 			if ( ! isset( $request['form_id'] ) ) {
@@ -184,24 +180,20 @@ class Checkout_Session_Controller extends Controller {
 		$session_args = array(
 			'cancel_url'                 => $form->payment_failure_page,
 			'billing_address_collection' => true === $form->enable_billing_address ? 'required' : 'auto',
-			'customer'                   => $customer_id,
 			'locale'                     => $form->locale,
 		);
 
-		// If a legacy creation hook is being used ensure we have access to form POST data on return.
-		if ( has_action( 'simpay_charge_created' ) || has_action( 'simpay_subscription_created' ) ) {
-			$session_args['success_url'] = add_query_arg(
-				array_merge(
-					array(
-						'session_id' => '{CHECKOUT_SESSION_ID}', 
-					),
-					$form_values
-				),
-				$form->payment_success_page
-			);
-		} else {
-			$session_args['success_url'] = add_query_arg( 'session_id', '{CHECKOUT_SESSION_ID}', $form->payment_success_page );
+		if ( ! empty( $customer_id ) ) {
+			$session_args['customer'] = $customer_id;
 		}
+
+		// Success URL
+
+		// Escape base URL.
+		$session_args['success_url'] = esc_url_raw( $form->payment_success_page );
+
+		// Avoid escaping the {CHECKOUT_SESSION_ID} tag.
+		$session_args['success_url'] = add_query_arg( 'session_id', '{CHECKOUT_SESSION_ID}', $session_args['success_url'] );
 
 		// Add a line item.
 		$amount = isset( $form_values['simpay_amount'] )

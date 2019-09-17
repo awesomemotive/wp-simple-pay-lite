@@ -30,7 +30,10 @@ let simpayApp;
 
 			simpayApp.spFormElList = body.find( '.simpay-checkout-form' );
 
-			simpayApp.spFormElList.each( function() {
+			// Setup Stripe Checkout when formData is available.
+			body.on( 'simpayBindCoreFormEventsAndTriggers', setupStripeCheckout );
+
+			simpayApp.spFormElList.each( function( i ) {
 				const spFormElem = $( this );
 
 				simpayApp.setupCoreForm( spFormElem );
@@ -91,10 +94,6 @@ let simpayApp;
 			simpayApp.spFormData[ formId ] = formData;
 
 			body.trigger( 'simpayCoreFormVarsInitialized', [ spFormElem, formData ] );
-
-			// Stripe Checkout.
-			body.on( 'simpayBindCoreFormEventsAndTriggers', setupStripeCheckout );
-
 			body.trigger( 'simpayBindCoreFormEventsAndTriggers', [ spFormElem, formData ] );
 		},
 
