@@ -19,7 +19,7 @@ In a few simple steps you can start accepting credit card payments with Stripe C
 
 If accepting credit card payments quickly and painlessly is what you're looking for, this plugin is for you.
 
-Stripe Checkout is continually optimized across millions of transactions to maximize customer conversions.
+[Stripe Checkout](https://stripe.com/payments/checkout) is continually optimized across millions of transactions to maximize customer conversions.
 
 WP Simple Pay is a standalone Stripe Checkout plugin built by [Sandhills Development](http://sandhillsdev.com). No complex shopping cart, form builder or membership site plugin needed.
 
@@ -30,13 +30,13 @@ That's it. *No other plugins required.*
 = LITE VERSION FEATURES =
 
 * Unlimited payment forms
-* Mobile responsive Stripe Checkout pages
-* Display brand or product image in Stripe Checkout page
-* Optionally collect customer billing & addresses
+* Mobile-optimized Stripe Checkout pages
+* Display brand or product image on Stripe Checkout pages
+* Optionally collect customer billing & shipping addresses
 * Optionally verify zip/postal code without address
 * Support for 14 languages, 30+ countries and 135+ currencies
-* Stripe Connect support for easier setup and improved security
-* PCI DSS and SCA—ready
+* Stripe Connect support for easier setup
+* PCI DSS and Strong Customer Authentication (SCA) support for improved security
 * Translation ready
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
