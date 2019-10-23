@@ -87,7 +87,7 @@ Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source
 
 = Can I get notified by email of new releases? =
 
-[Subscribe here](https://www.getdrip.com/forms/6606935/submissions/new) to be notified by email of major features or updates.
+[Subscribe here](https://wpsimplepay.com/subscribe/) to be notified by email of major features or updates.
 
 = How do I contribute to WP Simple Pay? =
 
