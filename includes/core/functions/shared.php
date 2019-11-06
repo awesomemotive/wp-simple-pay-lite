@@ -605,7 +605,7 @@ function simpay_unformat_currency( $amount ) {
  * Leaves zero decimal currencies alone.
  * Similar to JS function convertToCents.
  *
- * @param string|float $amount
+ * @param string|float|int $amount
  *
  * @return int
  */
@@ -614,9 +614,9 @@ function simpay_convert_amount_to_cents( $amount ) {
 	$amount = simpay_unformat_currency( $amount );
 
 	if ( simpay_is_zero_decimal() ) {
-		return intval( $amount );
+		return intval( strval( $amount ) );
 	} else {
-		return intval( $amount * 100 );
+		return intval( strval( $amount * 100 ) );
 	}
 }
 
@@ -660,26 +660,58 @@ function simpay_global_minimum_amount() {
 }
 
 /**
+ * Retrieves a list of unsupported characters for Stripe statement descriptors.
+ *
+ * @since 3.6.5
+ *
+ * @return array $unsupported_characters List of unsupported characters.
+ */
+function simpay_get_statement_descriptor_unsupported_characters() {
+	$unsupported_characters = array(
+		'<',
+		'>',
+		'"',
+		'\'',
+		'\\',
+		'*',
+	);
+
+	/**
+	 * Filters the list of unsupported characters for Stripe statement descriptors.
+	 *
+	 * @since 3.6.5
+	 *
+	 * @param array $unsupported_characters List of unsupported characters.
+	 */
+	$unsupported_characters = apply_filters(
+		'simpay_get_statement_descriptor_unsupported_characters',
+		$unsupported_characters 
+	);
+
+	return $unsupported_characters;
+}
+
+/**
  * Validate a statement subscription for a charge or plan.
  *
  * @since 3.4.0
  *
- * @param string $statement_description Statement description to validate.
+ * @param string $statement_descriptor Statement description to validate.
  * @return mixed Description or null.
  */
-function simpay_validate_statement_descriptor( $statement_descripor ) {
-	$illegal = array( '<', '>', '"', "'", '*', '\\' );
+function simpay_validate_statement_descriptor( $statement_descriptor ) {
+	if ( ! is_string( $statement_descriptor ) ) {
+		$statement_descriptor = '';
+	}
 
-	// Remove slashes
-	$descriptor = stripslashes( $statement_descripor );
-
-	// Remove illegal characters
-	$descriptor = str_replace( $illegal, '', $descriptor );
+	// Remove unsupported characters.
+	$unsupported_characters = simpay_get_statement_descriptor_unsupported_characters();
+	$statement_descriptor   = trim( str_replace( $unsupported_characters, '', $statement_descriptor ) );
 
 	// Trim to 22 characters max
-	$descriptor = substr( $descriptor, 0, 22 );
+	$statement_descriptor = substr( $statement_descriptor, 0, 22 );
 
-	return $descriptor;
+	return $statement_descriptor;
 }
 
 /**

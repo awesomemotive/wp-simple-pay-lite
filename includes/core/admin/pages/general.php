@@ -172,7 +172,7 @@ class General extends Admin_Page {
 
 					$fields[ $section ] = array(
 						'default_plugin_styles' => array(
-							'title'       => esc_html__( 'Default Plugin Styles', 'stripe' ),
+							'title'       => esc_html__( 'Opinionated Styles', 'stripe' ),
 							'type'        => 'radio',
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][default_plugin_styles]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-default-plugin-styles',
@@ -183,7 +183,8 @@ class General extends Admin_Page {
 							),
 							'default'     => 'enabled',
 							'inline'      => 'inline',
-							'description' => sprintf( esc_html__( 'Optionally disable all payment form styles (CSS files) included with %s. Styles in the Stripe Checkout overlay cannot be changed.', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ),
+							/* translators: Plugin name */
+							'description' => sprintf( esc_html__( 'Automatically apply %1$s styles to payment form fields and buttons.', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ). '<br />' . esc_html__( 'Styles on the Stripe.com Checkout page cannot be changed.', 'stripe' ),
 						),
 					);
 

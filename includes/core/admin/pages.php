@@ -208,7 +208,7 @@ class Pages {
 		$current_tab = empty( $_GET['tab'] ) ? $this->tab : sanitize_title( $_GET['tab'] );
 		$this->tab   = $current_tab;
 
-		$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'promos/views/sidebar.php' );
+		$sidebar = apply_filters( 'simpay_settings_sidebar_template', SIMPLE_PAY_INC . 'core/admin/notices/promos/views/sidebar.php' );
 
 		?>
 		<div id="simpay-global-settings" class="wrap <?php echo ! empty( $sidebar ) ? 'simpay-global-settings--has-sidebar' : null; ?>">

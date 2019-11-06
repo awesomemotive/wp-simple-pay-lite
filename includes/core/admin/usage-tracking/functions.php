@@ -190,54 +190,54 @@ function get_optin_notice() {
 			'simpay_dismiss_notice_id'    => $notice_id,
 			'simpay_dismiss_notice_nonce' => wp_create_nonce( 'simpay-dismiss-notice-' . $notice_id ),
 		),
-		admin_url()
+		( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
 	);
 ?>
 
 <p style="margin-top: 0.75em;"><strong><?php esc_html_e( 'Save 10% on WP Simple Pay Pro', 'stripe' ); ?></strong></p>
 
 <p>
+<?php esc_html_e( 'Do you want to help us make WP Simple Pay even better? Enabling usage analytics helps us better determine new features and improvements to make. In turn, you get the most out of each and every update to WP Simple Pay.', 'stripe' ); ?>
+</p>
+
+<p>
 <?php
 echo wp_kses(
 	sprintf(
 		/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. %1$s Opening <a> tag, do not translate. %4$s Closing <a> tag, do not translate. */
-		esc_html__( 'Enable usage analytics and subscribe to our newsletter to save %1$s10&#37;%2$s when you %3$supgrade to %1$sWP Simple Pay Pro%2$s%4$s with a coupon delivered directly to your inbox.', 'stripe' ),
+		esc_html__( 'Subscribe now and we will immediately send a %1$s10&#37; off%2$s discount code to your inbox. This code can be used to upgrade to any WP Simple Pay Pro license. No sensitive data is ever collected or stored. You may unsubscribe at anytime.', 'stripe' ),
 		'<strong>',
-		'</strong>',
-		'<a href="" target="_blank" rel="noopener noreferrer">',
-		'</a>'
+		'</strong>'
 	),
 	array(
-		'a' => array(
-			'href'   => true,
-			'target' => true,
-			'rel'    => true,
-		),
-		'strong' => array(),
+		'strong' => true,
 	)
 );
 ?></p>
-
-<p><?php esc_html_e( 'Allowing your website to be considered as we evaluate new features ensures you get the most out of each and every update to WP Simple Pay. No sensitive data is ever collected or stored.', 'stripe' ); ?></p>
 
 <form
 	id="simpay-usage-tracking-nag"
 	style="margin-bottom: 1em;"
 	target="_blank"
 	method="GET"
-	action="https://wpsimplepay.com/subscribe/"
+	action="https://wpsimplepay.com/subscribe-ut/"
+	enctype="application/x-www-form-urlencoded"
 >
 	<p>
-		<label for="simpay-usage-tracking-email"><?php esc_html_e( 'Email address', 'stripe' ); ?>:</label><br />
-		<input type="text" name="email" id="simpay-usage-tracking-email" class="regular-text" value="<?php echo bloginfo( 'admin_email' ); ?>" />
+		<label for="simpay-usage-tracking-email"><?php esc_html_e( 'First Name', 'stripe' ); ?></label><br />
+		<input type="text" name="edd_jilt_fname" id="simpay-usage-tracking-first-name" class="regular-text" value="" />
+	</p>
+	<p>
+		<label for="simpay-usage-tracking-email"><?php esc_html_e( 'Email Address', 'stripe' ); ?></label><br />
+		<input type="text" name="edd_jilt_email" id="simpay-usage-tracking-email" class="regular-text" value="<?php echo bloginfo( 'admin_email' ); ?>" />
+	</p>
+	<p>
+		<button type="submit" name="submit" class="button button-primary"><?php esc_html_e( 'Yes, enable and send me the coupon!', 'stripe' ); ?></button>
 		<input type="hidden" name="utm_source" value="inside-plugin" />
 		<input type="hidden" name="utm_medium" value="form" />
 		<input type="hidden" name="utm_campaign" value="<?php echo esc_attr( apply_filters( 'simpay_utm_campaign', 'lite-plugin' ) ); ?>" />
 		<input type="hidden" name="utm_content" value="usage-tracking-admin-notice" />
 		<?php wp_nonce_field( 'simpay-usage-tracking-optin-nag', 'simpay-usage-tracking-optin-nag' ); ?>
-	</p>
-	<p>
-		<button type="submit" name="submit" class="button button-primary"><?php esc_html_e( 'Enable and Subscribe', 'stripe' ); ?></button>
 		<a href="<?php echo esc_url( $dismiss_url ); ?>" class="button-link" style="margin-left: 5px;"><?php esc_html_e( 'No thanks', 'stripe' ); ?></a>
 	</p>
 </form>

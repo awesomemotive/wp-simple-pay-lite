@@ -334,5 +334,5 @@ function simpay_print_shortcode_tip( $post_id ) {
 	$shortcut  = sprintf( esc_attr__( 'Click to select. Then press %s to copy.', 'stripe' ), $cmd );
 	$shortcode = sprintf( '[simpay id="%s"]', $post_id );
 
-	echo "<input readonly='readonly' id='simpay-shortcode' class='simpay-shortcode simpay-form-shortcode simpay-shortcode-tip' title='" . esc_attr( $shortcut ) . "' " . "onclick='this.select();' value='" . esc_attr( $shortcode ) . "' />";
+	echo "<input type='text' readonly='readonly' id='simpay-shortcode' class='simpay-shortcode simpay-form-shortcode simpay-shortcode-tip' title='" . esc_attr( $shortcut ) . "' " . "onclick='this.select();' value='" . esc_attr( $shortcode ) . "' />";
 }
