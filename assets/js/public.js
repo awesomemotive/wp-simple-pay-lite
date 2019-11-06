@@ -82,8 +82,17 @@ let simpayApp;
 				...localizedFormData.form.strings,
 			};
 
+			const {
+				stripeParams: {
+					key,
+					elementsLocale,
+				}
+			} = formData;
+
 			// Attach Stripe instance to spFormElem to avoid tampering when adjusting formData.
-			spFormElem.stripeInstance = Stripe( formData.stripeParams.key );
+			spFormElem.stripeInstance = Stripe( key, {
+				locale: elementsLocale || 'auto',
+			} );
 
 			// Set a finalAmount setting so that we can perform all the actions on this.
 			// That way if we need to reverse anything we leave the base amount untouched and can revert to it.
