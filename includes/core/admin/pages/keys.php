@@ -135,11 +135,9 @@ class Keys extends Admin_Page {
 					);
 					$html .= '</span></p>';
 
-					$is_managing_keys = false === simpay_get_account_id() && simpay_check_keys_exist();
-
 					// Only show buttons if we are managing keys, but none exist.
 					// Otherwise the fields are auto shown.
-					if ( simpay_can_site_manage_stripe_keys() && ! $is_managing_keys ) {
+					if ( simpay_can_site_manage_stripe_keys() ) {
 						$html .= '<p id="wpsp-api-keys-row-reveal"><button type="button" class="button-link"><small>' . __( 'Manage API keys manually', 'stripe' ) . '</small></button></p>';
 						$html .= '<p id="wpsp-api-keys-row-hide"><button type="button" class="button-link"><small>' . __( 'Hide API keys', 'stripe' ) . '</small></button></p>';
 					}

@@ -1,0 +1,110 @@
+/* Sidebar */
+.simpay-settings-sidebar-content {
+	background-color: #fff;
+	text-align: center;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+}
+
+.simpay-settings-sidebar-content p {
+	font-size: 14px;
+	line-height: 1.5;
+	margin-top: 0;
+}
+
+/* Sidebar header section */
+.simpay-sidebar-header-section {
+	background-color: #428bca;
+	line-height: 1;
+	padding: 26px 20px 24px;
+	border-bottom: 3px dashed #fafafa;
+}
+
+/* Sidebar description section */
+.simpay-sidebar-description-section {
+	background-color: #fafafa;
+	padding: 16px 20px;
+	border-bottom: 1px solid #ddd;
+}
+
+.simpay-sidebar-description-section .simpay-sidebar-description {
+	margin: 0;
+}
+
+/* Sidebar coupon section */
+.simpay-sidebar-coupon-section {
+	font-size: 14px;
+	padding: 16px 20px;
+}
+
+.simpay-sidebar-coupon-section label {
+	display: block;
+	line-height: 1.4;
+	margin-bottom: 6px;
+}
+
+.simpay-sidebar-coupon-section label strong {
+	color: #253b51;
+	font-weight: 700;
+}
+
+.simpay-sidebar-coupon-section input {
+	background: #FFF7EC;
+	font-size: 22px;
+	font-weight: 600;
+	text-align: center;
+	padding: 10px;
+	border: 2px dashed #FFB957;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	box-shadow: none;
+	width: 100%;
+}
+
+.simpay-sidebar-coupon-section input:focus {
+	border: 2px dashed #FFB957;
+	box-shadow: none;
+}
+
+.simpay-settings-sidebar-content .simpay-coupon-note {
+	color: #6c7883;
+	font-size: 13px;
+	font-style: italic;
+	margin: 0;
+}
+
+.simpay-settings-sidebar-content .simpay-coupon-note a {
+	color: #253b51;
+}
+
+.simpay-settings-sidebar-content .simpay-coupon-note a:hover {
+	text-decoration: none;
+}
+
+/* Sidebar footer section */
+.simpay-sidebar-footer-section {
+	background-color: #fafafa;
+	padding: 16px 20px;
+	border-top: 1px solid #ddd;
+}
+
+.simpay-sidebar-footer-section .simpay-cta-button {
+	display: block;
+	background-color: #428bca;
+	color: #fff;
+	text-decoration: none;
+	font-size: 20px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding: 17px 10px;
+	border: none;
+	border-radius: 4px;
+	width: 100%;
+	box-sizing: border-box;
+	box-shadow: none;
+	transition: background-color .2s;
+}
+
+.simpay-sidebar-footer-section .simpay-cta-button:hover {
+	background-color: #3576af;
+}

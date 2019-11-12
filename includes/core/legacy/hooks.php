@@ -80,7 +80,7 @@ function simpay_stripe_charge_args( $paymentintent_args, $form, $form_values ) {
 		return $paymentintent_args;
 	}
 
-	$charge          = new stdClass();
+	$charge          = new \stdClass();
 	$charge->payment = new Payment( $form );
 
 	// Save old $_POST.
