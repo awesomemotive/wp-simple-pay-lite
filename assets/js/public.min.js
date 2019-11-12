@@ -1,4 +1,4 @@
-/*! WP Simple Pay Pro 3 - 3.6.4
+/*! WP Simple Pay Pro 3 - 3.6.5-beta-1
  * https://wpsimplepay.com/
  * Copyright (c) Sandhills Development, LLC 2019
  * Licensed GPLv2+ */

@@ -220,7 +220,7 @@ echo wp_kses(
 	style="margin-bottom: 1em;"
 	target="_blank"
 	method="GET"
-	action="https://wpsimplepay.com/subscribe-ut/"
+	action="https://wpsimplepay.com/subscribe-ua/"
 	enctype="application/x-www-form-urlencoded"
 >
 	<p>
