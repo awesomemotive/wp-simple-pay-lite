@@ -2,8 +2,8 @@
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.9
-Tested up to: 5.2.3
-Stable tag: 2.3.1
+Tested up to: 5.3.0
+Stable tag: 2.3.2-beta-1
 Requires PHP: 5.6
 License: GPLv2 or later
 
