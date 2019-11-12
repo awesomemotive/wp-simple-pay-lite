@@ -99,9 +99,6 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 
 		// Plugin files.
 		require_once( SIMPLE_PAY_DIR . 'includes/core/main.php' );
-
-		// Upgrade promos.
-		require_once( SIMPLE_PAY_INC . 'promos/promo-loader.php' );
 	} else {
 		SimplePay\Core\Bootstrap\Compatibility\show_admin_notices();
 	}

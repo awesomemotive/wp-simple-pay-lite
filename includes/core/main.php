@@ -93,7 +93,6 @@ final class SimplePay {
 	 * Load the plugin.
 	 */
 	public function load() {
-
 		// Load core shared back-end & front-end functions.
 		require_once( SIMPLE_PAY_INC . 'core/functions/template.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
@@ -123,6 +122,7 @@ final class SimplePay {
 
 		// Cron functionality.
 		$cron = new Cron();
+		$cron->init();
 		$cron->schedule_events();
 
 		$this->objects = new Objects();
@@ -147,6 +147,9 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/functions/admin.php' );
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/notices.php' );
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/plugin-upgrade-notice.php' );
+
+		// Promos (Lite-only).
+		require_once( SIMPLE_PAY_INC . 'core/admin/notices/promos.php' );
 
 		// Usage tracking functionality.
 		require_once( SIMPLE_PAY_INC . 'core/admin/usage-tracking/functions.php' );

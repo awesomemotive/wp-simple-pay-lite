@@ -103,10 +103,8 @@ function get_args_from_payment_form_request( $form, $form_data, $form_values, $c
 		'description' => Legacy\Hooks\simpay_payment_description( $form, $form_data, $form_values, $customer_id ),
 	);
 
-	$statement_descriptor = simpay_validate_statement_descriptor( $form->statement_descriptor );
-
-	if ( '' !== $statement_descriptor ) {
-		$paymentintent_args['statement_descriptor'] = $statement_descriptor;
+	if ( ! empty( $form->statement_descriptor ) ) {
+		$paymentintent_args['statement_descriptor'] = $form->statement_descriptor;
 	}
 
 	// Legacy filter.

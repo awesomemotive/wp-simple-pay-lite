@@ -149,11 +149,11 @@ function parse_content( $content, $payment_confirmation_data ) {
  * @return string
  */
 function charge_id( $value, $payment_confirmation_data ) {
-	if ( empty( $payment_confirmation_data['paymentintents']->data ) ) {
+	if ( empty( $payment_confirmation_data['paymentintents'] ) ) {
 		return $value;
 	}
 
-	$charges = current( $payment_confirmation_data['paymentintents']->data )->charges;
+	$charges = current( $payment_confirmation_data['paymentintents'] )->charges;
 
 	// Do nothing if there are no charges available in the PaymentIntent.
 	if ( empty( $charges ) ) {
