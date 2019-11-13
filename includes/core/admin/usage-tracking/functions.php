@@ -108,6 +108,10 @@ add_action( 'simpay_weekly_scheduled_events', __NAMESPACE__ . '\\maybe_send_chec
  * @since 3.6.0
  */
 function show_optin_notice() {
+	// Never show notice for 2.3.2.
+	// @link https://github.com/wpsimplepay/wp-simple-pay-lite/issues/114
+	return;
+
 	if ( true !== (bool) get_option( 'simpay_usage_tracking_show_optin_notice' ) ) {
 		return;
 	}
