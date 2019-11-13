@@ -6,12 +6,13 @@
 
 <!-- Repeat this bulleted list in sidebar.php & generic-tab-promo.php -->
 <ul>
-	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Unlimited Custom Fields', 'stripe' ); ?></li>
-	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'User-Entered Amounts', 'stripe' ); ?></li>
-	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon Codes', 'stripe' ); ?></li>
-	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & Overlay Custom Forms', 'stripe' ); ?></li>
-	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Apple Pay & Google Pay', 'stripe' ); ?></li>
-	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription Support (Plus license required)', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Unlimited custom fields to capture additional data', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Custom amounts - let customers enter an amount to pay', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon code support', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'On-site checkout (no redirect) with custom forms', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & overlay form display options', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Apple Pay & Google Pay support with custom forms', 'stripe' ); ?></li>
+	<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription support (Plus or higher license required)', 'stripe' ); ?></li>
 </ul>
 
 <?php if ( true === bfcm_is_promo_active() ) { ?>
