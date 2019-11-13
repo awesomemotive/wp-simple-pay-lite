@@ -9,12 +9,13 @@
 
 				<!-- Repeat this bulleted list in sidebar.php & generic-tab-promo.php -->
 				<ul>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Unlimited Custom Fields', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'User-Entered Amounts', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon Codes', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & Overlay Custom Forms', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Unlimited custom fields', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'User-entered amounts', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon code support', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'On-site checkout (no redirect)', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & overlay forms', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Apple Pay & Google Pay', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription Support', 'stripe' ); ?>*</li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription support', 'stripe' ); ?>*</li>
 				</ul>
 
 				<div class="centered">

@@ -2,8 +2,8 @@
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.9
-Tested up to: 5.2.3
-Stable tag: 2.3.1
+Tested up to: 5.3.0
+Stable tag: 2.3.2
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -19,7 +19,7 @@ In a few simple steps you can start accepting credit card payments with Stripe C
 
 If accepting credit card payments quickly and painlessly is what you're looking for, this plugin is for you.
 
-Stripe Checkout is continually optimized across millions of transactions to maximize customer conversions.
+[Stripe Checkout](https://stripe.com/payments/checkout) is continually optimized across millions of transactions to maximize customer conversions.
 
 WP Simple Pay is a standalone Stripe Checkout plugin built by [Sandhills Development](http://sandhillsdev.com). No complex shopping cart, form builder or membership site plugin needed.
 
@@ -30,13 +30,13 @@ That's it. *No other plugins required.*
 = LITE VERSION FEATURES =
 
 * Unlimited payment forms
-* Mobile responsive Stripe Checkout pages
-* Display brand or product image in Stripe Checkout page
-* Optionally collect customer billing & addresses
+* Mobile-optimized Stripe Checkout pages
+* Display brand or product image on Stripe Checkout pages
+* Optionally collect customer billing & shipping addresses
 * Optionally verify zip/postal code without address
 * Support for 14 languages, 30+ countries and 135+ currencies
-* Stripe Connect support for easier setup and improved security
-* PCI DSS and SCA—ready
+* Stripe Connect support for easier setup
+* PCI DSS and Strong Customer Authentication (SCA) support for improved security
 * Translation ready
 * [AffiliateWP](https://affiliatewp.com/) integration
 * Specify payment success & failure pages
@@ -50,8 +50,9 @@ That's it. *No other plugins required.*
 * Unlimited custom fields to capture additional data
 * Custom amounts - let customers enter an amount to pay
 * Coupon code support
-* Embedded & Overlay custom forms
-* Accept payments with Apple Pay & Google Pay
+* On-site checkout (no redirect) with custom forms
+* Embedded & overlay form display options
+* Apple Pay & Google Pay support with custom forms
 * reCAPTCHA v3 invisible verification support
 * Stripe Subscription support
 * Subscription installment plans
@@ -87,7 +88,7 @@ Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source
 
 = Can I get notified by email of new releases? =
 
-[Subscribe here](https://www.getdrip.com/forms/6606935/submissions/new) to be notified by email of major features or updates.
+[Subscribe here](https://wpsimplepay.com/subscribe/) to be notified by email of major features or updates.
 
 = How do I contribute to WP Simple Pay? =
 
@@ -102,15 +103,29 @@ We'd love your help! Here are a few things you can do:
 
 1. Desktop Stripe Checkout example
 2. Mobile Stripe Checkout example
-3. Settings: Stripe keys
-4. Settings: Site-wide defaults
-5. Settings: Payment confirmation details
-6. Payment forms listing
-7. Payment form settings: One-time amount
-8. Payment form settings: Payment button
-9. Payment form settings: Stripe Checkout display
+3. Payment forms listing
+4. Payment form settings: One-time amount
+5. Payment form settings: Payment button
+6. Payment form settings: Stripe Checkout display
+7. Settings: Payment confirmation details
+8. Settings: Connect with Stripe, Test mode
+9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 2.3.2 - November 13, 2019 =
+
+* Fix: Stripe Checkout - clarify "Require Billing Address" form setting description.
+* Fix: Stripe Checkout - Use Site Title if Company Name field is blank.
+* Fix: Ensure custom cron schedule is registered.
+* Fix: Ensure Statement Descriptor always results in a valid string.
+* Fix: Ensure WordPress 5.3 admin UI appears correctly.
+* Fix: Avoid PHP notices for undefined Stripe objects on payment confirmation.
+* Fix: Avoid rounding error when converting amounts to cents in PHP 7.1+.
+* Fix: Do not reference "Stripe Checkout overlay" in setting descriptions.
+* Fix: IE 11 Javascript support for `Promise` and `Object.assign`
+* Fix: IE 11 CSS support for `flexbox` alignment.
+* Fix: Avoid uncaught PHP error while handling legacy `simpay_stripe_charge_args` filter.
 
 = 2.3.1 - September 17, 2019 =
 
