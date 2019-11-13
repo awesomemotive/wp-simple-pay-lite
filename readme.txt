@@ -50,8 +50,9 @@ That's it. *No other plugins required.*
 * Unlimited custom fields to capture additional data
 * Custom amounts - let customers enter an amount to pay
 * Coupon code support
-* Embedded & Overlay custom forms
-* Accept payments with Apple Pay & Google Pay
+* On-site checkout (no redirect) with custom forms
+* Embedded & overlay form display options
+* Apple Pay & Google Pay support with custom forms
 * reCAPTCHA v3 invisible verification support
 * Stripe Subscription support
 * Subscription installment plans
