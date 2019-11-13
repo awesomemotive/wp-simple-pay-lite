@@ -2,8 +2,8 @@
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, payments, credit card, stripe payments, stripe checkout
 Requires at least: 4.9
-Tested up to: 5.2.3
-Stable tag: 2.3.1
+Tested up to: 5.3.0
+Stable tag: 2.3.2-beta-1
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -111,6 +111,20 @@ We'd love your help! Here are a few things you can do:
 9. Payment form settings: Stripe Checkout display
 
 == Changelog ==
+
+= 2.3.2 - November 13, 2019 =
+
+* Fix: Stripe Checkout - clarify "Require Billing Address" form setting description.
+* Fix: Stripe Checkout - Use Site Title if Company Name field is blank.
+* Fix: Ensure custom cron schedule is registered.
+* Fix: Ensure Statement Descriptor always results in a valid string.
+* Fix: Ensure WordPress 5.3 admin UI appears correctly.
+* Fix: Avoid PHP notices for undefined Stripe objects on payment confirmation.
+* Fix: Avoid rounding error when converting amounts to cents in PHP 7.1+.
+* Fix: Do not reference "Stripe Checkout overlay" in setting descriptions.
+* Fix: IE 11 Javascript support for `Promise` and `Object.assign`
+* Fix: IE 11 CSS support for `flexbox` alignment.
+* Fix: Avoid uncaught PHP error while handling legacy `simpay_stripe_charge_args` filter.
 
 = 2.3.1 - September 17, 2019 =
 

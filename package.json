@@ -1,13 +1,13 @@
 {
-  "name": "WP-Simple-Pay-Lite-for-Stripe",
+  "name": "wp-simple-pay-lite",
   "title": "WP Simple Pay Lite for Stripe",
   "description": "Add high conversion Stripe Checkout forms to your WordPress site and start accepting payments in minutes. **Lite Version**",
-  "version": "2.3.1",
-  "license": "GPL-2.0+",
+  "version": "2.3.2-beta-1",
+  "license": "GPL-2.0-or-later",
   "homepage": "https://wpsimplepay.com/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wpsimplepay/WP-Simple-Pay-Lite-for-Stripe"
+    "url": "https://github.com/wpsimplepay/wp-simple-pay-lite"
   },
   "devDependencies": {
     "grunt": "^1.0.4",

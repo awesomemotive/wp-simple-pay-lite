@@ -178,7 +178,6 @@ class Checkout_Session_Controller extends Controller {
 	 */
 	function get_args_from_payment_form_request( $form, $form_data, $form_values, $customer_id ) {
 		$session_args = array(
-			'cancel_url'                 => $form->payment_failure_page,
 			'billing_address_collection' => true === $form->enable_billing_address ? 'required' : 'auto',
 			'locale'                     => $form->locale,
 		);
@@ -192,8 +191,23 @@ class Checkout_Session_Controller extends Controller {
 		// Escape base URL.
 		$session_args['success_url'] = esc_url_raw( $form->payment_success_page );
 
+		// Ensure a valid base URL exists.
+		if ( empty( $session_args['success_url'] ) ) {
+			$session_args['success_url'] = esc_url_raw( home_url() );
+		}
+
 		// Avoid escaping the {CHECKOUT_SESSION_ID} tag.
 		$session_args['success_url'] = add_query_arg( 'session_id', '{CHECKOUT_SESSION_ID}', $session_args['success_url'] );
+
+		// Cancel URL
+
+		// Escape base URL.
+		$session_args['cancel_url'] = esc_url_raw( $form->payment_failure_page );
+
+		// Ensure a valid base URL exists.
+		if ( empty( $session_args['cancel_url'] ) ) {
+			$session_args['cancel_url'] = esc_url_raw( home_url() );
+		}
 
 		// Add a line item.
 		$amount = isset( $form_values['simpay_amount'] )
@@ -213,7 +227,7 @@ class Checkout_Session_Controller extends Controller {
 		$line_item = array(
 			'amount'      => $amount / $quantity,
 			'currency'    => $form->currency,
-			'name'        => $form->company_name,
+			'name'        => ! empty( $form->company_name ) ? $form->company_name : get_bloginfo( 'name' ),
 			'quantity'    => $quantity,
 			'description' => Legacy\Hooks\simpay_payment_description( $form, $form_data, $form_values, $customer_id ),
 			'images'      => $images,

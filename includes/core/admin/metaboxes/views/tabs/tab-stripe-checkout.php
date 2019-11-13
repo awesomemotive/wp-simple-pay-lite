@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_enable_billing_address"><?php esc_html_e( 'Collect Full Billing Address', 'stripe' ); ?></label>
+				<label for="_enable_billing_address"><?php esc_html_e( 'Require Billing Address', 'stripe' ); ?></label>
 			</th>
 			<td>
 				<?php
@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'class'       => array(
 						'simpay-section-toggle',
 					),
-					'description' => esc_html__( 'Collect full payment method Billing Address on the Checkout page.', 'stripe' ),
+					'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s billing address. If not, Checkout will only collect the billing address when necessary.', 'stripe' ),
 				) );
 				?>
 			</td>

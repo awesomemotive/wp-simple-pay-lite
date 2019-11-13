@@ -269,17 +269,8 @@ var spAdmin = {};
 		},
 
 		stripeConnect: function() {
-			if ( 
-				// If there is a toggle to manage keys, hide them initially.
-				0 !== $( '#wpsp-api-keys-row-reveal' ).length ||
-				// (Hacky) If we are on Pro, hide them initially.
-				(
-					0 === $( '#wpsp-api-keys-row-reveal' ).length ||
-					0 === $( '#simpay-settings-keys-elements-locale' ).length
-				)
-			) {
-				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().hide().prev().hide();
-			}
+			// Hide initially.
+			$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().hide().prev().hide();
 
 			$( '#wpsp-api-keys-row-reveal button' ).click( function( e ) {
 				e.preventDefault();
