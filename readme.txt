@@ -102,13 +102,13 @@ We'd love your help! Here are a few things you can do:
 
 1. Desktop Stripe Checkout example
 2. Mobile Stripe Checkout example
-3. Settings: Stripe keys
-4. Settings: Site-wide defaults
-5. Settings: Payment confirmation details
-6. Payment forms listing
-7. Payment form settings: One-time amount
-8. Payment form settings: Payment button
-9. Payment form settings: Stripe Checkout display
+3. Payment forms listing
+4. Payment form settings: One-time amount
+5. Payment form settings: Payment button
+6. Payment form settings: Stripe Checkout display
+7. Settings: Payment confirmation details
+8. Settings: Connect with Stripe, Test mode
+9. Settings: Site-wide defaults
 
 == Changelog ==
 
