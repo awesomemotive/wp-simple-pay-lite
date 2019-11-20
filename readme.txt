@@ -86,9 +86,9 @@ Additional documentation at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/
 
 Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq).
 
-= Can I get notified by email of new releases? =
+= Where can I learn more about accepting one-time and recurring payments on the web? =
 
-[Subscribe here](https://wpsimplepay.com/subscribe/) to be notified by email of major features or updates.
+[Subscribe to our newsletter](https://wpsimplepay.com/subscribe/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq) and once every 2-3 weeks we’ll email you our latest in-depth article packed with actionable advice for store owners. On occasion we’ll send you exclusive promotions and major release announcements.
 
 = How do I contribute to WP Simple Pay? =
 
@@ -96,8 +96,8 @@ We'd love your help! Here are a few things you can do:
 
 * [Rate our plugin](https://wordpress.org/support/plugin/stripe/reviews/#new-post) and help spread the word!
 * Help answer questions in our [community support forum](https://wordpress.org/support/plugin/stripe).
-* Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/wpsimplepay/WP-Simple-Pay-Lite-for-Stripe).
-* Help add or update a [plugin translation](https://translate.wordpress.org/projects/wp-plugins/stripe).
+* Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/wpsimplepay/wp-simple-pay-lite).
+* Add or update a [plugin translation](https://translate.wordpress.org/projects/wp-plugins/stripe).
 
 == Screenshots ==
 
