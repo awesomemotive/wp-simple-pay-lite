@@ -113,6 +113,14 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
+= 2.3.3 - January 7, 2020 =
+
+* Fix: Handle saving payment confirmation messages in WordPress 5.3.1+
+* Dev: Introduce `simpay_stripe_api_publishable_key` and `simpay_stripe_api_secret_key` filters.
+* Dev: Introduce `simpay_customer_create` filter to return a Customer ID and short circuit creation.
+* Dev: Introduce `\SimplePay\Core\Payments\Payment_Confirmation\get_confirmation_data()` for use in custom snippets to return any relevant confirmation data.
+* Dev: Add `?form_id=` to Payment Confirmation and Error redirect URLs.
+
 = 2.3.2 - November 13, 2019 =
 
 * Fix: Stripe Checkout - clarify "Require Billing Address" form setting description.
