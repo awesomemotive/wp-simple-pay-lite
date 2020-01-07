@@ -310,61 +310,86 @@ function simpay_get_test_mode_badge() {
 
 /**
  * Get the stored API Secret Key
+ *
+ * @since unknown
+ *
+ * @return string
  */
 function simpay_get_secret_key() {
-
 	global $simpay_form;
 
-	$test_mode = simpay_is_test_mode();
+	$secret_key = '';
+	$test_mode  = simpay_is_test_mode();
 
 	if ( ! empty( $simpay_form ) ) {
-		return $simpay_form->secret_key;
+		$secret_key = $simpay_form->secret_key;
 	} else {
-
 		$settings = get_option( 'simpay_settings_keys' );
 
-		$test_secret_key = isset( $settings['test_keys']['secret_key'] ) ? $settings['test_keys']['secret_key'] : '';
-		$live_secret_key = isset( $settings['live_keys']['secret_key'] ) ? $settings['live_keys']['secret_key'] : '';
+		$secret_key = isset( $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['secret_key'] )
+			? $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['secret_key']
+			: '';
 	}
 
-	// If we are not in test mode use the live key
-	if ( ! $test_mode ) {
-		// live mode key
-		return trim( $live_secret_key );
-	}
+	$secret_key = trim( $secret_key );
 
-	// Return test mode key by default
-	return trim( $test_secret_key );
+	/**
+	 * Filters the Stripe API secret key.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @param string $secret_key Stripe API secret key.
+	 * @param bool   $test_mode If test mode is enabled.
+	 */
+	$secret_key = apply_filters(
+		'simpay_stripe_api_secret_key',
+		$secret_key,
+		$test_mode
+	);
 
+	return $secret_key;
 }
 
 /**
- * Get the stored API Publishable Key
+ * Get the stored API Publishable Key.
+ *
+ * @since unknown
+ *
+ * @return string
  */
 function simpay_get_publishable_key() {
-
 	global $simpay_form;
 
-	$test_mode = simpay_is_test_mode();
+	$publishable_key = '';
+	$test_mode       = simpay_is_test_mode();
 
 	if ( ! empty( $simpay_form ) ) {
-		return $simpay_form->publishable_key;
+		$publishable_key = $simpay_form->publishable_key;
 	} else {
-
 		$settings = get_option( 'simpay_settings_keys' );
 
-		$test_publishable_key = isset( $settings['test_keys']['publishable_key'] ) ? $settings['test_keys']['publishable_key'] : '';
-		$live_publishable_key = isset( $settings['live_keys']['publishable_key'] ) ? $settings['live_keys']['publishable_key'] : '';
+		$publishable_key = isset( $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['publishable_key'] )
+			? $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['publishable_key']
+			: '';
 	}
 
-	// If we are not in test mode use the live key
-	if ( ! $test_mode ) {
-		// live mode key
-		return trim( $live_publishable_key );
-	}
+	$publishable_key = trim( $publishable_key );
 
-	// Return test mode key by default
-	return trim( $test_publishable_key );
+	/**
+	 * Filters the Stripe API publishable key.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @param string $publishable_key Stripe API publishable key.
+	 * @param bool   $test_mode If test mode is enabled.
+	 */
+	$publishable_key = apply_filters(
+		'simpay_stripe_api_publishable_key',
+		$publishable_key,
+		$test_mode
+	);
+
+	return $publishable_key;
 }
 
 /**

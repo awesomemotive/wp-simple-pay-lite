@@ -187,6 +187,8 @@ abstract class Admin_Page {
 	 *
 	 * Callback function for sanitizing and validating options before they are updated.
 	 *
+	 * @todo Properly handle arrays for all types, not just payment_confirmation_messages
+	 *
 	 * @since  3.0.0
 	 *
 	 * @param  array $settings Settings inputs.
@@ -200,7 +202,16 @@ abstract class Admin_Page {
 		if ( is_array( $settings ) ) {
 			foreach ( $settings as $k => $v ) {
 				if ( 'payment_confirmation_messages' == $k ) {
-					$sanitized[ $k ] = wp_kses_post( $v );
+
+					// @link https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1142
+					if ( is_array( $v ) ) {
+						foreach ( $v as $setting_key => $setting_value ) {
+							$sanitized[ $k ][ $setting_key ] = wp_kses_post( $setting_value );
+						}
+					} else {
+						$sanitized[ $k ] = wp_kses_post( $v );
+					}
+
 				} else {
 					$sanitized[ $k ] = simpay_sanitize_input( $v );
 				}

@@ -47,7 +47,20 @@ function create( $customer_args = array() ) {
 	 */
 	do_action( 'simpay_before_customer_created', $customer_args );
 
-	$customer = Stripe_API::request( 'Customer', 'create', $customer_args );
+	/**
+	 * Filters any existing \Stripe\Customer record, allowing for 
+	 * creation to be overridden or stopped.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @param null  $customer Existing \Stripe\Customer record.
+	 * @param array $customer_args Arguments used to create a Customer.
+	 */
+	$customer = apply_filters( 'simpay_customer_create', null, $customer_args );
+
+	if ( false === is_a( $customer, '\Stripe\Customer' ) ) {
+		$customer = Stripe_API::request( 'Customer', 'create', $customer_args );
+	}
 
 	/**
 	 * Allows further processing after a Customer has been created.
@@ -56,7 +69,7 @@ function create( $customer_args = array() ) {
 	 *
 	 * @param \Stripe\Customer $customer Customer.
 	 */
-	do_action( 'simpay_after_subscription_created', $customer );
+	do_action( 'simpay_after_customer_created', $customer );
 
 	return $customer;
 }
