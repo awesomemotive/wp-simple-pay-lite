@@ -215,11 +215,29 @@ abstract class Form {
 
 		// Success Page
 		$payment_success_page       = simpay_get_global_setting( 'success_page' );
-		$this->payment_success_page = simpay_get_filtered( 'payment_success_page', $this->get_redirect_url( $payment_success_page ), $this->id );
+		$this->payment_success_page = add_query_arg(
+			array(
+				'form_id' => $this->id,
+			),
+			simpay_get_filtered(
+				'payment_success_page',
+				$this->get_redirect_url( $payment_success_page ),
+				$this->id
+			)
+		);
 
 		// Failure Page
 		$payment_failure_page       = simpay_get_global_setting( 'failure_page' );
-		$this->payment_failure_page = simpay_get_filtered( 'payment_failure_page', $this->get_redirect_url( $payment_failure_page, true ), $this->id );
+		$this->payment_failure_page = add_query_arg(
+			array(
+				'form_id' => $this->id,
+			),
+			simpay_get_filtered(
+				'payment_failure_page',
+				$this->get_redirect_url( $payment_failure_page, true ),
+				$this->id
+			)
+		);
 
 		// Locale backwards compatibility.
 		// Can't search for the global setting key because it exists in both options now.
