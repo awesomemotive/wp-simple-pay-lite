@@ -58,6 +58,7 @@ That's it. *No other plugins required.*
 * Subscription installment plans
 * Subscription setup fees
 * Subscription trial periods
+* Send subscribers payment renewal reminders
 * [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
 * Priority email support with a 24-hour response time during business days
 
