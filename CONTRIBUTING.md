@@ -76,5 +76,5 @@ By making a contribution to this project, I certify that:
 
 # Additional Resources
 * [General GitHub Documentation](https://help.github.com/)
-* [GitHub Pull Request documentation](https://help.github.com/send-pull-requests/)
+* [GitHub Pull Request documentation](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
 * [WordPress Coding Standards](https://codex.wordpress.org/WordPress_Coding_Standards)
