@@ -1,6 +1,6 @@
 ## Contribute To WP Simple Pay
 
-Community made patches, localisations, bug reports and contributions are always welcome and are crucial to ensure WP Simple Pay Digital Downloads remains the simplest way to collect payments on WordPress.
+Community made patches, localisations, bug reports and contributions are always welcome and are crucial to ensure WP Simple Pay remains the simplest way to collect payments on WordPress.
 
 When contributing please ensure you follow the guidelines below so that we can keep on top of things.
 
@@ -33,7 +33,7 @@ At this point you're waiting on us to merge your pull request. We'll review all 
 ## Developer Certificate of Origin
 By contributing to WP Simple Pay, you agree to the Developer Certificate of Origin.
 
-In its simplest form, the DCO states that you have permission to supply the code submitted to Easy Digital Downloads. Here is the DCO in detail:
+In its simplest form, the DCO states that you have permission to supply the code submitted to WP Simple Pay. Here is the DCO in detail:
 ```
 Developer Certificate of Origin
 Version 1.1
