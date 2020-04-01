@@ -30,20 +30,7 @@ module.exports = function( grunt ) {
 
 		pkg: pkg,
 
-		// Set folder variables.
-		dirs: {
-			css: 'assets/css',
-			js: 'assets/js'
-		},
-
-		// Create comment banner to add to the top of minified .js and .css files.
-		banner: '/*! <%= pkg.title %> - <%= pkg.version %>\n' +
-		        ' * <%=pkg.homepage %>\n' +
-		        ' * Copyright (c) Sandhills Development, LLC <%= grunt.template.today("yyyy") %>\n' +
-		        ' * Licensed GPLv2+' +
-		        ' */\n',
-
-		// Validate i18n text domain slug throughout.
+		// Validates text domain.
 		checktextdomain: {
 			options: {
 				text_domain: 'stripe',
@@ -68,7 +55,6 @@ module.exports = function( grunt ) {
 			files: {
 				src: [
 					'includes/**/*.php',
-					'!includes/core/admin/wp-list-table.php', // Included from core for our use. See https://codex.wordpress.org/Class_Reference/WP_List_Table
 					'stripe-checkout.php',
 					'uninstall.php'
 				],
@@ -76,18 +62,18 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// Adds/adjusts text domains.
 		addtextdomain: {
 			options: {
-				textdomain: 'stripe'    // Project text domain.
+				textdomain: 'stripe'
 			},
 			target: {
 				files: {
 					src: [
 						'includes/**/*.php',
-						'!includes/core/admin/wp-list-table.php',
 						'stripe-checkout.php',
 						'uninstall.php'
-				    ]
+					]
 				}
 			}
 		},
@@ -110,122 +96,18 @@ module.exports = function( grunt ) {
 			}
 		},
 
-		// 'css' & 'js' tasks need to copy vendor-minified assets from bower folder to assets folder (moment, parsley, etc).
-		// Pikaday is a special case as it does NOT include minified assets and DOES include CSS.
-		// 'main' task is for distributing build files.
+		// Copy files to build folder.
 		copy: {
-			css: {
-				expand: true,
-				cwd: 'bower_components/',
-				flatten: true,
-				src: [
-					'chosen/chosen.css',
-				    'chosen/chosen-sprite.png',
-					'chosen/chosen-sprite@2x.png'
-				],
-				dest: '<%= dirs.css %>'
-			},
-			js: {
-				expand: true,
-				cwd: 'bower_components/',
-				flatten: true,
-				src: [
-					'!jquery/**',
-					'chosen/chosen.jquery.js',
-					'accountingjs/accounting.js',
-					'accountingjs/accounting.min.js'
-				],
-				dest: '<%= dirs.js %>/vendor/'
-			},
 			main: {
 				expand: true,
 				src: distFiles,
 				dest: 'build/stripe'
 			}
 		},
-
-		// Minify .css files.
-		cssmin: {
-			files: {
-				expand: true,
-				cwd: '<%= dirs.css %>',
-				src: [ '*.css', '!*.min.css', '!vendor/**' ],
-				dest: '<%= dirs.css %>',
-				ext: '.min.css'
-			}
-		},
-
-		// Compile all .scss files.
-		sass: {
-			options: {
-				precision: 2,
-				sourceMap: false
-			},
-			all: {
-				files: [
-					{
-						expand: true,
-						cwd: '<%= dirs.css %>',
-						src: [ '*.scss' ],
-						dest: '<%= dirs.css %>',
-						ext: '.css'
-					}
-				]
-			}
-		},
-
-		// Minify .js files.
-		uglify: {
-			files: {
-				expand: true,
-				cwd: '<%= dirs.js %>',
-				src: [ 
-					'*.js',
-					'!*.min.js',
-					'!admin.js',
-					'!vendor/**',
-					'vendor/chosen.jquery.js'
-				],
-				dest: '<%= dirs.js %>',
-				ext: '.min.js',
-				extDot: 'last'
-			}
-		},
-
-		// Add comment banner to each minified .js and .css file.
-		usebanner: {
-			options: {
-				position: 'top',
-				banner: '<%= banner %>',
-				linebreak: true
-			},
-			js: {
-				files: {
-					src: [ '<%= dirs.js %>/*.min.js' ]
-				}
-			},
-			css: {
-				files: {
-					src: [ '<%= dirs.css %>/*.min.css' ]
-				}
-			}
-		},
-
-		// .scss to .css file watcher. Run when project is loaded in PhpStorm or other IDE.
-		watch: {
-			css: {
-				files: '**/*.scss',
-				tasks: [ 'sass' ]
-			}
-		}
-
 	} );
 
 	require( 'load-grunt-tasks' )( grunt );
 
-	grunt.registerTask( 'css', [ 'sass', 'copy:css', 'cssmin', 'usebanner:css' ] );
-	grunt.registerTask( 'js', [ 'copy:js', 'uglify', 'usebanner:js' ] );
-	grunt.registerTask( 'default', [ 'css', 'js' ] );
 	grunt.registerTask( 'build', [ 'checktextdomain', 'clean:build', 'copy:main', 'compress' ] );
 
 	grunt.util.linefeed = '\n';
