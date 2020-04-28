@@ -55,7 +55,7 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 - Subscription trial periods
 - Send subscribers payment renewal reminders
 - [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
-- Coming soon: Support for iDEAL payments
+- Support for iDEAL payments
 
 By upgrading to WP Simple Pay Pro you also get access to one-on-one help from our knowledgeable support team and our [extensive documentation site](https://docs.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description).
 
