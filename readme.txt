@@ -113,6 +113,28 @@ We'd love your help! Here are a few things you can do:
 
 == Changelog ==
 
+= 2.4.0 - April XX, 2020 =
+
+* New: Stripe Checkout - Allow collection of Shipping Address.
+* New: Implement confirmation template tag support for accessing payment, subscription, and customer record data via dynamic tags such as `{customer:name}`.
+* New: Split structural and visual styles and inherit more theme defaults when no styles are applied.
+* New: Disable entire form during submission.
+* New: Allow field values to be set dynamically with via `simpay_form_{$form_id}_field_{$field_id}_default_value` filters.
+* New: Improve default form styles.
+* New: Stripe Checkout - Add support for Stripe Checkout's "Booking", "Donate", and "Pay" button types.
+* New: Stripe Checkout - Automatically remove generated Customer, Product, and Plan records upon completed Stripe Checkout Sessions.
+* New: Stripe Checkout - Add separate "Payment Cancelled" page setting for incomplete Stripe Checkout Sessions.
+* New: Stripe Checkout - Add notice about branding options in form settings.
+* Fix: Stripe Checkout - Fall back to generic "WP Simple Pay" line item has no name.
+* Fix: Ensure adequate spacing under Payment Form title with opinionated styles.
+* Fix: WordPress 5.4 UI compatibility.
+* Fix: Reduce complexity of "Upgrade" submenu item for Lite.
+* Dev: Use WordPress core custom post type screens for managing Payment Forms.
+* Dev: Update Stripe API PHP library to `7.28.0`.
+* Dev: Update Stripe API version to `2020-03-02`.
+* Dev: Add `\SimplePay\Core\Utils\Collection` for managing generic registries.
+* Dev: Use WordPress core `.button` styles for WP Simple Pay button base.
+
 = 2.3.3 - January 7, 2020 =
 
 * Fix: Handle saving payment confirmation messages in WordPress 5.3.1+
