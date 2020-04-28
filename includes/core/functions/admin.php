@@ -1,16 +1,16 @@
 <?php
+/**
+ * Functions: Admin
+ *
+ * @package SimplePay\Core
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since 3.0.0
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/**
- * Admin functions
- *
- * Functions for the admin back end components only.
- *
- * @package SimplePay/Admin/Functions
- */
 
 /**
  * Stripe Checkout supported locales.
@@ -40,15 +40,6 @@ function simpay_get_stripe_checkout_locales() {
 }
 
 /**
- * Get the svg icon URL
- *
- * @return string
- */
-function simpay_get_svg_icon_url() {
-	return 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ4OC4yMDEgNDg4LjIwMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDg4LjIwMSA0ODguMjAxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjY1LjIsMzUwLjI1MUgzMy42Yy01LjMsMC05LjYtNC4zLTkuNi05LjZ2LTE4Mi42aDQwOC41djI0YzAsNi42LDUuNCwxMiwxMiwxMnMxMi01LjQsMTItMTJ2LTg2LjUgICAgYzAtMTguNS0xNS4xLTMzLjYtMzMuNi0zMy42SDMzLjZjLTE4LjYsMC0zMy42LDE1LjEtMzMuNiwzMy42djI0NS4xYzAsMTguNSwxNS4xLDMzLjYsMzMuNiwzMy42aDIzMS43YzYuNiwwLDEyLTUuNCwxMi0xMiAgICBTMjcxLjksMzUwLjI1MSwyNjUuMiwzNTAuMjUxeiBNMzMuNiw4NS45NTFoMzg5LjNjNS4zLDAsOS42LDQuMyw5LjYsOS42djM4LjVIMjMuOXYtMzguNUMyMy45LDkwLjI1MSwyOC4zLDg1Ljk1MSwzMy42LDg1Ljk1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNMjQwLjIsMjQ3LjE1MWMwLTYuNi01LjQtMTItMTItMTJIODRjLTYuNiwwLTEyLDUuNC0xMiwxMnM1LjQsMTIsMTIsMTJoMTQ0LjJDMjM0LjksMjU5LjE1MSwyNDAuMiwyNTMuNzUxLDI0MC4yLDI0Ny4xNTEgICAgeiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik04NCwyNzguMTUxYy02LjYsMC0xMiw1LjQtMTIsMTJzNS40LDEyLDEyLDEyaDU3LjdjNi42LDAsMTItNS40LDEyLTEycy01LjQtMTItMTItMTJIODR6IiBmaWxsPSIjRkZGRkZGIi8+CgkJPHBhdGggZD0iTTgyLjYsMjE1LjY1MWgxNDQuMmM2LjYsMCwxMi01LjQsMTItMTJzLTUuNC0xMi0xMi0xMkg4Mi42Yy02LjYsMC0xMiw1LjQtMTIsMTJTNzUuOSwyMTUuNjUxLDgyLjYsMjE1LjY1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNNDc2LjMsMjk4LjI1MWgtMTcuNnYtMjhjMC0zNC43LTI4LjMtNjMtNjMtNjNzLTYzLDI4LjMtNjMsNjN2MjhoLTE3LjZjLTYuNiwwLTEyLDUuNC0xMiwxMnYxMDRjMCw2LjYsNS40LDEyLDEyLDEyICAgIGgxNjEuMWM2LjYsMCwxMi01LjQsMTItMTJ2LTEwNEM0ODguMywzMDMuNTUxLDQ4Mi45LDI5OC4yNTEsNDc2LjMsMjk4LjI1MXogTTM1Ni43LDI3MC4xNTFjMC0yMS41LDE3LjUtMzksMzktMzlzMzksMTcuNSwzOSwzOSAgICB2MjhoLTc4VjI3MC4xNTF6IE00NjQuMyw0MDIuMTUxSDMyNy4xdi04MGgxMzcuMXY4MEg0NjQuM3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K';
-}
-
-/**
  * Setup the insert form button
  */
 function simpay_insert_form_button() {
@@ -56,15 +47,18 @@ function simpay_insert_form_button() {
 	$output = '';
 
 	// Only run in post/page creation and edit screens
-	if ( in_array( $pagenow, array(
+	if ( in_array(
+		$pagenow,
+		array(
 			'post.php',
 			'page.php',
 			'post-new.php',
 			'post-edit.php',
-		) ) && $typenow != 'simple-pay'
+		)
+	) && $typenow != 'simple-pay'
 	) {
 
-		$img_url = SIMPLE_PAY_ASSETS . 'images/icon.png';
+		$img_url = SIMPLE_PAY_INC_URL . 'core/assets/images/icon.png';
 		$icon    = '<span class="wp-media-buttons-icon" id="simpay-insert-form-button"><img src="' . esc_url( $img_url ) . '" width="30" style="margin-left: -12px; margin-top: -12px;" /></span>';
 
 		// TODO Remove image & use SVG icon eventually.
@@ -84,12 +78,15 @@ function simpay_admin_footer_insert_form() {
 	global $pagenow, $typenow;
 
 	// Only run in post/page creation and edit screens
-	if ( in_array( $pagenow, array(
+	if ( in_array(
+		$pagenow,
+		array(
 			'post.php',
 			'page.php',
 			'post-new.php',
 			'post-edit.php',
-		) ) && $typenow != 'simple-pay'
+		)
+	) && $typenow != 'simple-pay'
 	) { ?>
 		<script type="text/javascript">
 			function insertSimpayForm() {
@@ -233,6 +230,11 @@ function simpay_sanitize_input( $var, $func = 'sanitize_text_field' ) {
  * @return string|bool
  */
 function simpay_is_admin_screen() {
+	$screen = \get_current_screen();
+
+	if ( 'simple-pay' === $screen->post_type ) {
+		return 'simpay';
+	}
 
 	if ( isset( $_GET['page'] ) ) {
 		if ( 'simpay' == $_GET['page'] ) {
@@ -264,12 +266,15 @@ function simpay_is_admin_screen() {
  */
 function simpay_ga_url( $base_url, $content, $raw = false ) {
 
-	$url = add_query_arg( array(
-		'utm_source'   => 'inside-plugin',
-		'utm_medium'   => 'link',
-		'utm_campaign' => apply_filters( 'simpay_utm_campaign', 'lite-plugin' ),
-		'utm_content'  => $content // i.e. 'general-settings', 'form-settings', etc.
-	), $base_url );
+	$url = add_query_arg(
+		array(
+			'utm_source'   => 'inside-plugin',
+			'utm_medium'   => 'link',
+			'utm_campaign' => apply_filters( 'simpay_utm_campaign', 'lite-plugin' ),
+			'utm_content'  => $content, // i.e. 'general-settings', 'form-settings', etc.
+		),
+		$base_url
+	);
 
 	if ( $raw ) {
 		return esc_url_raw( $url );
@@ -283,7 +288,7 @@ function simpay_ga_url( $base_url, $content, $raw = false ) {
  */
 function simpay_pro_upgrade_url( $content ) {
 
-	return apply_filters( 'simpay_upgrade_link', simpay_ga_url(SIMPLE_PAY_STORE_URL . 'lite-vs-pro/', $content ) );
+	return apply_filters( 'simpay_upgrade_link', simpay_ga_url( SIMPLE_PAY_STORE_URL . 'lite-vs-pro/', $content ) );
 }
 
 /**
@@ -312,7 +317,7 @@ function simpay_docs_link( $text, $slug, $ga_content, $plain = false ) {
 
 	} else {
 
-		$html = '';
+		$html  = '';
 		$html .= '<div class="simpay-docs-link-wrap">';
 		$html .= '<a href="' . simpay_ga_url( $url, $ga_content, true ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $text );
 		$html .= '<span class="dashicons dashicons-editor-help"></span>';
@@ -327,7 +332,6 @@ function simpay_docs_link( $text, $slug, $ga_content, $plain = false ) {
  * Output the copy/paste shortcode on the forms page
  */
 function simpay_print_shortcode_tip( $post_id ) {
-
 
 	$cmd = 'Ctrl&#43;C (&#8984;&#43;C on Mac)';
 

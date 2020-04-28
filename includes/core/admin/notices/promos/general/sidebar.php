@@ -19,8 +19,11 @@
 				</ul>
 
 				<div class="centered">
-					<a href="<?php echo simpay_pro_upgrade_url( 'sidebar-link' ); ?>"
-					   class="simpay-upgrade-btn simpay-upgrade-btn-large" target="_blank">
+					<a
+						href="<?php echo esc_url( simpay_pro_upgrade_url( 'sidebar-link' ) ); ?>"
+						class="button simpay-upgrade-btn simpay-upgrade-btn-large"
+						target="_blank"
+					>
 						<?php _e( 'Click here to Upgrade', 'stripe' ); ?></a>
 				</div>
 			</div>
@@ -44,7 +47,7 @@
 			<p>&nbsp;</p>
 			<p class="centered">
 				<a href="https://stripe.com/" target="_blank">
-					<img src="<?php echo SIMPLE_PAY_ASSETS; ?>images/powered_by_stripe.png" />
+					<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/powered_by_stripe.png' ); ?>" />
 				</a>
 			</p>
 		</div>

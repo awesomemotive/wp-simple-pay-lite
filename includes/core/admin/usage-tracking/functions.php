@@ -1,7 +1,10 @@
 <?php
 /**
- * Usage tracking.
+ * Usage tracking: functions
  *
+ * @package SimplePay\Core\Admin\Usage_Tracking
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -192,7 +195,7 @@ function get_optin_notice() {
 		),
 		( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
 	);
-?>
+	?>
 
 <p style="margin-top: 0.75em;"><strong><?php esc_html_e( 'Save 10% on WP Simple Pay Pro', 'stripe' ); ?></strong></p>
 
@@ -242,7 +245,7 @@ echo wp_kses(
 	</p>
 </form>
 
-<?php
+	<?php
 	return ob_get_clean();
 }
 
