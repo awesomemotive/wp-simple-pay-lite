@@ -2,6 +2,9 @@
 /**
  * Shim legacy hooks.
  *
+ * @package SimplePay\Core\Legacy\Hooks
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -349,10 +352,13 @@ function simpay_process_form( $form, $form_data, $form_values, $customer_id ) {
 		$type = $form->is_subscription() || isset( $form_data['isRecurring'] ) ? 'subscription' : 'paymentintent';
 
 		/** This filter is documented in includes/core/payments/paymentintent.php */
-		add_filter( "simpay_get_{$type}_args_from_payment_form_request", function( $object_args ) use ( $payment ) {
-			$object_args['metadata'] = array_merge( $object_args['metadata'], $payment->metadata );
+		add_filter(
+			"simpay_get_{$type}_args_from_payment_form_request",
+			function( $object_args ) use ( $payment ) {
+				$object_args['metadata'] = array_merge( $object_args['metadata'], $payment->metadata );
 
-			return $object_args;
-		} );
+				return $object_args;
+			}
+		);
 	}
 }

@@ -1,7 +1,10 @@
 <?php
 /**
- * Cron.
+ * Cron
  *
+ * @package SimplePay\Core
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -12,12 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class Cron.
+ * Cron class.
  */
 class Cron {
 
 	/**
-	 * Hook in to WordPress.
+	 * Hooks in to WordPress.
 	 *
 	 * @since 3.6.0
 	 */
@@ -35,8 +38,13 @@ class Cron {
 	 */
 	public function add_schedules( $schedules ) {
 		$schedules['weekly'] = array(
-			'interval' => 604800,
-			'display'  => __( 'Once Weekly', 'stripe' ),
+			'interval' => WEEK_IN_SECONDS,
+			'display'  => __( 'Once a Week', 'stripe' ),
+		);
+
+		$schedules['twenty_three_hours'] = array(
+			'interval' => ( DAY_IN_SECONDS - HOUR_IN_SECONDS ),
+			'display'  => __( 'Every 23 Hours', 'stripe' ),
 		);
 
 		return $schedules;
@@ -49,11 +57,12 @@ class Cron {
 	 */
 	public function schedule_events() {
 		$this->one_time_events();
+		$this->twenty_three_hour_events();
 		$this->weekly_events();
 	}
 
 	/**
-	 * Schedule a one time event a day after install.
+	 * Schedules a one time event a day after install.
 	 *
 	 * @since 3.6.0
 	 */
@@ -66,7 +75,20 @@ class Cron {
 	}
 
 	/**
-	 * Schedule weekly events.
+	 * Schedules 23 hour events.
+	 *
+	 * @since 3.7.0
+	 */
+	private function twenty_three_hour_events() {
+		if ( wp_next_scheduled( 'simpay_twenty_three_hours_scheduled_events' ) ) {
+			return;
+		}
+
+		wp_schedule_event( time(), 'twenty_three_hours', 'simpay_twenty_three_hours_scheduled_events' );
+	}
+
+	/**
+	 * Schedules weekly events.
 	 *
 	 * @since 3.6.0
 	 */

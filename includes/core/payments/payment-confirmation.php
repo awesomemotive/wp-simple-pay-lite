@@ -1,7 +1,10 @@
 <?php
 /**
- * Payment receipt/confirmation functionality.
+ * Payment confirmation
  *
+ * @package SimplePay\Core\Payments\Payment_Confirmation
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -140,8 +143,8 @@ function get_content() {
 	if ( ! $display_options ) {
 		return $content;
 	}
-	
-	$content = isset( $display_options['payment_confirmation_messages']['one_time_payment_details'] ) ? 
+
+	$content = isset( $display_options['payment_confirmation_messages']['one_time_payment_details'] ) ?
 		$display_options['payment_confirmation_messages']['one_time_payment_details'] :
 		$content;
 
@@ -153,7 +156,7 @@ function get_content() {
 		array(
 			$content,
 			'one_time',
-			$display_options
+			$display_options,
 		),
 		'3.6.0',
 		'simpay_payment_confirmation_content'
@@ -175,7 +178,7 @@ function get_error() {
 
 	/**
 	 * Filter the error message shown when a Payment Confirmation cannot be created.
-	 * 
+	 *
 	 * @since unknown
 	 *
 	 * @param string Error message.

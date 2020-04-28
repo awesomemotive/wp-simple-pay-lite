@@ -1,7 +1,10 @@
 <?php
 /**
- * Usage tracking.
+ * Usage tracking
  *
+ * @package SimplePay\Core\Admin\Usage_Tracking
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -113,11 +116,11 @@ class Tracker {
 		$this->data['pro'] = defined( 'SIMPLE_PAY_ITEM_ID' );
 
 		// License type.
-		$license_data = get_option( 'simpay_license_data', new \stdClass() );
+		$license_data          = get_option( 'simpay_license_data', new \stdClass() );
 		$this->data['license'] = isset( $license_data->price_id ) ? $license_data->price_id : null;
 
 		// Stripe Connect.
-		$this->data['stripe_connect']= simpay_get_account_id() ? true : null;
+		$this->data['stripe_connect'] = simpay_get_account_id() ? true : null;
 
 		// Test mode.
 		$this->data['test_mode'] = simpay_is_test_mode() ? true : null;
@@ -149,7 +152,7 @@ class Tracker {
 		$this->data['locale'] = get_locale();
 
 		// Plugins.
-		if( ! function_exists( 'get_plugins' ) ) {
+		if ( ! function_exists( 'get_plugins' ) ) {
 			include ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 

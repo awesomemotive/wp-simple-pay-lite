@@ -59,7 +59,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	// Stripe.
 	//
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2019-08-14' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2020-03-02' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
@@ -74,31 +74,31 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_URL' ) ) {
-		define( 'SIMPLE_PAY_URL', plugin_dir_url( __FILE__ ) );
-	}
-
-	if ( ! defined( 'SIMPLE_PAY_ASSETS' ) ) {
-		define( 'SIMPLE_PAY_ASSETS', plugin_dir_url( __FILE__ ) . 'assets/' );
+		define( 'SIMPLE_PAY_URL', plugin_dir_url( SIMPLE_PAY_MAIN_FILE ) );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_DIR' ) ) {
-		define( 'SIMPLE_PAY_DIR', plugin_dir_path( __FILE__ ) );
+		define( 'SIMPLE_PAY_DIR', plugin_dir_path( SIMPLE_PAY_MAIN_FILE ) );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_INC' ) ) {
-		define( 'SIMPLE_PAY_INC', plugin_dir_path( __FILE__ ) . 'includes/' );
+		define( 'SIMPLE_PAY_INC', plugin_dir_path( SIMPLE_PAY_MAIN_FILE ) . 'includes/' );
+	}
+
+	if ( ! defined( 'SIMPLE_PAY_INC_URL' ) ) {
+		define( 'SIMPLE_PAY_INC_URL', plugin_dir_url( SIMPLE_PAY_MAIN_FILE ) . 'includes/' );
 	}
 
 	// Compatibility files.
-	require_once( SIMPLE_PAY_DIR . 'includes/core/boostrap/compatibility.php' );
+	require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/compatibility.php' );
 
 	if ( SimplePay\Core\Bootstrap\Compatibility\server_requirements_met() ) {
 		// Autoloader.
 		require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
-		require_once( SIMPLE_PAY_DIR . 'includes/autoload.php' );
+		require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/autoload.php' );
 
 		// Plugin files.
-		require_once( SIMPLE_PAY_DIR . 'includes/core/main.php' );
+		require_once( SIMPLE_PAY_DIR . 'includes/core/class-simplepay.php' );
 	} else {
 		SimplePay\Core\Bootstrap\Compatibility\show_admin_notices();
 	}

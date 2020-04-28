@@ -1,7 +1,10 @@
 <?php
 /**
- * Stripe PaymentIntent functionality.
+ * Stripe PaymentIntent
  *
+ * @package SimplePay\Core\Payments\PaymentIntent
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 

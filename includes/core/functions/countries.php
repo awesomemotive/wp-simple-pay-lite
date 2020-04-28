@@ -1,4 +1,12 @@
 <?php
+/**
+ * Functions: Countries
+ *
+ * @package SimplePay\Core
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since 3.0.0
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,10 +24,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function simpay_get_country_list() {
 	$countries = array(
-		//''   => '',
 		'US' => 'United States',
 		'CA' => 'Canada',
 		'GB' => 'United Kingdom',
+		'AD' => 'Andorra',
 		'AF' => 'Afghanistan',
 		'AX' => '&#197;land Islands',
 		'AL' => 'Albania',
@@ -238,6 +246,7 @@ function simpay_get_country_list() {
 		'SE' => 'Sweden',
 		'CH' => 'Switzerland',
 		'SY' => 'Syrian Arab Republic',
+		'TA' => 'Tajikistan',
 		'TW' => 'Taiwan',
 		'TJ' => 'Tajikistan',
 		'TZ' => 'Tanzania',
@@ -268,7 +277,7 @@ function simpay_get_country_list() {
 		'WS' => 'Western Samoa',
 		'YE' => 'Yemen',
 		'ZM' => 'Zambia',
-		'ZW' => 'Zimbabwe'
+		'ZW' => 'Zimbabwe',
 	);
 
 	return apply_filters( 'simpay_countries', $countries );

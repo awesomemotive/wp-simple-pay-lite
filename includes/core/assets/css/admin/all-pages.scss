@@ -1,0 +1,59 @@
+// Admin bar test mode active link
+#wpadminbar .simpay-admin-bar-test-mode > .ab-item {
+	display: flex;
+	align-items: center;
+
+	.simpay-test-mode-badge {
+		text-align: center;
+		color: #23282d;
+		font-weight: 700;
+		font-size: 11px;
+		line-height: 1;
+		text-transform: uppercase;
+		background-color: #f7e633;
+		border-radius: 3px;
+		margin-left: 5px;
+		padding: 4px 5px;
+		display: inline-block;
+	}
+}
+
+// Admin menu upgrade link
+a[href^="https://wpsimplepay.com/lite-vs-pro"]:not(.simpay-upgrade-btn) {
+	color: #3db634 !important;
+}
+
+// Inline plugin update message
+.simpay-plugin-upgrade-notice {
+
+	font-weight: 400;
+	color: #fff;
+	background: #d54d21;
+	padding: 1em;
+	margin: 9px 0;
+
+	&::before {
+		content: "\f348";
+		display: inline-block;
+		font: 400 18px/1 dashicons;
+		speak: none;
+		margin: 0 8px 0 -2px;
+		vertical-align: top;
+	}
+}
+
+// Hide inline plugin update message when updating (Lite & Pro)
+#stripe-update {
+
+	.updating-message {
+
+		.simpay-plugin-upgrade-notice {
+			display: none;
+		}
+	}
+}
+
+// Remove border on plugin list when there is no license, but there is an update.
+.plugins .plugin-update-tr.simpay-plugin-update-license td {
+	box-shadow: none;
+}

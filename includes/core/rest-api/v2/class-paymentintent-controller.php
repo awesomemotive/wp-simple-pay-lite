@@ -1,7 +1,10 @@
 <?php
 /**
- * REST API PaymentIntent controller.
+ * REST API: PaymentIntent Controller
  *
+ * @package SimplePay\Core\REST_API\v2
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -52,7 +55,7 @@ class PaymentIntent_Controller extends Controller {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'create_item' ),
 					'permission_callback' => array( $this, 'create_item_permissions_check' ),
-					'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::CREATABLE )
+					'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::CREATABLE ),
 				),
 				'schema' => array( $this, 'get_public_item_schema' ),
 			)
@@ -66,7 +69,7 @@ class PaymentIntent_Controller extends Controller {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'confirm_item' ),
 					'permission_callback' => array( $this, 'create_item_permissions_check' ),
-					'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::CREATABLE )
+					'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::CREATABLE ),
 				),
 				'schema' => array( $this, 'get_public_item_schema' ),
 			)
@@ -108,12 +111,8 @@ class PaymentIntent_Controller extends Controller {
 	 */
 	public function create_item( $request ) {
 		try {
-			// Payment method is required (though the Stripe docs do not say this).
-			$payment_method_id = isset( $request['payment_method_id'] ) ? $request['payment_method_id'] : false;
-
-			if ( ! $payment_method_id ) {
-				throw new \Exception( __( 'A payment method is required.', 'stripe' ) );
-			}
+			// Payment Method type.
+			$payment_method_type = isset( $request['payment_method_type'] ) ? $request['payment_method_type'] : 'card';
 
 			// Gather customer information.
 			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : false;
@@ -146,16 +145,35 @@ class PaymentIntent_Controller extends Controller {
 			$paymentintent_args = array_merge(
 				Payments\PaymentIntent\get_args_from_payment_form_request( $form, $form_data, $form_values, $customer_id ),
 				array(
-					'customer'            => $customer_id,
-					'payment_method'      => $payment_method_id,
-					'confirmation_method' => 'manual',
-					'confirm'             => true,
-					'save_payment_method' => true,
+					'customer' => $customer_id,
 					'expand'   => array(
 						'customer',
-					)
+					),
 				)
 			);
+
+			$paymentintent_args['payment_method_types'] = array( $payment_method_type );
+
+			// @todo Move this to more Payment Method-specific areas.
+			switch ( $payment_method_type ) {
+				case 'card':
+					$payment_method_id = isset( $request['payment_method_id'] )
+						? $request['payment_method_id']
+						: false;
+
+					if ( false === $payment_method_id ) {
+						throw new \Exception( __( 'A Payment Method is required.', 'stripe' ) );
+					}
+
+					$paymentintent_args['payment_method']       = $payment_method_id;
+					$paymentintent_args['confirmation_method']  = 'manual';
+					$paymentintent_args['confirm']              = true;
+					$paymentintent_args['save_payment_method']  = true;
+
+					break;
+				case 'ideal':
+					break;
+			}
 
 			/**
 			 * Allows processing before a PaymentIntent is created from a payment form request.
@@ -170,7 +188,11 @@ class PaymentIntent_Controller extends Controller {
 			 */
 			do_action(
 				'simpay_before_paymentintent_from_payment_form_request',
-				$paymentintent_args, $form, $form_data, $form_values, $customer_id
+				$paymentintent_args,
+				$form,
+				$form_data,
+				$form_values,
+				$customer_id
 			);
 
 			// Generate a PaymentIntent.
@@ -189,7 +211,11 @@ class PaymentIntent_Controller extends Controller {
 			 */
 			do_action(
 				'simpay_after_paymentintent_from_payment_form_request',
-				$paymentintent, $form, $form_data, $form_values, $customer_id
+				$paymentintent,
+				$form,
+				$form_data,
+				$form_values,
+				$customer_id
 			);
 
 			return $this->generate_payment_response( $paymentintent, $form, $form_data, $form_values, $customer_id );
@@ -273,10 +299,16 @@ class PaymentIntent_Controller extends Controller {
 			$response = new \WP_REST_Response(
 				array(
 					'requires_action'              => true,
-					'payment_intent_client_secret' => $paymentintent->client_secret
+					'payment_intent_client_secret' => $paymentintent->client_secret,
 				)
 			);
-		} else if ( $paymentintent->status == 'succeeded' ) {
+		} elseif ( $paymentintent->status == 'requires_payment_method' ) {
+			$response = new \WP_REST_Response(
+				array(
+					'payment_intent_client_secret' => $paymentintent->client_secret,
+				)
+			);
+		} elseif ( $paymentintent->status == 'succeeded' ) {
 			$response = new \WP_REST_Response(
 				array(
 					'success' => true,
@@ -304,7 +336,11 @@ class PaymentIntent_Controller extends Controller {
 		 */
 		do_action(
 			'simpay_after_paymentintent_response_from_payment_form_request',
-			$paymentintent, $form, $form_data, $form_values, $customer_id
+			$paymentintent,
+			$form,
+			$form_data,
+			$form_values,
+			$customer_id
 		);
 
 		return $response;

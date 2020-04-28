@@ -1,7 +1,10 @@
 <?php
 /**
- * Notice functionality.
+ * Admin notices: Callbacks
  *
+ * @package SimplePay\Core\Admin\Notices
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.4.0
  */
 
@@ -25,25 +28,25 @@ function no_ssl() {
 	}
 
 	ob_start();
-?>
+	?>
 
 <p>
-<?php
-/**
- * Filter the message shown when no SSL certificate is available.
- *
- * @since unknown
- *
- * @param string $message
- */
-echo apply_filters(
-	'simpay_ssl_admin_notice_message',
-	__( 'SSL (HTTPS) is not enabled. You will not be able to process live Stripe transactions until SSL is enabled.', 'stripe' )
-);
-?>
+	<?php
+	/**
+	 * Filter the message shown when no SSL certificate is available.
+	 *
+	 * @since unknown
+	 *
+	 * @param string $message
+	 */
+	echo apply_filters(
+		'simpay_ssl_admin_notice_message',
+		__( 'SSL (HTTPS) is not enabled. You will not be able to process live Stripe transactions until SSL is enabled.', 'stripe' )
+	);
+	?>
 </p>
 
-<?php
+	<?php
 	return ob_get_clean();
 }
 
@@ -64,7 +67,7 @@ function stripe_connect() {
 	simpay_stripe_connect_button_css();
 
 	ob_start();
-?>
+	?>
 
 <p>
 	<?php _e( 'WP Simple Pay supports Stripe Connect for easier setup and improved security. Connect now to start accepting payments instantly.', 'stripe' ); ?>
@@ -76,7 +79,7 @@ function stripe_connect() {
 	</span></a>
 </p>
 
-<?php
+	<?php
 
 	return ob_get_clean();
 }
@@ -99,7 +102,7 @@ function php_version_56() {
 	}
 
 	ob_start();
-?>
+	?>
 
 <p>
 	<strong><?php esc_html_e( 'WP Simple Pay is increasing its PHP version requirement.', 'stripe' ); ?></strong>
@@ -125,6 +128,6 @@ function php_version_56() {
 	<?php echo sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see <a href="%s" target="_blank" rel="noopener noreferrer">our hosting recommendations</a>.', 'stripe' ), 'https://wpsimplepay.com/recommended-wordpress-hosting/' ); ?>
 </p>
 
-<?php
+	<?php
 	return ob_get_clean();
 }

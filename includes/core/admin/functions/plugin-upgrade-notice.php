@@ -1,9 +1,12 @@
 <?php
 /**
- * Plugin upgrade notice functionality.
+ * Plugin upgrade notice
  *
  * Used to show an extra note when a big change is coming.
  *
+ * @package SimplePay\Core\Admin\Plugin_Upgrade_Notice
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.5.0
  */
 
@@ -23,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param object $response Plugin update response.
  */
 function in_plugin_update_message( $args, $response ) {
-	$new_version = $response->new_version;
+	$new_version    = $response->new_version;
 	$upgrade_notice = get_upgrade_notice( $new_version );
 
 	/**
@@ -42,7 +45,7 @@ add_action(
 	'in_plugin_update_message-' . plugin_basename( SIMPLE_PAY_MAIN_FILE ),
 	__NAMESPACE__ . '\\in_plugin_update_message',
 	10,
-	2 
+	2
 );
 
 /**
@@ -55,8 +58,9 @@ add_action(
  */
 function get_upgrade_notice( $version ) {
 	$transient_name = 'simpay_upgrade_notice_' . $version;
-	$upgrade_notice = get_transient( $transient_name );;
-	$response       = '';
+	$upgrade_notice = get_transient( $transient_name );
+
+	$response = '';
 
 	if ( false === $upgrade_notice ) {
 

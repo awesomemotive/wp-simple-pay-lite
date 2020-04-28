@@ -1,6 +1,6 @@
 <?php use function SimplePay\Core\Admin\Notices\Promos\bfcm_is_promo_active; ?>
 <h2><?php _e( 'Want to customize your payment forms even more?', 'stripe' ); ?></h2>
-<p>
+<p style="margin: 0 0 1.5em">
 	<?php _e( 'By upgrading to WP Simple Pay Pro, you get access to powerful features such as:', 'stripe' ); ?>
 </p>
 
