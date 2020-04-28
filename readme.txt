@@ -1,67 +1,199 @@
-=== Stripe Payments for WordPress - WP Simple Pay ===
+=== Stripe Payments WordPress Plugin – WP Simple Pay ===
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
-Tags: stripe, payments, credit card, stripe payments, stripe checkout
+Tags: stripe subscription, credit card payments, payment request, credit card form, payment form
 Requires at least: 4.9
-Tested up to: 5.3.2
+Tested up to: 5.4
 Stable tag: 2.3.3
 Requires PHP: 5.6
 License: GPLv2 or later
 
-Add high conversion Stripe payment forms to your WordPress site in minutes.
+Easily connect Stripe Checkout with your WordPress site. Accept credit card payments using mobile-optimized checkout forms within minutes.
 
 == Description ==
 
-In a few simple steps you can start accepting credit card payments with Stripe Checkout on your WordPress site.
+It should be simple to accept payments and run your business online. There are many situations in which you don’t need a sophisticated store, cart or checkout process. You just need a simple payment form. Keep it simple with WP Simple Pay.
 
-**What is Stripe Checkout?**
+In just a few steps, you can be up and running in no time. For free! There is no charge for WP Simple Pay. There will just be the Stripe per-transaction fees which vary by country.  See [Stripes Pricing page](https://stripe.com/pricing) for more information.
 
-*"Stripe Checkout is a drop-in payment flow for desktop, tablet, and mobile devices. Rely on a checkout page that’s continuously tested and updated to offer a frictionless payments experience. PCI DSS and SCA—ready without any changes to your website."*
+Simply set up a payment form and start accepting credit cards on your WordPress site.
 
-If accepting credit card payments quickly and painlessly is what you're looking for, this plugin is for you.
+WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required.
 
-[Stripe Checkout](https://stripe.com/payments/checkout) is continually optimized across millions of transactions to maximize customer conversions.
+It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe currently supports 14 languages, over 35 countries and 135+ currencies. [Check support for your country](https://stripe.com/global).
 
-WP Simple Pay is a standalone Stripe Checkout plugin built by [Sandhills Development](http://sandhillsdev.com). No complex shopping cart, form builder or membership site plugin needed.
+[Stripe Checkout](https://stripe.com/payments/checkout) is a drop-in payments flow designed to drive conversion. It’s built for desktop, tablet, and mobile devices. It’s continuously tested and updated to offer a frictionless payment experience. It’s also PCI DSS compliant and SCA-ready without any changes to your website.
 
-That's it. *No other plugins required.*
+= WP Simple Pay features =
 
->**[Check out our demos & Pro version](https://demo.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+- Create unlimited payment forms integrated with [Stripe Checkout](https://stripe.com/payments/checkout)
+- Display your brand or product image on Stripe Checkout pages
+- Option to verify zip/postal code without an address
+- Support for 14 languages, 30+ countries and 135+ currencies
+- Stripe Connect support for easier setup
+- PCI DSS compliant and Strong Customer Authentication (SCA) support for improved security
+- Translation ready
+- [AffiliateWP](https://affiliatewp.com?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=integration&utm_term=description) integration
+- Customize payment success & failure pages
+- Toggle between test & live modes
+- Developer-friendly for building custom integrations
 
-= LITE VERSION FEATURES =
+= WP Simple Pay Pro features =
 
-* Unlimited payment forms
-* Mobile-optimized Stripe Checkout pages
-* Display brand or product image on Stripe Checkout pages
-* Optionally collect customer billing & shipping addresses
-* Optionally verify zip/postal code without address
-* Support for 14 languages, 30+ countries and 135+ currencies
-* Stripe Connect support for easier setup
-* PCI DSS and Strong Customer Authentication (SCA) support for improved security
-* Translation ready
-* [AffiliateWP](https://affiliatewp.com/) integration
-* Specify payment success & failure pages
-* Live/Test mode toggle
-* [Code snippets](https://github.com/wpsimplepay/WP-Simple-Pay-Snippet-Library/) & [hook reference](https://docs.wpsimplepay.com/articles/action-filter-hooks/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description) for developers
+If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/lite-vs-pro/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description) for these additional features:
 
-= PRO VERSION FEATURES =
+- Drag & drop form design controls
+- Unlimited custom fields to capture additional data
+- Custom amounts – let customers enter an amount to pay
+- Coupon code support
+- On-site checkout (no redirect) with custom forms
+- Embedded & overlay form display options
+- Apple Pay & Google Pay support with custom forms
+- reCAPTCHA v3 invisible verification support
+- Stripe Subscription support
+- Subscription installment plans
+- Subscription setup fees
+- Subscription trial periods
+- Send subscribers payment renewal reminders
+- [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
+- Coming soon: Support for iDEAL payments
 
-* *Everything in Lite plus...*
-* Drag & drop form design controls
-* Unlimited custom fields to capture additional data
-* Custom amounts - let customers enter an amount to pay
-* Coupon code support
-* On-site checkout (no redirect) with custom forms
-* Embedded & overlay form display options
-* Apple Pay & Google Pay support with custom forms
-* reCAPTCHA v3 invisible verification support
-* Stripe Subscription support
-* Subscription installment plans
-* Subscription setup fees
-* Subscription trial periods
-* [Easy Pricing Tables](https://fatcatapps.com/easypricingtables/) integration
-* Priority email support with a 24-hour response time during business days
+By upgrading to WP Simple Pay Pro you also get access to one-on-one help from our knowledgeable support team and our [extensive documentation site](https://docs.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description).
 
->**[Click here to upgrade to WP Simple Pay Pro](https://wpsimplepay.com/lite-vs-pro/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=description)**
+> WP Simple Pay Pro has been a game changer for my business. There is no simpler way to add Stripe payments to your site. We offer subscriptions with setup fees and this plugin handled these needs beautifully. Their support is unrivaled too.
+> Brian Casel, Founder of Audience Ops
+
+= Who is WP Simple Pay Pro For? =
+
+- Coaches and consultants selling one-time and recurring services
+- Sites selling just one or two products by credit card
+- Fitness and yoga studios selling one-time, monthly and annual memberships
+- Charities and churches accepting credit card payments for one-time and recurring donations
+- Sites selling tickets for events
+- Startups accepting Stripe payments before building out a custom billing system
+- Agencies and freelancers setting up client websites
+
+> We needed to start accepting credit card payments for services quickly, and WP Simple Pay Pro over-delivered. The plugin and support behind it have been key in building up our 6-figure business. I couldn’t wish for anything more out of a product.
+> Craig Hewitt, Founder of Podcast Motor
+
+**[Upgrade to WP Simple Pay Pro Now](https://wpsimplepay.com/lite-vs-pro/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description)**
+
+WP Simple Pay is also a [Stripe verified partner](https://stripe.com/accept-payments/wp-simple-pay). The Stripe partner program recognizes applications which meet their strict quality requirements and allows us to provide even better services to our customers.
+
+Here are a few examples of the WP Simple Pay Pro showing different ways you can set up Stripe payment forms. To see how they would appear and function on your site, [try out some demos](https://demo.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=demos&utm_term=description).
+
+= Payment form drag & drop builder =
+
+Drag and drop to add a custom amount entry, a coupon code field, various custom field types, subscription plan selection, a total amount label and more.
+
+All data entered into these custom fields are stored as "metadata" with each Stripe payment record within your Stripe dashboard, so everything is viewable alongside all payment or subscription plan data.
+
+[Try our custom fields demos](https://demo.wpsimplepay.com/custom-fields/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=custom-fields&utm_term=description)
+
+= 3 form display types =
+
+Select from the embedded, overlay, or Stripe Checkout payment form display types.
+
+Compare them by trying a few of our demos.
+
+- [Embedded form display](https://demo.wpsimplepay.com/embedded-form-display/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=embedded&utm_term=description)
+- [Overlay form display](https://demo.wpsimplepay.com/overlay-form-display/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=overlay&utm_term=description)
+- [Stripe Checkout](https://demo.wpsimplepay.com/stripe-checkout/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=checkout&utm_term=description)
+
+= Use Stripe Checkout payment pages =
+
+If you need only minimal payment form customizations and don't need an overlay payment form, you can utilize Stripe's fully-hosted checkout pages for payment. As of September 13, 2019, the newer Stripe Checkout has replaced the "legacy" Stripe Checkout overlay.
+
+You can set a few options when using Stripe Checkout, but when this option is selected, Stripe dictates what can and cannot be configured on the checkout page as it is served up by Stripe’s servers.
+
+[Try our Stripe Checkout demos](https://demo.wpsimplepay.com/stripe-checkout/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=checkout&utm_term=description)
+
+> We paid developers for several hours to do what WP Simple Pay Pro accomplished in minutes. A no-brainer investment for us.
+> Justin McGill, Founder of LeadFuze
+
+= Allow custom amount payments =
+
+Set a one-time amount or let your site visitors pay what they want. Optionally specify minimum and default amounts.
+
+[Try our one-time custom amount demo](https://demo.wpsimplepay.com/one-time-custom-amount/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=custom&utm_term=description)
+
+= Add and customize subscription options =
+
+Connect a payment button to an individual Stripe plan or let your site visitors pick a plan to subscribe to. Add a custom amount option, charge a setup fee or tie into free trials.
+
+Try a few of these subscription demos:
+
+- [Set single plan, user selects plan and adding custom fields](https://demo.wpsimplepay.com/subscriptions-basic/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=subscription&utm_term=description)
+- [Allow customer or donor to enter a recurring custom amount](https://demo.wpsimplepay.com/subscriptions-custom-amount/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=subscription-custom&utm_term=description)
+- [Add an initial setup fee or allow a free trial period](https://demo.wpsimplepay.com/subscriptions-setup-fees-free-trials/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=trials&utm_term=description)
+
+You can also set up installment plans to end subscriptions after a specific number of charges.
+
+= Offer discounts with coupon codes =
+
+Percent or amount-off coupon codes added in your Stripe dashboard can be used in your payment forms.
+
+Use with subscriptions or one-time payments, and optionally add a total amount label that updates real-time.
+
+[Try our demos with coupon code fields](https://demo.wpsimplepay.com/coupon-codes/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=coupons&utm_term=description)
+
+> I've set up payment processing on over a dozen sites and it usually takes forever just to get up and running. Using WP Simple Pay Pro I was accepting Stripe payments in no time. It’s one of the best decisions I made while launching my new product.
+> Mike Taber, Founder of Bluetick
+
+= Add Apple Pay and Google Pay buttons =
+
+Give your site visitors the option to pay using Apple Pay, Google Pay, and Microsoft Pay with a single button.
+
+Anyone with a browser and device combination that allows one of these options will see the new payment button.
+
+[Try it out on our demo site](https://demo.wpsimplepay.com/apple-pay-google-pay/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
+
+= Customized payment confirmation details =
+
+Easily customize the credit card payment confirmation details your customers see within the post editor using placeholder tags.
+
+[Complete any purchase on our demo site](https://demo.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=demos&utm_term=description) to see it in action.
+
+= Locale and currency settings =
+
+Stripe currently supports [14 languages](https://support.stripe.com/questions/supported-languages-for-stripe-checkout), [30+ countries](https://stripe.com/global), and [135+ currencies](https://stripe.com/docs/currencies). WP Simple Pay lets you set the locale (language) for your payment forms as well as the preferred currency and date formats for your site's region.
+
+[Try our French locale + Euro currency demo](https://demo.wpsimplepay.com/alternate-locale-currency/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=locale&utm_term=description)
+
+> The WP Simple Pay team has been outstanding. From technical support to feature requests to frequent product updates – the value provided has saved us thousands over building a Stripe integration ourselves.
+> Jon MacDonald, Founder of The Good
+
+= Get Help =
+
+WP Simple Pay is backed by top-notch technical support from our globally distributed full-time support team. We also have an [extensive documentation site available](https://docs.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description). If you’re looking for faster support via email, we encourage you to [purchase a WP Simple Pay Pro license](https://wpsimplepay.com/lite-vs-pro/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description).
+
+= Meet the team =
+
+Restrict Content is built by [Sandhills Development](https://sandhillsdev.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=sandhills&utm_term=description). We make [popular WordPress plugins](https://sandhillsdev.com/projects/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=popular&utm_term=description) used by hundreds of thousands of people just like you. [Get to know us here](https://sandhillsdev.com/about/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=about&utm_term=description)!
+
+= From our Blog =
+
+Check out some of our popular posts for actionable advice for running your business and accepting one-time/recurring payments on the web.
+
+- [How to Accept Recurring Payments Through Your WordPress Site](https://wpsimplepay.com/how-to-accept-recurring-payments-through-your-wordpress-site/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=how-to-accept-payments&utm_term=description)
+- [How to Set Suggested Donation Amounts That Drive Conversions](https://wpsimplepay.com/how-to-set-suggested-donation-amounts-that-drive-conversions/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=donations&utm_term=description)
+- [What Should You Do If a Customer Requests a Refund?](https://wpsimplepay.com/customer-requests-a-refund/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=refund&utm_term=description)
+- [Is Stripe Atlas Worth the Money?](https://wpsimplepay.com/is-stripe-atlas-worth-the-money/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=atlas&utm_term=description)
+- [Do You Need an Ecommerce Store or is WP Simple Pay Enough?](https://wpsimplepay.com/do-you-need-an-ecommerce-store-or-is-wp-simple-pay-enough/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=do-you-need-store&utm_term=description)
+
+**[Subscribe to our newsletter](https://wpsimplepay.com/subscribe/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=subscribe&utm_term=description)** to get posts like these in your inbox as soon as they’re published.
+
+= Contribute to WP Simple Pay =
+
+Development for this plugin happens in a public GitHub repository to better facilitate contributions from an active community of users, developers and designers. If you have a suggestion, bug report, patch, or pull request, please feel free to [contribute here](https://github.com/wpsimplepay/wp-simple-pay-lite) or to our [code snippet library](https://github.com/wpsimplepay/wp-simple-pay-snippet-library).
+
+= Looking for something else? =
+
+If WP Simple Pay doesn’t quite fit your needs, take a look at some of our other projects.
+
+- [Easy Digital Downloads](https://easydigitaldownloads.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – Sell digital products with WordPress
+- [AffiliateWP](https://affiliatewp.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – A full-featured affiliate marketing solution
+- [Sugar Calendar](https://sugarcalendar.com?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – WordPress event management made simple
+- [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – A lightweight Stripe payments plugin
 
 == Installation ==
 
@@ -82,22 +214,37 @@ Additional documentation at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/
 
 == Frequently Asked Questions ==
 
-= Where's your plugin documentation? =
+= Can I collect payments on mobile? =
 
-Find our docs at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq).
+Yes. Stripe Checkout is optimized for mobile and automatically presents Apple Pay or Google Pay options when available.
 
-= Where can I learn more about accepting one-time and recurring payments on the web? =
+= Can I create multiple payment forms? =
 
-[Subscribe to our newsletter](https://wpsimplepay.com/subscribe/?utm_source=wordpress.org&utm_medium=link&utm_campaign=simple-pay-lite-readme&utm_content=faq) and once every 2-3 weeks we’ll email you our latest in-depth article packed with actionable advice for store owners. On occasion we’ll send you exclusive promotions and major release announcements.
+Yes. There is no limit to the number of payment forms you can create, each with unique settings.
 
-= How do I contribute to WP Simple Pay? =
+= Is there a maximum amount that can be collected per payment? =
 
-We'd love your help! Here are a few things you can do:
+No. Payment forms do not have a limit on how much money can be processed.
 
-* [Rate our plugin](https://wordpress.org/support/plugin/stripe/reviews/#new-post) and help spread the word!
-* Help answer questions in our [community support forum](https://wordpress.org/support/plugin/stripe).
-* Report bugs (with steps to reproduce) or submit pull requests [on GitHub](https://github.com/wpsimplepay/wp-simple-pay-lite).
-* Add or update a [plugin translation](https://translate.wordpress.org/projects/wp-plugins/stripe).
+= Can I collect more than just payment data from my customers? =
+
+Not with this plugin, but the [Pro version](https://wpsimplepay.com?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) allows you to insert additional custom fields in your payment forms to record extra data with each Stripe payment record.
+
+= Where can payment forms be embedded? =
+
+Payment forms are embedded via shortcodes and can be placed anywhere a shortcode can.
+
+= Are there additional fees for collecting payments? =
+
+WP Simple Pay and WP Simple Pay Pro do not charge additional fees beyond a license purchase. However, Stripe has a per-transaction charge which varies by country. [See Stripe’s pricing](https://stripe.com/pricing).
+
+= Can I offer coupon codes to my site visitors? =
+
+Not with this plugin, but the [Pro version](https://wpsimplepay.com?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) provides a way to add a field to allow an amount or percentage off discount code.
+
+= Can I accept payments without leaving my website (on-site checkout)? =
+
+WP Simple Pay Pro offers on-site payments forms that ensure customers never leave your site.
 
 == Screenshots ==
 
