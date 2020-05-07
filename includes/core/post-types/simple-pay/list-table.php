@@ -24,6 +24,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array Row actions.
  */
 function row_actions( $actions, $post ) {
+	if ( 'simple-pay' !== $post->post_type ) {
+		return $actions;
+	}
+
 	// Remove "Quick Edit".
 	unset( $actions['inline hide-if-no-js'] );
 
