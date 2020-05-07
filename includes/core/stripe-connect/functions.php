@@ -1,7 +1,10 @@
 <?php
 /**
- * General functionality for managing Stripe Connect.
+ * Stripe Connect
  *
+ * @package SimplePay\Core\Stripe_Connect
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.4.0
  */
 
@@ -104,7 +107,7 @@ function simpay_can_site_manage_stripe_keys() {
  * @return string
  */
 function simpay_stripe_connect_button_css() {
-?>
+	?>
 
 <style>
 /* Stripe Button */
@@ -219,5 +222,5 @@ only screen and (min-device-pixel-ratio: 1.5) {
 /* End of stripe button*/
 </style>
 
-<?php
+	<?php
 }

@@ -1,7 +1,10 @@
 <?php
 /**
- * REST API Customer controller.
+ * REST API: Customer Controller
  *
+ * @package SimplePay\Core\REST_API\v2
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -49,7 +52,7 @@ class Customer_Controller extends Controller {
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'create_item' ),
 					'permission_callback' => array( $this, 'create_item_permissions_check' ),
-					'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::CREATABLE )
+					'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::CREATABLE ),
 				),
 				'schema' => array( $this, 'get_public_item_schema' ),
 			)
@@ -62,7 +65,7 @@ class Customer_Controller extends Controller {
 	 * @since 3.6.0
 	 *
 	 * @param \WP_REST_Request Request data.
-	 * @return true
+	 * @return bool
 	 */
 	public function create_item_permissions_check( $request ) {
 		$form_values = $request['form_values'];
@@ -75,7 +78,7 @@ class Customer_Controller extends Controller {
 	}
 
 	/**
-	 * Handle an incoming request to create a Checkout Session.
+	 * Handle an incoming request to create a Customer.
 	 *
 	 * @since 3.6.0
 	 *
@@ -116,7 +119,7 @@ class Customer_Controller extends Controller {
 			$customer_args = wp_parse_args(
 				Customer\get_args_from_payment_form_request( $form, $form_data, $form_values ),
 				array(
-					'source'   => $source_id,
+					'source' => $source_id,
 				)
 			);
 
@@ -139,7 +142,10 @@ class Customer_Controller extends Controller {
 			 */
 			do_action(
 				'simpay_before_customer_from_payment_form_request',
-				$customer_args, $form, $form_data, $form_values
+				$customer_args,
+				$form,
+				$form_data,
+				$form_values
 			);
 
 			$customer = Customer\create( $customer_args );
@@ -156,7 +162,10 @@ class Customer_Controller extends Controller {
 			 */
 			do_action(
 				'simpay_after_customer_from_payment_form_request',
-				$customer, $form, $form_data, $form_values
+				$customer,
+				$form,
+				$form_data,
+				$form_values
 			);
 
 			return $customer;

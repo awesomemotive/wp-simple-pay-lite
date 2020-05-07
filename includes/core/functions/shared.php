@@ -1,27 +1,30 @@
 <?php
+/**
+ * Functions: Shared
+ *
+ * @package SimplePay\Core
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since 3.0.0
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-/**
- * Shared functions
- *
- * Functions shared by both back end and front end components.
- */
 
 use SimplePay\Core\Abstracts\Form;
 
 /**
  * Get a Simple Pay setting. It will check for both a form setting or a global setting option.
  *
- * @param $setting
+ * @since 3.0.0
  *
+ * @param string $setting Setting key.
  * @return bool|mixed|null
  */
 function simpay_get_setting( $setting ) {
 
-	// If we are in the admin we don't want to use filters so we get the raw global setting value
+	// If we are in the admin we don't want to use filters so we get the raw global setting value.
 	if ( is_admin() ) {
 		return simpay_get_global_setting( $setting, true );
 	}
@@ -55,16 +58,14 @@ function simpay_get_setting( $setting ) {
 /**
  * Get a specific form setting.
  *
- * @param      $setting
- * @param null $form_id
- *
- * @return bool
+ * @param string   $setting Setting key.
+ * @param null|int $form_id Form ID.
+ * @return false|mixed Setting if property is set, otherwise false.
  */
 function simpay_get_form_setting( $setting, $form_id = null ) {
-
 	global $simpay_form;
 
-	// We want to use the form ID if it is passed, but only if there isn't a global form set
+	// We want to use the form ID if it is passed, but only if there isn't a global form set.
 	if ( ! $simpay_form && $form_id ) {
 		$simpay_form = simpay_get_form( $form_id );
 	}
@@ -83,7 +84,7 @@ function simpay_get_form_setting( $setting, $form_id = null ) {
  * Get a global setting.
  *
  * @param      $setting
- * @param bool $raw Whether to return the filtered setting data or just the raw saved value in the main settings.
+ * @param bool    $raw Whether to return the filtered setting data or just the raw saved value in the main settings.
  *
  * @return bool|mixed
  */
@@ -226,7 +227,7 @@ function simpay_admin_error( $message, $echo = true ) {
  */
 function simpay_get_form( $object ) {
 
-	if( is_numeric( $object ) ) {
+	if ( is_numeric( $object ) ) {
 		$object = get_post( $object );
 	}
 
@@ -400,7 +401,6 @@ function simpay_check_keys_exist() {
 	$secret_key      = simpay_get_secret_key();
 	$publishable_key = simpay_get_publishable_key();
 
-
 	if ( ! empty( $secret_key ) && ! empty( $publishable_key ) ) {
 		return true;
 	}
@@ -430,8 +430,8 @@ function simpay_get_currency_position() {
  *
  * @param        $post_id
  * @param        $setting
- * @param string $default
- * @param bool   $single
+ * @param string  $default
+ * @param bool    $single
  *
  * @return mixed|string
  */
@@ -451,7 +451,7 @@ function simpay_get_saved_meta( $post_id, $setting, $default = '', $single = tru
 
 	$value = get_post_meta( $post_id, $setting, $single );
 
-	if ( empty( $value ) && ! empty ( $default ) ) {
+	if ( empty( $value ) && ! empty( $default ) ) {
 		return $default;
 	}
 
@@ -500,23 +500,26 @@ function simpay_shared_script_variables() {
  */
 function simpay_get_zero_decimal_currencies() {
 
-	return apply_filters( 'simpay_zero_decimal_currencies', array(
-		'bif' => esc_html__( 'Burundian Franc', 'stripe' ),
-		'clp' => esc_html__( 'Chilean Peso', 'stripe' ),
-		'djf' => esc_html__( 'Djiboutian Franc', 'stripe' ),
-		'gnf' => esc_html__( 'Guinean Franc', 'stripe' ),
-		'jpy' => esc_html__( 'Japanese Yen', 'stripe' ),
-		'kmf' => esc_html__( 'Comorian Franc', 'stripe' ),
-		'krw' => esc_html__( 'South Korean Won', 'stripe' ),
-		'mga' => esc_html__( 'Malagasy Ariary', 'stripe' ),
-		'pyg' => esc_html__( 'Paraguayan Guaraní', 'stripe' ),
-		'rwf' => esc_html__( 'Rwandan Franc', 'stripe' ),
-		'vnd' => esc_html__( 'Vietnamese Dong', 'stripe' ),
-		'vuv' => esc_html__( 'Vanuatu Vatu', 'stripe' ),
-		'xaf' => esc_html__( 'Central African Cfa Franc', 'stripe' ),
-		'xof' => esc_html__( 'West African Cfa Franc', 'stripe' ),
-		'xpf' => esc_html__( 'Cfp Franc', 'stripe' ),
-	) );
+	return apply_filters(
+		'simpay_zero_decimal_currencies',
+		array(
+			'bif' => esc_html__( 'Burundian Franc', 'stripe' ),
+			'clp' => esc_html__( 'Chilean Peso', 'stripe' ),
+			'djf' => esc_html__( 'Djiboutian Franc', 'stripe' ),
+			'gnf' => esc_html__( 'Guinean Franc', 'stripe' ),
+			'jpy' => esc_html__( 'Japanese Yen', 'stripe' ),
+			'kmf' => esc_html__( 'Comorian Franc', 'stripe' ),
+			'krw' => esc_html__( 'South Korean Won', 'stripe' ),
+			'mga' => esc_html__( 'Malagasy Ariary', 'stripe' ),
+			'pyg' => esc_html__( 'Paraguayan Guaraní', 'stripe' ),
+			'rwf' => esc_html__( 'Rwandan Franc', 'stripe' ),
+			'vnd' => esc_html__( 'Vietnamese Dong', 'stripe' ),
+			'vuv' => esc_html__( 'Vanuatu Vatu', 'stripe' ),
+			'xaf' => esc_html__( 'Central African Cfa Franc', 'stripe' ),
+			'xof' => esc_html__( 'West African Cfa Franc', 'stripe' ),
+			'xpf' => esc_html__( 'Cfp Franc', 'stripe' ),
+		)
+	);
 }
 
 /**
@@ -813,22 +816,14 @@ function simpay_get_editor_default( $editor ) {
 }
 
 /**
- * Get a specific currency symbol
+ * Retrieves a list of currency codes and symbols.
  *
- * We need to make sure we keep these up to date if Stripe adds any more
- * https://support.stripe.com/questions/which-currencies-does-stripe-support
+ * @since 3.8.0
+ *
+ * @return array
  */
-function simpay_get_currency_symbol( $currency = '' ) {
-
-	if ( ! $currency ) {
-
-		// If no currency is passed then default it to USD
-		$currency = 'USD';
-	}
-
-	$currency = strtoupper( $currency );
-
-	$symbols = apply_filters( 'simpay_currency_symbols', array(
+function simpay_get_currencies() {
+	return array(
 		'AED' => '&#x62f;.&#x625;',
 		'AFN' => '&#x60b;',
 		'ALL' => 'L',
@@ -927,7 +922,7 @@ function simpay_get_currency_symbol( $currency = '' ) {
 		'MUR' => '&#x20a8;',
 		'MVR' => '.&#x783;',
 		'MWK' => 'MK',
-		'MXN' => '&#36;',
+		'MXN' => 'MXN',
 		'MYR' => '&#82;&#77;',
 		'MZN' => 'MT',
 		'NAD' => '&#36;',
@@ -990,7 +985,38 @@ function simpay_get_currency_symbol( $currency = '' ) {
 		'YER' => '&#xfdfc;',
 		'ZAR' => '&#82;',
 		'ZMW' => 'ZK',
-	) );
+	);
+
+	/**
+	 * Filters the list of available currencies.
+	 *
+	 * @since 3.8.0
+	 *
+	 * @param array $currencies List of currency symbols and names.
+	 */
+	$currencies = apply_filters( 'simpay_get_currencies', $currencies );
+
+	return $currencies;
+}
+
+/**
+ * Get a specific currency symbol
+ *
+ * We need to make sure we keep these up to date if Stripe adds any more
+ * https://support.stripe.com/questions/which-currencies-does-stripe-support
+ */
+function simpay_get_currency_symbol( $currency = '' ) {
+
+	if ( ! $currency ) {
+
+		// If no currency is passed then default it to USD
+		$currency = 'USD';
+	}
+
+	$currency   = strtoupper( $currency );
+	$currencies = simpay_get_currencies();
+
+	$symbols = apply_filters( 'simpay_currency_symbols', $currencies );
 
 	$currency_symbol = isset( $symbols[ $currency ] ) ? $symbols[ $currency ] : '';
 
@@ -1002,7 +1028,7 @@ function simpay_get_currency_symbol( $currency = '' ) {
  *
  * @since 3.4.0
  *
- * @param $new_key  string The new key to use for $fields[ $section ][ $new_key ]
+ * @param new_key  string The new key to use for                                      $fields[ $section ][ $new_key ]
  * @param $value    array The array that holds the information for this settings array
  * @param $needle   string The key to find in the current array of fields
  * @param $haystack array The current array to search
@@ -1057,4 +1083,13 @@ function simpay_get_form_address_data( $type, $fields ) {
 	}
 
 	return array_filter( $address );
+}
+
+/**
+ * Get the svg icon URL
+ *
+ * @return string
+ */
+function simpay_get_svg_icon_url() {
+	return 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ4OC4yMDEgNDg4LjIwMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDg4LjIwMSA0ODguMjAxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjY1LjIsMzUwLjI1MUgzMy42Yy01LjMsMC05LjYtNC4zLTkuNi05LjZ2LTE4Mi42aDQwOC41djI0YzAsNi42LDUuNCwxMiwxMiwxMnMxMi01LjQsMTItMTJ2LTg2LjUgICAgYzAtMTguNS0xNS4xLTMzLjYtMzMuNi0zMy42SDMzLjZjLTE4LjYsMC0zMy42LDE1LjEtMzMuNiwzMy42djI0NS4xYzAsMTguNSwxNS4xLDMzLjYsMzMuNiwzMy42aDIzMS43YzYuNiwwLDEyLTUuNCwxMi0xMiAgICBTMjcxLjksMzUwLjI1MSwyNjUuMiwzNTAuMjUxeiBNMzMuNiw4NS45NTFoMzg5LjNjNS4zLDAsOS42LDQuMyw5LjYsOS42djM4LjVIMjMuOXYtMzguNUMyMy45LDkwLjI1MSwyOC4zLDg1Ljk1MSwzMy42LDg1Ljk1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNMjQwLjIsMjQ3LjE1MWMwLTYuNi01LjQtMTItMTItMTJIODRjLTYuNiwwLTEyLDUuNC0xMiwxMnM1LjQsMTIsMTIsMTJoMTQ0LjJDMjM0LjksMjU5LjE1MSwyNDAuMiwyNTMuNzUxLDI0MC4yLDI0Ny4xNTEgICAgeiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik04NCwyNzguMTUxYy02LjYsMC0xMiw1LjQtMTIsMTJzNS40LDEyLDEyLDEyaDU3LjdjNi42LDAsMTItNS40LDEyLTEycy01LjQtMTItMTItMTJIODR6IiBmaWxsPSIjRkZGRkZGIi8+CgkJPHBhdGggZD0iTTgyLjYsMjE1LjY1MWgxNDQuMmM2LjYsMCwxMi01LjQsMTItMTJzLTUuNC0xMi0xMi0xMkg4Mi42Yy02LjYsMC0xMiw1LjQtMTIsMTJTNzUuOSwyMTUuNjUxLDgyLjYsMjE1LjY1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNNDc2LjMsMjk4LjI1MWgtMTcuNnYtMjhjMC0zNC43LTI4LjMtNjMtNjMtNjNzLTYzLDI4LjMtNjMsNjN2MjhoLTE3LjZjLTYuNiwwLTEyLDUuNC0xMiwxMnYxMDRjMCw2LjYsNS40LDEyLDEyLDEyICAgIGgxNjEuMWM2LjYsMCwxMi01LjQsMTItMTJ2LTEwNEM0ODguMywzMDMuNTUxLDQ4Mi45LDI5OC4yNTEsNDc2LjMsMjk4LjI1MXogTTM1Ni43LDI3MC4xNTFjMC0yMS41LDE3LjUtMzksMzktMzlzMzksMTcuNSwzOSwzOSAgICB2MjhoLTc4VjI3MC4xNTF6IE00NjQuMyw0MDIuMTUxSDMyNy4xdi04MGgxMzcuMXY4MEg0NjQuM3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K';
 }

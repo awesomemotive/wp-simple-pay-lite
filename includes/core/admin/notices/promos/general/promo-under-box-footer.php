@@ -11,13 +11,16 @@ if ( true === bfcm_is_promo_active() ) {
 		'utm_campaign' => 'bfcm2019',
 		'utm_content'  => 'upgrade-promo',
 	);
-	$upgrade_url = esc_url( add_query_arg( $utm_args, 'https://wpsimplepay.com/lite-vs-pro/' ) );
+	$upgrade_url = add_query_arg( $utm_args, 'https://wpsimplepay.com/lite-vs-pro/' );
 }
 ?>
 
 <p>
-	<a href="<?php echo $upgrade_url; ?>"
-	   class="simpay-upgrade-btn simpay-upgrade-btn-large" target="_blank">
+	<a
+		href="<?php echo esc_url( $upgrade_url ); ?>"
+		class="button simpay-upgrade-btn simpay-upgrade-btn-large"
+		target="_blank"
+	>
 		<?php _e( 'Click here to Upgrade', 'stripe' ); ?>
 	</a>
 </p>

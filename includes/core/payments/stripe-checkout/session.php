@@ -1,7 +1,10 @@
 <?php
 /**
- * Stripe Checkout Session functionality.
+ * Stripe Checkout: Session
  *
+ * @package SimplePay\Core\Payments\Stripe_Checkout\Sesssion
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
@@ -24,10 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return \Stripe\Checkout\Session
  */
 function create( $session_args = array() ) {
-	$defaults = array(
-		'payment_method_types' => Payments\Stripe_Checkout\get_available_payment_method_types(),
-	);
-
+	$defaults     = array();
 	$session_args = wp_parse_args( $session_args, $defaults );
 
 	/**

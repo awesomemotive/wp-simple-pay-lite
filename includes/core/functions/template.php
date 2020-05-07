@@ -2,6 +2,9 @@
 /**
  * Shared template functions/functionality.
  *
+ * @package SimplePay\Core\Template
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.5.0
  */
 
@@ -22,4 +25,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 function viewport_tag() {
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1" />';
 }
-add_action( 'wp_head', __NAMESPACE__ . '\viewport_tag' );
+add_action( 'wp_head', __NAMESPACE__ . '\\viewport_tag' );

@@ -1,6 +1,0 @@
-/*! WP Simple Pay Lite for Stripe - 2.3.2-beta-1
- * https://wpsimplepay.com/
- * Copyright (c) Sandhills Development, LLC 2019
- * Licensed GPLv2+ */
-
-.simpay-clearfix::after,.simpay-clearfix::before{content:" ";display:table}.simpay-clearfix::after{clear:both}.simpay-total-amount-value{font-style:normal}.simpay-form-control{margin-bottom:15px}.simpay-form-control::after,.simpay-form-control::before{content:" ";display:table}.simpay-form-control::after{clear:both}.simpay-form-control p{padding:0;margin:0}.simpay-form-control ul{margin:0 0 .5em 0}.simpay-form-control ul li{list-style-type:none}.simpay-form-control ul li label{display:block;margin:0 0 .5em 0}.simpay-form-control ul li label input[type=checkbox],.simpay-form-control ul li label input[type=radio]{margin-right:.5em}.simpay-form-control label{cursor:pointer;display:block}.simpay-form-control .simpay-field-wrap::after,.simpay-form-control .simpay-field-wrap::before{content:" ";display:table}.simpay-form-control .simpay-field-wrap::after{clear:both}.simpay-errors{color:#eb1c26;margin-bottom:15px}.simpay-test-mode-badge-container .simpay-test-mode-badge{background-color:#f7e633;color:#333;border-radius:5px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;padding:5px 9px}

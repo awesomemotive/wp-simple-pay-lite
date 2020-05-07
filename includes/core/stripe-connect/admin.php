@@ -1,10 +1,11 @@
 <?php
 /**
- * Admin functionality for managing Stripe Connect.
+ * Stripe Connect: Admin
  *
+ * @package SimplePay\Core\Stripe_Connect
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.4.0
- *
- * @todo Namespace this file.
  */
 
 use SimplePay\Core\Payments\Stripe_API;
@@ -162,7 +163,7 @@ function simpay_stripe_connect_account_information() {
 			) . '<br />' .
 			'<strong>' . esc_html__( 'You will not be able to reconnect to this account unless it is saved.', 'stripe' ) . '</strong>'
 		),
-		'actions'  => 'simpay-stripe-unactivated-account-actions',
+		'actions' => 'simpay-stripe-unactivated-account-actions',
 	);
 
 	if ( ! wp_verify_nonce( $_POST['nonce'], 'simpay-stripe-connect-information' ) ) {
@@ -199,20 +200,24 @@ function simpay_stripe_connect_account_information() {
 				$display_name = '<strong>' . $display_name . '</strong><br/ >';
 			}
 
-			return wp_send_json_success( array(
-				'message' => $display_name . $account->email . ' &mdash; ' . esc_html( 'Administrator (Owner)', 'simple-pay' ),
-				'actions' => 'simpay-stripe-activated-account-actions',
-			) );
-		} catch( \Stripe\Error\Authentication $e ) {
-			return wp_send_json_error( array(
-				'message' => esc_html__( 'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys.', 'stripe' ),
-				'actions' => 'simpay-stripe-auth-error-account-actions',
-			) );
-		} catch( \Exception $e ) {
+			return wp_send_json_success(
+				array(
+					'message' => $display_name . $account->email . ' &mdash; ' . esc_html( 'Administrator (Owner)', 'simple-pay' ),
+					'actions' => 'simpay-stripe-activated-account-actions',
+				)
+			);
+		} catch ( \Stripe\Exception\AuthenticationException $e ) {
+			return wp_send_json_error(
+				array(
+					'message' => esc_html__( 'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys.', 'stripe' ),
+					'actions' => 'simpay-stripe-auth-error-account-actions',
+				)
+			);
+		} catch ( \Exception $e ) {
 			return wp_send_json_error( $unknown_error );
 		}
 	} else {
-		$mode = simpay_is_test_mode() ? __( 'test', 'stripe' ) : __( 'live', 'stripe' );
+		$mode    = simpay_is_test_mode() ? __( 'test', 'stripe' ) : __( 'live', 'stripe' );
 		$connect = esc_html__( 'It is highly recommended to Connect with Stripe for easier setup and improved security.', 'stripe' );
 
 		try {
@@ -220,29 +225,33 @@ function simpay_stripe_connect_account_information() {
 			Stripe_API::set_api_key();
 			$balance = \Stripe\Balance::retrieve();
 
-			return wp_send_json_success( array(
-				'message' => (
+			return wp_send_json_success(
+				array(
+					'message' => (
 					sprintf(
 						/* translators: %1$s Stripe payment mode.*/
 						__( 'Your manually managed %1$s mode API keys are valid.', 'stripe' ),
 						'<strong>' . $mode . '</strong>'
 					) . '<br />' .
-					$connect
-				),
-			) );
-		} catch( \Exception $e ) {
-			return wp_send_json_error( array(
-				'message' => (
+					 $connect
+				 ),
+				)
+			);
+		} catch ( \Exception $e ) {
+			return wp_send_json_error(
+				array(
+					'message' => (
 					'<span style="color: red;">' .
 						sprintf(
 							/* translators: %1$s Stripe payment mode.*/
 							__( 'Your manually managed %1$s mode API keys are invalid.', 'stripe' ),
 							'<strong>' . $mode . '</strong>'
 						)
-					. '</span><br />' . 
-					$connect
-				),
-			) );
+					 . '</span><br />' .
+					 $connect
+				 ),
+				)
+			);
 		}
 	}
 }

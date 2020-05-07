@@ -1,4 +1,12 @@
 <?php
+/**
+ * Admin notices
+ *
+ * @package SimplePay\Core\Admin
+ * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since 3.5.0
+ */
 
 namespace SimplePay\Core\Admin;
 
@@ -6,6 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Notice_Manager class
+ *
+ * @since 3.5.0
+ */
 class Notice_Manager {
 
 	/**
@@ -19,7 +32,7 @@ class Notice_Manager {
 			'type'        => 'error',
 			'callback'    => 'SimplePay\Core\Admin\Notices\no_ssl',
 		),
-		'php_version_56'  => array(
+		'php_version_56' => array(
 			'dismissible' => false,
 			'type'        => 'error',
 			'callback'    => 'SimplePay\Core\Admin\Notices\php_version_56',
@@ -207,20 +220,20 @@ class Notice_Manager {
 		if ( $notice_args['dismissible'] ) {
 			$classes[] = 'is-dismissible';
 		}
-?>
+		?>
 
 <div
 	class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
 
-	<?php if ( $notice_args['dismissible'] ) : ?>
+		<?php if ( $notice_args['dismissible'] ) : ?>
 	data-id="<?php echo esc_attr( $notice_id ); ?>"
 	data-nonce="<?php echo esc_attr( wp_create_nonce( 'simpay-dismiss-notice-' . $notice_id ) ); ?>"
 	<?php endif; ?>
 >
-	<?php echo $notice; ?>
+		<?php echo $notice; ?>
 </div>
 
-<?php
+		<?php
 		echo ob_get_clean();
 	}
 }
