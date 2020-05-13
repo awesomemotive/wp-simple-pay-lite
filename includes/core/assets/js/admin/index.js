@@ -61,7 +61,7 @@ let spAdmin = {};
 				let inputEl = $( input );
 				let isCustomFieldToggle = false;
 
-				if ( 0 === inputEl.length ) {
+				if ( '.' !== input.substring( 0, 1 ) ) {
 					inputEl = `input[name="${ input }"]`;
 				} else {
 					inputEl = input;

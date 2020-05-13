@@ -43,7 +43,7 @@ abstract class Custom_Field {
 	 * @since 3.7.0
 	 * @var SimplePay\Core\Abstracts\Form
 	 */
-	private static $form;
+	protected static $form;
 
 	/**
 	 * Static function that we can call from any field and it will in turn call
