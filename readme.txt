@@ -260,6 +260,10 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
+= 2.4.1 - May 13, 2020 =
+
+* Fix: Avoid duplicate filter names with inconsistent argument signatures which can cause multiple Payment Forms on the same page to not output correctly.
+
 = 2.4.0 - May 7, 2020 =
 
 * New: Stripe Checkout - Allow collection of Shipping Address.
