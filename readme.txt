@@ -3,7 +3,7 @@ Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702,
 Tags: stripe subscription, credit card payments, payment request, credit card form, payment form
 Requires at least: 4.9
 Tested up to: 5.4.1
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -259,6 +259,10 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 2.4.1 - May 13, 2020 =
+
+* Fix: Avoid duplicate filter names with inconsistent argument signatures which can cause multiple Payment Forms on the same page to not output correctly.
 
 = 2.4.0 - May 7, 2020 =
 

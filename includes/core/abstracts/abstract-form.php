@@ -320,7 +320,7 @@ abstract class Form {
 		}
 
 		$this->custom_fields = simpay_get_filtered(
-			'custom_fields',
+			'get_custom_fields',
 			$_custom_fields,
 			$this->id
 		);
