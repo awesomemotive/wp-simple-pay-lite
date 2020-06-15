@@ -28,7 +28,7 @@ It’s no secret that we believe [Stripe](https://stripe.com/) is the best payme
 - Create unlimited payment forms integrated with [Stripe Checkout](https://stripe.com/payments/checkout)
 - Display your brand or product image on Stripe Checkout pages
 - Option to verify zip/postal code without an address
-- Support for 14 languages, 30+ countries and 135+ currencies
+- Support for 27 languages, 39 countries and 135+ currencies
 - Stripe Connect support for easier setup
 - PCI DSS compliant and Strong Customer Authentication (SCA) support for improved security
 - Translation ready
