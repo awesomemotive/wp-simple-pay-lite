@@ -15,11 +15,9 @@ It should be simple to accept payments and run your business online. There are m
 
 In just a few steps, you can be up and running in no time. For free! There is no charge for WP Simple Pay. There will just be the Stripe per-transaction fees which vary by country.  See [Stripes Pricing page](https://stripe.com/pricing) for more information.
 
-Simply set up a payment form and start accepting credit cards on your WordPress site.
+WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required. Simply set up a payment form and start accepting credit cards on your WordPress site.
 
-WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required.
-
-It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe currently supports 14 languages, over 35 countries and 135+ currencies. [Check support for your country](https://stripe.com/global).
+It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe many languages, countries and currencies. [Check support for your country](https://stripe.com/global).
 
 [Stripe Checkout](https://stripe.com/payments/checkout) is a drop-in payments flow designed to drive conversion. It’s built for desktop, tablet, and mobile devices. It’s continuously tested and updated to offer a frictionless payment experience. It’s also PCI DSS compliant and SCA-ready without any changes to your website.
 
