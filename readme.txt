@@ -46,7 +46,7 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 - On-site checkout (no redirect) with custom forms
 - Embedded & overlay form display options
 - Apple Pay & Google Pay support with custom forms
-- Support for ACH and iDEAL payments
+- Support for ACH debit and iDEAL payments
 - reCAPTCHA v3 invisible verification support
 - Stripe Subscription support
 - Subscription installment plans
