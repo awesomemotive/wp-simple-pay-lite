@@ -1,22 +1,9 @@
 {
-	"name": "wpsimplepay/wp-simple-pay-pro-3",
+	"name": "wpsimplepay/wp-simple-pay-lite",
 	"description": "Add high conversion Stripe Checkout forms to your WordPress site and start accepting payments in minutes.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
-	"require-dev": {
-		"dealerdirect/phpcodesniffer-composer-installer": "0.6.2",
-		"squizlabs/php_codesniffer": "3.5.5",
-		"phpcompatibility/php-compatibility": "9.3.5",
-		"wp-coding-standards/wpcs": "2.3.0"
-	},
 	"require": {
 		"stripe/stripe-php": "7.37.1"
-	},
-	"scripts": {
-		"format": "phpcbf --standard=phpcs.xml.dist --report-summary --report-source",
-		"install-codestandards": [
-			"Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
-		],
-		"lint": "phpcs --standard=phpcs.xml.dist"
 	}
 }
