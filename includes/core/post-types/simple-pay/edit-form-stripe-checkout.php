@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param int $post_id Current Payment Form ID.
  */
 function add_stripe_checkout( $post_id ) {
-?>
+	?>
 <table>
 	<tbody class="simpay-panel-section">
 
@@ -96,7 +96,7 @@ function add_stripe_checkout( $post_id ) {
 								'href'   => true,
 								'target' => true,
 								'rel'    => true,
-							)
+							),
 						)
 					);
 					?>
@@ -152,13 +152,15 @@ function add_stripe_checkout( $post_id ) {
 				<?php
 				$enable_shipping_address = simpay_get_saved_meta( $post_id, '_enable_shipping_address', 'no' );
 
-				simpay_print_field( array(
-					'type'        => 'checkbox',
-					'name'        => '_enable_shipping_address',
-					'id'          => '_enable_shipping_address',
-					'value'       => $enable_shipping_address,
-					'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s shipping address.', 'stripe' ),
-				) );
+				simpay_print_field(
+					array(
+						'type'        => 'checkbox',
+						'name'        => '_enable_shipping_address',
+						'id'          => '_enable_shipping_address',
+						'value'       => $enable_shipping_address,
+						'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s shipping address.', 'stripe' ),
+					)
+				);
 				?>
 			</td>
 		</tr>
@@ -173,13 +175,15 @@ function add_stripe_checkout( $post_id ) {
 				<?php
 				$enable_billing_address = simpay_get_saved_meta( $post_id, '_enable_billing_address', 'no' );
 
-				simpay_print_field( array(
-					'type'        => 'checkbox',
-					'name'        => '_enable_billing_address',
-					'id'          => '_enable_billing_address',
-					'value'       => $enable_billing_address,
-					'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s billing address. If not, Checkout will only collect the billing address when necessary.', 'stripe' ),
-				) );
+				simpay_print_field(
+					array(
+						'type'        => 'checkbox',
+						'name'        => '_enable_billing_address',
+						'id'          => '_enable_billing_address',
+						'value'       => $enable_billing_address,
+						'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s billing address. If not, Checkout will only collect the billing address when necessary.', 'stripe' ),
+					)
+				);
 				?>
 			</td>
 		</tr>
@@ -197,7 +201,7 @@ function add_stripe_checkout( $post_id ) {
 	</tbody>
 </table>
 
-<?php
+	<?php
 	/**
 	 * Allows output at the top of "Stripe Checkout" Payment Form
 	 * settings tab content.
@@ -218,7 +222,7 @@ add_action( 'simpay_form_settings_meta_stripe_checkout_panel', __NAMESPACE__ . '
  */
 function add_company_info( $post_id ) {
 	$form_display_type = simpay_get_saved_meta( $post_id, '_form_display_type', 'embedded' );
-?>
+	?>
 
 <tr class="simpay-panel-field">
 	<th>
@@ -275,7 +279,7 @@ function add_company_info( $post_id ) {
 	</td>
 </tr>
 
-<?php
+	<?php
 }
 add_action( 'simpay_admin_before_stripe_checkout_rows', __NAMESPACE__ . '\\add_company_info', 20 );
 
@@ -291,7 +295,7 @@ function add_custom_form_fields_link() {
 		'<a href="#" class="simpay-tab-link" data-show-tab="simpay-form_display">',
 		'</a>'
 	);
-?>
+	?>
 
 <tr class="simpay-panel-field">
 	<td>
@@ -303,6 +307,6 @@ function add_custom_form_fields_link() {
 	</td>
 </tr>
 
-<?php
+	<?php
 }
 add_action( 'simpay_admin_before_stripe_checkout_rows', __NAMESPACE__ . '\\add_custom_form_fields_link' );

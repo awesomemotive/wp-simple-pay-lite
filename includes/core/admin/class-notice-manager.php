@@ -3,7 +3,7 @@
  * Admin notices
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.5.0
  */
@@ -85,7 +85,7 @@ class Notice_Manager {
 	public static function add_notice( $notice_id, $notice_args ) {
 		self::$notices[ $notice_id ] = $notice_args;
 
-		return array_unique( self::$notices );
+		return array_unique( self::$notices, SORT_REGULAR );
 	}
 
 	/**

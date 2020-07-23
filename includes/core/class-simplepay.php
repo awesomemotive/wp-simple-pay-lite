@@ -3,7 +3,7 @@
  * SimplePay
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -11,7 +11,6 @@
 namespace SimplePay\Core;
 
 use SimplePay\Core\Forms\Preview;
-use SimplePay\Core\Payments\Stripe_API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -113,10 +112,15 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/meta.php' );
 
 		// Load core shared back-end & front-end functions.
+		require_once( SIMPLE_PAY_INC . 'core/utils/exceptions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/utils/collections.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/template.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/countries.php' );
+
+		// i18n.
+		require_once( SIMPLE_PAY_INC . 'core/i18n/countries.php' );
+		require_once( SIMPLE_PAY_INC . 'core/i18n/stripe.php' );
 
 		// Payments/Purchase Flow.
 		require_once( SIMPLE_PAY_INC . 'core/payments/customer.php' );

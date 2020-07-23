@@ -3,7 +3,7 @@
  * Assets
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -69,7 +69,7 @@ class Assets {
 				'footer' => true,
 			),
 			'simpay-accounting'   => array(
-				'src'    =>  SIMPLE_PAY_INC_URL. 'core/assets/js/vendor/accounting.min.js',
+				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/accounting.min.js',
 				'deps'   => array(),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
@@ -84,6 +84,7 @@ class Assets {
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public.min.js',
 				'deps'   => array(
 					'jquery',
+					'underscore',
 					'wp-api',
 					'simpay-polyfill',
 					'simpay-accounting',
@@ -123,7 +124,7 @@ class Assets {
 		 * @param array  $styles List of styles to register.
 		 * @param string $min Suffix for minification.
 		 */
-		$this->styles  = apply_filters( 'simpay_before_register_public_styles', $this->styles, '.min' );
+		$this->styles = apply_filters( 'simpay_before_register_public_styles', $this->styles, '.min' );
 
 		/**
 		 * Filters the scripts before they are registered.

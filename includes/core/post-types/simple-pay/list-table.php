@@ -70,6 +70,26 @@ function row_actions( $actions, $post ) {
 add_filter( 'post_row_actions', __NAMESPACE__ . '\\row_actions', 10, 2 );
 
 /**
+ * Adds a "Payment Mode" column to the `simple-pay` list table.
+ *
+ * @since 3.9.0
+ *
+ * @param array $columns List table columns.
+ * @return array Modified list of columns.
+ */
+function add_livemode_column( $columns ) {
+	$columns = simpay_add_to_array_after(
+		'livemode',
+		'<span class="screen-reader-text">' . esc_html__( 'Payment Mode', 'stripe' ) . '</span>',
+		'title',
+		$columns
+	);
+
+	return $columns;
+}
+add_filter( 'manage_edit-simple-pay_columns', __NAMESPACE__ . '\\add_livemode_column' );
+
+/**
  * Adds a "Shortcode" column to the `simple-pay` list table.
  *
  * @since 3.8.0
@@ -81,7 +101,7 @@ function add_shortcode_column( $columns ) {
 	$columns = simpay_add_to_array_after(
 		'shortcode',
 		esc_html__( 'Shortcode', 'stripe' ),
-		'title',
+		'livemode',
 		$columns
 	);
 
@@ -101,12 +121,43 @@ function output_shortcode_column( $column, $post_id ) {
 	if ( 'shortcode' !== $column ) {
 		return;
 	}
-?>
+	?>
 
 <div id="simpay-get-shortcode">
 	<?php simpay_print_shortcode_tip( $post_id ); ?>
 </div>
 
-<?php
+	<?php
 }
 add_action( 'manage_simple-pay_posts_custom_column', __NAMESPACE__ . '\\output_shortcode_column', 10, 2 );
+
+/**
+ * Outputs the "Payment Mode" column content in the `simple-pay` list table.
+ *
+ * @since 3.9.0
+ *
+ * @param string $column  Column key.
+ * @param int    $post_id Current Payment Form \WP_Post ID.
+ */
+function output_livemode_column( $column, $post_id ) {
+	if ( 'livemode' !== $column ) {
+		return;
+	}
+
+	$livemode          = simpay_get_saved_meta( $post_id, '_livemode', '' );
+	$livemode_filtered = simpay_get_filtered( 'livemode', $livemode, $post_id );
+	?>
+
+	<?php if ( '1' === $livemode_filtered ) : ?>
+		<div class="simpay-badge simpay-badge--green">
+			<?php esc_html_e( 'Live Mode', 'stripe' ); ?>
+		</div>
+	<?php elseif ( '0' === $livemode_filtered ) : ?>
+		<div class="simpay-badge simpay-badge--yellow">
+			<?php esc_html_e( 'Test Mode', 'stripe' ); ?>
+		</div>
+	<?php endif; ?>
+
+	<?php
+}
+add_action( 'manage_simple-pay_posts_custom_column', __NAMESPACE__ . '\\output_livemode_column', 10, 2 );

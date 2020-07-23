@@ -6,7 +6,7 @@
 *.sublime-workspace
 
 # Grunt
-/node_modules
+node_modules
 
 # Bower
 /bower_components
@@ -29,3 +29,8 @@ phpunit.xml
 # Windows crap
 ehthumbs.db
 Thumbs.db
+
+/vendor/*/
+!/vendor/autoload.php
+!/vendor/composer/
+!/vendor/stripe/

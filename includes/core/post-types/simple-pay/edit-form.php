@@ -36,7 +36,7 @@ function add_preview_action( $post ) {
 		/* translators: Accessibility text. */
 		__( '(opens in a new tab)', 'stripe' )
 	);
-?>
+	?>
 	<div id="preview-action">
 		<a
 			class="preview button"
@@ -48,7 +48,7 @@ function add_preview_action( $post ) {
 		</a>
 		<input type="hidden" name="wp-preview" id="wp-preview" value="" />
 	</div>
-<?php
+	<?php
 }
 add_action( 'post_submitbox_minor_actions', __NAMESPACE__ . '\\add_preview_action' );
 
@@ -64,7 +64,7 @@ function add_shortcode_action( $post ) {
 	if ( 'simple-pay' !== $post->post_type ) {
 		return;
 	}
-?>
+	?>
 
 <div class="misc-pub-section">
 	<label for="simpay-shortcode">
@@ -74,7 +74,7 @@ function add_shortcode_action( $post ) {
 	<?php simpay_print_shortcode_tip( $post->ID ); ?>
 </div>
 
-<?php
+	<?php
 }
 add_action( 'post_submitbox_misc_actions', __NAMESPACE__ . '\\add_shortcode_action' );
 
@@ -135,7 +135,7 @@ function get_form_settings( $post ) {
 	if ( class_exists( '\SimplePay\Pro\Lite_Helper', false ) ) {
 		$panel_classes[] = 'simpay-panel--has-help';
 	}
-?>
+	?>
 
 <div id="simpay-form-settings">
 	<div class="simpay-panels-wrap">
@@ -328,7 +328,7 @@ function get_form_settings( $post ) {
 	</div>
 </div>
 
-<?php
+	<?php
 }
 
 /**
@@ -419,7 +419,7 @@ function settings_tabs( $post ) {
 				'span' => true,
 			)
 		);
-?>
+		?>
 
 <li
 	class="simpay-<?php echo esc_attr( $key ); ?>-settings simpay-<?php echo esc_attr( $key ); ?>-tab <?php echo esc_attr( implode( ' ', $class ) ); ?>"
@@ -427,9 +427,9 @@ function settings_tabs( $post ) {
 	data-if="_form_display_type"
 	data-is="stripe_checkout"
 >
-	<?php echo $html; // WPCS: XSS okay. ?>
+		<?php echo $html; // WPCS: XSS okay. ?>
 </li>
 
-<?php
+		<?php
 	}
 }

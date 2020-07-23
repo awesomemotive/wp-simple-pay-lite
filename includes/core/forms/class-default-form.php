@@ -3,7 +3,7 @@
  * Form: Default
  *
  * @package SimplePay\Core\Forms
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -13,6 +13,7 @@ namespace SimplePay\Core\Forms;
 use SimplePay\Core\Abstracts\Form;
 use SimplePay\Core\Forms\Fields;
 use SimplePay\Core\Assets;
+use SimplePay\Core\i18n;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -70,6 +71,16 @@ class Default_Form extends Form {
 
 		$temp = apply_filters( 'simpay_form_' . absint( $this->id ) . '_script_variables', $temp, $this->id );
 
+		/**
+		 * Filters Payment Form's script variables.
+		 *
+		 * @since 3.9.0
+		 *
+		 * @param \SimplePay\Core\Abstracts\Form[] $forms List of Payment Forms and associated script variables.
+		 * @param \SimplePay\Core\Abstracts\Form   $this  Current Payment Form.
+		 */
+		$temp = apply_filters( 'simpay_form_script_variables', $temp, $this );
+
 		// Add this temp script variables to our assets so if multiple forms are on the page they will all be loaded at once and be specific to each form
 		Assets::get_instance()->script_variables( $temp );
 	}
@@ -123,7 +134,9 @@ class Default_Form extends Form {
 				// Form validation error message container
 				echo '<div class="simpay-errors" id="' . esc_attr( $id ) . '-error"></div>';
 
-				echo simpay_get_test_mode_badge();
+		if ( true === $this->test_mode ) {
+			echo simpay_get_test_mode_badge();
+		}
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', $this );
 
@@ -283,7 +296,14 @@ class Default_Form extends Form {
 			'paymentButtonLoadingText' => esc_html( $payment_loading_text ),
 		);
 
-		$form_variables = array_merge( $integers, $strings );
+		// @since 3.9.0 start with a less complex configuration object.
+		$config = array(
+			'i18n' => array(
+				'stripeErrorMessages' => i18n\get_localized_error_messages(),
+			),
+		);
+
+		$form_variables = array_merge( $integers, $strings, $config );
 
 		return $form_variables;
 	}

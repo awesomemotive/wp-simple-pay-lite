@@ -5,7 +5,7 @@
  * Additional promotional notices.
  *
  * @package SimplePay\Core\Admin\Notices\Promos
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.5
  */
@@ -25,13 +25,13 @@ switch ( $current_tab ) {
 
 $coupon_code = 'BFCM2019';
 
-$utm_args    = array(
+$utm_args = array(
 	'utm_source'   => 'global-settings',
 	'utm_medium'   => 'wp-admin',
 	'utm_campaign' => 'bfcm2019',
 	'utm_content'  => 'sidebar-promo-' . $current_tab,
 );
-$url         = add_query_arg( $utm_args, 'https://wpsimplepay.com/lite-vs-pro/' );
+$url      = add_query_arg( $utm_args, 'https://wpsimplepay.com/lite-vs-pro/' );
 ?>
 
 <div class="simpay-settings-sidebar-content">

@@ -3,7 +3,7 @@
  * Payment form
  *
  * @package SimplePay\Core\Abstracts
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -174,6 +174,77 @@ abstract class Form {
 	}
 
 	/**
+	 * Determines if the Payment Form is using a live API.
+	 *
+	 * @since 3.9.0
+	 *
+	 * @return bool True if accessing Stripe's live API.
+	 */
+	public function is_livemode() {
+		// Legacy filter.
+		$test_mode = simpay_get_filtered(
+			'test_mode',
+			simpay_get_global_setting( 'test_mode' ),
+			$this->id
+		);
+
+		// Convert to bool.
+		$test_mode = empty( $test_mode ) || 'enabled' === $test_mode;
+
+		// Per-form setting.
+		$livemode = simpay_get_saved_meta( $this->id, '_livemode', '' );
+
+		// Use per-form or global setting with backwards-compatible property.
+		return '' !== $livemode
+			? true === (bool) $livemode
+			: false === $test_mode;
+	}
+
+	/**
+	 * Returns per-request arguments for use when making a Stripe API
+	 * request on behalf of the current Payment Form's context.
+	 *
+	 * @since 3.9.0
+	 *
+	 * @param array {
+	 *   Arguments to modify the per-request arguments.
+	 *
+	 *   @type string $api_key  Set a specific secret key.
+	 *   @type bool   $livemode Force livemode.
+	 * }
+	 * @return array {
+	 *   Additional request arguments to send to the Stripe API when making a request.
+	 *
+	 *   @type string $api_key API Secret Key to use.
+	 * }
+	 */
+	public function get_api_request_args( $args = array() ) {
+		$request_args = array();
+		$defaults     = array(
+			'api_key'  => null,
+			'livemode' => $this->is_livemode(),
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		// Use a specific API key.
+		if ( null !== $args['api_key'] ) {
+			$request_args['api_key'] = $args['api_key'];
+		} else {
+			// Determine which key to use based on `livemode`.
+			if ( true === $args['livemode'] ) {
+				$request_args['api_key'] = simpay_get_filtered( 'secret_key', $this->live_secret_key, $this->id );
+			} elseif ( false === $args['livemode'] ) {
+				$request_args['api_key'] = simpay_get_filtered( 'secret_key', $this->test_secret_key, $this->id );
+			} else {
+				$request_args['api_key'] = $this->secret_key;
+			}
+		}
+
+		return $request_args;
+	}
+
+	/**
 	 * Determine the display type of the form.
 	 *
 	 * @since 3.6.0
@@ -188,32 +259,42 @@ abstract class Form {
 	 * Set the global settings options to the form attributes.
 	 */
 	public function set_global_settings() {
-
-		// Set all the global settings that have been saved here.
-		// Doing this here allows us to make every setting filterable on a per-form basis
-
-		// We have to use simpay_get_filtered() for these since this is the first time setting these values. That's why we can't use something like simpay_get_setting()
-		// Basically, think of this as the construction of global $simpay_form, so anything that uses $simpay_form will not work because the global will still be null at this point.
-
-		/** STRIPE KEYS */
-
-		/* Test mode options */
-		$this->test_mode = simpay_get_filtered( 'test_mode', simpay_get_global_setting( 'test_mode' ), $this->id );
-
+		// Setup API.
 		$settings = get_option( 'simpay_settings_keys' );
 
-		/* Test Keys */
-		$this->test_secret_key      = isset( $settings['test_keys']['secret_key'] ) ? $settings['test_keys']['secret_key'] : '';
-		$this->test_publishable_key = isset( $settings['test_keys']['publishable_key'] ) ? $settings['test_keys']['publishable_key'] : '';
+		// Global keys.
+		$this->test_secret_key = isset( $settings['test_keys']['secret_key'] )
+			? $settings['test_keys']['secret_key']
+			: '';
 
-		/* Live Keys */
-		$this->live_secret_key      = isset( $settings['live_keys']['secret_key'] ) ? $settings['live_keys']['secret_key'] : '';
-		$this->live_publishable_key = isset( $settings['live_keys']['publishable_key'] ) ? $settings['live_keys']['publishable_key'] : '';
+		$this->test_publishable_key = isset( $settings['test_keys']['publishable_key'] )
+			? $settings['test_keys']['publishable_key']
+			: '';
 
-		/* Final ambiguous keys */
-		$this->secret_key      = simpay_get_filtered( 'secret_key', simpay_is_test_mode() ? $this->test_secret_key : $this->live_secret_key, $this->id );
-		$this->publishable_key = simpay_get_filtered( 'publishable_key', simpay_is_test_mode() ? $this->test_publishable_key : $this->live_publishable_key, $this->id );
-		$this->account_id      = simpay_get_filtered( 'account_id', $this->account_id, $this->id );
+		$this->live_secret_key = isset( $settings['live_keys']['secret_key'] )
+			? $settings['live_keys']['secret_key']
+			: '';
+
+		$this->live_publishable_key = isset( $settings['live_keys']['publishable_key'] )
+			? $settings['live_keys']['publishable_key']
+			: '';
+
+		// Choose keys based on current mode.
+		$secret_key = true === $this->is_livemode()
+			? $this->live_secret_key
+			: $this->test_secret_key;
+
+		$this->secret_key = simpay_get_filtered( 'secret_key', $secret_key, $this->id );
+
+		$publishable_key = true === $this->is_livemode()
+			? $this->live_publishable_key
+			: $this->test_publishable_key;
+
+		$this->publishable_key = simpay_get_filtered( 'publishable_key', $publishable_key, $this->id );
+
+		// Backwards compat.
+		$this->test_mode  = false === $this->is_livemode();
+		$this->account_id = simpay_get_filtered( 'account_id', $this->account_id, $this->id );
 
 		/** GENERAL */
 
@@ -314,7 +395,7 @@ abstract class Form {
 
 		foreach ( $custom_fields as $type => $fields ) {
 			foreach ( $fields as $k => $field ) {
-				$field['type'] = $type;
+				$field['type']    = $type;
 				$_custom_fields[] = $field;
 			}
 		}
@@ -345,12 +426,12 @@ abstract class Form {
 
 		$this->image_url = simpay_get_filtered( 'image_url', simpay_get_saved_meta( $this->id, '_image_url' ), $this->id );
 
-		$submit_type = simpay_get_filtered( 'checkout_submit_type', simpay_get_saved_meta( $this->id, '_checkout_submit_type' ), $this->id );
-		$this->checkout_submit_type  = empty( $submit_type )
+		$submit_type                = simpay_get_filtered( 'checkout_submit_type', simpay_get_saved_meta( $this->id, '_checkout_submit_type' ), $this->id );
+		$this->checkout_submit_type = empty( $submit_type )
 			? 'pay'
 			: $submit_type;
 
-		$this->enable_billing_address = simpay_get_filtered( 'enable_billing_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_billing_address' ) ), $this->id );
+		$this->enable_billing_address  = simpay_get_filtered( 'enable_billing_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_billing_address' ) ), $this->id );
 		$this->enable_shipping_address = simpay_get_filtered( 'enable_shipping_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_shipping_address' ) ), $this->id );
 	}
 

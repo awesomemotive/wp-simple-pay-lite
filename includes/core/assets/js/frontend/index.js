@@ -3,6 +3,7 @@
 /**
  * Internal dependencies.
  */
+import hooks from '@wpsimplepay/hooks';
 import { getPaymentForms } from '@wpsimplepay/core/frontend/payment-forms';
 
 let simpayApp;
@@ -245,3 +246,10 @@ let simpayApp;
 }( jQuery ) );
 
 window.simpayApp = simpayApp;
+
+/**
+ * Globally accessible object of WP Simple Pay-related functionality.
+ */
+window.wpsp = {
+	hooks,
+};

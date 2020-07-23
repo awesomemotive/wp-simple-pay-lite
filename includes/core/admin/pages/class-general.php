@@ -3,7 +3,7 @@
  * Admin pages: General
  *
  * @package SimplePay\Core\Admin\Pages
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -96,7 +96,7 @@ class General extends Admin_Page {
 					$failure_default = isset( $options['confirmation_pages']['failed'] ) ? $options['confirmation_pages']['failed'] : '';
 
 					$fields[ $section ] = array(
- 						'success_page'   => array(
+						'success_page'   => array(
 							'title'       => esc_html__( 'Payment Success Page', 'stripe' ),
 							'type'        => 'select',
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][success_page]',
@@ -349,7 +349,6 @@ class General extends Admin_Page {
 			'SOS' => esc_html__( 'Somali Shilling', 'stripe' ),
 			'SRD' => esc_html__( 'Surinamese Dollar', 'stripe' ), // NON AMEX
 			'STD' => esc_html__( 'São Tomé and Príncipe Dobra', 'stripe' ),
-			'SVC' => esc_html__( 'Salvadoran Colón', 'stripe' ), // NON AMEX
 			'SZL' => esc_html__( 'Swazi Lilangeni', 'stripe' ),
 			'THB' => esc_html__( 'Thai Baht', 'stripe' ),
 			'TJS' => esc_html__( 'Tajikistani Somoni', 'stripe' ),

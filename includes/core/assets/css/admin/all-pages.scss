@@ -4,16 +4,18 @@
 	align-items: center;
 
 	.simpay-test-mode-badge {
-		text-align: center;
-		color: #23282d;
+		color: #a04903;
+		font-size: 10px;
 		font-weight: 700;
-		font-size: 11px;
-		line-height: 1;
+		text-align: center;
 		text-transform: uppercase;
-		background-color: #f7e633;
+		line-height: 10px;
+		margin-left: 7px;
+		padding: 4px 6px;
 		border-radius: 3px;
-		margin-left: 5px;
-		padding: 4px 5px;
+		background: #ffde92;
+		display: inline-flex;
+		align-items: center;
 		display: inline-block;
 	}
 }
