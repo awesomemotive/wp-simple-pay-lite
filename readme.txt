@@ -260,6 +260,18 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
+= 2.5.0 - July 23, 2020 =
+
+* New: Add per-form "Test Mode" toggles.
+* New: Add localization support for Stripe errors.
+* New: Update available Stripe Elements and Stripe Checkout locales.
+* Fix: Update supported country and currency lists.
+* Fix: Avoid PHP error on some versions when accessing class property.
+* Fix: Avoid PHP notice in `array_unique`.
+* Dev: Update file copyrights.
+* Dev: Update WordPress coding standards.
+* Dev: Update Stripe PHP library to `7.37.1`.
+
 = 2.4.1 - May 13, 2020 =
 
 * Fix: Avoid duplicate filter names with inconsistent argument signatures which can cause multiple Payment Forms on the same page to not output correctly.
