@@ -145,6 +145,14 @@ Anyone with a browser and device combination that allows one of these options wi
 
 [Try our Apple Pay & Google Pay demos](https://demo.wpsimplepay.com/apple-pay-google-pay/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
 
+= ACH debit and iDEAL payments =
+
+Give your customers the option to pay directly from their bank accounts with ACH debit payments. ACH debits offer you lower transaction fees than cards.
+
+Other payment methods such as iDEAL are also supported with more coming soon!
+
+[ACH debit demo](https://demo.wpsimplepay.com/ach-debit-payment-method/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description) | [iDEAL payment demo](https://demo.wpsimplepay.com/ideal-payment-method/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
+
 = Customized payment confirmation details =
 
 Easily customize the credit card payment confirmation details your customers see within the post editor using placeholder tags.
