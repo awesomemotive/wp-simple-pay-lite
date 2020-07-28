@@ -2,8 +2,8 @@
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe subscription, credit card payments, payment request, credit card form, payment form
 Requires at least: 4.9
-Tested up to: 5.5
-Stable tag: 2.4.1
+Tested up to: 5.4.1
+Stable tag: 2.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -265,6 +265,18 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 2.5.0 - July 23, 2020 =
+
+* New: Add per-form "Test Mode" toggles.
+* New: Add localization support for Stripe errors.
+* New: Update available Stripe Elements and Stripe Checkout locales.
+* Fix: Update supported country and currency lists.
+* Fix: Avoid PHP error on some versions when accessing class property.
+* Fix: Avoid PHP notice in `array_unique`.
+* Dev: Update file copyrights.
+* Dev: Update WordPress coding standards.
+* Dev: Update Stripe PHP library to `7.37.1`.
 
 = 2.4.1 - May 13, 2020 =
 

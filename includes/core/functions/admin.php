@@ -3,7 +3,7 @@
  * Functions: Admin
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -20,23 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array
  */
 function simpay_get_stripe_checkout_locales() {
-	return array(
-		'auto' => esc_html__( 'Auto-detect', 'stripe' ),
-		'da'   => esc_html__( 'Danish (da)', 'stripe' ),
-		'nl'   => esc_html__( 'Dutch (nl)', 'stripe' ),
-		'en'   => esc_html__( 'English (en)', 'stripe' ),
-		'fi'   => esc_html__( 'Finnish (fi)', 'stripe' ),
-		'fr'   => esc_html__( 'French (fr)', 'stripe' ),
-		'de'   => esc_html__( 'German (de)', 'stripe' ),
-		'it'   => esc_html__( 'Italian (it)', 'stripe' ),
-		'ja'   => esc_html__( 'Japanese (ja)', 'stripe' ),
-		'nb'   => esc_html__( 'Norwegian (nb)', 'stripe' ),
-		'pl'   => esc_html__( 'Polish (pl)', 'stripe' ),
-		'pt'   => esc_html__( 'Portuguese (pt)', 'stripe' ),
-		'zh'   => esc_html__( 'Simplified Chinese (zh)', 'stripe' ),
-		'es'   => esc_html__( 'Spanish (es)', 'stripe' ),
-		'sv'   => esc_html__( 'Swedish (sv)', 'stripe' ),
-	);
+	return SimplePay\Core\i18n\get_stripe_checkout_locales();
 }
 
 /**

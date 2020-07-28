@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function add_payment_options( $post_id ) {
 	$currency_position = simpay_get_currency_position();
-?>
+	?>
 
 <table class="simpay-show-if" data-if="_subscription_type" data-is="disabled">
 	<tbody class="simpay-panel-section">
@@ -86,15 +86,15 @@ function add_payment_options( $post_id ) {
 	</tbody>
 </table>
 
-<?php
-/**
- * Allows further output after the "Amount" field in
- * "Payment Options" Payment Form settings tab content.
- *
- * @since 3.0
- */
-do_action( 'simpay_admin_after_amount_options', $post_id );
-?>
+	<?php
+	/**
+	 * Allows further output after the "Amount" field in
+	 * "Payment Options" Payment Form settings tab content.
+	 *
+	 * @since 3.0
+	 */
+	do_action( 'simpay_admin_after_amount_options', $post_id );
+	?>
 
 <table>
 	<tbody class="simpay-panel-section">
@@ -171,7 +171,7 @@ do_action( 'simpay_admin_after_amount_options', $post_id );
 	</tbody>
 </table>
 
-<?php
+	<?php
 	/**
 	 * Allows further output after the "Payment Options" Payment Form
 	 * settings tab content.
@@ -183,3 +183,66 @@ do_action( 'simpay_admin_after_amount_options', $post_id );
 	do_action( 'simpay_admin_after_payment_options' );
 }
 add_action( 'simpay_form_settings_meta_payment_options_panel', __NAMESPACE__ . '\\add_payment_options' );
+
+/**
+ * Adds "Payment Mode" setting to toggle between live and test mode
+ * on a per-form basis.
+ *
+ * @since 3.9.0
+ *
+ * @param int $post_id Current Payment Form ID.
+ */
+function add_payment_mode( $post_id ) {
+	?>
+
+<table>
+	<tr class="simpay-panel-field">
+		<th>
+			<label for="_livemode"><?php esc_html_e( 'Payment Mode', 'stripe' ); ?></label>
+		</th>
+		<td>
+			<?php
+			$livemode = simpay_get_saved_meta( $post_id, '_livemode', '' );
+
+			simpay_print_field(
+				array(
+					'type'    => 'radio',
+					'name'    => '_livemode',
+					'id'      => '_livemode',
+					'value'   => $livemode,
+					'options' => array(
+						''  => esc_html__( 'Global Setting', 'stripe' ),
+						'0' => esc_html__( 'Test Mode', 'stripe' ),
+						'1' => esc_html__( 'Live Mode', 'stripe' ),
+					),
+					'inline'  => 'inline',
+				)
+			);
+			?>
+
+			<p class="description">
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: %1$s Opening anchor tag to Stripe Dashboard, do not translate. %2$s Closing anchor tag, do not translate. */
+						__( 'While in Test Mode no live payments are processed. Make sure Test mode is enabled in your %1$sStripe dashboard%2$s to view your test transactions.', 'stripe' ),
+						'<a href="https://dashboard.stripe.com/test/dashboard" target="_blank" rel="noopener noreferrer">',
+						'</a>'
+					),
+					array(
+						'a' => array(
+							'href'   => true,
+							'target' => '_blank',
+							'rel'    => 'noopener noreferrer',
+						),
+					)
+				);
+				?>
+			</p>
+		</td>
+	</tr>
+</table>
+
+	<?php
+}
+add_action( 'simpay_form_settings_meta_payment_options_panel', __NAMESPACE__ . '\\add_payment_mode', 5 );

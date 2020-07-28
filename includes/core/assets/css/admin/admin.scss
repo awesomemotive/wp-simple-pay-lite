@@ -1,3 +1,20 @@
+.fixed .column-livemode {
+	width: 15%;
+	text-align: right;
+
+	@media screen and (max-width: 782px) {
+		text-align: left;
+	}
+
+	.simpay-badge {
+		margin-top: 3px;
+	}
+}
+
+.fixed .column-shortcode {
+	width: 25%;
+}
+
 .post-type-simple-pay {
 
 	// Hide post type UI.
@@ -9,6 +26,33 @@
 
 .simpay-metabox-title {
 	border: 1px solid #eee;
+}
+
+/** Badge */
+.simpay-badge {
+	color: #23282d;
+	text-align: center;
+	line-height: 1;
+	padding: 5px 7px;
+	border-radius: 3px;
+	background: #ececec;
+	display: inline-flex;
+	align-items: center;
+
+	&__icon {
+		opacity: 0.80;
+		margin: 0 -2px 0 2px;
+	}
+
+	&--green {
+		color: #0e6245;
+		background: #cbf4c9;
+	}
+
+	&--yellow {
+		color: #983705;
+		background: #f8e5b9;
+	}
 }
 
 .simpay-stripe-account-info {

@@ -3,7 +3,7 @@
  * Custom field
  *
  * @package SimplePay\Core\Abstracts
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -27,7 +27,7 @@ abstract class Custom_Field {
 	 * @since 3.7.0
 	 * @var string
 	 */
-	private static $type;
+	protected static $type;
 
 	/**
 	 * Field settings.
@@ -35,7 +35,7 @@ abstract class Custom_Field {
 	 * @since 3.7.0
 	 * @var array
 	 */
-	private static $settings = array();
+	protected static $settings = array();
 
 	/**
 	 * Form.
@@ -64,6 +64,25 @@ abstract class Custom_Field {
 		self::$form     = $form;
 
 		return static::print_html( $settings, $type, $form );
+	}
+
+	/**
+	 * Creates and returns an ID that can be used as an HTML attribute.
+	 *
+	 * simpay-form-{$form_id}-field-{$field_id}
+	 *
+	 * @since 3.9.0
+	 *
+	 * @return string
+	 */
+	public static function get_id_attr() {
+		$id = isset( self::$settings['uid'] )
+			? self::$settings['uid']
+			: '';
+
+		$id = 'simpay-form-' . self::$form->id . '-field-' . $id;
+
+		return $id;
 	}
 
 	/**
@@ -105,5 +124,79 @@ abstract class Custom_Field {
 		$default = simpay_get_filtered( 'field_' . $id . '_default_value', $default, self::$form->id );
 
 		return $default;
+	}
+
+	/**
+	 * Returns the field's label.
+	 *
+	 * @since 3.9.0
+	 *
+	 * @param string $key Setting key.
+	 */
+	public static function get_label( $key = 'label' ) {
+		$id = self::get_id_attr();
+
+		$label = isset( self::$settings[ $key ] )
+			? self::$settings[ $key ]
+			: '';
+
+		$classes = array();
+
+		if ( empty( $label ) ) {
+			$label     = self::$settings['type'];
+			$classes[] = 'screen-reader-text';
+		}
+
+		ob_start();
+		?>
+
+		<div class="simpay-<?php echo esc_attr( self::$settings['type'] ); ?>-label simpay-label-wrap">
+			<label for="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
+				<?php echo $label; // WPCS: XSS okay. ?>
+				<?php
+				switch ( self::$type ) :
+					case 'email':
+					case 'radio':
+					case 'card':
+					case 'address':
+						$required = true;
+						break;
+					default:
+						$required = isset( self::$settings['required'] );
+				endswitch;
+
+				if ( true === $required ) :
+					echo ''; // WPCS: XSS okay
+				else :
+					echo self::get_optional_indicator(); // WPCS: XSS okay.
+				endif;
+				?>
+			</label>
+		</div>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Returns an indicator if the field is optional.
+	 *
+	 * @since 3.9.0
+	 *
+	 * @return string Required indicator, or empty string if the field is not optional.
+	 */
+	public static function get_optional_indicator() {
+		$optional_indicator = '<span class="simpay-optional-indicator">' . esc_html__( ' (optional)', 'stripe' ) . '</span>';
+
+		/**
+		 * Filters the indicator for optional fields.
+		 *
+		 * @since 3.9.0
+		 *
+		 * @param string $indicator Required indicator.
+		 */
+		$optional_indicator = apply_filters( 'simpay_form_field_optional_indicator', $optional_indicator );
+
+		return $optional_indicator;
 	}
 }

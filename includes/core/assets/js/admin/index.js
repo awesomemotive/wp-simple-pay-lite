@@ -1,19 +1,18 @@
-/* global spGeneral, jQuery, wpspHooks */
-
-/**
- * WordPress dependencies
- */
-import { createHooks } from '@wordpress/hooks';
+/* global spGeneral, jQuery */
 
 /**
  * Internal dependencies.
  */
+import hooks from '@wpsimplepay/hooks';
 import 'admin/settings/test-mode.js';
 import toggleStripeConnectNotice from 'admin/settings/stripe-connect.js';
 
-// Since we rely on WordPress 4.9 and package our own copy of @wordpress/hooks
-// it is up to us to create a hooks instance to use in our app.
-window.wpspHooks = createHooks();
+/**
+ * Globallly accessible object of WP Simple Pay-related (admin) functionality.
+ */
+window.wpsp = window.wpsp || {
+	hooks,
+};
 
 let spAdmin = {};
 
@@ -115,7 +114,7 @@ let spAdmin = {};
 
 			// Wait to do this here due to weird loading order of scripts.
 			// @todo Redo script dependency management.
-			wpspHooks.addAction( 'settings.toggleTestMode', 'wpsp/settings/stripe-connect', toggleStripeConnectNotice );
+			hooks.addAction( 'settings.toggleTestMode', 'wpsp/settings/stripe-connect', toggleStripeConnectNotice );
 
 			// Init internal link to tab clicks.
 			spFormSettings.on( 'click.simpayTabLink', '.simpay-tab-link', function( e ) {

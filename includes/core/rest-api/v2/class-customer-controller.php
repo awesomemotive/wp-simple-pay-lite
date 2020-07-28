@@ -3,7 +3,7 @@
  * REST API: Customer Controller
  *
  * @package SimplePay\Core\REST_API\v2
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
@@ -14,6 +14,7 @@ use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\REST_API\Controller;
 use SimplePay\Core\Payments\Customer;
 use SimplePay\Core\Legacy;
+use SimplePay\Core\Utils;
 
 use function SimplePay\Core\SimplePay;
 
@@ -148,7 +149,10 @@ class Customer_Controller extends Controller {
 				$form_values
 			);
 
-			$customer = Customer\create( $customer_args );
+			$customer = Customer\create(
+				$customer_args,
+				$form->get_api_request_args()
+			);
 
 			/**
 			 * Allow further processing after a Customer is created from a posted form.
@@ -172,7 +176,7 @@ class Customer_Controller extends Controller {
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(
 				array(
-					'message' => $e->getMessage(),
+					'message' => Utils\handle_exception_message( $e ),
 				),
 				400
 			);

@@ -3,7 +3,7 @@
  * Functions: Shared
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -300,11 +300,9 @@ function simpay_is_test_mode() {
 function simpay_get_test_mode_badge() {
 	$html = '';
 
-	if ( simpay_is_test_mode() ) {
-		$html .= '<div class="simpay-test-mode-badge-container">';
-		$html .= '<span class="simpay-test-mode-badge">' . esc_html__( 'Test Mode', 'stripe' ) . '</span>';
-		$html .= '</div>';
-	}
+	$html .= '<div class="simpay-test-mode-badge-container">';
+	$html .= '<span class="simpay-test-mode-badge">' . esc_html__( 'Test Mode', 'stripe' ) . '</span>';
+	$html .= '</div>';
 
 	return $html;
 }
@@ -713,7 +711,7 @@ function simpay_get_statement_descriptor_unsupported_characters() {
 	 */
 	$unsupported_characters = apply_filters(
 		'simpay_get_statement_descriptor_unsupported_characters',
-		$unsupported_characters 
+		$unsupported_characters
 	);
 
 	return $unsupported_characters;

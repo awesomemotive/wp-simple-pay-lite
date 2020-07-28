@@ -3,7 +3,7 @@
  * Admin assets
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -134,7 +134,7 @@ class Assets {
 		 * @param array  $styles List of styles to register.
 		 * @param string $min Suffix for minification.
 		 */
-		$this->styles  = apply_filters( 'simpay_before_register_admin_styles', $this->styles, '.min' );
+		$this->styles = apply_filters( 'simpay_before_register_admin_styles', $this->styles, '.min' );
 
 		/**
 		 * Filters the scripts before they are registered in the admin.

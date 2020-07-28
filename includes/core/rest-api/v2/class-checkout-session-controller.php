@@ -3,7 +3,7 @@
  * REST API: Checkout Session Controller
  *
  * @package SimplePay\Core\REST_API\v2
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
@@ -14,6 +14,8 @@ use SimplePay\Core\Payments;
 use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\REST_API\Controller;
 use SimplePay\Core\Legacy;
+use SimplePay\Core\Utils;
+
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -140,7 +142,10 @@ class Checkout_Session_Controller extends Controller {
 				$customer_id
 			);
 
-			$session = Payments\Stripe_Checkout\Session\create( $session_args );
+			$session = Payments\Stripe_Checkout\Session\create(
+				$session_args,
+				$form->get_api_request_args()
+			);
 
 			/**
 			 * Allows further processing after a Checkout\Session is created from a payment form request.
@@ -171,7 +176,7 @@ class Checkout_Session_Controller extends Controller {
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(
 				array(
-					'message' => $e->getMessage(),
+					'message' => Utils\handle_exception_message( $e ),
 				),
 				400
 			);
@@ -190,6 +195,9 @@ class Checkout_Session_Controller extends Controller {
 	function get_args_from_payment_form_request( $form, $form_data, $form_values, $customer_id ) {
 		$session_args = array(
 			'locale'               => $form->locale,
+			'metadata'             => array(
+				'simpay_form_id' => $form->id,
+			),
 			'payment_method_types' => array(
 				'card',
 			),
@@ -258,7 +266,7 @@ class Checkout_Session_Controller extends Controller {
 		$quantity = isset( $form_values['simpay_quantity'] )
 			? absint( $form_values['simpay_quantity'] )
 			: 1;
-		
+
 		$name = ! empty( $form->company_name )
 			? $form->company_name
 			: get_bloginfo( 'name' );

@@ -3,7 +3,7 @@
  * Usage tracking: functions
  *
  * @package SimplePay\Core\Admin\Usage_Tracking
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
@@ -200,23 +200,24 @@ function get_optin_notice() {
 <p style="margin-top: 0.75em;"><strong><?php esc_html_e( 'Save 10% on WP Simple Pay Pro', 'stripe' ); ?></strong></p>
 
 <p>
-<?php esc_html_e( 'Do you want to help us make WP Simple Pay even better? Enabling usage analytics helps us better determine new features and improvements to make. In turn, you get the most out of each and every update to WP Simple Pay.', 'stripe' ); ?>
+	<?php esc_html_e( 'Do you want to help us make WP Simple Pay even better? Enabling usage analytics helps us better determine new features and improvements to make. In turn, you get the most out of each and every update to WP Simple Pay.', 'stripe' ); ?>
 </p>
 
 <p>
-<?php
-echo wp_kses(
-	sprintf(
+	<?php
+	echo wp_kses(
+		sprintf(
 		/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. %1$s Opening <a> tag, do not translate. %4$s Closing <a> tag, do not translate. */
-		esc_html__( 'Subscribe now and we will immediately send a %1$s10&#37; off%2$s discount code to your inbox. This code can be used to upgrade to any WP Simple Pay Pro license. No sensitive data is ever collected or stored. You may unsubscribe at anytime.', 'stripe' ),
-		'<strong>',
-		'</strong>'
-	),
-	array(
-		'strong' => true,
-	)
-);
-?></p>
+			esc_html__( 'Subscribe now and we will immediately send a %1$s10&#37; off%2$s discount code to your inbox. This code can be used to upgrade to any WP Simple Pay Pro license. No sensitive data is ever collected or stored. You may unsubscribe at anytime.', 'stripe' ),
+			'<strong>',
+			'</strong>'
+		),
+		array(
+			'strong' => true,
+		)
+	);
+	?>
+</p>
 
 <form
 	id="simpay-usage-tracking-nag"

@@ -5,7 +5,7 @@
  * @link https://github.com/stripe/stripe-php
  *
  * @package SimplePay\Core\Bootstrap
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -81,6 +81,22 @@ class Stripe_API {
 			$args = wp_parse_args( $opts, $default_opts );
 		} else {
 			$opts = wp_parse_args( $opts, $default_opts );
+		}
+
+		// Log an error.
+		if ( empty( $opts ) ) {
+			$logger = Stripe::getLogger();
+			$logger->error(
+				sprintf(
+					__( "Calling \SimplePay\Core\Payments\Stripe_API::request() without per-form request options (such as an API key) is discouraged. \n%s\n\n", 'stripe' ),
+					sprintf(
+						'%s\%s\%s',
+						$class,
+						$function,
+						serialize( $id_or_args )
+					)
+				)
+			);
 		}
 
 		return call_user_func(

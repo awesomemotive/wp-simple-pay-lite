@@ -2,7 +2,7 @@
   "name": "wp-simple-pay-lite",
   "title": "WP Simple Pay Lite for Stripe",
   "description": "Add high conversion Stripe Checkout forms to your WordPress site and start accepting payments in minutes. **Lite Version**",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "license": "GPL-2.0-or-later",
   "homepage": "https://wpsimplepay.com/",
   "repository": {
@@ -16,12 +16,6 @@
     "grunt-contrib-clean": "2.x",
     "grunt-contrib-compress": "^1.5.0",
     "grunt-contrib-copy": "1.x",
-    "grunt-contrib-cssmin": "3.x",
-    "grunt-contrib-jshint": "^2.1.0",
-    "grunt-contrib-uglify": "^4.0.1",
-    "grunt-contrib-watch": "1.x",
-    "grunt-jscs": "3.x",
-    "grunt-sass": "2.x",
     "grunt-wp-i18n": "^1.0.3",
     "load-grunt-tasks": "4.x"
   }

@@ -50,7 +50,14 @@ export const getPaymentForms = () => ( {
 export function onPaymentFormError( error = {}, spFormElem, formData ) {
 	const { showError, enableForm } = window.simpayApp;
 	const { debugLog } = window.spShared;
-	const { id = '', message = '' } = error;
+
+	const { stripeErrorMessages } = formData;
+	let message = error.message || '';
+
+	// Use localized message if code exists.
+	if ( error.code && stripeErrorMessages[ error.code ] ) {
+		message = stripeErrorMessages[ error.code ];
+	}
 
 	showError( spFormElem, formData, message );
 	enableForm( spFormElem, formData );

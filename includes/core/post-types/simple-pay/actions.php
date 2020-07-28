@@ -33,7 +33,7 @@ function save( $post_id, $post, $update ) {
 	if (
 		defined( 'DOING_AUTOSAVE' ) ||
 		is_int( wp_is_post_revision( $post ) ) ||
-		is_int( wp_is_post_autosave( $post ) ) 
+		is_int( wp_is_post_autosave( $post ) )
 	) {
 		return;
 	}
@@ -51,10 +51,28 @@ function save( $post_id, $post, $update ) {
 		return;
 	}
 
+	// Payment Mode.
+	$livemode = isset( $_POST['_livemode'] ) && '' !== $_POST['_livemode']
+		? absint( $_POST['_livemode'] )
+		: '';
+
+	if ( '' !== $livemode ) {
+		update_post_meta(
+			$post_id,
+			'_livemode_prev',
+			get_post_meta( $post_id, '_livemode', true )
+		);
+
+		update_post_meta( $post_id, '_livemode', $livemode );
+	} else {
+		delete_post_meta( $post_id, '_livemode' );
+		delete_post_meta( $post_id, '_livemode_prev' );
+	}
+
 	// Amount.
 	$amount = isset( $_POST['_amount'] )
 		? sanitize_text_field( $_POST['_amount'] )
-		: ( 
+		: (
 				false !== get_post_meta( $post_id, '_amount', true )
 					? get_post_meta( $post_id, '_amount', true )
 					: simpay_global_minimum_amount()
@@ -182,7 +200,7 @@ function save_redirect( $location, $post_id ) {
 	$hash = isset( $_REQUEST['simpay_form_settings_tab'] )
 		? sanitize_text_field( $_REQUEST['simpay_form_settings_tab'] )
 		: '#payment-options-settings-panel';
-		
+
 	$location .= $hash;
 
 	return $location;
@@ -236,8 +254,8 @@ function duplicate() {
 	$wpdb->query(
 		$wpdb->prepare(
 			"INSERT INTO {$wpdb->prefix}postmeta (post_id, meta_key, meta_value) SELECT %d, meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = %d",
-		$duplicate,
-		$post->ID
+			$duplicate,
+			$post->ID
 		)
 	);
 
@@ -245,7 +263,7 @@ function duplicate() {
 		array(
 			'post'    => $duplicate,
 			'action'  => 'edit',
-			'message' => 299
+			'message' => 299,
 		),
 		admin_url( 'post.php' )
 	);

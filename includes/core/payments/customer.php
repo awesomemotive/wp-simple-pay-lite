@@ -3,7 +3,7 @@
  * Stripe Customer
  *
  * @package SimplePay\Core\Payments\Customer
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.5.0
  */
@@ -21,16 +21,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Retrives a Customer record.
+ * Retrieves a Customer.
  *
  * @since 3.7.0
  *
- * @param string $customer_id Customer ID.
+ * @param string|array $customer Customer ID or {
+ *   Arguments used to retrieve a Customer.
+ *
+ *   @type string $id Customer ID.
+ * }
+ * @param array        $api_request_args {
+ *   Additional request arguments to send to the Stripe API when making a request.
+ *
+ *   @type string $api_key API Secret Key to use.
+ * }
  * @return \Stripe\Customer
  * @throws \Stripe\Exception
  */
-function retrieve( $customer_id ) {
-	return Stripe_API::request( 'Customer', 'retrieve', $customer_id );
+function retrieve( $customer, $api_request_args = array() ) {
+	if ( false === is_array( $customer ) ) {
+		$customer_args = array(
+			'id' => $customer,
+		);
+	} else {
+		$customer_args = $customer;
+	}
+
+	return Stripe_API::request(
+		'Customer',
+		'retrieve',
+		$customer_args,
+		$api_request_args
+	);
 }
 
 /**
@@ -39,10 +61,15 @@ function retrieve( $customer_id ) {
  * @since 3.6.0
  *
  * @param array $customer_args Optional arguments used to create a customer.
+ * @param array $api_request_args {
+ *   Additional request arguments to send to the Stripe API when making a request.
+ *
+ *   @type string $api_key API Secret Key to use.
+ * }
  * @return \Stripe\Customer
  * @throws \Stripe\Exception
  */
-function create( $customer_args = array() ) {
+function create( $customer_args = array(), $api_request_args = array() ) {
 	$defaults      = array();
 	$customer_args = wp_parse_args( $customer_args, $defaults );
 
@@ -65,18 +92,33 @@ function create( $customer_args = array() ) {
 	do_action( 'simpay_before_customer_created', $customer_args );
 
 	/**
-	 * Filters any existing \Stripe\Customer record, allowing for 
+	 * Filters any existing \Stripe\Customer record, allowing for
 	 * creation to be overridden or stopped.
 	 *
 	 * @since 3.6.6
 	 *
 	 * @param null  $customer Existing \Stripe\Customer record.
 	 * @param array $customer_args Arguments used to create a Customer.
+	 * @param array $api_request_args {
+	 *   Additional request arguments to send to the Stripe API when making a request.
+	 *
+	 *   @type string $api_key API Secret Key to use.
+	 * }
 	 */
-	$customer = apply_filters( 'simpay_customer_create', null, $customer_args );
+	$customer = apply_filters(
+		'simpay_customer_create',
+		null,
+		$customer_args,
+		$api_request_args
+	);
 
 	if ( false === is_a( $customer, '\Stripe\Customer' ) ) {
-		$customer = Stripe_API::request( 'Customer', 'create', $customer_args );
+		$customer = Stripe_API::request(
+			'Customer',
+			'create',
+			$customer_args,
+			$api_request_args
+		);
 	}
 
 	/**
@@ -98,10 +140,15 @@ function create( $customer_args = array() ) {
  *
  * @param string $customer_id ID of the Customer to update.
  * @param array  $customer_args Data to update Customer with.
+ * @param array  $api_request_args {
+ *   Additional request arguments to send to the Stripe API when making a request.
+ *
+ *   @type string $api_key API Secret Key to use.
+ * }
  * @return \Stripe\Customer $customer Stripe Customer.
  * @throws \Stripe\Exception
  */
-function update( $customer_id, $customer_args ) {
+function update( $customer_id, $customer_args, $api_request_args = array() ) {
 	/**
 	 * Filters the arguments passed to customer creation in Stripe.
 	 *
@@ -120,7 +167,8 @@ function update( $customer_id, $customer_args ) {
 		'Customer',
 		'update',
 		$customer_id,
-		$customer_args
+		$customer_args,
+		$api_request_args
 	);
 
 	/**
@@ -141,11 +189,16 @@ function update( $customer_id, $customer_args ) {
  * @since 3.8.0
  *
  * @param string $customer_id ID of the Customer to update.
+ * @param array  $api_request_args {
+ *   Additional request arguments to send to the Stripe API when making a request.
+ *
+ *   @type string $api_key API Secret Key to use.
+ * }
  * @return \Stripe\Customer $customer Stripe Customer.
  * @throws \Stripe\Exception
  */
-function delete( $customer_id ) {
-	$customer = retrieve( $customer_id );
+function delete( $customer_id, $api_request_args = array() ) {
+	$customer = retrieve( $customer_id, $api_request_args );
 	$customer = $customer->delete();
 
 	/**
@@ -158,6 +211,28 @@ function delete( $customer_id ) {
 	do_action( 'simpay_after_customer_deleted', $customer );
 
 	return $customer;
+}
+
+/**
+ * Retrieves Customers.
+ *
+ * @since 3.9.0
+ *
+ * @param array $args Optional arguments used when listing Customers.
+ * @param array $api_request_args {
+ *   Additional request arguments to send to the Stripe API when making a request.
+ *
+ *   @type string $api_key API Secret Key to use.
+ * }
+ * @return \Stripe\Customers[]
+ */
+function all( $args = array(), $api_request_args = array() ) {
+	return Stripe_API::request(
+		'Customer',
+		'all',
+		$args,
+		$api_request_args
+	);
 }
 
 /**

@@ -3,7 +3,7 @@
  * Admin setting fields: Select
  *
  * @package SimplePay\Core\Admin\Fields
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -153,7 +153,7 @@ class Select extends Field {
 					} else {
 						$selected = selected( $this->value, trim( strval( esc_html( $option ) ) ), false );
 					}
-					echo '<option value="' . $option . '" ' . $selected . '>' . esc_attr( $name ) . '</option>';
+					echo '<option value="' . $option . '" ' . $selected . '>' . esc_html( $name ) . '</option>';
 				}
 			}
 
