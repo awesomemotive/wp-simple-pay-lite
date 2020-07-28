@@ -153,7 +153,7 @@ Easily customize the credit card payment confirmation details your customers see
 
 = Locale and currency settings =
 
-Stripe currently supports [14 languages](https://support.stripe.com/questions/supported-languages-for-stripe-checkout), [30+ countries](https://stripe.com/global), and [135+ currencies](https://stripe.com/docs/currencies). WP Simple Pay lets you set the locale (language) for your payment forms as well as the preferred currency and date formats for your site's region.
+Stripe currently supports [27 languages](https://support.stripe.com/questions/supported-languages-for-stripe-checkout), [39 countries](https://stripe.com/global), and [135+ currencies](https://stripe.com/docs/currencies). WP Simple Pay lets you set the locale (language) for your payment forms as well as the preferred currency and date formats for your site's region.
 
 [Try our French locale + Euro currency demo](https://demo.wpsimplepay.com/alternate-locale-currency/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=locale&utm_term=description)
 
