@@ -143,7 +143,7 @@ Give your site visitors the option to pay using Apple Pay, Google Pay, and Micro
 
 Anyone with a browser and device combination that allows one of these options will see the new payment button.
 
-[Try it out on our demo site](https://demo.wpsimplepay.com/apple-pay-google-pay/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
+[Try our Apple Pay & Google Pay demos](https://demo.wpsimplepay.com/apple-pay-google-pay/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
 
 = Customized payment confirmation details =
 
