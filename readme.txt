@@ -17,7 +17,7 @@ In just a few steps, you can be up and running in no time. For free! There is no
 
 WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required. Simply set up a payment form and start accepting credit cards on your WordPress site.
 
-It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe many languages, countries and currencies. [Check support for your country](https://stripe.com/global).
+It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe supports many languages, countries and currencies. [Check support for your country](https://stripe.com/global).
 
 [Stripe Checkout](https://stripe.com/payments/checkout) is a drop-in payments flow designed to drive conversion. It’s built for desktop, tablet, and mobile devices. It’s continuously tested and updated to offer a frictionless payment experience. It’s also PCI DSS compliant and SCA-ready without any changes to your website.
 
