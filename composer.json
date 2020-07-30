@@ -4,6 +4,6 @@
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
 	"require": {
-		"stripe/stripe-php": "7.28.0"
+		"stripe/stripe-php": "7.37.1"
 	}
 }

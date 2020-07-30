@@ -3,7 +3,7 @@
  * Admin pages
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.5.0
  */

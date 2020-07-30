@@ -3,7 +3,7 @@
  * Shortcodes
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -14,7 +14,7 @@ use SimplePay\Core\Abstracts\Form;
 use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Payments\Payment;
 use SimplePay\Core\Payments\Payment_Confirmation;
-use SimplePay\Core\Payments\Stripe_API;
+use SimplePay\Core\Utils;
 
 use function SimplePay\Core\SimplePay;
 
@@ -106,7 +106,7 @@ class Shortcodes {
 					$html .= self::form_html( $id );
 				}
 
-			// Published forms.
+				// Published forms.
 			} else {
 				$html .= self::form_html( $id );
 			}
@@ -206,7 +206,7 @@ class Shortcodes {
 				return '';
 			}
 		} catch ( \Exception $e ) {
-			return $e->getMessage();
+			return Utils\handle_exception_message( $e );
 		}
 	}
 
@@ -237,7 +237,7 @@ class Shortcodes {
 		try {
 			$payment_confirmation_data = Payment_Confirmation\get_confirmation_data();
 
-			if ( false === $payment_confirmation_data ) {
+			if ( empty( $payment_confirmation_data ) ) {
 				return Payment_Confirmation\get_error();
 			}
 
@@ -291,7 +291,7 @@ class Shortcodes {
 			);
 		} catch ( \Exception $e ) {
 			if ( current_user_can( 'manage_options' ) ) {
-				$content = $e->getMessage();
+				$content = Utils\handle_exception_message( $e );
 			} else {
 				$content = Payment_Confirmation\get_error();
 			}

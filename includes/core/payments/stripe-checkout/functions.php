@@ -3,14 +3,14 @@
  * Stripe Checkout
  *
  * @package SimplePay\Core\Payments\Stripe_Checkout
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
 namespace SimplePay\Core\Payments\Stripe_Checkout;
 
-use SimplePay\Core\Payments\Stripe_API;
+use SimplePay\Core\i18n;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -54,7 +54,7 @@ function get_available_payment_method_types() {
  */
 function get_available_shipping_address_countries() {
 	// Built in countries.
-	$countries = \simpay_get_country_list();
+	$countries = i18n\get_countries();
 
 	// Remove unsupported countries.
 	unset( $countries['AS'] );

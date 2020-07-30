@@ -3,15 +3,15 @@
  * Shim legacy hooks.
  *
  * @package SimplePay\Core\Legacy\Hooks
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
 
 namespace SimplePay\Core\Legacy\Hooks;
 
-use SimplePay\Core\Payments\Stripe_API;
 use SimplePay\Core\Payments\Payment;
+use SimplePay\Core\Payments\Customer;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -323,7 +323,10 @@ function simpay_process_form( $form, $form_data, $form_values, $customer_id ) {
 		return;
 	}
 
-	$customer = Stripe_API::request( 'Customer', 'retrieve', $customer_id );
+	$customer = Customer\retrieve(
+		$customer_id,
+		$form->get_api_request_args()
+	);
 
 	$amount = isset( $form_values['simpay_amount'] )
 		? $form_values['simpay_amount']

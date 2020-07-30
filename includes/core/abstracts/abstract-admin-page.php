@@ -3,7 +3,7 @@
  * Admin page
  *
  * @package SimplePay\Core\Abstracts
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -218,7 +218,6 @@ abstract class Admin_Page {
 					} else {
 						$sanitized[ $k ] = wp_kses_post( $v );
 					}
-
 				} else {
 					$sanitized[ $k ] = simpay_sanitize_input( $v );
 				}

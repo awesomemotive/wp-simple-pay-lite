@@ -38,7 +38,7 @@ function add_subscription_options( $post_id ) {
 	);
 
 	$upgrade_url = add_query_arg( $utm_args, 'https://wpsimplepay.com/lite-vs-pro/' );
-?>
+	?>
 
 <div class="simpay-promo-under-box">
 
@@ -67,6 +67,6 @@ function add_subscription_options( $post_id ) {
 
 </div>
 
-<?php
+	<?php
 }
 add_action( 'simpay_form_settings_meta_subscription_display_panel', __NAMESPACE__ . '\\add_subscription_options' );

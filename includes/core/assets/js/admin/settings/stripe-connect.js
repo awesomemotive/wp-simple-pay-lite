@@ -1,4 +1,4 @@
-/* global wp, _, wpspHooks */
+/* global wp, _ */
 
 /**
  * WordPress dependencies

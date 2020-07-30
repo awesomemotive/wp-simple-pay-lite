@@ -31,7 +31,7 @@ function add_custom_fields( $post_id ) {
 	$field   = isset( $fields['payment_button'] )
 		? current( $fields['payment_button'] )
 		: array();
-?>
+	?>
 
 <table>
 	<tbody class="simpay-panel-section">
@@ -121,7 +121,7 @@ function add_custom_fields( $post_id ) {
 	</tbody>
 </table>
 
-<?php
+	<?php
 	/**
 	 * Allows further content after "Custom" Fields" Payment Form
 	 * settings tab content.

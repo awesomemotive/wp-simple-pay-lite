@@ -2,8 +2,8 @@
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe subscription, credit card payments, payment request, credit card form, payment form
 Requires at least: 4.9
-Tested up to: 5.4.1
-Stable tag: 2.4.1
+Tested up to: 5.5
+Stable tag: 2.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -15,11 +15,9 @@ It should be simple to accept payments and run your business online. There are m
 
 In just a few steps, you can be up and running in no time. For free! There is no charge for WP Simple Pay. There will just be the Stripe per-transaction fees which vary by country.  See [Stripes Pricing page](https://stripe.com/pricing) for more information.
 
-Simply set up a payment form and start accepting credit cards on your WordPress site.
+WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required. Simply set up a payment form and start accepting credit cards on your WordPress site.
 
-WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required.
-
-It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe currently supports 14 languages, over 35 countries and 135+ currencies. [Check support for your country](https://stripe.com/global).
+It’s no secret that we believe [Stripe](https://stripe.com/) is the best payment processor. Stripe supports many languages, countries and currencies. [Check support for your country](https://stripe.com/global).
 
 [Stripe Checkout](https://stripe.com/payments/checkout) is a drop-in payments flow designed to drive conversion. It’s built for desktop, tablet, and mobile devices. It’s continuously tested and updated to offer a frictionless payment experience. It’s also PCI DSS compliant and SCA-ready without any changes to your website.
 
@@ -28,7 +26,7 @@ It’s no secret that we believe [Stripe](https://stripe.com/) is the best payme
 - Create unlimited payment forms integrated with [Stripe Checkout](https://stripe.com/payments/checkout)
 - Display your brand or product image on Stripe Checkout pages
 - Option to verify zip/postal code without an address
-- Support for 14 languages, 30+ countries and 135+ currencies
+- Support for 27 languages, 39 countries and 135+ currencies
 - Stripe Connect support for easier setup
 - PCI DSS compliant and Strong Customer Authentication (SCA) support for improved security
 - Translation ready
@@ -48,7 +46,7 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 - On-site checkout (no redirect) with custom forms
 - Embedded & overlay form display options
 - Apple Pay & Google Pay support with custom forms
-- Support for iDEAL payments
+- Support for ACH debit and iDEAL payments
 - reCAPTCHA v3 invisible verification support
 - Stripe Subscription support
 - Subscription installment plans
@@ -145,7 +143,15 @@ Give your site visitors the option to pay using Apple Pay, Google Pay, and Micro
 
 Anyone with a browser and device combination that allows one of these options will see the new payment button.
 
-[Try it out on our demo site](https://demo.wpsimplepay.com/apple-pay-google-pay/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
+[Try our Apple Pay & Google Pay demos](https://demo.wpsimplepay.com/apple-pay-google-pay/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
+
+= ACH debit and iDEAL payments =
+
+Give your customers the option to pay directly from their bank accounts with ACH debit payments. ACH debits offer you lower transaction fees than cards.
+
+Other payment methods such as iDEAL are also supported with more coming soon!
+
+[ACH debit demo](https://demo.wpsimplepay.com/ach-debit-payment-method/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description) | [iDEAL payment demo](https://demo.wpsimplepay.com/ideal-payment-method/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=apple&utm_term=description)
 
 = Customized payment confirmation details =
 
@@ -155,7 +161,7 @@ Easily customize the credit card payment confirmation details your customers see
 
 = Locale and currency settings =
 
-Stripe currently supports [14 languages](https://support.stripe.com/questions/supported-languages-for-stripe-checkout), [30+ countries](https://stripe.com/global), and [135+ currencies](https://stripe.com/docs/currencies). WP Simple Pay lets you set the locale (language) for your payment forms as well as the preferred currency and date formats for your site's region.
+Stripe currently supports [27 languages](https://support.stripe.com/questions/supported-languages-for-stripe-checkout), [39 countries](https://stripe.com/global), and [135+ currencies](https://stripe.com/docs/currencies). WP Simple Pay lets you set the locale (language) for your payment forms as well as the preferred currency and date formats for your site's region.
 
 [Try our French locale + Euro currency demo](https://demo.wpsimplepay.com/alternate-locale-currency/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=locale&utm_term=description)
 
@@ -193,7 +199,7 @@ If WP Simple Pay doesn’t quite fit your needs, take a look at some of our othe
 - [Easy Digital Downloads](https://easydigitaldownloads.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – Sell digital products with WordPress
 - [AffiliateWP](https://affiliatewp.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – A full-featured affiliate marketing solution
 - [Sugar Calendar](https://sugarcalendar.com?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – WordPress event management made simple
-- [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – A lightweight Stripe payments plugin
+- [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – A powerful membership plugin for WordPress
 
 == Installation ==
 
@@ -259,6 +265,18 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 2.5.0 - July 30, 2020 =
+
+* New: Add per-form "Test Mode" toggles.
+* New: Add localization support for Stripe errors.
+* New: Update available Stripe Elements and Stripe Checkout locales.
+* Fix: Update supported country and currency lists.
+* Fix: Avoid PHP error on some versions when accessing class property.
+* Fix: Avoid PHP notice in `array_unique`.
+* Dev: Update file copyrights.
+* Dev: Update WordPress coding standards.
+* Dev: Update Stripe PHP library to `7.37.1`.
 
 = 2.4.1 - May 13, 2020 =
 

@@ -3,7 +3,7 @@
  * Admin pages: Stripe Setup
  *
  * @package SimplePay\Core\Admin\Pages
- * @copyright Copyright (c) 2019, Sandhills Development, LLC
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -11,6 +11,7 @@
 namespace SimplePay\Core\Admin\Pages;
 
 use SimplePay\Core\Abstracts\Admin_Page;
+use SimplePay\Core\i18n;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -165,7 +166,7 @@ class Keys extends Admin_Page {
 				} elseif ( 'mode' == $section ) {
 					$dashboard_message = sprintf(
 						/* translators: %1$s Opening anchor tag to Stripe Dashboard, do not translate. %2$s Closing anchor tag, do not translate. */
-						__( 'While in test mode no live payments are processed. Make sure Test mode is enabled in your %1$sStripe dashboard%2$s to view your test transactions.', 'stripe' ),
+						__( 'While in Test Mode no live payments are processed. Make sure Test mode is enabled in your %1$sStripe dashboard%2$s to view your test transactions.', 'stripe' ),
 						'<a href="https://dashboard.stripe.com" target="_blank" rel="noopener noreferrer">',
 						'</a>'
 					);
@@ -259,15 +260,20 @@ class Keys extends Admin_Page {
 						),
 					);
 				} elseif ( 'country' == $section ) {
+					$country = $this->get_option_value( $section, 'country' );
+
+					if ( empty( $country ) ) {
+						$country = 'US';
+					}
 
 					$fields[ $section ] = array(
 						'country' => array(
 							'title'       => esc_html__( 'Account Country', 'stripe' ),
 							'type'        => 'select',
-							'options'     => simpay_get_country_list(),
+							'options'     => i18n\get_stripe_countries(),
 							'name'        => 'simpay_' . $this->option_group . '_' . $this->id . '[' . $section . '][country]',
 							'id'          => 'simpay-' . $this->option_group . '-' . $this->id . '-' . $section . '-country',
-							'value'       => $this->get_option_value( $section, 'country' ),
+							'value'       => $country,
 							'description' => esc_html__( 'The country associated with the connected Stripe account.', 'stripe' ),
 						),
 					);
@@ -281,7 +287,7 @@ class Keys extends Admin_Page {
 						'locale' => array(
 							'title'       => esc_html__( 'Stripe Checkout Locale', 'stripe' ),
 							'type'        => 'select',
-							'options'     => simpay_get_stripe_checkout_locales(),
+							'options'     => i18n\get_stripe_checkout_locales(),
 							'name'        => 'simpay_' . $this->option_group . '_keys[locale][locale]',
 							'id'          => 'simpay-' . $this->option_group . '-keys-locale-locale',
 							'value'       => '' !== $value ? $value : $fallback,

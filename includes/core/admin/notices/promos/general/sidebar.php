@@ -4,7 +4,7 @@
 		<div class="inside">
 			<div class="main">
 				<p class="sidebar-heading centered">
-					<?php _e( "Additional features included in<br />WP Simple Pay Pro", 'stripe' ); ?>
+					<?php _e( 'Additional features included in<br />WP Simple Pay Pro', 'stripe' ); ?>
 				</p>
 
 				<!-- Repeat this bulleted list in sidebar.php & generic-tab-promo.php -->
@@ -15,6 +15,7 @@
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'On-site checkout (no redirect)', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & overlay forms', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Apple Pay & Google Pay', 'stripe' ); ?></li>
+					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'ACH and iDEAL payments', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription support', 'stripe' ); ?>*</li>
 				</ul>
 
