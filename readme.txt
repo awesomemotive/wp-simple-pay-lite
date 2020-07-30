@@ -266,7 +266,7 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
-= 2.5.0 - July 23, 2020 =
+= 2.5.0 - July 30, 2020 =
 
 * New: Add per-form "Test Mode" toggles.
 * New: Add localization support for Stripe errors.
