@@ -13,7 +13,7 @@ Easily connect Stripe Checkout with your WordPress site. Accept credit card paym
 
 It should be simple to accept payments and run your business online. There are many situations in which you don’t need a sophisticated store, cart or checkout process. You just need a simple payment form. Keep it simple with WP Simple Pay.
 
-In just a few steps, you can be up and running in no time. For free! There is no charge for WP Simple Pay. There will just be the Stripe per-transaction fees which vary by country.  See [Stripes Pricing page](https://stripe.com/pricing) for more information.
+In just a few steps, you can be up and running in no time. For free! There is no charge for WP Simple Pay. There will just be the Stripe per-transaction fees which vary by country. See [Stripe’s Pricing page](https://stripe.com/pricing) for more information.
 
 WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required. Simply set up a payment form and start accepting credit cards on your WordPress site.
 
