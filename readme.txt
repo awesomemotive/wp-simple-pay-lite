@@ -1,19 +1,19 @@
 === Stripe Payments WordPress Plugin – WP Simple Pay ===
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
-Tags: stripe subscription, credit card payments, payment request, credit card form, payment form
+Tags: stripe, stripe checkout, stripe payments, payments, credit card payments
 Requires at least: 4.9
 Tested up to: 5.5
 Stable tag: 2.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
-Easily connect Stripe Checkout with your WordPress site. Accept credit card payments using mobile-optimized checkout forms within minutes.
+Easily accept payments on your WordPress site with our Stripe payments plugin. Create credit card payment forms in minutes using Stripe Checkout.
 
 == Description ==
 
 It should be simple to accept payments and run your business online. There are many situations in which you don’t need a sophisticated store, cart or checkout process. You just need a simple payment form. Keep it simple with WP Simple Pay.
 
-In just a few steps, you can be up and running in no time. For free! There is no charge for WP Simple Pay. There will just be the Stripe per-transaction fees which vary by country.  See [Stripes Pricing page](https://stripe.com/pricing) for more information.
+In just a few steps, you can be up and running in no time. For free! There is no charge for WP Simple Pay. There will just be the Stripe per-transaction fees which vary by country. See [Stripe’s Pricing page](https://stripe.com/pricing) for more information.
 
 WP Simple Pay is a _standalone_ payments plugin that connects Stripe with WordPress. Since it’s not an add-on, no other plugins are required. Simply set up a payment form and start accepting credit cards on your WordPress site.
 
@@ -174,7 +174,7 @@ WP Simple Pay is backed by top-notch technical support from our globally distrib
 
 = Meet the team =
 
-Restrict Content is built by [Sandhills Development](https://sandhillsdev.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=sandhills&utm_term=description). We make [popular WordPress plugins](https://sandhillsdev.com/projects/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=popular&utm_term=description) used by hundreds of thousands of people just like you. [Get to know us here](https://sandhillsdev.com/about/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=about&utm_term=description)!
+WP Simple Pay is built by [Sandhills Development](https://sandhillsdev.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=sandhills&utm_term=description). We make [popular WordPress plugins](https://sandhillsdev.com/projects/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=popular&utm_term=description) used by hundreds of thousands of people just like you. [Get to know us here](https://sandhillsdev.com/about/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=about&utm_term=description)!
 
 = From our Blog =
 
