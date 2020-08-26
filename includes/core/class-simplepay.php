@@ -112,6 +112,7 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/meta.php' );
 
 		// Load core shared back-end & front-end functions.
+		require_once( SIMPLE_PAY_INC . 'core/utils/functions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/utils/exceptions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/utils/collections.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/template.php' );
@@ -148,6 +149,10 @@ final class SimplePay {
 		$cron = new Cron();
 		$cron->init();
 		$cron->schedule_events();
+
+		// Rate Limiting.
+		$rate_limiting = new Utils\Rate_Limiting();
+		$rate_limiting->init();
 
 		$this->objects = new Objects();
 
