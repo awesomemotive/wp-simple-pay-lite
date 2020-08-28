@@ -7,7 +7,7 @@ Stable tag: 2.5.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
-Easily accept payments on your WordPress site with our Stripe payments plugin. Create credit card payment forms in minutes using Stripe Checkout.
+Easily accept credit card payments on your WordPress site using Stripe Checkout.
 
 == Description ==
 
