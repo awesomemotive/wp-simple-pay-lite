@@ -141,7 +141,7 @@ Use with subscriptions or one-time payments, and optionally add a total amount l
 
 = Add Apple Pay and Google Pay buttons =
 
-Give your site visitors the option to pay using Apple Pay, Google Pay, and Microsoft Pay with a single button.
+Give your site visitors the option to pay using Apple Pay, Google Pay, and Microsoft Pay with a single button in your custom embedded or overlay forms.
 
 Anyone with a browser and device combination that allows one of these options will see the new payment button.
 
