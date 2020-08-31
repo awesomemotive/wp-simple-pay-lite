@@ -71,6 +71,21 @@ class Checkout_Session_Controller extends Controller {
 	 * @return bool True with a valid nonce.
 	 */
 	public function create_item_permissions_check( $request ) {
+		$has_exceeded_rate_limit = false;
+
+		/** This filter is documented in includes/core/rest-api/class-customer-controller.php */
+		$has_exceeded_rate_limit = apply_filters( 'simpay_has_exceeded_rate_limit', $has_exceeded_rate_limit );
+
+		if ( true === $has_exceeded_rate_limit ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'Sorry, you have made too many requests. Please try again later.', 'stripe' ),
+				array(
+					'status' => rest_authorization_required_code()
+				)
+			);
+		}
+
 		$form_values = $request['form_values'];
 
 		if ( ! isset( $form_values['_wpnonce'] ) || ! wp_verify_nonce( $form_values['_wpnonce'], 'simpay_payment_form' ) ) {

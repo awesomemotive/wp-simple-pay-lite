@@ -309,8 +309,11 @@ function charge_date( $value, $payment_confirmation_data ) {
 	// Assume and use the first charge in the list.
 	$first_charge = current( $charges->data );
 
-	// Localize format.
-	$value = date_i18n( get_option( 'date_format' ), $first_charge->created );
+	// Localize to current timezone and formatting.
+	$value = get_date_from_gmt(
+		date( 'Y-m-d H:i:s', $first_charge->created ),
+		get_option( 'date_format' )
+	);
 
 	/**
 	 * @deprecated 3.6.0

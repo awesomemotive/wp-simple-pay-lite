@@ -69,6 +69,27 @@ class Customer_Controller extends Controller {
 	 * @return bool
 	 */
 	public function create_item_permissions_check( $request ) {
+		$has_exceeded_rate_limit = false;
+
+		/**
+		 * Filters if the current IP address has exceeded the rate limit.
+		 *
+		 * @since 3.9.5
+		 *
+		 * @param bool $has_exceeded_rate_limit
+		 */
+		$has_exceeded_rate_limit = apply_filters( 'simpay_has_exceeded_rate_limit', $has_exceeded_rate_limit );
+
+		if ( true === $has_exceeded_rate_limit ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'Sorry, you have made too many requests. Please try again later.', 'stripe' ),
+				array(
+					'status' => rest_authorization_required_code()
+				)
+			);
+		}
+
 		$form_values = $request['form_values'];
 
 		if ( ! isset( $form_values['_wpnonce'] ) || ! wp_verify_nonce( $form_values['_wpnonce'], 'simpay_payment_form' ) ) {

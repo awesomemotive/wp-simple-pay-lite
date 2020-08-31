@@ -3,7 +3,7 @@ Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702,
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 4.9
 Tested up to: 5.5
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -270,6 +270,11 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 2.5.1 - August 26, 2020 =
+
+* New: Add IP-based rate limiting to internal API endpoints.
+* Fix: Ensure {charge-date} Payment Confirmation Template Tag is output in the site's local timezone.
 
 = 2.5.0 - July 30, 2020 =
 

@@ -180,6 +180,47 @@ class System_Status extends Admin_Page {
 						'result_export' => $test_or_live_mode,
 					);
 
+					// Pro only.
+					//
+					// @todo Add via filter.
+					if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
+						$livemode = ! simpay_is_test_mode();
+						$db       = new \SimplePay\Pro\Webhooks\Database\Query();
+
+						$webhook = $db->query(
+							array(
+								'number'   => 1,
+								'livemode' => $livemode,
+							)
+						);
+
+						$sections['simpay']['webhook_last'] = array(
+							'label'         => __( 'Most Recent Webhook Event', 'stripe' ),
+							'label_export'  => 'Most Recent Webhook Event',
+							'result'        => ! empty( $webhook ) ? current( $webhook )->date_created : 'None',
+							'result_export' => ! empty( $webhook ) ? current( $webhook )->date_created : 'None',
+						);
+
+						$settings = get_option( 'simpay_settings_keys' );
+
+						if ( false === $livemode ) {
+							$endpoint_secret = isset( $settings['test_keys']['endpoint_secret'] )
+								? $settings['test_keys']['endpoint_secret']
+								: '';
+						} else {
+							$endpoint_secret = isset( $settings['live_keys']['endpoint_secret'] )
+								? $settings['live_keys']['endpoint_secret']
+								: '';
+						}
+
+						$sections['simpay']['webhook_secret'] = array(
+							'label'         => __( 'Webhook Secret', 'stripe' ),
+							'label_export'  => 'Webhook Secret', 
+							'result'        => ! empty( $endpoint_secret ) ? 'Yes' : 'No',
+							'result_export' => ! empty( $endpoint_secret ) ? 'Yes' : 'No',
+						);
+					}
+
 					/**
 					 * WordPress Installation
 					 * ======================
