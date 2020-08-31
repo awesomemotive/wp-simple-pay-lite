@@ -25,13 +25,15 @@ It’s no secret that we believe [Stripe](https://stripe.com/) is the best payme
 
 - Create unlimited payment forms integrated with [Stripe Checkout](https://stripe.com/payments/checkout)
 - Display your brand or product image on Stripe Checkout pages
+- Option to collect customer billing & shipping addresses
 - Option to verify zip/postal code without an address
 - Support for 27 languages, 39 countries and 135+ currencies
+- Apple Pay & Google Pay support with Stripe Checkout
 - Stripe Connect support for easier setup
 - PCI DSS compliant and Strong Customer Authentication (SCA) support for improved security
 - Translation ready
 - [AffiliateWP](https://affiliatewp.com?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=integration&utm_term=description) integration
-- Customize payment success & failure pages
+- Custom payment success & failure pages
 - Toggle between test & live modes
 - Developer-friendly for building custom integrations
 
