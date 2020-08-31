@@ -1,6 +1,6 @@
 === Stripe Payments WordPress Plugin – WP Simple Pay ===
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
-Tags: stripe, stripe checkout, stripe payments, payments, credit card payments
+Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 4.9
 Tested up to: 5.5
 Stable tag: 2.5.0
