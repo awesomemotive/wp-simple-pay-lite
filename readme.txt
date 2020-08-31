@@ -234,6 +234,9 @@ Yes. There is no limit to the number of payment forms you can create, each with 
 
 No. Payment forms do not have a limit on how much money can be processed.
 
+= Do I need to purchase a Stripe payment gateway add-on? =
+No. WP Simple Pay connects to Stripe (and Stripe only) out of the box. No Stripe payment gateway add-on required.
+
 = Can I collect more than just payment data from my customers? =
 
 Not with this plugin, but the [Pro version](https://wpsimplepay.com?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) allows you to insert additional custom fields in your payment forms to record extra data with each Stripe payment record.
