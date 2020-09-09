@@ -273,7 +273,7 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 = 2.5.2 - September 9, 2020 =
 
-* New: Add reCAPTCHA v3 support.
+* New: Add reCAPTCHA v3 support. Configure in "Simple Pay Lite > Settings > General"
 
 = 2.5.1 - August 26, 2020 =
 
