@@ -33,6 +33,7 @@ It’s no secret that we believe [Stripe](https://stripe.com/) is the best payme
 - [AffiliateWP](https://affiliatewp.com?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=integration&utm_term=description) integration
 - Customize payment success & failure pages
 - Toggle between test & live modes
+- reCAPTCHA v3 invisible verification support
 - Developer-friendly for building custom integrations
 
 = WP Simple Pay Pro features =
@@ -47,7 +48,6 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 - Embedded & overlay form display options
 - Apple Pay & Google Pay support with custom forms
 - Support for ACH debit and iDEAL payments
-- reCAPTCHA v3 invisible verification support
 - Stripe Subscription support
 - Subscription installment plans
 - Subscription setup fees
