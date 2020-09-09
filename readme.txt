@@ -1,9 +1,9 @@
 === Stripe Payments WordPress Plugin – WP Simple Pay ===
 Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
-Tags: stripe, stripe checkout, stripe payments, payments, credit card payments
+Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 4.9
-Tested up to: 5.5
-Stable tag: 2.5.1
+Tested up to: 5.5.1
+Stable tag: 2.5.2
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -25,14 +25,17 @@ It’s no secret that we believe [Stripe](https://stripe.com/) is the best payme
 
 - Create unlimited payment forms integrated with [Stripe Checkout](https://stripe.com/payments/checkout)
 - Display your brand or product image on Stripe Checkout pages
+- Option to collect customer billing & shipping addresses
 - Option to verify zip/postal code without an address
 - Support for 27 languages, 39 countries and 135+ currencies
+- Apple Pay & Google Pay support with Stripe Checkout
 - Stripe Connect support for easier setup
 - PCI DSS compliant and Strong Customer Authentication (SCA) support for improved security
 - Translation ready
 - [AffiliateWP](https://affiliatewp.com?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=integration&utm_term=description) integration
-- Customize payment success & failure pages
+- Custom payment success & failure pages
 - Toggle between test & live modes
+- reCAPTCHA v3 invisible verification support
 - Developer-friendly for building custom integrations
 
 = WP Simple Pay Pro features =
@@ -47,7 +50,6 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 - Embedded & overlay form display options
 - Apple Pay & Google Pay support with custom forms
 - Support for ACH debit and iDEAL payments
-- reCAPTCHA v3 invisible verification support
 - Stripe Subscription support
 - Subscription installment plans
 - Subscription setup fees
@@ -139,7 +141,7 @@ Use with subscriptions or one-time payments, and optionally add a total amount l
 
 = Add Apple Pay and Google Pay buttons =
 
-Give your site visitors the option to pay using Apple Pay, Google Pay, and Microsoft Pay with a single button.
+Give your site visitors the option to pay using Apple Pay, Google Pay, and Microsoft Pay with a single button in your custom embedded or overlay forms.
 
 Anyone with a browser and device combination that allows one of these options will see the new payment button.
 
@@ -232,6 +234,9 @@ Yes. There is no limit to the number of payment forms you can create, each with 
 
 No. Payment forms do not have a limit on how much money can be processed.
 
+= Do I need to purchase a Stripe payment gateway add-on? =
+No. WP Simple Pay connects to Stripe (and Stripe only) out of the box. No Stripe payment gateway add-on required.
+
 = Can I collect more than just payment data from my customers? =
 
 Not with this plugin, but the [Pro version](https://wpsimplepay.com?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=faq) allows you to insert additional custom fields in your payment forms to record extra data with each Stripe payment record.
@@ -265,6 +270,10 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 2.5.2 - September 9, 2020 =
+
+* New: Add reCAPTCHA v3 support. Configure in "Simple Pay Lite > Settings > General"
 
 = 2.5.1 - August 26, 2020 =
 

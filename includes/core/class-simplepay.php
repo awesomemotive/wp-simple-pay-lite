@@ -141,6 +141,10 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/functions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/admin.php' );
 
+
+		// reCAPTCHA
+		require_once( SIMPLE_PAY_INC . 'core/recaptcha/index.php' );
+
 		// Legacy.
 		require_once( SIMPLE_PAY_INC . 'core/legacy/hooks.php' );
 		require_once( SIMPLE_PAY_INC . 'core/legacy/class-payment-form.php' );
