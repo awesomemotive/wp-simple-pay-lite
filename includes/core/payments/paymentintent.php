@@ -168,9 +168,21 @@ function confirm( $paymentintent_id, $api_request_args = array() ) {
  * @return array
  */
 function get_args_from_payment_form_request( $form, $form_data, $form_values, $customer_id ) {
-	$amount = isset( $form_values['simpay_amount'] )
-		? $form_values['simpay_amount']
-		: simpay_convert_amount_to_cents( $form->amount );
+	if ( true === $form->is_one_time_custom_amount ) {
+		$amount = isset( $form_values['simpay_amount'] )
+			? $form_values['simpay_amount']
+			: simpay_convert_amount_to_cents( $form->amount );
+
+		$minimum = isset( $form->minimum_amount )
+			? simpay_convert_amount_to_cents( $form->minimum_amount )
+			: simpay_convert_amount_to_cents( simpay_global_minimum_amount() );
+
+		if ( $amount < $minimum ) {
+			throw new \Exception( __( 'Invalid amount.', 'stripe' ) );
+		}
+	} else {
+		$amount = simpay_convert_amount_to_cents( $form->amount );
+	}
 
 	$paymentintent_args = array(
 		'amount'      => $amount,

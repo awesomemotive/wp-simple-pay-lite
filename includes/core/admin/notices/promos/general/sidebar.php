@@ -14,7 +14,6 @@
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Coupon code support', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'On-site checkout (no redirect)', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Embedded & overlay forms', 'stripe' ); ?></li>
-					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Apple Pay & Google Pay', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'ACH and iDEAL payments', 'stripe' ); ?></li>
 					<li><div class="dashicons dashicons-yes"></div> <?php _e( 'Stripe Subscription support', 'stripe' ); ?>*</li>
 				</ul>

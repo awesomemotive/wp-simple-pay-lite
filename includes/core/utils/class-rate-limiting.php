@@ -100,7 +100,7 @@ class Rate_Limiting {
 			return false;
 		}
 
-		$max_rate_count = 30;
+		$max_rate_count = 20;
 
 		/**
 		 * Filters the number of times the endpoint can be hit within the specified time period (1 hour).
@@ -199,7 +199,7 @@ class Rate_Limiting {
 	 * @param int    $current_count The count to update to.
 	 */
 	protected function update_rate_limiting_count( $blocking_id = '', $current_count = 0 ) {
-		$expiration_in_seconds = HOUR_IN_SECONDS;
+		$expiration_in_seconds = HOUR_IN_SECONDS * 1.5;
 
 		/**
 		 * Filters the length of time before rate limits are reset.
