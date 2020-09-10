@@ -81,7 +81,7 @@ By upgrading to WP Simple Pay Pro you also get access to one-on-one help from ou
 
 WP Simple Pay is also a [Stripe verified partner](https://stripe.com/accept-payments/wp-simple-pay). The Stripe partner program recognizes applications which meet their strict quality requirements and allows us to provide even better services to our customers.
 
-Here are a few examples of the WP Simple Pay Pro showing different ways you can set up Stripe payment forms. To see how they would appear and function on your site, [try out some demos](https://demo.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=demos&utm_term=description).
+Below are a few examples of ways you can set up Stripe payment forms with WP Simple Pay Pro. To see how they would appear and function on your site, [try out our demos](https://demo.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=demos&utm_term=description).
 
 = Payment form drag & drop builder =
 
