@@ -60,6 +60,7 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 By upgrading to WP Simple Pay Pro you also get access to one-on-one help from our knowledgeable support team and our [extensive documentation site](https://docs.wpsimplepay.com/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=docs&utm_term=description).
 
 > WP Simple Pay Pro has been a game changer for my business. There is no simpler way to add Stripe payments to your site. We offer subscriptions with setup fees and this plugin handled these needs beautifully. Their support is unrivaled too.
+
 > Brian Casel, Founder of Audience Ops
 
 = Who is WP Simple Pay Pro For? =
@@ -73,6 +74,7 @@ By upgrading to WP Simple Pay Pro you also get access to one-on-one help from ou
 - Agencies and freelancers setting up client websites
 
 > We needed to start accepting credit card payments for services quickly, and WP Simple Pay Pro over-delivered. The plugin and support behind it have been key in building up our 6-figure business. I couldn’t wish for anything more out of a product.
+
 > Craig Hewitt, Founder of Podcast Motor
 
 **[Upgrade to WP Simple Pay Pro Now](https://wpsimplepay.com/lite-vs-pro/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=upgrade&utm_term=description)**
@@ -108,6 +110,7 @@ You can set a few options when using Stripe Checkout, but when this option is se
 [Try our Stripe Checkout demos](https://demo.wpsimplepay.com/stripe-checkout/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=checkout&utm_term=description)
 
 > We paid developers for several hours to do what WP Simple Pay Pro accomplished in minutes. A no-brainer investment for us.
+
 > Justin McGill, Founder of LeadFuze
 
 = Allow custom amount payments =
@@ -137,6 +140,7 @@ Use with subscriptions or one-time payments, and optionally add a total amount l
 [Try our demos with coupon code fields](https://demo.wpsimplepay.com/coupon-codes/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=coupons&utm_term=description)
 
 > I've set up payment processing on over a dozen sites and it usually takes forever just to get up and running. Using WP Simple Pay Pro I was accepting Stripe payments in no time. It’s one of the best decisions I made while launching my new product.
+
 > Mike Taber, Founder of Bluetick
 
 = Add Apple Pay and Google Pay buttons =
@@ -168,6 +172,7 @@ Stripe currently supports [27 languages](https://support.stripe.com/questions/su
 [Try our French locale + Euro currency demo](https://demo.wpsimplepay.com/alternate-locale-currency/?utm_medium=readme&utm_source=wporg&utm_campaign=lite-plugin&utm_content=locale&utm_term=description)
 
 > The WP Simple Pay team has been outstanding. From technical support to feature requests to frequent product updates – the value provided has saved us thousands over building a Stripe integration ourselves.
+
 > Jon MacDonald, Founder of The Good
 
 = Get Help =
