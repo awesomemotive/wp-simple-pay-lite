@@ -10,6 +10,8 @@
 
 namespace SimplePay\Core\Admin\Pages;
 
+use SimplePay\Core\reCAPTCHA;
+use SimplePay\Core\Utils;
 use SimplePay\Core\Abstracts\Admin_Page;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -220,6 +222,26 @@ class System_Status extends Admin_Page {
 							'result_export' => ! empty( $endpoint_secret ) ? 'Yes' : 'No',
 						);
 					}
+
+					$recaptcha_keys = reCAPTCHA\has_keys();
+
+					$sections['simpay']['recaptcha'] = array(
+						'label'         => __( 'reCAPTCHA', 'stripe' ),
+						'label_export'  => 'reCAPTCHA',
+						'result'        => true === $recaptcha_keys ? 'Yes' : 'No',
+						'result_export' => true === $recaptcha_keys ? 'Yes' : 'No',
+					);
+
+					$rate_limiting = new Utils\Rate_Limiting();
+					$rate_limiting->setup_log_file();
+					$has_file = $rate_limiting->has_file();
+
+					$sections['simpay']['rate-limit'] = array(
+						'label'         => __( 'Rate Limit File', 'stripe' ),
+						'label_export'  => 'Rate Limit File',
+						'result'        => true === $has_file ? 'Yes' : 'No',
+						'result_export' => true === $has_file ? 'Yes' : 'No',
+					);
 
 					/**
 					 * WordPress Installation

@@ -611,11 +611,16 @@ function simpay_get_decimal_places() {
  * Also prevent negative values.
  * Similar to JS function unformatCurrency.
  *
- * @param string|float $amount
+ * @param string|float|int $amount
  *
  * @return float
  */
 function simpay_unformat_currency( $amount ) {
+
+	// Nothing neesd to be replaced if we are using a number already.
+	if ( is_float( $amount ) || is_int( $amount ) ) {
+		return abs( $amount );
+	}
 
 	// Remove thousand separator.
 	$amount = str_replace( simpay_get_thousand_separator(), '', $amount );
