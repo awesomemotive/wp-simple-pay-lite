@@ -271,6 +271,15 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
+= 2.5.3 - October 22, 2020 =
+
+* New: Add theme compatibility for reCAPTCHA badge display.
+* New: Add invalid reCAPTCHA configuration feedback to settings.
+* Fix: Avoid double conversion to cents when using comma decimal separators.
+* Fix: Disable `autocomplete` in plugin setting inputs.
+* Fix: Do not register unused API endpoints in Lite.
+* Dev: Add reCAPTCHA and rate limit information to System Report.
+
 = 2.5.2 - September 9, 2020 =
 
 * New: Add reCAPTCHA v3 support. Configure in "Simple Pay Lite > Settings > General"
