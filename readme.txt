@@ -3,7 +3,7 @@ Contributors: pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702,
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 4.9
 Tested up to: 5.5.1
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 Requires PHP: 5.6
 License: GPLv2 or later
 
