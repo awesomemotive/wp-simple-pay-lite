@@ -36,8 +36,6 @@ class REST_API {
 	 */
 	public function register_routes() {
 		$controllers = array(
-			'\SimplePay\Core\REST_API\v2\Customer_Controller',
-			'\SimplePay\Core\REST_API\v2\PaymentIntent_Controller',
 			'\SimplePay\Core\REST_API\v2\Checkout_Session_Controller',
 		);
 

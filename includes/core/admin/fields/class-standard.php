@@ -75,6 +75,7 @@ class Standard extends Field {
 				id="' . esc_attr( $this->id ) . '"
 				value="' . esc_attr( $this->value ) . '"
 				class="' . esc_attr( $this->class ) . '"
+				autocomplete="off"
 				' . ( $this->style ? 'style="' . $this->style . '" ' : ' ' ) . '
 				' . ( $this->placeholder ? 'placeholder="' . $this->placeholder . '"' : ' ' ) . '
 				' . ( $this->attributes ) . '

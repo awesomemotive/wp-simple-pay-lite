@@ -152,6 +152,14 @@ class Keys extends Admin_Page {
 					if ( simpay_can_site_manage_stripe_keys() ) {
 						$html .= '<p id="wpsp-api-keys-row-reveal"><button type="button" class="button-link"><small>' . __( 'Manage API keys manually', 'stripe' ) . '</small></button></p>';
 						$html .= '<p id="wpsp-api-keys-row-hide"><button type="button" class="button-link"><small>' . __( 'Hide API keys', 'stripe' ) . '</small></button></p>';
+						$html .= '<div class="notice inline notice-warning wpsp-manual-key-warning" style="margin: 15px 0 -10px; display: none;">';
+						$html .= wpautop(
+							esc_html__(
+								'Although you can add your API keys manually, we recommend using Stripe Connect: an easier and more secure way of connecting your Stripe account to your website. Stripe Connect prevents issues that can arise when copying and pasting account details from Stripe into WP Simple Pay\'s settings. With Stripe Connect you\'ll be ready to go with just a few clicks.',
+								'stripe'
+							)
+						);
+						$html .= '</div>';
 					}
 
 					$fields[ $section ] = array(

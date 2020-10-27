@@ -87,6 +87,38 @@ function admin_setting_description() {
 	</p>
 
 	<?php
+	// No keys are entered.
+	if ( ! has_keys() ) {
+		return ob_get_clean();
+	}
+	?>
+
+	<div class="notice inline simpay-recaptcha-feedback" style="display: none; margin: 15px 0 -10px;"><p></p></div>
+
+	<?php
+	$url = add_query_arg(
+		array(
+			'render' => get_key( 'site' ),
+		),
+		'https://www.google.com/recaptcha/api.js'
+	);
+
+	wp_enqueue_script( 'google-recaptcha', esc_url( $url ), array(), 'v3', true );
+
+	wp_localize_script(
+		'google-recaptcha',
+		'simpayGoogleRecaptcha',
+		array(
+			'siteKey' => get_key( 'site' ),
+			'i18n'    => array(
+				'invalid' => esc_html__(
+					'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.',
+					'stripe'
+				),
+			),
+		)
+	);
+
 	return ob_get_clean();
 }
 
@@ -132,7 +164,9 @@ function add_recaptcha_settings_fields( $fields ) {
 	$fields[ $section ]['setup'] = array(
 		'title' => esc_html__( 'Setup', 'stripe' ),
 		'type'  => 'custom-html',
-		'html'  => admin_setting_description(),
+		'html'  => isset( $_GET['tab'] ) && 'general' === $_GET['tab']
+			? admin_setting_description()
+			: '',
 		'name'  => 'simpay_' . $id . '_' . $group . '[' . $section . '][setup]',
 		'id'    => 'simpay-' . $id . '-' . $group . '-' . $section . '-setup',
 	);

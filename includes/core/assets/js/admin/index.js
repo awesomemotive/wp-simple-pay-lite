@@ -6,6 +6,7 @@
 import hooks from '@wpsimplepay/hooks';
 import 'admin/settings/test-mode.js';
 import toggleStripeConnectNotice from 'admin/settings/stripe-connect.js';
+import 'admin/settings/recaptcha.js';
 
 /**
  * Globallly accessible object of WP Simple Pay-related (admin) functionality.
@@ -263,6 +264,7 @@ let spAdmin = {};
 				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().show().prev().show();
 				$( '#wpsp-api-keys-row-hide' ).show();
 				$( this ).parent().hide();
+				$( '.wpsp-manual-key-warning' ).show();
 			} );
 
 			$( '#wpsp-api-keys-row-hide button' ).click( function( e ) {
@@ -271,6 +273,7 @@ let spAdmin = {};
 				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().hide().prev().hide();
 				$( '#wpsp-api-keys-row-reveal' ).show();
 				$( this ).parent().hide();
+				$( '.wpsp-manual-key-warning' ).hide();
 			} );
 		},
 

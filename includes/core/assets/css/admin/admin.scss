@@ -170,7 +170,7 @@
 		border-right: 1px solid #ccd0d4;
 		line-height: 1em;
 		position: relative;
-		flex: 0 1 25%;
+		flex: 0 0 25%;
 
 		@media screen and (max-width: 782px) {
 			flex-basis: 100%;
@@ -308,8 +308,9 @@
 	}
 
 	.simpay-panels {
-		flex: 1 0 75%;
+		flex: 0 0 75%;
 		display: flex;
+		overflow: hidden;
 
 		@media screen and (max-width: 782px) {
 			flex-basis: 100%;

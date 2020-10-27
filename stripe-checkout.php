@@ -5,7 +5,7 @@
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author: Sandhills Development, LLC
  * Author URI: https://sandhillsdev.com
- * Version: 2.5.2
+ * Version: 2.5.3
  * Text Domain: stripe
  * Domain Path: /languages
  */
@@ -45,7 +45,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	//
 	// Lite/Pro-specific.
 	//
-	define( 'SIMPLE_PAY_VERSION', '2.5.2' );
+	define( 'SIMPLE_PAY_VERSION', '2.5.3' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );

@@ -100,7 +100,7 @@ class Rate_Limiting {
 			return false;
 		}
 
-		$max_rate_count = 20;
+		$max_rate_count = 18;
 
 		/**
 		 * Filters the number of times the endpoint can be hit within the specified time period (1 hour).
@@ -199,7 +199,7 @@ class Rate_Limiting {
 	 * @param int    $current_count The count to update to.
 	 */
 	protected function update_rate_limiting_count( $blocking_id = '', $current_count = 0 ) {
-		$expiration_in_seconds = HOUR_IN_SECONDS * 1.5;
+		$expiration_in_seconds = HOUR_IN_SECONDS * 2.5;
 
 		/**
 		 * Filters the length of time before rate limits are reset.
@@ -282,6 +282,18 @@ class Rate_Limiting {
 
 		return (array) $decoded_contents;
 	}
+
+	/**
+	 * Determines if the log file exists.
+	 *
+	 * @since 3.9.7
+	 *
+	 * @return string
+	 */
+	public function has_file() {
+		return @file_exists( $this->file );
+	}
+
 
 	/**
 	 * Retrieve the file data is written to
