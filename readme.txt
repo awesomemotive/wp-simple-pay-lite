@@ -276,7 +276,7 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
-= 2.5.3 - October 22, 2020 =
+= 2.5.3 - October 27, 2020 =
 
 * New: Add theme compatibility for reCAPTCHA badge display.
 * New: Add invalid reCAPTCHA configuration feedback to settings.
