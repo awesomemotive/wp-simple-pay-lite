@@ -276,6 +276,26 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
+= 2.6.0 - February XX, 2021 =
+
+* New: Update plugin settings screen UI and UX.
+* New: Parse shortcodes in `[simpay_payment_receipt]` shortcode.
+* New: Show notice and don't output Payment Form if REST API is disabled.
+* New: Prevent switching to an invalid Payment Mode in per-form settings.
+* Fix: Clarify Lite to Pro upgrade notice and steps.
+* Fix: Ensure plugin update notice spans all columns in table.
+* Fix: Avoid page "jump" when loading Payment Form settings.
+* Fix: Avoid sending URLs in form data for ModSecurity rules.
+* Fix: Ensure notices can be persistently dismissed in WordPress 5.6.
+* Fix: Adjust opinionated form styles for Twenty Twenty One theme.
+* Fix: Ensure currency symbol position preview is correct in settings.
+* Fix: Update Stripe Connect messaging for temporary accounts.
+* Fix: Use updated admin URLs to ensure admin menu items are highlighted consistently.
+* Fix: Ensure account display name appears in "Connect with Stripe" messaging in Test Mode.
+* Dev: Update Stripe API PHP Library to `7.53.0`.
+* Dev: Rename Stripe script handle to `sandhills-stripe-js-v3`.
+* Dev: Rename Stripe script handle to `simpay-google-recaptcha-v3`.
+
 = 2.5.3 - October 27, 2020 =
 
 * New: Add theme compatibility for reCAPTCHA badge display.
