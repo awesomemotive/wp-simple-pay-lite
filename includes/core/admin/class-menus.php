@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\Admin;
 
+use SimplePay\Core\Settings;
 use SimplePay\Core\Admin\Pages\System_Status;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,11 +48,36 @@ class Menus {
 
 		// Show if test mode is active in admin bar menu.
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ) );
+
+		add_filter( 'admin_footer_text', array( $this, 'add_footer_text' ) );
+	}
+
+	/**
+	 * Outputs "please rate" text.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param string $footer_text Footer text.
+	 * @return string
+	 */
+	public function add_footer_text( $footer_text ) {
+
+		if ( simpay_is_admin_screen() ) {
+			$footer_text = sprintf(
+				/* Translators: 1. The plugin name */
+				__( 'If you like <strong>%1$s</strong> please leave us a %2$s rating. A huge thanks in advance!', 'stripe' ),
+				SIMPLE_PAY_PLUGIN_NAME,
+				'<a href="https://wordpress.org/support/plugin/stripe/reviews?rate=5#new-post" rel="noopener noreferrer" target="_blank" class="simpay-rating-link" data-rated="' .
+				esc_attr__( 'Thanks :)', 'stripe' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
+			);
+		}
+
+		return $footer_text;
 	}
 
 
 	/**
-	 * Display admin bar test mode active
+	 * Display admin bar test mode active.
 	 *
 	 * @return bool
 	 */
@@ -62,10 +88,16 @@ class Menus {
 			return false;
 		}
 
+		$stripe_test_mode_url = Settings\get_url( array(
+			'section'    => 'stripe',
+			'subsection' => 'account',
+			'setting'    => 'test_mode',
+		) );
+
 		$wp_admin_bar->add_menu(
 			array(
 				'id'     => 'simpay-admin-bar-test-mode',
-				'href'   => admin_url( 'admin.php?page=simpay_settings&tab=keys#simpay-settings-keys-mode-test-mode' ),
+				'href'   => $stripe_test_mode_url,
 				'parent' => 'top-secondary',
 				'title'  => sprintf(
 					/* translators: "Test Mode" badge. */
@@ -82,20 +114,30 @@ class Menus {
 	 *
 	 * @since  3.0.0
 	 *
-	 * @param  array  $action_links
-	 * @param  string $file
-	 *
+	 * @param array  $action_links Action links.
+	 * @param string $file Plugin file.
 	 * @return array
 	 */
 	public static function plugin_action_links( $action_links, $file ) {
 
 		if ( self::$plugin == $file ) {
 
-			$links             = array();
-			$links['settings'] = '<a href="' . admin_url( 'admin.php?page=simpay_settings' ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
-			$links['forms']    = '<a href="' . admin_url( 'admin.php?page=simpay' ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
+			$settings_url = Settings\get_url( array(
+				'section' => 'stripe',
+			) );
 
-			if ( ! defined( 'SIMPLE_PAY_ITEM_NAME' ) ) {
+			$forms_url = add_query_arg(
+				array(
+					'post_type' => 'simple-pay',
+				),
+				admin_url( 'edit.php' )
+			);
+
+			$links             = array();
+			$links['settings'] = '<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
+			$links['forms']    = '<a href="' . esc_url( $forms_url ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
+
+			if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
 
 				array_push( $action_links, $upgrade_link );

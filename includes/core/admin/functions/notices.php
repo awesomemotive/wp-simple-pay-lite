@@ -51,6 +51,23 @@ function no_ssl() {
 }
 
 /**
+ * Returns a notice message to display when the REST API is disabled.
+ *
+ * @since 4.0.0
+ *
+ * @return string
+ */
+function no_rest_api() {
+	if ( true === simpay_is_rest_api_enabled() ) {
+		return false;
+	}
+
+	return wpautop(
+		esc_html__( 'WP Simple Pay requires the WordPress REST API to be enabled to process payments.', 'stripe' )
+	);
+}
+
+/**
  * Function to display an alert to installs that have not authorized through Stripe Connect
  *
  * @return string
@@ -108,25 +125,80 @@ function php_version_56() {
 	<strong><?php esc_html_e( 'WP Simple Pay is increasing its PHP version requirement.', 'stripe' ); ?></strong>
 </p>
 
-<p>
-	<?php echo sprintf( __( 'WP Simple Pay will be increasing its PHP requirement to version <code>%1$s</code> or higher in an upcoming release. It looks like you\'re using version <code>%2$s</code>, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you\'re using <a href="%3$s" target="_blank" rel="noopener noreferrer">no longer receives security updates</a>, which is another great reason to update.', 'stripe' ), $future_required_version, PHP_VERSION, 'http://php.net/eol.php' ); ?>
-</p>
+<?php
+echo wp_kses(
+	wpautop(
+		sprintf(
+			/* translators: %1$s Future PHP version requirement. %2$s Current PHP version. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
+			__(
+				'WP Simple Pay will be increasing its PHP requirement to version %1$s or higher in an upcoming release. It looks like you\'re using version %2$s, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you\'re using %3$sno longer receives security updates%4$s, which is another great reason to update.',
+				'stripe'
+			),
+			'<code>' . $future_required_version . '</code>',
+			'<code>' . PHP_VERSION . '</code>',
+			'<a href="http://php.net/eol.php" target="_blank" rel="noopener noreferrer">',
+			'</a>'
+		)
+	),
+	array(
+		'code' => true,
+		'a'    => array(
+			'href'   => true,
+			'target' => true,
+			'rel'    => true,
+		),
+	)
+);
+?>
 
 <p>
 	<strong><?php esc_html_e( 'Which version should I upgrade to?', 'stripe' ); ?></strong>
 </p>
 
-<p>
-	<?php echo sprintf( __( 'In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to <code>%1$s</code>, <code>7.0</code>, <code>7.1</code>, or <code>7.2</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>7.1</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>7.x</code>, so more testing may be required.', 'stripe' ), $future_required_version ); ?>
-</p>
+<?php
+echo wpautop(
+	wp_kses(
+		sprintf(
+			/* translators: %1$s Future PHP version requirement. */
+			__(
+				'In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.0</code>, <code>7.1</code>, or <code>7.2</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>7.1</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>7.x</code>, so more testing may be required.',
+				'stripe'
+			),
+			'<code>' . $future_required_version . '</code>'
+		),
+		array(
+			'code' => true,
+		)
+	)
+);
+?>
 
 <p>
 	<strong><?php esc_html_e( 'Need help upgrading? Ask your web host!', 'stripe' ); ?></strong>
 </p>
 
-<p>
-	<?php echo sprintf( __( 'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see <a href="%s" target="_blank" rel="noopener noreferrer">our hosting recommendations</a>.', 'stripe' ), 'https://wpsimplepay.com/recommended-wordpress-hosting/' ); ?>
-</p>
+<?php
+echo wpautop(
+	wp_kses(
+		sprintf(
+			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+			__(
+				'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s.',
+				'stripe'
+			),
+			'<a href="https://wpsimplepay.com/recommended-wordpress-hosting/" target="_blank" rel="noopener noreferrer">',
+			'</a>'
+		),
+		array(
+			'a'    => array(
+				'href'   => true,
+				'target' => true,
+				'rel'    => true,
+			),
+		)
+	)
+);
+?>
 
 	<?php
 	return ob_get_clean();

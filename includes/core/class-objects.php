@@ -40,10 +40,9 @@ class Objects {
 	}
 
 	/**
-	 * Get a specific form
+	 * Get a specific form.
 	 *
-	 * @param $object Post ID or post object
-	 *
+	 * @param object|int $object Post ID or post object.
 	 * @return false|null|Object
 	 */
 	public function get_form( $object ) {
@@ -103,8 +102,7 @@ class Objects {
 	 *
 	 * @since  3.0.0
 	 *
-	 * @param  string $name
-	 *
+	 * @param string $name Admin page slug.
 	 * @return null|Object
 	 */
 	public function get_admin_page( $name ) {

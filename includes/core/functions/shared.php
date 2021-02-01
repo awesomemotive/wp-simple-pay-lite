@@ -13,116 +13,130 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use SimplePay\Core\Abstracts\Form;
+use SimplePay\Core\Settings;
 
 /**
- * Get a Simple Pay setting. It will check for both a form setting or a global setting option.
+ * Returns all saved settings.
+ *
+ * @since 4.0.0
+ *
+ * @return array
+ */
+function simpay_get_settings() {
+	return get_option( 'simpay_settings', array() );
+}
+
+/**
+ * Returns a setting value.
+ *
+ * @todo Move to \SimplePay\Core\Settings namespace.
  *
  * @since 3.0.0
  *
  * @param string $setting Setting key.
- * @return bool|mixed|null
+ * @param mixed  $default Setting default.
+ * @param bool   $raw If the value should be unfiltered. Default true.
+ * @return mixed|null
  */
-function simpay_get_setting( $setting ) {
+function simpay_get_setting( $setting, $default = null, $raw = true ) {
+	$legacy_setting = $setting;
+	$setting        = Settings\Compat\get_setting_key( $legacy_setting );
 
-	// If we are in the admin we don't want to use filters so we get the raw global setting value.
-	if ( is_admin() ) {
-		return simpay_get_global_setting( $setting, true );
+	if ( $setting !== $legacy_setting ) {
+		_doing_it_wrong(
+			__FUNCTION__,
+			esc_html(
+				sprintf(
+					/* translators: %1$s Legacy setting key. %2$s Migrated setting key. */
+					__(
+						'Legacy setting %1$s should be accessed via %2$s.',
+						'stripe'
+					),
+					$legacy_setting,
+					$setting
+				)
+			),
+			'4.0.0'
+		);
 	}
 
-	global $simpay_form;
+	$settings = simpay_get_settings();
 
-	$global = simpay_get_global_setting( $setting );
-	$form   = simpay_get_form_setting( $setting );
+	/**
+	 * Filters the saved settings and values.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param array $settings Saved settings and values.
+	 */
+	$settings = apply_filters( 'simpay_global_settings', $settings );
 
-	$form_setting   = null;
-	$global_setting = null;
-
-	if ( ! $global && ! $form ) {
-		return false;
+	if ( isset( $settings[ $setting ] ) ) {
+		$value = $settings[ $setting ];
+	} else {
+		$value = $default;
 	}
 
-	if ( $simpay_form ) {
-		$form_setting = simpay_get_filtered( $setting, simpay_get_form_setting( $setting, $simpay_form->id ), $simpay_form->id );
-	}
+	// Look in legacy options that might be used by extensions.
+	if ( null === $value ) {
+		$legacy = array_merge(
+			get_option( 'simpay_settings_general', array() ),
+			get_option( 'simpay_settings_keys', array() ),
+			get_option( 'simpay_settings_display', array() )
+		);
 
-	if ( ! $form_setting ) {
-
-		$global_setting = simpay_get_filtered( $setting, simpay_get_global_setting( $setting ) );
-
-		return $global_setting;
-	}
-
-	return $form_setting;
-}
-
-/**
- * Get a specific form setting.
- *
- * @param string   $setting Setting key.
- * @param null|int $form_id Form ID.
- * @return false|mixed Setting if property is set, otherwise false.
- */
-function simpay_get_form_setting( $setting, $form_id = null ) {
-	global $simpay_form;
-
-	// We want to use the form ID if it is passed, but only if there isn't a global form set.
-	if ( ! $simpay_form && $form_id ) {
-		$simpay_form = simpay_get_form( $form_id );
-	}
-
-	if ( $simpay_form ) {
-
-		if ( $simpay_form instanceof Form && isset( $simpay_form->$setting ) ) {
-			return $simpay_form->$setting;
+		if ( isset( $legacy[ $legacy_setting ] ) ) {
+			$value = $legacy[ $legacy_setting ];
 		}
 	}
 
-	return false;
+	if ( false === $raw ) {
+		return simpay_get_filtered( $setting, $value );
+	}
+
+	return $value;
 }
 
 /**
- * Get a global setting.
+ * Updates a setting value.
  *
- * @param      $setting
- * @param bool    $raw Whether to return the filtered setting data or just the raw saved value in the main settings.
+ * @since 4.0.0
  *
- * @return bool|mixed
+ * @param string $setting Setting ID.
+ * @param mixed  $value Setting value.
+ * @return bool True if the value was updated, false otherwise.
  */
-function simpay_get_global_setting( $setting, $raw = false ) {
+function simpay_update_setting( $setting, $value ) {
+	$existing_settings = get_option( 'simpay_settings', array() );
 
-	// This works but there must be a nicer way to do this
+	$settings_to_update = array(
+		$setting => $value,
+	);
 
-	$general = get_option( 'simpay_settings_general' );
-	$keys    = get_option( 'simpay_settings_keys' );
-	$display = get_option( 'simpay_settings_display' );
+	$new_settings = array_merge(
+		$existing_settings,
+		$settings_to_update
+	);
 
-	$general = false !== $general ? $general : array();
-	$keys    = false !== $keys ? $keys : array();
-	$display = false !== $display ? $display : array();
+	return update_option( 'simpay_settings', $new_settings );
+}
 
-	// Jam all of our settings into one array
-	$mega = apply_filters( 'simpay_global_settings', array_merge( $general, $keys, $display ) );
-
-	if ( ! empty( $mega ) ) {
-		foreach ( $mega as $k => $v ) {
-
-			if ( ! empty( $v ) && is_array( $v ) ) {
-				foreach ( $v as $k2 => $v2 ) {
-					if ( $setting == $k2 ) {
-						if ( $raw ) {
-							return $v2;
-						} else {
-							return simpay_get_filtered( $setting, $v2 );
-						}
-					} else {
-
-					}
-				}
-			}
-		}
-	}
-
-	return false;
+/**
+ * Checks if REST API is enabled.
+ *
+ * @link https://github.com/Automattic/jetpack/blob/master/_inc/lib/admin-pages/class.jetpack-admin-page.php#L157-L171
+ *
+ * @since 4.0.0
+ *
+ * @return bool
+ */
+function simpay_is_rest_api_enabled() {
+	return /** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
+		apply_filters( 'rest_enabled', true ) &&
+		/** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
+		apply_filters( 'rest_jsonp_enabled', true ) &&
+		/** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
+		apply_filters( 'rest_authentication_errors', true );
 }
 
 /**
@@ -165,26 +179,9 @@ function simpay_get_filtered( $filter, $value, $form_id = null ) {
 }
 
 /**
- * Return the total amount for the form.
- *
- * @param bool $formatted
- *
- * @return string
- */
-function simpay_get_total( $formatted = true ) {
-
-	if ( $formatted ) {
-		return simpay_format_currency( simpay_get_setting( 'amount' ) );
-	}
-
-	return simpay_get_setting( 'amount' );
-}
-
-/**
  * Get plugin URL.
  *
- * @param  string $url
- *
+ * @param string $url URL to retrieve.
  * @return string
  */
 function simpay_get_url( $url ) {
@@ -194,9 +191,8 @@ function simpay_get_url( $url ) {
 /**
  * Print an error message only to those with admin privileges
  *
- * @param string $message
- * @param bool   $echo
- *
+ * @param string $message Admin error message.
+ * @param bool   $echo If the message should be echoed. Default true.
  * @return string
  */
 function simpay_admin_error( $message, $echo = true ) {
@@ -217,53 +213,58 @@ function simpay_admin_error( $message, $echo = true ) {
 }
 
 /**
- * Get a form.
+ * Retrieves a Payment Form.
  *
- * @since  3.0.0
+ * @todo This function is not used, but should be.
  *
- * @param  string|int|object|WP_Post $object
+ * @since 3.0.0
  *
- * @return null|\SimplePay\Core\Abstracts\Form
+ * @param string|int|WP_Post $form_id Payment Form to retrieve.
+ * @return \SimplePay\Core\Abstracts\Form
  */
-function simpay_get_form( $object ) {
-
-	if ( is_numeric( $object ) ) {
-		$object = get_post( $object );
+function simpay_get_form( $form_id ) {
+	if ( $form_id instanceof WP_Post ) {
+		$form_id = $form_id->ID;
 	}
 
-	$objects = \SimplePay\Core\SimplePay()->objects;
+	/** This filter is documented in includes/core/shortcodes.php */
+	$form = apply_filters( 'simpay_form_view', '', $form_id );
 
-	return $objects instanceof \SimplePay\Core\Objects ? $objects->get_form( $object ) : null;
+	if ( empty( $form ) ) {
+		$form = new Default_Form( $form_id );
+	}
+
+	// @todo Validate if a form is found.
+
+	return $form;
 }
 
 /**
  * Get a field.
  *
- * @since  3.0.0
+ * @since 3.0.0
  *
- * @param  array  $args
- * @param  string $name
- *
+ * @param array  $args Field arguments.
+ * @param string $name Field name.
  * @return null|\SimplePay\Core\Abstracts\Field
  */
 function simpay_get_field( $args, $name = '' ) {
 	$objects = \SimplePay\Core\SimplePay()->objects;
 
-	return $objects instanceof \SimplePay\Core\Objects ? $objects->get_field( $args, $name ) : null;
+	return $objects instanceof \SimplePay\Core\Objects
+		? $objects->get_field( $args, $name )
+		: null;
 }
 
 /**
- * Print a field.
+ * Prints a field.
  *
- * @since  3.0.0
+ * @since 3.0.0
  *
- * @param  array  $args
- * @param  string $name
- *
- * @return void
+ * @param array  $args Field arguments.
+ * @param string $name Field name.
  */
 function simpay_print_field( $args, $name = '' ) {
-
 	$field = simpay_get_field( $args, $name );
 
 	if ( $field instanceof \SimplePay\Core\Abstracts\Field ) {
@@ -272,28 +273,30 @@ function simpay_print_field( $args, $name = '' ) {
 }
 
 /**
- * Change underscores to dashes in a string
+ * Changes underscores to dashes in a string.
+ *
+ * @since 3.0.0
+ *
+ * @param string $string String to convert underscores to dashes.
+ * @return string
  */
 function simpay_dashify( $string ) {
-
 	return str_replace( '_', '-', $string );
-
 }
 
 /**
- * Check if test mode is enabled.
+ * Determines if the global payment mode is Test Mode.
  *
- * Returns true if test mode enabled or false if not
+ * @since 3.0
+ *
+ * @return bool True if in Test Mode.
  */
 function simpay_is_test_mode() {
-
-	$settings = get_option( 'simpay_settings_keys' );
-
-	return ( isset( $settings['mode']['test_mode'] ) && 'enabled' === $settings['mode']['test_mode'] );
+	return 'enabled' === simpay_get_setting( 'test_mode', 'enabled' );
 }
 
 /**
- * Return test mode badge html if in test mode.
+ * Returns test mode badge html if in test mode.
  *
  * @return string
  */
@@ -308,29 +311,22 @@ function simpay_get_test_mode_badge() {
 }
 
 /**
- * Get the stored API Secret Key
+ * Returns the Stripe Secret Key for the current payment mode.
  *
- * @since unknown
+ * @since 3.0.0
  *
  * @return string
  */
 function simpay_get_secret_key() {
-	global $simpay_form;
+	$test_mode = simpay_is_test_mode();
 
-	$secret_key = '';
-	$test_mode  = simpay_is_test_mode();
+	$setting_key = $test_mode
+		? 'test_secret_key'
+		: 'live_secret_key';
 
-	if ( ! empty( $simpay_form ) ) {
-		$secret_key = $simpay_form->secret_key;
-	} else {
-		$settings = get_option( 'simpay_settings_keys' );
-
-		$secret_key = isset( $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['secret_key'] )
-			? $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['secret_key']
-			: '';
-	}
-
-	$secret_key = trim( $secret_key );
+	$secret_key = trim(
+		simpay_get_setting( $setting_key, '' )
+	);
 
 	/**
 	 * Filters the Stripe API secret key.
@@ -350,29 +346,22 @@ function simpay_get_secret_key() {
 }
 
 /**
- * Get the stored API Publishable Key.
+ * Returns the stored API Publishable Key.
  *
- * @since unknown
+ * @since 3.0.0
  *
  * @return string
  */
 function simpay_get_publishable_key() {
-	global $simpay_form;
+	$test_mode = simpay_is_test_mode();
 
-	$publishable_key = '';
-	$test_mode       = simpay_is_test_mode();
+	$setting_key = $test_mode
+		? 'test_publishable_key'
+		: 'live_publishable_key';
 
-	if ( ! empty( $simpay_form ) ) {
-		$publishable_key = $simpay_form->publishable_key;
-	} else {
-		$settings = get_option( 'simpay_settings_keys' );
-
-		$publishable_key = isset( $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['publishable_key'] )
-			? $settings[ ( $test_mode ? 'test' : 'live' ) . '_keys' ]['publishable_key']
-			: '';
-	}
-
-	$publishable_key = trim( $publishable_key );
+	$publishable_key = trim(
+		simpay_get_setting( $setting_key, '' )
+	);
 
 	/**
 	 * Filters the Stripe API publishable key.
@@ -392,7 +381,11 @@ function simpay_get_publishable_key() {
 }
 
 /**
- * Check that the API keys actually exist.
+ * Checks that the API keys actually exists.
+ *
+ * @since 3.0.0
+ *
+ * @return bool
  */
 function simpay_check_keys_exist() {
 
@@ -407,40 +400,45 @@ function simpay_check_keys_exist() {
 }
 
 /**
- * Get the currency symbol saved by the user
+ * Returns the Stripe Account's currency symbol (set by user).
+ *
+ * @since 3.0.0
+ *
+ * @return string
  */
 function simpay_get_saved_currency_symbol() {
-	return simpay_get_currency_symbol( simpay_get_setting( 'currency' ) );
+	return simpay_get_currency_symbol(
+		simpay_get_setting( 'currency', 'USD' )
+	);
 }
 
 /**
- * Get the saved currency position value
+ * Returns the currency position.
+ *
+ * @since 3.0.0
+ *
+ * @return string
  */
 function simpay_get_currency_position() {
-
-	$position = simpay_get_setting( 'currency_position' );
-
-	return ( ! empty( $position ) ? $position : 'left' );
+	return simpay_get_setting( 'currency_position', 'left' );
 }
 
 /**
- * Get a saved meta setting from a form
+ * Returns a saved meta setting from a form.
  *
- * @param        $post_id
- * @param        $setting
- * @param string  $default
- * @param bool    $single
- *
+ * @param int|string $post_id Payment Form ID.
+ * @param string     $setting Payment Form meta key.
+ * @param string     $default Payment Form meta default.
+ * @param bool       $single Return the Paymetn Form meta as a single value.
+ *                           Default true.
  * @return mixed|string
  */
 function simpay_get_saved_meta( $post_id, $setting, $default = '', $single = true ) {
-
 	if ( empty( $post_id ) ) {
 		return '';
 	}
 
 	// Check for custom keys array. If it doesn't exist then that means this is a brand new form.
-	// See also comment from memuller here: https://developer.wordpress.org/reference/functions/get_post_meta/#user-contributed-notes
 	$custom_keys = get_post_custom_keys( $post_id );
 
 	if ( empty( $custom_keys ) || ! in_array( $setting, $custom_keys ) ) {
@@ -457,19 +455,22 @@ function simpay_get_saved_meta( $post_id, $setting, $default = '', $single = tru
 }
 
 /**
- * Localize the shared script with the shared script variables.
+ * Localizes the shared script with the shared script variables.
+ *
+ * @since 3.0.0
  */
 function simpay_shared_script_variables() {
 
 	$strings = array();
 
 	$bools['booleans'] = array(
+		'isTestMode'    => simpay_is_test_mode(),
 		'isZeroDecimal' => simpay_is_zero_decimal(),
 		'scriptDebug'   => defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
 	);
 
 	$strings['strings'] = array(
-		'currency'          => simpay_get_setting( 'currency' ),
+		'currency'          => simpay_get_setting( 'currency', 'USD' ),
 		'currencySymbol'    => html_entity_decode( simpay_get_saved_currency_symbol() ),
 		'currencyPosition'  => simpay_get_currency_position(),
 		'decimalSeparator'  => simpay_get_decimal_separator(),
@@ -493,8 +494,13 @@ function simpay_shared_script_variables() {
 }
 
 /**
- * Function to return the array of Zero Decimal currencies
- * https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
+ * Returns a list of zero decimal currencies.
+ *
+ * @link https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
+ *
+ * @since 3.0.0
+ *
+ * @return array
  */
 function simpay_get_zero_decimal_currencies() {
 
@@ -521,8 +527,11 @@ function simpay_get_zero_decimal_currencies() {
 }
 
 /**
- * Check if the currency is set to a zero decimal currency or not.
+ * Checks if the currency is set to a zero decimal currency or not.
  *
+ * @since 3.0.0
+ *
+ * @param string $currency Currency code.
  * @return bool
  */
 function simpay_is_zero_decimal( $currency = '' ) {
@@ -530,7 +539,7 @@ function simpay_is_zero_decimal( $currency = '' ) {
 	$zero_decimal_currencies = simpay_get_zero_decimal_currencies();
 
 	if ( empty( $currency ) ) {
-		$currency = simpay_get_setting( 'currency' );
+		$currency = simpay_get_setting( 'currency', 'USD' );
 	}
 
 	if ( array_key_exists( strtolower( $currency ), $zero_decimal_currencies ) ) {
@@ -541,54 +550,57 @@ function simpay_is_zero_decimal( $currency = '' ) {
 }
 
 /**
- * Get the thousands separator.
+ * Returns the thousands separator.
+ *
+ * @since 3.0.0
  *
  * @return string
  */
 function simpay_get_thousand_separator() {
+	$separator = 'no' === simpay_get_setting( 'separator', 'no' )
+		? ','
+		: '.';
 
-	$swap = 'yes' === simpay_get_setting( 'separator' ) ? true : false;
+	/**
+	 * Filters the thousands separator.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param string $separator Thousands separator.
+	 */
+	$separator = apply_filters( 'simpay_thousand_separator', $separator );
 
-	$separator = ',';
-
-	if ( $swap ) {
-		$separator = '.';
-	}
-
-	// Depending on if admin or frontend we enable a filter.
-	if ( is_admin() ) {
-		return $separator;
-	} else {
-		// This is a special case where we need a filter that's different from our global option (in this case it's a bool value checkbox)
-		return apply_filters( 'simpay_thousand_separator', $separator );
-	}
+	return $separator;
 }
 
 /**
- * Get the decimal separator.
+ * Returns the decimal separator.
+ *
+ * @since 3.0.0
  *
  * @return string
  */
 function simpay_get_decimal_separator() {
+	$separator = 'no' === simpay_get_setting( 'separator', 'no' )
+		? '.'
+		: ',';
 
-	$swap = 'yes' === simpay_get_setting( 'separator' ) ? true : false;
+	/**
+	 * Filters the decimal separator.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param string $separator Decimal separator.
+	 */
+	$separator = apply_filters( 'simpay_decimal_separator', $separator );
 
-	$decimal = '.';
-
-	if ( $swap ) {
-		$decimal = ',';
-	}
-
-	if ( is_admin() ) {
-		return $decimal;
-	} else {
-		// This is a special case where we need a filter that's different from our global option (in this case it's a bool value checkbox)
-		return apply_filters( 'simpay_decimal_separator', $decimal );
-	}
+	return $separator;
 }
 
 /**
- * Get the number of decimal places to use.
+ * Returns the number of decimal places to use.
+ *
+ * @since 3.0.0
  *
  * @return int
  */
@@ -604,15 +616,11 @@ function simpay_get_decimal_places() {
 }
 
 /**
- * Return amount as number value.
- * Uses global (or filtered) decimal separator setting ("." or ",") & thousand separator setting.
- * Like accounting.unformat removes formatting/cruft first.
- * Respects decimal separator, but ignores zero decimal currency setting.
- * Also prevent negative values.
- * Similar to JS function unformatCurrency.
+ * Returns an amount as a float.
  *
- * @param string|float|int $amount
+ * @since 3.0.0
  *
+ * @param string|float|int $amount Amount to unformat.
  * @return float
  */
 function simpay_unformat_currency( $amount ) {
@@ -632,12 +640,13 @@ function simpay_unformat_currency( $amount ) {
 }
 
 /**
- * Convert from dollars to cents (in USD).
+ * Converts a non-zero decimal currency amount to cents.
+ *
  * Leaves zero decimal currencies alone.
- * Similar to JS function convertToCents.
  *
- * @param string|float|int $amount
+ * @since 3.0.0
  *
+ * @param string|float|int $amount Amount to convert.
  * @return int
  */
 function simpay_convert_amount_to_cents( $amount ) {
@@ -652,13 +661,13 @@ function simpay_convert_amount_to_cents( $amount ) {
 }
 
 /**
- * Convert from cents to dollars (in USD).
- * Uses global zero decimal currency setting.
+ * Converts a non-zero decimal currency amount to dollars.
+ *
  * Leaves zero decimal currencies alone.
- * Similar to JS function convertToDollars.
  *
- * @param string|int $amount
+ * @since 3.0.0
  *
+ * @param string|int $amount Amount to convert.
  * @return int|float
  */
 function simpay_convert_amount_to_dollars( $amount ) {
@@ -673,10 +682,14 @@ function simpay_convert_amount_to_dollars( $amount ) {
 }
 
 /**
- * Get the global system-wide minimum amount. Stripe dictates minimum USD is 50 cents, but set to 100 cents/currency
+ * Get the global system-wide minimum amount.
+ *
+ * Stripe dictates minimum USD is 50 cents, but set to 100 cents/currency
  * units as it can vary from currency to currency.
  *
- * @return int
+ * @since 3.0.0
+ *
+ * @return float
  */
 function simpay_global_minimum_amount() {
 
@@ -723,7 +736,7 @@ function simpay_get_statement_descriptor_unsupported_characters() {
 }
 
 /**
- * Validate a statement subscription for a charge or plan.
+ * Validates a statement subscription for a charge or plan.
  *
  * @since 3.4.0
  *
@@ -739,34 +752,31 @@ function simpay_validate_statement_descriptor( $statement_descriptor ) {
 	$unsupported_characters = simpay_get_statement_descriptor_unsupported_characters();
 	$statement_descriptor   = trim( str_replace( $unsupported_characters, '', $statement_descriptor ) );
 
-	// Trim to 22 characters max
+	// Trim to 22 characters max.
 	$statement_descriptor = substr( $statement_descriptor, 0, 22 );
 
 	return $statement_descriptor;
 }
 
 /**
- * Return amount as formatted string.
- * With or without currency symbol.
- * Used for labels & amount inputs in admin & front-end.
- * Uses global (or filtered) decimal separator setting ("." or ",") & thousand separator setting.
- * Similar to JS function formatCurrency.
+ * Formats an amount for a specificed currency.
  *
- * @param        $amount
- * @param string $currency
- * @param bool   $show_symbol
+ * @since 3.0.0
  *
+ * @param string|float|int $amount Amount to unformat.
+ * @param string           $currency Currency code.
+ * @param bool             $show_symbol Show currency symbol. Default true.
  * @return string
  */
 function simpay_format_currency( $amount, $currency = '', $show_symbol = true ) {
 
 	if ( empty( $currency ) ) {
-		$currency = simpay_get_setting( 'currency' );
+		$currency = simpay_get_setting( 'currency', 'USD' );
 	}
 
 	$symbol = simpay_get_currency_symbol( $currency );
 
-	$position = simpay_get_setting( 'currency_position' );
+	$position = simpay_get_currency_position();
 
 	$amount = number_format( floatval( $amount ), simpay_get_decimal_places(), simpay_get_decimal_separator(), simpay_get_thousand_separator() );
 
@@ -785,37 +795,6 @@ function simpay_format_currency( $amount, $currency = '', $show_symbol = true ) 
 	}
 
 	return $amount;
-}
-
-/**
- * Get the default editor content based on what type of editor is passed in
- *
- * @param $editor
- *
- * @return mixed|string
- */
-function simpay_get_editor_default( $editor ) {
-
-	if ( empty( $editor ) ) {
-		return '';
-	}
-
-	$template = '';
-
-	switch ( $editor ) {
-		case 'one_time':
-			$template .= __( 'Thanks for your purchase. Here are the details of your payment:', 'stripe' ) . "\n\n";
-			$template .= '<strong>' . esc_html__( 'Item:', 'stripe' ) . '</strong>' . ' {item-description}' . "\n";
-			$template .= '<strong>' . esc_html__( 'Purchased From:', 'stripe' ) . '</strong>' . ' {company-name}' . "\n";
-			$template .= '<strong>' . esc_html__( 'Payment Date:', 'stripe' ) . '</strong>' . ' {charge-date}' . "\n";
-			$template .= '<strong>' . esc_html__( 'Payment Amount: ', 'stripe' ) . '</strong>' . '{total-amount}' . "\n";
-
-			return $template;
-		case has_filter( 'simpay_editor_template' ):
-			return apply_filters( 'simpay_editor_template', '', $editor );
-		default:
-			return '';
-	}
 }
 
 /**
@@ -1003,16 +982,20 @@ function simpay_get_currencies() {
 }
 
 /**
- * Get a specific currency symbol
+ * Returns a specific currency symbol.
  *
- * We need to make sure we keep these up to date if Stripe adds any more
- * https://support.stripe.com/questions/which-currencies-does-stripe-support
+ * @link https://support.stripe.com/questions/which-currencies-does-stripe-support
+ *
+ * @since 3.0.0
+ *
+ * @param string $currency Currency code.
+ * @return string
  */
 function simpay_get_currency_symbol( $currency = '' ) {
 
 	if ( ! $currency ) {
 
-		// If no currency is passed then default it to USD
+		// If no currency is passed then default it to USD.
 		$currency = 'USD';
 	}
 
@@ -1031,15 +1014,15 @@ function simpay_get_currency_symbol( $currency = '' ) {
  *
  * @since 3.4.0
  *
- * @param new_key  string The new key to use for                                      $fields[ $section ][ $new_key ]
- * @param $value    array The array that holds the information for this settings array
- * @param $needle   string The key to find in the current array of fields
- * @param $haystack array The current array to search
+ * @param string $new_key New key to add to the list.
+ * @param array  $value New array value to add to the list.
+ * @param string $needle Existing key to insert after.
+ * @param array  $haystack Full existing list to modify.
  * @return array
  */
 function simpay_add_to_array_after( $new_key, $value, $needle, $haystack ) {
-	$split = array(); // The split off portion of the array after the key we want to insert after
-	$new   = array(); // The new array will consist of the opposite of the split + the new element we want to add
+	$split = array(); // The split off portion of the array after the key we want to insert after.
+	$new   = array(); // The new array will consist of the opposite of the split + the new element we want to add.
 
 	if ( array_key_exists( $needle, $haystack ) ) {
 		$offset = array_search( $needle, array_keys( $haystack ) );
@@ -1047,7 +1030,7 @@ function simpay_add_to_array_after( $new_key, $value, $needle, $haystack ) {
 		$split = array_slice( $haystack, $offset + 1 );
 		$new   = array_slice( $haystack, 0, $offset + 1 );
 
-		// Add the new element to the bottom
+		// Add the new element to the bottom.
 		$new[ $new_key ] = $value;
 	}
 
@@ -1056,6 +1039,8 @@ function simpay_add_to_array_after( $new_key, $value, $needle, $haystack ) {
 
 /**
  * Generate a shipping object containing the required fields for the Stripe API.
+ *
+ * @since 3.6.0
  *
  * @param string $type The type of address (billing or shipping).
  * @param array  $fields The field data list. Assumes data is coming from a payment form.
@@ -1089,7 +1074,9 @@ function simpay_get_form_address_data( $type, $fields ) {
 }
 
 /**
- * Get the svg icon URL
+ * Returns the Stripe logo as an SVG.
+ *
+ * @since 3.0.0
  *
  * @return string
  */

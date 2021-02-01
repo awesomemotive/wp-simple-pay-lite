@@ -35,183 +35,20 @@ function has_keys() {
  * @return bool|string
  */
 function get_key( $key ) {
-	$settings = get_option( 'simpay_settings_general' );
-	$key      = isset( $settings['recaptcha'][ $key ] ) ? $settings['recaptcha'][ $key ] : false;
+	$key = simpay_get_setting(
+		sprintf(
+			'recaptcha_%s_key',
+			$key
+		),
+		''
+	);
 
-	if ( ! $key || '' === $key ) {
+	if ( empty( $key ) ) {
 		return false;
 	}
 
 	return $key;
 }
-
-/**
- * Generate custom HTML to output under reCAPTCHA title.
- *
- * @since 3.9.6
- */
-function admin_setting_description() {
-	ob_start();
-	?>
-
-	<p><?php esc_html_e( 'reCAPTCHA can help automatically protect your custom payment forms from spam and fraud.', 'stripe' ); ?></p>
-
-	<br />
-
-	<p>
-	<?php
-	echo wp_kses_post(
-		sprintf(
-			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-			__( 'To enable reCAPTCHA %1$sregister your site with Google%2$s with reCAPTCHA v3 to retrieve the necessary credentials.', 'stripe' ),
-			'<a href="https://www.google.com/recaptcha/admin/create" target="_blank" rel="noopener noreferrer">',
-			'</a>'
-		)
-	);
-	?>
-	</p>
-
-	<br />
-
-	<p>
-	<?php
-	echo wp_kses_post(
-		sprintf(
-			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-			__( 'For more information view our %1$shelp docs for reCAPTCHA%2$s.', 'stripe' ),
-			'<a href="' . simpay_docs_link( '', 'recaptcha', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer">',
-			'</a>'
-		)
-	);
-	?>
-	</p>
-
-	<?php
-	// No keys are entered.
-	if ( ! has_keys() ) {
-		return ob_get_clean();
-	}
-	?>
-
-	<div class="notice inline simpay-recaptcha-feedback" style="display: none; margin: 15px 0 -10px;"><p></p></div>
-
-	<?php
-	$url = add_query_arg(
-		array(
-			'render' => get_key( 'site' ),
-		),
-		'https://www.google.com/recaptcha/api.js'
-	);
-
-	wp_enqueue_script( 'google-recaptcha', esc_url( $url ), array(), 'v3', true );
-
-	wp_localize_script(
-		'google-recaptcha',
-		'simpayGoogleRecaptcha',
-		array(
-			'siteKey' => get_key( 'site' ),
-			'i18n'    => array(
-				'invalid' => esc_html__(
-					'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.',
-					'stripe'
-				),
-			),
-		)
-	);
-
-	return ob_get_clean();
-}
-
-/**
- * Add "reCaptcha" section to General tab.
- *
- * @since 3.9.6
- *
- * @param array $sections Settings sections.
- * @return array
- */
-function add_recaptcha_settings_section( $sections ) {
-	$settings = array(
-		'title' => __( 'reCAPTCHA', 'stripe' ),
-	);
-
-	return simpay_add_to_array_after( 'recaptcha', $settings, 'styles', $sections );
-}
-add_filter( 'simpay_add_settings_general_sections', __NAMESPACE__ . '\\add_recaptcha_settings_section' );
-
-/**
- * Add "reCAPTCHA" fields to General tab.
- *
- * @since 3.9.6
- *
- * @param array $fields Settings fields.
- * @return array
- */
-function add_recaptcha_settings_fields( $fields ) {
-	$id      = 'settings';
-	$group   = 'general';
-	$section = 'recaptcha';
-
-	$input_args = array(
-		'type'    => 'standard',
-		'subtype' => 'password',
-		'default' => '',
-		'class'   => array(
-			'regular-text',
-		),
-	);
-
-	$fields[ $section ]['setup'] = array(
-		'title' => esc_html__( 'Setup', 'stripe' ),
-		'type'  => 'custom-html',
-		'html'  => isset( $_GET['tab'] ) && 'general' === $_GET['tab']
-			? admin_setting_description()
-			: '',
-		'name'  => 'simpay_' . $id . '_' . $group . '[' . $section . '][setup]',
-		'id'    => 'simpay-' . $id . '-' . $group . '-' . $section . '-setup',
-	);
-
-	$fields[ $section ]['site'] = wp_parse_args(
-		array(
-			'subtype' => 'text',
-			'title'   => esc_html__( 'Site Key', 'stripe' ),
-			'name'    => 'simpay_' . $id . '_' . $group . '[recaptcha][site]',
-			'id'      => 'simpay-' . $id . '-' . $group . '-recaptcha-site',
-			'value'   => get_key( 'site' ),
-		),
-		$input_args
-	);
-
-	$fields[ $section ]['secret'] = wp_parse_args(
-		array(
-			'title' => esc_html__( 'Secret Key', 'stripe' ),
-			'name'  => 'simpay_' . $id . '_' . $group . '[recaptcha][secret]',
-			'id'    => 'simpay-' . $id . '-' . $group . '-recaptcha-secret',
-			'value' => get_key( 'secret' ),
-		),
-		$input_args
-	);
-
-	$settings = get_option( 'simpay_settings_general' );
-
-	$fields[ $section ]['threshold'] = array(
-		'title'   => esc_html__( 'Score Threshold', 'stripe' ),
-		'type'    => 'select',
-		'default' => 'default',
-		'options' => array(
-			'default'    => esc_html__( 'Default', 'stripe' ),
-			'aggressive' => esc_html__( 'Aggressive', 'stripe' ),
-		),
-		'name'  => 'simpay_' . $id . '_' . $group . '[recaptcha][threshold]',
-		'id'    => 'simpay-' . $id . '-' . $group . '-recaptcha-threshold',
-		'value' => isset( $settings['recaptcha']['threshold'] )
-			? $settings['recaptcha']['threshold']
-			: 'default'
-	);
-
-	return $fields;
-}
-add_filter( 'simpay_add_settings_general_fields', __NAMESPACE__ . '\\add_recaptcha_settings_fields' );
 
 /**
  * Enqueue scripts necessary for generating a reCAPTCHA token.
@@ -234,15 +71,15 @@ function add_script( $form_id, $form ) {
 		'https://www.google.com/recaptcha/api.js'
 	);
 
-	wp_enqueue_script( 'google-recaptcha', esc_url( $url ), array(), 'v3', true );
+	wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
 
 	wp_localize_script(
-		'google-recaptcha',
+		'simpay-google-recaptcha-v3',
 		'simpayGoogleRecaptcha',
 		array(
 			'siteKey' => get_key( 'site' ),
 			'i18n'    => array(
-				'invalid' => esc_html__( 'Unable to verify Google reCAPTCHA response.', 'stripe' ),
+				'invalid' => esc_html__( 'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.', 'stripe' ),
 			),
 		)
 	);
@@ -252,7 +89,7 @@ function add_script( $form_id, $form ) {
 		SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-recaptcha.min.js',
 		array(
 			'wp-util',
-			'google-recaptcha',
+			'simpay-google-recaptcha-v3',
 			'simpay-public',
 		),
 		SIMPLE_PAY_VERSION,
@@ -304,10 +141,7 @@ function validate_recaptcha( $token, $action ) {
 		return false;
 	}
 
-	$settings  = get_option( 'simpay_settings_general' );
-	$threshold = isset( $settings['recaptcha']['threshold'] )
-		? $settings['recaptcha']['threshold']
-		: 'default';
+	$threshold = simpay_get_setting( 'recaptcha_score_threshold', 'default' );
 
 	switch ( $threshold ) {
 		case 'aggressive':
@@ -337,12 +171,6 @@ function validate_recaptcha( $token, $action ) {
  * Validate reCAPTCHA on page load.
  *
  * @since 3.5.0
- *
- * @param array                         $object_args Arguments used to create a Customer or Session.
- * @param SimplePay\Core\Abstracts\Form $form Form instance.
- * @param array                         $form_data Form data generated by the client.
- * @param array                         $form_values Values of named fields in the payment form.
- * @param int|string                    $customer_id Stripe Customer ID, or a blank string if none is needed.
  */
 function validate_recaptcha_source() {
 	// No keys are entered.
@@ -350,7 +178,7 @@ function validate_recaptcha_source() {
 		return wp_send_json_success();
 	}
 
-	$token  = isset( $_POST['token'] )
+	$token = isset( $_POST['token'] )
 		? sanitize_text_field( $_POST['token'] )
 		: false;
 
@@ -381,6 +209,7 @@ add_action( 'wp_ajax_simpay_validate_recaptcha_source', __NAMESPACE__ . '\\valid
  * @param SimplePay\Core\Abstracts\Form $form Form instance.
  * @param array                         $form_data Form data generated by the client.
  * @param array                         $form_values Values of named fields in the payment form.
+ * @throws \Exception If reCAPTCHA cannot be validated.
  */
 function validate_recaptcha_customer( $customer_args, $form, $form_data, $form_values ) {
 	// Do nothing if no keys set.
@@ -427,6 +256,7 @@ add_action(
  * @param SimplePay\Core\Abstracts\Form $form Form instance.
  * @param array                         $form_data Form data generated by the client.
  * @param array                         $form_values Values of named fields in the payment form.
+ * @throws \Exception If reCAPTCHA cannot be validated.
  */
 function validate_recaptcha_payment( $paymentintent_args, $form, $form_data, $form_values ) {
 	// Do nothing if no keys set.

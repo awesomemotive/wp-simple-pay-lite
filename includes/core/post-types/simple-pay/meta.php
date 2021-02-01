@@ -116,7 +116,7 @@ function register() {
 		)
 	);
 
-	// Stripe Checkout - Enable Billing Address
+	// Stripe Checkout - Enable Billing Address.
 	register_post_meta(
 		'simple-pay',
 		'_enable_billing_address',
@@ -128,7 +128,7 @@ function register() {
 		)
 	);
 
-	// Stripe Checkout - Enable Shipping Address
+	// Stripe Checkout - Enable Shipping Address.
 	register_post_meta(
 		'simple-pay',
 		'_enable_shipping_address',
@@ -137,18 +137,6 @@ function register() {
 			'description'       => __( 'Payment Form Stripe Checkout shipping address.', 'stripe' ),
 			'single'            => true,
 			'sanitize_callback' => 'sanitize_text_field',
-		)
-	);
-
-	// Stripe Checkout - Payment button style.
-	register_post_meta(
-		'simple-pay',
-		'_payment_button_style',
-		array(
-			'type'              => 'boolean',
-			'description'       => __( 'Payment Form Stripe Checkout payment button styles.', 'stripe' ),
-			'single'            => true,
-			'sanitize_callback' => null,
 		)
 	);
 

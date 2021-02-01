@@ -4,6 +4,7 @@
  * Internal dependencies.
  */
 import hooks from '@wpsimplepay/hooks';
+import 'admin/settings/toggles.js';
 import 'admin/settings/test-mode.js';
 import toggleStripeConnectNotice from 'admin/settings/stripe-connect.js';
 import 'admin/settings/recaptcha.js';
@@ -140,6 +141,23 @@ let spAdmin = {};
 
 			this.stripeConnect();
 
+			// Payment Mode.
+			//
+			// Disable modes that are not globally available.
+			const paymentModeSelector = $( '.simpay-payment-modes' );
+
+			if ( paymentModeSelector.length ) {
+				const paymentModes = paymentModeSelector.find( 'input' );
+
+				paymentModes.each( function() {
+					const mode = $( this );
+
+					if ( ! paymentModeSelector.hasClass( 'simpay-payment-mode--' + mode.val() ) ) {
+						mode.attr( 'disabled', true );
+					}
+				} );
+			}
+
 			body.trigger( 'simpayAdminInit' );
 		},
 
@@ -222,6 +240,11 @@ let spAdmin = {};
 				const hash = $( this ).attr( 'href' );
 				history.pushState( null, null, hash );
 
+				// Avoid jumping to ID after setting anchor.
+				setTimeout( function() {
+					window.scrollTo( 0, 0 );
+				}, 1 );
+
 				$( '[name="simpay_form_settings_tab"]' ).val( hash );
 
 				$( '.simpay-panels > .spinner' ).hide();
@@ -256,12 +279,17 @@ let spAdmin = {};
 		},
 
 		stripeConnect() {
-			$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().hide().prev().hide();
+			const rows = 'tr:nth-child(2), tr:nth-child(3), tr:nth-child(4), tr:nth-child(5)';
+
+			$( '.simpay-settings.stripe-account .form-table' )
+				.find( rows ).hide();
 
 			$( '#wpsp-api-keys-row-reveal button' ).click( function( e ) {
 				e.preventDefault();
 
-				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().show().prev().show();
+				$( '.simpay-settings.stripe-account .form-table' )
+					.find( rows ).show();
+
 				$( '#wpsp-api-keys-row-hide' ).show();
 				$( this ).parent().hide();
 				$( '.wpsp-manual-key-warning' ).show();
@@ -270,7 +298,9 @@ let spAdmin = {};
 			$( '#wpsp-api-keys-row-hide button' ).click( function( e ) {
 				e.preventDefault();
 
-				$( '#simpay-settings-keys-mode-test-mode' ).closest( '.form-table' ).prev().hide().prev().hide();
+				$( '.simpay-settings.stripe-account .form-table' )
+					.find( rows ).hide();
+
 				$( '#wpsp-api-keys-row-reveal' ).show();
 				$( this ).parent().hide();
 				$( '.wpsp-manual-key-warning' ).hide();

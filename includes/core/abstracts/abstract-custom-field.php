@@ -69,7 +69,7 @@ abstract class Custom_Field {
 	/**
 	 * Creates and returns an ID that can be used as an HTML attribute.
 	 *
-	 * simpay-form-{$form_id}-field-{$field_id}
+	 * @example simpay-form-{$form_id}-field-{$field_id}
 	 *
 	 * @since 3.9.0
 	 *
@@ -166,7 +166,7 @@ abstract class Custom_Field {
 				endswitch;
 
 				if ( true === $required ) :
-					echo ''; // WPCS: XSS okay
+					echo ''; // WPCS: XSS okay.
 				else :
 					echo self::get_optional_indicator(); // WPCS: XSS okay.
 				endif;

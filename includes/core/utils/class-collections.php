@@ -58,7 +58,7 @@ class Collections extends Collection implements Static_Collection {
 			return new \WP_Error(
 				'collection_exists',
 				sprintf(
-					/** translators: %s Collection ID that could not be registered. */
+					/* translators: %s Collection ID that could not be registered. */
 					__( 'The %s collection already exists and could not be added.', 'stripe' ),
 					$collection_id
 				)
@@ -69,7 +69,7 @@ class Collections extends Collection implements Static_Collection {
 			return new \WP_Error(
 				'collection_invalid',
 				sprintf(
-					/** translators: %s Collection ID that could not be registered. */
+					/* translators: %s Collection ID that could not be registered. */
 					__( 'The %s collection must be an instance of \SimplePay\Core\Utils\Collection.', 'stripe' ),
 					$collection_id
 				)
@@ -84,7 +84,7 @@ class Collections extends Collection implements Static_Collection {
 	 *
 	 * @since 3.8.0
 	 *
-	 * @param string $item_id Item ID.
+	 * @param string $collection_id Collection ID.
 	 */
 	public function remove_item( $collection_id ) {
 		_doing_it_wrong( 'Initialized Collections cannot be removed.', '3.8.0' );

@@ -88,6 +88,7 @@ class Stripe_API {
 			$logger = Stripe::getLogger();
 			$logger->error(
 				sprintf(
+					/* translators: %s Stripe_API::request() arguments. */
 					__( "Calling \SimplePay\Core\Payments\Stripe_API::request() without per-form request options (such as an API key) is discouraged. \n%s\n\n", 'stripe' ),
 					sprintf(
 						'%s\%s\%s',

@@ -26,9 +26,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * or \Stripe\Customer ID.
  *
  * @since 3.6.6
+ * @since 4.0.0 Allow a Payment Form ID to be explicitely set.
  *
  * @param bool|string $customer_id Customer ID to retrieve. Default false.
  * @param bool|string $session_id Session ID to retrieve. Default false.
+ * @param bool|int    $form_id Form ID. Default false.
  * @return array $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
@@ -38,13 +40,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   @type \Stripe\PaymentIntent[]        $paymentintents PaymentIntents associated with the Customer.
  * }
  */
-function get_confirmation_data( $customer_id = false, $session_id = false ) {
+function get_confirmation_data( $customer_id = false, $session_id = false, $form_id = false ) {
 	$payment_confirmation_data = array();
 
-	// Find the used Payment Form via the URL
+	// Find the used Payment Form via the URL.
 	$form_id = isset( $_GET['form_id'] )
 		? absint( $_GET['form_id'] )
-		: false;
+		: $form_id;
 
 	/**
 	 * Filters the ID of the form to retrieve.
@@ -133,27 +135,46 @@ function get_confirmation_data( $customer_id = false, $session_id = false ) {
 }
 
 /**
+ * Returns the default Payment Confirmation message for "One-Time Amount" payments.
+ *
+ * @since 4.0.0
+ *
+ * @return string
+ */
+function get_one_time_amount_message_default() {
+	$message  = __( 'Thanks for your purchase. Here are the details of your payment:', 'stripe' ) . "\n\n";
+	$message .= '<strong>' . esc_html__( 'Item:', 'stripe' ) . '</strong>' . ' {item-description}' . "\n";
+	$message .= '<strong>' . esc_html__( 'Purchased From:', 'stripe' ) . '</strong>' . ' {company-name}' . "\n";
+	$message .= '<strong>' . esc_html__( 'Payment Date:', 'stripe' ) . '</strong>' . ' {charge-date}' . "\n";
+	$message .= '<strong>' . esc_html__( 'Payment Amount: ', 'stripe' ) . '</strong>' . '{total-amount}' . "\n";
+
+	return $message;
+}
+
+/**
  * Retrieves the default confirmation content set in Settings > Payment Confirmation.
  *
  * @since 3.6.0
  *
- * @param string $confirmation_type The type of confirmation content to retrieve.
  * @return string
  */
 function get_content() {
-	$display_options = get_option( 'simpay_settings_display' );
-	$content         = simpay_get_editor_default( 'one_time' );
+	$content = simpay_get_setting(
+		'one_time_payment_details',
+		get_one_time_amount_message_default()
+	);
 
-	if ( ! $display_options ) {
-		return $content;
-	}
-
-	$content = isset( $display_options['payment_confirmation_messages']['one_time_payment_details'] ) ?
-		$display_options['payment_confirmation_messages']['one_time_payment_details'] :
-		$content;
+	$display_options = array();
 
 	/**
+	 * Filters the Payment Confirmation editor content.
+	 *
+	 * @since 3.0.0
 	 * @deprecated 3.6.0
+	 *
+	 * @param string $content Editor content.
+	 * @param string $type Editor type. one_time, subscription, or trial.
+	 * @param array  $display_options Content display options.
 	 */
 	$content = apply_filters_deprecated(
 		'simpay_get_editor_content',

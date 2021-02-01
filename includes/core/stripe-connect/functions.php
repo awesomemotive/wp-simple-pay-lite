@@ -8,6 +8,8 @@
  * @since 3.4.0
  */
 
+use SimplePay\Core\Settings;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -21,14 +23,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string
  */
 function simpay_get_stripe_connect_url() {
-	$args = array(
-		'live_mode'         => (int) ! simpay_is_test_mode(),
-		'state'             => str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ),
-		'customer_site_url' => admin_url( 'admin.php?page=simpay_settings&tab=keys' ),
-	);
-
 	return add_query_arg(
-		$args,
+		array(
+			'live_mode'         => (int) ! simpay_is_test_mode(),
+			'state'             => str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ),
+			'customer_site_url' => Settings\get_url(
+				array(
+					'section'    => 'stripe',
+					'subsection' => 'account',
+				)
+			),
+		),
 		'https://wpsimplepay.com/?wpsp_gateway_connect_init=stripe_connect'
 	);
 }
@@ -41,15 +46,16 @@ function simpay_get_stripe_connect_url() {
  * @return string
  */
 function simpay_get_stripe_disconnect_url() {
-	$args = array(
-		'page'                     => 'simpay_settings',
-		'tab'                      => 'keys',
-		'simpay-stripe-disconnect' => true,
-	);
-
 	return add_query_arg(
-		$args,
-		admin_url( 'admin.php' )
+		array(
+			'simpay-stripe-disconnect' => true,
+		),
+		Settings\get_url(
+			array(
+				'section'    => 'stripe',
+				'subsection' => 'account',
+			)
+		)
 	);
 }
 
@@ -103,8 +109,6 @@ function simpay_can_site_manage_stripe_keys() {
  * Output CSS to style a button to look like an official Stripe Connect button.
  *
  * @since 3.5.0
- *
- * @return string
  */
 function simpay_stripe_connect_button_css() {
 	?>

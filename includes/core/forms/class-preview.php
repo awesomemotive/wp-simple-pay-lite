@@ -17,6 +17,12 @@ namespace SimplePay\Core\Forms;
  */
 class Preview {
 
+	/**
+	 * Payment Form ID.
+	 *
+	 * @var null|int|string
+	 * @since 3.0.0
+	 */
 	public $preview_form_id = null;
 
 	/**
@@ -42,19 +48,18 @@ class Preview {
 	}
 
 	/**
-	 * Since we know we are on a preview page we set the posts_per_page to show only 1 (ours)
+	 * Since we know we are on a preview page we set the posts_per_page to show only 1 (ours).
 	 *
-	 * @param $query
+	 * @param \WP_Query $query Current WordPress query.
 	 */
 	public function pre_get_posts( $query ) {
 		$query->set( 'posts_per_page', 1 );
 	}
 
 	/**
-	 * Change the title of our preview page
+	 * Change the title of our preview page.
 	 *
-	 * @param $title
-	 *
+	 * @param string $title Post title.
 	 * @return string
 	 */
 	public function the_title( $title ) {
@@ -66,10 +71,9 @@ class Preview {
 	}
 
 	/**
-	 * Rewrite the_content to output our form preview shortcode
+	 * Rewrite the_content to output our form preview shortcode.
 	 *
-	 * @param $content
-	 *
+	 * @param string $content Post content.
 	 * @return string
 	 */
 	public function the_content( $content ) {
@@ -85,7 +89,7 @@ class Preview {
 	}
 
 	/**
-	 * Search for these templates so we can show preview within the theme
+	 * Search for these templates so we can show preview within the theme.
 	 *
 	 * @return string
 	 */

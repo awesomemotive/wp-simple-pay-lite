@@ -79,7 +79,7 @@ function redirect() {
 			);
 
 			break;
-		// All Payment Forms
+		// All Payment Forms.
 		default:
 			wp_safe_redirect(
 				add_query_arg(

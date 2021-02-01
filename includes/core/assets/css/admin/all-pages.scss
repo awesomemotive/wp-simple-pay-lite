@@ -54,8 +54,3 @@ a[href^="https://wpsimplepay.com/lite-vs-pro"]:not(.simpay-upgrade-btn) {
 		}
 	}
 }
-
-// Remove border on plugin list when there is no license, but there is an update.
-.plugins .plugin-update-tr.simpay-plugin-update-license td {
-	box-shadow: none;
-}

@@ -52,12 +52,14 @@ class Rate_Limiting {
 		// Setup the log file.
 		add_action( 'plugins_loaded', array( $this, 'setup_log_file' ), 11 );
 
-		// Determines if the current rate limit has been exceeded.
-		//
-		// Note: Using this inside REST API permission checks means that it is called an additional
-		//       time for the first permission check which is why the default is somewhat high.
-		//
-		//       https://github.com/WP-API/WP-API/issues/2400#issuecomment-202620551
+		/**
+		 * Determines if the current rate limit has been exceeded.
+		 *
+		 * Note: Using this inside REST API permission checks means that it is called an additional
+		 * time for the first permission check which is why the default is somewhat high.
+		 *
+		 * @link https://github.com/WP-API/WP-API/issues/2400#issuecomment-202620551
+		 */
 		add_filter( 'simpay_has_exceeded_rate_limit', array( $this, 'has_hit_limit' ) );
 	}
 
@@ -67,9 +69,9 @@ class Rate_Limiting {
 	 * @since 3.9.5
 	 */
 	public function setup_log_file() {
-		$upload_dir       = wp_upload_dir();
-		$this->filename   = wp_hash( home_url( '/' ) ) . '-wpsp-rate-limiting.log';
-		$this->file       = trailingslashit( $upload_dir['basedir'] ) . $this->filename;
+		$upload_dir     = wp_upload_dir();
+		$this->filename = wp_hash( home_url( '/' ) ) . '-wpsp-rate-limiting.log';
+		$this->file     = trailingslashit( $upload_dir['basedir'] ) . $this->filename;
 
 		if ( ! is_writeable( $upload_dir['basedir'] ) ) {
 			$this->is_writable = false;
@@ -138,7 +140,7 @@ class Rate_Limiting {
 	 */
 	public function get_rate_limiting_entry( $blocking_id = '' ) {
 		$current_logs = $this->get_decoded_file();
-		$entry = array();
+		$entry        = array();
 
 		if ( array_key_exists( $blocking_id, $current_logs ) ) {
 			$entry = $current_logs[ $blocking_id ];

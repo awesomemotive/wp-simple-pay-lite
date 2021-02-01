@@ -324,8 +324,8 @@ abstract class Field {
 	 * @since  3.0.0
 	 * @access protected
 	 *
-	 * @param array|string $callback
-	 * @param mixed        $value
+	 * @param array|string $callback Callback used to escape the value.
+	 * @param mixed        $value Value to escape.
 	 * @return mixed
 	 */
 	protected function escape_callback( $callback, $value ) {
@@ -343,8 +343,8 @@ abstract class Field {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param array|string $callback
-	 * @param string       $value
+	 * @param array|string $callback Callback used to validate a value.
+	 * @param string       $value Value to validate.
 	 * @return true|string Expected to return bool (true) if passes, message string if not.
 	 */
 	protected function validate( $callback, $value ) {

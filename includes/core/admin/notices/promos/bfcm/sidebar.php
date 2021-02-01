@@ -10,10 +10,10 @@
  * @since 3.6.5
  */
 
-// Get the current global settings tab, or set a default
+// Get the current global settings tab, or set a default.
 $current_tab = ! empty( $_GET['tab'] ) ? sanitize_title( $_GET['tab'] ) : 'keys';
 
-// Make sure the current tab value is recognizable
+// Make sure the current tab value is recognizable.
 switch ( $current_tab ) {
 	case 'keys':
 		$current_tab = 'stripe-setup';

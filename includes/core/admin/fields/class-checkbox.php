@@ -30,7 +30,7 @@ class Checkbox extends Field {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $field
+	 * @param array $field Field data.
 	 */
 	public function __construct( $field ) {
 		$this->type_class = 'simpay-field-checkboxes';

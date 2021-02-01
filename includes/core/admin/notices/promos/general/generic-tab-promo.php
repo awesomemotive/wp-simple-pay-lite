@@ -1,4 +1,15 @@
-<?php use function SimplePay\Core\Admin\Notices\Promos\bfcm_is_promo_active; ?>
+<?php
+/**
+ * Promos: Generic
+ *
+ * @package SimplePay\Core\Admin\Notices\Promos
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since 3.6.5
+ */
+
+use function SimplePay\Core\Admin\Notices\Promos\bfcm_is_promo_active;
+?>
 <h2><?php _e( 'Want to customize your payment forms even more?', 'stripe' ); ?></h2>
 <p style="margin: 0 0 1.5em">
 	<?php _e( 'By upgrading to WP Simple Pay Pro, you get access to powerful features such as:', 'stripe' ); ?>

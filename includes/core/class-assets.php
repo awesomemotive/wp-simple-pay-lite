@@ -14,18 +14,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Assets class.
+ *
+ * @since 3.0.0
+ */
 class Assets {
 
+	/**
+	 * Scripts.
+	 *
+	 * @since 3.0.0
+	 * @var array
+	 */
 	private $scripts = array();
 
+	/**
+	 * Styles.
+	 *
+	 * @since 3.0.0
+	 * @var array
+	 */
 	public $styles = array();
 
+	/**
+	 * Class instance.
+	 *
+	 * @since 3.0.0
+	 * @var \SimplePay\Core\Assets
+	 */
 	public static $instance;
 
+	/**
+	 * Script variables.
+	 *
+	 * @since 3.0.0
+	 * @var array
+	 */
 	public static $script_variables = array();
 
 	/**
-	 * Assets constructor.
+	 * Hooks in to WordPress.
+	 *
+	 * @since 3.0.0
 	 */
 	public function __construct() {
 		$this->setup();
@@ -39,7 +70,9 @@ class Assets {
 	/**
 	 * Get the singleton.
 	 *
-	 * @return Assets
+	 * @since 3.0.0
+	 *
+	 * @return \SimplePay\Core\Assets
 	 */
 	public static function get_instance() {
 
@@ -53,34 +86,36 @@ class Assets {
 
 	/**
 	 * Setup arrays for both scripts & styles.
+	 *
+	 * @since 3.0.0
 	 */
 	public function setup() {
 		$this->scripts = array(
-			'simpay-stripe-js-v3' => array(
+			'sandhills-stripe-js-v3' => array(
 				'src'    => 'https://js.stripe.com/v3/',
 				'deps'   => array(),
 				'ver'    => null,
 				'footer' => true,
 			),
-			'simpay-polyfill'     => array(
+			'simpay-polyfill'        => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-polyfill.min.js',
 				'deps'   => array(),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),
-			'simpay-accounting'   => array(
+			'simpay-accounting'      => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/accounting.min.js',
 				'deps'   => array(),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),
-			'simpay-shared'       => array(
+			'simpay-shared'          => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-shared.min.js',
 				'deps'   => array( 'jquery', 'simpay-accounting' ),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),
-			'simpay-public'       => array(
+			'simpay-public'          => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public.min.js',
 				'deps'   => array(
 					'jquery',
@@ -112,7 +147,9 @@ class Assets {
 	}
 
 	/**
-	 * Register scripts & styles
+	 * Register scripts & styles.
+	 *
+	 * @since 3.0.0
 	 */
 	public function register() {
 		/**
@@ -158,6 +195,8 @@ class Assets {
 
 	/**
 	 * Enqueue registered scripts & styles
+	 *
+	 * @since 3.0.0
 	 */
 	public function enqueue() {
 
@@ -178,6 +217,8 @@ class Assets {
 
 	/**
 	 * Localize our public script
+	 *
+	 * @since 3.0.0
 	 */
 	public function localize_scripts() {
 		wp_localize_script( 'simpay-public', 'simplePayForms', self::$script_variables );
@@ -186,7 +227,9 @@ class Assets {
 	/**
 	 * Use this function to add to our script variables to localize later
 	 *
-	 * @param $vars
+	 * @since 3.0.0
+	 *
+	 * @param array $vars Script variables.
 	 */
 	public static function script_variables( $vars ) {
 

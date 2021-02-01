@@ -79,7 +79,7 @@ abstract class Collection extends \ArrayObject {
 	 *
 	 * @since 3.8.0
 	 *
-	 * @param string $offset Item ID.
+	 * @param string $item_id Item ID.
 	 * @return bool True if the item exists, false on failure.
 	 */
 	public function has_item( $item_id ) {
@@ -131,7 +131,7 @@ abstract class Collection extends \ArrayObject {
 	 *
 	 * @since 3.8.0
 	 *
-	 * @param mixed $item_id Item ID.
+	 * @param mixed $offset Item ID.
 	 * @return mixed|false Item attributes if registered, otherwise false.
 	 */
 	public function offsetGet( $offset ) {

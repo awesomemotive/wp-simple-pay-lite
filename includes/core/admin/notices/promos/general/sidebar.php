@@ -1,3 +1,15 @@
+<?php
+/**
+ * Promos: General
+ *
+ * @package SimplePay\Core\Admin\Notices\Promos
+ * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @since 3.6.5
+ */
+
+?>
+
 <div class="sidebar-container metabox-holder">
 	<div class="postbox" style="margin-bottom: 0;">
 		<h3 class="wp-ui-primary"><span><?php _e( 'Upgrade your Payment Forms', 'stripe' ); ?></span></h3>

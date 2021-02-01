@@ -26,16 +26,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Default_Form extends Form {
 
+	/**
+	 * Total amount.
+	 *
+	 * @var string
+	 * @since 3.0.0
+	 */
 	public $total_amount = '';
 
 	/**
 	 * Default_Form constructor.
 	 *
-	 * @param $id int
+	 * @param int $id Payment Form ID.
 	 */
 	public function __construct( $id ) {
 
-		// Construct our base form from the parent class
+		// Construct our base form from the parent class.
 		parent::__construct( $id );
 
 		// Shim a few properties that are referenced later without checking existence.
@@ -46,7 +52,11 @@ class Default_Form extends Form {
 	/**
 	 * Add hooks and filters for this form instance.
 	 *
-	 * Hooks get run once per form instance. See https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
+	 * Hooks get run once per form instance.
+	 *
+	 * @link https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
+	 *
+	 * @since 3.0.0
 	 */
 	public function register_hooks() {
 		add_action( 'wp_footer', array( $this, 'set_script_variables' ), 0 );
@@ -55,6 +65,8 @@ class Default_Form extends Form {
 
 	/**
 	 * Set the JS script variables specifically for this form
+	 *
+	 * @since 3.0.0
 	 */
 	public function set_script_variables() {
 
@@ -81,12 +93,14 @@ class Default_Form extends Form {
 		 */
 		$temp = apply_filters( 'simpay_form_script_variables', $temp, $this );
 
-		// Add this temp script variables to our assets so if multiple forms are on the page they will all be loaded at once and be specific to each form
+		// Add this temp script variables to our assets so if multiple forms are on the page they will all be loaded at once and be specific to each form.
 		Assets::get_instance()->script_variables( $temp );
 	}
 
 	/**
-	 * Output for the form
+	 * Output for the form.
+	 *
+	 * @since 3.0.0
 	 */
 	public function html() {
 
@@ -121,22 +135,20 @@ class Default_Form extends Form {
 				 */
 				do_action( 'simpay_form_before_form_top', $this->id, $this );
 
-		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
-			echo $this->print_custom_fields();
-		}
-
-				// Hidden inputs to hold the Stripe token properties (id & email) appended to the form in public.js.
+				if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
+					echo $this->print_custom_fields();
+				}
 
 				// TODO Append these hidden inputs to form in public.js?
 				echo '<input type="hidden" name="simpay_form_id" value="' . esc_attr( $this->id ) . '" />';
 				echo '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
 
-				// Form validation error message container
+				// Form validation error message container.
 				echo '<div class="simpay-errors" id="' . esc_attr( $id ) . '-error"></div>';
 
-		if ( true === $this->test_mode ) {
-			echo simpay_get_test_mode_badge();
-		}
+				if ( true === $this->test_mode ) {
+					echo simpay_get_test_mode_badge();
+				}
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', $this );
 
@@ -152,23 +164,30 @@ class Default_Form extends Form {
 
 				wp_nonce_field( 'simpay_payment_form' );
 
-			// We echo the </form> instead of appending it so that the action hook can work correctly if they try to output something before the form close.
 			echo '</form>';
 
 			do_action( 'simpay_form_' . absint( $this->id ) . '_after_form_display', $this );
 
-		echo '</div>'; // .simpay-{$form_display_type}-form-wrap
+		echo '</div>';
 
 		do_action( 'simpay_after_form_display', $this );
 	}
 
+	/**
+	 * Returns the form class.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param int $id Payment Form ID.
+	 * @return string
+	 */
 	private function get_form_classes( $id ) {
 		$classes = array(
 			'simpay-checkout-form',
 			'simpay-form-' . absint( $this->id ),
 		);
 
-		if ( 'disabled' !== simpay_get_global_setting( 'default_plugin_styles' ) ) {
+		if ( 'disabled' !== simpay_get_setting( 'default_plugin_styles', 'enabled' ) ) {
 			$classes[] = 'simpay-styled';
 		}
 
@@ -197,10 +216,6 @@ class Default_Form extends Form {
 		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
 
 			foreach ( $this->custom_fields as $k => $v ) {
-
-				/*
-				 * These filters are deprecated but still here for backwards compatibility
-				 */
 				$html = apply_filters( 'simpay_custom_field_html', $html, $v );
 				$html = apply_filters( 'simpay_custom_fields', $html, $v );
 			}
@@ -259,19 +274,12 @@ class Default_Form extends Form {
 	 */
 	public function get_form_script_variables() {
 
-		/**
-		 * @todo Use `$this->extract_custom_field_setting`
-		 *
-		 * Not switching now, because I'm not confident $this->custom_fields is always correctly accessed.
-		 *
-		 * @link https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/860
-		 */
 		$custom_fields = simpay_get_saved_meta( $this->id, '_custom_fields' );
 
 		$payment_text         = __( 'Pay with Card', 'stripe' );
 		$payment_loading_text = __( 'Please Wait...', 'stripe' );
 
-		// Payment Button (Embed + Stripe Checkout)
+		// Payment Button (Embed + Stripe Checkout).
 		if ( isset( $custom_fields['payment_button'] ) && is_array( $custom_fields['payment_button'] ) ) {
 			// There can only be one Checkout Button, but it's saved in an array.
 			$payment_button = current( $custom_fields['payment_button'] );

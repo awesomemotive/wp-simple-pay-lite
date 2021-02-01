@@ -14,6 +14,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Returns markup that denotes the link is external.
+ *
+ * @since 4.0.0
+ *
+ * @return string
+ */
+function get_external_link_markup() {
+	return sprintf(
+		'<span class="screen-reader-text">%s</span><span aria-hidden="true" class="dashicons dashicons-external"></span>',
+		' ' . esc_html__( '(opens in a new tab)', 'stripe' )
+	);
+}
 
 /**
  * Retrieves the IP address of the current visitor.

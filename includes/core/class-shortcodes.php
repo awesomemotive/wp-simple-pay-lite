@@ -14,6 +14,7 @@ use SimplePay\Core\Abstracts\Form;
 use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Payments\Payment;
 use SimplePay\Core\Payments\Payment_Confirmation;
+use SimplePay\Core\Settings;
 use SimplePay\Core\Utils;
 
 use function SimplePay\Core\SimplePay;
@@ -68,10 +69,9 @@ class Shortcodes {
 	/**
 	 * Shortcode to render public paymetn form
 	 *
-	 * @since  3.0.0
+	 * @since 3.0.0
 	 *
-	 * @param  array $attributes
-	 *
+	 * @param array $attributes Shortcode attributes.
 	 * @return string
 	 */
 	public function print_public_form( $attributes ) {
@@ -116,10 +116,11 @@ class Shortcodes {
 	}
 
 	/**
-	 * Shortcode to render payment form preview
+	 * Shortcode to render payment form preview.
 	 *
-	 * @param $attributes
+	 * @since 3.0.0
 	 *
+	 * @param array $attributes Shortcode attributes.
 	 * @return string
 	 */
 	public function print_preview_form( $attributes ) {
@@ -148,29 +149,35 @@ class Shortcodes {
 	/**
 	 * Private function for returning payment form html common between public & preview modes.
 	 *
-	 * @param $form_id int
+	 * @since 3.0.0
 	 *
+	 * @param int $form_id Payment Form ID.
 	 * @return string
 	 */
 	private function form_html( $form_id ) {
+		if ( false === simpay_is_rest_api_enabled() ) {
+			return wpautop(
+				esc_html__(
+					'WP Simple Pay requires the WordPress REST API to be enabled to process payments.',
+					'stripe'
+				)
+			);
+		}
+
 		$has_keys = simpay_check_keys_exist();
 
 		// Show a notice to admins if they have not setup Stripe.
 		if ( ! $has_keys && current_user_can( 'manage_options' ) ) {
+			$stripe_account_settings_url = Settings\get_url( array(
+				'section'    => 'stripe',
+				'subsection' => 'account',
+			) );
+
 			return wp_kses_post(
 				sprintf(
 					/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 					__( 'Please complete your %1$sStripe Setup%2$s to view the payment form.', 'stripe' ),
-					sprintf(
-						'<a href="%s">',
-						add_query_arg(
-							array(
-								'page' => 'simpay_settings',
-								'tab'  => 'keys',
-							),
-							admin_url( 'admin.php' )
-						)
-					),
+					'<a href="' . esc_url( $stripe_account_settings_url ) . '">',
 					'</a>'
 				)
 			);
@@ -184,7 +191,7 @@ class Shortcodes {
 			/**
 			 * Filter the form type used to generate a Stripe PaymentIntent.
 			 *
-			 * @since unknown
+			 * @since 3.0.0
 			 *
 			 * @param string $form_instance Form instance. Blank by default to load Default_Form.
 			 * @param int    $form_id Form ID.
@@ -219,7 +226,7 @@ class Shortcodes {
 	 * @todo Maybe split out some of grunt work involved in collecting the necessary information.
 	 * @todo Try to expand any available objects to reduce extra API calls.
 	 *
-	 * @since unknown
+	 * @since 3.0.0
 	 *
 	 * @param array  $atts Shortcode attributes.
 	 * @param string $content Shortcode content.
@@ -300,7 +307,7 @@ class Shortcodes {
 		/**
 		 * Filters the HTML output before the payment confirmation.
 		 *
-		 * @since unknown
+		 * @since 3.0.0
 		 * @since 3.7.0 Pass payment confirmation data.
 		 *
 		 * @param string
@@ -315,7 +322,7 @@ class Shortcodes {
 		/**
 		 * Filters the HTML output after the payment confirmation.
 		 *
-		 * @since unknown
+		 * @since 3.0.0
 		 * @since 3.7.0 Pass payment confirmation data.
 		 *
 		 * @param string
@@ -327,6 +334,10 @@ class Shortcodes {
 			$payment_confirmation_data
 		);
 
-		return $before_html . wpautop( $content ) . $after_html;
+		$content = wpautop(
+			do_shortcode( $content )
+		);
+
+		return $before_html . $content . $after_html;
 	}
 }

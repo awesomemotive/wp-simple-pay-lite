@@ -27,6 +27,11 @@ class Notice_Manager {
 	 * @var array
 	 */
 	private static $core_notices = array(
+		'rest_api_error' => array(
+			'dismissible' => false,
+			'type'        => 'error',
+			'callback'    => 'SimplePay\Core\Admin\Notices\no_rest_api',
+		),
 		'ssl_error'      => array(
 			'dismissible' => false,
 			'type'        => 'error',

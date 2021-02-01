@@ -36,7 +36,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   @type string $api_key API Secret Key to use.
  * }
  * @return \Stripe\Customer
- * @throws \Stripe\Exception
  */
 function retrieve( $customer, $api_request_args = array() ) {
 	if ( false === is_array( $customer ) ) {
@@ -67,7 +66,6 @@ function retrieve( $customer, $api_request_args = array() ) {
  *   @type string $api_key API Secret Key to use.
  * }
  * @return \Stripe\Customer
- * @throws \Stripe\Exception
  */
 function create( $customer_args = array(), $api_request_args = array() ) {
 	$defaults      = array();
@@ -146,7 +144,6 @@ function create( $customer_args = array(), $api_request_args = array() ) {
  *   @type string $api_key API Secret Key to use.
  * }
  * @return \Stripe\Customer $customer Stripe Customer.
- * @throws \Stripe\Exception
  */
 function update( $customer_id, $customer_args, $api_request_args = array() ) {
 	/**
@@ -195,7 +192,6 @@ function update( $customer_id, $customer_args, $api_request_args = array() ) {
  *   @type string $api_key API Secret Key to use.
  * }
  * @return \Stripe\Customer $customer Stripe Customer.
- * @throws \Stripe\Exception
  */
 function delete( $customer_id, $api_request_args = array() ) {
 	$customer = retrieve( $customer_id, $api_request_args );

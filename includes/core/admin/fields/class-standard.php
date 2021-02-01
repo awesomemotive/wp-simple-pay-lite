@@ -44,7 +44,7 @@ class Standard extends Field {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $field
+	 * @param array $field Field data.
 	 */
 	public function __construct( $field ) {
 		$this->subtype   = isset( $field['subtype'] ) ? esc_attr( $field['subtype'] ) : 'text';

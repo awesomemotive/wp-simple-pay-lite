@@ -16,7 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-
+/**
+ * Custom_Html class.
+ *
+ * @since 3.0.0
+ */
 class Custom_Html extends Field {
 
 	/**
@@ -24,7 +28,7 @@ class Custom_Html extends Field {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $field
+	 * @param array $field Field data.
 	 */
 	public function __construct( $field ) {
 		$this->type_class = 'simpay-field-custom-html';

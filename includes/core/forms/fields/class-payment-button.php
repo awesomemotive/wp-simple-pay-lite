@@ -24,17 +24,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Payment_Button extends Custom_Field {
 
 	/**
-	 * Payment_Button constructor.
-	 */
-	public function __construct() {
-		// No constructor needed, but to keep consistent will keep it here but just blank
-	}
-
-	/**
-	 * Print the HTML for the payment button on the frontend
+	 * Print the HTML for the payment button on the frontend.
 	 *
-	 * @param $settings
+	 * @since 3.0.0
 	 *
+	 * @param array $settings Field settings.
 	 * @return string
 	 */
 	public static function print_html( $settings ) {
@@ -44,7 +38,9 @@ class Payment_Button extends Custom_Field {
 
 		$id    = isset( $settings['id'] ) ? $settings['id'] : '';
 		$text  = isset( $settings['text'] ) && ! empty( $settings['text'] ) ? $settings['text'] : esc_html__( 'Pay with Card', 'stripe' );
-		$style = isset( $settings['style'] ) ? $settings['style'] : ( simpay_get_global_setting( 'payment_button_style' ) ? simpay_get_global_setting( 'payment_button_style' ) : 'stripe' );
+		$style = isset( $settings['style'] )
+			? $settings['style']
+			: 'stripe';
 
 		$id = simpay_dashify( $id );
 
@@ -56,7 +52,14 @@ class Payment_Button extends Custom_Field {
 		return $html;
 	}
 
-	// Helper method for adding custom CSS classes to payment button.
+	/**
+	 * Generates a class name for the Payment Button.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param string $button_style Button style.
+	 * @return string
+	 */
 	public static function get_payment_button_classes( $button_style ) {
 		$classes = array(
 			'simpay-btn',

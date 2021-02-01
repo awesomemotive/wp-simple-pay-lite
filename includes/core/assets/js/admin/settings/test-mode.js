@@ -9,8 +9,8 @@ import domReady from '@wordpress/dom-ready';
 // @todo Investigate enqueing admin.js in the footer.
 domReady( () => {
 	const { hooks } = window.wpsp;
-	const radioEls = document.querySelectorAll( '[name="simpay_settings_keys[mode][test_mode]"]' );
-	const selectedRadioEl = document.querySelector( '[name="simpay_settings_keys[mode][test_mode]"]:checked' );
+	const radioEls = document.querySelectorAll( '[name="simpay_settings[test_mode]"]' );
+	const selectedRadioEl = document.querySelector( '[name="simpay_settings[test_mode]"]:checked' );
 
 	if ( 0 === radioEls.length ) {
 		return;
