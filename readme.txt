@@ -276,7 +276,7 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
-= 2.6.0 - February XX, 2021 =
+= 2.6.0 - February 3, 2021 =
 
 * New: Update plugin settings screen UI and UX.
 * New: Parse shortcodes in `[simpay_payment_receipt]` shortcode.
