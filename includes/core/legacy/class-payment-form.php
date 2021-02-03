@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 /**
  * Backwards compatibility for <= 3.5.x Payment class.
  *

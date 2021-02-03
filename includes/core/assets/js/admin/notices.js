@@ -1,4 +1,4 @@
-/* global _ */
+/* global jQuery, wp */
 
 /**
  * WordPress dependencies
@@ -12,25 +12,17 @@ import './settings/usage-tracking.js';
 
 /**
  * Handle AJAX dismissal of notices.
+ *
+ * Uses jQuery because the `.notice-dismiss` button is added to the DOM
+ * via jQuery when the notice loads.
  */
 domReady( () => {
-	const simpayNotices = document.querySelectorAll( '.simpay-notice' );
+	jQuery( '.simpay-notice' ).each( function() {
+		const notice = $( this );
+		const noticeId = notice.data( 'id' );
+		const nonce = notice.data( 'nonce' );
 
-	if ( simpayNotices.length === 0 ) {
-		return;
-	}
-
-	_.each( simpayNotices, ( notice ) => {
-		const dismissEl = notice.querySelector( '.notice-dismiss' );
-
-		if ( ! dismissEl ) {
-			return;
-		}
-
-		const noticeId = notice.dataset.id;
-		const nonce = notice.dataset.nonce;
-
-		dismissEl.addEventListener( 'click', ( e ) => {
+		notice.on( 'click', '.notice-dismiss', ( e ) => {
 			wp.ajax.post( 'simpay_dismiss_admin_notice', {
 				notice_id: noticeId,
 				nonce,

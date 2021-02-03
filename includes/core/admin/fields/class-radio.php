@@ -38,7 +38,7 @@ class Radio extends Field {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $field
+	 * @param array $field Field data.
 	 */
 	public function __construct( $field ) {
 

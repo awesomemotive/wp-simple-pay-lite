@@ -14,6 +14,10 @@
 
 	.simpay-styled & {
 		text-decoration: none;
+
+		&:hover {
+			box-shadow: none;
+		}
 	}
 }
 

@@ -1,0 +1,75 @@
+.simpay-settings-subsections {
+	display: flex;
+	align-items: center;
+	box-shadow: inset 0 -1px 0 0 #ccc;
+}
+
+.simpay-settings-subsections__subsection {
+	font-weight: 500;
+	text-decoration: none;
+	padding: 15px;
+	display: flex;
+	align-items: center;
+
+	.dashicons {
+		width: 18px;
+		height: 18px;
+		font-size: 18px;
+		margin-right: 4px;
+	}
+
+	&.is-active {
+		box-shadow: inset 0 -4px 0 0 currentColor;
+		position: relative;
+		z-index: 1;
+	}
+
+	&:not(.is-active) {
+		color: #23282d;
+	}
+}
+
+.simpay-settings {
+
+	form > h2:not(.nav-tab-wrapper) {
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px;
+		overflow: hidden;
+		position: absolute !important;
+		width: 1px;
+	}
+
+	.form-table td fieldset + p,
+	.form-table td label + p,
+	.form-table td select + p,
+	.form-table td input + p {
+		color: #666;
+		font-style: italic;
+	}
+
+	.nav-tab {
+		display: flex;
+		align-items: center;
+
+		.simpay-settings-bubble {
+			margin-left: 5px;
+		}
+	}
+}
+
+.simpay-settings-bubble {
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	margin: 1px 0 -1px 2px;
+	padding: 0 5px;
+	min-width: 18px;
+	height: 18px;
+	border-radius: 9px;
+	background-color: #ca4a1f;
+	color: #fff;
+	font-size: 11px;
+	line-height: 1.6;
+	text-align: center;
+	z-index: 26;
+}

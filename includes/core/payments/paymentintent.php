@@ -36,7 +36,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   @type string $api_key API Secret Key to use.
  * }
  * @return \Stripe\PaymentIntent
- * @throws \Stripe\Exception
  */
 function retrieve( $payment_intent, $api_request_args = array() ) {
 	if ( false === is_array( $payment_intent ) ) {

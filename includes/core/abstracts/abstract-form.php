@@ -21,101 +21,230 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 abstract class Form {
 
-	/*****
+	/**
+	 * Test mode.
 	 *
-	 * GLOBAL SETTINGS
-	 *****/
-
-	/** STRIPE KEYS **/
-
-	/* Test mode options */
+	 * @since 3.0.0
+	 * @var string|bool
+	 */
 	public $test_mode = '';
 
-	/* Test Keys */
-	public $test_secret_key      = '';
+
+	/**
+	 * Test Secret Key.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $test_secret_key = '';
+
+	/**
+	 * Test Publishable Key.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $test_publishable_key = '';
 
-	/* Live Keys */
-	public $live_secret_key      = '';
+	/**
+	 * Live Secret Key.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $live_secret_key = '';
+
+	/**
+	 * Live Publishable Key.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $live_publishable_key = '';
 
-	/* Ambiguous Keys */
-	public $account_id      = '';
-	public $secret_key      = '';
+	/**
+	 * Stripe Connect Account ID.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $account_id = '';
+
+	/**
+	 * Secret Key.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $secret_key = '';
+
+	/**
+	 * Publishable Key.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $publishable_key = '';
 
-	/** GENERAL **/
-
-	/* General */
+	/**
+	 * Payment Confirmation: Success.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $payment_success_page = '';
-	public $payment_failure_page = '';
-	public $locale               = '';
-	public $country              = '';
 
-	/* Currency Options */
-	public $currency          = '';
+	/**
+	 * Payment Confirmation: Failure.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $payment_failure_page = '';
+
+	/**
+	 * Locale.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $locale = '';
+
+	/**
+	 * Country code.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $country = '';
+
+	/**
+	 * Currency.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $currency = '';
+
+	/**
+	 * Currency position.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $currency_position = '';
 
-	// Separators
+	/**
+	 * Decimal separator.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $decimal_separator  = '';
+
+	/**
+	 * Thousand separator.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $thousand_separator = '';
 
-	/*****
+	/**
+	 * One-time amount.
 	 *
-	 * FORM SETTINGS
-	 *****/
-
-	/** PAYMENT OPTIONS **/
-
-	/* one-time payment options */
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $amount = '';
 
-	// Statement descriptor setting
+	/**
+	 * Statement descriptor.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $statement_descriptor = '';
 
-	/** STRIPE CHECKOUT DISPLAY **/
+	/**
+	 * Company name (form title).
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $company_name = '';
 
-	public $company_name           = '';
+	/**
+	 * Item desccription (form description).
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $item_description       = '';
-	public $image_url              = '';
+
+	/**
+	 * Stripe Checkout: Image URL (form logo).
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $image_url = '';
+
+	/**
+	 * Stripe Checkout: Billing address
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $enable_billing_address = '';
 
-	/*****
+	/**
+	 * Form ID.
 	 *
-	 * OTHER OPTIONS
-	 *****/
-
-	// Form ID
+	 * @since 3.0.0
+	 * @var int
+	 */
 	public $id = 0;
 
-	// The filter specific to this form. Allows us to make each form be completely customizable through filters independent of each other
+	/**
+	 * Form filter.
+	 *
+	 * @since 3.0.0
+	 * @deprecated 4.0.0
+	 * @var string
+	 */
 	public $filter = '';
 
-	// Custom fields
+	/**
+	 * Form custom fields.
+	 *
+	 * @since 3.0.0
+	 * @var array
+	 */
 	public $custom_fields = array();
 
 	/**
 	 * Form constructor.
 	 *
-	 * @param $id int
+	 * @param int $id Payment Form ID.
 	 */
 	public function __construct( $id ) {
 
-		// Setup the post object
+		// Setup the post object.
 		$this->set_post_object( $id );
 
-		// Set our form specific filter to apply to each setting
+		// Set our form specific filter to apply to each setting.
 		$this->filter = 'simpay_form_' . $this->id;
 
-		// Setup the global settings tied to this form
+		// Setup the global settings tied to this form.
 		$this->set_global_settings();
 
-		// Setup the post meta settings tied to this form
+		// Setup the post meta settings tied to this form.
 		$this->set_post_meta_settings();
 
 		global $simpay_form;
 
-		// Set global form object to this instance
+		// Set global form object to this instance.
 		$simpay_form = $this;
 
 		$this->maybe_register_hooks();
@@ -136,7 +265,7 @@ abstract class Form {
 			$simpay_displayed_form_ids = array();
 		}
 
-		// Collect any form IDs we've displayed already so we can avoid duplicate IDs
+		// Collect any form IDs we've displayed already so we can avoid duplicate IDs.
 		if ( ! isset( $simpay_displayed_form_ids[ $this->id ] ) ) {
 			$this->register_hooks();
 
@@ -148,14 +277,20 @@ abstract class Form {
 	/**
 	 * Add hooks and filters for this form instance.
 	 *
-	 * Hooks get run once per form instance. See https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
+	 * Hooks get run once per form instance.
+	 *
+	 * @link https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
+	 *
+	 * @since 3.0.0
 	 */
 	public function register_hooks() {}
 
 	/**
-	 * Setup the post object for this form
+	 * Setup the post object for this form.
 	 *
-	 * @param $form
+	 * @since 3.0.0
+	 *
+	 * @param int|\SimplePay\Core\Abastracts\Form|\WP_Post $form Payment Form.
 	 */
 	public function set_post_object( $form ) {
 		if ( is_numeric( $form ) ) {
@@ -184,7 +319,7 @@ abstract class Form {
 		// Legacy filter.
 		$test_mode = simpay_get_filtered(
 			'test_mode',
-			simpay_get_global_setting( 'test_mode' ),
+			simpay_get_setting( 'test_mode', 'enabled' ),
 			$this->id
 		);
 
@@ -206,7 +341,7 @@ abstract class Form {
 	 *
 	 * @since 3.9.0
 	 *
-	 * @param array {
+	 * @param array $args {
 	 *   Arguments to modify the per-request arguments.
 	 *
 	 *   @type string $api_key  Set a specific secret key.
@@ -257,27 +392,15 @@ abstract class Form {
 
 	/**
 	 * Set the global settings options to the form attributes.
+	 *
+	 * @since 3.0.0
 	 */
 	public function set_global_settings() {
-		// Setup API.
-		$settings = get_option( 'simpay_settings_keys' );
-
 		// Global keys.
-		$this->test_secret_key = isset( $settings['test_keys']['secret_key'] )
-			? $settings['test_keys']['secret_key']
-			: '';
-
-		$this->test_publishable_key = isset( $settings['test_keys']['publishable_key'] )
-			? $settings['test_keys']['publishable_key']
-			: '';
-
-		$this->live_secret_key = isset( $settings['live_keys']['secret_key'] )
-			? $settings['live_keys']['secret_key']
-			: '';
-
-		$this->live_publishable_key = isset( $settings['live_keys']['publishable_key'] )
-			? $settings['live_keys']['publishable_key']
-			: '';
+		$this->test_secret_key      = simpay_get_setting( 'test_secret_key', '' );
+		$this->test_publishable_key = simpay_get_setting( 'test_publishable_key', '' );
+		$this->live_secret_key      = simpay_get_setting( 'live_secret_key', '' );
+		$this->live_publishable_key = simpay_get_setting( 'live_publishable_key', '' );
 
 		// Choose keys based on current mode.
 		$secret_key = true === $this->is_livemode()
@@ -296,12 +419,8 @@ abstract class Form {
 		$this->test_mode  = false === $this->is_livemode();
 		$this->account_id = simpay_get_filtered( 'account_id', $this->account_id, $this->id );
 
-		/** GENERAL */
-
-		/* General */
-
-		// Success Page
-		$payment_success_page       = simpay_get_global_setting( 'success_page' );
+		// Success Page.
+		$payment_success_page       = simpay_get_setting( 'success_page', '' );
 		$this->payment_success_page = add_query_arg(
 			array(
 				'form_id' => $this->id,
@@ -313,8 +432,8 @@ abstract class Form {
 			)
 		);
 
-		// Failure Page
-		$payment_failure_page       = simpay_get_global_setting( 'failure_page' );
+		// Failure Page.
+		$payment_failure_page       = simpay_get_setting( 'failure_page', '' );
 		$this->payment_failure_page = add_query_arg(
 			array(
 				'form_id' => $this->id,
@@ -327,7 +446,7 @@ abstract class Form {
 		);
 
 		// Cancel page.
-		$payment_cancelled_page = simpay_get_global_setting( 'cancelled_page' );
+		$payment_cancelled_page = simpay_get_setting( 'cancelled_page', '' );
 
 		if ( empty( $payment_cancelled_page ) ) {
 			$payment_cancelled_page = $payment_failure_page;
@@ -339,13 +458,8 @@ abstract class Form {
 			$this->id
 		);
 
-		// Locale backwards compatibility.
-		// Can't search for the global setting key because it exists in both options now.
-		$keys   = get_option( 'simpay_settings_keys' );
-		$locale = isset( $keys['locale']['locale'] ) ? $keys['locale']['locale'] : 'auto';
-
-		$fallback = get_option( 'simpay_settings_general' );
-		$fallback = isset( $fallback['general']['locale'] ) ? $fallback['general']['locale'] : 'auto';
+		// Locale.
+		$locale = simpay_get_setting( 'stripe_checkout_locale', 'auto' );
 
 		// Previously an empty value was English. Force that to `en` to avoid errors.
 		if ( '' === $locale ) {
@@ -354,42 +468,60 @@ abstract class Form {
 
 		$this->locale = ! empty( $locale ) ? $locale : $fallback;
 
-		$this->country = simpay_get_filtered( 'country', simpay_get_global_setting( 'country' ), $this->id );
+		// Country.
+		$this->country = simpay_get_filtered(
+			'country',
+			simpay_get_setting( 'account_country', 'US' ),
+			$this->id
+		);
 
 		// Stripe needs something, so default to US if settings haven't been saved.
-		if ( ! $this->country ) {
+		if ( empty( $this->country ) ) {
 			$this->country = 'US';
 		}
 
-		/* Currency Options */
-		$this->currency          = simpay_get_filtered( 'currency', simpay_get_global_setting( 'currency' ), $this->id );
-		$this->currency_position = simpay_get_filtered( 'currency_position', simpay_get_global_setting( 'currency_position' ), $this->id );
+		// Currency.
+		$this->currency = simpay_get_filtered(
+			'currency',
+			simpay_get_setting( 'currency', 'USD' ),
+			$this->id
+		);
 
-		// Decimal Separator
-		$decimal_separator       = ( true === $this->set_bool_value( simpay_get_global_setting( 'separator' ) ) ? ',' : '.' );
-		$this->decimal_separator = simpay_get_filtered( 'decimal_separator', $decimal_separator, $this->id );
+		$this->currency_position = simpay_get_filtered(
+			'currency_position',
+			simpay_get_setting( 'currency_position', 'left' ),
+			$this->id
+		);
 
-		// Thousand separator
-		$thousand_separator       = ( true === $this->set_bool_value( simpay_get_global_setting( 'separator' ) ) ? '.' : ',' );
-		$this->thousand_separator = simpay_get_filtered( 'thousand_separator', $thousand_separator, $this->id );
+		$decimal_separator = 'yes' === simpay_get_setting( 'separator', 'no' )
+			? ','
+			: '.';
+
+		$this->decimal_separator = simpay_get_filtered(
+			'decimal_separator',
+			$decimal_separator,
+			$this->id
+		);
+
+		$thousand_separator = 'yes' === simpay_get_setting( 'separator', 'no' )
+			? '.'
+			: ',';
+
+		$this->thousand_separator = simpay_get_filtered(
+			'thousand_separator',
+			$thousand_separator,
+			$this->id
+		);
 	}
 
 	/**
 	 * Set the form settings options to the form attributes.
+	 *
+	 * @since 3.0.0
 	 */
 	public function set_post_meta_settings() {
 
-		// Set all the form settings that have been saved here.
-		// Doing this here allows us to make every setting filterable on a per-form
-
-		// We have to use simpay_get_filtered() for these since this is the first time setting these values. That's why we can't use something like simpay_get_setting()
-		// Basically, think of this as the construction of global $simpay_form, so anything that uses $simpay_form will not work because the global will still be null at this point.
-
 		// Custom Fields.
-		//
-		// Add `type` key and create a flat list.
-		//
-		// Here for backwards compatibility.
 		$custom_fields  = simpay_get_saved_meta( $this->id, '_custom_fields', array() );
 		$_custom_fields = array();
 
@@ -406,45 +538,99 @@ abstract class Form {
 			$this->id
 		);
 
-		/** PAYMENT OPTIONS */
+		// Amount.
+		$this->amount = simpay_unformat_currency(
+			simpay_get_filtered(
+				'amount',
+				simpay_get_saved_meta( $this->id, '_amount', simpay_global_minimum_amount() ),
+				$this->id
+			)
+		);
 
-		/* one-time payment options */
-		$this->amount = simpay_unformat_currency( simpay_get_filtered( 'amount', simpay_get_saved_meta( $this->id, '_amount', simpay_global_minimum_amount() ), $this->id ) );
-
-		// Statement descriptor
+		// Statement descriptor.
 		$this->statement_descriptor = simpay_validate_statement_descriptor(
 			simpay_get_filtered( 'statement_descriptor', '', $this->id )
 		);
 
-		/** STRIPE CHECKOUT DISPLAY */
+		// Checkout button text.
+		$this->checkout_button_text = simpay_get_filtered(
+			'checkout_button_text',
+			simpay_get_saved_meta(
+				$this->id,
+				'_checkout_button_text',
+				esc_html(
+					sprintf(
+						/* translators: %s Amount to pay. */
+						__( 'Pay %s', 'stripe' ),
+						'{{amount}}'
+					)
+				)
+			),
+			$this->id
+		);
 
-		$this->checkout_button_text = simpay_get_filtered( 'checkout_button_text', simpay_get_saved_meta( $this->id, '_checkout_button_text', sprintf( esc_html__( 'Pay %s', 'stripe' ), '{{amount}}' ) ), $this->id );
+		// Company name.
+		$this->company_name = simpay_get_filtered(
+			'company_name',
+			simpay_get_saved_meta( $this->id, '_company_name' ),
+			$this->id
+		);
 
-		$this->company_name = simpay_get_filtered( 'company_name', simpay_get_saved_meta( $this->id, '_company_name' ), $this->id );
+		// Item description.
+		$this->item_description = simpay_get_filtered(
+			'item_description',
+			simpay_get_saved_meta( $this->id, '_item_description' ),
+			$this->id
+		);
 
-		$this->item_description = simpay_get_filtered( 'item_description', simpay_get_saved_meta( $this->id, '_item_description' ), $this->id );
+		// Image URL.
+		$this->image_url = simpay_get_filtered(
+			'image_url',
+			simpay_get_saved_meta( $this->id, '_image_url' ),
+			$this->id
+		);
 
-		$this->image_url = simpay_get_filtered( 'image_url', simpay_get_saved_meta( $this->id, '_image_url' ), $this->id );
+		// Checkout button.
+		$submit_type = simpay_get_filtered(
+			'checkout_submit_type',
+			simpay_get_saved_meta( $this->id, '_checkout_submit_type' ),
+			$this->id
+		);
 
-		$submit_type                = simpay_get_filtered( 'checkout_submit_type', simpay_get_saved_meta( $this->id, '_checkout_submit_type' ), $this->id );
 		$this->checkout_submit_type = empty( $submit_type )
 			? 'pay'
 			: $submit_type;
 
-		$this->enable_billing_address  = simpay_get_filtered( 'enable_billing_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_billing_address' ) ), $this->id );
-		$this->enable_shipping_address = simpay_get_filtered( 'enable_shipping_address', $this->set_bool_value( simpay_get_saved_meta( $this->id, '_enable_shipping_address' ) ), $this->id );
+		// Billing/Shipping address.
+		$this->enable_billing_address = simpay_get_filtered(
+			'enable_billing_address',
+			$this->set_bool_value(
+				simpay_get_saved_meta( $this->id, '_enable_billing_address' )
+			),
+			$this->id
+		);
+
+		$this->enable_shipping_address = simpay_get_filtered(
+			'enable_shipping_address',
+			$this->set_bool_value(
+				simpay_get_saved_meta( $this->id, '_enable_shipping_address' )
+			),
+			$this->id
+		);
 	}
 
 	/**
-	 * Find the page by post ID and return the permalink
+	 * Find the page by post ID and return the permalink.
 	 *
-	 * @param $page_id
+	 * @since 3.0.0
 	 *
+	 * @param int  $page_id ID of page to redirect to.
+	 * @param bool $failure_page If this URL is for the failure page.
 	 * @return false|string
 	 */
 	public function get_redirect_url( $page_id, $failure_page = false ) {
 
-		// If we are getting success page then check the form settings first
+		// If we are getting success page then check the form settings first.
 		if ( ! $failure_page ) {
 			$success_redirect_type = simpay_get_saved_meta( $this->id, '_success_redirect_type' );
 
@@ -455,7 +641,7 @@ abstract class Form {
 			}
 		}
 
-		// Fallback for using default global setting and for getting the failure page URL
+		// Fallback for using default global setting and for getting the failure page URL.
 		if ( empty( $page_id ) ) {
 			return '';
 		}
@@ -467,15 +653,15 @@ abstract class Form {
 		}
 
 		return '';
-
 	}
 
 	/**
 	 * Make a check on bool fields to set them as a boolean value instead of their saved value.
 	 *
-	 * @param        $option
-	 * @param string $check
+	 * @since 3.0.0
 	 *
+	 * @param string $option Option to conver to bool.
+	 * @param string $check Existing value.
 	 * @return bool
 	 */
 	private function set_bool_value( $option, $check = '' ) {
@@ -488,7 +674,9 @@ abstract class Form {
 	}
 
 	/**
-	 * Set all the script variables for the Stripe specific settings (the ones Stripe needs for the checkout form)
+	 * Set all the script variables for the Stripe specific settings.
+	 *
+	 * @since 3.0.0
 	 *
 	 * @return array
 	 */

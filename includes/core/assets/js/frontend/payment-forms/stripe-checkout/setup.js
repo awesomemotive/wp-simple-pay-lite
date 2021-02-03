@@ -61,30 +61,37 @@ export function setup( e, spFormElem, formData ) {
 			e.preventDefault();
 
 			if ( window.simpayGoogleRecaptcha ) {
-				const { siteKey } = simpayGoogleRecaptcha;
+				const { siteKey, i18n } = simpayGoogleRecaptcha;
 
 				// @todo Complete syncronously inside of separate reCAPTCHA script.
 				//
 				// This is a temporary measure to ensure reCAPTCHA tokens are generated
 				// at the time of submission to avoid them being invalidated after 120 seconds.
 				grecaptcha.ready( () => {
-					grecaptcha.execute( siteKey, {
-						action: `simple_pay_form_${ formData.formId }_customer`,
-					} )
-						.then( ( token ) => {
-							spFormElem.append( '<input type="hidden" name="grecaptcha_customer" value="' + token + '" />' );
+					try {
+						grecaptcha.execute( siteKey, {
+							action: `simple_pay_form_${ formData.formId }_customer`,
+						} )
+							.then( ( token ) => {
+								spFormElem.append( '<input type="hidden" name="grecaptcha_customer" value="' + token + '" />' );
 
-							grecaptcha.execute( siteKey, {
-								action: `simple_pay_form_${ formData.formId }_payment`,
+								grecaptcha.execute( siteKey, {
+									action: `simple_pay_form_${ formData.formId }_payment`,
+								} )
+									.then( ( token ) => {
+										spFormElem.append( '<input type="hidden" name="grecaptcha_payment" value="' + token + '" />' );
+
+										// Find and submit the Payment Form.
+										getPaymentForms()[ getPaymentFormType( spFormElem, formData ) ]
+											.submit( spFormElem, formData );
+									} );
 							} )
-								.then( ( token ) => {
-									spFormElem.append( '<input type="hidden" name="grecaptcha_payment" value="' + token + '" />' );
-
-									// Find and submit the Payment Form.
-									getPaymentForms()[ getPaymentFormType( spFormElem, formData ) ]
-										.submit( spFormElem, formData );
-								} );
-						} );
+							.catch( ( error ) => {
+								onPaymentFormError( i18n.error, spFormElem, formData );
+							} );
+					} catch ( error ) {
+						onPaymentFormError( i18n.error, spFormElem, formData );
+					}
 				} );
 			} else {
 				getPaymentForms()[ getPaymentFormType( spFormElem, formData ) ]

@@ -62,7 +62,7 @@ class Assets {
 		wp_enqueue_script(
 			'simpay-notices',
 			SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin-notices.min.js',
-			array( 'wp-util', 'underscore' ),
+			array( 'wp-util', 'jquery' ),
 			SIMPLE_PAY_VERSION,
 			true
 		);

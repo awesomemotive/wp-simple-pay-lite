@@ -23,6 +23,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Customer_Controller class.
+ *
+ * @since 3.6.0
+ */
 class Customer_Controller extends Controller {
 
 	/**
@@ -65,7 +70,11 @@ class Customer_Controller extends Controller {
 	 *
 	 * @since 3.6.0
 	 *
-	 * @param \WP_REST_Request Request data.
+	 * @param \WP_REST_Request $request {
+	 *   Incoming REST API request data.
+	 *
+	 *   @type array $form_values Values of named fields in the payment form.
+	 * }
 	 * @return bool
 	 */
 	public function create_item_permissions_check( $request ) {
@@ -85,7 +94,7 @@ class Customer_Controller extends Controller {
 				'rest_forbidden',
 				__( 'Sorry, you have made too many requests. Please try again later.', 'stripe' ),
 				array(
-					'status' => rest_authorization_required_code()
+					'status' => rest_authorization_required_code(),
 				)
 			);
 		}
@@ -105,12 +114,13 @@ class Customer_Controller extends Controller {
 	 * @since 3.6.0
 	 *
 	 * @param \WP_REST_Request $request {
-	 *   Incoming REQUEST data.
+	 *   Incoming REST API request data.
 	 *
 	 *   @type int   $form_id Form ID used to generate PaymentIntent data.
 	 *   @type array $form_data Client-generated formData information.
 	 *   @type array $form_values Values of named fields in the payment form.
 	 * }
+	 * @throws \Exception When required data is missing or cannot be verified.
 	 * @return \WP_REST_Response
 	 */
 	public function create_item( $request ) {

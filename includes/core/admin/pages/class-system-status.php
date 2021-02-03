@@ -21,32 +21,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * System Status.
  */
-class System_Status extends Admin_Page {
-
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-
-	}
-
-	public function add_fields() {
-		return array();
-	}
-
-	public function add_sections() {
-		return array();
-	}
+class System_Status {
 
 	/**
 	 * Stripe TLS requirement.
-	 * https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2
+	 *
+	 * @link https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2
+	 *
+	 * @param bool $for_export If the value is for the export.
+	 * @return string
 	 */
 	private static function stripe_tls_check( $for_export ) {
 
-		$test_key = simpay_get_setting( 'secret_key' );
+		$test_key = simpay_get_setting( 'test_secret_key', '' );
 
-		// If test key isn't set...
+		// If test key isn't set.
 		if ( empty( $test_key ) ) {
 
 			$retval = __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' );
@@ -76,15 +65,30 @@ class System_Status extends Admin_Page {
 			$retval = __( 'TLS 1.2 is not supported. You will need to upgrade your integration.', 'stripe' );
 
 			if ( $for_export ) {
-				return $retval . ' ' . sprintf( __( 'See %1$s.', 'stripe' ), 'https://stripe.com/blog/upgrading-tls' );
+				$tls_link = sprintf(
+					/* translators: %1$s TLS upgrade link. */
+					__( 'See %1$s.', 'stripe' ),
+					'https://stripe.com/blog/upgrading-tls'
+				);
+
+				return $retval . ' ' . $tls_link;
 			} else {
-				return '<mark class="error">' . $retval . ' ' . sprintf( __( '<a href="%s" target="_blank" rel="noopener noreferrer">Please read this</a> for more information.', 'stripe' ), 'https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2' ) . '</mark>';
+				$tls_link = sprintf(
+					/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+					__( '%1$sPlease read this%2$s for more information.', 'stripe' ),
+					'<a href="https://support.stripe.com/questions/how-do-i-upgrade-my-stripe-integration-from-tls-1-0-to-tls-1-2" target="_blank" rel="noopener noreferrer">',
+					'</a>'
+				);
+
+				return '<mark class="error">' . $retval . ' ' . $tls_link . '</mark>';
 			}
 		}
 	}
 
 	/**
-	 * HTML output
+	 * HTML output.
+	 *
+	 * @since 3.0.0
 	 */
 	public static function html() {
 		?>
@@ -122,7 +126,11 @@ class System_Status extends Admin_Page {
 							'export' => 'WordPress Installation',
 						),
 						'simpay'    => array(
-							'label'  => sprintf( __( '%s Settings', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ),
+							'label'  => sprintf(
+								/* translators: %s Plugin name. */
+								__( '%s Settings', 'stripe' ),
+								SIMPLE_PAY_PLUGIN_NAME
+							),
 							'export' => SIMPLE_PAY_PLUGIN_NAME . ' Settings',
 						),
 						'theme'     => array(
@@ -153,7 +161,11 @@ class System_Status extends Admin_Page {
 
 					// Show version from base class.
 					$sections['simpay']['version'] = array(
-						'label'        => sprintf( __( '%s Version', 'stripe' ), $plugin_name ),
+						'label'        => sprintf(
+							/* translators: %s Plugin name. */
+							__( '%s Version', 'stripe' ),
+							$plugin_name
+						),
 						'label_export' => $plugin_name . ' Version',
 						'result'       => SIMPLE_PAY_VERSION,
 					);
@@ -187,37 +199,33 @@ class System_Status extends Admin_Page {
 					// @todo Add via filter.
 					if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
 						$livemode = ! simpay_is_test_mode();
-						$db       = new \SimplePay\Pro\Webhooks\Database\Query();
-
-						$webhook = $db->query(
-							array(
-								'number'   => 1,
-								'livemode' => $livemode,
-							)
+						$webhook  = \SimplePay\Pro\Webhooks\get_latest_event(
+							$livemode
 						);
 
 						$sections['simpay']['webhook_last'] = array(
 							'label'         => __( 'Most Recent Webhook Event', 'stripe' ),
 							'label_export'  => 'Most Recent Webhook Event',
-							'result'        => ! empty( $webhook ) ? current( $webhook )->date_created : 'None',
-							'result_export' => ! empty( $webhook ) ? current( $webhook )->date_created : 'None',
+							'result'        => false !== $webhook
+								? $webhook->date_created
+								: 'None',
+							'result_export' => false !== $webhook
+								? $webhook->date_created
+								: 'None',
 						);
 
-						$settings = get_option( 'simpay_settings_keys' );
+						$prefix = false === $livemode
+							? 'test'
+							: 'live';
 
-						if ( false === $livemode ) {
-							$endpoint_secret = isset( $settings['test_keys']['endpoint_secret'] )
-								? $settings['test_keys']['endpoint_secret']
-								: '';
-						} else {
-							$endpoint_secret = isset( $settings['live_keys']['endpoint_secret'] )
-								? $settings['live_keys']['endpoint_secret']
-								: '';
-						}
+						$endpoint_secret = simpay_get_setting(
+							$prefix . '_webhook_endpoint_secret',
+							''
+						);
 
 						$sections['simpay']['webhook_secret'] = array(
 							'label'         => __( 'Webhook Secret', 'stripe' ),
-							'label_export'  => 'Webhook Secret', 
+							'label_export'  => 'Webhook Secret',
 							'result'        => ! empty( $endpoint_secret ) ? 'Yes' : 'No',
 							'result_export' => ! empty( $endpoint_secret ) ? 'Yes' : 'No',
 						);
@@ -243,10 +251,7 @@ class System_Status extends Admin_Page {
 						'result_export' => true === $has_file ? 'Yes' : 'No',
 					);
 
-					/**
-					 * WordPress Installation
-					 * ======================
-					 */
+					// WordPress installation.
 					$debug_mode = $script_debug = __( 'No', 'stripe' );
 					if ( defined( 'WP_DEBUG' ) ) {
 						$debug_mode = ( true === WP_DEBUG ? __( 'Yes', 'stripe' ) : $debug_mode );
@@ -259,7 +264,18 @@ class System_Status extends Admin_Page {
 					$memory_export = size_format( $memory );
 
 					if ( $memory < 41943040 ) {
-						$memory = '<mark class="error">' . sprintf( __( '%1$s - It is recommendend to set memory to at least 40MB. See: <a href="%2$s" target="_blank" rel="noopener noreferrer">Increasing memory allocated to PHP</a>', 'stripe' ), $memory_export, 'http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP' ) . '</mark>';
+						$memory_notice = sprintf(
+							/* translators: %1$s Memory limit. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate. */
+							__(
+								'%1$s - It is recommendend to set memory to at least 40MB. See: %2$sIncreasing memory allocated to PHP%3$s',
+								'stripe'
+							),
+							$memory_export,
+							'<a href="http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP" target="_blank" rel="noopener noreferrer">',
+							'</a>'
+						);
+
+						$memory = '<mark class="error">' . $memory_notice . '</mark>';
 					} else {
 						$memory = '<mark class="ok">' . $memory_export . '</mark>';
 					}
@@ -332,10 +348,7 @@ class System_Status extends Admin_Page {
 						),
 					);
 
-					/**
-					 * Active Theme
-					 * ============
-					 */
+					// Active theme.
 					include_once( ABSPATH . 'wp-admin/includes/theme-install.php' );
 
 					if ( version_compare( $wp_version, '3.4', '<' ) ) {
@@ -370,7 +383,13 @@ class System_Status extends Admin_Page {
 					}
 
 					if ( version_compare( $theme_version, $theme_update_version, '<' ) ) {
-						$theme_version = '<mark class="error">' . $theme_version . ' (' . sprintf( __( '%s is available', 'stripe' ), esc_html( $theme_update_version ) ) . '</mark>';
+						$theme_version_update = sprintf(
+							/* translators: %s Theme version number. */
+							__( '%s is available', 'stripe' ),
+							esc_html( $theme_update_version )
+						);
+
+						$theme_version = '<mark class="error">' . $theme_version . ' (' . $theme_version_update . ' )</mark>';
 					} else {
 						$theme_version = '<mark class="ok">' . $theme_version . '</mark>';
 					}
@@ -429,10 +448,7 @@ class System_Status extends Admin_Page {
 						),
 					);
 
-					/**
-					 * Active Plugins
-					 * ==============
-					 */
+					// Active plugins.
 					include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 
 					$active_plugins = (array) get_option( 'active_plugins', array() );
@@ -465,7 +481,13 @@ class System_Status extends Admin_Page {
 									if ( ! empty( $api->version ) ) {
 										$plugin_update_version = $api->version;
 										if ( version_compare( $plugin_version, $plugin_update_version, '<' ) ) {
-											$plugin_version = '<mark class="error">' . $plugin_version . ' (' . sprintf( __( '%s is available', 'stripe' ), esc_html( $plugin_update_version ) ) . '</mark>';
+											$plugin_version_update = sprintf(
+												/* translators: %s Available plugin version. */
+												__( '%s is available', 'stripe' ),
+												esc_html( $plugin_update_version )
+											);
+
+											$plugin_version = '<mark class="error">' . $plugin_version . ' (' . $plugin_version_update . ')</mark>';
 										} else {
 											$plugin_version = '<mark class="ok">' . $plugin_version . '</mark>';
 										}
@@ -493,10 +515,7 @@ class System_Status extends Admin_Page {
 						rsort( $sections['plugins'] );
 					}
 
-					/**
-					 * Server Environment
-					 * ==================
-					 */
+					// Server environment.
 					if ( version_compare( PHP_VERSION, '7.0', '<' ) ) {
 						$php = '<mark>' . PHP_VERSION . ' - ' . __( 'WordPress.org recommends upgrading to PHP 7 or higher for better security.', 'stripe' ) . ' <a href="https://wordpress.org/about/requirements/" target="_blank" rel="noopener noreferrer">' . __( 'Read more.', 'stripe' ) . '</a>' . '</mark>';
 					} else {
@@ -519,7 +538,16 @@ class System_Status extends Admin_Page {
 
 					$default_timezone = $server_timezone_export = date_default_timezone_get();
 					if ( 'UTC' !== $default_timezone ) {
-						$server_timezone = '<mark class="error">' . sprintf( __( 'Server default timezone is %s - it should be UTC', 'stripe' ), $default_timezone ) . '</mark>';
+						$server_timezone = sprintf(
+							/* translators: %s Default timezone. */
+							__(
+								'Server default timezone is %s - it should be UTC',
+								'stripe'
+							),
+							$default_timezone
+						);
+
+						$server_timezone = '<mark class="error">' . $server_timezone . '</mark>';
 					} else {
 						$server_timezone = '<mark class="ok">UTC</mark>';
 					}
@@ -683,11 +711,7 @@ class System_Status extends Admin_Page {
 						),
 					);
 
-					/**
-					 * Client Information
-					 * ==================
-					 */
-
+					// Client information.
 					$user_client = new \SimplePay\Core\Browser();
 
 					$browser  = '<dl>';
@@ -716,10 +740,7 @@ class System_Status extends Admin_Page {
 						),
 					);
 
-					/**
-					 * Final Output
-					 * ============
-					 */
+					// Output.
 					$panels   = apply_filters( 'sc_system_status_report_panels', $panels );
 					$sections = apply_filters( 'sc_system_status_report_sections', $sections );
 
@@ -830,21 +851,11 @@ class System_Status extends Admin_Page {
 	}
 
 	/**
-	 * Output page markup.
-	 *
-	 * @param string $page
-	 * @param string $tab
-	 */
-
-	/**
 	 * PHP sizes conversions.
 	 *
 	 * This function transforms the php.ini notation for numbers (like '2M') to an integer.
 	 *
-	 * @access private
-	 *
-	 * @param  string $size
-	 *
+	 * @param string $size Size to convert to a number.
 	 * @return int|string
 	 */
 	private static function let_to_num( $size ) {

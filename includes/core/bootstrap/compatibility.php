@@ -106,12 +106,12 @@ function show_admin_notices() {
 				if ( isset( $requirement['requires'] ) ) :
 					echo wp_kses(
 						sprintf(
-							esc_html__(
-								/* translators: %1$s Plugin name, do not translate. %2$s Requirement name, do not translate. %3$s Requirement version, do not translate. */
+							/* translators: %1$s Plugin name, do not translate. %2$s Requirement name, do not translate. %3$s Requirement version, do not translate. */
+							__(
 								'%1$s requires %2$s version %3$s or higher.',
 								'stripe'
 							),
-							SIMPLE_PAY_ITEM_NAME,
+							SIMPLE_PAY_PLUGIN_NAME,
 							'<code>' . esc_html( $requirement['name'] ) . '</code>',
 							'<code>' . esc_html( $requirement['requires'] ) . '</code>'
 						),
@@ -122,12 +122,12 @@ function show_admin_notices() {
 			else :
 				echo wp_kses(
 					sprintf(
-						esc_html__(
-							/* translators: %1$s Plugin name, do not translate. %2$s Requirement name, do not translate. */
+						/* translators: %1$s Plugin name, do not translate. %2$s Requirement name, do not translate. */
+						__(
 							'%1$s requires %2$s to be installed.',
 							'stripe'
 						),
-						SIMPLE_PAY_ITEM_NAME,
+						SIMPLE_PAY_PLUGIN_NAME,
 						'<code>' . esc_html( $requirement['name'] ) . '</code>'
 					),
 					array(
@@ -153,6 +153,7 @@ function show_admin_notices() {
 
 				echo wp_kses(
 					sprintf(
+						/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 						__(
 							'Many web hosts can give you instructions on how/where to upgrade your server through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s.',
 							'stripe'

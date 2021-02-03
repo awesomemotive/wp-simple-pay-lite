@@ -23,6 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class REST_API {
 
 	/**
+	 * Hooks in to WordPress.
+	 *
 	 * @since 3.5.0
 	 */
 	public function __construct() {

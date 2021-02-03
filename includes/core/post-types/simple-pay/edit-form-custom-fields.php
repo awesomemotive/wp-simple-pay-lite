@@ -106,7 +106,9 @@ function add_custom_fields( $post_id ) {
 						'type'    => 'radio',
 						'name'    => '_simpay_custom_field[payment_button][' . $counter . '][style]',
 						'id'      => esc_attr( 'simpay-payment-button-style-' . $counter ),
-						'value'   => isset( $field['style'] ) ? $field['style'] : ( simpay_get_global_setting( 'payment_button_style' ) ? simpay_get_global_setting( 'payment_button_style' ) : 'stripe' ),
+						'value'   => isset( $field['style'] )
+							? $field['style']
+							: 'stripe',
 						'class'   => array( 'simpay-multi-toggle' ),
 						'options' => array(
 							'stripe' => esc_html__( 'Stripe blue', 'stripe' ),

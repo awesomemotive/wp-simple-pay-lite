@@ -87,6 +87,7 @@ function add_stripe_checkout( $post_id ) {
 					<?php
 					echo wp_kses(
 						sprintf(
+							/* translators: %1$s Anchor opening tag, do not translate. %2$s Closing anchor tag, do not translate. */
 							__( 'Adjust the Stripe Checkout submit button color in the Stripe %1$sBranding settings%2$s', 'stripe' ),
 							'<a href="https://dashboard.stripe.com/account/branding" target="_blank" rel="noopener noreferrer">',
 							'</a>'
@@ -291,6 +292,7 @@ add_action( 'simpay_admin_before_stripe_checkout_rows', __NAMESPACE__ . '\\add_c
  */
 function add_custom_form_fields_link() {
 	$message = sprintf(
+		/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 		__( 'Configure the on-site Payment Button in the %1$sOn-Site Form Display%2$s settings.', 'stripe' ),
 		'<a href="#" class="simpay-tab-link" data-show-tab="simpay-form_display">',
 		'</a>'

@@ -34,7 +34,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   @type string $api_key API Secret Key to use.
  * }
  * @return \Stripe\Checkout\Session
- * @throws \Stripe\Exception
  */
 function retrieve( $session, $api_request_args = array() ) {
 	if ( false === is_array( $session ) ) {

@@ -1,3 +1,24 @@
+@import './settings.scss';
+
+.simpay-external-link {
+
+	.dashicons {
+		opacity: 0.80;
+		font-size: 16px;
+		margin: 3px 0 0 2px;
+		width: 16px;
+		height: 16px;
+		text-decoration: none;
+	}
+
+	&:hover {
+
+		.dashicons {
+			opacity: 1;
+		}
+	}
+}
+
 .fixed .column-livemode {
 	width: 15%;
 	text-align: right;

@@ -30,7 +30,7 @@ function simpay_insert_form_button() {
 	global $pagenow, $typenow;
 	$output = '';
 
-	// Only run in post/page creation and edit screens
+	// Only run in post/page creation and edit screens.
 	if ( in_array(
 		$pagenow,
 		array(
@@ -61,7 +61,7 @@ add_action( 'media_buttons', 'simpay_insert_form_button', 11 );
 function simpay_admin_footer_insert_form() {
 	global $pagenow, $typenow;
 
-	// Only run in post/page creation and edit screens
+	// Only run in post/page creation and edit screens.
 	if ( in_array(
 		$pagenow,
 		array(
@@ -146,8 +146,7 @@ function simpay_get_admin_pages() {
  *
  * @since  3.0.0
  *
- * @param  string $page
- *
+ * @param string $page Admin page slug.
  * @return null|\SimplePay\Core\Abstracts\Admin_Page
  */
 function simpay_get_admin_page( $page ) {
@@ -165,7 +164,7 @@ function simpay_get_admin_page( $page ) {
  * @since  3.0.0
  *
  * @param  mixed  $var  Variable to sanitize.
- * @param  string $func Function to use for sanitizing text strings (default 'sanitize_text_field')
+ * @param  string $func Function to use for sanitizing text strings (default 'sanitize_text_field').
  *
  * @return array|string Sanitized variable
  */
@@ -242,11 +241,10 @@ function simpay_is_admin_screen() {
  *
  * @since   3.0.0
  *
- * @param   string $base_url Plain URL to navigate to
- * @param   string $content  GA "content" tracking value
- * @param   bool   $raw      Use esc_url_raw instead (default = false)
- *
- * @return  string  $url        Full Google Analytics campaign URL
+ * @param string $base_url Plain URL to navigate to.
+ * @param string $content GA "content" tracking value.
+ * @param bool   $raw Use esc_url_raw instead (default = false).
+ * @return string $url Full Google Analytics campaign URL.
  */
 function simpay_ga_url( $base_url, $content, $raw = false ) {
 
@@ -269,20 +267,21 @@ function simpay_ga_url( $base_url, $content, $raw = false ) {
 
 /**
  * URL for upgrading to Pro used in promo links.
+ *
+ * @param string $content Upgrade URL content.
+ * @return string
  */
 function simpay_pro_upgrade_url( $content ) {
-
 	return apply_filters( 'simpay_upgrade_link', simpay_ga_url( SIMPLE_PAY_STORE_URL . 'lite-vs-pro/', $content ) );
 }
 
 /**
  * Link with HTML to docs site article & GA campaign values.
  *
- * @param string $text
- * @param string $slug
- * @param string $ga_content
- * @param bool   $plain
- *
+ * @param string $text Link text.
+ * @param string $slug Link slug.
+ * @param string $ga_content Google Analytics content.
+ * @param bool   $plain If the link should have an icon. Default false.
  * @return string
  */
 function simpay_docs_link( $text, $slug, $ga_content, $plain = false ) {
@@ -313,13 +312,22 @@ function simpay_docs_link( $text, $slug, $ga_content, $plain = false ) {
 }
 
 /**
- * Output the copy/paste shortcode on the forms page
+ * Output the copy/paste shortcode on the forms page.
+ *
+ * @param int $post_id Payment Form ID.
  */
 function simpay_print_shortcode_tip( $post_id ) {
 
 	$cmd = 'Ctrl&#43;C (&#8984;&#43;C on Mac)';
 
-	$shortcut  = sprintf( esc_attr__( 'Click to select. Then press %s to copy.', 'stripe' ), $cmd );
+	$shortcut  = esc_attr(
+		sprintf(
+			/* translators: %s Copy shortcode shortcut. */
+			__( 'Click to select. Then press %s to copy.', 'stripe' ),
+			$cmd
+		)
+	);
+
 	$shortcode = sprintf( '[simpay id="%s"]', $post_id );
 
 	echo "<input type='text' readonly='readonly' id='simpay-shortcode' class='simpay-shortcode simpay-form-shortcode simpay-shortcode-tip' title='" . esc_attr( $shortcut ) . "' " . "onclick='this.select();' value='" . esc_attr( $shortcode ) . "' />";

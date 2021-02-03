@@ -14,12 +14,9 @@ jQuery( document ).on( 'simpayCoreFormVarsInitialized', function( e, spFormElem,
 		showError,
 	} = window.simpayApp;
 
-	function onError() {
-		// Enable form.
-		enableForm( spFormElem, formData );
-
-		debugLog( 'Your payment form will not be checked for robots:', '' );
-		debugLog( 'Unable to generate reCAPTCHA token. Please ensure you are using v3 of the reCAPTCHA and you have entered valid keys in Simple Pay > Settings > General.', '' );
+	function onError( spFormElem, formData ) {
+		showError( spFormElem, formData, i18n.invalid );
+		spFormElem.find( ':not(.simpay-errors)' ).remove();
 	}
 
 	try {
@@ -51,20 +48,15 @@ jQuery( document ).on( 'simpayCoreFormVarsInitialized', function( e, spFormElem,
 							 *
 							 * @since 3.7.1
 							 */
-							error() {
-								showError( spFormElem, formData, i18n.invalid );
-								spFormElem.find( ':not(.simpay-errors)' ).remove();
-							}
+							error: () => onError( spFormElem, formData ),
 						} );
 					} )
-					.catch( () => {
-						onError();
-					} );
+					.catch( () => onError( spFormElem, formData ) );
 			} catch {
-				onError();
+				onError( spFormElem, formData );
 			}
 		} );
 	} catch {
-		onError();
+		onError( spFormElem, formData );
 	}
 } );

@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\Admin\Usage_Tracking;
 
+use SimplePay\Core\Settings\Setting_Checkbox;
 use SimplePay\Core\Admin\Notice_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -46,9 +47,15 @@ function checkin_url() {
  * @return bool
  */
 function is_opted_in() {
-	$optin = simpay_get_global_setting( 'usage_tracking_opt_in' );
+	/* This filter is documented in includes/core/admin/usage-tracking/settings.php */
+	$default = apply_filters( 'simpay_usage_tracking_enabled_default', false );
 
-	return ( $optin && 'yes' === $optin );
+	$optin = simpay_get_setting(
+		'usage_tracking_opt_in',
+		false === $default ? 'no' : 'yes'
+	);
+
+	return 'yes' === $optin;
 }
 
 /**
@@ -155,12 +162,8 @@ function save_optin_notice_form() {
 	}
 
 	// Update setting.
-	$settings = get_option( 'simpay_settings_general' );
-
-	$settings['general_misc']['usage_tracking_opt_in']         = 'yes';
-	$settings['general_misc']['usage_tracking_opt_in_consent'] = time();
-
-	update_option( 'simpay_settings_general', $settings );
+	simpay_update_setting( 'usage_tracking_opt_in', 'yes' );
+	simpay_update_setting( 'usage_tracking_opt_in_consent', time() );
 
 	// Force hide notice.
 	Notice_Manager::dismiss_notice( 'usage_tracking_optin' );
@@ -249,31 +252,3 @@ function get_optin_notice() {
 	<?php
 	return ob_get_clean();
 }
-
-/**
- * Adds usage tracking opt-in setting.
- *
- * @since 3.6.0
- *
- * @param array $fields Setting fields.
- * @return array
- */
-function add_admin_setting( $fields ) {
-	$group   = 'general';
-	$id      = 'settings';
-	$section = 'general_misc';
-
-	$fields[ $section ]['usage_tracking_opt_in'] = array(
-		'title'       => esc_html__( 'Usage Tracking', 'stripe' ),
-		'text'        => esc_html__( 'Allow', 'stripe' ),
-		'type'        => 'checkbox',
-		'name'        => 'simpay_' . $id . '_' . $group . '[' . $section . '][usage_tracking_opt_in]',
-		'id'          => 'simpay-' . $id . '-' . $group . '-' . $section . '-usage-tracking-opt-in',
-		'value'       => simpay_get_global_setting( 'usage_tracking_opt_in' ),
-		'default'     => 'no',
-		'description' => esc_html__( 'Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked.', 'stripe' ),
-	);
-
-	return $fields;
-}
-add_filter( 'simpay_add_settings_general_fields', __NAMESPACE__ . '\\add_admin_setting' );

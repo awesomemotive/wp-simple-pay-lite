@@ -67,7 +67,11 @@ class Checkout_Session_Controller extends Controller {
 	 *
 	 * @since 3.6.0
 	 *
-	 * @param \WP_REST_Request Request data.
+	 * @param \WP_REST_Request $request {
+	 *   Incoming REST API request data.
+	 *
+	 *   @type array $form_values Values of named fields in the payment form.
+	 * }
 	 * @return bool True with a valid nonce.
 	 */
 	public function create_item_permissions_check( $request ) {
@@ -81,7 +85,7 @@ class Checkout_Session_Controller extends Controller {
 				'rest_forbidden',
 				__( 'Sorry, you have made too many requests. Please try again later.', 'stripe' ),
 				array(
-					'status' => rest_authorization_required_code()
+					'status' => rest_authorization_required_code(),
 				)
 			);
 		}
@@ -101,13 +105,14 @@ class Checkout_Session_Controller extends Controller {
 	 * @since 3.6.0
 	 *
 	 * @param \WP_REST_Request $request {
-	 *   Incoming REQUEST data.
+	 *   Incoming REST API request data.
 	 *
 	 *   @type int   $customer_id Customer ID previously generated with Payment Source.
 	 *   @type int   $form_id Form ID used to generate PaymentIntent data.
 	 *   @type array $form_data Client-generated formData information.
 	 *   @type array $form_values Values of named fields in the payment form.
 	 * }
+	 * @throws \Exception When required data is missing or cannot be verified.
 	 * @return \WP_REST_Response
 	 */
 	public function create_item( $request ) {
@@ -237,7 +242,7 @@ class Checkout_Session_Controller extends Controller {
 			$session_args['customer'] = $customer_id;
 		}
 
-		// Success URL
+		// Success URL.
 
 		// Escape base URL.
 		$session_args['success_url'] = esc_url_raw( $form->payment_success_page );
@@ -250,7 +255,7 @@ class Checkout_Session_Controller extends Controller {
 		// Avoid escaping the {CHECKOUT_SESSION_ID} tag.
 		$session_args['success_url'] = add_query_arg( 'session_id', '{CHECKOUT_SESSION_ID}', $session_args['success_url'] );
 
-		// Cancel URL
+		// Cancel URL.
 
 		// Escape base URL.
 		$session_args['cancel_url'] = esc_url_raw( $form->payment_cancelled_page );

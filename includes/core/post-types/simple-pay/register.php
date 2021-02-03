@@ -168,31 +168,31 @@ function updated_messages( $messages ) {
 
 	$messages['simple-pay'] = array(
 		1   => sprintf(
-			/** translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
+			/* translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
 			__( 'Payment form updated. %1$sPreview payment form%2$s.', 'stripe' ),
 			$open,
 			$close
 		),
 		4   => sprintf(
-			/** translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
+			/* translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
 			__( 'Payment form updated. %1$sPreview payment form%2$s.', 'stripe' ),
 			$open,
 			$close
 		),
 		6   => sprintf(
-			/** translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
+			/* translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
 			__( 'Payment form published. %1$sPreview payment form%2$s.', 'stripe' ),
 			$open,
 			$close
 		),
 		7   => sprintf(
-			/** translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
+			/* translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
 			__( 'Payment form saved. %1$sPreview payment form%2$s.', 'stripe' ),
 			$open,
 			$close
 		),
 		8   => sprintf(
-			/** translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
+			/* translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
 			__( 'Payment form submitted. %1$sPreview payment form%2$s.', 'stripe' ),
 			$open,
 			$close

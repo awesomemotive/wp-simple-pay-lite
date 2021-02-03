@@ -70,7 +70,7 @@ function add_payment_options( $post_id ) {
 							'id'          => '_amount',
 							'value'       => $amount,
 							'class'       => $classes,
-							'placeholder' => simpay_format_currency( simpay_global_minimum_amount(), simpay_get_setting( 'currency' ), false ),
+							'placeholder' => simpay_format_currency( simpay_global_minimum_amount(), simpay_get_setting( 'currency', 'USD' ), false ),
 						)
 					);
 					?>
@@ -204,21 +204,71 @@ function add_payment_mode( $post_id ) {
 			<?php
 			$livemode = simpay_get_saved_meta( $post_id, '_livemode', '' );
 
+			$all_options = array(
+				''  => esc_html__( 'Global Setting', 'stripe' ),
+				'0' => esc_html__( 'Test Mode', 'stripe' ),
+				'1' => esc_html__( 'Live Mode', 'stripe' ),
+			);
+
+			$available_options = $all_options;
+
+			if ( empty( simpay_get_setting( 'test_secret_key', '' ) ) ) {
+				unset( $available_options['0'] );
+			}
+
+			if ( empty( simpay_get_setting( 'live_secret_key', '' ) ) ) {
+				unset( $available_options['1'] );
+			}
+
+			$class = array( 'simpay-payment-modes' );
+
+			foreach ( $available_options as $mode => $label ) {
+				$class[] = 'simpay-payment-mode--' . $mode;
+			}
+
 			simpay_print_field(
 				array(
 					'type'    => 'radio',
 					'name'    => '_livemode',
 					'id'      => '_livemode',
 					'value'   => $livemode,
-					'options' => array(
-						''  => esc_html__( 'Global Setting', 'stripe' ),
-						'0' => esc_html__( 'Test Mode', 'stripe' ),
-						'1' => esc_html__( 'Live Mode', 'stripe' ),
-					),
+					'options' => $all_options,
 					'inline'  => 'inline',
+					'class'   => $class,
 				)
 			);
+
+			$keys_url = add_query_arg(
+				array(
+					'post_type' => 'simple-pay',
+					'page'      => 'simpay_settings',
+					'tab'       => 'keys',
+				),
+				admin_url( 'edit.php' )
+			);
 			?>
+
+			<?php if ( count( $available_options ) < 3 ) : ?>
+			<p class="description" style="margin: 8px 0 15px;">
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: %1$s Opening anchor tag to Stripe Dashboard, do not translate. %2$s Closing anchor tag, do not translate. */
+						__( 'Connect to Stripe in both %1$spayment modes globally%2$s to use on a per-form basis.', 'stripe' ),
+						'<a href="' . esc_url( $keys_url ) . '" target="_blank" rel="noopener noreferrer">',
+						'</a>'
+					),
+					array(
+						'a' => array(
+							'href'   => true,
+							'target' => '_blank',
+							'rel'    => 'noopener noreferrer',
+						),
+					)
+				);
+				?>
+			</p>
+			<?php endif; ?>
 
 			<p class="description">
 				<?php

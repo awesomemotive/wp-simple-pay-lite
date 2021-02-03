@@ -143,13 +143,6 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_enable_shipping_address', $enable_shipping_address );
 
-	// Payment button style.
-	$payment_button_style = isset( $_POST['_payment_button_type'] )
-		? 'yes'
-		: 'no';
-
-	update_post_meta( $post_id, '_payment_button_style', $payment_button_style );
-
 	// Custom fields.
 	// Handles "Payment Button Text" and "Payment Button Processing Text".
 	$fields = isset( $_POST['_simpay_custom_field'] )

@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\Payments\Payment_Confirmation\Template_Tags;
 
+use SimplePay\Core\Utils;
 use SimplePay\Core\Payments;
 use function SimplePay\Core\SimplePay;
 
@@ -45,24 +46,28 @@ function get_tags( $payment_confirmation_data ) {
 	);
 
 	// Backwards compatibility.
+	if ( isset( $payment_confirmation_data['form'] ) ) {
 
-	// Setup a backwards compatible Payment object.
-	$payment = new Payments\Payment( $payment_confirmation_data['form'] );
+		// Setup a backwards compatible Payment object.
+		$payment = new Payments\Payment( $payment_confirmation_data['form'] );
 
-	if ( ! empty( $payment_confirmation_data['paymentintents']->data ) ) {
-		// Retrieve the first charge so the action can be called to maintain compatibility.
-		$charges = current( $payment_confirmation_data['paymentintents']->data )->charges;
+		if ( ! empty( $payment_confirmation_data['paymentintents']->data ) ) {
+			// Retrieve the first charge so the action can be called to maintain compatibility.
+			$charges = current( $payment_confirmation_data['paymentintents']->data )->charges;
 
-		if ( ! empty( $charges ) ) {
-			$charge = current( $charges->data );
+			if ( ! empty( $charges ) ) {
+				$charge = current( $charges->data );
 
-			$payment->customer = $payment_confirmation_data['customer'];
-			$payment->charge   = $charge;
+				$payment->customer = $payment_confirmation_data['customer'];
+				$payment->charge   = $charge;
 
-			if ( $payment->charge ) {
-				$payment->charge->source = $charge->billing_details;
+				if ( $payment->charge ) {
+					$payment->charge->source = $charge->billing_details;
+				}
 			}
 		}
+	} else {
+		$payment = new \stdClass();
 	}
 
 	/**
@@ -168,8 +173,8 @@ function replace_tag( $tag, $value, $content ) {
  *
  * @since 3.7.0
  *
- * @param string $content Payment confirmation content.
  * @param string $tag Payment confirmation template tag name, excluding curly braces.
+ * @param string $content Payment confirmation content.
  * @return string $tags_with_keys Tag including keys, excluding curly braces.
  */
 function get_tags_with_keys( $tag, $content ) {
@@ -316,11 +321,18 @@ function charge_date( $value, $payment_confirmation_data ) {
 	);
 
 	/**
+	 * Filters the {charge-date} template tag value.
+	 *
+	 * @since 3.0.0
 	 * @deprecated 3.6.0
+	 *
+	 * @param string $value Charge date.
 	 */
 	$value = apply_filters_deprecated(
 		'simpay_details_order_date',
-		array( $value ),
+		array(
+			$value,
+		),
 		'3.6.0',
 		'simpay_payment_confirmation_template_tag_charge-date'
 	);
@@ -410,3 +422,87 @@ function item_description( $value, $payment_confirmation_data ) {
 	return esc_html( $payment_confirmation_data['form']->item_description );
 }
 add_filter( 'simpay_payment_confirmation_template_tag_item-description', __NAMESPACE__ . '\\item_description', 10, 3 );
+
+/**
+ * Returns a list of available template tags and their descriptions.
+ *
+ * @todo Temporary until this can be more easily generated through a tag registry.
+ *
+ * @since 4.0.0
+ *
+ * @return array
+ */
+function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
+	$tags = array(
+		'company-name' => esc_html__(
+			'The form\'s Company Name value.',
+			'stripe'
+		),
+		'total-amount' => esc_html__(
+			'The total price of the payment.',
+			'stripe'
+		),
+		'charge-date'  => esc_html__(
+			'The charge date returned from Stripe.',
+			'stripe'
+		),
+		'charge-id'    => esc_html__(
+			'The unique charge ID returned from Stripe.',
+			'stripe'
+		),
+	);
+
+	if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
+		$tags['tax-amount'] = esc_html__(
+			'The calculated tax amount based on the total and the tax percent setting.',
+			'stripe'
+		);
+	}
+
+	return $tags;
+}
+
+/**
+ * Prints a list of available template tags and their descriptions.
+ *
+ * @todo Temporary until this can be more easily generated through a tag registry.
+ *
+ * @since 4.0.0
+ *
+ * @param string $description Template tag description.
+ * @param array  $tags List of template tags and descriptions.
+ */
+function __unstable_print_tag_list( $description, $tags ) { // phpcs:ignore PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
+	printf(
+		'<p class="description">%s</p>',
+		esc_html( $description )
+	);
+
+	printf(
+		'<p><strong>%s</strong></p>',
+		esc_html__( 'Available template tags:', 'stripe' )
+	);
+
+	foreach ( $tags as $tag_id => $description ) {
+		printf(
+			'<p><code>{%s}</code> - %s</p>',
+			esc_html( $tag_id ),
+			$description
+		);
+	}
+
+	printf(
+		(
+			'<p class="simpay-stripe-connect-help description">' .
+			'<span class="dashicons dashicons-editor-help"></span>' .
+			'<span>%s</span>' .
+			'</p>'
+		),
+		sprintf(
+			/* translators: %1$s Opening anchor tag for template tag documentation, do not translate. %2$s Closing anchor tag, do not translate. */
+			__( 'Have questions about template tags? %1$sView the template tags documentation%2$s', 'stripe' ),
+			'<a href="' . simpay_docs_link( '', 'configuring-payment-confirmation-display', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+			Utils\get_external_link_markup() . '</a>'
+		)
+	);
+}

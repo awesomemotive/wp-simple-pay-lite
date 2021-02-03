@@ -36,14 +36,15 @@ function add_items() {
 	// Settings.
 	add_submenu_page(
 		'edit.php?post_type=simple-pay',
-		sprintf( __( '%s Settings', 'stripe' ), SIMPLE_PAY_PLUGIN_NAME ),
+		sprintf(
+			/* translators: %s Plugin name. */
+			__( '%s Settings', 'stripe' ),
+			SIMPLE_PAY_PLUGIN_NAME
+		),
 		$settings_menu_name,
 		'manage_options',
 		'simpay_settings',
-		function() {
-			$page = new Pages( 'settings' );
-			$page->html();
-		}
+		'SimplePay\\Core\\Settings\\page'
 	);
 
 	// System Report.

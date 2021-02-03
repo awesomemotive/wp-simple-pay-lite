@@ -26,10 +26,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param int $post_id Current Payment Form ID.
  */
 function add_subscription_options( $post_id ) {
-	// Get the upgrade URL
+	// Get the upgrade URL.
 	$upgrade_url = simpay_pro_upgrade_url( 'under-box-promo' );
 
-	// Adjust the upgrade URL if there's an active promotion
+	// Adjust the upgrade URL if there's an active promotion.
 	$utm_args = array(
 		'utm_source'   => 'form-settings',
 		'utm_medium'   => 'wp-admin',

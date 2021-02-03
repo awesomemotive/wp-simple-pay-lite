@@ -28,7 +28,6 @@ class Select extends Field {
 	/**
 	 * Enhanced select.
 	 *
-	 * @access public
 	 * @var bool
 	 */
 	public $enhanced = false;
@@ -51,11 +50,16 @@ class Select extends Field {
 	/**
 	 * Allow void option.
 	 *
-	 * @access private
 	 * @var bool
 	 */
 	private $allow_void = false;
 
+	/**
+	 * Field class.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
 	public $class = '';
 
 	/**
@@ -63,7 +67,7 @@ class Select extends Field {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param array $field
+	 * @param array $field Field data.
 	 */
 	public function __construct( $field ) {
 
@@ -168,7 +172,8 @@ class Select extends Field {
 	}
 
 	/**
-	 * Make use of the wp_dropdown_pages function provided by WP to output a list of the site's pages in a select box.
+	 * Make use of the wp_dropdown_pages function provided by WP to output a
+	 * list of the site's pages in a select box.
 	 *
 	 * @since 3.0.0
 	 */
@@ -181,10 +186,10 @@ class Select extends Field {
 			'echo'                  => 1,
 			'name'                  => $this->name,
 			'id'                    => $this->id,
-			'class'                 => $this->class, // string
-			'show_option_none'      => null, // string
-			'show_option_no_change' => null, // string
-			'option_none_value'     => null, // string
+			'class'                 => $this->class,
+			'show_option_none'      => null,
+			'show_option_no_change' => null,
+			'option_none_value'     => null,
 		);
 
 		wp_dropdown_pages( $args );

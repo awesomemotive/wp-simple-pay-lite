@@ -25,8 +25,7 @@ class Tracker {
 	 * Tracking data.
 	 *
 	 * @since 3.6.0
-	 *
-	 * @type array
+	 * @var array
 	 */
 	protected $data = array();
 
@@ -102,8 +101,6 @@ class Tracker {
 	 * Get default tracking data.
 	 *
 	 * @since 3.6.0
-	 *
-	 * @return array
 	 */
 	private function setup_default_data() {
 		// URL.
@@ -141,7 +138,7 @@ class Tracker {
 		$this->data['server'] = isset( $_SERVER['SERVER_SOFTWARE'] ) ? $_SERVER['SERVER_SOFTWARE'] : null;
 
 		// Install date.
-		$confirmation_page = simpay_get_global_setting( 'success_page' );
+		$confirmation_page = simpay_get_setting( 'success_page', '' );
 
 		$this->data['install_date'] = $confirmation_page ? get_post_field( 'post_date', $confirmation_page ) : null;
 
