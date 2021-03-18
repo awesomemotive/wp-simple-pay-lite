@@ -276,6 +276,10 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
+= 2.6.1 - March 18, 2021 =
+
+* Fix: Restore "Save Plugin Settings" setting to allow plugin content to be retained upon plugin deletion.
+
 = 2.6.0 - February 3, 2021 =
 
 * New: Update plugin settings screen UI and UX.
