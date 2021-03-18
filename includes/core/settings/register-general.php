@@ -79,6 +79,7 @@ add_action( 'simpay_register_settings_subsections', __NAMESPACE__ . '\\register_
  */
 function register_settings( $settings ) {
 	register_currency_settings( $settings );
+	register_advanced_settings( $settings );
 }
 add_action( 'simpay_register_settings', __NAMESPACE__ . '\\register_settings' );
 
@@ -194,6 +195,50 @@ function register_currency_settings( $settings ) {
 					)
 				),
 				'priority'    => 30,
+			)
+		)
+	);
+}
+
+/**
+ * Registers advanced settings.
+ *
+ * @since 4.1.0
+ *
+ * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
+ */
+function register_advanced_settings( $settings ) {
+	// Save Settings.
+	$settings->add(
+		new Settings\Setting_Checkbox(
+			array(
+				'id'          => 'save_settings',
+				'section'     => 'general',
+				'subsection'  => 'advanced',
+				'label'       => esc_html_x(
+					'Save Plugin Settings',
+					'setting label',
+					'stripe'
+				),
+				'input_label' => esc_html_x(
+					'Save plugin settings',
+					'setting input label',
+					'stripe'
+				),
+				'value'       => simpay_get_setting( 'save_settings', 'yes' ),
+				'description' => wpautop(
+					esc_html(
+						sprintf(
+							/* translators: %s Plugin name. */
+							__(
+								'If UN-checked, all %s plugin data will be removed when the plugin is deleted. However, your data saved with Stripe will not be deleted.',
+								'stripe'
+							),
+							SIMPLE_PAY_PLUGIN_NAME
+						)
+					)
+				),
+				'priority'    => 50,
 			)
 		)
 	);
