@@ -276,6 +276,10 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
+= 2.6.2 - April 13, 2021 =
+
+* Fix: Improve checks on the Stripe Connect disconnection process.
+
 = 2.6.1 - March 18, 2021 =
 
 * Fix: Restore "Save Plugin Settings" setting to allow plugin content to be retained upon plugin deletion.
