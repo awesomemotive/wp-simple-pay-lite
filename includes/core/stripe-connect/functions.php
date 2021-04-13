@@ -49,6 +49,9 @@ function simpay_get_stripe_disconnect_url() {
 	return add_query_arg(
 		array(
 			'simpay-stripe-disconnect' => true,
+			'_wpnonce'                 => wp_create_nonce(
+				'simpay-stripe-connect-disconnect'
+			),
 		),
 		Settings\get_url(
 			array(

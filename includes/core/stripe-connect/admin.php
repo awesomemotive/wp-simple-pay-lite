@@ -127,16 +127,25 @@ add_action( 'admin_init', 'simpay_process_gateway_connect_completion' );
  * @since 3.5.0
  */
 function simpay_process_stripe_disconnect() {
-	// Current user cannot handle this request.
-	if ( ! current_user_can( 'manage_options' ) ) {
-		return;
-	}
-
 	// Do not need to handle this request, bail.
 	if (
 		! ( isset( $_GET['page'] ) && 'simpay_settings' === $_GET['page'] ) ||
 		! isset( $_GET['simpay-stripe-disconnect'] )
 	) {
+		return;
+	}
+
+	// Current user cannot handle this request.
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	if ( ! isset( $_GET['_wpnonce'] ) ) {
+		return;
+	}
+
+	// Invalid nonce, bail.
+	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'simpay-stripe-connect-disconnect' ) ) {
 		return;
 	}
 
