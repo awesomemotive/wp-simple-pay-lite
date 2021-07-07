@@ -10,6 +10,8 @@
 
 namespace SimplePay\Core\Admin;
 
+use Sandhills\Utils\Persistent_Dismissible;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -109,11 +111,22 @@ class Notice_Manager {
 	 *
 	 * @since 3.5.0
 	 * @since 3.6.0 Directly dismisses notice, instead of an AJAX response.
+	 * @since 4.2.0 Support temporary dismissals.
 	 *
 	 * @param string $notice_id Notice ID.
+	 * @param string $lifespan Dismissal lifespan.
 	 */
-	public static function dismiss_notice( $notice_id ) {
-		update_option( 'simpay_dismiss_' . $notice_id, true );
+	public static function dismiss_notice( $notice_id, $lifespan = '' ) {
+		if ( empty( $lifespan ) ) {
+			update_option( 'simpay_dismiss_' . $notice_id, true );
+		} else {
+			Persistent_Dismissible::set(
+				array(
+					'id'   => $notice_id,
+					'life' => $lifespan,
+				)
+			);
+		}
 	}
 
 	/**
@@ -131,11 +144,28 @@ class Notice_Manager {
 	 * Determine if a notice has been permanently dismissed.
 	 *
 	 * @since 3.5.0
+	 * @since 4.2.0 Support temporary dismissals.
 	 *
 	 * @param string $notice_id Notice ID.
 	 */
 	public static function is_notice_dismissed( $notice_id ) {
-		return get_option( 'simpay_dismiss_' . $notice_id, false );
+		$permanent = (bool) get_option( 'simpay_dismiss_' . $notice_id, false );
+
+		if ( true === $permanent ) {
+			return true;
+		}
+
+		$temporary = (bool) Persistent_Dismissible::get(
+			array(
+				'id' => $notice_id,
+			)
+		);
+
+		if ( true === $temporary ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -167,16 +197,25 @@ class Notice_Manager {
 	 * Dismisses a notice via AJAX.
 	 *
 	 * @since 3.6.0
+	 * @since 4.2.0 Support temporary dismissals.
 	 */
 	public static function ajax_dismiss_notice() {
 		$notice_id = isset( $_POST['notice_id'] ) ? sanitize_text_field( $_POST['notice_id'] ) : false;
 		$nonce     = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : false;
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return wp_send_json_error();
+		}
+
 		if ( ! wp_verify_nonce( $nonce, 'simpay-dismiss-notice-' . $notice_id ) ) {
 			return wp_send_json_error();
 		}
 
-		self::dismiss_notice( $notice_id );
+		$lifespan  = isset( $_POST['lifespan'] )
+			? sanitize_text_field( $_POST['lifespan'] )
+			: '';
+
+		self::dismiss_notice( $notice_id, $lifespan );
 
 		wp_send_json_success();
 	}
@@ -195,6 +234,11 @@ class Notice_Manager {
 			? sanitize_text_field( $_GET['simpay_dismiss_notice_nonce'] )
 			: false;
 
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		if ( ! ( $notice_id && $nonce ) ) {
 			return;
 		}
@@ -203,7 +247,11 @@ class Notice_Manager {
 			return;
 		}
 
-		self::dismiss_notice( $notice_id );
+		$lifespan = isset( $_GET['simpay_dismiss_notice_lifespan'] )
+			? sanitize_text_field( $_GET['simpay_dismiss_notice_lifespan'] )
+			: '';
+
+		self::dismiss_notice( $notice_id, $lifespan );
 	}
 
 	/**
