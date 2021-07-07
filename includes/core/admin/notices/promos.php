@@ -184,7 +184,7 @@ function license_upgrade_promo() {
 	);
 
 	if ( true === $is_lite ) {
-		$upgrade_base_url = 'https://wpsimplepay.com/pricing/';
+		$upgrade_base_url = 'https://wpsimplepay.com/lite-vs-pro/';
 	} else {
 		$upgrade_base_url = 'https://wpsimplepay.com/my-account/licenses/';
 	}
