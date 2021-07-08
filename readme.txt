@@ -2,8 +2,8 @@
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 4.9.8
-Tested up to: 5.7
-Stable tag: 2.6.2
+Tested up to: 5.8
+Stable tag: 2.6.3
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -275,6 +275,10 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 2.6.3 - July 8, 2021 =
+
+* New: Update in-plugin promotions.
 
 = 2.6.2 - April 13, 2021 =
 
