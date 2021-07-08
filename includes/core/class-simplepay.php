@@ -118,6 +118,9 @@ final class SimplePay {
 	 * @since 3.0.0
 	 */
 	public function load() {
+		// Vendors.
+		require_once( SIMPLE_PAY_INC . 'core/utils/class-persistent-dismissible.php' );
+
 		// Migrations.
 		require_once( SIMPLE_PAY_INC . 'core/utils/migrations/admin.php' );
 		require_once( SIMPLE_PAY_INC . 'core/utils/migrations/functions.php' );
