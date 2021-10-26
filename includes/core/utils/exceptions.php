@@ -12,7 +12,6 @@
 
 namespace SimplePay\Core\Utils;
 
-use Stripe\Stripe;
 use SimplePay\Core\i18n;
 
 // Exit if accessed directly.
@@ -29,10 +28,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function handle_exception_message( $e ) {
 	// Stripe Exception.
-	if ( $e instanceof \Stripe\Exception\ApiErrorException ) {
+	if ( $e instanceof \SimplePay\Vendor\Stripe\Exception\ApiErrorException ) {
 		$error = $e->getError();
 
-		// Base instances of `\Stripe\Exception\ApiErrorException`
+		// Base instances of `\SimplePay\Vendor\Stripe\Exception\ApiErrorException`
 		// does not contain specific error information.
 		if ( null === $error ) {
 			return $e->getMessage();

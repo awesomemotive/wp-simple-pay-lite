@@ -181,10 +181,10 @@ function register_account_settings( $settings ) {
 
 	// Keys.
 	$keys = array(
-		'test_secret_key'      => esc_html__( 'Test Secret Key', 'stripe' ),
 		'test_publishable_key' => esc_html__( 'Test Publishable Key', 'stripe' ),
-		'live_secret_key'      => esc_html__( 'Live Secret Key', 'stripe' ),
+		'test_secret_key'      => esc_html__( 'Test Secret Key', 'stripe' ),
 		'live_publishable_key' => esc_html__( 'Live Publishable Key', 'stripe' ),
+		'live_secret_key'      => esc_html__( 'Live Secret Key', 'stripe' ),
 	);
 
 	$priority = 20;

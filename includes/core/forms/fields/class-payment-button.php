@@ -32,20 +32,46 @@ class Payment_Button extends Custom_Field {
 	 * @return string
 	 */
 	public static function print_html( $settings ) {
-		global $simpay_form;
-
 		$html = '';
 
-		$id    = isset( $settings['id'] ) ? $settings['id'] : '';
-		$text  = isset( $settings['text'] ) && ! empty( $settings['text'] ) ? $settings['text'] : esc_html__( 'Pay with Card', 'stripe' );
+		$id = isset( $settings['id'] )
+			? simpay_dashify( $settings['id'] )
+			: '';
+
 		$style = isset( $settings['style'] )
 			? $settings['style']
 			: 'stripe';
 
-		$id = simpay_dashify( $id );
+		// Find button loading text, and replace amount tag if specified.
+		$text = (
+			isset( $settings['text'] ) &&
+			! empty( $settings['text'] )
+		)
+			? $settings['text']
+			: esc_html__( 'Pay with Card', 'stripe' );
+
+		$prices = simpay_get_payment_form_prices( self::$form );
+		$price  = simpay_get_payment_form_default_price( $prices );
+
+		$formatted_amount = simpay_format_currency(
+			$price->unit_amount,
+			$price->currency
+		);
+
+		$text = str_replace(
+			'{{amount}}',
+			'<em class="simpay-total-amount-value">' . $formatted_amount . '</em>',
+			esc_html( $text )
+		);
 
 		$html .= '<div class="simpay-form-control">';
-		$html .= '<button id="' . esc_attr( $id ) . '" class="' . self::get_payment_button_classes( $style ) . '"><span>' . esc_html( $text ) . '</span></button>';
+		$html .= sprintf(
+			'<button id="%1$s" class="%2$s" %3$s><span>%4$s</span></button>',
+			esc_attr( $id ),
+			self::get_payment_button_classes( $style ),
+			'overlay' === self::$form->get_display_type() ? '' : 'disabled',
+			$text
+		);
 
 		$html .= '</div>';
 
@@ -64,6 +90,7 @@ class Payment_Button extends Custom_Field {
 		$classes = array(
 			'simpay-btn',
 			'simpay-payment-btn',
+			'simpay-disabled',
 		);
 
 		// Also add default CSS class from Stripe unless option set to "none".

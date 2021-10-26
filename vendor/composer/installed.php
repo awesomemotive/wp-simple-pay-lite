@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => '5ccd1dd72a5b782633260fe83ca59a14d32d3a60',
+        'name' => 'wpsimplepay/wp-simple-pay-lite',
+        'dev' => false,
+    ),
+    'versions' => array(
+        'berlindb/core' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../berlindb/core',
+            'aliases' => array(),
+            'reference' => '52f07e192b484d201d668daef0ba290df5836ecb',
+            'dev_requirement' => false,
+        ),
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v7.97.0',
+            'version' => '7.97.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
+            'aliases' => array(),
+            'reference' => 'ae41c309ce113362706f8d5f19cf0cf2c730bc4a',
+            'dev_requirement' => false,
+        ),
+        'wpsimplepay/wp-simple-pay-lite' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => '5ccd1dd72a5b782633260fe83ca59a14d32d3a60',
+            'dev_requirement' => false,
+        ),
+    ),
+);

@@ -38,7 +38,7 @@ function add_custom_fields( $post_id ) {
 		<tr class="simpay-panel-field">
 			<th>
 				<label for="<?php echo esc_attr( 'simpay-payment-button-text-' . $counter ); ?>">
-					<?php esc_html_e( 'Payment Button Text', 'stripe' ); ?>
+					<?php esc_html_e( 'Button Text', 'stripe' ); ?>
 				</label>
 			</th>
 			<td>
@@ -67,7 +67,7 @@ function add_custom_fields( $post_id ) {
 		<tr class="simpay-panel-field">
 			<th>
 				<label for="<?php echo esc_attr( 'simpay-processing-button-text' . $counter ); ?>">
-					<?php esc_html_e( 'Payment Button Processing Text', 'stripe' ); ?>
+					<?php esc_html_e( 'Button Processing Text', 'stripe' ); ?>
 				</label>
 			</th>
 			<td>
@@ -96,7 +96,7 @@ function add_custom_fields( $post_id ) {
 		<tr class="simpay-panel-field">
 			<th>
 				<label for="<?php echo esc_attr( 'simpay-payment-button-style-' . $counter ); ?>">
-					<?php esc_html_e( 'Payment Button Style', 'stripe' ); ?>
+					<?php esc_html_e( 'Button Style', 'stripe' ); ?>
 				</label>
 			</th>
 			<td>
@@ -132,4 +132,4 @@ function add_custom_fields( $post_id ) {
 	 */
 	do_action( 'simpay_admin_after_custom_fields' );
 }
-add_action( 'simpay_form_settings_meta_form_display_panel', __NAMESPACE__ . '\\add_custom_fields' );
+add_action( 'simpay_form_settings_meta_payment_options_panel', __NAMESPACE__ . '\\add_custom_fields' );

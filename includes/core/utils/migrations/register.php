@@ -38,6 +38,15 @@ function register( $registry ) {
 		)
 	);
 
+	// Payment Form amounts to Prices API.
+	$migrations->add(
+		new Routines\Prices_API(
+			array(
+				'id' => 'prices-api',
+			)
+		)
+	);
+
 	/**
 	 * Allows further migrations to be registered.
 	 *

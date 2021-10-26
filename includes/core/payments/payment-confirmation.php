@@ -10,10 +10,10 @@
 
 namespace SimplePay\Core\Payments\Payment_Confirmation;
 
+use SimplePay\Core\API;
 use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Payments\Stripe_Checkout\Session;
 use SimplePay\Core\Payments\Stripe_API;
-use SimplePay\Core\Payments\Customer;
 use SimplePay\Core\Payments\PaymentIntent;
 
 // Exit if accessed directly.
@@ -22,8 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Retrieves relevant payment confirmation data from a \Stripe\Checkout\Session
- * or \Stripe\Customer ID.
+ * Retrieves relevant payment confirmation data from a \SimplePay\Vendor\Stripe\Checkout\Session
+ * or \SimplePay\Vendor\Stripe\Customer ID.
  *
  * @since 3.6.6
  * @since 4.0.0 Allow a Payment Form ID to be explicitely set.
@@ -34,10 +34,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
- *   @type \Stripe\Subscription[]         $subscriptions Subscriptions associated with the Customer.
- *   @type \Stripe\PaymentIntent[]        $paymentintents PaymentIntents associated with the Customer.
+ *   @type \SimplePay\Vendor\Stripe\Subscription[]         $subscriptions Subscriptions associated with the Customer.
+ *   @type \SimplePay\Vendor\Stripe\PaymentIntent[]        $paymentintents PaymentIntents associated with the Customer.
  * }
  */
 function get_confirmation_data( $customer_id = false, $session_id = false, $form_id = false ) {
@@ -48,6 +48,10 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 		? absint( $_GET['form_id'] )
 		: $form_id;
 
+	if ( false === $form_id ) {
+		return $payment_confirmation_data;
+	}
+
 	/**
 	 * Filters the ID of the form to retrieve.
 	 *
@@ -56,17 +60,16 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 	 * @param int   $form_id ID of the form the payment was created from.
 	 * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation template tags.
 	 */
-	$form_id = apply_filters( 'simpay_payment_confirmation_form_id', $form_id, $payment_confirmation_data );
+	$form_id = apply_filters(
+		'simpay_payment_confirmation_form_id',
+		$form_id,
+		$payment_confirmation_data
+	);
 
-	if ( false === $form_id ) {
+	$form = simpay_get_form( $form_id );
+
+	if ( false === $form ) {
 		return $payment_confirmation_data;
-	}
-
-	/** This filter is documented in includes/core/shortcodes.php */
-	$form = apply_filters( 'simpay_form_view', '', $form_id );
-
-	if ( empty( $form ) ) {
-		$form = new Default_Form( $form_id );
 	}
 
 	// Attach form to confirmation data.
@@ -96,7 +99,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 
 		$customer = $session->customer;
 	} else {
-		$customer = Customer\retrieve(
+		$customer = API\Customers\retrieve(
 			$customer_id,
 			$form->get_api_request_args()
 		);
@@ -143,8 +146,8 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
  */
 function get_one_time_amount_message_default() {
 	$message  = __( 'Thanks for your purchase. Here are the details of your payment:', 'stripe' ) . "\n\n";
-	$message .= '<strong>' . esc_html__( 'Item:', 'stripe' ) . '</strong>' . ' {item-description}' . "\n";
-	$message .= '<strong>' . esc_html__( 'Purchased From:', 'stripe' ) . '</strong>' . ' {company-name}' . "\n";
+	$message .= '<strong>' . esc_html__( 'Item:', 'stripe' ) . '</strong>' . ' {form-title}' . "\n";
+	$message .= '<strong>' . esc_html__( 'Description:', 'stripe' ) . '</strong>' . ' {form-description}' . "\n";
 	$message .= '<strong>' . esc_html__( 'Payment Date:', 'stripe' ) . '</strong>' . ' {charge-date}' . "\n";
 	$message .= '<strong>' . esc_html__( 'Payment Amount: ', 'stripe' ) . '</strong>' . '{total-amount}' . "\n";
 

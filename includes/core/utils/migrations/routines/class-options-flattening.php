@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 4.0.0
  */
-class Options_Flattening extends Migrations\Migration {
+class Options_Flattening extends Migrations\Bulk_Migration {
 
 	/**
 	 * Runs the migration.

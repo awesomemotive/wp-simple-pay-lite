@@ -11,8 +11,8 @@
 
 namespace SimplePay\Core\Legacy\Hooks;
 
+use SimplePay\Core\API;
 use SimplePay\Core\Payments\Payment;
-use SimplePay\Core\Payments\Customer;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -124,7 +124,7 @@ function simpay_stripe_charge_args( $paymentintent_args, $form, $form_values ) {
  *
  * @since 3.6.0
  *
- * @param \Stripe\PaymentIntent         $paymentintent Stripe PaymentIntent.
+ * @param \SimplePay\Vendor\Stripe\PaymentIntent         $paymentintent Stripe PaymentIntent.
  * @param SimplePay\Core\Abstracts\Form $form Form instance.
  * @param array                         $form_values POSTed form values that can be shimmed in to $_POST.
  */
@@ -324,7 +324,7 @@ function simpay_process_form( $form, $form_data, $form_values, $customer_id ) {
 		return;
 	}
 
-	$customer = Customer\retrieve(
+	$customer = API\Customers\retrieve(
 		$customer_id,
 		$form->get_api_request_args()
 	);

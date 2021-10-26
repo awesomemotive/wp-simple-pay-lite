@@ -8,6 +8,7 @@
  * @since 3.4.0
  */
 
+use SimplePay\Core\API;
 use SimplePay\Core\Payments\Stripe_API;
 use SimplePay\Core\Settings;
 
@@ -179,6 +180,31 @@ function simpay_stripe_connect_account_information() {
 		'message' => esc_html__( 'Unable to retrieve account information.', 'stripe' ),
 	);
 
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return wp_send_json_error( $unknown_error );
+	}
+
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'simpay-stripe-connect-information' ) ) {
+		return wp_send_json_error( $unknown_error );
+	}
+
+	if ( ! isset( $_POST['account_id'] ) ) {
+		return wp_send_json_error( $unknown_error );
+	}
+
+	$mode = simpay_is_test_mode()
+		? __( 'test', 'stripe' )
+		: __( 'live', 'stripe' );
+
+	$connect = sprintf(
+		(
+			'<div style="margin-top: 8px;"><a href="%s" class="wpsp-stripe-connect"><span>' .
+			__( 'Connect with Stripe', 'stripe' ) .
+			'</span></a></div>'
+		),
+		esc_url( simpay_get_stripe_connect_url() )
+	);
+
 	$access_string = class_exists( 'SimplePay\Pro\SimplePayPro', false )
 		? __(
 			'You cannot manage this account in Stripe to configure features such as Subscriptions, Webhooks, or Coupons.',
@@ -204,27 +230,109 @@ function simpay_stripe_connect_account_information() {
 		'actions' => 'simpay-stripe-unactivated-account-actions',
 	);
 
-	if ( ! current_user_can( 'manage_options' ) ) {
-		return wp_send_json_error( $unknown_error );
-	}
-
-	if ( ! wp_verify_nonce( $_POST['nonce'], 'simpay-stripe-connect-information' ) ) {
-		return wp_send_json_error( $unknown_error );
-	}
-
-	if ( ! isset( $_POST['account_id'] ) ) {
-		return wp_send_json_error( $unknown_error );
-	}
-
 	$account_id = sanitize_text_field( $_POST['account_id'] );
 
-	// Show status of Stripe Connect.
-	if ( '' !== $account_id ) {
+	// Look for manually managed API key mishaps.
+	$secret_key      = simpay_get_secret_key();
+	$publishable_key = simpay_get_publishable_key();
+	$key_errors      = new WP_Error();
+
+	// Publishable Key being used for Secret Key.
+	if ( 'pk_' === substr( $secret_key, 0, 3 ) ) {
+		$key_errors->add(
+			'simpay_sk_mismatch',
+			__(
+				'Invalid Secret Key. Secret Key should begin with <code>sk_</code>.',
+				'stripe'
+			)
+		);
+	}
+
+	// Secret Key being used for Publishable Key.
+	if ( 'sk_' === substr( $publishable_key, 0, 3 ) ) {
+		$key_errors->add(
+			'simpay_pk_mismatch',
+			__(
+				'Invalid Publishable Key. Publishable Key should begin with <code>pk_</code>.',
+				'stripe'
+			)
+		);
+	}
+
+	if ( simpay_is_test_mode() ) {
+		// Live Mode Publishable Key used in Test Mode Publishable Key.
+		if ( 'pk_live_' === substr( $publishable_key, 0, 8 ) ) {
+			$key_errors->add(
+				'simpay_pk_mode_mismatch',
+				__(
+					'Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_test_</code>.',
+					'stripe'
+				)
+			);
+		}
+
+		// Live Mode Secret Key used in Test Mode Secret Key.
+		if ( 'sk_live_' === substr( $secret_key, 0, 8 ) ) {
+			$key_errors->add(
+				'simpay_sk_mode_mismatch',
+				__(
+					'Invalid Secret Key for current mode. Secret Key should begin with <code>sk_test_</code>.',
+					'stripe'
+				)
+			);
+		}
+	} else {
+		// Test Mode Secret Key used in Live Mode Secret Key.
+		if ( 'pk_test_' === substr( $publishable_key, 0, 8 ) ) {
+			$key_errors->add(
+				'simpay_pk_mode_mismatch',
+				__(
+					'Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_live_</code>.',
+					'stripe'
+				)
+			);
+		}
+
+		// Test Mode Secret Key used in Live Mode Secret Key.
+		if ( 'sk_test_' === substr( $secret_key, 0, 8 ) ) {
+			$key_errors->add(
+				'simpay_sk_mode_mismatch',
+				__(
+					'Invalid Secret Key for current mode. Secret Key should begin with <code>sk_live_</code>.',
+					'stripe'
+				)
+			);
+		}
+	}
+
+	if ( ! empty( $key_errors->errors ) ) {
+		return wp_send_json_error(
+			array(
+				'message' => sprintf(
+					'<span style="color: red;">%s</span> %s %s',
+					$key_errors->get_error_message(),
+					__(
+						'If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually.',
+						'stripe'
+					),
+					$connect
+				)
+			)
+		);
+	}
+
+
+	// Stripe Connect.
+	if ( ! empty( $account_id ) ) {
 		try {
-			// @todo remove when API wrapper throws errors.
-			Stripe_API::set_app_info();
-			Stripe_API::set_api_key();
-			$account = \Stripe\Account::retrieve( $account_id );
+			$account = Stripe_API::request(
+				'Account',
+				'retrieve',
+				$account_id,
+				array(
+					'api_key' => simpay_get_secret_key(),
+				)
+			);
 
 			$email        = isset( $account->email ) ? $account->email : '';
 			$display_name = isset( $account->display_name )
@@ -259,53 +367,58 @@ function simpay_stripe_connect_account_information() {
 					'actions' => 'simpay-stripe-activated-account-actions',
 				)
 			);
-		} catch ( \Stripe\Exception\AuthenticationException $e ) {
+		} catch ( \SimplePay\Vendor\Stripe\Exception\AuthenticationException $e ) {
 			return wp_send_json_error(
 				array(
-					'message' => esc_html__( 'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys.', 'stripe' ),
-					'actions' => 'simpay-stripe-auth-error-account-actions',
+					'message' => esc_html__(
+						'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually.',
+						'stripe'
+					) . $connect,
 				)
 			);
 		} catch ( \Exception $e ) {
+			var_dump( $e->getMessage() );
 			return wp_send_json_error( $unknown_error );
 		}
-	} else {
-		$mode    = simpay_is_test_mode() ? __( 'test', 'stripe' ) : __( 'live', 'stripe' );
-		$connect = esc_html__( 'It is highly recommended to Connect with Stripe for easier setup and improved security.', 'stripe' );
+	}
 
-		try {
-			// @todo remove when API wrapper throws errors.
-			Stripe_API::set_api_key();
-			$balance = \Stripe\Balance::retrieve();
+	// No Stripe Connect.
+	try {
+		// Attempt to make an API request.
+		API\Customers\all(
+			array(
+				'limit' => 1,
+			),
+			array(
+				'api_key' => simpay_get_secret_key(),
+			)
+		);
 
-			return wp_send_json_success(
-				array(
-					'message' => (
+		return wp_send_json_success(
+			array(
+				'message' => (
 					sprintf(
 						/* translators: %1$s Stripe payment mode.*/
 						__( 'Your manually managed %1$s mode API keys are valid.', 'stripe' ),
 						'<strong>' . $mode . '</strong>'
-					) . '<br />' .
-					 $connect
-				 ),
-				)
-			);
-		} catch ( \Exception $e ) {
-			return wp_send_json_error(
-				array(
-					'message' => (
+					)
+				),
+			)
+		);
+	} catch ( \Exception $e ) {
+		return wp_send_json_error(
+			array(
+				'message' => (
 					'<span style="color: red;">' .
 						sprintf(
 							/* translators: %1$s Stripe payment mode.*/
 							__( 'Your manually managed %1$s mode API keys are invalid.', 'stripe' ),
 							'<strong>' . $mode . '</strong>'
 						)
-					 . '</span><br />' .
-					 $connect
-				 ),
-				)
-			);
-		}
+					. '</span>'
+				),
+			)
+		);
 	}
 }
 add_action( 'wp_ajax_simpay_stripe_connect_account_information', 'simpay_stripe_connect_account_information' );

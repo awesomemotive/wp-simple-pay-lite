@@ -12,7 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use SimplePay\Core\Utils;
 use SimplePay\Core\Abstracts\Form;
+use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Settings;
 
 /**
@@ -215,12 +217,10 @@ function simpay_admin_error( $message, $echo = true ) {
 /**
  * Retrieves a Payment Form.
  *
- * @todo This function is not used, but should be.
- *
  * @since 3.0.0
  *
  * @param string|int|WP_Post $form_id Payment Form to retrieve.
- * @return \SimplePay\Core\Abstracts\Form
+ * @return false|\SimplePay\Core\Abstracts\Form Payment Form instance or false if not found.
  */
 function simpay_get_form( $form_id ) {
 	if ( $form_id instanceof WP_Post ) {
@@ -234,7 +234,17 @@ function simpay_get_form( $form_id ) {
 		$form = new Default_Form( $form_id );
 	}
 
-	// @todo Validate if a form is found.
+	if ( 0 === $form->id ) {
+		return false;
+	}
+
+	// Migrate legacy amounts/subscription information if required.
+	$migrations = Utils\get_collection( 'migrations' );
+	$migration  = $migrations->get_item( 'prices-api' );
+
+	if ( false === $migration->is_complete( $form ) ) {
+		$migration->run( $form );
+	}
 
 	return $form;
 }
@@ -293,6 +303,17 @@ function simpay_dashify( $string ) {
  */
 function simpay_is_test_mode() {
 	return 'enabled' === simpay_get_setting( 'test_mode', 'enabled' );
+}
+
+/**
+ * Determines if "livemode" is currently enabled globally.
+ *
+ * @since 4.3.0
+ *
+ * @return bool
+ */
+function simpay_is_livemode() {
+	return ! simpay_is_test_mode();
 }
 
 /**
@@ -470,12 +491,31 @@ function simpay_shared_script_variables() {
 	);
 
 	$strings['strings'] = array(
-		'currency'          => simpay_get_setting( 'currency', 'USD' ),
-		'currencySymbol'    => html_entity_decode( simpay_get_saved_currency_symbol() ),
-		'currencyPosition'  => simpay_get_currency_position(),
-		'decimalSeparator'  => simpay_get_decimal_separator(),
-		'thousandSeparator' => simpay_get_thousand_separator(),
-		'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+		'currency'                 => simpay_get_setting( 'currency', 'USD' ),
+		'currencySymbol'           => html_entity_decode(
+			simpay_get_saved_currency_symbol()
+		),
+		'currencyPosition'         => simpay_get_currency_position(),
+		'decimalSeparator'         => simpay_get_decimal_separator(),
+		'thousandSeparator'        => simpay_get_thousand_separator(),
+		'ajaxurl'                  => admin_url( 'admin-ajax.php' ),
+		'customAmountLabel'        => esc_html__(
+			'starting at %s',
+			'stripe'
+		),
+		'recurringIntervals'       => simpay_get_recurring_intervals(),
+		/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
+		'recurringIntervalDisplay' => esc_html_x(
+			'%1$s every %2$s %3$s',
+			'recurring interval',
+			'stripe'
+		),
+		/* translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount. */
+		'recurringIntervalDisplayLimitedDiscount' => esc_html_x(
+			'%1$s every %2$s %3$s for %4$s months then %5$s',
+			'recurring interval',
+			'stripe'
+		),
 	);
 
 	$i18n['i18n'] = array(
@@ -494,59 +534,34 @@ function simpay_shared_script_variables() {
 }
 
 /**
- * Returns a list of zero decimal currencies.
+ * Returns a list of recurring billing intervals.
  *
- * @link https://support.stripe.com/questions/which-zero-decimal-currencies-does-stripe-support
+ * @since 4.1.0
  *
- * @since 3.0.0
- *
- * @return array
+ * @return array[] {
+ *   @var string Singular interval.
+ *   @var string Plural interval.
+ * }
  */
-function simpay_get_zero_decimal_currencies() {
-
-	return apply_filters(
-		'simpay_zero_decimal_currencies',
-		array(
-			'bif' => esc_html__( 'Burundian Franc', 'stripe' ),
-			'clp' => esc_html__( 'Chilean Peso', 'stripe' ),
-			'djf' => esc_html__( 'Djiboutian Franc', 'stripe' ),
-			'gnf' => esc_html__( 'Guinean Franc', 'stripe' ),
-			'jpy' => esc_html__( 'Japanese Yen', 'stripe' ),
-			'kmf' => esc_html__( 'Comorian Franc', 'stripe' ),
-			'krw' => esc_html__( 'South Korean Won', 'stripe' ),
-			'mga' => esc_html__( 'Malagasy Ariary', 'stripe' ),
-			'pyg' => esc_html__( 'Paraguayan Guaraní', 'stripe' ),
-			'rwf' => esc_html__( 'Rwandan Franc', 'stripe' ),
-			'vnd' => esc_html__( 'Vietnamese Dong', 'stripe' ),
-			'vuv' => esc_html__( 'Vanuatu Vatu', 'stripe' ),
-			'xaf' => esc_html__( 'Central African Cfa Franc', 'stripe' ),
-			'xof' => esc_html__( 'West African Cfa Franc', 'stripe' ),
-			'xpf' => esc_html__( 'Cfp Franc', 'stripe' ),
-		)
+function simpay_get_recurring_intervals() {
+	return array(
+		'day'   => array(
+			esc_html_x( 'day', 'recurring interval', 'stripe' ),
+			esc_html_x( 'days', 'recurring interval', 'stripe' ),
+		),
+		'week'  => array(
+			esc_html_x( 'week', 'recurring interval', 'stripe' ),
+			esc_html_x( 'weeks', 'recurring interval', 'stripe' ),
+		),
+		'month' => array(
+			esc_html_x( 'month', 'recurring interval', 'stripe' ),
+			esc_html_x( 'months', 'recurring interval', 'stripe' ),
+		),
+		'year'  => array(
+			esc_html_x( 'year', 'recurring interval', 'stripe' ),
+			esc_html_x( 'years', 'recurring interval', 'stripe' ),
+		),
 	);
-}
-
-/**
- * Checks if the currency is set to a zero decimal currency or not.
- *
- * @since 3.0.0
- *
- * @param string $currency Currency code.
- * @return bool
- */
-function simpay_is_zero_decimal( $currency = '' ) {
-
-	$zero_decimal_currencies = simpay_get_zero_decimal_currencies();
-
-	if ( empty( $currency ) ) {
-		$currency = simpay_get_setting( 'currency', 'USD' );
-	}
-
-	if ( array_key_exists( strtolower( $currency ), $zero_decimal_currencies ) ) {
-		return true;
-	}
-
-	return false;
 }
 
 /**
@@ -601,18 +616,39 @@ function simpay_get_decimal_separator() {
  * Returns the number of decimal places to use.
  *
  * @since 3.0.0
+ * @since 4.1.0 Accepts a specific currency.
  *
+ * @param string $currency Optional. Currency code. Default global currency.
  * @return int
  */
-function simpay_get_decimal_places() {
+function simpay_get_decimal_places( $currency = '' ) {
 
 	$decimal_places = 2;
 
-	if ( simpay_is_zero_decimal() ) {
+	if ( empty( $currency ) ) {
+		$currency = strtolower( simpay_get_setting( 'currency', 'USD' ) );
+	}
+
+	if ( simpay_is_zero_decimal( $currency ) ) {
 		$decimal_places = 0;
 	}
 
-	return intval( apply_filters( 'simpay_decimal_places', $decimal_places ) );
+	/**
+	 * Filters the number of decimal places to use.
+	 *
+	 * @since 3.0.0
+	 * @since 4.1.0 Accepts a specific currency.
+	 *
+	 * @param int    $decimal_places Number of decimal places.
+	 * @param string $currency Currency code.
+	 */
+	$decimal_places = apply_filters(
+		'simpay_decimal_places',
+		$decimal_places,
+		$currency
+	);
+
+	return intval( $decimal_places );
 }
 
 /**
@@ -759,45 +795,6 @@ function simpay_validate_statement_descriptor( $statement_descriptor ) {
 }
 
 /**
- * Formats an amount for a specificed currency.
- *
- * @since 3.0.0
- *
- * @param string|float|int $amount Amount to unformat.
- * @param string           $currency Currency code.
- * @param bool             $show_symbol Show currency symbol. Default true.
- * @return string
- */
-function simpay_format_currency( $amount, $currency = '', $show_symbol = true ) {
-
-	if ( empty( $currency ) ) {
-		$currency = simpay_get_setting( 'currency', 'USD' );
-	}
-
-	$symbol = simpay_get_currency_symbol( $currency );
-
-	$position = simpay_get_currency_position();
-
-	$amount = number_format( floatval( $amount ), simpay_get_decimal_places(), simpay_get_decimal_separator(), simpay_get_thousand_separator() );
-
-	$amount = apply_filters( 'simpay_formatted_amount', $amount );
-
-	if ( $show_symbol ) {
-		if ( 'left' === $position ) {
-			return $symbol . $amount;
-		} elseif ( 'left_space' === $position ) {
-			return $symbol . ' ' . $amount;
-		} elseif ( 'right' === $position ) {
-			return $amount . $symbol;
-		} elseif ( 'right_space' === $position ) {
-			return $amount . ' ' . $symbol;
-		}
-	}
-
-	return $amount;
-}
-
-/**
  * Retrieves a list of currency codes and symbols.
  *
  * @since 3.8.0
@@ -931,14 +928,12 @@ function simpay_get_currencies() {
 		'SAR' => '&#x631;.&#x633;',
 		'SBD' => '&#36;',
 		'SCR' => '&#x20a8;',
-		'SDG' => '&#x62c;.&#x633;.',
 		'SEK' => '&#107;&#114;',
-		'SGD' => '&#36;',
+		'SGD' => 'S&#36;',
 		'SHP' => '&pound;',
 		'SLL' => 'Le',
 		'SOS' => 'Sh',
 		'SRD' => '&#36;',
-		'SSP' => '&pound;',
 		'STD' => 'Db',
 		'SYP' => '&#x644;.&#x633;',
 		'SZL' => 'L',
@@ -1082,4 +1077,52 @@ function simpay_get_form_address_data( $type, $fields ) {
  */
 function simpay_get_svg_icon_url() {
 	return 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ4OC4yMDEgNDg4LjIwMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDg4LjIwMSA0ODguMjAxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjY1LjIsMzUwLjI1MUgzMy42Yy01LjMsMC05LjYtNC4zLTkuNi05LjZ2LTE4Mi42aDQwOC41djI0YzAsNi42LDUuNCwxMiwxMiwxMnMxMi01LjQsMTItMTJ2LTg2LjUgICAgYzAtMTguNS0xNS4xLTMzLjYtMzMuNi0zMy42SDMzLjZjLTE4LjYsMC0zMy42LDE1LjEtMzMuNiwzMy42djI0NS4xYzAsMTguNSwxNS4xLDMzLjYsMzMuNiwzMy42aDIzMS43YzYuNiwwLDEyLTUuNCwxMi0xMiAgICBTMjcxLjksMzUwLjI1MSwyNjUuMiwzNTAuMjUxeiBNMzMuNiw4NS45NTFoMzg5LjNjNS4zLDAsOS42LDQuMyw5LjYsOS42djM4LjVIMjMuOXYtMzguNUMyMy45LDkwLjI1MSwyOC4zLDg1Ljk1MSwzMy42LDg1Ljk1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNMjQwLjIsMjQ3LjE1MWMwLTYuNi01LjQtMTItMTItMTJIODRjLTYuNiwwLTEyLDUuNC0xMiwxMnM1LjQsMTIsMTIsMTJoMTQ0LjJDMjM0LjksMjU5LjE1MSwyNDAuMiwyNTMuNzUxLDI0MC4yLDI0Ny4xNTEgICAgeiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik04NCwyNzguMTUxYy02LjYsMC0xMiw1LjQtMTIsMTJzNS40LDEyLDEyLDEyaDU3LjdjNi42LDAsMTItNS40LDEyLTEycy01LjQtMTItMTItMTJIODR6IiBmaWxsPSIjRkZGRkZGIi8+CgkJPHBhdGggZD0iTTgyLjYsMjE1LjY1MWgxNDQuMmM2LjYsMCwxMi01LjQsMTItMTJzLTUuNC0xMi0xMi0xMkg4Mi42Yy02LjYsMC0xMiw1LjQtMTIsMTJTNzUuOSwyMTUuNjUxLDgyLjYsMjE1LjY1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNNDc2LjMsMjk4LjI1MWgtMTcuNnYtMjhjMC0zNC43LTI4LjMtNjMtNjMtNjNzLTYzLDI4LjMtNjMsNjN2MjhoLTE3LjZjLTYuNiwwLTEyLDUuNC0xMiwxMnYxMDRjMCw2LjYsNS40LDEyLDEyLDEyICAgIGgxNjEuMWM2LjYsMCwxMi01LjQsMTItMTJ2LTEwNEM0ODguMywzMDMuNTUxLDQ4Mi45LDI5OC4yNTEsNDc2LjMsMjk4LjI1MXogTTM1Ni43LDI3MC4xNTFjMC0yMS41LDE3LjUtMzksMzktMzlzMzksMTcuNSwzOSwzOSAgICB2MjhoLTc4VjI3MC4xNTF6IE00NjQuMyw0MDIuMTUxSDMyNy4xdi04MGgxMzcuMXY4MEg0NjQuM3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K';
+}
+
+/**
+ * Returns the length for a 2 minute nonce lifespan.
+ *
+ * @since 4.2.0
+ *
+ * @return int 120.
+ */
+function simpay_nonce_life_2_min() {
+	return MINUTE_IN_SECONDS * 2;
+}
+
+/**
+ * Returns the length for a 2 hour nonce lifespan.
+ *
+ * @since 4.2.0
+ *
+ * @return int 7200
+ */
+function simpay_nonce_life_2_hour() {
+	return HOUR_IN_SECONDS * 2;
+}
+
+/**
+ * Shims wp_timezone_string() for WordPress < 5.3.0
+ *
+ * @since 4.3.0
+ *
+ * @return string
+ */
+function simpay_wp_timezone_string() {
+	$timezone_string = get_option( 'timezone_string' );
+
+	if ( $timezone_string ) {
+		return $timezone_string;
+	}
+
+	$offset  = (float) get_option( 'gmt_offset' );
+	$hours   = (int) $offset;
+	$minutes = ( $offset - $hours );
+
+	$sign      = ( $offset < 0 ) ? '-' : '+';
+	$abs_hour  = abs( $hours );
+	$abs_mins  = abs( $minutes * 60 );
+	$tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+
+	return $tz_offset;
 }

@@ -12,7 +12,8 @@
 
 namespace SimplePay\Core\Payments;
 
-use Stripe\Stripe;
+use SimplePay\Vendor\Stripe\Stripe;
+use SimplePay\Vendor\Stripe\Util\Util;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +48,8 @@ class Stripe_API {
 	/**
 	 * Sets the API Keys
 	 *
-	 * @since unknown
+	 * @since 3.0.0
+	 * @since 4.3.0 Log an error if called directly.
 	 */
 	public static function set_api_key() {
 		if ( ! simpay_check_keys_exist() ) {
@@ -55,6 +57,17 @@ class Stripe_API {
 		}
 
 		Stripe::setApiKey( simpay_get_secret_key() );
+
+		$logger = Stripe::getLogger();
+		$logger->error(
+			sprintf(
+				__(
+					'Calling %s directly is discouraged. Please use API wrappers or pass the Stripe API key via the ::request() static method.',
+					'stripe'
+				),
+				__METHOD__
+			)
+		);
 	}
 
 	/**
@@ -68,9 +81,18 @@ class Stripe_API {
 	 * @param array        $args Arguments for request, default empty.
 	 * @param array        $opts Per-request options, default empty.
 	 */
-	public static function request( $class, $function, $id_or_args = array(), $args = array(), $opts = array() ) {
+	public static function request(
+		$class,
+		$function,
+		$id_or_args = array(),
+		$args = array(),
+		$opts = array()
+	) {
 		// Enure app information is set.
 		self::set_app_info();
+
+		// Allow retries and enable idempotency on network failures.
+		Stripe::setMaxNetworkRetries( 2 );
 
 		$default_opts = array(
 			'api_key' => simpay_get_secret_key(),
@@ -100,8 +122,44 @@ class Stripe_API {
 			);
 		}
 
+		$cache_id = is_array( $id_or_args ) && isset( $id_or_args['id'] )
+			? $id_or_args['id']
+			: $id_or_args;
+		$cache_id = is_array( $cache_id ) ? serialize( $cache_id ) : $cache_id;
+
+		$cache_key = sprintf( 'simpay_stripe_%s', $cache_id );
+
+		// Cache if retrieving, and set.
+		if (
+			'retrieve' === $function &&
+			isset( $opts['cached'] ) &&
+			true === $opts['cached']
+		) {
+			$object = get_transient( $cache_key );
+
+			if ( false === $object ) {
+				$object = call_user_func(
+					array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
+					$id_or_args,
+					$args,
+					$opts
+				);
+
+				set_transient( $cache_key, $object->toArray(), DAY_IN_SECONDS );
+			} else {
+				$object = Util::convertToStripeObject( $object, $opts );
+			}
+
+			return $object;
+		}
+
+		// Clear cache if updating.
+		if ( 'update' === $function ) {
+			delete_transient( $cache_key );
+		}
+
 		return call_user_func(
-			array( '\Stripe\\' . $class, $function ),
+			array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
 			$id_or_args,
 			$args,
 			$opts

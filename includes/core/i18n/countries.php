@@ -157,7 +157,7 @@ function get_countries() {
 		'LT' => __( 'Lithuania', 'stripe' ),
 		'LU' => __( 'Luxembourg', 'stripe' ),
 		'MO' => __( 'Macau', 'stripe' ),
-		'MK' => __( 'Macedonia', 'stripe' ),
+		'MK' => __( 'North Macedonia', 'stripe' ),
 		'MG' => __( 'Madagascar', 'stripe' ),
 		'MW' => __( 'Malawi', 'stripe' ),
 		'MY' => __( 'Malaysia', 'stripe' ),

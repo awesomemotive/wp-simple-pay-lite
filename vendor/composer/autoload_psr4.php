@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Stripe\\' => array($vendorDir . '/stripe/stripe-php/lib'),
+    'SimplePay\\Vendor\\Stripe\\' => array($baseDir . '/lib/Stripe/lib'),
+    'SimplePay\\Vendor\\' => array($baseDir . '/lib'),
 );

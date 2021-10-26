@@ -44,6 +44,10 @@ class Default_Form extends Form {
 		// Construct our base form from the parent class.
 		parent::__construct( $id );
 
+		if ( null === $this->post ) {
+			return;
+		}
+
 		// Shim a few properties that are referenced later without checking existence.
 		// @todo Update implementation of these properties to check validitiy.
 		$this->is_one_time_custom_amount = false;
@@ -71,6 +75,10 @@ class Default_Form extends Form {
 	public function set_script_variables() {
 
 		$temp[ $this->id ] = array(
+			'id'     => $this->id,
+			'type'   => 'stripe_checkout' === $this->get_display_type()
+				? 'stripe-checkout'
+				: 'stripe-elements',
 			'form'   => $this->get_form_script_variables(),
 			'stripe' => array_merge(
 				array(
@@ -144,7 +152,7 @@ class Default_Form extends Form {
 				echo '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
 
 				// Form validation error message container.
-				echo '<div class="simpay-errors" id="' . esc_attr( $id ) . '-error"></div>';
+				echo '<div class="simpay-errors" id="' . esc_attr( $id ) . '-error" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div>';
 
 				if ( true === $this->test_mode ) {
 					echo simpay_get_test_mode_badge();
@@ -273,6 +281,13 @@ class Default_Form extends Form {
 	 * @return array
 	 */
 	public function get_form_script_variables() {
+		$prices = simpay_get_payment_form_prices( $this );
+		$prices = array_map(
+			function( $price ) {
+				return $price->to_array();
+			},
+			$prices
+		);
 
 		$custom_fields = simpay_get_saved_meta( $this->id, '_custom_fields' );
 
@@ -306,8 +321,14 @@ class Default_Form extends Form {
 
 		// @since 3.9.0 start with a less complex configuration object.
 		$config = array(
-			'i18n' => array(
+			'livemode' => $this->is_livemode(),
+			'prices'   => $prices,
+			'i18n'     => array(
 				'stripeErrorMessages' => i18n\get_localized_error_messages(),
+				'unknownError'        => __(
+					'Unable to complete request. Please try again.',
+					'stripe'
+				),
 			),
 		);
 
@@ -329,7 +350,11 @@ class Default_Form extends Form {
 		foreach ( $this->custom_fields as $key => $value ) {
 			switch ( $value['type'] ) {
 				case 'payment_button':
-					$html .= Fields\Payment_Button::html( $value );
+					$html .= Fields\Payment_Button::html(
+						$value,
+						'payment-button',
+						$form
+					);
 					break;
 			}
 		}

@@ -74,7 +74,7 @@ function register() {
 		'_company_name',
 		array(
 			'type'              => 'string',
-			'description'       => __( 'Payment Form Company Name.', 'stripe' ),
+			'description'       => __( 'Payment Form title.', 'stripe' ),
 			'single'            => true,
 			'sanitize_callback' => 'sanitize_text_field',
 		)
@@ -86,7 +86,7 @@ function register() {
 		'_item_description',
 		array(
 			'type'              => 'string',
-			'description'       => __( 'Payment Form Item Description.', 'stripe' ),
+			'description'       => __( 'Payment Form description.', 'stripe' ),
 			'single'            => true,
 			'sanitize_callback' => 'sanitize_text_field',
 		)
