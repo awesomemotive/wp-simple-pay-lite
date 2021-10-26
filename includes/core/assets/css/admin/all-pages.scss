@@ -1,3 +1,22 @@
+.simpay-external-link {
+
+	.dashicons {
+		opacity: 0.80;
+		font-size: 16px;
+		margin: 3px 0 0 2px;
+		width: 16px;
+		height: 16px;
+		text-decoration: none;
+	}
+
+	&:hover {
+
+		.dashicons {
+			opacity: 1;
+		}
+	}
+}
+
 // Admin bar test mode active link
 #wpadminbar .simpay-admin-bar-test-mode > .ab-item {
 	display: flex;

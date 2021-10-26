@@ -233,6 +233,10 @@ abstract class Form {
 		// Setup the post object.
 		$this->set_post_object( $id );
 
+		if ( null === $this->post ) {
+			return;
+		}
+
 		// Set our form specific filter to apply to each setting.
 		$this->filter = 'simpay_form_' . $this->id;
 
@@ -368,9 +372,17 @@ abstract class Form {
 		} else {
 			// Determine which key to use based on `livemode`.
 			if ( true === $args['livemode'] ) {
-				$request_args['api_key'] = simpay_get_filtered( 'secret_key', $this->live_secret_key, $this->id );
+				$request_args['api_key'] = simpay_get_filtered(
+					'secret_key',
+					$this->live_secret_key,
+					$this->id
+				);
 			} elseif ( false === $args['livemode'] ) {
-				$request_args['api_key'] = simpay_get_filtered( 'secret_key', $this->test_secret_key, $this->id );
+				$request_args['api_key'] = simpay_get_filtered(
+					'secret_key',
+					$this->test_secret_key,
+					$this->id
+				);
 			} else {
 				$request_args['api_key'] = $this->secret_key;
 			}

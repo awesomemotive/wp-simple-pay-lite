@@ -1,93 +1,52 @@
-/* global _ */
-
 /**
- * External dependencies.
+ * Internal dependencies
  */
-import serialize from 'form-serialize';
+import { customers, sessions } from '@wpsimplepay/api';
 
-/**
- * Internal dependencies.
- */
-import { onPaymentFormError } from '@wpsimplepay/core/frontend/payment-forms';
-import { create as createCustomer } from '@wpsimplepay/core/frontend/payments/customer.js';
-import { create as createSession } from '@wpsimplepay/core/frontend/payments/session.js';
+/** @typedef {import('@wpsimplepay/payment-forms').PaymentForm} PaymentForm */
 
 /**
  * Submit Stripe Checkout Payment Form.
  *
- * @todo DRY presubmission validation checks?
+ * @since 4.2.0
  *
- * @since 3.8.0
- *
- * @param {Element} cardElementInstance Stripe Elements card.
- * @param {jQuery} spFormElem Form element jQuery object.
- * @param {Object} formData Configured form data.
+ * @param {PaymentForm} paymentForm
  */
-export async function submit( spFormElem, formData ) {
-	const {
-		enableForm,
-		disableForm,
-		triggerBrowserValidation,
-	} = window.simpayApp;
+async function submit( paymentForm ) {
+	const { error: onError, __unstableLegacyFormData } = paymentForm;
 
-	// Disable form while processing.
-	disableForm( spFormElem, formData, true );
+	let customerId = null;
+	const { hasCustomerFields } = __unstableLegacyFormData;
 
-	// HTML5 validation check.
-	if ( ! spFormElem[ 0 ].checkValidity() ) {
-		triggerBrowserValidation( spFormElem, formData );
-		enableForm( spFormElem, formData );
+	// Only generate a custom Customer if we need to map on-page form fields.
+	if ( hasCustomerFields ) {
+		const {
+			customer: { id },
+		} = await customers.create( {}, paymentForm );
 
-		return;
+		customerId = id;
 	}
 
-	// Allow further validation.
-	//
-	// jQuery( document.body ).on( 'simpayBeforeStripePayment', function( e, spFormElem, formData ) {
-	//  formData.isValid = false;
-	// } );
-	spFormElem.trigger( 'simpayBeforeStripePayment', [ spFormElem, formData ] );
+	// Generate a Checkout Session.
+	const { sessionId } = await sessions.create(
+		{
+			customer_id: customerId,
+		},
+		paymentForm
+	);
 
-	if ( ! formData.isValid ) {
-		enableForm( spFormElem, formData );
+	// Redirect to Stripe.
+	return paymentForm.stripeInstance
+		.redirectToCheckout( {
+			sessionId,
+		} )
+		.then( ( result ) => {
+			if ( result.error ) {
+				onError( result.error );
+			}
 
-		return;
-	}
-
-	try {
-
-		// @todo Implement as a "Stripe Checkout" Payment Method?
-
-		let customer_id = null;
-		const { hasCustomerFields } = formData;
-
-		// Only generate a custom Customer if we need to map on-page form fields.
-		if ( hasCustomerFields ) {
-			const { id } = await createCustomer( {}, spFormElem, formData );
-			customer_id = id;
-		}
-
-		// Generate a Checkout Session.
-		const session = await createSession(
-			{
-				customer_id,
-			},
-			spFormElem,
-			formData
-		);
-
-		// Redirect to Stripe.
-		spFormElem.stripeInstance
-			.redirectToCheckout( {
-				sessionId: session.sessionId,
-			} )
-			.then( ( { error } ) => {
-				if ( error ) {
-					onPaymentFormError( error, spFormElem, formData );
-				}
-			} );
-
-	} catch ( error ) {
-		onPaymentFormError( error, spFormElem, formData );
-	}
+			return result;
+		} );
 }
+
+export default submit;

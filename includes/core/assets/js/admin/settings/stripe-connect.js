@@ -7,6 +7,9 @@ import domReady from '@wordpress/dom-ready';
 
 /**
  * Toggle fields based on current mode.
+ *
+ * @param newMode
+ * @param oldMode
  */
 export default function toggleStripeConnectNotice( newMode, oldMode ) {
 	// Only how a notice when the mode changes.
@@ -16,7 +19,9 @@ export default function toggleStripeConnectNotice( newMode, oldMode ) {
 
 	const notice = document.getElementById( 'simpay-test-mode-toggle-notice' );
 	const statusText = document.getElementById( 'simpay-toggle-notice-status' );
-	const statusLink = document.getElementById( 'simpay-toggle-notice-status-link' );
+	const statusLink = document.getElementById(
+		'simpay-toggle-notice-status-link'
+	);
 
 	notice.classList.add( 'notice' );
 	notice.classList.add( 'notice-warning' );
@@ -26,7 +31,8 @@ export default function toggleStripeConnectNotice( newMode, oldMode ) {
 		return;
 	}
 
-	statusText.innerHTML = '<strong>' + statusText.dataset[ newMode ] + '</strong>';
+	statusText.innerHTML =
+		'<strong>' + statusText.dataset[ newMode ] + '</strong>';
 	statusLink.href = statusLink.dataset[ newMode ];
 }
 
@@ -50,7 +56,9 @@ domReady( () => {
 			containerEl.style.display = 'block';
 			containerEl.classList.add( 'notice' );
 
-			if ( 'simpay-stripe-activated-account-actions' === response.actions ) {
+			if (
+				'simpay-stripe-activated-account-actions' === response.actions
+			) {
 				containerEl.classList.add( 'notice-info' );
 			} else {
 				containerEl.classList.add( 'notice-warning' );

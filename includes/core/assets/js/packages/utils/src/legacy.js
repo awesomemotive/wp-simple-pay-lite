@@ -1,19 +1,13 @@
 /* global spGeneral, jQuery, accounting */
 
-( function( $ ) {
+( function ( $ ) {
 	'use strict';
 
-	var body;
+	let body;
 
 	window.spShared = {
-
-		init: function() {
+		init() {
 			body = $( document.body );
-
-			// Validate & update amount input fields on focus out (blur).
-			body.find( '.simpay-amount-input' ).on( 'blur.validateAndUpdateAmount', function( e ) {
-				spShared.validateAndUpdateAmountInput( $( this ) );
-			} );
 		},
 
 		/**
@@ -22,10 +16,17 @@
 		 * accounting.unformat removes formatting/cruft first.
 		 * Respects decimal separator, but ignores zero decimal currency setting.
 		 * Also prevent negative values.
-		 * @returns number
+		 *
+		 * @param amount
+		 * @return number
 		 */
-		unformatCurrency: function( amount ) {
-			return Math.abs( accounting.unformat( amount, spGeneral.strings.decimalSeparator ) );
+		unformatCurrency( amount ) {
+			return Math.abs(
+				accounting.unformat(
+					amount,
+					spGeneral.strings.decimalSeparator
+				)
+			);
 		},
 
 		/**
@@ -33,22 +34,31 @@
 		 * With or without currency symbol.
 		 * Used for labels & amount inputs in admin & front-end.
 		 * Uses global currency settings.
-		 * @returns string
+		 *
+		 * @param amount
+		 * @param _includeSymbol
+		 * @param _currencySymbol
+		 * @param _isZeroDecimal
+		 * @return string
 		 */
-		formatCurrency: function( amount, includeSymbol ) {
+		formatCurrency(
+			amount,
+			_includeSymbol,
+			_currencySymbol,
+			_isZeroDecimal
+		) {
+			const includeSymbol = _includeSymbol || false;
+			const currencySymbol =
+				_currencySymbol || spGeneral.strings.currencySymbol;
+			const isZeroDecimal = _isZeroDecimal || false;
 
 			// Default format is to the left with no space.
-			var format = '%s%v',
+			let format = '%s%v',
 				args;
 
-			// Include symbol param = false if omitted.
-			includeSymbol = includeSymbol || false;
-
 			if ( includeSymbol ) {
-
 				// Account for other symbol placement formats (besides default left without space).
 				switch ( spGeneral.strings.currencyPosition ) {
-
 					case 'left_space':
 						format = '%s %v'; // Left side with space
 						break;
@@ -64,11 +74,11 @@
 			}
 
 			args = {
-				symbol: includeSymbol ? spGeneral.strings.currencySymbol : '',
+				symbol: includeSymbol ? currencySymbol : '',
 				decimal: spGeneral.strings.decimalSeparator,
 				thousand: spGeneral.strings.thousandSeparator,
-				precision: spGeneral.integers.decimalPlaces,
-				format: format
+				precision: isZeroDecimal ? 0 : spGeneral.integers.decimalPlaces,
+				format,
 			};
 
 			return accounting.formatMoney( amount, args );
@@ -78,9 +88,11 @@
 		 * Convert from cents to dollars (in USD).
 		 * Uses global zero decimal currency setting.
 		 * Leaves zero decimal currencies alone.
-		 * @returns number
+		 *
+		 * @param amount
+		 * @return number
 		 */
-		convertToDollars: function( amount ) {
+		convertToDollars( amount ) {
 			if ( ! spGeneral.booleans.isZeroDecimal ) {
 				amount = accounting.toFixed( amount / 100, 2 );
 			}
@@ -92,9 +104,11 @@
 		 * Convert from dollars to cents (in USD).
 		 * Uses global zero decimal currency setting.
 		 * Leaves zero decimal currencies alone.
-		 * @returns number
+		 *
+		 * @param amount
+		 * @return number
 		 */
-		convertToCents: function( amount ) {
+		convertToCents( amount ) {
 			if ( ! spGeneral.booleans.isZeroDecimal ) {
 				amount = Number( accounting.toFixed( amount * 100, 0 ) );
 			}
@@ -109,12 +123,13 @@
 		 * Invalid characters and the negative symbol will be removed.
 		 *
 		 * @param {jQuery} Input to validate.
+		 * @param el
 		 */
-		validateAndUpdateAmountInput: function( el ) {
+		validateAndUpdateAmountInput( el ) {
 			// Amount is intially a string.
-			var amount = el.val();
+			let amount = el.val();
 
-			var globalMinAmount = Math.abs( spGeneral.integers.minAmount );
+			const globalMinAmount = Math.abs( spGeneral.integers.minAmount );
 
 			// Convert amount to number value.
 			amount = spShared.unformatCurrency( amount );
@@ -143,7 +158,7 @@
 
 			// Update format price string in input field.
 			// Exception: If they changed to 'number' type via filters don't reformat (default type is 'tel').
-			if ( 'number' !== el[0].type ) {
+			if ( 'number' !== el[ 0 ].type ) {
 				el.val( amount );
 			}
 		},
@@ -152,17 +167,21 @@
 		 * Log debug messages to console.
 		 * Alternative to console.log so doesn't show up in production environments.
 		 * Instead, only if SCRIPT_DEBUG PHP constant set to true.
+		 *
+		 * @param key
+		 * @param value
 		 */
-		debugLog: function( key, value ) {
-
-			if ( ( 'undefined' !== typeof spGeneral ) && ( true === spGeneral.booleans.scriptDebug ) ) {
+		debugLog( key, value ) {
+			if (
+				'undefined' !== typeof spGeneral &&
+				true === spGeneral.booleans.scriptDebug
+			) {
 				console.log( key, value );
 			}
-		}
+		},
 	};
 
-	$( document ).ready( function( $ ) {
+	$( document ).ready( function ( $ ) {
 		window.spShared.init();
 	} );
-
-}( jQuery ) );
+} )( jQuery );

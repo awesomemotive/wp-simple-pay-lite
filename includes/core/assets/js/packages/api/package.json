@@ -1,0 +1,27 @@
+{
+	"name": "@wpsimplepay/api",
+	"version": "1.0.0",
+	"description": "WP Simple Pay client-side payments API.",
+	"author": "Sandhills Development, LLC.",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"wordpress"
+	],
+	"homepage": "https://wpsimplepay.com",
+	"main": "./src/index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wpsimplepay/wp-simple-pay-pro",
+		"directory": "includes/core/assets/js/packages/api"
+	},
+	"dependencies": {
+		"@wordpress/url": "2.11.0",
+		"form-serialize": "0.7.2"
+	},
+	"bugs": {
+		"url": "https://github.com/wpsimplepay/wp-simple-pay-pro/issues"
+	},
+	"publishConfig": {
+		"access": "restricted"
+	}
+}

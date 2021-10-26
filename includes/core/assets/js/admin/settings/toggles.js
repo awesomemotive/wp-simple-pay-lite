@@ -28,14 +28,10 @@ const SETTING_TOGGLES = simpayAdminSettingToggles || [];
  * Retrieves the setting input (or select) and the currnet value.
  *
  * @param {Setting} settingObj Setting object.
- * @return {SettingInput} 
+ * @return {SettingInput}
  */
 function getSetting( settingObj ) {
-	const {
-		id: settingId,
-		value: settingValue,
-		toggles
-	} = settingObj;
+	const { id: settingId, value: settingValue, toggles } = settingObj;
 
 	// Settting row <tr>.
 	const settingRowEl = document.querySelector(
@@ -76,9 +72,7 @@ function toggleSettings( settingObj ) {
 	const { setting, currentValue } = getSetting( settingObj );
 
 	// Don't adjust dependent settings if this one is already hidden.
-	const currentRow = document.querySelector(
-		`.simpay-settings-${ id }`
-	);
+	const currentRow = document.querySelector( `.simpay-settings-${ id }` );
 
 	if ( 'none' === currentRow.style.display ) {
 		return;
@@ -86,9 +80,7 @@ function toggleSettings( settingObj ) {
 
 	// Toggle setting row visibility.
 	const toToggleRowEls = toggles.map( ( setting ) => {
-		return document.querySelector(
-			`.simpay-settings-${ setting }`
-		);
+		return document.querySelector( `.simpay-settings-${ setting }` );
 	} );
 
 	toToggleRowEls.forEach( ( el ) => {
@@ -124,6 +116,8 @@ domReady( () => {
 
 		// Bind to setting input changes.
 		const { setting } = getSetting( settingObj );
-		setting.addEventListener( 'change', () => toggleSettings( settingObj ) );
+		setting.addEventListener( 'change', () =>
+			toggleSettings( settingObj )
+		);
 	} );
 } );

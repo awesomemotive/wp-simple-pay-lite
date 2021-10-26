@@ -21,6 +21,7 @@ export const LineItem = class LineItem {
 	 * @param {boolean} args.subscription.isTrial Cart line item subscription trial designation.
 	 * @param {number} args.subscription.intervalCount Cart line item subscription interval count.
 	 * @param {number} args.subscription.interval Cart line item subscription interval.
+	 * @param {Object} args.price Price option data.
 	 * @param {Cart} cart Cart this line item is attached to.
 	 * @return {LineItem} LineItem
 	 */
@@ -33,6 +34,7 @@ export const LineItem = class LineItem {
 		this.amount = 0;
 		this.quantity = 1;
 		this.subscription = false;
+		this.price = null;
 
 		if ( 'object' !== typeof cart ) {
 			throw {
@@ -60,17 +62,12 @@ export const LineItem = class LineItem {
 	 * @param {boolean} args.subscription.isTrial Cart line item subscription trial designation.
 	 * @param {number} args.subscription.intervalCount Cart line item subscription interval count.
 	 * @param {number} args.subscription.interval Cart line item subscription interval.
+	 * @param {Object} args.price Price option data.
 	 * @return {LineItem} Line item.
 	 */
 	update( args ) {
 		// Parse and retrieve specific arguments.
-		const {
-			id,
-			title,
-			amount,
-			quantity,
-			subscription,
-		} = {
+		const { id, title, amount, quantity, subscription, price } = {
 			...this,
 			...args,
 		};
@@ -118,13 +115,23 @@ export const LineItem = class LineItem {
 
 		// Subscription must be false or contain subscription data.
 		// @todo Validate subscription data.
-		if ( ! ( false === subscription || 'object' === typeof subscription ) ) {
+		if (
+			! ( false === subscription || 'object' === typeof subscription )
+		) {
 			throw {
 				id: 'invalid-line-item-subscription',
-				message: 'Item subscription data must be a false or contain subscription data.',
+				message:
+					'Item subscription data must be a false or contain subscription data.',
 			};
 		} else {
 			this.subscription = subscription;
+		}
+
+		// Price option data.
+		if ( typeof price === 'object' && price !== null ) {
+			this.price = price;
+		} else {
+			this.price = null;
 		}
 
 		return this;
@@ -139,7 +146,7 @@ export const LineItem = class LineItem {
 	 */
 	remove() {
 		const allItems = this.cart.getLineItems();
-		const remainingItems = allItems.filter( ( { id } ) => ( this.id !== id ) );
+		const remainingItems = allItems.filter( ( { id } ) => this.id !== id );
 
 		this.cart.items = remainingItems;
 
@@ -167,7 +174,86 @@ export const LineItem = class LineItem {
 	getQuantity() {
 		return this.quantity;
 	}
-	
+
+	/**
+	 * Retrieves the cart line item's discount.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {number} Cart line item discount.
+	 */
+	getDiscount() {
+		const cartDiscount = this.cart.getDiscount();
+
+		if ( 0 === cartDiscount ) {
+			return 0;
+		}
+
+		const nonZeroLineItems = this.cart
+			.getLineItems()
+			.filter( ( lineItem ) => {
+				return 0 !== lineItem.getUnitPrice();
+			} );
+
+		return Math.round( cartDiscount / nonZeroLineItems.length );
+	}
+
+	/**
+	 * Retrieves a cart line item's subtotal.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return {number} Cart line item subtotal.
+	 */
+	getSubtotal() {
+		const hasTrial =
+			this.subscription && false !== this.subscription.isTrial;
+
+		if ( hasTrial ) {
+			return 0;
+		}
+
+		const amount = this.getUnitPrice() * this.getQuantity();
+
+		if ( 0 === amount ) {
+			return amount;
+		}
+
+		return Math.round( amount - this.getDiscount() );
+	}
+
+	/**
+	 * Retrieves a cart line item's inclusive tax amount.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {number} Inclusive tax amount.
+	 */
+	getInclusiveTaxAmount() {
+		const taxRate = this.cart.getTaxPercent( 'inclusive' ) / 100;
+		const subtotal = this.getSubtotal();
+
+		const inclusiveTaxAmount = Math.round(
+			subtotal - subtotal / ( 1 + taxRate )
+		);
+
+		return Math.round( subtotal - ( subtotal - inclusiveTaxAmount ) );
+	}
+
+	/**
+	 * Retrieves a cart line item's taxable amount.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {number} Taxable amount.
+	 */
+	getTaxableAmount() {
+		const subtotal = this.getSubtotal();
+		const inclusiveTaxAmount = this.getInclusiveTaxAmount();
+
+		return Math.round( subtotal - inclusiveTaxAmount );
+	}
+
 	/**
 	 * Retrieves a cart line item's tax.
 	 *
@@ -176,18 +262,21 @@ export const LineItem = class LineItem {
 	 * @return {number} Cart line item tax.
 	 */
 	getTax() {
-		let tax = 0;
-		let i = 0;
+		const taxableAmount = this.getTaxableAmount();
+		const taxPercent = this.cart.getTaxPercent( 'exclusive' );
 
-		const taxDecimal = this.cart.getTaxDecimal();
-		const quantity = this.getQuantity();
-		const subtotal = this.getSubtotal();
+		return Math.round( taxableAmount * ( taxPercent / 100 ) );
+	}
 
-		for ( i = 0; i < quantity; i++ ) {
-			tax += Math.round( subtotal * taxDecimal );
-		}
-
-		return tax;
+	/**
+	 * Retrieves a cart line item's total.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return {number} Cart line item total.
+	 */
+	getTotal() {
+		return this.getSubtotal() + this.getTax();
 	}
 };
 

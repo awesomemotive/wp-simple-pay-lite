@@ -9,22 +9,29 @@ import domReady from '@wordpress/dom-ready';
 // @todo Investigate enqueing admin.js in the footer.
 // @todo Use REST API.
 domReady( () => {
-	const nagForm = document.getElementById( 'simpay-usage-tracking-nag' );
+	const nagButton = document.getElementById( 'simpay-usage-tracking-opt-in' );
 
-	if ( ! nagForm ) {
+	if ( ! nagButton ) {
 		return;
 	}
 
-	const nag = nagForm.parentNode;
+	nagButton.addEventListener( 'click', ( e ) => {
+		e.preventDefault();
 
-	nagForm.addEventListener( 'submit', ( e ) => {
-		const optin = wp.ajax.send( 'simpay-usage-tracking-optin-nag', {
-			data: {
-				email: document.getElementById( 'simpay-usage-tracking-email' ).value,
-				nonce: document.getElementById( 'simpay-usage-tracking-optin-nag' ).value,
-			},
-		} );
+		wp.ajax
+			.send( 'simpay-usage-tracking-optin-nag', {
+				data: {
+					nonce: document.getElementById(
+						'simpay-usage-tracking-optin-nag'
+					).value,
+				},
+			} )
+			.always( () => {
+				const notice = document.getElementById(
+					'simpay-usage-tracking-optin'
+				).parentNode;
 
-		optin.always( () => nag.style.display = 'none' );
+				notice.style.display = 'none';
+			} );
 	} );
 } );

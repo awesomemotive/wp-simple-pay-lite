@@ -9,6 +9,8 @@ import 'admin/settings/test-mode.js';
 import toggleStripeConnectNotice from 'admin/settings/stripe-connect.js';
 import 'admin/settings/recaptcha.js';
 
+import 'admin/payment-form/prices.js';
+
 /**
  * Globallly accessible object of WP Simple Pay-related (admin) functionality.
  */
@@ -18,14 +20,12 @@ window.wpsp = window.wpsp || {
 
 let spAdmin = {};
 
-( function( $ ) {
+( function ( $ ) {
 	'use strict';
 
-	let body,
-		spFormSettings;
+	let body, spFormSettings;
 
 	spAdmin = {
-
 		init() {
 			// Set main vars on init.
 			body = $( document.body );
@@ -41,7 +41,11 @@ let spAdmin = {};
 			// Sortable metabox implementation.
 			// Must attach to wrapper to handle live DOM additions.
 			if ( window.postboxes && window.postboxes.handle_click ) {
-				spFormSettings.on( 'click', '.postbox .simpay-hndle, .postbox .simpay-handlediv', window.postboxes.handle_click );
+				spFormSettings.on(
+					'click',
+					'.postbox .simpay-hndle, .postbox .simpay-handlediv',
+					window.postboxes.handle_click
+				);
 			}
 
 			// Radios settings.
@@ -55,8 +59,10 @@ let spAdmin = {};
 				'.simpay-total-amount-label-tax',
 				'.simpay-shipping-address',
 				'.simpay-text-multiline',
-				'.simpay-dropdown-type input',
-				'.simpay-radio-type input',
+				'.simpay-dropdown-type',
+				'.simpay-radio-type',
+				'.simpay-price-enable-custom',
+				'.simpay-price-type input',
 			].forEach( ( input ) => {
 				// Allow classes to be passed, but prefer an input name.
 				let inputEl = $( input );
@@ -76,7 +82,7 @@ let spAdmin = {};
 					 *
 					 * @since 3.8.0
 					 */
-					.on( 'change', inputEl, function() {
+					.on( 'change', inputEl, function () {
 						let parent = $( '#simpay-form-settings' );
 
 						if ( true === isCustomFieldToggle ) {
@@ -94,44 +100,54 @@ let spAdmin = {};
 
 						// Find all linked content via `[data-toggle=""]` where the matching
 						// values will be shown and others hidden.
-						parent.find( $( `.simpay-show-if[data-if="${ input }"]` ) ).each( function() {
-							const content = $( this );
-							const showIf = content.data( 'is' );
+						parent
+							.find(
+								$( `.simpay-show-if[data-if="${ input }"]` )
+							)
+							.each( function () {
+								const content = $( this );
+								const showIf = content.data( 'is' );
 
-							// All all initially.
-							content.hide();
+								// All all initially.
+								content.hide();
 
-							// Show items where `[data-if=""]` contains the toggle input value.
-							if ( showIf.includes( current ) ) {
-								content.show();
-							}
-						} );
+								// Show items where `[data-if=""]` contains the toggle input value.
+								if ( showIf.includes( current ) ) {
+									content.show().css( 'display', 'block' );
+								}
+							} );
 					} );
 
 				// Trigger initial state.
-				$( inputEl )
-					.filter( ':checked' )
-					.trigger( 'change' );
+				$( inputEl ).filter( ':checked' ).trigger( 'change' );
 			} );
 
 			// Wait to do this here due to weird loading order of scripts.
 			// @todo Redo script dependency management.
-			hooks.addAction( 'settings.toggleTestMode', 'wpsp/settings/stripe-connect', toggleStripeConnectNotice );
+			hooks.addAction(
+				'settings.toggleTestMode',
+				'wpsp/settings/stripe-connect',
+				toggleStripeConnectNotice
+			);
 
 			// Init internal link to tab clicks.
-			spFormSettings.on( 'click.simpayTabLink', '.simpay-tab-link', function( e ) {
-				e.preventDefault();
-				spAdmin.handleInternalLinkToTabClicks( $( this ) );
-			} );
+			spFormSettings.on(
+				'click.simpayTabLink',
+				'.simpay-tab-link',
+				function ( e ) {
+					e.preventDefault();
+					spAdmin.handleInternalLinkToTabClicks( $( this ) );
+				}
+			);
 
 			// Remove image preview click.
-			spFormSettings.on( 'click.simpayImagePreview', '.simpay-remove-image-preview', function( e ) {
-				spAdmin.handleRemoveImagePreviewClick( e );
-			} );
-
-			// Trigger focus out (blur) for all amount input fields on page load.
-			// Should only need for admin. Used to be in shared.js.
-			body.find( '.simpay-amount-input' ).trigger( 'blur.validateAndUpdateAmount' );
+			spFormSettings.on(
+				'click.simpayImagePreview',
+				'.simpay-remove-image-preview',
+				function ( e ) {
+					spAdmin.handleRemoveImagePreviewClick( e );
+				}
+			);
 
 			// Use chosen for select fields
 			this.setupChosen();
@@ -149,10 +165,14 @@ let spAdmin = {};
 			if ( paymentModeSelector.length ) {
 				const paymentModes = paymentModeSelector.find( 'input' );
 
-				paymentModes.each( function() {
+				paymentModes.each( function () {
 					const mode = $( this );
 
-					if ( ! paymentModeSelector.hasClass( 'simpay-payment-mode--' + mode.val() ) ) {
+					if (
+						! paymentModeSelector.hasClass(
+							'simpay-payment-mode--' + mode.val()
+						)
+					) {
 						mode.attr( 'disabled', true );
 					}
 				} );
@@ -172,7 +192,7 @@ let spAdmin = {};
 		addMediaFields() {
 			let simpayMediaUploader;
 
-			$( '.simpay-media-uploader' ).on( 'click', function( e ) {
+			$( '.simpay-media-uploader' ).on( 'click', function ( e ) {
 				e.preventDefault();
 
 				// This is our button
@@ -189,14 +209,22 @@ let spAdmin = {};
 					title: spGeneral.i18n.mediaTitle,
 					button: {
 						text: spGeneral.i18n.mediaButtonText,
-					}, multiple: false,
+					},
+					multiple: false,
 				} );
 
 				// When a file is selected, grab the URL and set it as the text field's value
-				simpayMediaUploader.on( 'select', function() {
-					const attachment = simpayMediaUploader.state().get( 'selection' ).first().toJSON(),
+				simpayMediaUploader.on( 'select', function () {
+					const attachment = simpayMediaUploader
+							.state()
+							.get( 'selection' )
+							.first()
+							.toJSON(),
 						inputField = $( '#_image_url' ), // Get the field previous to our button, aka our input field.
-						image = ( 'id' === inputField.data( 'fvalue' ) ? attachment.id : attachment.url );
+						image =
+							'id' === inputField.data( 'fvalue' )
+								? attachment.id
+								: attachment.url;
 
 					// Update our image preview
 					$( '.simpay-image-preview-wrap' ).show();
@@ -211,7 +239,9 @@ let spAdmin = {};
 		},
 
 		setupChosen() {
-			const chosenSelect = $( '.simpay-chosen-select, .simpay-chosen-search' );
+			const chosenSelect = $(
+				'.simpay-chosen-select, .simpay-chosen-search'
+			);
 
 			chosenSelect.chosen( { disable_search_threshold: 20 } );
 			chosenSelect.chosen();
@@ -228,7 +258,7 @@ let spAdmin = {};
 			const allTabLinkParents = tabLinks.parents( 'li' );
 
 			// When a tab link is clicked.
-			tabLinks.on( 'click', function( e ) {
+			tabLinks.on( 'click', function ( e ) {
 				e.preventDefault();
 
 				const currentTabLinkParent = $( this ).parent();
@@ -241,7 +271,7 @@ let spAdmin = {};
 				history.pushState( null, null, hash );
 
 				// Avoid jumping to ID after setting anchor.
-				setTimeout( function() {
+				setTimeout( function () {
 					window.scrollTo( 0, 0 );
 				}, 1 );
 
@@ -262,14 +292,16 @@ let spAdmin = {};
 				currentTabEl.removeClass( 'simpay-panel-hidden' );
 			} );
 
-			let activeTab = '#payment-options-settings-panel';
+			let activeTab = '#form-display-options-settings-panel';
 
 			// Auto open tab if in url hash.
 			if ( location.hash.length ) {
 				activeTab = location.hash;
 			}
 
-			const activeTabLink = $( 'ul.simpay-tabs a[href="' + activeTab + '"]' );
+			const activeTabLink = $(
+				'ul.simpay-tabs a[href="' + activeTab + '"]'
+			);
 
 			$( '[name="simpay_form_settings_tab"]' ).val( activeTab );
 
@@ -279,27 +311,34 @@ let spAdmin = {};
 		},
 
 		stripeConnect() {
-			const rows = 'tr:nth-child(2), tr:nth-child(3), tr:nth-child(4), tr:nth-child(5)';
+			const rows =
+				'tr:nth-child(2), tr:nth-child(3), tr:nth-child(4), tr:nth-child(5)';
 
 			$( '.simpay-settings.stripe-account .form-table' )
-				.find( rows ).hide();
+				.find( rows )
+				.hide();
 
-			$( '#wpsp-api-keys-row-reveal button' ).click( function( e ) {
+			$( '#wpsp-api-keys-row-reveal button' ).on(
+				'click',
+				function ( e ) {
+					e.preventDefault();
+
+					$( '.simpay-settings.stripe-account .form-table' )
+						.find( rows )
+						.show();
+
+					$( '#wpsp-api-keys-row-hide' ).show();
+					$( this ).parent().hide();
+					$( '.wpsp-manual-key-warning' ).show();
+				}
+			);
+
+			$( '#wpsp-api-keys-row-hide button' ).on( 'click', function ( e ) {
 				e.preventDefault();
 
 				$( '.simpay-settings.stripe-account .form-table' )
-					.find( rows ).show();
-
-				$( '#wpsp-api-keys-row-hide' ).show();
-				$( this ).parent().hide();
-				$( '.wpsp-manual-key-warning' ).show();
-			} );
-
-			$( '#wpsp-api-keys-row-hide button' ).click( function( e ) {
-				e.preventDefault();
-
-				$( '.simpay-settings.stripe-account .form-table' )
-					.find( rows ).hide();
+					.find( rows )
+					.hide();
 
 				$( '#wpsp-api-keys-row-reveal' ).show();
 				$( this ).parent().hide();
@@ -317,7 +356,7 @@ let spAdmin = {};
 		},
 	};
 
-	$( document ).ready( function( $ ) {
+	$( document ).ready( function ( $ ) {
 		spAdmin.init();
 	} );
-}( jQuery ) );
+} )( jQuery );

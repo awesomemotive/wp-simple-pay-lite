@@ -5,7 +5,7 @@
  *
  * @param {string} route REST route.
  * @param {Object} data Data to send to the request.
- * @return {Promise} jQuery promise.
+ * @return {jqXHR} jQuery XMLHttpRequest object.
  */
 export async function apiRequest( route, data ) {
 	try {

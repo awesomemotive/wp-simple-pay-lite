@@ -28,28 +28,7 @@ class Notice_Manager {
 	 *
 	 * @var array
 	 */
-	private static $core_notices = array(
-		'rest_api_error' => array(
-			'dismissible' => false,
-			'type'        => 'error',
-			'callback'    => 'SimplePay\Core\Admin\Notices\no_rest_api',
-		),
-		'ssl_error'      => array(
-			'dismissible' => false,
-			'type'        => 'error',
-			'callback'    => 'SimplePay\Core\Admin\Notices\no_ssl',
-		),
-		'php_version_56' => array(
-			'dismissible' => false,
-			'type'        => 'error',
-			'callback'    => 'SimplePay\Core\Admin\Notices\php_version_56',
-		),
-		'stripe_connect' => array(
-			'dismissible' => true,
-			'type'        => 'info',
-			'callback'    => 'SimplePay\Core\Admin\Notices\stripe_connect',
-		),
-	);
+	private static $core_notices = array();
 
 	/**
 	 * List of additional notices added by other functionality.
@@ -64,6 +43,54 @@ class Notice_Manager {
 	 * @since 3.5.0
 	 */
 	public function __construct() {
+		self::$core_notices = array(
+			'rest_api_error'     => array(
+				'dismissible' => false,
+				'type'        => 'error',
+				'callback'    => 'SimplePay\Core\Admin\Notices\no_rest_api',
+			),
+			'ssl_error'          => array(
+				'dismissible' => false,
+				'type'        => 'error',
+				'callback'    => 'SimplePay\Core\Admin\Notices\no_ssl',
+			),
+			'php_version_56'     => array(
+				'dismissible' => false,
+				'type'        => 'error',
+				'callback'    => 'SimplePay\Core\Admin\Notices\php_version_56',
+			),
+			'stripe_connect'     => array(
+				'dismissible' => true,
+				'type'        => 'info',
+				'callback'    => 'SimplePay\Core\Admin\Notices\stripe_connect',
+			),
+			// Pro only.
+			// @todo Use a proper registry so this can be placed in the correct location.
+			'plaid_redirect_uri' => array(
+				'dismissible' => true,
+				'type'        => 'warning',
+				'callback'    => function () {
+					if ( ! class_exists( 'SimplePay\Pro\Admin\Plaid_Redirect_URI' ) ) {
+						return false;
+					}
+
+					$service = new \SimplePay\Pro\Admin\Plaid_Redirect_URI;
+					return $service->notice();
+				},
+			),
+			'coupon_management'  => array(
+				'dismissible' => true,
+				'type'        => 'info',
+				'callback'    => function() {
+					if ( ! class_exists( 'SimplePay\Pro\Coupons\Coupon' ) ) {
+						return false;
+					}
+
+					return \SimplePay\Pro\Coupons\Admin\__unstable_new_management_notice();
+				}
+			)
+		);
+
 		add_action( 'admin_notices', array( __CLASS__, 'show_notices' ) );
 		add_action( 'wp_ajax_simpay_dismiss_admin_notice', array( __CLASS__, 'ajax_dismiss_notice' ) );
 
@@ -182,6 +209,10 @@ class Notice_Manager {
 
 		foreach ( $notices as $notice_id => $notice_args ) {
 			if ( self::is_notice_dismissed( $notice_id ) ) {
+				continue;
+			}
+
+			if ( ! is_callable( $notice_args['callback'] ) ) {
 				continue;
 			}
 

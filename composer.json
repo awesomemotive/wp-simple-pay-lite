@@ -3,7 +3,46 @@
 	"description": "Add high conversion Stripe Checkout forms to your WordPress site and start accepting payments in minutes.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
+	"config": {
+		"platform-check": false
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:berlindb/core.git"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"SimplePay\\Vendor\\": "lib/",
+			"SimplePay\\Vendor\\Stripe\\": "lib/Stripe/lib"
+		}
+	},
 	"require": {
-		"stripe/stripe-php": "7.37.1"
+		"berlindb/core": "2.0",
+		"stripe/stripe-php": "7.97.0"
+	},
+	"scripts": {
+		"mozart": "~/.composer/vendor/bin/mozart compose && composer dump-autoload"
+	},
+	"extra": {
+		"mozart": {
+			"dep_namespace": "SimplePay\\Vendor",
+			"dep_directory": "/lib/",
+			"classmap_directory": "/lib/",
+			"classmap_prefix": "SimplePay_",
+			"packages": [
+				"berlindb/core",
+				"stripe/stripe-php"
+			],
+			"delete_vendor_directories": true,
+			"override_autoload": {
+				"stripe/stripe-php": {
+					"psr-4": {
+						"Stripe\\": ""
+					}
+				}
+			}
+		}
 	}
 }

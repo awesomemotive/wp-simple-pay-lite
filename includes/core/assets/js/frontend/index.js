@@ -1,255 +1,190 @@
-/* global simplePayForms, spGeneral, jQuery */
+/* global jQuery, _, Stripe */
 
 /**
  * Internal dependencies.
  */
-import hooks from '@wpsimplepay/hooks';
-import { getPaymentForms } from '@wpsimplepay/core/frontend/payment-forms';
-
-let simpayApp;
-
-( function( $ ) {
-	'use strict';
-
-	let body;
-
-	simpayApp = {
-
-		formCount: 0,
-
-		// Collection of DOM elements of all payment forms.
-		spFormElList: {},
-
-		// Internal organized collection of all form data.
-		spFormData: {},
-		spFormElems: {},
-
-		/**
-		 *
-		 */
-		init() {
-			body = $( document.body );
-
-			// Skip "Update Payment Method Forms"
-			// We need to keep .simpay-checkout-form so styles are applied.
-			simpayApp.spFormElList = body.find( '.simpay-checkout-form:not(.simpay-update-payment-method)' );
-
-			const stripeCheckout = getPaymentForms()['stripe-checkout'];
-			const { setup: setupPaymentForm } = stripeCheckout;
-
-			// Setup Stripe Checkout when formData is available.
-			body.on( 'simpayCoreFormVarsInitialized', setupPaymentForm );
-
-			simpayApp.spFormElList.each( function( i ) {
-				const spFormElem = $( this );
-
-				simpayApp.setupCoreForm( spFormElem );
-				simpayApp.formCount++;
-
-				body.trigger( 'simpaySetupCoreForm', [ spFormElem ] );
-			} );
-		},
-
-		/**
-		 * Does this payment form use the Stripe Checkout overlay?
-		 *
-		 * @param {Object} formData Configured form data.
-		 */
-		isStripeCheckoutForm( formData ) {
-			return ( undefined === formData.formDisplayType ) || ( 'stripe_checkout' === formData.formDisplayType );
-		},
-
-		/**
-		 * Setup form object properties and additional data.
-		 *
-		 * @param {jQuery} spFormElem Form element jQuery object.
-		 */
-		setupCoreForm( spFormElem ) {
-			// Add a unique identifier to the form for unique selectors.
-			spFormElem.attr( 'data-simpay-form-instance', simpayApp.formCount );
-
-			const formId = spFormElem.data( 'simpay-form-id' );
-
-			// Grab the localized data for this form ID.
-			const localizedFormData = simplePayForms[ formId ];
-
-			// Merge form data from bootstrapped data (separated based on type... for some reason).
-			const formData = {
-				formId,
-				formInstance: simpayApp.formCount,
-				quantity: 1,
-				isValid: true,
-				stripeParams: {
-					...localizedFormData.stripe.strings,
-					...localizedFormData.stripe.bools,
-				},
-				...localizedFormData.form.bools,
-				...localizedFormData.form.integers,
-				...localizedFormData.form.i18n,
-				...localizedFormData.form.strings,
-				...localizedFormData.form.config,
-			};
-
-			const {
-				stripeParams: {
-					key,
-					elementsLocale,
-				}
-			} = formData;
-
-			// Attach Stripe instance to spFormElem to avoid tampering when adjusting formData.
-			spFormElem.stripeInstance = Stripe( key, {
-				locale: elementsLocale || 'auto',
-			} );
-
-			// Track in global namespace.
-			window.simpayApp.spFormData[ formId ] = formData;
-			window.simpayApp.spFormElems[ formId ] = spFormElem;
-
-			body.trigger( 'simpayCoreFormVarsInitialized', [ spFormElem, formData ] );
-			body.trigger( 'simpayBindCoreFormEventsAndTriggers', [ spFormElem, formData ] );
-		},
-
-		/**
-		 * Set the final amount for the Payment Form.
-		 *
-		 * @param {jQuery} spFormElem Form element jQuery object.
-		 * @param {Object} formData Configured form data.
-		 */
-		setCoreFinalAmount( spFormElem, formData ) {
-			// Backwards compat.
-			formData.finalAmount = spFormElem.cart.getTotal();
-
-			body.trigger( 'simpayFinalizeCoreAmount', [ spFormElem, formData ] );
-		},
-
-		/**
-		 * Disable Payment Form.
-		 *
-		 * @param {jQuery} spFormElem Form element jQuery object.
-		 * @param {Object} formData Configured form data.
-		 * @param {bool} setSubmitAsLoading Adjust button text to Processing text state.
-		 */
-		disableForm( spFormElem, formData, setSubmitButtonAsLoading ) {
-			let submitBtn = spFormElem.find( '.simpay-payment-btn' );
-			let loadingText = formData.paymentButtonLoadingText;
-
-			spFormElem.addClass( 'simpay-checkout-form--loading' );
-
-			if ( ! window.simpayApp.isStripeCheckoutForm( formData ) ) {
-				submitBtn = spFormElem.find( '.simpay-checkout-btn' );
-				loadingText = formData.checkoutButtonLoadingText;
-			}
-
-			// Disable the form submit button upon initial form load or form submission.
-			submitBtn
-				.prop( 'disabled', true );
-
-			if ( true === setSubmitButtonAsLoading ) {
-				submitBtn
-					.addClass( 'simpay-disabled' )
-					.find( 'span' )
-					.html( loadingText );
-			}
-		},
-
-		/**
-		 * Enable Payment Form.
-		 *
-		 * @param {jQuery} spFormElem Form element jQuery object.
-		 * @param {Object} formData Configured form data.
-		 */
-		enableForm( spFormElem, formData ) {
-			const { cart } = spFormElem;
-
-			// Do nothing if Cart is unavailable.
-			if ( undefined === cart ) {
-				return;
-			}
-
-			let submitBtn = spFormElem.find( '.simpay-payment-btn' );
-			let loadingText = formData.paymentButtonLoadingText;
-			let buttonText = formData.paymentButtonText;
-
-			spFormElem.removeClass( 'simpay-checkout-form--loading' );
-
-			if ( ! window.simpayApp.isStripeCheckoutForm( formData ) ) {
-				submitBtn = spFormElem.find( '.simpay-checkout-btn' );
-				loadingText = formData.checkoutButtonLoadingText;
-				buttonText = formData.checkoutButtonText;
-			}
-
-			// Re-enable button.
-			submitBtn
-				.prop( 'disabled', false )
-				.removeClass( 'simpay-disabled' );
-
-			// Embed in to an arbitrary node to retrieve parsed entities.
-			const embeddedHtml = document.createElement( 'div' );
-			embeddedHtml.innerHTML = loadingText;
-
-			// Reset button text back to original if needed during validation.
-			if ( $( embeddedHtml ).html() === submitBtn.find( 'span' ).html() ) {
-				const {
-					convertToDollars,
-					formatCurrency,
-				} = window.spShared;
-
-				const total = convertToDollars( cart.getTotal() );
-				const formatted = formatCurrency( total, true );
-				const amount = `<em class="simpay-total-amount-value">${ formatted }</span>`;
-
-				buttonText = buttonText
-					.replace( '{{amount}}', amount );
-
-				return submitBtn
-					.find( 'span' )
-					.html( buttonText );
-			}
-		},
-
-		/**
-		 * Show an error.
-		 *
-		 * @param {jQuery} spFormElem Form element jQuery object.
-		 * @param {Object} formData Configured form data.
-		 * @param {string} errorMessage Message to show.
-		 */
-		showError( spFormElem, formData, errorMessage ) {
-			return spFormElem
-				.find( '.simpay-errors' )
-				.html( errorMessage );
-		},
-
-		/**
-		 * Ref triggerBrowserValidation in https://stripe.github.io/elements-examples/
-		 *
-		 * @param {jQuery} spFormElem Form element jQuery object.
-		 * @param {Object} formData Configured form data.
-		 */
-		triggerBrowserValidation( spFormElem, formData ) {
-			return $( '<input>' )
-				.attr( {
-					type: 'submit',
-					style: {
-						display: 'none',
-					},
-				} )
-				.appendTo( spFormElem )
-				.click()
-				.remove();
-		},
-	};
-
-	// Initialize form.
-	$( document ).ready( () => simpayApp.init() );
-}( jQuery ) );
-
-window.simpayApp = simpayApp;
+import { default as hooks, doAction } from '@wpsimplepay/hooks';
+import * as paymentForms from '@wpsimplepay/payment-forms';
+import * as api from '@wpsimplepay/api';
+import { default as legacyHelpers } from './utils/legacy.js';
+import './payment-forms';
 
 /**
- * Globally accessible object of WP Simple Pay-related functionality.
+ * WP Simple Pay API.
+ *
+ * @todo Create automatically with Webpack.
  */
+
+// Don't expose api.apiRequest to window.
+const {
+	charges,
+	customers,
+	paymentintents,
+	sessions,
+	setupintents,
+	subscriptions,
+} = api;
+
 window.wpsp = {
 	hooks,
+	paymentForms,
+	api: {
+		charges,
+		customers,
+		paymentintents,
+		sessions,
+		setupintents,
+		subscriptions,
+	},
 };
+
+/**
+ * Legacy API.
+ */
+window.simpayApp = {
+	formCount: 0,
+	spFormElList: {},
+	spFormData: {},
+	spFormElems: {},
+	...legacyHelpers,
+};
+
+/**
+ * Initializes Payment Forms on the current page.
+ */
+function initPaymentForms() {
+	const $paymentForms = jQuery( document.body ).find(
+		'.simpay-checkout-form:not(.simpay-update-payment-method)'
+	);
+
+	window.simpayApp.spFormElList = $paymentForms;
+
+	$paymentForms.each( function () {
+		window.simpayApp.formCount++;
+		initPaymentForm( jQuery( this ) );
+	} );
+}
+
+/**
+ * Initializes a Payment Form given a jQuery object.
+ *
+ * @param {jQuery} $paymentForm jQuery Payment Form object.
+ */
+function initPaymentForm( $paymentForm ) {
+	// Add the form instance count to the wrapper element to allow selectors
+	// such as #payment-form-123[data-simpay-form-instance="2"].
+	//
+	// This ensures we can query for a specific element if a form appears more
+	// than once on a page. We cannot always access via spFormElem/$paymentForm
+	// due to Overlay forms being moved around the DOM.
+	//
+	// @link https://github.com/wpsimplepay/wp-simple-pay-pro/pull/766
+	const { formCount } = window.simpayApp;
+	$paymentForm.attr( 'data-simpay-form-instance', formCount );
+
+	// Retrieve localized form data.
+	const forms = window.simplePayForms;
+	const formId = $paymentForm.data( 'simpay-form-id' );
+
+	const paymentFormData = forms[ formId ];
+	const {
+		type: formType,
+		form: { prices, livemode, config = {} },
+	} = paymentFormData;
+
+	const { taxRates = [], paymentMethods = [] } = config;
+
+	// Merge localized form data in to a semi-simplified object.
+	// Maintained for backwards compatibility.
+	const formData = {
+		formId,
+		formInstance: formCount,
+		quantity: 1,
+		isValid: true,
+		stripeParams: {
+			...paymentFormData.stripe.strings,
+			...paymentFormData.stripe.bools,
+		},
+		prices,
+		...paymentFormData.form.bools,
+		...paymentFormData.form.integers,
+		...paymentFormData.form.i18n,
+		...paymentFormData.form.strings,
+		...paymentFormData.form.config,
+	};
+
+	// Attach legacy form data to the Payment Form jQuery object so
+	// it is available for backwards compatibility.
+	$paymentForm.__unstableLegacyFormData = formData;
+
+	// Bind the Payment Form's type settings.
+	const formTypeSettings = paymentForms.getPaymentFormType( formType );
+
+	_.each( formTypeSettings, ( setting, settingKey ) => {
+		// Bind the instance of the PaymentForm to the first argument of setting callbacks.
+		// @link https://underscorejs.org/#bind
+		$paymentForm[ settingKey ] = _.isFunction( setting )
+			? _.bind( setting, $paymentForm, $paymentForm )
+			: setting;
+	} );
+
+	// Attach the ID.
+	$paymentForm.id = formId;
+
+	// Attach form state information to the Payment Form jQuery object.
+	$paymentForm.state = {
+		isValid: true,
+		customAmount: false,
+		coupon: false,
+		// Ensure a price is always available.
+		price: _.find( prices, ( { default: isDefault } ) => {
+			return true === isDefault;
+		} ),
+		paymentMethod: _.first( paymentMethods ),
+		taxRates,
+		paymentMethods,
+		livemode,
+		displayType: formData.formDisplayType,
+	};
+
+	// Attach a form state setter to the Payment Form jQuery object.
+	$paymentForm.setState = function ( updatedState ) {
+		$paymentForm.state = {
+			...$paymentForm.state,
+			...updatedState,
+		};
+	};
+
+	// Attach a Stripe instance to the Payment Form jQuery object.
+	const {
+		key: publishableKey,
+		elementsLocale,
+	} = paymentFormData.stripe.strings;
+
+	$paymentForm.stripeInstance = Stripe( publishableKey, {
+		locale: elementsLocale || 'auto',
+	} );
+
+	/**
+	 * Allows further setup of a Payment Form.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param {PaymentForm} $paymentForm
+	 */
+	doAction( 'simpaySetupPaymentForm', $paymentForm );
+
+	// Backwards compatibility.
+	window.simpayApp.spFormData[ formId ] = formData;
+	window.simpayApp.spFormElems[ formId ] = $paymentForm;
+
+	jQuery( document.body )
+		.trigger( 'simpayCoreFormVarsInitialized', [ $paymentForm, formData ] )
+		.trigger( 'simpayBindCoreFormEventsAndTriggers', [
+			$paymentForm,
+			formData,
+		] )
+		.trigger( 'simpaySetupCoreForm', [ $paymentForm ] );
+}
+
+jQuery( () => initPaymentForms() );

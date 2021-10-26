@@ -23,6 +23,7 @@ export const Cart = class Cart {
 		this.items = [];
 		this.currency = 'usd';
 		this.taxPercent = 0;
+		this.taxRates = [];
 		this.coupon = false;
 		this.isNonDecimalCurrency = false;
 
@@ -36,6 +37,7 @@ export const Cart = class Cart {
 	 *
 	 * @param {Object} args Cart arguments.
 	 * @param {number} args.taxPercent Tax percentage.
+	 * @param {Array} args.taxRates Tax rates.
 	 * @param {false|Object} args.coupon Stripe Coupon.
 	 * @param {boolean} args.isNonDecimalCurrency If the currency is non-decimal based.
 	 * @return {Cart} Cart.
@@ -45,6 +47,7 @@ export const Cart = class Cart {
 		const {
 			currency,
 			taxPercent,
+			taxRates,
 			coupon,
 			isNonDecimalCurrency,
 		} = {
@@ -72,6 +75,11 @@ export const Cart = class Cart {
 			this.taxPercent = parseFloat( taxPercent );
 		}
 
+		// Tax rates.
+		if ( taxRates && Array.isArray( taxRates ) ) {
+			this.taxRates = taxRates;
+		}
+
 		// Set coupon.
 		// @todo Validate coupon data.
 		if ( ! ( false === coupon || 'object' === typeof coupon ) ) {
@@ -83,7 +91,7 @@ export const Cart = class Cart {
 			this.coupon = coupon;
 		}
 
-		if ( 'boolean' !== typeof isNonDecimalCurrency  ) {
+		if ( 'boolean' !== typeof isNonDecimalCurrency ) {
 			throw {
 				id: 'invalid-non-decimal-currency',
 				message: 'Declaring a non-decimal currency must be a boolean.',
@@ -103,7 +111,62 @@ export const Cart = class Cart {
 	 * @return {Cart} Cart.
 	 */
 	reset() {
-		return new Cart;
+		return new Cart();
+	}
+
+	/**
+	 * Returns the currency used by the base item, and therefore, the whole cart.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {string}
+	 */
+	getCurrency() {
+		let currency;
+		const { price } = this.getLineItem( 'base' );
+
+		if ( null === price ) {
+			currency = spGeneral.strings.currency;
+		} else {
+			currency = price.currency;
+		}
+
+		return currency;
+	}
+
+	/**
+	 * Returns the currency symbol used by the base item, and therefore,
+	 * the whole cart.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {string}
+	 */
+	getCurrencySymbol() {
+		let currencySymbol;
+		const { price } = this.getLineItem( 'base' );
+
+		if ( null === price ) {
+			currencySymbol = spGeneral.strings.currencySymbol;
+		} else {
+			currencySymbol = price.currency_symbol;
+		}
+
+		return currencySymbol;
+	}
+
+	/**
+	 * Determines if the currenet cart is using a zero decimal currency.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {bool}
+	 */
+	isZeroDecimal() {
+		const { price } = this.getLineItem( 'base' );
+		const { is_zero_decimal: isZeroDecimal } = price;
+
+		return isZeroDecimal;
 	}
 
 	/**
@@ -118,14 +181,24 @@ export const Cart = class Cart {
 	}
 
 	/**
-	 * Retrieves the cart's tax percent amount.
+	 * Retrieves a cart's inclusive tax percentage.
 	 *
 	 * @since 3.7.0
 	 *
-	 * @return {number}
+	 * @param {string} taxCalculation Tax caclulation type.
+	 * @return {number} Cart's inclusive tax percentage.
 	 */
-	getTaxPercent() {
-		return this.taxPercent;
+	getTaxPercent( taxCalculation ) {
+		return this.getTaxRates().reduce(
+			( percent, { calculation, percentage } ) => {
+				if ( taxCalculation !== calculation ) {
+					return percent;
+				}
+
+				return ( percent += percentage );
+			},
+			0
+		);
 	}
 
 	/**
@@ -136,7 +209,18 @@ export const Cart = class Cart {
 	 * @return {number}
 	 */
 	getTaxDecimal() {
-		return ( this.taxPercent / 100 );
+		return this.taxPercent / 100;
+	}
+
+	/**
+	 * Retrieves the cart's tax rates.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {Array}
+	 */
+	getTaxRates() {
+		return this.taxRates;
 	}
 
 	/**
@@ -151,6 +235,227 @@ export const Cart = class Cart {
 	}
 
 	/**
+	 * Retrieves subtotal.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return {number} Cart subtotal.
+	 */
+	getSubtotal() {
+		return this.getLineItems().reduce( ( subtotal, lineItem ) => {
+			return ( subtotal += Math.round(
+				lineItem.getUnitPrice() * lineItem.getQuantity()
+			) );
+		}, 0 );
+	}
+
+	/**
+	 * Retrieves the total discount amount.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return {number} Cart discount amount.
+	 */
+	getDiscount() {
+		const coupon = this.getCoupon();
+		const { percent_off: percentOff, amount_off: amountOff } = coupon;
+
+		let discount = 0;
+
+		if ( false === coupon ) {
+			return discount;
+		}
+
+		if ( percentOff ) {
+			discount += Math.round( this.getSubtotal() * ( percentOff / 100 ) );
+		} else if ( amountOff ) {
+			discount += amountOff;
+		}
+
+		return discount;
+	}
+
+	/**
+	 * Retrieves the total tax amount.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return {number} Cart tax.
+	 */
+	getTax() {
+		return this.getLineItems().reduce( ( tax, lineItem ) => {
+			return ( tax += lineItem.getTax() );
+		}, 0 );
+	}
+
+	/**
+	 * Retrieves the cart's tax amounts for corresponding tax rate IDs.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @link https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1198#issuecomment-776724336
+	 *
+	 * @return {Object[]}
+	 */
+	getAppliedTaxRates() {
+		const lineItems = this.getLineItems();
+
+		const exclusiveTaxRates = this.getTaxRates().filter(
+			( { calculation } ) => calculation !== 'inclusive'
+		);
+		const totalExclusiveTaxDecimal =
+			this.getTaxPercent( 'exclusive' ) / 100;
+
+		const inclusiveTaxRates = this.getTaxRates().filter(
+			( { calculation } ) => calculation !== 'exclusive'
+		);
+		const inclusiveTaxPercent = this.getTaxPercent( 'inclusive' );
+		const totalInclusiveTaxDecimal = inclusiveTaxPercent / 100;
+
+		const taxRateAmounts = {};
+
+		lineItems.forEach( ( lineItem ) => {
+			const lineExclusiveTax = lineItem.getTax();
+			const lineTaxableAmount = lineItem.getTaxableAmount();
+			const lineInclusiveTaxAmount = lineItem.getInclusiveTaxAmount();
+
+			exclusiveTaxRates.forEach( ( taxRate, i ) => {
+				const { id, percentage } = taxRate;
+				const taxDecimal = percentage / 100;
+				let taxAmount = 0;
+
+				if ( i === exclusiveTaxRates.length - 1 ) {
+					const otherExclusiveTaxRates = exclusiveTaxRates.filter(
+						( { id: taxRateId } ) => taxRateId !== id
+					);
+
+					const otherExclusiveTaxPercent = otherExclusiveTaxRates.reduce(
+						( percent, { percentage } ) => {
+							return ( percent += percentage );
+						},
+						0
+					);
+
+					const otherExclusiveTaxDecimal =
+						otherExclusiveTaxPercent / 100;
+
+					const remainingExclusiveTax = Math.floor(
+						lineTaxableAmount * otherExclusiveTaxDecimal
+					);
+
+					taxAmount = lineExclusiveTax - remainingExclusiveTax;
+				} else {
+					taxAmount = Math.floor(
+						lineExclusiveTax *
+							( taxDecimal / totalExclusiveTaxDecimal )
+					);
+				}
+
+				taxRateAmounts[ id ] = [
+					...( taxRateAmounts[ id ] || [] ),
+					taxAmount,
+				];
+			} );
+
+			inclusiveTaxRates.forEach( ( taxRate, i ) => {
+				const { id, percentage } = taxRate;
+				const taxDecimal = percentage / 100;
+				let taxAmount;
+
+				if ( i === inclusiveTaxRates.length - 1 ) {
+					const otherInclusiveTaxRates = inclusiveTaxRates.filter(
+						( { id: taxRateId } ) => taxRateId !== id
+					);
+
+					const otherInclusiveTaxAmount = otherInclusiveTaxRates.reduce(
+						( taxAmount, { percentage } ) => {
+							return ( taxAmount += Math.floor(
+								lineInclusiveTaxAmount *
+									( percentage /
+										100 /
+										totalInclusiveTaxDecimal )
+							) );
+						},
+						0
+					);
+
+					taxAmount =
+						lineInclusiveTaxAmount - otherInclusiveTaxAmount;
+				} else {
+					taxAmount = Math.floor(
+						lineInclusiveTaxAmount *
+							( taxDecimal / totalInclusiveTaxDecimal )
+					);
+				}
+
+				taxRateAmounts[ id ] = [
+					...( taxRateAmounts[ id ] || [] ),
+					taxAmount,
+				];
+			} );
+		} );
+
+		return taxRateAmounts;
+	}
+
+	/**
+	 * Retrieves the total.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @return {number} Cart total.
+	 */
+	getTotal() {
+		return this.getLineItems().reduce( ( total, lineItem ) => {
+			return ( total += lineItem.getTotal() );
+		}, 0 );
+	}
+
+	/**
+	 * Retrieves the recurring total.
+	 *
+	 * Calculates amounts manually by applying the whole discount to the line item.
+	 * Assumes discounts apply indefinitely.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return {number} Cart recurring total.
+	 */
+	getRecurringTotal() {
+		const recurring = this.getLineItem( 'base' );
+		let recurringSubtotal =
+			recurring.getUnitPrice() * recurring.getQuantity();
+		recurringSubtotal = Math.round(
+			recurringSubtotal - this.getDiscount()
+		);
+
+		const taxRates = this.getTaxRates();
+		const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
+
+		const inclusiveTaxAmount = Math.round(
+			recurringSubtotal - recurringSubtotal / ( 1 + taxRate )
+		);
+
+		const postInclusiveTaxAmount = Math.round(
+			recurringSubtotal - inclusiveTaxAmount
+		);
+		const taxAmount = taxRates.reduce(
+			( tax, { percentage, calculation } ) => {
+				if ( 'inclusive' === calculation ) {
+					return tax;
+				}
+
+				return ( tax += Math.round(
+					postInclusiveTaxAmount * ( percentage / 100 )
+				) );
+			},
+			0
+		);
+
+		return Math.round( recurringSubtotal + taxAmount );
+	}
+
+	/**
 	 * Retrieves an item.
 	 *
 	 * @since 3.7.0
@@ -162,7 +467,9 @@ export const Cart = class Cart {
 		const items = this.getLineItems();
 
 		// Can't use `find` because it is not supported in IE.
-		const filteredItems = items.filter( ( { id: itemId } ) => ( itemId === id ) );
+		const filteredItems = items.filter(
+			( { id: itemId } ) => itemId === id
+		);
 
 		if ( 0 === filteredItems.length ) {
 			throw {

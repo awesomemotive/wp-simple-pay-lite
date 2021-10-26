@@ -90,17 +90,14 @@ class Assets {
 	 * @since 3.0.0
 	 */
 	public function setup() {
+		$wp_version      = get_bloginfo( 'version' );
+		$has_wp_polyfill = version_compare( $wp_version, '5.0', '>=' );
+
 		$this->scripts = array(
 			'sandhills-stripe-js-v3' => array(
 				'src'    => 'https://js.stripe.com/v3/',
 				'deps'   => array(),
 				'ver'    => null,
-				'footer' => true,
-			),
-			'simpay-polyfill'        => array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-polyfill.min.js',
-				'deps'   => array(),
-				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),
 			'simpay-accounting'      => array(
@@ -120,8 +117,10 @@ class Assets {
 				'deps'   => array(
 					'jquery',
 					'underscore',
+					'wp-util',
 					'wp-api',
-					'simpay-polyfill',
+					'wp-a11y',
+					( $has_wp_polyfill ? 'wp-polyfill' : 'simpay-polyfill' ),
 					'simpay-accounting',
 					'simpay-shared',
 				),
@@ -129,6 +128,15 @@ class Assets {
 				'footer' => true,
 			),
 		);
+
+		if ( false === $has_wp_polyfill ) {
+			$this->scripts['simpay-polyfill'] = array(
+				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-polyfill.min.js',
+				'deps'   => array(),
+				'ver'    => SIMPLE_PAY_VERSION,
+				'footer' => true,
+			);
+		}
 
 		$this->styles = array(
 			'stripe-checkout-button' => array(

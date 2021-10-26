@@ -10,9 +10,10 @@
 
 namespace SimplePay\Core\Admin\Pages;
 
+use SimplePay\Core\API;
 use SimplePay\Core\reCAPTCHA;
 use SimplePay\Core\Utils;
-use SimplePay\Core\Abstracts\Admin_Page;
+use SimplePay\Vendor\Stripe;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -32,11 +33,11 @@ class System_Status {
 	 * @return string
 	 */
 	private static function stripe_tls_check( $for_export ) {
-
 		$test_key = simpay_get_setting( 'test_secret_key', '' );
+		$live_key = simpay_get_setting( 'live_secret_key', '' );
 
 		// If test key isn't set.
-		if ( empty( $test_key ) ) {
+		if ( empty( $test_key ) && empty( $live_key ) ) {
 
 			$retval = __( 'Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered.', 'stripe' );
 
@@ -47,11 +48,16 @@ class System_Status {
 			}
 		}
 
-		// Set Stripe API key. Force test key.
-		\Stripe\Stripe::setApiKey( $test_key );
-
+		// Attempt to make an API request.
 		try {
-			\Stripe\Charge::all();
+			API\Customers\all(
+				array(
+					'limit' => 1,
+				),
+				array(
+					'api_key' => simpay_get_secret_key(),
+				)
+			);
 
 			$retval = __( 'TLS 1.2 is supported. No action required.', 'stripe' );
 
@@ -60,7 +66,7 @@ class System_Status {
 			} else {
 				return '<mark class="ok">' . $retval . '</mark>';
 			}
-		} catch ( \Stripe\Exception\ApiConnectionException $e ) {
+		} catch ( \SimplePay\Vendor\Stripe\Exception\ApiConnectionException $e ) {
 
 			$retval = __( 'TLS 1.2 is not supported. You will need to upgrade your integration.', 'stripe' );
 

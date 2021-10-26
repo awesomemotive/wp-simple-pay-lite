@@ -9,8 +9,12 @@ import domReady from '@wordpress/dom-ready';
 // @todo Investigate enqueing admin.js in the footer.
 domReady( () => {
 	const { hooks } = window.wpsp;
-	const radioEls = document.querySelectorAll( '[name="simpay_settings[test_mode]"]' );
-	const selectedRadioEl = document.querySelector( '[name="simpay_settings[test_mode]"]:checked' );
+	const radioEls = document.querySelectorAll(
+		'[name="simpay_settings[test_mode]"]'
+	);
+	const selectedRadioEl = document.querySelector(
+		'[name="simpay_settings[test_mode]"]:checked'
+	);
 
 	if ( 0 === radioEls.length ) {
 		return;
@@ -21,11 +25,15 @@ domReady( () => {
 	hooks.doAction( 'settings.toggleTestMode', currentMode, currentMode );
 
 	// Update when the input changes.
-	_.each( radioEls, ( radio ) => (
+	_.each( radioEls, ( radio ) =>
 		radio.addEventListener( 'change', ( e ) => {
 			const newMode = 'enabled' === e.target.value ? 'test' : 'live';
 
-			hooks.doAction( 'settings.toggleTestMode', newMode, 'test' === newMode ? 'live' : 'test' );
+			hooks.doAction(
+				'settings.toggleTestMode',
+				newMode,
+				'test' === newMode ? 'live' : 'test'
+			);
 		} )
-	) );
+	);
 } );

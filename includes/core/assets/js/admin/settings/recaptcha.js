@@ -38,9 +38,10 @@ domReady( () => {
 		}
 
 		try {
-			grecaptcha.execute( siteKey, {
-				action: `simple_pay_admin_test`,
-			} )
+			grecaptcha
+				.execute( siteKey, {
+					action: `simple_pay_admin_test`,
+				} )
 				.then( ( token ) => {
 					wp.ajax.send( 'simpay_validate_recaptcha_source', {
 						data: {
