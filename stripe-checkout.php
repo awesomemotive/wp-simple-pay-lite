@@ -5,7 +5,7 @@
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author: Sandhills Development, LLC
  * Author URI: https://sandhillsdev.com
- * Version: 2.7.0-beta-1
+ * Version: 4.4.0-alpha-1
  * Text Domain: stripe
  * Domain Path: /languages
  */
