@@ -3,7 +3,7 @@
  * Admin setting fields: Checkbox
  *
  * @package SimplePay\Core\Admin\Fields
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -81,7 +81,7 @@ class Checkbox extends Field {
 		} else {
 
 			?>
-			<span class="simpay-field-bool" <?php echo $this->style ? 'style="' . $this->style . '"' : ''; ?>>
+			<label for="<?php echo esc_attr( $this->id ); ?>" class="simpay-field-bool" <?php echo $this->style ? 'style="' . $this->style . '"' : ''; ?>>
 				<?php if ( ! empty( $this->title ) ) : ?>
 					<span class="screen-reader-text"><?php echo $this->title; ?></span>
 				<?php endif; ?>
@@ -92,7 +92,7 @@ class Checkbox extends Field {
 					   value="yes"
 					<?php checked( $this->value, 'yes', true ); ?>
 					<?php echo $this->attributes; ?>/><?php echo( ! empty( $this->text ) ? $this->text : esc_html__( 'Yes', 'stripe' ) ); ?>
-			</span>
+			</label>
 			<?php
 
 			if ( ! empty( $this->description ) ) {

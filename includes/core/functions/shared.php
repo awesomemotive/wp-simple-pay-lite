@@ -3,7 +3,7 @@
  * Functions: Shared
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -124,6 +124,26 @@ function simpay_update_setting( $setting, $value ) {
 }
 
 /**
+ * Check the user's license to see if subscriptions are enabled or not
+ *
+ * @return bool
+ */
+function simpay_subscriptions_enabled() {
+
+	$license_data = get_option( 'simpay_license_data' );
+
+	if ( ! empty( $license_data ) && 'valid' === $license_data->license ) {
+		$price_id = $license_data->price_id;
+
+		if ( '1' !== $price_id ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
  * Checks if REST API is enabled.
  *
  * @link https://github.com/Automattic/jetpack/blob/master/_inc/lib/admin-pages/class.jetpack-admin-page.php#L157-L171
@@ -178,16 +198,6 @@ function simpay_get_filtered( $filter, $value, $form_id = null ) {
 	}
 
 	return $value;
-}
-
-/**
- * Get plugin URL.
- *
- * @param string $url URL to retrieve.
- * @return string
- */
-function simpay_get_url( $url ) {
-	return \SimplePay\Core\SimplePay()->get_url( $url );
 }
 
 /**
@@ -802,7 +812,7 @@ function simpay_validate_statement_descriptor( $statement_descriptor ) {
  * @return array
  */
 function simpay_get_currencies() {
-	return array(
+	$currencies = array(
 		'AED' => '&#x62f;.&#x625;',
 		'AFN' => '&#x60b;',
 		'ALL' => 'L',
@@ -1125,4 +1135,71 @@ function simpay_wp_timezone_string() {
 	$tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
 
 	return $tz_offset;
+}
+
+/**
+ * Determine if the base country supports Payment Request Button
+ *
+ * @since 3.5.0
+ *
+ * @return bool
+ */
+function simpay_can_use_payment_request_button() {
+	$country = strtoupper( simpay_get_setting( 'account_country', 'US' ) );
+
+	if ( ! $country ) {
+		$country = 'US';
+	}
+
+	$countries = array(
+		'AT',
+		'AU',
+		'BE',
+		'BR',
+		'CA',
+		'CH',
+		'DE',
+		'DK',
+		'EE',
+		'ES',
+		'FI',
+		'FR',
+		'GB',
+		'GR',
+		'HK',
+		'IE',
+		'IN',
+		'IT',
+		'JP',
+		'LT',
+		'LU',
+		'LV',
+		'MX',
+		'MY',
+		'NL',
+		'NO',
+		'NZ',
+		'PH',
+		'PL',
+		'PT',
+		'RO',
+		'SE',
+		'SG',
+		'SK',
+		'US',
+	);
+
+	$can_use = in_array( $country, $countries, true );
+
+	/**
+	 * Filter Payment Request Button availibility.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param bool $can_use   Can the button be used?
+	 * @param string $country Current country.
+	 */
+	$can_use = apply_filters( 'simpay_can_use_payment_request_button', $can_use, $country );
+
+	return $can_use;
 }

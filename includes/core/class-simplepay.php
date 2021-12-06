@@ -3,7 +3,7 @@
  * SimplePay
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -247,31 +247,6 @@ final class SimplePay {
 		new Admin\Assets();
 		new Admin\Menus();
 		new Admin\Notice_Manager();
-	}
-
-	/**
-	 * Get common URLs.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $case URL case.
-	 * @return string
-	 */
-	public function get_url( $case ) {
-
-		switch ( $case ) {
-			case 'docs':
-				$url = 'https://docs.wpsimplepay.com/';
-				break;
-			case 'upgrade':
-				$url = 'https://wpsimplepay.com/lite-vs-pro/';
-				break;
-			case 'home':
-			default:
-				$url = SIMPLE_PAY_STORE_URL;
-		}
-
-		return esc_url( apply_filters( 'simpay_get_url', $url, $case ) );
 	}
 }
 

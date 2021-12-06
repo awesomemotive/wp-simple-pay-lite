@@ -3,7 +3,7 @@
  * Settings: Section collection
  *
  * @package SimplePay\Core\Settings
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  */
@@ -28,7 +28,7 @@ class Section_Collection extends Utils\Collection_Prioritized {
 	 *
 	 * @since 4.0.0
 	 *
-	 * @param \SimplePay\Core\Admin\Settings\Section $section Settings section arguments.
+	 * @param \SimplePay\Core\Settings\Section $section Settings section arguments.
 	 * @return \WP_Error|true True on successful addition, otherwise a \WP_Error object.
 	 */
 	public function add( $section ) {

@@ -3,12 +3,15 @@
  * Simple Pay: Edit form
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Edit_Form
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
 
 namespace SimplePay\Core\Post_Types\Simple_Pay\Edit_Form;
+
+use SimplePay\Core\reCAPTCHA;
+use SimplePay\Core\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -136,6 +139,10 @@ function get_form_settings( $post ) {
 		$panel_classes[] = 'simpay-panel--has-help';
 	}
 	?>
+
+<style>
+.page-title-action { display: none; }
+</style>
 
 <div id="simpay-form-settings">
 	<div class="simpay-panels-wrap">
@@ -352,13 +359,11 @@ function settings_tabs( $post ) {
 		),
 	);
 
-	if ( has_action( 'simpay_form_settings_meta_form_display_panel' ) ) {
-		$tabs['form_display'] = array(
-			'label'  => esc_html__( 'Payment Button', 'stripe' ),
-			'target' => 'custom-form-fields-settings-panel',
-			'icon'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20,3H4C2.897,3,2,3.897,2,5v14c0,1.103,0.897,2,2,2h16c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z M4,19V5h16 l0.002,14H4z"></path><path d="M6 7H18V9H6zM6 11H18V13H6zM6 15H12V17H6z"></path></svg>',
-		);
-	}
+	$tabs['form_display'] = array(
+		'label'  => esc_html__( 'Form Fields', 'stripe' ),
+		'target' => 'custom-form-fields-settings-panel',
+		'icon'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20,3H4C2.897,3,2,3.897,2,5v14c0,1.103,0.897,2,2,2h16c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z M4,19V5h16 l0.002,14H4z"></path><path d="M6 7H18V9H6zM6 11H18V13H6zM6 15H12V17H6z"></path></svg>',
+	);
 
 	if ( has_action( 'simpay_form_settings_meta_subscription_display_panel' ) ) {
 		$tabs['subscription_options'] = array(
@@ -530,7 +535,7 @@ function add_display_options( $post_id ) {
 							'subtype'     => 'text',
 							'name'        => '_company_name',
 							'id'          => '_company_name',
-							'value'       => false !== $company_name
+							'value'       => ( false !== $company_name && ! empty( $company_name ) )
 								? $company_name
 								: get_bloginfo( 'name' ),
 							'class'       => array(
@@ -542,6 +547,15 @@ function add_display_options( $post_id ) {
 						)
 					);
 					?>
+
+					<p class="description hidden" style="color: red;">
+						<?php
+						esc_html_e(
+							'A payment form title is required.',
+							'stripe'
+						);
+						?>
+					</p>
 				</td>
 			</tr>
 
@@ -680,4 +694,96 @@ add_action(
 	'simpay_admin_after_form_display_options_rows',
 	__NAMESPACE__ . '\\_add_payment_success_page',
 	20
+);
+
+/**
+ * Outputs markup for the "reCAPTCHA Anti-Spam" setting.
+ *
+ * @since 4.4.0
+ * @access private
+ *
+ * @return void
+ */
+function __unstable_add_recaptcha() {
+	?>
+	<tr class="simpay-panel-field">
+		<th>
+			<label for="_recaptcha">
+				<?php esc_html_e( 'reCAPTCHA Anti-Spam', 'stripe' ); ?>
+			</label>
+		</th>
+		<td>
+			<?php
+			$url = add_query_arg(
+				array(
+					'render' => reCAPTCHA\get_key( 'site' ),
+				),
+				'https://www.google.com/recaptcha/api.js'
+			);
+
+			wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
+
+			wp_localize_script(
+				'simpay-google-recaptcha-v3',
+				'simpayGoogleRecaptcha',
+				array(
+					'siteKey' => reCAPTCHA\get_key( 'site' ),
+					'i18n'    => array(
+						'enabled' => '<span class="dashicons dashicons-yes"></span>' . esc_html__( 'Enabled', 'stripe' ),
+						'disabled' => '<span class="dashicons dashicons-no"></span>' . esc_html__( 'Disabled', 'stripe' ),
+					),
+				)
+			);
+
+			$recaptcha    = reCAPTCHA\has_keys();
+			$settings_url = Settings\get_url(
+				array(
+					'section'    => 'general',
+					'subsection' => 'recaptcha',
+					'setting'    => 'recaptcha_site_key'
+				)
+			);
+
+			$description = $recaptcha
+				? __(
+					'%1$sConfigure reCAPTCHA%2$s to adjust anti-spam protection.',
+					'stripe'
+				)
+				: __(
+					'%1$sEnable reCAPTCHA%2$s to add anti-spam protection.',
+					'stripe'
+				);
+
+			echo wp_kses(
+				sprintf(
+					'<span class="simpay-recaptcha-payment-form-feedback">%s</span> <span class="simpay-recaptcha-payment-form-description" style="display: none;">- %s</span>',
+					esc_html( 'Verifying...', 'simple-pay' ),
+					sprintf(
+						$description,
+						'<a href="' . esc_url( $settings_url ) . '" target="_blank">',
+						'</a>'
+					)
+				),
+				array(
+					'a'    => array(
+						'href'   => true,
+						'target' => true,
+					),
+					'span' => array(
+						'class' => true,
+						'style' => true,
+					),
+				)
+			);
+			echo '</div>';
+			?>
+		</td>
+	</tr>
+
+	<?php
+}
+add_action(
+	'simpay_admin_after_form_display_options_rows',
+	__NAMESPACE__ . '\\__unstable_add_recaptcha',
+	30
 );

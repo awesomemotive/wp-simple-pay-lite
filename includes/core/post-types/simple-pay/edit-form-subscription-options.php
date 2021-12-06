@@ -3,14 +3,12 @@
  * Simple Pay: Edit form Subscription options
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Edit_Form
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
 
 namespace SimplePay\Core\Post_Types\Simple_Pay\Edit_Form;
-
-use function SimplePay\Core\Admin\Notices\Promos\bfcm_is_promo_active;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

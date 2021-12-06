@@ -3,7 +3,7 @@
  * Internationalization: Stripe
  *
  * @package SimplePay\Core\i18n
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.9.0
  */

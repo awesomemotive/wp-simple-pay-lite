@@ -3,7 +3,7 @@
  * Simple Pay: Edit form payment options
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Edit_Form
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
@@ -341,6 +341,15 @@ function __unstable_add_payment_amount( $post_id ) {
 							</span>
 						<?php endif; ?>
 					</div>
+
+					<?php
+					/**
+					 * Allows extra output after the "One-Time Amount" field.
+					 *
+					 * @since 4.4.0
+					 */
+					do_action( '__unstable_simpay_form_settings_lite_payment_amount' )
+					?>
 				</td>
 			</tr>
 		</tbody>
@@ -350,4 +359,73 @@ function __unstable_add_payment_amount( $post_id ) {
 add_action(
 	'simpay_form_settings_meta_payment_options_panel',
 	__NAMESPACE__ . '\\__unstable_add_payment_amount'
+);
+
+/**
+ * Adds "Tax Rates" upgrade placeholder setting.
+ *
+ * @since 4.4.0
+ *
+ * @return void
+ */
+function __add_tax_rates_upsell() {
+	if ( class_exists( '\SimplePay\Pro\Lite_Helper', false ) ) {
+		return;
+	}
+	?>
+
+	<table>
+		<tr class="simpay-panel-field">
+			<th>
+				<label for="_tax_rates">
+					<?php esc_html_e( 'Tax Rates', 'stripe' ); ?>
+				</label>
+			</th>
+			<td>
+				<?php
+				$upgrade_url = simpay_pro_upgrade_url( 'form-settings' );
+
+				echo wp_kses(
+					sprintf( '
+						<span class="dashicons dashicons-no"></span>%s - ',
+						__( 'Disabled', 'stripe' )
+					),
+					array(
+						'span' => array(
+							'class' => true,
+						)
+					)
+				);
+
+				echo wp_kses(
+					sprintf(
+						__(
+							'%1$sUpgrade to WP Simple Pay Pro%2$s to collect taxes or additional fees on payments.',
+							'stripe'
+						),
+						'<a href="' . esc_url( $upgrade_url ) . '" target="_blank" rel="noopener noreferrer">',
+						'</a>'
+					),
+					array(
+						'a'    => array(
+							'href'   => true,
+							'target' => true,
+							'rel'    => true,
+						),
+						'span' => array(
+							'class' => true,
+						),
+					)
+				);
+				?>
+			</td>
+		</tr>
+	</table>
+
+	<?php
+}
+add_action(
+	'simpay_form_settings_meta_payment_options_panel',
+	__NAMESPACE__ . '\\__add_tax_rates_upsell',
+	10.5
 );

@@ -10,6 +10,19 @@ import domReady from '@wordpress/dom-ready';
  */
 import './settings/usage-tracking.js';
 
+// Open the "Upgrade to Pro" menu item in a new tab.
+( function () {
+	const upgradeLinkEl = document.querySelector(
+		'#adminmenu a[href^="https://wpsimplepay.com/lite-vs-pro"]'
+	);
+
+	if ( ! upgradeLinkEl ) {
+		return;
+	}
+
+	upgradeLinkEl.setAttribute( 'target', '_blank' );
+} )();
+
 /**
  * Handle AJAX dismissal of notices.
  *
@@ -23,23 +36,29 @@ domReady( () => {
 		const nonce = notice.data( 'nonce' );
 		const lifespan = notice.data( 'lifespan' );
 
-		notice.on( 'click', '.notice-dismiss, .simpay-notice-dismiss', () => {
-			wp.ajax.send( 'simpay_dismiss_admin_notice', {
-				data: {
-					notice_id: noticeId,
-					nonce,
-					lifespan,
-				},
-				success() {
-					notice.slideUp( 'fast' );
+		notice.on(
+			'click',
+			'.notice-dismiss, .simpay-notice-dismiss',
+			( e ) => {
+				e.preventDefault();
 
-					// Remove previously set "seen" local storage.
-					const { uid = 0 } = userSettings;
-					const seenKey = `simpay-notice-${ noticeId }-seen-${ uid }`;
-					window.localStorage.removeItem( seenKey );
-				},
-			} );
-		} );
+				wp.ajax.send( 'simpay_dismiss_admin_notice', {
+					data: {
+						notice_id: noticeId,
+						nonce,
+						lifespan,
+					},
+					success() {
+						notice.slideUp( 'fast' );
+
+						// Remove previously set "seen" local storage.
+						const { uid = 0 } = userSettings;
+						const seenKey = `simpay-notice-${ noticeId }-seen-${ uid }`;
+						window.localStorage.removeItem( seenKey );
+					},
+				} );
+			}
+		);
 	} );
 
 	// Move "Top of Page" promos to the top of content (before Help/Screen Options).

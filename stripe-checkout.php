@@ -10,6 +10,11 @@
  * Domain Path: /languages
  */
 
+namespace SimplePay;
+
+use SimplePay\Core\Plugin;
+use SimplePay\Core\Bootstrap\Compatibility;
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -92,15 +97,19 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	// Compatibility files.
 	require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/compatibility.php' );
 
-	if ( SimplePay\Core\Bootstrap\Compatibility\server_requirements_met() ) {
+	if ( Compatibility\server_requirements_met() ) {
 		// Autoloader.
 		require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
 		require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/autoload.php' );
 
 		// Plugin files.
 		require_once( SIMPLE_PAY_DIR . 'includes/core/class-simplepay.php' );
+
+		// New plugin container.
+		$plugin = new Plugin( __FILE__ );
+		$plugin->load();
 	} else {
-		SimplePay\Core\Bootstrap\Compatibility\show_admin_notices();
+		Compatibility\show_admin_notices();
 	}
 
 } else {

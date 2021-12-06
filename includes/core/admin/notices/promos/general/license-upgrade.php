@@ -27,7 +27,7 @@
 			sprintf(
 				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				__(
-					'You are using WP Simple Pay Lite. %1$sPurchase a license%2$s to get custom amounts, recurring payments and more.',
+					'You\'re using WP Simple Pay Lite. To unlock more features consider %1$supgrading to Pro%2$s.',
 					'stripe'
 				),
 				'<a href="' . esc_url( $upgrade_url ) . '" target="_blank" rel="noopener noreferrer">',
@@ -46,7 +46,7 @@
 			case 1:
 				/* translators: %1$s License type. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate. */
 				$message = __(
-					'You are using WP Simple Pay with a %1$s license. Consider %2$supgrading%3$s to get recurring payments and more.',
+					'You\'re using WP Simple Pay with a %1$s license. To unlock more features consider %2$supgrading now%3$s.',
 					'stripe'
 				);
 				break;

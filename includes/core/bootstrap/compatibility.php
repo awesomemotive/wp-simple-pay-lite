@@ -5,7 +5,7 @@
  * Server compatibility checks.
  *
  * @package SimplePay\Core\Bootstrap
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
@@ -141,16 +141,6 @@ function show_admin_notices() {
 	<p><strong><?php _e( 'Need help with your server? Ask your web host!', 'stripe' ); ?></strong></p>
 	<p>
 				<?php
-				$hosting_url = add_query_arg(
-					array(
-						'utm_source'   => 'inside-plugin',
-						'utm_medium'   => 'link',
-						'utm_campaign' => defined( 'SIMPLE_PAY_ITEM_ID' ) ? 'pro-plugin' : 'lite-plugin',
-						'utm_content'  => 'compatibility-check',
-					),
-					'https://wpsimplepay.com/recommended-wordpress-hosting/'
-				);
-
 				echo wp_kses(
 					sprintf(
 						/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
@@ -158,7 +148,7 @@ function show_admin_notices() {
 							'Many web hosts can give you instructions on how/where to upgrade your server through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s.',
 							'stripe'
 						),
-						'<a href="' . esc_url( $hosting_url ) . '" target="_blank" rel="noopener noreferrer">',
+						'<a href="https://www.wpbeginner.com/wordpress-hosting/" target="_blank" rel="noopener noreferrer">',
 						'</a>'
 					),
 					array(

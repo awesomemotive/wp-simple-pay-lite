@@ -488,7 +488,7 @@ abstract class Table extends Base {
 	 *
 	 * @return bool
 	 */
-	public function clone( $new_table_name = '' ) {
+	public function _clone( $new_table_name = '' ) {
 
 		// Get the database interface
 		$db = $this->get_db();

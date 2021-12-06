@@ -3,7 +3,7 @@
  * Admin assets
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -75,7 +75,7 @@ class Assets {
 		$this->scripts = array(
 			'simpay-chosen'     => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/chosen.jquery.min.js',
-				'deps'   => array( 'jquery', 'jquery-ui-sortable' ),
+				'deps'   => array( 'jquery', 'jquery-ui-dialog', 'jquery-ui-sortable' ),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => false,
 			),
@@ -114,7 +114,7 @@ class Assets {
 			),
 			'simpay-admin'  => array(
 				'src'   => SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin.min.css',
-				'deps'  => array( 'simpay-chosen' ),
+				'deps'  => array( 'simpay-chosen', 'wp-jquery-ui-dialog' ),
 				'ver'   => SIMPLE_PAY_VERSION,
 				'media' => 'all',
 			),
@@ -158,6 +158,26 @@ class Assets {
 				if ( is_array( $values ) ) {
 					wp_register_script( $script, $values['src'], $values['deps'], $values['ver'], $values['footer'] );
 				}
+			}
+
+			if ( isset( $this->scripts['simpay-admin'] ) ) {
+				wp_localize_script(
+					'simpay-admin',
+					'simpayAdmin',
+					array(
+						'siteTitle' => get_bloginfo( 'name' ),
+						'i18n'      => array(
+							'disconnectConfirm' => esc_html__(
+								'Disconnect',
+								'stripe'
+							),
+							'disconnectCancel'  => esc_html__(
+								'Cancel',
+								'stripe'
+							),
+						),
+					)
+				);
 			}
 		}
 	}

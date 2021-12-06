@@ -3,7 +3,7 @@
  * Stripe Connect: Admin
  *
  * @package SimplePay\Core\Stripe_Connect
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.4.0
  */
@@ -377,7 +377,6 @@ function simpay_stripe_connect_account_information() {
 				)
 			);
 		} catch ( \Exception $e ) {
-			var_dump( $e->getMessage() );
 			return wp_send_json_error( $unknown_error );
 		}
 	}

@@ -3,7 +3,7 @@
  * Admin notices: Callbacks
  *
  * @package SimplePay\Core\Admin\Notices
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.4.0
  */
@@ -73,7 +73,11 @@ function no_rest_api() {
  * @return string
  */
 function stripe_connect() {
-	if ( simpay_is_admin_screen() && isset( $_GET['tab'] ) && 'keys' === $_GET['tab'] ) {
+	if (
+		simpay_is_admin_screen() &&
+		isset( $_GET['post_type'] ) &&
+		'simple-pay' === sanitize_key( $_GET['post_type'] )
+	) {
 		return false;
 	}
 
@@ -87,13 +91,17 @@ function stripe_connect() {
 	?>
 
 <p>
-	<?php _e( 'WP Simple Pay supports Stripe Connect for easier setup and improved security. Connect now to start accepting payments instantly.', 'stripe' ); ?>
+	<?php esc_html_e( 'WP Simple Pay requires Stripe Connect for the highest reliability and security. Connect now to start accepting payments instantly.', 'stripe' ); ?>
 </p>
 
 <p>
 	<a href="<?php echo esc_url( simpay_get_stripe_connect_url() ); ?>" class="wpsp-stripe-connect"><span>
 		<?php esc_html_e( 'Connect with Stripe', 'stripe' ); ?>
 	</span></a>
+
+	<a href="<?php echo esc_url( simpay_docs_link( '', 'stripe-setup', 'global-notice', true ) ); ?>" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="margin-left: 5px;">
+		<?php esc_html_e( 'Learn More', 'stripe' ); ?>
+	</a>
 </p>
 
 	<?php
@@ -186,7 +194,7 @@ echo wpautop(
 				'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s.',
 				'stripe'
 			),
-			'<a href="https://wpsimplepay.com/recommended-wordpress-hosting/" target="_blank" rel="noopener noreferrer">',
+			'<a href="https://www.wpbeginner.com/wordpress-hosting/" target="_blank" rel="noopener noreferrer">',
 			'</a>'
 		),
 		array(

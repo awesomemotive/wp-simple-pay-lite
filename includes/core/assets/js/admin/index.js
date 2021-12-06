@@ -4,12 +4,11 @@
  * Internal dependencies.
  */
 import hooks from '@wpsimplepay/hooks';
-import 'admin/settings/toggles.js';
-import 'admin/settings/test-mode.js';
-import toggleStripeConnectNotice from 'admin/settings/stripe-connect.js';
-import 'admin/settings/recaptcha.js';
-
-import 'admin/payment-form/prices.js';
+import './settings/toggles.js';
+import './settings/test-mode.js';
+import { toggleStripeConnectNotice } from './settings/stripe-connect.js';
+import './settings/recaptcha.js';
+import './payment-form';
 
 /**
  * Globallly accessible object of WP Simple Pay-related (admin) functionality.
@@ -122,8 +121,7 @@ let spAdmin = {};
 				$( inputEl ).filter( ':checked' ).trigger( 'change' );
 			} );
 
-			// Wait to do this here due to weird loading order of scripts.
-			// @todo Redo script dependency management.
+			// Stripe Connect toggle notice.
 			hooks.addAction(
 				'settings.toggleTestMode',
 				'wpsp/settings/stripe-connect',

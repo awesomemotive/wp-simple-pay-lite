@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * }
  * @return \SimplePay\Vendor\Stripe\Coupon
  */
-function create( array $coupon_args, array $api_request_args = array() ) {
+function create( $coupon_args, $api_request_args = array() ) {
 	$defaults    = array();
 	$coupon_args = wp_parse_args( $coupon_args, $defaults );
 
@@ -57,11 +57,7 @@ function create( array $coupon_args, array $api_request_args = array() ) {
  * @param array  $opts Per-request options, default empty.
  * @return \SimplePay\Vendor\Stripe\Coupon
  */
-function retrieve(
-	string $coupon_id,
-	array $api_request_args = array(),
-	array $opts = array()
-) {
+function retrieve( $coupon_id, $api_request_args = array(), $opts = array() ) {
 	return Stripe_API::request(
 		'Coupon',
 		'retrieve',
@@ -85,11 +81,7 @@ function retrieve(
  * }
  * @return \SimplePay\Vendor\Stripe\Coupon
  */
-function update(
-	string $coupon_id,
-	array $coupon_args = array(),
-	array $api_request_args = array()
-) {
+function update( $coupon_id, $coupon_args = array(), $api_request_args = array() ) {
 	return Stripe_API::request(
 		'Coupon',
 		'update',
@@ -112,7 +104,7 @@ function update(
  * }
  * @return \SimplePay\Vendor\Stripe\Coupon
  */
-function delete( string $coupon_id, array $api_request_args = array() ) {
+function delete( $coupon_id, $api_request_args = array() ) {
 	$coupon = retrieve( $coupon_id, $api_request_args );
 	return $coupon->delete();
 }

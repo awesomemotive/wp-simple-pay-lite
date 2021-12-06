@@ -3,7 +3,7 @@
  * Admin pages: System Status
  *
  * @package SimplePay\Core\Admin\Pages
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -103,7 +103,8 @@ class System_Status {
 			<div id="simpay-settings">
 				<div id="simpay-settings-content">
 
-					<h1><?php _e( 'System Report', 'stripe' ); ?></h1>
+					<h1 class="wp-heading-inline"><?php esc_html_e( 'System Report', 'stripe' ); ?></h1>
+					<hr class="wp-header-end" />
 
 					<div id="simpay-system-status-report">
 						<p>

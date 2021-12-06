@@ -3,7 +3,7 @@
  * Admin notices
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.5.0
  */
@@ -302,7 +302,18 @@ class Notice_Manager {
 		);
 
 		if ( $notice_args['dismissible'] ) {
-			$classes[] = 'is-dismissible';
+			switch ( $notice_id ) {
+				// Check lately because the `simpay_can_site_manage_stripe_keys` filter
+				// has not run upon notice registration.
+				case 'stripe_connect':
+					if ( simpay_can_site_manage_stripe_keys() ) {
+						$classes[] = 'is-dismissible';
+					}
+
+					break;
+				default:
+					$classes[] = 'is-dismissible';
+			}
 		}
 		?>
 

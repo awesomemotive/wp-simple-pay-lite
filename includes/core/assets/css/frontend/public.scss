@@ -52,6 +52,7 @@ $error-text-color: #eb1c26;
 	.simpay-styled & {
 		font-family: $base-font;
 		color: $error-text-color;
+		line-height: 1.5;
 	}
 }
 

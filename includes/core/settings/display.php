@@ -3,7 +3,7 @@
  * Settings: Display
  *
  * @package SimplePay\Core\Settings
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  */
@@ -148,14 +148,6 @@ function page() {
 		? sanitize_key( $_GET['subsection'] )
 		: get_main_subsection_id( $section );
 
-	$sidebar       = apply_filters(
-		'simpay_settings_sidebar_template',
-		SIMPLE_PAY_INC . 'core/admin/notices/promos/general/sidebar.php'
-	);
-	$sidebar_class = ! empty( $sidebar )
-		? 'simpay-global-settings--has-sidebar'
-		: null;
-
 	// Find the legacy "page" value for hook/filter compatibility.
 	switch ( $section ) {
 		case 'stripe':
@@ -169,86 +161,74 @@ function page() {
 	}
 	?>
 
-	<div
-		id="simpay-global-settings"
-		class="wrap <?php echo esc_attr( $sidebar_class ); ?>"
-	>
+	<div id="simpay-global-settings" class="wrap">
 		<h1 class="wp-heading-inline">
 			<?php esc_html_e( 'Settings', 'stripe' ); ?>
 		</h1>
-
 		<hr class="wp-header-end">
 
-		<div class="wp-clearfix">
-			<div
-				id="simpay-settings-left"
-				class="simpay-settings <?php echo esc_attr( $section . '-' . $subsection ); ?>"
-			>
+		<div class="simpay-settings <?php echo esc_attr( $section . '-' . $subsection ); ?>">
+			<?php
+			settings_errors();
+			primary_nav( $section );
+			secondary_nav( $subsection );
+			?>
 
+			<form method="post" action="options.php">
 				<?php
-				settings_errors();
-				primary_nav( $section );
-				secondary_nav( $subsection );
+				/**
+				 * Allows output before a settings section.
+				 *
+				 * @since 3.0.0
+				 */
+				do_action( 'simpay_admin_page_settings_' . $page . '_start' );
+
+				settings_fields( 'simpay_settings' );
+
+				do_settings_sections(
+					sprintf(
+						'simpay_settings_%s_%s',
+						$section,
+						$subsection
+					)
+				);
+
+				/**
+				 * Allows output after a settings section.
+				 *
+				 * @since 3.0.0
+				 */
+				do_action( 'simpay_admin_page_settings_' . $page . '_end' );
+
+				/**
+				 * Filters the display of the setting's "Submit" button.
+				 *
+				 * @since 3.0.0
+				 *
+				 * @param bool $submit If the submit button should display. Default true.
+				 */
+				$submit = apply_filters(
+					'simpay_admin_page_settings_' . $page . '_submit',
+					true
+				);
+
+				if ( true === $submit ) {
+					submit_button();
+				}
 				?>
 
-				<form method="post" action="options.php">
-					<?php
-					/**
-					 * Allows output before a settings section.
-					 *
-					 * @since 3.0.0
-					 */
-					do_action( 'simpay_admin_page_settings_' . $page . '_start' );
+				<input type="hidden" name="section" value="<?php echo esc_attr( $section ); ?>" />
+				<input type="hidden" name="subsection" value="<?php echo esc_attr( $subsection ); ?>" />
+			</form>
 
-					settings_fields( 'simpay_settings' );
-
-					do_settings_sections(
-						sprintf(
-							'simpay_settings_%s_%s',
-							$section,
-							$subsection
-						)
-					);
-
-					/**
-					 * Allows output after a settings section.
-					 *
-					 * @since 3.0.0
-					 */
-					do_action( 'simpay_admin_page_settings_' . $page . '_end' );
-
-					/**
-					 * Filters the display of the setting's "Submit" button.
-					 *
-					 * @since 3.0.0
-					 *
-					 * @param bool $submit If the submit button should display. Default true.
-					 */
-					$submit = apply_filters(
-						'simpay_admin_page_settings_' . $page . '_submit',
-						true
-					);
-
-					if ( true === $submit ) {
-						submit_button();
-					}
-					?>
-
-					<input type="hidden" name="section" value="<?php echo esc_attr( $section ); ?>" />
-					<input type="hidden" name="subsection" value="<?php echo esc_attr( $subsection ); ?>" />
-				</form>
-
-			</div>
-
-			<div id="simpay-settings-sidebar-right">
-				<?php
-				if ( ! empty( $sidebar ) ) :
-					include_once $sidebar;
-				endif;
-				?>
-			</div>
-
-			<br class="simpay-clearfix">
+			<?php
+			/**
+			 * Allows further output after all content on all settings pages.
+			 *
+			 * @since 4.4.0
+			 */
+			do_action( '__unstable_simpay_admin_page_settings_end' );
+			?>
 		</div>
 	</div>
 

@@ -3,7 +3,7 @@
  * Settings Registration: General
  *
  * @package SimplePay\Core\Settings
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  */
@@ -29,7 +29,7 @@ function register_section( $sections ) {
 			array(
 				'id'       => 'general',
 				'label'    => esc_html_x( 'General', 'settings section label', 'stripe' ),
-				'priority' => 20,
+				'priority' => 10,
 			)
 		)
 	);
