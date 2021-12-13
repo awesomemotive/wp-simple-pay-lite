@@ -16,7 +16,7 @@
 ?>
 
 <div
-	class="simpay-settings-upgrade simpay-notice"
+	class="simpay-settings-upgrade simpay-card simpay-notice"
 	data-nonce="<?php echo esc_attr( wp_create_nonce( 'simpay-dismiss-notice-simpay-settings-license-upgrade' ) ); ?>"
 	data-id="simpay-settings-license-upgrade"
 	data-lifespan="<?php echo esc_attr( DAY_IN_SECONDS * 30 ); // @phpstan-ignore-line ?>"

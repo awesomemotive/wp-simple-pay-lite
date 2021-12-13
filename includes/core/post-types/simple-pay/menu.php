@@ -56,15 +56,6 @@ function add_items() {
 		}
 	);
 
-	// Upgrade.
-	global $submenu;
-
-	$submenu['edit.php?post_type=simple-pay'][99] = array(
-		__( 'Upgrade to Pro', 'stripe' ),
-		'manage_options',
-		simpay_ga_url( 'https://wpsimplepay.com/lite-vs-pro/', 'admin-menu' ),
-	);
-
 	/**
 	 * Allows further menu items to be added.
 	 *
@@ -75,3 +66,19 @@ function add_items() {
 	do_action( 'simpay_admin_add_menu_items' );
 }
 add_action( 'admin_menu', __NAMESPACE__ . '\\add_items' );
+
+/**
+ * Adds the "Upgrade to Pro" menu item to the very end of the submenu.
+ *
+ * @since 4.4.0
+ */
+function __unstable_add_upgrade_item() {
+	global $submenu;
+
+	$submenu['edit.php?post_type=simple-pay'][99] = array(
+		__( 'Upgrade to Pro', 'stripe' ),
+		'manage_options',
+		simpay_ga_url( 'https://wpsimplepay.com/lite-vs-pro/', 'admin-menu' ),
+	);
+}
+add_action( 'admin_menu', __NAMESPACE__ . '\\__unstable_add_upgrade_item', 99 );

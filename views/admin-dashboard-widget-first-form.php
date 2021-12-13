@@ -9,8 +9,6 @@
  * @since 4.4.0
  */
 
-use SimplePay\Core\Utils;
-
 $docs_url = simpay_docs_link(
 	'',
 	'first-payment-form',

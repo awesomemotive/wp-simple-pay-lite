@@ -166,16 +166,58 @@ class Assets {
 					'simpayAdmin',
 					array(
 						'siteTitle' => get_bloginfo( 'name' ),
+						'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
+						'nonce'     => wp_create_nonce( 'simpay-admin' ),
 						'i18n'      => array(
-							'disconnectConfirm' => esc_html__(
+							'disconnectConfirm'     => esc_html__(
 								'Disconnect',
 								'stripe'
 							),
-							'disconnectCancel'  => esc_html__(
+							'disconnectCancel'      => esc_html__(
 								'Cancel',
 								'stripe'
 							),
-						),
+							'addonActivate'         => esc_html__(
+								'Activate',
+								'stripe'
+							),
+							'addonActivated'        => esc_html__(
+								'Activated',
+								'stripe'
+							),
+							'addonActive'           => esc_html__(
+								'Active',
+								'stripe'
+							),
+							'addonDeactivate'       => esc_html__(
+								'Deactivate',
+								'stripe'
+							),
+							'addonInactive'         => esc_html__(
+								'Inactive',
+								'stripe'
+							),
+							'addonInstall'          => esc_html__(
+								'Install Addon',
+								'stripe'
+							),
+							'addonError'            => esc_html__(
+								'Could not install the addon. Please download it from wpforms.com and install it manually.',
+								'stripe'
+							),
+							'pluginError'           => esc_html__(
+								'Could not install the plugin automatically. Please download and install it manually.',
+								'stripe'
+							 ),
+							'pluginInstallActivate' => esc_html__(
+								'Install and Activate',
+								'stripe'
+							),
+							'pluginActivate'        => esc_html__(
+								'Activate',
+								'stripe'
+							),
+						)
 					)
 				);
 			}

@@ -33,6 +33,7 @@ class AdminPageServiceProvider extends AbstractPluginServiceProvider {
 	public function get_subscribers() {
 		return array(
 			'admin-branding',
+			'admin-page-subscriber',
 		);
 	}
 
@@ -44,6 +45,34 @@ class AdminPageServiceProvider extends AbstractPluginServiceProvider {
 
 		// Admin branding.
 		$container->share( 'admin-branding', AdminBranding::class );
+
+		// Admin pages.
+		$container->share(
+			'admin-page-subscriber',
+			AdminPageSubscriber::class
+		)
+			->withArgument( $this->get_pages() );
+	}
+
+	/**
+	 * Returns a list of admin pages to register.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @return \SimplePay\Core\AdminPage\AdminPageInterface[] Admin pages to register.
+	 */
+	private function get_pages() {
+		$container = $this->getContainer();
+		$pages     = array();
+
+		// "About Us" page.
+		$license = $container->get( 'license' );
+
+		if ( $license instanceof \SimplePay\Core\License\License ) {
+			$pages[] = new AboutUsPage( $license );
+		}
+
+		return $pages;
 	}
 
 }

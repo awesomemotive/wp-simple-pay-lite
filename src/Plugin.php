@@ -141,6 +141,7 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			$admin_service_providers = array(
+				new Admin\Addon\AddonServiceProvider,
 				new Admin\Education\EducationServiceProvider,
 				new Admin\Page\AdminPageServiceProvider,
 				new License\LicenseServiceProvider,

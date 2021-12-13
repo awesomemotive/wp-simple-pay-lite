@@ -81,11 +81,8 @@
 	}
 }
 
-.simpay-settings-upgrade {
-	background-color: #fff;
-	border: 1px solid #dadada;
+.post-type-simple-pay .simpay-settings-upgrade {
 	padding: 25px 20px 30px;
-	margin: 10px 0 0;
 	position: relative;
 
 	&__inner {
@@ -692,6 +689,202 @@
 	}
 }
 
+/**
+ * Generic card.
+ */
+.simpay-card {
+	margin: 0 0 20px;
+	padding: 30px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+
+	&,
+	p {
+		line-height: 1.5;
+		font-size: 16px;
+	}
+
+	h3 {
+		line-height: 1.6;
+		font-size: 18px;
+		margin: 0 0 20px;
+		color: #23282C;
+	}
+
+	p {
+		margin: 0 0 20px;
+	}
+
+	p,
+	ul {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	figure {
+		float: right;
+		margin: 0 0 30px 30px;
+		max-width: 400px;
+
+		iframe,
+		img {
+			max-width: 100%;
+		}
+
+		figcaption {
+			text-align: center;
+		}
+
+		@media screen and (max-width: 782px) {
+			margin: 0 0 30px;
+			max-width: 100%;
+			float: none;
+		}
+	}
+}
+
+/**
+ * Docs list
+ */
+.simpay-doc-suggestions {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
+}
+
+.simpay-doc-suggestion {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex: 0 1 33.333%;
+	padding: 30px;
+	border-right: 1px solid #c3c4c7;
+	box-sizing: border-box;
+
+	&:nth-child(3n) {
+		border-right: 0;
+	}
+
+	@media screen and (max-width: 782px) {
+		flex: 0 1 100%;
+		border-bottom: 1px solid #c3c4c7;
+		border-right: 0;
+
+		&:last-child {
+			border-bottom: 0;
+		}
+	}
+
+	h3 {
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+
+	p {
+		font-size: 15px;
+	}
+
+	.dashicons {
+		font-size: 40px;
+		width: 40px;
+		height: 40px;
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	.button-large {
+		font-size: 16px;
+	}
+}
+
+/**
+ * Addons
+ */
+.simpay-addons {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 20px 0;
+}
+
+.simpay-addon {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	flex-basis: calc(33% - 10px);
+	box-sizing: border-box;
+
+	@media screen and (max-width: 782px) {
+		flex-basis: 100%;
+	}
+
+	img {
+		float: left;
+		max-width: 75px;
+	}
+
+	h5 {
+		margin: 0 0 10px 100px;
+		font-size: 16px;
+	}
+
+	&__details {
+		padding: 20px;
+		flex: 1 0 auto;
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex: 0 1 auto;
+		background-color: #f7f7f7;
+		border-top: 1px solid #ddd;
+		margin-top: auto;
+		padding: 20px;
+		position: relative;
+
+		.msg {
+			text-align: center;
+			justify-content: center;
+			display: flex;
+			align-items: center;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #f7f7f7;
+			z-index: 3;
+		}
+	}
+
+	.error,
+	.status-label.status-installed {
+		color: #d63638;
+	}
+
+	.success,
+	.status-label.status-active {
+		color: #00a32a;
+	}
+
+	.addon-desc {
+		margin: 0 0 0 100px;
+	}
+}
+
+
 // Stripe Connect help information.
 .form-table td .simpay-stripe-connect-help {
 	margin: 15px 0;
@@ -875,6 +1068,7 @@ select.simpay-currency-symbol {
 	padding: 14px 20px 14px 22px;
 	background: #fff;
 	border-bottom: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
 
 	&__title {
 		display: flex;

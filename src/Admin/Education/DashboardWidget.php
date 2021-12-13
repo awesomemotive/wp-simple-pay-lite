@@ -36,7 +36,6 @@ class DashboardWidget implements SubscriberInterface {
 		$this->widget = $widget;
 	}
 
-
 	/**
 	 * {@inheritdoc}
 	 */

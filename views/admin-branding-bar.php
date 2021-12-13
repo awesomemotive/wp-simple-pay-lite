@@ -41,7 +41,7 @@ var getNextInclusiveUntil = function( elem, selector ) {
 };
 
 document.addEventListener( 'DOMContentLoaded', function() {
-	var brandingBar = document.querySelector( '.simpay-branding-bar__title' );
+	var brandingBarTitle = document.querySelector( '.simpay-branding-bar__title' );
 
 	var titleEls = getNextInclusiveUntil(
 		document.querySelector( '.wp-heading-inline' ),
@@ -49,7 +49,15 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	);
 
 	titleEls.forEach( function( el ) {
-		brandingBar.appendChild( el );
+		brandingBarTitle.appendChild( el );
 	} );
+
+	// Move core update nag.
+	var coreUpdateNag = document.querySelector( '.update-nag.notice.notice-warning.inline' );
+	var brandingBar = document.querySelector( '.simpay-branding-bar' );
+
+	if ( coreUpdateNag ) {
+		brandingBar.after( coreUpdateNag );
+	}
 } );
 </script>
