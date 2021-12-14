@@ -276,20 +276,18 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 
 == Changelog ==
 
-= 4.4.0 - December X, 2021 =
+= 4.4.0 - December 14, 2021 =
 
 * New: Add additional product education.
 * New: Add product education dashboard widget.
 * New: Add branding to all plugin pages.
 * New: Various plugin UI/UX improvements.
-* New: Show notice when managing taxes if there is no Stripe connection.
 * New: Show notice if payment form title is empty.
 * New: Add confirmation when disconnecting a Stripe account.
 * New: Add empty states to payment form list when no forms have been created.
 * New: Show global reCAPTCHA and tax settings within payment form settings.
 * New: Alert users of test/live and publishable/secret swapped API credentials.
-* New: Add India as a supported account country.
-* New: Add Brazil and United Arab Emirates to Stripe country list.
+* New: Add India, Brazil and United Arab Emirates as a supported account country.
 * New: Automatically retry Stripe API requests on a network failure.
 * Fix: Add consistency to UTM parameters in `*.wpsimplepay.com` outbound links.
 * Fix: Ensure `simpay_get_currencies` filter is called.
@@ -300,10 +298,6 @@ WP Simple Pay Pro offers on-site payments forms that ensure customers never leav
 * Fix: Show generic error message text when REST API response is invalid JSON.
 * Fix: Rename "Macedonia" to "North Macedonia".
 * Fix: Lighten placeholder colors on Payment Form settings to avoid confusion with values.
-* Fix: Search "Title" and "Description" fields when searching Payment Form list.
-* Fix: Improve checks on the Stripe Connect disconnection process.
-* Dev: Update JavaScript coding standards.
-* Dev: Update project UTM tags and usage analytic opt-in flow.
 * Dev: Add plugin service container, service providers, and subscriber architecture in `./src`.
 
 = 2.6.3 - July 8, 2021 =
