@@ -35,6 +35,9 @@ function redirect() {
 		$section = $tab;
 
 		switch ( $tab ) {
+			case 'license':
+				$section = 'general';
+				break;
 			case 'keys':
 				$section = 'stripe';
 				break;

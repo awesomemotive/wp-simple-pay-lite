@@ -146,6 +146,7 @@ class Menus {
 		);
 
 		if ( class_exists( 'SimplePay\Pro\SimplePayPro', false ) ) {
+
 			// Documentation.
 			$documentation_url = simpay_ga_url(
 				'https://docs.wpsimplepay.com/',
@@ -154,20 +155,20 @@ class Menus {
 			);
 
 			$links[] = sprintf(
-				'<a href="%s">%s</a>',
+				'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
 				esc_url( $documentation_url ),
 				esc_html__( 'Documentation', 'stripe' )
 			);
 
 			// Support.
 			$support_url = simpay_ga_url(
-				'https://wpsimplepay.com/contact/',
+				'https://wpsimplepay.com/support',
 				'plugin-listing-link',
 				false
 			);
 
 			$links[] = sprintf(
-				'<a href="%s">%s</a>',
+				'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
 				esc_url( $support_url ),
 				esc_html__( 'Support', 'stripe' )
 			);
