@@ -199,14 +199,27 @@ Check out some of our popular posts for actionable advice for running your busin
 
 Development for this plugin happens in a public GitHub repository to better facilitate contributions from an active community of users, developers and designers. If you have a suggestion, bug report, patch, or pull request, please feel free to [contribute here](https://github.com/wpsimplepay/wp-simple-pay-lite) or to our [code snippet library](https://github.com/wpsimplepay/wp-simple-pay-snippet-library).
 
-= Looking for something else? =
+= What's Next =
 
-If WP Simple Pay doesn’t quite fit your needs, take a look at some of our other projects.
+If you like our WordPress payment form plugin, then consider checking out our other projects:
 
-- [Easy Digital Downloads](https://easydigitaldownloads.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – Sell digital products with WordPress
-- [AffiliateWP](https://affiliatewp.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – A full-featured affiliate marketing solution
-- [Sugar Calendar](https://sugarcalendar.com?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – WordPress event management made simple
-- [Restrict Content Pro](https://restrictcontentpro.com/?utm_medium=readme&utm_source=wporg&utm_campaign=wpsp-lite-plugin&utm_content=something-else&utm_term=description) – A powerful membership plugin for WordPress
+- [OptinMonster](https://optinmonster.com/) - Get More Email Subscribers with the most popular conversion optimization plugin for WordPress.
+- [WPForms](https://wpforms.com/) - #1 drag & drop online form builder for WordPress (trusted by 5 million sites).
+- [MonsterInsights](https://monsterinsights.com/) - See the Stats that Matter and Grow Your Business with Confidence. Best Google Analytics Plugin for WordPress.
+- [SeedProd](https://seedprod.com) - Create beautiful landing pages with our powerful drag & drop landing page builder.
+- [WP Mail SMTP](https://wpmailsmtp.com/) - Improve email deliverability for your contact form with the most popular SMTP plugin for WordPress.
+- [RafflePress](https://rafflepress.com/) - Best WordPress giveaway and contest plugin to grow traffic and social followers.
+- [Smash Balloon](https://smashballoon.com/) - #1 social feeds plugin for WordPress - display social media content in WordPress without code.
+- [AIOSEO](https://aioseo.com/) - The original WordPress SEO plugin to help you rank higher in search results (trusted by over 3 million sites).
+- [PushEngage](https://www.pushengage.com/) - Connect with visitors after they leave your website with the leading web push notification plugin.
+- [TrustPulse](https://trustpulse.com/) - Add real-time social proof notifications to boost your store conversions by up to 15%.
+- [SearchWP](https://searchwp.com/) - The most advanced custom WordPress search plugin to improve WordPress search quality.
+- [AffiliateWP](https://affiliatewp.com/) - The #1 affiliate management plugin for WordPress. Add a referral program to your online store
+- [Easy Digital Downloads](https://easydigitaldownloads.com/) - The best WordPress eCommerce plugin to sell digital products (eBooks, software, music, and more).
+- [Sugar Calendar](https://sugarcalendar.com) - A simple event calendar plugin for WordPress that’s both easy and powerful.
+
+Visit [WPBeginner](https://www.wpbeginner.com/) to learn from our [WordPress Tutorials](https://www.wpbeginner.com/category/wp-tutorials/) and find out about other [best WordPress plugins](https://www.wpbeginner.com/category/plugins/).
+
 
 == Installation ==
 
