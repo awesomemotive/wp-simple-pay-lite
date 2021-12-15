@@ -1,0 +1,86 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => '7874c73e0c72fbd2ce3ccb04ddedae38c36e397d',
+        'name' => 'wpsimplepay/wp-simple-pay-lite',
+        'dev' => true,
+    ),
+    'versions' => array(
+        'berlindb/core' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../berlindb/core',
+            'aliases' => array(),
+            'reference' => '52f07e192b484d201d668daef0ba290df5836ecb',
+            'dev_requirement' => false,
+        ),
+        'container-interop/container-interop' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../container-interop/container-interop',
+            'aliases' => array(),
+            'reference' => '79cbf1341c22ec75643d841642dd5d6acd83bdb8',
+            'dev_requirement' => false,
+        ),
+        'container-interop/container-interop-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '^1.2',
+            ),
+        ),
+        'league/container' => array(
+            'pretty_version' => '2.5.0',
+            'version' => '2.5.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../league/container',
+            'aliases' => array(),
+            'reference' => '8438dc47a0674e3378bcce893a0a04d79a2c22b3',
+            'dev_requirement' => false,
+        ),
+        'orno/di' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '~2.0',
+            ),
+        ),
+        'psr/container' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/container',
+            'aliases' => array(),
+            'reference' => 'b7ce3b176482dbbc1245ebf52b181af44c2cf55f',
+            'dev_requirement' => false,
+        ),
+        'psr/container-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '^1.0',
+            ),
+        ),
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v7.97.0',
+            'version' => '7.97.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
+            'aliases' => array(),
+            'reference' => 'ae41c309ce113362706f8d5f19cf0cf2c730bc4a',
+            'dev_requirement' => false,
+        ),
+        'wpsimplepay/wp-simple-pay-lite' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => '7874c73e0c72fbd2ce3ccb04ddedae38c36e397d',
+            'dev_requirement' => false,
+        ),
+    ),
+);

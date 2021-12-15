@@ -3,7 +3,7 @@
  * Shortcodes
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -82,7 +82,8 @@ class Shortcodes {
 			$attributes
 		);
 
-		$id = absint( $args['id'] );
+		$id   = absint( $args['id'] );
+		$html = '';
 
 		if ( $id > 0 ) {
 
@@ -91,8 +92,6 @@ class Shortcodes {
 			if ( ! $form_post ) {
 				return '';
 			}
-
-			$html = '';
 
 			// Pending or Draft forms.
 			if ( in_array( $form_post->post_status, array( 'pending', 'draft' ), true ) ) {
@@ -187,26 +186,12 @@ class Shortcodes {
 		}
 
 		try {
+			$form = simpay_get_form( $form_id );
 
-			/**
-			 * Filter the form type used to generate a Stripe PaymentIntent.
-			 *
-			 * @since 3.0.0
-			 *
-			 * @param string $form_instance Form instance. Blank by default to load Default_Form.
-			 * @param int    $form_id Form ID.
-			 */
-			$simpay_form = apply_filters( 'simpay_form_view', '', $form_id );
-
-			if ( empty( $simpay_form ) ) {
-				$simpay_form = new Default_Form( $form_id );
-			}
-
-			if ( $simpay_form instanceof Form ) {
-
+			if ( false !== $form ) {
 				ob_start();
 
-				$simpay_form->html();
+				$form->html();
 
 				return ob_get_clean();
 			} else {
@@ -264,7 +249,7 @@ class Shortcodes {
 			 * @param array  $payment_confirmation_data {
 			 *   Contextual information about this payment confirmation.
 			 *
-			 *   @type \Stripe\Customer               $customer Stripe Customer
+			 *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
 			 *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
 			 *   @type object                         $subscriptions Subscriptions associated with the Customer.
 			 *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -282,7 +267,7 @@ class Shortcodes {
 			 * @param array $payment_confirmation_data {
 			 *   Contextual information about this payment confirmation.
 			 *
-			 *   @type \Stripe\Customer               $customer Stripe Customer
+			 *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
 			 *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
 			 *   @type object                         $subscriptions Subscriptions associated with the Customer.
 			 *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -296,6 +281,17 @@ class Shortcodes {
 				$payment_confirmation_data['form'],
 				$_GET
 			);
+
+			// Processing a SEPA Direct Debit Subscription can have a slight delay which
+			// can cause a RateLimitException to be thrown when trying to display the
+			// Payment Confirmation message content. Refresh the page automatically.
+		} catch ( \SimplePay\Vendor\Stripe\Exception\RateLimitException $e ) {
+			$content = esc_html__(
+				'Your payment is still processing. This page will reload in 5 seconds&hellip;',
+				'stripe'
+			);
+
+			$content .= '<script>setInterval( function() { window.location.reload(); }, 5000 );</script>';
 		} catch ( \Exception $e ) {
 			if ( current_user_can( 'manage_options' ) ) {
 				$content = Utils\handle_exception_message( $e );

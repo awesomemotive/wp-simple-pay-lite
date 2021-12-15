@@ -3,7 +3,7 @@
  * Migrations: Register
  *
  * @package SimplePay\Core\Utils
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  */
@@ -34,6 +34,15 @@ function register( $registry ) {
 			array(
 				'id'        => 'options-flattening',
 				'automatic' => true,
+			)
+		)
+	);
+
+	// Payment Form amounts to Prices API.
+	$migrations->add(
+		new Routines\Prices_API(
+			array(
+				'id' => 'prices-api',
 			)
 		)
 	);

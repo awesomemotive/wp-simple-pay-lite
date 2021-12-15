@@ -1,2 +1,2 @@
 export * from './number.js';
-export * from './api-request.js';
+export { apiRequest } from '@wpsimplepay/api';

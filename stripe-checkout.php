@@ -5,10 +5,15 @@
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author: Sandhills Development, LLC
  * Author URI: https://sandhillsdev.com
- * Version: 2.6.3
+ * Version: 4.4.0
  * Text Domain: stripe
  * Domain Path: /languages
  */
+
+namespace SimplePay;
+
+use SimplePay\Core\Plugin;
+use SimplePay\Core\Bootstrap\Compatibility;
 
 /**
  * This program is free software; you can redistribute it and/or
@@ -45,7 +50,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	//
 	// Lite/Pro-specific.
 	//
-	define( 'SIMPLE_PAY_VERSION', '2.6.3' );
+	define( 'SIMPLE_PAY_VERSION', '4.4.0' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );
@@ -59,7 +64,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	// Stripe.
 	//
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2020-03-02' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2020-08-27' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
@@ -92,15 +97,19 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	// Compatibility files.
 	require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/compatibility.php' );
 
-	if ( SimplePay\Core\Bootstrap\Compatibility\server_requirements_met() ) {
+	if ( Compatibility\server_requirements_met() ) {
 		// Autoloader.
 		require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
 		require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/autoload.php' );
 
 		// Plugin files.
 		require_once( SIMPLE_PAY_DIR . 'includes/core/class-simplepay.php' );
+
+		// New plugin container.
+		$plugin = new Plugin( __FILE__ );
+		$plugin->load();
 	} else {
-		SimplePay\Core\Bootstrap\Compatibility\show_admin_notices();
+		Compatibility\show_admin_notices();
 	}
 
 } else {

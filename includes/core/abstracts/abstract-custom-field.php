@@ -3,7 +3,7 @@
  * Custom field
  *
  * @package SimplePay\Core\Abstracts
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -131,14 +131,16 @@ abstract class Custom_Field {
 	 *
 	 * @since 3.9.0
 	 *
-	 * @param string $key Setting key.
+	 * @param string $label_setting_key Setting key to look for the label.
+	 * @param string $label_fallback Fallback label value.
+	 * @return string
 	 */
-	public static function get_label( $key = 'label' ) {
+	public static function get_label( $label_setting_key = 'label', $label_fallback = '' ) {
 		$id = self::get_id_attr();
 
-		$label = isset( self::$settings[ $key ] )
-			? self::$settings[ $key ]
-			: '';
+		$label = isset( self::$settings[ $label_setting_key ] )
+			? self::$settings[ $label_setting_key ]
+			: $label_fallback;
 
 		$classes = array();
 
@@ -159,6 +161,8 @@ abstract class Custom_Field {
 					case 'radio':
 					case 'card':
 					case 'address':
+					case 'custom_amount':
+					case 'plan_select':
 						$required = true;
 						break;
 					default:

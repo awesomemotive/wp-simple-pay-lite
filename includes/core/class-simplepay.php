@@ -3,7 +3,7 @@
  * SimplePay
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -121,6 +121,11 @@ final class SimplePay {
 		// Vendors.
 		require_once( SIMPLE_PAY_INC . 'core/utils/class-persistent-dismissible.php' );
 
+		// i18n.
+		require_once( SIMPLE_PAY_INC . 'core/i18n/functions.php' );
+		require_once( SIMPLE_PAY_INC . 'core/i18n/countries.php' );
+		require_once( SIMPLE_PAY_INC . 'core/i18n/stripe.php' );
+
 		// Migrations.
 		require_once( SIMPLE_PAY_INC . 'core/utils/migrations/admin.php' );
 		require_once( SIMPLE_PAY_INC . 'core/utils/migrations/functions.php' );
@@ -147,15 +152,26 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
 		require_once( SIMPLE_PAY_INC . 'core/functions/countries.php' );
 
-		// i18n.
-		require_once( SIMPLE_PAY_INC . 'core/i18n/countries.php' );
-		require_once( SIMPLE_PAY_INC . 'core/i18n/stripe.php' );
+		// Payment form.
+		require_once( SIMPLE_PAY_INC . 'core/forms/functions.php' );
+		require_once( SIMPLE_PAY_INC . 'core/forms/class-price-option.php' );
+		require_once( SIMPLE_PAY_INC . 'core/forms/class-price-options.php' );
 
 		// Payments/Purchase Flow.
 		require_once( SIMPLE_PAY_INC . 'core/payments/customer.php' );
 		require_once( SIMPLE_PAY_INC . 'core/payments/paymentintent.php' );
 		require_once( SIMPLE_PAY_INC . 'core/payments/payment-confirmation.php' );
 		require_once( SIMPLE_PAY_INC . 'core/payments/payment-confirmation-template-tags.php' );
+
+		// API.
+		require_once( SIMPLE_PAY_INC . 'core/api/products.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/plans.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/prices.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/tax-rates.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/customers.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/paymentmethods.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/setupintents.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/coupons.php' );
 
 		// REST API.
 		new REST_API();
@@ -231,31 +247,6 @@ final class SimplePay {
 		new Admin\Assets();
 		new Admin\Menus();
 		new Admin\Notice_Manager();
-	}
-
-	/**
-	 * Get common URLs.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param string $case URL case.
-	 * @return string
-	 */
-	public function get_url( $case ) {
-
-		switch ( $case ) {
-			case 'docs':
-				$url = 'https://docs.wpsimplepay.com/';
-				break;
-			case 'upgrade':
-				$url = 'https://wpsimplepay.com/lite-vs-pro/';
-				break;
-			case 'home':
-			default:
-				$url = SIMPLE_PAY_STORE_URL;
-		}
-
-		return esc_url( apply_filters( 'simpay_get_url', $url, $case ) );
 	}
 }
 

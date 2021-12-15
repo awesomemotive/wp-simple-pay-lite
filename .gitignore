@@ -1,36 +1,17 @@
-# PhpStorm
-.idea
-
-# Sublime
-*.sublime-project
-*.sublime-workspace
-
-# Grunt
-node_modules
-
-# Bower
-/bower_components
-
-# Sass
-/.sass-cache
-
-# Tests
-phpunit.xml
-
-# Logs
-/logs
-
-# wordpress.org
-/build
-
-# Mac crap
 .DS_Store
-
-# Windows crap
 ehthumbs.db
 Thumbs.db
 
+*.cache
+composer.lock
+phpunit.xml
+node_modules
+/.sass-cache
+/logs
+/build
 /vendor/*/
 !/vendor/autoload.php
 !/vendor/composer/
-!/vendor/stripe/
+
+# PhpStorm
+.idea

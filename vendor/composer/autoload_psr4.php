@@ -7,4 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Stripe\\' => array($vendorDir . '/stripe/stripe-php/lib'),
+    'SimplePay\\Vendor\\Stripe\\' => array($baseDir . '/lib/Stripe/lib'),
+    'SimplePay\\Vendor\\' => array($baseDir . '/lib'),
+    'SimplePay\\Core\\' => array($baseDir . '/src'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'League\\Container\\' => array($vendorDir . '/league/container/src'),
+    'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
+    'BerlinDB\\' => array($vendorDir . '/berlindb/core/src'),
 );

@@ -3,7 +3,7 @@
  * Internationalization: Countries
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -157,7 +157,7 @@ function get_countries() {
 		'LT' => __( 'Lithuania', 'stripe' ),
 		'LU' => __( 'Luxembourg', 'stripe' ),
 		'MO' => __( 'Macau', 'stripe' ),
-		'MK' => __( 'Macedonia', 'stripe' ),
+		'MK' => __( 'North Macedonia', 'stripe' ),
 		'MG' => __( 'Madagascar', 'stripe' ),
 		'MW' => __( 'Malawi', 'stripe' ),
 		'MY' => __( 'Malaysia', 'stripe' ),

@@ -23,8 +23,7 @@ describe( 'LineItem', () => {
 		it( 'should throw with invalid cart', () => {
 			expect( () => {
 				new LineItem();
-			} )
-				.toThrow( new Error( 'Item must have an cart.' ) );
+			} ).toThrow( new Error( 'Item must have an cart.' ) );
 		} );
 
 		it( 'should throw with invalid ID', () => {
@@ -35,8 +34,7 @@ describe( 'LineItem', () => {
 					},
 					cart
 				);
-			} )
-				.toThrow( new Error( 'Item ID must be a string.' ) );
+			} ).toThrow( new Error( 'Item ID must be a string.' ) );
 		} );
 
 		it( 'should throw with invalid title', () => {
@@ -48,8 +46,7 @@ describe( 'LineItem', () => {
 					},
 					cart
 				);
-			} )
-				.toThrow( new Error( 'Item title must be a string.' ) );
+			} ).toThrow( new Error( 'Item title must be a string.' ) );
 		} );
 
 		it( 'should throw with invalid amount', () => {
@@ -62,8 +59,7 @@ describe( 'LineItem', () => {
 					},
 					cart
 				);
-			} )
-				.toThrow( new Error( 'Item amount must be an integer.' ) );
+			} ).toThrow( new Error( 'Item amount must be an integer.' ) );
 		} );
 
 		it( 'should throw with invalid quantity', () => {
@@ -77,8 +73,7 @@ describe( 'LineItem', () => {
 					},
 					cart
 				);
-			} )
-				.toThrow( new Error( 'Item quantity must be an integer.' ) );
+			} ).toThrow( new Error( 'Item quantity must be an integer.' ) );
 		} );
 
 		it( 'should throw with invalid subscription', () => {
@@ -93,8 +88,11 @@ describe( 'LineItem', () => {
 					},
 					cart
 				);
-			} )
-				.toThrow( new Error( 'Item subscription data must be a false or contain subscription data.' ) );
+			} ).toThrow(
+				new Error(
+					'Item subscription data must be a false or contain subscription data.'
+				)
+			);
 		} );
 	} );
 
@@ -107,6 +105,11 @@ describe( 'LineItem', () => {
 					amount: 1000,
 					quantity: 1,
 					subscription: false,
+					price: {
+						id: 'price_123',
+						unit_amount: 100,
+						currency: 'usd',
+					},
 				},
 				cart
 			);
@@ -116,14 +119,18 @@ describe( 'LineItem', () => {
 				quantity: 4,
 			} );
 
-			expect( item )
-				.toMatchObject( {
-					id: 'foo',
-					title: 'Bar',
-					amount: 1000,
-					quantity: 4,
-					subscription: false,
-				} );
+			expect( item ).toMatchObject( {
+				id: 'foo',
+				title: 'Bar',
+				amount: 1000,
+				quantity: 4,
+				subscription: false,
+				price: {
+					id: 'price_123',
+					unit_amount: 100,
+					currency: 'usd',
+				},
+			} );
 		} );
 	} );
 
@@ -146,8 +153,7 @@ describe( 'LineItem', () => {
 			const item = cart.getLineItem( 'bar' );
 			item.remove();
 
-			expect( cart.getLineItems().length )
-				.toBe( 1 );
+			expect( cart.getLineItems().length ).toBe( 1 );
 		} );
 	} );
 } );

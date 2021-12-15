@@ -3,4 +3,8 @@
  */
 import { createHooks } from '@wordpress/hooks';
 
-export default createHooks();
+const defaultHooks = createHooks();
+const { addAction, addFilter, doAction, applyFilters } = defaultHooks;
+
+export { addAction, addFilter, doAction, applyFilters };
+export default defaultHooks;

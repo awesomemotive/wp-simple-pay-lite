@@ -1,3 +1,7 @@
+$base-font: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+$base-text-color: #333;
+$error-text-color: #eb1c26;
+
 .screen-reader-text {
 	clip: rect(1px, 1px, 1px, 1px);
 	height: 1px;
@@ -48,6 +52,7 @@
 	.simpay-styled & {
 		font-family: $base-font;
 		color: $error-text-color;
+		line-height: 1.5;
 	}
 }
 

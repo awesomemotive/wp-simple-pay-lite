@@ -4,7 +4,7 @@
  * Legacy: functions
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  */
@@ -76,4 +76,18 @@ function simpay_get_total( $formatted = true ) {
  */
 function simpay_get_editor_default( $editor ) {
 	return '';
+}
+
+/**
+ * Returns the default price option for a Payment FOrm.
+ *
+ * @since 4.1.0
+ * @deprecated 4.1.0-beta-1 Renamed to match simpay_get_ format.
+ *
+ * @param \SimplePay\Core\PaymentForm\PriceOption[] $prices Prices list.
+ * @return \SimplePay\Core\PaymentForm\PriceOption[]|false Price or false if no
+ *                                                         prices are found.
+ */
+function simpay_payment_form_get_default_price( $prices ) {
+	return simpay_get_payment_form_default_price( $prices );
 }

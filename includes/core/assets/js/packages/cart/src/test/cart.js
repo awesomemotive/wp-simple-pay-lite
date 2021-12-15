@@ -10,8 +10,7 @@ describe( 'Cart', () => {
 				new Cart( {
 					currency: 123,
 				} );
-			} )
-				.toThrow( new Error( 'Currency must be a string.' ) );
+			} ).toThrow( new Error( 'Currency must be a string.' ) );
 		} );
 
 		it( 'should throw with invalid tax percent', () => {
@@ -19,8 +18,7 @@ describe( 'Cart', () => {
 				new Cart( {
 					taxPercent: 'abc',
 				} );
-			} )
-				.toThrow( new Error( 'Tax percentage must be a number.' ) );
+			} ).toThrow( new Error( 'Tax percentage must be a number.' ) );
 		} );
 
 		it( 'should convert tax percents to floating point numbers', () => {
@@ -28,8 +26,7 @@ describe( 'Cart', () => {
 				taxPercent: '3.3744',
 			} );
 
-			expect( typeof cart.taxPercent )
-				.toBe( 'number' );
+			expect( typeof cart.taxPercent ).toBe( 'number' );
 		} );
 
 		it( 'should throw with invalid coupon', () => {
@@ -37,8 +34,9 @@ describe( 'Cart', () => {
 				new Cart( {
 					coupon: 9000,
 				} );
-			} )
-				.toThrow( new Error( 'Coupon must be a false or contain coupon data.' ) );
+			} ).toThrow(
+				new Error( 'Coupon must be a false or contain coupon data.' )
+			);
 		} );
 
 		it( 'should throw with invalid currency decimal setting', () => {
@@ -46,8 +44,11 @@ describe( 'Cart', () => {
 				new Cart( {
 					isNonDecimalCurrency: 'yes',
 				} );
-			} )
-				.toThrow( new Error( 'Declaring a non-decimal currency must be a boolean.' ) );
+			} ).toThrow(
+				new Error(
+					'Declaring a non-decimal currency must be a boolean.'
+				)
+			);
 		} );
 	} );
 
@@ -65,14 +66,13 @@ describe( 'Cart', () => {
 				},
 			} );
 
-			expect( cart )
-				.toMatchObject( {
-					taxPercent: 0,
-					coupon: {
-						amount_off: 1000,
-					},
-					isNonDecimalCurrency: false,
-				} );
+			expect( cart ).toMatchObject( {
+				taxPercent: 0,
+				coupon: {
+					amount_off: 1000,
+				},
+				isNonDecimalCurrency: false,
+			} );
 		} );
 	} );
 
@@ -102,8 +102,7 @@ describe( 'Cart', () => {
 		} );
 
 		it( 'should return all items', () => {
-			expect( cart.getLineItems().length )
-				.toBe( 2 );
+			expect( cart.getLineItems().length ).toBe( 2 );
 		} );
 	} );
 
@@ -126,11 +125,9 @@ describe( 'Cart', () => {
 				quantity: 4,
 			} );
 
-			expect( item instanceof LineItem )
-				.toBe( true );
+			expect( item instanceof LineItem ).toBe( true );
 
-			expect( cart.getLineItems().length )
-				.toBe( 1 );
+			expect( cart.getLineItems().length ).toBe( 1 );
 		} );
 
 		it( 'should be added via LineItem', () => {
@@ -146,11 +143,9 @@ describe( 'Cart', () => {
 
 			item = cart.addLineItem( item );
 
-			expect( item instanceof LineItem )
-				.toBe( true );
+			expect( item instanceof LineItem ).toBe( true );
 
-			expect( cart.getLineItems().length )
-				.toBe( 1 );
+			expect( cart.getLineItems().length ).toBe( 1 );
 		} );
 	} );
 } );

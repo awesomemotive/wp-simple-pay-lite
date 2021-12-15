@@ -31,18 +31,16 @@ describe( 'StripeCheckout', () => {
 	 */
 	describe( 'LineItem', () => {
 		describe( 'getTax', () => {
-			it ( 'should return tax amount', () => {
+			it( 'should return tax amount', () => {
 				const item = cart.getLineItem( 'foo' );
 
-				expect( item.getTax() )
-					.toEqual( 1132 );
+				expect( item.getTax() ).toEqual( 1132 );
 			} );
 		} );
 
 		describe( 'getTotal', () => {
 			it( 'should equal the subtotal', () => {
-				expect( cart.getTotal() )
-					.toEqual( cart.getSubtotal() );
+				expect( cart.getTotal() ).toEqual( cart.getSubtotal() );
 			} );
 		} );
 	} );
@@ -54,8 +52,7 @@ describe( 'StripeCheckout', () => {
 		// Taxes.
 		describe( 'getTax', () => {
 			it( 'should add tax amount for each line item quantity', () => {
-				expect( cart.getTax() )
-					.toEqual( 692 );
+				expect( cart.getTax() ).toEqual( 692 );
 			} );
 		} );
 
@@ -66,8 +63,7 @@ describe( 'StripeCheckout', () => {
 					coupon: false,
 				} );
 
-				expect( cart.getDiscount() )
-					.toEqual( 0 );
+				expect( cart.getDiscount() ).toEqual( 0 );
 			} );
 
 			// Flat discounts.
@@ -79,8 +75,7 @@ describe( 'StripeCheckout', () => {
 						},
 					} );
 
-					expect( cart.getDiscount() )
-						.toEqual( 1200 );
+					expect( cart.getDiscount() ).toEqual( 1200 );
 				} );
 			} );
 
@@ -93,8 +88,7 @@ describe( 'StripeCheckout', () => {
 						},
 					} );
 
-					expect( cart.getDiscount() )
-						.toEqual( 1571 );
+					expect( cart.getDiscount() ).toEqual( 1571 );
 				} );
 			} );
 		} );
@@ -108,8 +102,7 @@ describe( 'StripeCheckout', () => {
 					},
 				} );
 
-				expect( cart.getTotal() )
-					.toEqual( 11521 );
+				expect( cart.getTotal() ).toEqual( 11521 );
 			} );
 		} );
 	} );

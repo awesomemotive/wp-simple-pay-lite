@@ -3,7 +3,7 @@
  * Internationalization: Stripe
  *
  * @package SimplePay\Core\i18n
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.9.0
  */
@@ -27,6 +27,7 @@ function get_stripe_countries() {
 		'AU' => __( 'Australia', 'stripe' ),
 		'AT' => __( 'Austria', 'stripe' ),
 		'BE' => __( 'Belgium', 'stripe' ),
+		'BR' => __( 'Brazil', 'stripe' ),
 		'BG' => __( 'Bulgaria', 'stripe' ),
 		'CA' => __( 'Canada', 'stripe' ),
 		'CY' => __( 'Cyprus', 'stripe' ),
@@ -38,6 +39,7 @@ function get_stripe_countries() {
 		'DE' => __( 'Germany', 'stripe' ),
 		'GR' => __( 'Greece', 'stripe' ),
 		'HK' => __( 'Hong Kong', 'stripe' ),
+		'IN' => __( 'India', 'stripe' ),
 		'IE' => __( 'Ireland', 'stripe' ),
 		'IT' => __( 'Italy', 'stripe' ),
 		'JP' => __( 'Japan', 'stripe' ),
@@ -59,6 +61,7 @@ function get_stripe_countries() {
 		'ES' => __( 'Spain', 'stripe' ),
 		'SE' => __( 'Sweden', 'stripe' ),
 		'CH' => __( 'Switzerland', 'stripe' ),
+		'AE' => __( 'United Arab Emirates', 'stripe' ),
 		'GB' => __( 'United Kingdom', 'stripe' ),
 		'US' => __( 'United States', 'stripe' ),
 	);
@@ -84,34 +87,44 @@ function get_stripe_countries() {
  */
 function get_stripe_checkout_locales() {
 	return array(
-		'auto' => __( 'Auto-detect', 'stripe' ),
-		'cs'   => __( 'Czech (cs)', 'stripe' ),
-		'da'   => __( 'Danish (da)', 'stripe' ),
-		'de'   => __( 'German (de)', 'stripe' ),
-		'el'   => __( 'Greek (el)', 'stripe' ),
-		'et'   => __( 'Estonian (et)', 'stripe' ),
-		'en'   => __( 'English (en)', 'stripe' ),
-		'es'   => __( 'Spanish (es)', 'stripe' ),
-		'fi'   => __( 'Finnish (fi)', 'stripe' ),
-		'fr'   => __( 'French (fr)', 'stripe' ),
-		'hu'   => __( 'Hungarian (hu)', 'stripe' ),
-		'it'   => __( 'Italian (it)', 'stripe' ),
-		'ja'   => __( 'Japanese (ja)', 'stripe' ),
-		'lt'   => __( 'Lithuanian (lt)', 'stripe' ),
-		'lv'   => __( 'Latvian (lv)', 'stripe' ),
-		'ms'   => __( 'Malay (ms)', 'stripe' ),
-		'mt'   => __( 'Maltese (mt)', 'stripe' ),
-		'nb'   => __( 'Norwegian Bokmål (nb)', 'stripe' ),
-		'nl'   => __( 'Dutch (nl)', 'stripe' ),
-		'pl'   => __( 'Polish (pl)', 'stripe' ),
-		'pt'   => __( 'Portuguese (pt)', 'stripe' ),
-		'ro'   => __( 'Romanian (ro)', 'stripe' ),
-		'ru'   => __( 'Russian (ru)', 'stripe' ),
-		'sk'   => __( 'Slovak (sk)', 'stripe' ),
-		'sl'   => __( 'Slovenian (sl)', 'stripe' ),
-		'sv'   => __( 'Swedish (sv)', 'stripe' ),
-		'tk'   => __( 'Turkish (tk)', 'stripe' ),
-		'zh'   => __( 'Chinese Simplified (zh)', 'stripe' ),
+		'auto'  => __( 'Auto-detect', 'stripe' ),
+		'bg'    => __( 'Bulgarian (bg)', 'stripe' ),
+		'zh'    => __( 'Chinese Simplified (zh)', 'stripe' ),
+		'zh-HK' => __( 'Chinese Traditional (zh-HK)', 'stripe' ),
+		'zh-TW' => __( 'Chinese Traditional (zh-TW)', 'stripe' ),
+		'hr'    => __( 'Croatian (hr)', 'stripe' ),
+		'cs'    => __( 'Czech (cs)', 'stripe' ),
+		'da'    => __( 'Danish (da)', 'stripe' ),
+		'de'    => __( 'German (de)', 'stripe' ),
+		'el'    => __( 'Greek (el)', 'stripe' ),
+		'en'    => __( 'English (en)', 'stripe' ),
+		'en-GB' => __( 'English (en-gb)', 'stripe' ),
+		'et'    => __( 'Estonian (et)', 'stripe' ),
+		'fi'    => __( 'Finnish (fi)', 'stripe' ),
+		'fil'   => __( 'Filipino (fil)', 'stripe' ),
+		'fr'    => __( 'French (fr)', 'stripe' ),
+		'fr-CA' => __( 'French (fr-ca)', 'stripe' ),
+		'hu'    => __( 'Hungarian (hu)', 'stripe' ),
+		'it'    => __( 'Italian (it)', 'stripe' ),
+		'ja'    => __( 'Japanese (ja)', 'stripe' ),
+		'ko'    => __( 'Korean (kr)', 'stripe' ),
+		'lt'    => __( 'Lithuanian (lt)', 'stripe' ),
+		'lv'    => __( 'Latvian (lv)', 'stripe' ),
+		'ms'    => __( 'Malay (ms)', 'stripe' ),
+		'mt'    => __( 'Maltese (mt)', 'stripe' ),
+		'nb'    => __( 'Norwegian Bokmål (nb)', 'stripe' ),
+		'nl'    => __( 'Dutch (nl)', 'stripe' ),
+		'pl'    => __( 'Polish (pl)', 'stripe' ),
+		'pt'    => __( 'Portuguese (pt)', 'stripe' ),
+		'pt-BR' => __( 'Portuguese (pt-BR)', 'stripe' ),
+		'ro'    => __( 'Romanian (ro)', 'stripe' ),
+		'ru'    => __( 'Russian (ru)', 'stripe' ),
+		'sk'    => __( 'Slovak (sk)', 'stripe' ),
+		'sl'    => __( 'Slovenian (sl)', 'stripe' ),
+		'es'    => __( 'Spanish (es)', 'stripe' ),
+		'sv'    => __( 'Swedish (sv)', 'stripe' ),
+		'th'    => __( 'Thai (th)', 'stripe' ),
+		'tk'    => __( 'Turkish (tk)', 'stripe' ),
 	);
 }
 
@@ -124,34 +137,46 @@ function get_stripe_checkout_locales() {
  */
 function get_stripe_elements_locales() {
 	return array(
-		'auto' => __( 'Auto-detect', 'stripe' ),
-		'ar'   => __( 'Arabic (ar)', 'stripe' ),
-		'bg'   => __( 'Bulgarian (bg)', 'stripe' ),
-		'cs'   => __( 'Czech (cs)', 'stripe' ),
-		'da'   => __( 'Danish (da)', 'stripe' ),
-		'de'   => __( 'German (de)', 'stripe' ),
-		'el'   => __( 'Greek (el)', 'stripe' ),
-		'et'   => __( 'Estonian (et)', 'stripe' ),
-		'en'   => __( 'English (en)', 'stripe' ),
-		'es'   => __( 'Spanish (es)', 'stripe' ),
-		'fi'   => __( 'Finnish (fi)', 'stripe' ),
-		'fr'   => __( 'French (fr)', 'stripe' ),
-		'he'   => __( 'Hebrew (he)', 'stripe' ),
-		'in'   => __( 'Indonesian (in)', 'stripe' ),
-		'it'   => __( 'Italian (it)', 'stripe' ),
-		'ja'   => __( 'Japanese (ja)', 'stripe' ),
-		'lt'   => __( 'Lithuanian (lt)', 'stripe' ),
-		'lv'   => __( 'Latvian (lv)', 'stripe' ),
-		'ms'   => __( 'Malay (ms)', 'stripe' ),
-		'nb'   => __( 'Norwegian Bokmål (nb)', 'stripe' ),
-		'nl'   => __( 'Dutch (nl)', 'stripe' ),
-		'pl'   => __( 'Polish (pl)', 'stripe' ),
-		'pt'   => __( 'Portuguese (pt)', 'stripe' ),
-		'ru'   => __( 'Russian (ru)', 'stripe' ),
-		'sk'   => __( 'Slovak (sk)', 'stripe' ),
-		'sl'   => __( 'Slovenian (sl)', 'stripe' ),
-		'sv'   => __( 'Swedish (sv)', 'stripe' ),
-		'zh'   => __( 'Chinese Simplified (zh)', 'stripe' ),
+		'auto'  => __( 'Auto-detect', 'stripe' ),
+		'ar'    => __( 'Arabic', 'stripe' ),
+		'bg'    => __( 'Bulgarian (bg)', 'stripe' ),
+		'zh'    => __( 'Chinese Simplified (zh)', 'stripe' ),
+		'zh-HK' => __( 'Chinese Traditional (zh-HK)', 'stripe' ),
+		'zh-TW' => __( 'Chinese Traditional (zh-TW)', 'stripe' ),
+		'hr'    => __( 'Croatian (hr)', 'stripe' ),
+		'cs'    => __( 'Czech (cs)', 'stripe' ),
+		'da'    => __( 'Danish (da)', 'stripe' ),
+		'de'    => __( 'German (de)', 'stripe' ),
+		'el'    => __( 'Greek (el)', 'stripe' ),
+		'en'    => __( 'English (en)', 'stripe' ),
+		'en-GB' => __( 'English (en-gb)', 'stripe' ),
+		'et'    => __( 'Estonian (et)', 'stripe' ),
+		'fi'    => __( 'Finnish (fi)', 'stripe' ),
+		'fil'   => __( 'Filipino (fil)', 'stripe' ),
+		'fr'    => __( 'French (fr)', 'stripe' ),
+		'fr-CA' => __( 'French (fr-ca)', 'stripe' ),
+		'he'    => __( 'Hebrew (he)', 'stripe' ),
+		'hu'    => __( 'Hungarian (hu)', 'stripe' ),
+		'it'    => __( 'Italian (it)', 'stripe' ),
+		'ja'    => __( 'Japanese (ja)', 'stripe' ),
+		'ko'    => __( 'Korean (kr)', 'stripe' ),
+		'lt'    => __( 'Lithuanian (lt)', 'stripe' ),
+		'lv'    => __( 'Latvian (lv)', 'stripe' ),
+		'ms'    => __( 'Malay (ms)', 'stripe' ),
+		'mt'    => __( 'Maltese (mt)', 'stripe' ),
+		'nb'    => __( 'Norwegian Bokmål (nb)', 'stripe' ),
+		'nl'    => __( 'Dutch (nl)', 'stripe' ),
+		'pl'    => __( 'Polish (pl)', 'stripe' ),
+		'pt'    => __( 'Portuguese (pt)', 'stripe' ),
+		'pt-BR' => __( 'Portuguese (pt-BR)', 'stripe' ),
+		'ro'    => __( 'Romanian (ro)', 'stripe' ),
+		'ru'    => __( 'Russian (ru)', 'stripe' ),
+		'sk'    => __( 'Slovak (sk)', 'stripe' ),
+		'sl'    => __( 'Slovenian (sl)', 'stripe' ),
+		'es'    => __( 'Spanish (es)', 'stripe' ),
+		'sv'    => __( 'Swedish (sv)', 'stripe' ),
+		'th'    => __( 'Thai (th)', 'stripe' ),
+		'tk'    => __( 'Turkish (tk)', 'stripe' ),
 	);
 }
 
@@ -299,6 +324,65 @@ function get_stripe_currencies() {
 		'ZAR' => esc_html__( 'South African Rand', 'stripe' ),
 		'ZMW' => esc_html__( 'Zambian Kwacha', 'stripe' ),
 	);
+}
+
+/**
+ * Returns a list of Customer Tax ID types.
+ *
+ * @since 4.2.0
+ *
+ * @return array $tax_id_types List of tax ID types.
+ */
+function get_stripe_tax_id_types() {
+	$tax_id_types = array(
+		'ae_trn'  => esc_html__( 'United Arab Emirates TRN', 'stripe' ),
+		'au_abn'  => esc_html__( 'Australian Business Number', 'stripe' ),
+		'br_cnpj' => esc_html__( 'Brazilian CNPJ number', 'stripe' ),
+		'br_cpf'  => esc_html__( 'Brazilian CPF number', 'stripe' ),
+		'ca_bn'   => esc_html__( 'Canadian BN', 'stripe' ),
+		'ca_qst'  => esc_html__( 'Canadian QST number', 'stripe' ),
+		'ch_vat'  => esc_html__( 'Switzerland VAT number', 'stripe' ),
+		'cl_tin'  => esc_html__( 'Chilean TIN', 'stripe' ),
+		'es_cif'  => esc_html__( 'Spanish CIF number', 'stripe' ),
+		'eu_vat'  => esc_html__( 'European VAT number', 'stripe' ),
+		'gb_vat'  => esc_html__( 'United Kingdom VAT number', 'stripe' ),
+		'hk_br'   => esc_html__( 'Hong Kong BR number', 'stripe' ),
+		'id_npwp' => esc_html__( 'Indonesian NPWP number', 'stripe' ),
+		'id_gst'  => esc_html__( 'Indian GST number', 'stripe' ),
+		'jp_cn'   => esc_html__( 'Japanese Corporate Number', 'stripe' ),
+		'jp_rn'   => esc_html__(
+			'Japanese Registered Foreign Businesses\' Registration Number',
+			'stripe'
+		),
+		'kr_brn'   => esc_html__( 'Korean BRN', 'stripe' ),
+		'li_uid'   => esc_html__( 'Liechtensteinian UID number', 'stripe' ),
+		'mx_rfc'   => esc_html__( 'Mexican RFC number', 'stripe' ),
+		'my_frp'   => esc_html__( 'Malaysian FRP number', 'stripe' ),
+		'my_itn'   => esc_html__( 'Malaysian ITN', 'stripe' ),
+		'my_sst'   => esc_html__( 'Malaysian SST number', 'stripe' ),
+		'no_vat'   => esc_html__( 'Norwegian VAT number', 'stripe' ),
+		'nz_gst'   => esc_html__( 'New Zealand GST number', 'stripe' ),
+		'ru_inn'   => esc_html__( 'Russian INN', 'stripe' ),
+		'ru_kpp'   => esc_html__( 'Russian KPP', 'stripe' ),
+		'sa_vat'   => esc_html__( 'Saudi Arabia VAT', 'stripe' ),
+		'sg_gst'   => esc_html__( 'Singaporean GST', 'stripe' ),
+		'sg_uen'   => esc_html__( 'Singaporean UEN', 'stripe' ),
+		'th_vat'   => esc_html__( 'Thai VAT', 'stripe' ),
+		'tw_vat'   => esc_html__( 'Taiwanese VAT', 'stripe' ),
+		'us_ein'   => esc_html__( 'United States EIN', 'stripe' ),
+		'za_vat'   => esc_html__( 'South African VAT number', 'stripe' ),
+	);
+
+	/**
+	 * Filters the supported Customer Tax ID types.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param array $tax_id_types Supported Customer Tax ID types.
+	 */
+	$tax_id_types = apply_filters( 'simpay_stripe_tax_id_types', $tax_id_types );
+
+	return $tax_id_types;
 }
 
 /**

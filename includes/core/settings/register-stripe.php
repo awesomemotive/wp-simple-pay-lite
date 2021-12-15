@@ -3,7 +3,7 @@
  * Settings Registration: Stripe
  *
  * @package SimplePay\Core\Settings
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  *
@@ -33,7 +33,7 @@ function register_section( $sections ) {
 			array(
 				'id'       => 'stripe',
 				'label'    => esc_html_x( 'Stripe', 'settings section label', 'stripe' ),
-				'priority' => 10,
+				'priority' => 20,
 			)
 		)
 	);
@@ -95,6 +95,14 @@ add_action( 'simpay_register_settings', __NAMESPACE__ . '\\register_settings' );
  * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
  */
 function register_account_settings( $settings ) {
+	// Hide submit button if there is no Stripe connection.
+	if ( empty( simpay_get_secret_key() ) && false === simpay_can_site_manage_stripe_keys() ) {
+		add_filter(
+			'simpay_admin_page_settings_keys_submit',
+			'__return_false'
+		);
+	}
+
 	// Account.
 	$settings->add(
 		new Settings\Setting(
@@ -116,7 +124,7 @@ function register_account_settings( $settings ) {
 
 					// Need some sort of key (from a Connect account or manual) to check status.
 					if ( simpay_check_keys_exist() ) {
-						$html .= '<div id="simpay-stripe-account-info" class="simpay-stripe-account-info" data-account-id="' . simpay_get_account_id() . '" data-nonce="' . wp_create_nonce( 'simpay-stripe-connect-information' ) . '"><p><span class="spinner is-active"></span> <em>' . esc_html__( 'Retrieving account information...', 'stripe' ) . '</em></p></div>';
+						$html .= '<div id="simpay-stripe-account-info" class="simpay-stripe-account-info notice inline" data-account-id="' . simpay_get_account_id() . '" data-nonce="' . wp_create_nonce( 'simpay-stripe-connect-information' ) . '"><p><span class="spinner is-active"></span> <em>' . esc_html__( 'Retrieving account information...', 'stripe' ) . '</em></p></div>';
 					}
 
 					if ( false === simpay_get_account_id() || ! simpay_check_keys_exist() ) {
@@ -124,23 +132,28 @@ function register_account_settings( $settings ) {
 					} else {
 						$html .= '<p id="simpay-stripe-auth-error-account-actions" style="display: none;">' . sprintf(
 							/* translators: %1$s Stripe payment mode. %2$s Opening anchor tag for reconnecting to Stripe, do not translate. %3$s Opening anchor tag for disconnecting Stripe, do not translate. %4$s Closing anchor tag, do not translate. */
-							__( '%2$sReconnect in %1$s mode%4$s or %3$sdisconnect this account%5$s.', 'stripe' ),
-							'<strong>' . $mode . '</strong>',
-							'<a href="' . esc_url( simpay_get_stripe_connect_url() ) . '" class="simpay-external-link">',
-							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">',
-							Utils\get_external_link_markup() . '</a>',
+							__( '%1$sdisconnect this account%2$s.', 'stripe' ),
+							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '" class="simpay-disconnect-link">',
 							'</a>'
 						) . '</p>';
 
 						$html .= '<p id="simpay-stripe-activated-account-actions" style="display: none;">' . sprintf(
 							/* translators: %1$s Stripe payment mode. %2$s Opening anchor tag for reconnecting to Stripe, do not translate. %3$s Opening anchor tag for disconnecting Stripe, do not translate. %4$s Closing anchor tag, do not translate. */
-							__( 'Your Stripe account is connected in %1$s mode. %2$sReconnect in %1$s mode%4$s or %3$sdisconnect this account%5$s.', 'stripe' ),
+							__( 'Your Stripe account is connected in %1$s mode. %2$sDisconnect this account%3$s.', 'stripe' ),
 							'<strong>' . $mode . '</strong>',
-							'<a href="' . esc_url( simpay_get_stripe_connect_url() ) . '" class="simpay-external-link">',
-							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">',
-							Utils\get_external_link_markup() . '</a>',
+							'<a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '" class="simpay-disconnect-link">',
 							'</a>'
 						) . '</p>';
+
+						$html .= sprintf(
+							'<div class="simpay-disconnect-confirm" style="display: none;" title="%1$s"><p style="margin-top: 0;">%2$s</p><p style="margin-bottom: 0;">%3$s</p></div>',
+							esc_attr__( 'Are you sure?', 'stripe' ),
+							esc_html__(
+								'Connecting to a different Stripe account requires recreating your payment forms and tax rates. Are you sure you want to disconnect?',
+								'stripe'
+							),
+							'<a href="' . esc_url( simpay_docs_link( '', 'switching-stripe-accounts', 'global-settings', true ) ) . '" class="simpay-external-link" rel="noopener noreferrer" target="_blank">' . esc_html__( 'Review the documentation', 'stripe' ) . Utils\get_external_link_markup() . '</a>'
+						);
 
 						$html .= '<p id="simpay-stripe-unactivated-account-actions" style="display: none;"><a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">' .
 						__( 'Disconnect temporary account', 'stripe' ) .
@@ -179,12 +192,17 @@ function register_account_settings( $settings ) {
 		)
 	);
 
+	// Do not add additional fields until there is a connection.
+	if ( empty( simpay_get_secret_key() ) && false === simpay_can_site_manage_stripe_keys() ) {
+		return;
+	}
+
 	// Keys.
 	$keys = array(
-		'test_secret_key'      => esc_html__( 'Test Secret Key', 'stripe' ),
 		'test_publishable_key' => esc_html__( 'Test Publishable Key', 'stripe' ),
-		'live_secret_key'      => esc_html__( 'Live Secret Key', 'stripe' ),
+		'test_secret_key'      => esc_html__( 'Test Secret Key', 'stripe' ),
 		'live_publishable_key' => esc_html__( 'Live Publishable Key', 'stripe' ),
+		'live_secret_key'      => esc_html__( 'Live Secret Key', 'stripe' ),
 	);
 
 	$priority = 20;
@@ -254,7 +272,7 @@ function register_account_settings( $settings ) {
 						Utils\get_external_link_markup() . '</a>'
 					) .
 					sprintf(
-						'<div id="simpay-test-mode-toggle-notice" class="hidden" style="margin-top: 15px;">%s</div>',
+						'<div id="simpay-test-mode-toggle-notice" class="notice inline notice-warning hidden" style="margin-top: 15px;">%s</div>',
 						$toggle_notice
 					)
 				),

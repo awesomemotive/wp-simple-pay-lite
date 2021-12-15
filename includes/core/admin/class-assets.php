@@ -3,7 +3,7 @@
  * Admin assets
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -75,7 +75,7 @@ class Assets {
 		$this->scripts = array(
 			'simpay-chosen'     => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/chosen.jquery.min.js',
-				'deps'   => array( 'jquery', 'jquery-ui-sortable' ),
+				'deps'   => array( 'jquery', 'jquery-ui-dialog', 'jquery-ui-sortable' ),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => false,
 			),
@@ -114,7 +114,7 @@ class Assets {
 			),
 			'simpay-admin'  => array(
 				'src'   => SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin.min.css',
-				'deps'  => array( 'simpay-chosen' ),
+				'deps'  => array( 'simpay-chosen', 'wp-jquery-ui-dialog' ),
 				'ver'   => SIMPLE_PAY_VERSION,
 				'media' => 'all',
 			),
@@ -158,6 +158,68 @@ class Assets {
 				if ( is_array( $values ) ) {
 					wp_register_script( $script, $values['src'], $values['deps'], $values['ver'], $values['footer'] );
 				}
+			}
+
+			if ( isset( $this->scripts['simpay-admin'] ) ) {
+				wp_localize_script(
+					'simpay-admin',
+					'simpayAdmin',
+					array(
+						'siteTitle' => get_bloginfo( 'name' ),
+						'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
+						'nonce'     => wp_create_nonce( 'simpay-admin' ),
+						'i18n'      => array(
+							'disconnectConfirm'     => esc_html__(
+								'Disconnect',
+								'stripe'
+							),
+							'disconnectCancel'      => esc_html__(
+								'Cancel',
+								'stripe'
+							),
+							'addonActivate'         => esc_html__(
+								'Activate',
+								'stripe'
+							),
+							'addonActivated'        => esc_html__(
+								'Activated',
+								'stripe'
+							),
+							'addonActive'           => esc_html__(
+								'Active',
+								'stripe'
+							),
+							'addonDeactivate'       => esc_html__(
+								'Deactivate',
+								'stripe'
+							),
+							'addonInactive'         => esc_html__(
+								'Inactive',
+								'stripe'
+							),
+							'addonInstall'          => esc_html__(
+								'Install Addon',
+								'stripe'
+							),
+							'addonError'            => esc_html__(
+								'Could not install the addon. Please download it from wpforms.com and install it manually.',
+								'stripe'
+							),
+							'pluginError'           => esc_html__(
+								'Could not install the plugin automatically. Please download and install it manually.',
+								'stripe'
+							 ),
+							'pluginInstallActivate' => esc_html__(
+								'Install and Activate',
+								'stripe'
+							),
+							'pluginActivate'        => esc_html__(
+								'Activate',
+								'stripe'
+							),
+						)
+					)
+				);
 			}
 		}
 	}

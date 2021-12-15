@@ -3,7 +3,7 @@
  * Admin menu
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -119,33 +119,61 @@ class Menus {
 	 * @return array
 	 */
 	public static function plugin_action_links( $action_links, $file ) {
-
-		if ( self::$plugin == $file ) {
-
-			$settings_url = Settings\get_url( array(
-				'section' => 'stripe',
-			) );
-
-			$forms_url = add_query_arg(
-				array(
-					'post_type' => 'simple-pay',
-				),
-				admin_url( 'edit.php' )
-			);
-
-			$links             = array();
-			$links['settings'] = '<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Settings', 'stripe' ) . '</a>';
-			$links['forms']    = '<a href="' . esc_url( $forms_url ) . '">' . esc_html__( 'Payment Forms', 'stripe' ) . '</a>';
-
-			if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
-				$upgrade_link = '<a href="' . simpay_ga_url( simpay_get_url( 'upgrade' ), 'plugin-listing-link', false ) . '" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Upgrade to Pro', 'stripe' ) . '</a>';
-
-				array_push( $action_links, $upgrade_link );
-			}
-
-			return apply_filters( 'simpay_plugin_action_links', array_merge( $links, $action_links ) );
+		if ( self::$plugin !== $file ) {
+			return $action_links;
 		}
 
-		return $action_links;
+		$links = array();
+
+		// Upgrade to Pro.
+		if ( ! class_exists( 'SimplePay\Pro\SimplePayPro', false ) ) {
+			$links[] = sprintf(
+				'<a href="%s" target="_blank" rel="noopener noreferrer" class="simpay-upgrade-link">%s</a>',
+				simpay_ga_url( 'https://wpsimplepay.com/lite-vs-pro/', 'admin-menu' ),
+				esc_html__( 'Upgrade to Pro', 'stripe' )
+			);
+		}
+
+		// Settings.
+		$settings_url = Settings\get_url( array(
+			'section' => 'stripe',
+		) );
+
+		$links[] = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( $settings_url ),
+			esc_html__( 'Settings', 'stripe' )
+		);
+
+		if ( class_exists( 'SimplePay\Pro\SimplePayPro', false ) ) {
+
+			// Documentation.
+			$documentation_url = simpay_ga_url(
+				'https://docs.wpsimplepay.com/',
+				'plugin-listing-link',
+				false
+			);
+
+			$links[] = sprintf(
+				'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+				esc_url( $documentation_url ),
+				esc_html__( 'Documentation', 'stripe' )
+			);
+
+			// Support.
+			$support_url = simpay_ga_url(
+				'https://wpsimplepay.com/support',
+				'plugin-listing-link',
+				false
+			);
+
+			$links[] = sprintf(
+				'<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>',
+				esc_url( $support_url ),
+				esc_html__( 'Support', 'stripe' )
+			);
+		}
+
+		return array_merge( $links, $action_links );
 	}
 }

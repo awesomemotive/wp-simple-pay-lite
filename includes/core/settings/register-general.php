@@ -3,7 +3,7 @@
  * Settings Registration: General
  *
  * @package SimplePay\Core\Settings
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  */
@@ -29,7 +29,7 @@ function register_section( $sections ) {
 			array(
 				'id'       => 'general',
 				'label'    => esc_html_x( 'General', 'settings section label', 'stripe' ),
-				'priority' => 20,
+				'priority' => 10,
 			)
 		)
 	);
@@ -109,7 +109,11 @@ function register_currency_settings( $settings ) {
 				'id'         => 'currency',
 				'section'    => 'general',
 				'subsection' => 'currency',
-				'label'      => esc_html_x( 'Currency', 'setting label', 'stripe' ),
+				'label'      => esc_html_x(
+					'Default Currency',
+					'setting label',
+					'stripe'
+				),
 				'options'    => $currency_list,
 				'value'      => simpay_get_setting( 'currency', 'USD' ),
 				'priority'   => 10,
@@ -118,13 +122,12 @@ function register_currency_settings( $settings ) {
 	);
 
 	// Currency position.
-	$symbol = simpay_get_currency_symbol(
-		simpay_get_setting( 'currency', 'USD' )
-	);
+	$currency = simpay_get_setting( 'currency', 'USD' );
+	$symbol   = simpay_get_currency_symbol( $currency );
 
 	$formatted_amount = simpay_format_currency(
-		( simpay_is_zero_decimal() ? 499 : 4.99 ),
-		'',
+		simpay_get_currency_minimum( $currency ),
+		$currency,
 		false
 	);
 

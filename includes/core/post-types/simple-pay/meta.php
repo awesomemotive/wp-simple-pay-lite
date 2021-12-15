@@ -3,7 +3,7 @@
  * Simple Pay: Meta
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Meta
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
@@ -74,7 +74,7 @@ function register() {
 		'_company_name',
 		array(
 			'type'              => 'string',
-			'description'       => __( 'Payment Form Company Name.', 'stripe' ),
+			'description'       => __( 'Payment Form title.', 'stripe' ),
 			'single'            => true,
 			'sanitize_callback' => 'sanitize_text_field',
 		)
@@ -86,7 +86,7 @@ function register() {
 		'_item_description',
 		array(
 			'type'              => 'string',
-			'description'       => __( 'Payment Form Item Description.', 'stripe' ),
+			'description'       => __( 'Payment Form description.', 'stripe' ),
 			'single'            => true,
 			'sanitize_callback' => 'sanitize_text_field',
 		)

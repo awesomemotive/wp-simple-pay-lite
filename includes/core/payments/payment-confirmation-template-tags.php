@@ -3,7 +3,7 @@
  * Payment confirmation template tags
  *
  * @package SimplePay\Core\Payments\Payment_Confirmation\Template_Tags
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
  *   @type object                         $subscriptions Subscriptions associated with the Customer.
  *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -38,11 +38,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function get_tags( $payment_confirmation_data ) {
 	$tags = array(
+		'form-title',
+		'form-description',
 		'charge-id',
 		'charge-date',
 		'company-name',
 		'item-description',
 		'total-amount',
+		'payment-type',
 	);
 
 	// Backwards compatibility.
@@ -92,7 +95,7 @@ function get_tags( $payment_confirmation_data ) {
  * @param array  $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
  *   @type object                         $subscriptions Subscriptions associated with the Customer.
  *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -127,7 +130,7 @@ function parse_content( $content, $payment_confirmation_data ) {
 					 * @param array  $payment_confirmation_data {
 					 *   Contextual information about this payment confirmation.
 					 *
-					 *   @type \Stripe\Customer               $customer Stripe Customer
+					 *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
 					 *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
 					 *   @type object                         $subscriptions Subscriptions associated with the Customer.
 					 *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -257,7 +260,7 @@ function get_object_property_deep( $keys, $ref ) {
  * @param array  $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
  *   @type object                         $subscriptions Subscriptions associated with the Customer.
  *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -292,7 +295,7 @@ add_filter( 'simpay_payment_confirmation_template_tag_charge-id', __NAMESPACE__ 
  * @param array  $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
  *   @type object                         $subscriptions Subscriptions associated with the Customer.
  *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -317,8 +320,10 @@ function charge_date( $value, $payment_confirmation_data ) {
 	// Localize to current timezone and formatting.
 	$value = get_date_from_gmt(
 		date( 'Y-m-d H:i:s', $first_charge->created ),
-		get_option( 'date_format' )
+		'U'
 	);
+
+	$value = date_i18n( get_option( 'date_format' ), $value );
 
 	/**
 	 * Filters the {charge-date} template tag value.
@@ -350,7 +355,7 @@ add_filter( 'simpay_payment_confirmation_template_tag_charge-date', __NAMESPACE_
  * @param array  $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
  *   @type object                         $subscriptions Subscriptions associated with the Customer.
  *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -373,7 +378,7 @@ function charge_amount( $value, $payment_confirmation_data ) {
 	$first_charge = current( $charges->data );
 
 	$value = simpay_format_currency(
-		simpay_convert_amount_to_dollars( $first_charge->amount ),
+		$first_charge->amount,
 		$first_charge->currency
 	);
 
@@ -382,7 +387,7 @@ function charge_amount( $value, $payment_confirmation_data ) {
 add_filter( 'simpay_payment_confirmation_template_tag_total-amount', __NAMESPACE__ . '\\charge_amount', 10, 3 );
 
 /**
- * Replaces {company-name} with the form data's set Company Name.
+ * Replaces {company-name} or {form-title} with the Payment Form's title.
  *
  * @since 3.6.0
  *
@@ -390,7 +395,7 @@ add_filter( 'simpay_payment_confirmation_template_tag_total-amount', __NAMESPACE
  * @param array  $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
  *   @type object                         $subscriptions Subscriptions associated with the Customer.
  *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -401,9 +406,16 @@ function company_name( $value, $payment_confirmation_data ) {
 	return esc_html( $payment_confirmation_data['form']->company_name );
 }
 add_filter( 'simpay_payment_confirmation_template_tag_company-name', __NAMESPACE__ . '\\company_name', 10, 3 );
+add_filter(
+	'simpay_payment_confirmation_template_tag_form-title',
+	__NAMESPACE__ . '\\company_name',
+	10,
+	3
+);
 
 /**
- * Replaces {item-description} with the form data's set description.
+ * Replaces {item-description} or {form-description} with the Payment Form's
+ * description.
  *
  * @since 3.6.0
  *
@@ -411,7 +423,7 @@ add_filter( 'simpay_payment_confirmation_template_tag_company-name', __NAMESPACE
  * @param array  $payment_confirmation_data {
  *   Contextual information about this payment confirmation.
  *
- *   @type \Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
  *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
  *   @type object                         $subscriptions Subscriptions associated with the Customer.
  *   @type object                         $paymentintents PaymentIntents associated with the Customer.
@@ -422,6 +434,45 @@ function item_description( $value, $payment_confirmation_data ) {
 	return esc_html( $payment_confirmation_data['form']->item_description );
 }
 add_filter( 'simpay_payment_confirmation_template_tag_item-description', __NAMESPACE__ . '\\item_description', 10, 3 );
+add_filter(
+	'simpay_payment_confirmation_template_tag_form-description',
+	__NAMESPACE__ . '\\item_description',
+	10,
+	3
+);
+
+/**
+ * Replaces {payment-type} with the payment type.
+ *
+ * @since 4.1.0
+ *
+ * @param string $value Default value (empty string).
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function payment_type( $value, $payment_confirmation_data ) {
+	if (
+		isset( $payment_confirmation_data['subscriptions'] ) &&
+		! empty( $payment_confirmation_data['subscriptions'] )
+	) {
+		return esc_html__( 'Subscription', 'stripe' );
+	} else {
+		return esc_html__( 'One time', 'stripe' );
+	}
+}
+add_filter(
+	'simpay_payment_confirmation_template_tag_payment-type',
+	__NAMESPACE__ . '\\payment_type',
+	10,
+	3
+);
 
 /**
  * Returns a list of available template tags and their descriptions.
@@ -434,8 +485,12 @@ add_filter( 'simpay_payment_confirmation_template_tag_item-description', __NAMES
  */
 function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 	$tags = array(
-		'company-name' => esc_html__(
-			'The form\'s Company Name value.',
+		'form-title' => esc_html__(
+			'The form\'s title.',
+			'stripe'
+		),
+		'form-description' => esc_html__(
+			'The form\'s description.',
 			'stripe'
 		),
 		'total-amount' => esc_html__(
@@ -448,6 +503,10 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 		),
 		'charge-id'    => esc_html__(
 			'The unique charge ID returned from Stripe.',
+			'stripe'
+		),
+		'payment-type'    => esc_html__(
+			'The type of payment (one-time or recurring).',
 			'stripe'
 		),
 	);

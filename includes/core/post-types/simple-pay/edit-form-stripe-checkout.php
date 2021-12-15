@@ -3,7 +3,7 @@
  * Simple Pay: Edit form Stripe Checkout
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Edit_Form
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
@@ -222,67 +222,12 @@ add_action( 'simpay_form_settings_meta_stripe_checkout_panel', __NAMESPACE__ . '
  * @param int $post_id Current Payment Form ID.
  */
 function add_company_info( $post_id ) {
-	$form_display_type = simpay_get_saved_meta( $post_id, '_form_display_type', 'embedded' );
-	?>
-
-<tr class="simpay-panel-field">
-	<th>
-		<label for="_company_name">
-			<?php esc_html_e( 'Company Name', 'stripe' ); ?>
-		</label>
-	</th>
-	<td>
-		<?php
-		$company_name = simpay_get_saved_meta( $post_id, '_company_name', false );
-
-		simpay_print_field(
-			array(
-				'type'        => 'standard',
-				'subtype'     => 'text',
-				'name'        => '_company_name',
-				'id'          => '_company_name',
-				'value'       => false !== $company_name ? $company_name : get_bloginfo( 'name' ),
-				'class'       => array(
-					'simpay-field-text',
-				),
-				'description' => __( 'Also used for the form heading.', 'stripe' ),
-			)
-		);
-		?>
-	</td>
-</tr>
-
-<tr class="simpay-panel-field">
-	<th>
-		<label for="_item_description">
-			<?php esc_html_e( 'Item Description', 'stripe' ); ?>
-		</label>
-	</th>
-	<td>
-		<?php
-		simpay_print_field(
-			array(
-				'type'        => 'standard',
-				'subtype'     => 'text',
-				'name'        => '_item_description',
-				'id'          => '_item_description',
-				'value'       => simpay_get_saved_meta( $post_id, '_item_description' ),
-				'class'       => array(
-					'simpay-field-text',
-				),
-				'description' => __(
-					'Also used for the form subheading.',
-					'stripe'
-				),
-			)
-		);
-		?>
-	</td>
-</tr>
-
-	<?php
+	_doing_it_wrong(
+		__FUNCTION__,
+		esc_html__( 'No longer used.', 'stripe' ),
+		'4.1.0'
+	);
 }
-add_action( 'simpay_admin_before_stripe_checkout_rows', __NAMESPACE__ . '\\add_company_info', 20 );
 
 /**
  * Outputs a link back to "Custom Form Fields" when viewing the
@@ -291,24 +236,9 @@ add_action( 'simpay_admin_before_stripe_checkout_rows', __NAMESPACE__ . '\\add_c
  * @since 3.8.0
  */
 function add_custom_form_fields_link() {
-	$message = sprintf(
-		/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-		__( 'Configure the on-site Payment Button in the %1$sOn-Site Form Display%2$s settings.', 'stripe' ),
-		'<a href="#" class="simpay-tab-link" data-show-tab="simpay-form_display">',
-		'</a>'
+	_doing_it_wrong(
+		__FUNCTION__,
+		esc_html__( 'No longer used.', 'stripe' ),
+		'4.1.0'
 	);
-	?>
-
-<tr class="simpay-panel-field">
-	<td>
-		<div class="notice inline notice-info" style="margin-top: 18px;">
-			<p>
-				<?php echo wp_kses_post( $message ); ?>
-			</p>
-		</div>
-	</td>
-</tr>
-
-	<?php
 }
-add_action( 'simpay_admin_before_stripe_checkout_rows', __NAMESPACE__ . '\\add_custom_form_fields_link' );

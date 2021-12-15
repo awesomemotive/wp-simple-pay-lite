@@ -4,12 +4,31 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit7f9f7659b1399c1ab86af601b8831ccb
+class ComposerStaticInit9ac30b47f82bedb0e5541d9fa58e089e
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
             'Stripe\\' => 7,
+            'SimplePay\\Vendor\\Stripe\\' => 24,
+            'SimplePay\\Vendor\\' => 17,
+            'SimplePay\\Core\\' => 15,
+        ),
+        'P' => 
+        array (
+            'Psr\\Container\\' => 14,
+        ),
+        'L' => 
+        array (
+            'League\\Container\\' => 17,
+        ),
+        'I' => 
+        array (
+            'Interop\\Container\\' => 18,
+        ),
+        'B' => 
+        array (
+            'BerlinDB\\' => 9,
         ),
     );
 
@@ -18,13 +37,46 @@ class ComposerStaticInit7f9f7659b1399c1ab86af601b8831ccb
         array (
             0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
+        'SimplePay\\Vendor\\Stripe\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib/Stripe/lib',
+        ),
+        'SimplePay\\Vendor\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/lib',
+        ),
+        'SimplePay\\Core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'League\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/container/src',
+        ),
+        'Interop\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
+        'BerlinDB\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/berlindb/core/src',
+        ),
+    );
+
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit7f9f7659b1399c1ab86af601b8831ccb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit7f9f7659b1399c1ab86af601b8831ccb::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9ac30b47f82bedb0e5541d9fa58e089e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9ac30b47f82bedb0e5541d9fa58e089e::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9ac30b47f82bedb0e5541d9fa58e089e::$classMap;
 
         }, null, ClassLoader::class);
     }

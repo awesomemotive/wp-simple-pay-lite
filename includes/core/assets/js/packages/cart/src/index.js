@@ -10,21 +10,14 @@ export * from './line-item.js';
  * @return {Object} data Cart data.
  */
 export function convertFormDataToCartData( formData ) {
-	const {
-		debugLog,
-		convertToCents,
-	} = window.spShared;
+	const { debugLog, convertToCents } = window.spShared;
 
 	const {
-		booleans: {
-			isZeroDecimal: isNonDecimalCurrency,
-		},
+		booleans: { isZeroDecimal: isNonDecimalCurrency },
 	} = window.spGeneral;
 
 	const {
-		stripeParams: {
-			currency,
-		},
+		stripeParams: { currency },
 
 		// Items.
 		amount,
@@ -38,7 +31,6 @@ export function convertFormDataToCartData( formData ) {
 		feePercent,
 		feeAmount,
 		taxPercent,
-		setupFee,
 	} = formData;
 
 	const data = {
@@ -53,15 +45,13 @@ export function convertFormDataToCartData( formData ) {
 	//
 
 	// Initial Setup Fee.
-	if ( ! isNaN( setupFee ) ) {
-		data.items.push( {
-			id: 'setup-fee',
-			title: 'Initial Setup Fee',
-			amount: convertToCents( setupFee ),
-			quantity: 1,
-			subscription: false,
-		} );
-	}
+	data.items.push( {
+		id: 'setup-fee',
+		title: 'Initial Setup Fee',
+		amount: 0,
+		quantity: 1,
+		subscription: false,
+	} );
 
 	// Plan Setup Fee.
 	data.items.push( {
@@ -91,7 +81,10 @@ export function convertFormDataToCartData( formData ) {
 		if ( ! isNaN( feeAmount ) && feeAmount > 0 ) {
 			singleAmount += feeAmount;
 
-			debugLog( 'feeAmount:', 'Arbitrary fee amounts should be added to the base amount directly.' );
+			debugLog(
+				'feeAmount:',
+				'Arbitrary fee amounts should be added to the base amount directly.'
+			);
 		}
 
 		data.items.push( {
@@ -112,8 +105,11 @@ export function convertFormDataToCartData( formData ) {
 	// @link https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1161
 	if ( ! isNaN( feePercent ) && feePercent > 0 ) {
 		data.taxPercent = data.taxPercent + feePercent;
-		debugLog( 'feePercent:', 'Arbitrary fee percentages should be added to the taxPercent directly.' );
-	};
+		debugLog(
+			'feePercent:',
+			'Arbitrary fee percentages should be added to the taxPercent directly.'
+		);
+	}
 
 	return data;
 }

@@ -3,7 +3,7 @@
  * Routines: Options flattening.
  *
  * @package SimplePay\Core\Utils\Migrations
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.0.0
  */
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 4.0.0
  */
-class Options_Flattening extends Migrations\Migration {
+class Options_Flattening extends Migrations\Bulk_Migration {
 
 	/**
 	 * Runs the migration.

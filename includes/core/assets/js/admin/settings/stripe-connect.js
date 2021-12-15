@@ -1,4 +1,4 @@
-/* global wp, _ */
+/* global jQuery, simpayAdmin */
 
 /**
  * WordPress dependencies
@@ -7,33 +7,39 @@ import domReady from '@wordpress/dom-ready';
 
 /**
  * Toggle fields based on current mode.
+ *
+ * @param {string} newMode The new mode.
+ * @param {string} initialMode The initial mode.
  */
-export default function toggleStripeConnectNotice( newMode, oldMode ) {
-	// Only how a notice when the mode changes.
-	if ( newMode === oldMode ) {
+export function toggleStripeConnectNotice( newMode, initialMode ) {
+	const notice = document.getElementById( 'simpay-test-mode-toggle-notice' );
+
+	// Only show a notice when the mode changes.
+	if ( newMode === initialMode ) {
+		notice.style.display = 'none';
 		return;
 	}
 
-	const notice = document.getElementById( 'simpay-test-mode-toggle-notice' );
 	const statusText = document.getElementById( 'simpay-toggle-notice-status' );
-	const statusLink = document.getElementById( 'simpay-toggle-notice-status-link' );
+	const statusLink = document.getElementById(
+		'simpay-toggle-notice-status-link'
+	);
 
-	notice.classList.add( 'notice' );
-	notice.classList.add( 'notice-warning' );
 	notice.style.display = 'block';
 
 	if ( ! statusText || ! statusLink ) {
 		return;
 	}
 
-	statusText.innerHTML = '<strong>' + statusText.dataset[ newMode ] + '</strong>';
+	statusText.innerHTML =
+		'<strong>' + statusText.dataset[ newMode ] + '</strong>';
 	statusLink.href = statusLink.dataset[ newMode ];
 }
 
 /**
- * Shows the currently connected Stripe account's email address.
+ * Outputs connected Stripe account information.
  */
-domReady( () => {
+function accountInfo() {
 	const containerEl = document.getElementById( 'simpay-stripe-account-info' );
 
 	if ( ! containerEl ) {
@@ -48,9 +54,10 @@ domReady( () => {
 		success: ( response ) => {
 			containerEl.querySelector( 'p' ).innerHTML = response.message;
 			containerEl.style.display = 'block';
-			containerEl.classList.add( 'notice' );
 
-			if ( 'simpay-stripe-activated-account-actions' === response.actions ) {
+			if (
+				'simpay-stripe-activated-account-actions' === response.actions
+			) {
 				containerEl.classList.add( 'notice-info' );
 			} else {
 				containerEl.classList.add( 'notice-warning' );
@@ -61,18 +68,82 @@ domReady( () => {
 			if ( actionsEl ) {
 				actionsEl.style.display = 'block';
 			}
+
+			disconnectLink();
 		},
 		error: ( response ) => {
 			containerEl.querySelector( 'p' ).innerHTML = response.message;
 			containerEl.style.display = 'block';
-			containerEl.classList.add( 'notice' );
 			containerEl.classList.add( 'notice-error' );
 
 			const actionsEl = document.getElementById( response.actions );
 
 			if ( actionsEl ) {
 				actionsEl.style.display = 'block';
+				disconnectLink();
 			}
 		},
 	} );
+}
+
+/**
+ * Handles the Stripe Disconnect link and confirmation.
+ */
+function disconnectLink() {
+	const disconnectLinkEls = document.querySelectorAll(
+		'.simpay-disconnect-link'
+	);
+
+	if ( ! disconnectLinkEls ) {
+		return;
+	}
+
+	const { i18n } = simpayAdmin;
+	const { disconnectConfirm, disconnectCancel } = i18n;
+
+	disconnectLinkEls.forEach( function ( el ) {
+		el.addEventListener( 'click', ( event ) => {
+			event.preventDefault();
+
+			jQuery( '.simpay-disconnect-confirm' ).dialog( {
+				resizable: false,
+				height: 'auto',
+				width: 400,
+				modal: true,
+				draggable: false,
+				open() {
+					jQuery( '.ui-dialog-buttonset .ui-button' )
+						.removeClass( 'ui-button' )
+						.last()
+						.css( {
+							marginLeft: '10px',
+						} )
+						.focus();
+				},
+				buttons: [
+					{
+						text: disconnectCancel,
+						click() {
+							jQuery( this ).dialog( 'close' );
+						},
+						class: 'button button-secondary',
+					},
+					{
+						text: disconnectConfirm,
+						click() {
+							window.location.href = el.href;
+						},
+						class: 'button button-primary',
+					},
+				],
+			} );
+		} );
+	} );
+}
+
+/**
+ * DOM ready.
+ */
+domReady( () => {
+	accountInfo();
 } );

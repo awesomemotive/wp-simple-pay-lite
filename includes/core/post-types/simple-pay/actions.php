@@ -3,12 +3,17 @@
  * Simple Pay: Actions
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Actions
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
 
 namespace SimplePay\Core\Post_Types\Simple_Pay\Actions;
+
+use SimplePay\Core\API;
+
+use Stripe\Exception\ApiErrorException;
+use WP_Error;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -51,34 +56,24 @@ function save( $post_id, $post, $update ) {
 		return;
 	}
 
+	$form = simpay_get_form( $post_id );
+
+	if ( false === $form ) {
+		return;
+	}
+
 	// Payment Mode.
 	$livemode = isset( $_POST['_livemode'] ) && '' !== $_POST['_livemode']
 		? absint( $_POST['_livemode'] )
 		: '';
 
-	if ( '' !== $livemode ) {
-		update_post_meta(
-			$post_id,
-			'_livemode_prev',
-			get_post_meta( $post_id, '_livemode', true )
-		);
+	update_post_meta(
+		$post_id,
+		'_livemode_prev',
+		get_post_meta( $post_id, '_livemode', true )
+	);
 
-		update_post_meta( $post_id, '_livemode', $livemode );
-	} else {
-		delete_post_meta( $post_id, '_livemode' );
-		delete_post_meta( $post_id, '_livemode_prev' );
-	}
-
-	// Amount.
-	$amount = isset( $_POST['_amount'] )
-		? sanitize_text_field( $_POST['_amount'] )
-		: (
-				false !== get_post_meta( $post_id, '_amount', true )
-					? get_post_meta( $post_id, '_amount', true )
-					: simpay_global_minimum_amount()
-			);
-
-	update_post_meta( $post_id, '_amount', $amount );
+	update_post_meta( $post_id, '_livemode', $livemode );
 
 	// Success redirect type.
 	$success_redirect_type = isset( $_POST['_success_redirect_type'] )
@@ -144,7 +139,7 @@ function save( $post_id, $post, $update ) {
 	update_post_meta( $post_id, '_enable_shipping_address', $enable_shipping_address );
 
 	// Custom fields.
-	// Handles "Payment Button Text" and "Payment Button Processing Text".
+	// Handles "Button Text" and "Button Processing Text".
 	$fields = isset( $_POST['_simpay_custom_field'] )
 		? $_POST['_simpay_custom_field']
 		: array();
@@ -167,12 +162,378 @@ function save( $post_id, $post, $update ) {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param int      $post_id Payment Form ID.
-	 * @param \WP_Post $post    Payment Form \WP_Post object.
+	 * @param int                            $post_id Payment Form ID.
+	 * @param \WP_Post                       $post Payment Form \WP_Post object.
+	 * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
 	 */
-	do_action( 'simpay_save_form_settings', $post_id, $post );
+	do_action( 'simpay_save_form_settings', $post_id, $post, $form );
 }
 add_action( 'save_post_simple-pay', __NAMESPACE__ . '\\save', 10, 3 );
+
+/**
+ * Saves the Payment Form's container Product.
+ *
+ * @since 4.1.0
+ *
+ * @param int                            $post_id Payment Form ID.
+ * @param \WP_Post                       $post Payment Form \WP_Post object.
+ * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+ * @return \SimplePay\Vendor\Stripe\Product
+ */
+function save_product( $post_id, $post, $form ) {
+	$error        = new WP_Error();
+	$product_args = array();
+
+	$product_key = true === $form->is_livemode()
+		? '_simpay_product_live'
+		: '_simpay_product_test';
+
+	$form_product = get_post_meta( $post_id, $product_key, true );
+
+	// Name.
+	$title = get_post_meta( $form->id, '_company_name', true );
+	$name  = ! empty( $title ) ? $title : get_bloginfo( 'name' );
+
+	// https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1598
+	if ( empty( $name ) ) {
+		$name = sprintf(
+			__( 'WP Simple Pay - Form %d', 'stripe' ),
+			$form->id
+		);
+	}
+
+	$product_args['name'] = esc_html( $name );
+
+	// Description. Optional.
+	$description = get_post_meta( $form->id, '_item_description', true );
+
+	// Images. Optional.
+	if ( '' !== $form->image_url ) {
+		$product_args['images'] = array(
+			$form->image_url,
+		);
+	}
+
+	try {
+		if ( empty( $form_product ) ) {
+			if ( ! empty( $description ) ) {
+				$product_args['description'] = sanitize_text_field( $description );
+			}
+
+			$product = API\Products\create(
+				$product_args,
+				$form->get_api_request_args()
+			);
+
+			update_post_meta( $form->id, $product_key, $product->id );
+
+			$form_product = $product->id;
+		} else {
+			$product_args['description'] = sanitize_text_field( $description );
+
+			$product = API\Products\update(
+				$form_product,
+				$product_args,
+				$form->get_api_request_args()
+			);
+		}
+	} catch ( ApiErrorException $e ) {
+		$error->add(
+			$e->getStripeCode(),
+			$e->getMessage(),
+			array(
+				'status' => $e->getHttpStatus(),
+			)
+		);
+	}
+
+	if ( ! empty( $error->errors ) ) {
+		wp_die( $error->get_error_message() );
+	}
+
+	return $product;
+}
+
+/**
+ * Saves the Payment Form's Prices.
+ *
+ * @since 4.1.0
+ *
+ * @param int                            $post_id Payment Form ID.
+ * @param \WP_Post                       $post Payment Form \WP_Post object.
+ * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+ */
+function save_prices( $post_id, $post, $form ) {
+	$error   = new WP_Error();
+	$product = save_product( $post_id, $post, $form );
+
+	$prices = isset( $_POST['_simpay_prices'] )
+		? $_POST['_simpay_prices']
+		: array();
+
+	$_prices = array();
+
+	$prices_key = true === $form->is_livemode()
+		? '_simpay_prices_live'
+		: '_simpay_prices_test';
+
+	$livemode_prev = get_post_meta( $form->id, '_livemode_prev', true );
+
+	if ( '' === $livemode_prev ) {
+		$livemode_prev = ! simpay_is_test_mode();
+	}
+
+	// Let the syncing handle the Prices if the mode has changed.
+	if ( (bool) $livemode_prev !== $form->is_livemode() ) {
+		delete_post_meta( $post_id, sprintf( '%s_modified', $prices_key ), time() );
+
+		return;
+	}
+
+	foreach ( $prices as $instance_id => $price ) {
+		$price_args = array(
+			'default' => isset( $price['default'] ) || 1 === count( $prices ),
+		);
+
+		$recurring_args = array();
+		$line_item_args = array();
+
+		// Setup shared arguments.
+
+		$currency    = sanitize_text_field( $price['currency'] );
+		$unit_amount = sanitize_text_field( $price['unit_amount'] );
+
+		// Short circuit for Lite. If the current unit amount is
+		// the same as the new amount, do nothing.
+		$unit_amount_current = isset( $price['unit_amount_current'] )
+			? sanitize_text_field( $price['unit_amount_current'] )
+			: false;
+
+		if (
+			false !== $unit_amount_current &&
+			$unit_amount_current === $unit_amount
+		) {
+			$price_id = sanitize_text_field( $price['id_current'] );
+
+			$_prices[ $instance_id ] = array_merge(
+				$price_args,
+				array(
+					'id' => $price_id,
+				)
+			);
+
+			continue;
+		}
+
+		$is_zero_decimal     = simpay_is_zero_decimal( $currency );
+		$currency_min_amount = simpay_get_currency_minimum( $currency );
+
+		$unit_amount = $is_zero_decimal
+			? simpay_unformat_currency( $unit_amount )
+			: simpay_convert_amount_to_cents( $unit_amount );
+
+		if ( $unit_amount < $currency_min_amount ) {
+			$unit_amount = $currency_min_amount;
+		}
+
+		$amount_type = 'recurring' === $price['amount_type']
+			? 'recurring'
+			: 'one-time';
+
+		$can_recur = isset( $price['can_recur'] );
+
+		$label = isset( $price['label'] )
+			? sanitize_text_field( $price['label'] )
+			: '';
+
+		if ( 'recurring' === $amount_type || $can_recur ) {
+			$recurring = isset( $price['recurring'] )
+				? $price['recurring']
+				: array();
+
+			if ( isset( $recurring['id'] ) ) {
+				$recurring_args['id'] = $recurring['id'];
+			}
+
+			$recurring_args['interval'] = isset( $recurring['interval'] )
+				? sanitize_text_field( $recurring['interval'] )
+				: 'month';
+
+			$recurring_args['interval_count'] = isset( $recurring['interval_count'] )
+				? (int) $recurring['interval_count']
+				: 1;
+
+			$invoice_limit = isset( $recurring['invoice_limit'] )
+				? (int) $recurring['invoice_limit']
+				: '';
+
+			if ( ! empty( $invoice_limit ) ) {
+				$recurring_args['invoice_limit'] = $invoice_limit;
+			}
+
+			$trial_period_days = isset( $recurring['trial_period_days'] )
+				? (int) $recurring['trial_period_days']
+				: '';
+
+			if ( ! empty( $trial_period_days ) ) {
+				$recurring_args['trial_period_days'] = $trial_period_days;
+			}
+
+			$line_items = isset( $price['line_items'] )
+				? $price['line_items']
+				: array();
+
+			$setup_fee_amount = isset( $line_items['subscription-setup-fee'] )
+				? $line_items['subscription-setup-fee']['unit_amount']
+				: '';
+
+			if ( ! empty( $setup_fee_amount ) ) {
+				$line_item_args[] = array(
+					'unit_amount' => $is_zero_decimal
+						? simpay_unformat_currency( $setup_fee_amount )
+						: simpay_convert_amount_to_cents( $setup_fee_amount ),
+					'currency'    => $currency,
+				);
+			}
+
+			$plan_fee_amount = isset( $line_items['plan-setup-fee'] )
+				? $line_items['plan-setup-fee']['unit_amount']
+				: '';
+
+			if ( ! empty( $plan_fee_amount ) ) {
+				$line_item_args[] = array(
+					'unit_amount' => $is_zero_decimal
+						? simpay_unformat_currency( $plan_fee_amount )
+						: simpay_convert_amount_to_cents( $plan_fee_amount ),
+					'currency'    => $currency,
+				);
+			}
+		} else {
+			$recurring_args = array();
+		}
+
+		// Custom price data.
+		if ( isset( $price['custom'] ) ) {
+			$price_args['id']          = $price['id'];
+			$price_args['unit_amount'] = $unit_amount;
+			$price_args['currency']    = $currency;
+
+			$unit_amount_min = isset( $price['unit_amount_min'] )
+				? sanitize_text_field(
+					$is_zero_decimal
+						? $price['unit_amount_min']
+						: simpay_convert_amount_to_cents( $price['unit_amount_min'] )
+				)
+				: $currency_min_amount;
+
+			if ( $unit_amount_min < $currency_min_amount ) {
+				$unit_amount_min = $currency_min_amount;
+			}
+
+			$price_args['unit_amount_min'] = $unit_amount_min;
+
+			// Defined Price.
+		} else {
+
+			// Existing Price.
+			if ( simpay_payment_form_prices_is_defined_price( $price['id'] ) ) {
+				$price_args['id'] = $price['id'];
+
+				// Create a new Price.
+			} else {
+				$stripe_price_args = array(
+					'unit_amount' => $unit_amount,
+					'currency'    => $currency,
+					'product'     => $product->id,
+				);
+
+				if ( 'recurring' === $amount_type ) {
+					$stripe_price_args['recurring'] = array(
+						'interval'       => $recurring_args['interval'],
+						'interval_count' => $recurring_args['interval_count'],
+					);
+				}
+
+				try {
+					$stripe_price = API\Prices\create(
+						$stripe_price_args,
+						$form->get_api_request_args()
+					);
+
+					$price_args['id'] = $stripe_price->id;
+
+					if ( $can_recur ) {
+						$stripe_recurring_price = API\Prices\create(
+							array_merge(
+								$stripe_price_args,
+								array(
+									'recurring'  => array(
+										'interval'       =>
+											$recurring_args['interval'],
+										'interval_count' =>
+											$recurring_args['interval_count'],
+									),
+								)
+							),
+							$form->get_api_request_args()
+						);
+
+						$recurring_args['id'] = $stripe_recurring_price->id;
+					}
+				} catch ( ApiErrorException $e ) {
+					$error->add(
+						$e->getStripeCode(),
+						$e->getMessage(),
+						array(
+							'status' => $e->getHttpStatus(),
+						)
+					);
+				}
+			}
+		}
+
+		if ( ! empty( $error->errors ) ) {
+			wp_die( $error->get_error_message() );
+		}
+
+		// Label.
+		if ( ! empty( $label ) ) {
+			$price_args['label'] = $label;
+		}
+
+		// Optional recurring.
+		$price_args['can_recur'] = $can_recur;
+
+		// Recurring.
+		if ( ! empty( $recurring_args ) ) {
+			// Remove data that can be retrieved from Stripe.
+			if ( ! isset( $price['custom'] ) ) {
+				unset( $recurring_args['interval'] );
+				unset( $recurring_args['interval_count'] );
+			}
+
+			if ( ! empty( $recurring_args ) ) {
+				$price_args['recurring'] = $recurring_args;
+			}
+		}
+
+		// Line items.
+		if ( ! empty( $line_item_args ) ) {
+			$price_args['line_items'] = $line_item_args;
+		}
+
+		$_prices[ $instance_id ] = $price_args;
+	}
+
+	update_post_meta( $post_id, $prices_key, $_prices );
+	update_post_meta( $post_id, sprintf( '%s_modified', $prices_key ), time() );
+}
+add_action(
+	'simpay_save_form_settings',
+	__NAMESPACE__ . '\\save_prices',
+	30,
+	3
+);
 
 /**
  * Redirects the Payment Form back to the current Payment Form settings tab.
@@ -192,7 +553,7 @@ function save_redirect( $location, $post_id ) {
 
 	$hash = isset( $_REQUEST['simpay_form_settings_tab'] )
 		? sanitize_text_field( $_REQUEST['simpay_form_settings_tab'] )
-		: '#payment-options-settings-panel';
+		: '#form-display-options-settings-panel';
 
 	$location .= $hash;
 
@@ -226,11 +587,13 @@ function duplicate() {
 		return;
 	}
 
-	// Insert the new post using the original post values plus some modifications.
+	// Allow empty post.
+	add_filter( 'wp_insert_post_empty_content', '__return_false' );
+
+	// Insert the new post using the original post values.
 	$duplicate = wp_insert_post(
 		array(
 			'post_author' => wp_get_current_user()->ID,
-			'post_title'  => $post->post_title . __( ' - Duplicate', 'stripe' ),
 			'post_type'   => $post->post_type,
 			'post_status' => $post->post_status,
 		)
@@ -250,6 +613,19 @@ function duplicate() {
 			$duplicate,
 			$post->ID
 		)
+	);
+
+	// Remove the linked container Product. Existing Prices will still be linked to
+	// the Payment Form that was originally duplicated, but new ones will not.
+	delete_post_meta( $duplicate, '_simpay_product_live' );
+	delete_post_meta( $duplicate, '_simpay_product_test' );
+
+	// Update form title to append - Duplicate
+	$form_name = get_post_meta( $duplicate, '_company_name', true );
+	update_post_meta(
+		$duplicate,
+		'_company_name',
+		sprintf( __( '%s - Duplicate', 'stripe' ), $form_name )
 	);
 
 	$redirect = add_query_arg(

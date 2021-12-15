@@ -1,22 +1,23 @@
 {
 	"name": "@wpsimplepay/cart",
-	"version": "1.0.0",
-	"description": "Cart module for WP Simple Pay.",
-	"author": "Sandhills Development, LLC",
+	"version": "1.2.0",
+	"description": "WP Simple Pay client-side cart system.",
+	"author": "Sandhills Development, LLC.",
 	"license": "GPL-2.0-or-later",
 	"keywords": [
-		"wordpress",
-		"cart"
+		"wordpress"
 	],
-	"homepage": "https://github.com/wpsimplepay/wp-simple-pay-pro/tree/master/includes/core/assets/js/packages/cart/README.md",
+	"homepage": "https://wpsimplepay.com",
+	"main": "./src/index.js",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/wpsimplepay/wp-simple-pay-pro.git",
+		"url": "https://github.com/wpsimplepay/wp-simple-pay-pro",
 		"directory": "includes/core/assets/js/packages/cart"
 	},
 	"bugs": {
 		"url": "https://github.com/wpsimplepay/wp-simple-pay-pro/issues"
 	},
-	"main": "build/index.js",
-	"module": "build-module/index.js"
+	"publishConfig": {
+		"access": "restricted"
+	}
 }

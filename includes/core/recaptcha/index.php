@@ -3,7 +3,7 @@
  * reCAPTCHA
  *
  * @package SimplePay\Core\reCAPTCHA
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.9.6
  */
@@ -74,26 +74,17 @@ function add_script( $form_id, $form ) {
 	wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
 
 	wp_localize_script(
-		'simpay-google-recaptcha-v3',
+		'simpay-public',
 		'simpayGoogleRecaptcha',
 		array(
 			'siteKey' => get_key( 'site' ),
 			'i18n'    => array(
-				'invalid' => esc_html__( 'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.', 'stripe' ),
+				'invalid' => esc_html__(
+					'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.',
+					'stripe'
+				),
 			),
 		)
-	);
-
-	wp_enqueue_script(
-		'simpay-recaptcha',
-		SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-recaptcha.min.js',
-		array(
-			'wp-util',
-			'simpay-google-recaptcha-v3',
-			'simpay-public',
-		),
-		SIMPLE_PAY_VERSION,
-		true
 	);
 }
 add_action( 'simpay_form_before_form_bottom', __NAMESPACE__ . '\\add_script', 10, 2 );
@@ -186,13 +177,20 @@ function validate_recaptcha_source() {
 		? sanitize_text_field( $_POST['recaptcha_action'] )
 		: false;
 
+	$data = array(
+		'message' => esc_html__(
+			'Unable to validate reCAPTCHA token. Please verify your Site and Secret keys.',
+			'stripe'
+		),
+	);
+
 	// A token couldn't be generated, let it through.
 	if ( false === $token || false === $recaptcha_action ) {
-		return wp_send_json_error();
+		return wp_send_json_error( $data );
 	}
 
 	if ( true !== validate_recaptcha( $token, $recaptcha_action ) ) {
-		return wp_send_json_error();
+		return wp_send_json_error( $data );
 	}
 
 	return wp_send_json_success();
@@ -218,17 +216,13 @@ function validate_recaptcha_customer( $customer_args, $form, $form_data, $form_v
 	}
 
 	// Ensure a token exists.
-	if ( ! isset( $form_values['grecaptcha_customer'] ) ) {
+	if ( ! isset( $form_data['customerCaptchaToken'] ) ) {
 		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
-	}
-
-	if ( is_array( $form_values['grecaptcha_customer'] ) ) {
-		$form_values['grecaptcha_customer'] = end( $form_values['grecaptcha_customer'] );
 	}
 
 	// Validate token.
 	$valid = validate_recaptcha(
-		$form_values['grecaptcha_customer'],
+		$form_data['customerCaptchaToken'],
 		sprintf(
 			'simple_pay_form_%s_%s',
 			$form->id,
@@ -265,17 +259,13 @@ function validate_recaptcha_payment( $paymentintent_args, $form, $form_data, $fo
 	}
 
 	// Ensure a token exists.
-	if ( ! isset( $form_values['grecaptcha_payment'] ) ) {
+	if ( ! isset( $form_data['paymentCaptchaToken'] ) ) {
 		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
-	}
-
-	if ( is_array( $form_values['grecaptcha_payment'] ) ) {
-		$form_values['grecaptcha_payment'] = end( $form_values['grecaptcha_payment'] );
 	}
 
 	// Validate token.
 	$valid = validate_recaptcha(
-		$form_values['grecaptcha_payment'],
+		$form_data['paymentCaptchaToken'],
 		sprintf(
 			'simple_pay_form_%s_%s',
 			$form->id,

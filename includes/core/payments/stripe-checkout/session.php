@@ -3,7 +3,7 @@
  * Stripe Checkout: Session
  *
  * @package SimplePay\Core\Payments\Stripe_Checkout\Sesssion
- * @copyright Copyright (c) 2020, Sandhills Development, LLC
+ * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *   @type string $api_key API Secret Key to use.
  * }
- * @return \Stripe\Checkout\Session
+ * @return \SimplePay\Vendor\Stripe\Checkout\Session
  */
 function retrieve( $session, $api_request_args = array() ) {
 	if ( false === is_array( $session ) ) {
@@ -63,9 +63,9 @@ function retrieve( $session, $api_request_args = array() ) {
  *
  *   @type string $api_key API Secret Key to use.
  * }
- * @return \Stripe\Checkout\Session
+ * @return \SimplePay\Vendor\Stripe\Checkout\Session
  */
-function create( $session_args = array(), $api_request_args ) {
+function create( $session_args = array(), $api_request_args = array() ) {
 	$defaults = array(
 		'payment_method_types' => Payments\Stripe_Checkout\get_available_payment_method_types(),
 	);
@@ -102,7 +102,7 @@ function create( $session_args = array(), $api_request_args ) {
 	 *
 	 * @since 3.6.0
 	 *
-	 * @param \Stripe\Checkout\Session $session Checkout Session.
+	 * @param \SimplePay\Vendor\Stripe\Checkout\Session $session Checkout Session.
 	 */
 	do_action( 'simpay_after_checkout_session_created', $session );
 
