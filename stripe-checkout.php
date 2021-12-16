@@ -3,8 +3,8 @@
  * Plugin Name: WP Simple Pay Lite
  * Plugin URI: https://wpsimplepay.com
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
- * Author: Sandhills Development, LLC
- * Author URI: https://sandhillsdev.com
+ * Author: WP Simple Pay
+ * Author URI: https://wpsimplepay.com
  * Version: 4.4.0
  * Text Domain: stripe
  * Domain Path: /languages
