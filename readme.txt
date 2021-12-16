@@ -7,7 +7,7 @@ Stable tag: 4.4.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
-Easily accept payments on your WordPress site using Stripe.
+Add high conversion Stripe payment forms to your WordPress site in minutes.
 
 == Description ==
 
