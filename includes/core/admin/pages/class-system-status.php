@@ -3,7 +3,7 @@
  * Admin pages: System Status
  *
  * @package SimplePay\Core\Admin\Pages
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -13,7 +13,7 @@ namespace SimplePay\Core\Admin\Pages;
 use SimplePay\Core\API;
 use SimplePay\Core\reCAPTCHA;
 use SimplePay\Core\Utils;
-use SimplePay\Vendor\Stripe;
+use SimplePay\Pro\Webhooks\Database\Query as WebhookDatabase;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -106,22 +106,30 @@ class System_Status {
 					<h1 class="wp-heading-inline"><?php esc_html_e( 'System Report', 'stripe' ); ?></h1>
 					<hr class="wp-header-end" />
 
-					<div id="simpay-system-status-report">
-						<p>
-							<?php _e( 'Please copy and paste this information when contacting support:', 'stripe' ); ?>
-						</p>
+					<div id="simpay-system-status-report" style="margin: 10px 0 20px;">
+						<textarea id="simpay-system-report" readonly="readonly" class="simpay-copy-hidden-input"></textarea>
 
-						<textarea readonly="readonly" onclick="this.select();"></textarea>
+						<div style="display: flex; align-items: center">
+							<button type="button" class="button button-primary button-large simpay-copy-button simpay-button-large" data-copied="<?php echo esc_attr_e( 'Copied!', 'stripe' ); ?>" data-clipboard-target="#simpay-system-report">
+								<?php
+								esc_html_e(
+									'Copy to Clipboard',
+									'stripe'
+								);
+								?>
+							</button>
 
-						<p>
-							<?php _e( 'You can also download your information as a text file to attach, or simply view it below.', 'stripe' ); ?>
-						</p>
-						<p>
-							<a href="#" id="simpay-system-status-report-download"
-							   class="button button-primary"><?php _e( 'Download System Report', 'stripe' ); ?></a>
-						</p>
+							<a id="simpay-system-status-report-download" class="button button-secondary button-large simpay-button-large" style="margin-left: 10px;">
+								<?php
+								esc_html_e(
+									'Download System Report',
+									'stripe'
+								);
+								?>
+							</a>
+						</div>
 					</div>
-					<hr>
+
 					<?php
 
 					global $wpdb, $wp_version;
@@ -204,21 +212,29 @@ class System_Status {
 					// Pro only.
 					//
 					// @todo Add via filter.
-					if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
+					if ( class_exists( 'SimplePay\Pro\SimplePayPro', false ) ) {
 						$livemode = ! simpay_is_test_mode();
-						$webhook  = \SimplePay\Pro\Webhooks\get_latest_event(
-							$livemode
+						$webhooks = new WebhookDatabase();
+						$webhooks = $webhooks->query(
+							array(
+								'number'     => 1,
+								'livemode'   => $livemode,
+							)
 						);
+
+						$latest = __( 'None', 'stripe' );
+
+						if ( ! empty( $webhooks ) ) {
+							$latest = current( $webhooks )
+								? current( $webhooks )->date_created
+								: __( 'None', 'stripe' );
+						}
 
 						$sections['simpay']['webhook_last'] = array(
 							'label'         => __( 'Most Recent Webhook Event', 'stripe' ),
 							'label_export'  => 'Most Recent Webhook Event',
-							'result'        => false !== $webhook
-								? $webhook->date_created
-								: 'None',
-							'result_export' => false !== $webhook
-								? $webhook->date_created
-								: 'None',
+							'result'        => $latest,
+							'result_export' => $latest
 						);
 
 						$prefix = false === $livemode
@@ -355,48 +371,28 @@ class System_Status {
 						),
 					);
 
-					// Active theme.
-					include_once( ABSPATH . 'wp-admin/includes/theme-install.php' );
+					$active_theme  = wp_get_theme();
+					$theme_name    = $active_theme->Name;
+					$theme_version = $active_theme->Version;
+					$theme_author  = $active_theme->Author;
+					$theme_export  = $active_theme->Name . ': ' . $theme_version;
 
-					if ( version_compare( $wp_version, '3.4', '<' ) ) {
-						$active_theme  = get_theme_data( get_stylesheet_directory() . '/style.css' );
-						$theme_name    = '<a href="' . $active_theme['URI'] . '" target="_blank" rel="noopener noreferrer">' . $active_theme['Name'] . '</a>';
-						$theme_version = $active_theme['Version'];
-						$theme_author  = '<a href="' . $active_theme['AuthorURI'] . '" target="_blank" rel="noopener noreferrer">' . $active_theme['Author'] . '</a>';
-						$theme_export  = $active_theme['Name'] . ' - ' . $theme_version;
-					} else {
-						$active_theme  = wp_get_theme();
-						$theme_name    = '<a href="' . $active_theme->ThemeURI . '" target="_blank" rel="noopener noreferrer">' . $active_theme->Name . '</a>';
-						$theme_version = $active_theme->Version;
-						$theme_author  = $active_theme->Author;
-						$theme_export  = $active_theme->Name . ' - ' . $theme_version;
-					}
+					$theme_updates = get_theme_updates();
 
-					$theme_update_version = $theme_version;
+					if ( isset( $theme_updates[ $active_theme->get_template() ] ) ) {
+						$new_version = $theme_updates[ $active_theme->get_template() ];
 
-					$api = themes_api(
-						'theme_information',
-						array(
-							'slug'   => get_template(),
-							'fields' => array(
-								'sections' => false,
-								'tags'     => false,
-							),
-						)
-					);
-
-					if ( $api && ! is_wp_error( $api ) ) {
-						$theme_update_version = $api->version;
-					}
-
-					if ( version_compare( $theme_version, $theme_update_version, '<' ) ) {
 						$theme_version_update = sprintf(
-							/* translators: %s Theme version number. */
-							__( '%s is available', 'stripe' ),
-							esc_html( $theme_update_version )
+							' - <mark class="error">needs update: %s</mark>',
+							esc_html( $new_version->update['new_version'] )
 						);
 
-						$theme_version = '<mark class="error">' . $theme_version . ' (' . $theme_version_update . ' )</mark>';
+						$theme_export .= sprintf(
+							' - needs update: %s',
+							esc_html( $new_version->update['new_version'] )
+						);
+
+						$theme_version = $theme_version . $theme_version_update;
 					} else {
 						$theme_version = '<mark class="ok">' . $theme_version . '</mark>';
 					}
@@ -458,68 +454,48 @@ class System_Status {
 					// Active plugins.
 					include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 
+					$plugins = get_plugins();
+					$updates = get_plugin_updates();
+
 					$active_plugins = (array) get_option( 'active_plugins', array() );
+
 					if ( is_multisite() ) {
-						$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+						$active_plugins = array_merge(
+							$active_plugins,
+							get_site_option( 'active_sitewide_plugins', array() )
+						);
 					}
 
-					foreach ( $active_plugins as $plugin ) {
-
-						$plugin_data = @get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
-
-						if ( ! empty( $plugin_data['Name'] ) ) {
-
-							$plugin_name    = $plugin_data['Title'];
-							$plugin_author  = $plugin_data['Author'];
-							$plugin_version = $plugin_update_version = $plugin_data['Version'];
-
-							// Afraid that querying many plugins may risk a timeout.
-							if ( count( $active_plugins ) <= 10 ) {
-								$api = plugins_api(
-									'plugin_information',
-									array(
-										'slug'   => $plugin_data['Name'],
-										'fields' => array(
-											'version' => true,
-										),
-									)
-								);
-								if ( $api && ! is_wp_error( $api ) ) {
-									if ( ! empty( $api->version ) ) {
-										$plugin_update_version = $api->version;
-										if ( version_compare( $plugin_version, $plugin_update_version, '<' ) ) {
-											$plugin_version_update = sprintf(
-												/* translators: %s Available plugin version. */
-												__( '%s is available', 'stripe' ),
-												esc_html( $plugin_update_version )
-											);
-
-											$plugin_version = '<mark class="error">' . $plugin_version . ' (' . $plugin_version_update . ')</mark>';
-										} else {
-											$plugin_version = '<mark class="ok">' . $plugin_version . '</mark>';
-										}
-									}
-								}
-							}
-
-							$plugin  = '<dl>';
-							$plugin .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
-							$plugin .= '<dd>' . $plugin_author . '</dd>';
-							$plugin .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
-							$plugin .= '<dd>' . $plugin_version . '</dd>';
-							$plugin .= '</dl>';
-
-							$sections['plugins'][ sanitize_key( strip_tags( $plugin_name ) ) ] = array(
-								'label'         => $plugin_name,
-								'label_export'  => strip_tags( $plugin_data['Title'] ),
-								'result'        => $plugin,
-								'result_export' => $plugin_data['Version'],
-							);
+					foreach ( $plugins as $plugin_path => $plugin ) {
+						if ( ! in_array( $plugin_path, $active_plugins, true ) ) {
+							continue;
 						}
+
+						$plugin_name    = $plugin['Title'];
+						$plugin_author  = $plugin['Author'];
+						$plugin_version = $plugin['Version'];
+
+						$plugin_version .= ( array_key_exists( $plugin_path, $updates ) )
+							? ' - <mark class="error">needs update: ' . $updates[ $plugin_path ]->update->new_version . '</mark>'
+							: '';
+
+						$plugin  = '<dl>';
+						$plugin .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
+						$plugin .= '<dd>' . $plugin_author . '</dd>';
+						$plugin .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
+						$plugin .= '<dd>' . $plugin_version . '</dd>';
+						$plugin .= '</dl>';
+
+						$sections['plugins'][ sanitize_key( strip_tags( $plugin_path ) ) ] = array(
+							'label'         => $plugin_name,
+							'label_export'  => strip_tags( $plugin_name ),
+							'result'        => $plugin,
+							'result_export' => strip_tags( $plugin_version ),
+						);
 					}
 
 					if ( isset( $sections['plugins'] ) ) {
-						rsort( $sections['plugins'] );
+						sort( $sections['plugins'] );
 					}
 
 					// Server environment.
@@ -761,7 +737,7 @@ class System_Status {
 					) . '-system-report-' . date(
 						'Y-m-d',
 						time()
-					);
+					) . '.txt';
 
 					foreach ( $panels as $panel => $v ) {
 
@@ -835,13 +811,6 @@ class System_Status {
 							jQuery( '#simpay-system-status-report textarea' ).val( report ).focus().select();
 						} catch ( e ) {
 							console.log( e );
-						}
-
-						function downloadReport( text, name, type ) {
-							var a = document.getElementById( 'simpay-system-status-report-download' );
-							var file = new Blob( [ text ], { type: type } );
-							a.href = URL.createObjectURL( file );
-							a.download = name;
 						}
 
 						jQuery( '#simpay-system-status-report-download' ).on( 'click', function() {

@@ -7,7 +7,7 @@
  * Stripe Products and Prices.
  *
  * @package SimplePay\Core\Utils\Migrations
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.1.0
  */

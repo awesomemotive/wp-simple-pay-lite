@@ -3,7 +3,7 @@
  * Admin assets
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -99,6 +99,7 @@ class Assets {
 					'simpay-accounting',
 					'simpay-shared',
 					'wp-util',
+					'clipboard',
 				),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => false,
@@ -169,6 +170,10 @@ class Assets {
 						'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
 						'nonce'     => wp_create_nonce( 'simpay-admin' ),
 						'i18n'      => array(
+							'leavePageConfirm'      => esc_html__(
+								'The changes you made will be lost if you navigate away from this page.',
+								'stripe'
+							),
 							'disconnectConfirm'     => esc_html__(
 								'Disconnect',
 								'stripe'

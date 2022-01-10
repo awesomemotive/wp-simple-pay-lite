@@ -21,7 +21,7 @@
 	display: inline-block;
 	vertical-align: top;
 	box-sizing: border-box;
-	margin: 1px 0 -1px 2px;
+	margin: 1px 0 -1px 5px;
 	padding: 0 5px;
 	min-width: 18px;
 	height: 18px;
@@ -32,6 +32,52 @@
 	line-height: 1.6;
 	text-align: center;
 	z-index: 26;
+	position: relative;
+
+	&:empty {
+		width: 10px;
+		height: 10px;
+		min-width: 10px;
+
+		.nav-tab & {
+			margin-top: 7px;
+		}
+	}
+
+	#wpadminbar & {
+		display: inline-block !important;
+		min-width: 18px !important;
+		height: 18px !important;
+		border-radius: 9px !important;
+		margin: 0 0 0 5px !important;
+		vertical-align: top !important;
+		font-size: 11px !important;
+		line-height: 1.6 !important;
+		text-align: center !important;
+
+		&:empty {
+			width: 10px !important;
+			height: 10px !important;
+			min-width: 10px !important;
+		}
+	}
+
+	#wpadminbar .ab-sub-wrapper & {
+		margin-top: 4px !important;
+
+		&:empty {
+			margin-top: 8px !important;
+			float: right;
+		}
+	}
+
+	.wp-menu-name & {
+		margin-top: 4px;
+
+		.wp-menu-open & {
+			display: none;
+		}
+	}
 }
 
 // Admin bar test mode active link
@@ -183,4 +229,42 @@
 		margin-left: 5px;
 	}
 
+}
+
+.simpay-admin-notice-update-plugin {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+
+	&__copy {
+		display: flex;
+		align-items: center;
+		flex-grow: 1;
+
+		img {
+			width: 150px;
+			margin: 0 15px 3px 0;
+		}
+	}
+
+	~ .notice-dismiss {
+		top: 11px;
+	}
+
+	@media screen and (max-width: 782px) {
+		flex-wrap: wrap;
+
+		img {
+			display: none;
+		}
+
+		.button.button-primary {
+			margin-top: 10px;
+		}
+
+		~ .notice-dismiss {
+			top: 0;
+		}
+	}
 }

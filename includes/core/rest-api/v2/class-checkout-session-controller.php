@@ -3,7 +3,7 @@
  * REST API: Checkout Session Controller
  *
  * @package SimplePay\Core\REST_API\v2
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.6.0
  */
@@ -342,6 +342,19 @@ class Checkout_Session_Controller extends Controller {
 		}
 
 		$session_args['line_items'] = array( $item );
+
+		// Phone number.
+		$enable_phone = 'yes' === simpay_get_saved_meta(
+			$form->id,
+			'_enable_phone',
+			'no'
+		);
+
+		if ( true === $enable_phone ) {
+			$session_args['phone_number_collection'] = array(
+				'enabled' => true,
+			);
+		}
 
 		// Add PaymentIntent data.
 		$payment_intent_data = Payments\PaymentIntent\get_args_from_payment_form_request(

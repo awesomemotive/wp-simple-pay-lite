@@ -3,7 +3,7 @@
  * Simple Pay: Edit form
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Edit_Form
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
@@ -69,13 +69,19 @@ function add_shortcode_action( $post ) {
 	}
 	?>
 
-<div class="misc-pub-section">
-	<label for="simpay-shortcode">
-		<?php esc_html_e( 'Payment Form Shortcode', 'stripe' ); ?>
-	</label>
+	<div class="misc-pub-section simpay-shortcode-section">
+		<label for="simpay-shortcode">
+			<span class="dashicons dashicons-shortcode"></span>
+			<?php esc_html_e( 'Form Shortcode', 'stripe' ); ?>
+		</label>
 
-	<?php simpay_print_shortcode_tip( $post->ID ); ?>
-</div>
+		<?php
+		simpay_print_shortcode_tip(
+			$post->ID,
+			'<span class="dashicons dashicons-clipboard"></span>'
+		);
+		?>
+	</div>
 
 	<?php
 }

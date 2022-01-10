@@ -3,7 +3,7 @@
  * Simple Pay: Actions
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Actions
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
@@ -137,6 +137,11 @@ function save( $post_id, $post, $update ) {
 		: 'no';
 
 	update_post_meta( $post_id, '_enable_shipping_address', $enable_shipping_address );
+
+	// Phone number.
+	$enable_phone = isset( $_POST['_enable_phone'] ) ? 'yes' : 'no';
+
+	update_post_meta( $post_id, '_enable_phone', $enable_phone );
 
 	// Custom fields.
 	// Handles "Button Text" and "Button Processing Text".
