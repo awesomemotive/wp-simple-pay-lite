@@ -273,6 +273,16 @@ WP Simple Pay and WP Simple Pay Pro do not charge additional fees beyond a licen
 
 == Changelog ==
 
+= 4.4.1 - January XX, 2022 =
+
+* New: Lite - add a 2% application fee to Checkout Sessions for new Stripe Connect connections.
+* New: Stripe Checkout - Add support for collecting phone numbers.
+* New: Show an alert when leaving unsaved changes on payment forms.
+* New: Add "Copy to clipboard" buttons to payment form shortcodes and system report.
+* New: Add an admin notice requesting a review after 14 days of installation/update.
+* Fix: Update admin bar from "Simple Pay" to "WP Simple Pay".
+* Dev: Update copyright dates.
+
 = 4.4.0 - December 14, 2021 =
 
 * New: Add additional product education.
