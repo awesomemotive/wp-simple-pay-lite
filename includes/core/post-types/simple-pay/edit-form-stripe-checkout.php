@@ -3,7 +3,7 @@
  * Simple Pay: Edit form Stripe Checkout
  *
  * @package SimplePay\Core\Post_Types\Simple_Pay\Edit_Form
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.8.0
  */
@@ -183,6 +183,36 @@ function add_stripe_checkout( $post_id ) {
 						'id'          => '_enable_billing_address',
 						'value'       => $enable_billing_address,
 						'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s billing address. If not, Checkout will only collect the billing address when necessary.', 'stripe' ),
+					)
+				);
+				?>
+			</td>
+		</tr>
+
+		<tr class="simpay-panel-field">
+			<th>
+				<label for="_enable_phone">
+					<?php esc_html_e( 'Require Phone Number', 'stripe' ); ?>
+				</label>
+			</th>
+			<td>
+				<?php
+				$enable_phone = simpay_get_saved_meta(
+					$post_id,
+					'_enable_phone',
+					'no'
+				);
+
+				simpay_print_field(
+					array(
+						'type'        => 'checkbox',
+						'name'        => '_enable_phone',
+						'id'          => '_enable_phone',
+						'value'       => $enable_phone,
+						'description' => esc_html__(
+							'If enabled, Checkout will always collect the customer\'s phone number.',
+							'stripe'
+						),
 					)
 				);
 				?>

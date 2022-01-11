@@ -5,9 +5,9 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '7874c73e0c72fbd2ce3ccb04ddedae38c36e397d',
-        'name' => 'wpsimplepay/wp-simple-pay-lite',
-        'dev' => true,
+        'reference' => 'f80d706c6e1a11369f9e425dce515c1420057b12',
+        'name' => 'wpsimplepay/wp-simple-pay-pro-3',
+        'dev' => false,
     ),
     'versions' => array(
         'berlindb/core' => array(
@@ -73,13 +73,13 @@
             'reference' => 'ae41c309ce113362706f8d5f19cf0cf2c730bc4a',
             'dev_requirement' => false,
         ),
-        'wpsimplepay/wp-simple-pay-lite' => array(
+        'wpsimplepay/wp-simple-pay-pro-3' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '7874c73e0c72fbd2ce3ccb04ddedae38c36e397d',
+            'reference' => 'f80d706c6e1a11369f9e425dce515c1420057b12',
             'dev_requirement' => false,
         ),
     ),

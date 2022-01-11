@@ -3,12 +3,13 @@
  * Stripe Connect: Admin
  *
  * @package SimplePay\Core\Stripe_Connect
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.4.0
  */
 
 use SimplePay\Core\API;
+use SimplePay\Core\License\License;
 use SimplePay\Core\Payments\Stripe_API;
 use SimplePay\Core\Settings;
 
@@ -100,6 +101,14 @@ function simpay_process_gateway_connect_completion() {
 		sanitize_text_field( $data['stripe_user_id'] )
 	);
 
+	// @todo Migrate to use container system.
+	$license = new License( get_option( 'simpay_license_key', '' ) );
+
+	if ( $license instanceof License ) {
+		$type = $license->is_lite() ? 'lite' : 'pro';
+		update_option( 'simpay_stripe_connect_type', $type );
+	}
+
 	/**
 	 * Allow further processing after connecting a Stripe account.
 	 *
@@ -158,6 +167,7 @@ function simpay_process_stripe_disconnect() {
 
 	// Clear account ID.
 	update_option( 'simpay_stripe_connect_account_id', false );
+	update_option( 'simpay_stripe_connect_type', false );
 
 	$redirect = Settings\get_url(
 		array(
@@ -361,9 +371,27 @@ function simpay_stripe_connect_account_information() {
 				$email = $email . ' &mdash; ';
 			}
 
+			$message = (
+				$display_name .
+				$email .
+				esc_html( 'Administrator (Owner)', 'simple-pay' )
+			);
+
+			/**
+			 * Allows filtering of the message displayed when Stripe Connect is connected.
+			 *
+			 * @since 4.4.1
+			 *
+			 * @param string $message The message to display.
+			 */
+			$message = apply_filters(
+				'__unstable_simpay_stripe_connect_account_message',
+				$message
+			);
+
 			return wp_send_json_success(
 				array(
-					'message' => $display_name . $email . esc_html( 'Administrator (Owner)', 'simple-pay' ),
+					'message' => $message,
 					'actions' => 'simpay-stripe-activated-account-actions',
 				)
 			);

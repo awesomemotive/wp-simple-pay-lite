@@ -10,6 +10,7 @@ import { toggleStripeConnectNotice } from './settings/stripe-connect.js';
 import './settings/recaptcha.js';
 import './payment-form';
 import './addons.js';
+import './utils.js';
 
 /**
  * Globallly accessible object of WP Simple Pay-related (admin) functionality.

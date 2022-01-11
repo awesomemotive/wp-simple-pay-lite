@@ -4,7 +4,7 @@
  *
  * @package SimplePay
  * @subpackage Core
- * @copyright Copyright (c) 2021, WP Simple Pay, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.4.0
  */
@@ -137,14 +137,15 @@ final class Plugin {
 	private function get_service_providers() {
 		$service_providers = array(
 			new License\LicenseServiceProvider,
+			new StripeConnect\StripeConnectServiceProvider,
+			new Webhook\WebhookServiceProvider,
 		);
 
 		if ( is_admin() ) {
 			$admin_service_providers = array(
+				new Admin\AdminServiceProvider,
 				new Admin\Addon\AddonServiceProvider,
 				new Admin\Education\EducationServiceProvider,
-				new Admin\Page\AdminPageServiceProvider,
-				new License\LicenseServiceProvider,
 			);
 
 			return array_merge( $admin_service_providers, $service_providers );

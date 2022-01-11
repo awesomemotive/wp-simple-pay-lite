@@ -3,7 +3,7 @@
  * Functions: Admin
  *
  * @package SimplePay\Core
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -329,21 +329,41 @@ function simpay_docs_link( $text, $slug, $utm_medium, $plain = false ) {
 /**
  * Output the copy/paste shortcode on the forms page.
  *
- * @param int $post_id Payment Form ID.
+ * @since 3.0.0
+ *
+ * @param int    $post_id Payment Form ID.
+ * @param string $copy_button_text Text for copy button. Default empty, do not show.
+ * @return void
  */
-function simpay_print_shortcode_tip( $post_id ) {
-
-	$cmd = 'Ctrl&#43;C (&#8984;&#43;C on Mac)';
-
-	$shortcut  = esc_attr(
-		sprintf(
-			/* translators: %s Copy shortcode shortcut. */
-			__( 'Click to select. Then press %s to copy.', 'stripe' ),
-			$cmd
-		)
+function simpay_print_shortcode_tip( $post_id, $copy_button_text = '' ) {
+	$shortcut = __(
+		'Click to select. Then press Ctrl&#43;C (&#8984;&#43;C on Mac) to copy.',
+		'stripe'
 	);
 
 	$shortcode = sprintf( '[simpay id="%s"]', $post_id );
 
-	echo "<input type='text' readonly='readonly' id='simpay-shortcode' class='simpay-shortcode simpay-form-shortcode simpay-shortcode-tip' title='" . esc_attr( $shortcut ) . "' " . "onclick='this.select();' value='" . esc_attr( $shortcode ) . "' />";
+	printf(
+		'<textarea type="text" readonly="readonly" id="simpay-shortcode-%1$s" class="simpay-shortcode simpay-form-shortcode simpay-shortcode-tip" title="%2$s">%3$s</textarea>',
+		esc_attr( $post_id ),
+		esc_attr( $shortcut ),
+		esc_attr( $shortcode )
+	);
+
+	if ( ! empty( $copy_button_text ) ) {
+		printf(
+			'<button type="button" class="button button-secondary simpay-copy-button" data-copied="%1$s" data-clipboard-target="%2$s">%3$s</button>',
+			esc_attr__( 'Copied!', 'stripe' ),
+			sprintf( '#simpay-shortcode-%d', $post_id ),
+			wp_kses(
+				$copy_button_text,
+				array(
+					'span' => array(
+						'class' => true,
+						'style' => true,
+					)
+				)
+			)
+		);
+	}
 }

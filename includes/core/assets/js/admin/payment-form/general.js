@@ -1,9 +1,60 @@
-/* global simpayAdmin, grecaptcha, simpayGoogleRecaptcha */
+/* global simpayAdmin, grecaptcha, simpayGoogleRecaptcha, jQuery */
+
+/**
+ * External dependencies.
+ */
+import serialize from 'form-serialize';
 
 /**
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready';
+
+/**
+ * Alerts the user when they are about to leave unsaved changes.
+ *
+ * @since 4.4.1
+ *
+ * @param {string} initialValues Serialized form initial values.
+ */
+function onLeavePage( initialValues ) {
+	/**
+	 * Alerts the user when they are about to leave unsaved changes.
+	 *
+	 * @since 4.4.1
+	 *
+	 * @param {Event} event beforeunload event.
+	 * @return {string} Message to display in the browser's confirmation dialog (when supported).
+	 */
+	function confirmLeave( event ) {
+		const newFormValues = serialize(
+			document.querySelector( '.post-type-simple-pay form#post' ),
+			{ hash: true }
+		);
+		delete newFormValues.simpay_form_settings_tab;
+
+		if ( JSON.stringify( newFormValues ) !== initialValues ) {
+			event.preventDefault();
+
+			// The return string is needed for browser compat.
+			// See https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event.
+			return simpayAdmin.i18n.leavePageConfirm;
+		}
+	}
+
+	// eslint-disable-next-line @wordpress/no-global-event-listener
+	window.addEventListener( 'beforeunload', confirmLeave );
+	window.onbeforeunload = confirmLeave;
+
+	// Use jQuery to match WordPress core.
+	jQuery( '.post-type-simple-pay form#post' )
+		.off( 'submit' )
+		.on( 'submit', function () {
+			// eslint-disable-next-line @wordpress/no-global-event-listener
+			window.removeEventListener( 'beforeunload', confirmLeave );
+			window.onbeforeunload = null;
+		} );
+}
 
 /**
  * Provides feedback to reCAPTCHA configuration.
@@ -106,6 +157,16 @@ function requireFormTitle() {
  * DOM ready.
  */
 domReady( () => {
-	reCaptchaFeedback();
-	requireFormTitle();
+	const formSettings = document.querySelector(
+		'.post-type-simple-pay #post'
+	);
+
+	if ( formSettings ) {
+		const formValues = serialize( formSettings, { hash: true } );
+		delete formValues.simpay_form_settings_tab;
+		onLeavePage( JSON.stringify( formValues ) );
+
+		reCaptchaFeedback();
+		requireFormTitle();
+	}
 } );

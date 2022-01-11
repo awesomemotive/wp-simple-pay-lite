@@ -3,7 +3,7 @@
  * Admin menu
  *
  * @package SimplePay\Core\Admin
- * @copyright Copyright (c) 2021, Sandhills Development, LLC
+ * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 3.0.0
  */
@@ -61,18 +61,18 @@ class Menus {
 	 * @return string
 	 */
 	public function add_footer_text( $footer_text ) {
-
-		if ( simpay_is_admin_screen() ) {
-			$footer_text = sprintf(
-				/* Translators: 1. The plugin name */
-				__( 'If you like <strong>%1$s</strong> please leave us a %2$s rating. A huge thanks in advance!', 'stripe' ),
-				SIMPLE_PAY_PLUGIN_NAME,
-				'<a href="https://wordpress.org/support/plugin/stripe/reviews?rate=5#new-post" rel="noopener noreferrer" target="_blank" class="simpay-rating-link" data-rated="' .
-				esc_attr__( 'Thanks :)', 'stripe' ) . '">&#9733;&#9733;&#9733;&#9733;&#9733;</a>'
-			);
+		if ( ! simpay_is_admin_screen() ) {
+			return $footer_text;
 		}
 
-		return $footer_text;
+		return sprintf(
+			/* translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
+			__( 'Please rate %1$sWP Simple Pay%2$s %3$s★★★★★%4$s on %3$sWordPress.org%4$s to help us spread the word. Thank you from the WP Simple Pay team!', 'stripe' ),
+			'<strong>',
+			'</strong>',
+			'<a href="https://wordpress.org/support/plugin/stripe/reviews/?filter=5#new-post" rel="noopener noreferrer" target="_blank">',
+			'</a>'
+		);
 	}
 
 
@@ -91,7 +91,7 @@ class Menus {
 		$stripe_test_mode_url = Settings\get_url( array(
 			'section'    => 'stripe',
 			'subsection' => 'account',
-			'setting'    => 'test_mode',
+			'setting'    => 'test_mode-enabled',
 		) );
 
 		$wp_admin_bar->add_menu(
@@ -99,10 +99,9 @@ class Menus {
 				'id'     => 'simpay-admin-bar-test-mode',
 				'href'   => $stripe_test_mode_url,
 				'parent' => 'top-secondary',
-				'title'  => sprintf(
-					/* translators: "Test Mode" badge. */
-					__( 'Simple Pay %s', 'stripe' ),
-					'<span class="simpay-test-mode-badge">' . __( 'Test Mode', 'stripe' ) . '</span>'
+				'title'  => (
+					__( 'WP Simple Pay', 'stripe' ) .
+					' <span class="simpay-test-mode-badge">' . __( 'Test Mode', 'stripe' ) . '</span>'
 				),
 				'meta'   => array( 'class' => 'simpay-admin-bar-test-mode' ),
 			)

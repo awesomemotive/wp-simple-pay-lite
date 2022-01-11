@@ -1,5 +1,22 @@
 @import './settings.scss';
 
+.button.button-large.simpay-button-large {
+	font-size: 14px;
+	line-height: 30px;
+	padding: 4px 12px;
+}
+
+.simpay-copy-hidden-input {
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
 .fixed .column-livemode {
 	width: 15%;
 	text-align: right;
@@ -15,6 +32,17 @@
 
 .fixed .column-shortcode {
 	width: 25%;
+
+	.simpay-shortcode {
+		clip: rect(1px, 1px, 1px, 1px);
+		clip-path: inset(50%);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
 }
 
 .post-type-simple-pay {
@@ -28,6 +56,54 @@
 
 .simpay-metabox-title {
 	border: 1px solid #eee;
+}
+
+.simpay-shortcode-section {
+	border-top: 1px solid #ddd;
+	border-width: 1px 0;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	position: relative;
+
+	label {
+		display: block;
+		margin-bottom: 6px;
+
+		.dashicons {
+			color: #8c8f94;
+			margin-right: 3px;
+		}
+	}
+
+	.simpay-copy-button {
+		line-height: normal;
+		position: absolute;
+		right: 20px;
+		bottom: 20px;
+		border: 0;
+		background: none;
+		box-shadow: none;
+		padding: 0;
+
+		&:hover {
+			border: 0;
+			background: none;
+			box-shadow: none;
+		}
+
+		.dashicons {
+			color: #3c434a;
+		}
+	}
+}
+
+.simpay-shortcode {
+	width: 100%;
+	padding: 8px;
+	line-height: 1;
+	margin: 0;
+	height: 32px;
+	resize: none;
 }
 
 /** Badge */
@@ -310,7 +386,6 @@
 	}
 
 	.simpay-panel {
-		overflow: hidden;
 
 		> table {
 
@@ -893,18 +968,6 @@
 
 	.dashicons {
 		margin-right: 4px;
-	}
-}
-
-// System Status page
-#simpay-system-status-report {
-
-	textarea {
-		font-family: monospace;
-		min-height: 200px;
-		padding: 5px 20px;
-		white-space: pre;
-		width: 100%;
 	}
 }
 
