@@ -55,12 +55,15 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 - Subscription setup fees
 - Subscription trial periods
 - Send subscribers payment renewal reminders
+- Priority customer support
 
 By upgrading to WP Simple Pay Pro you also get access to one-on-one help from our knowledgeable support team and our extensive documentation site.
 
 > WP Simple Pay has been a game changer for my business. There is no simpler way to add Stripe payments to your site. We offer subscriptions with setup fees and this plugin handled these needs beautifully. Their support is unrivaled too.
 
 > Brian Casel, Founder of Audience Ops
+
+There is a small 2% fee per-transaction plus Stripe fees while using WP Simple Pay Lite. [Upgrade to Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) for no added fees and priority support.
 
 = Who is WP Simple Pay For? =
 
@@ -247,9 +250,13 @@ No. WP Simple Pay connects to Stripe (and Stripe only) out of the box. No Stripe
 
 Payment forms are embedded via shortcodes and can be placed anywhere a shortcode can.
 
-= Are there additional fees for collecting payments? =
+= What are the fees for collecting payments? =
 
-WP Simple Pay and WP Simple Pay Pro do not charge additional fees beyond a license purchase. However, Stripe has a per-transaction charge which varies by country. [See Stripe’s pricing](https://stripe.com/pricing).
+Stripe has a per-transaction charge which varies by country. [See Stripe’s pricing](https://stripe.com/pricing) for details.
+
+Besides Stripe's pricing, WP Simple Pay charges an additional 2% fee for transactions processed through WP Simple Pay Lite (the free version of the plugin).
+
+The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
 
 = Can I offer coupon codes to my site visitors? =
 
