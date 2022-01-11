@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 4.9.8
 Tested up to: 5.9
-Stable tag: 4.4.1-alpha-1
+Stable tag: 4.4.1
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -280,7 +280,7 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
-= 4.4.1 - January XX, 2022 =
+= 4.4.1 - January 11, 2022 =
 
 * New: Lite - add a 2% application fee to Checkout Sessions for new Stripe Connect connections.
 * New: Stripe Checkout - Add support for collecting phone numbers.
