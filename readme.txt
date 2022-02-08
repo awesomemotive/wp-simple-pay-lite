@@ -280,6 +280,19 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
+= 4.4.2 - February XX, 2022 =
+
+* New: Add "Setup Wizard" for new installs.
+* New: Add "WP Simple Pay" payment form block.
+* New: Load payment form preview in an isolated environment. Add helper links.
+* New: Link branding bar logo to website.
+* Fix: Do not display empty form state when searching for payment forms.
+* Fix: Update reCAPTCHA setup description.
+* Fix: Ensure "Test Mode" can be toggled when there is no active connection.
+* Fix: Only show published pages in settings dropdowns.
+* Fix: Redirect back to relevant page when connecting to Stripe.
+* Dev: Update test matrix against WordPress 5.9.
+
 = 4.4.1 - January 11, 2022 =
 
 * New: Lite - add a 2% application fee to Checkout Sessions for new Stripe Connect connections.
