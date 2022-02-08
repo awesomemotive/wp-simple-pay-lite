@@ -489,6 +489,8 @@ function simpay_get_saved_meta( $post_id, $setting, $default = '', $single = tru
  * Localizes the shared script with the shared script variables.
  *
  * @since 3.0.0
+ *
+ * @return array<mixed> Array of shared script variables.
  */
 function simpay_shared_script_variables() {
 
@@ -541,6 +543,8 @@ function simpay_shared_script_variables() {
 	$final = apply_filters( 'simpay_shared_script_variables', array_merge( $strings, $bools, $i18n, $integers ) );
 
 	wp_localize_script( 'simpay-shared', 'spGeneral', $final );
+
+	return $final;
 }
 
 /**
@@ -1152,41 +1156,60 @@ function simpay_can_use_payment_request_button() {
 	}
 
 	$countries = array(
+		'AE',
 		'AT',
 		'AU',
 		'BE',
+		'BG',
 		'BR',
 		'CA',
 		'CH',
+		'CI',
+		'CR',
+		'CY',
+		'CZ',
 		'DE',
 		'DK',
+		'DO',
 		'EE',
 		'ES',
 		'FI',
 		'FR',
 		'GB',
+		'GI',
 		'GR',
+		'GT',
 		'HK',
+		'HU',
+		'ID',
 		'IE',
 		'IN',
 		'IT',
 		'JP',
+		'LI',
 		'LT',
 		'LU',
 		'LV',
+		'MT',
 		'MX',
 		'MY',
 		'NL',
 		'NO',
 		'NZ',
+		'PE',
 		'PH',
 		'PL',
 		'PT',
 		'RO',
 		'SE',
 		'SG',
+		'SI',
 		'SK',
+		'SN',
+		'TH',
+		'TT',
 		'US',
+		'UY',
 	);
 
 	$can_use = in_array( $country, $countries, true );

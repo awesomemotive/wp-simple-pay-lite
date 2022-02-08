@@ -143,7 +143,7 @@ function register_page_settings( $settings ) {
 	global $wpdb;
 
 	$pages = $wpdb->get_results(
-		"SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'page' ORDER BY ID"
+		"SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' ORDER BY ID"
 	);
 
 	$page_list = array();
@@ -177,6 +177,9 @@ function register_page_settings( $settings ) {
 					)
 				),
 				'priority'    => 10,
+				'schema'      => array(
+					'type' => 'integer',
+				),
 			)
 		)
 	);
@@ -202,6 +205,9 @@ function register_page_settings( $settings ) {
 					)
 				),
 				'priority'    => 20,
+				'schema'      => array(
+					'type' => 'integer',
+				),
 			)
 		)
 	);
@@ -230,6 +236,9 @@ function register_page_settings( $settings ) {
 					)
 				),
 				'priority'    => 30,
+				'schema'      => array(
+					'type' => 'integer',
+				),
 			)
 		)
 	);
@@ -275,6 +284,9 @@ function register_one_time_payment_confirmation_settings( $settings ) {
 						Payment_Confirmation\Template_Tags\__unstable_get_tags_and_descriptions()
 					);
 				},
+				'schema'      => array(
+					'type' => 'string',
+				),
 			)
 		)
 	);

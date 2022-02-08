@@ -8,8 +8,9 @@
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since 4.4.1
  *
- * @var string $verify_url URL to mark webhooks as verified.
  * @var string $docs_url URL to webhook documentation.
+ * @var string $verify_url URL to mark webhooks as verified.
+ * @var string $dismiss_url URL To dismiss this notice permanently.
  */
 
 ?>
@@ -54,7 +55,7 @@
 		?>
 	</p>
 
-	<p>
+	<p style="display: flex; align-items: center;">
 		<a
 			href="<?php echo esc_url( $docs_url ); ?>"
 			target="_blank"
@@ -66,6 +67,10 @@
 
 		<a href="<?php echo esc_url( $verify_url ); ?>" style="margin-left: 5px;">
 			<?php esc_html_e( 'I have configured webhooks in Stripe', 'simple-pay' ); ?>
+		</a>
+
+		<a href="<?php echo esc_url( $dismiss_url ); ?>" style="margin-left: auto;">
+			<?php esc_html_e( 'Do not show again', 'simple-pay' ); ?>
 		</a>
 	</p>
 </div>

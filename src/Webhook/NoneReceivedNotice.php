@@ -57,7 +57,12 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 			$check_received_events
 		);
 
-		if ( false === $check_received_events ) {
+		$dismissed = (bool) get_option(
+			'simpay_webhook_event_expected_dismiss',
+			false
+		);
+
+		if ( false === $check_received_events || true === $dismissed ) {
 			return array();
 		}
 
@@ -92,7 +97,10 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 
 			// Clear the "expected" flag when a user claims they have verified their settings.
 			'admin_init'                                              =>
-				'clear_expected_event',
+				array(
+					array( 'clear_expected_event' ),
+					array( 'dismiss_expected_event' )
+				),
 		);
 	}
 
@@ -279,6 +287,10 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function maybe_show_setting_notice() {
+		if ( true === $this->received_expected_event() ) {
+			return;
+		}
+
 		$docs_url = simpay_docs_link(
 			'',
 			'webhooks',
@@ -286,22 +298,27 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 			true
 		);
 
-		if ( true === $this->received_expected_event() ) {
-			return;
-		}
-
-		$verify_url = Settings\get_url(
+		$base_url = Settings\get_url(
 			array(
 				'section'    => 'stripe',
 				'subsection' => 'webhooks',
 			)
 		);
+
 		$verify_url = add_query_arg(
 			array(
 				'action' => 'simpay_verify_webhook',
 				'nonce'  => wp_create_nonce( 'simpay_verify_webhook' ),
 			),
-			$verify_url
+			$base_url
+		);
+
+		$dismiss_url = add_query_arg(
+			array(
+				'action' => 'simpay_dismiss_webhook',
+				'nonce'  => wp_create_nonce( 'simpay_dismiss_webhook' ),
+			),
+			$base_url
 		);
 
 		// @todo use a ViewLoader
@@ -356,6 +373,55 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 	}
 
 	/**
+	 * Permanately dismisses the "No webhooks received" notice.
+	 *
+	 * @since 4.4.2
+	 *
+	 * @return void
+	 */
+	public function dismiss_expected_event() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if (
+			! isset( $_GET['action'] ) ||
+			'simpay_dismiss_webhook' !== sanitize_text_field( $_GET['action'] )
+		) {
+			return;
+		}
+
+		$nonce = isset( $_GET['nonce'] )
+			? sanitize_text_field( $_GET['nonce'] )
+			: '';
+
+		if ( ! wp_verify_nonce( $nonce, 'simpay_dismiss_webhook' ) ) {
+			return;
+		}
+
+		// Clear expected event.
+		$option_key = sprintf(
+			'simpay_webhook_event_expected_%s',
+			simpay_is_test_mode() ? 'test' : 'live'
+		);
+
+		delete_option( $option_key );
+
+		// Flag permanent dismissal.
+		update_option( 'simpay_webhook_event_expected_dismiss', true );
+
+		$settings_url = Settings\get_url(
+			array(
+				'section'    => 'stripe',
+				'subsection' => 'webhooks',
+			)
+		);
+
+		wp_safe_redirect( esc_url_raw( $settings_url ) );
+		exit;
+	}
+
+	/**
 	 * Determines if the most recently received webhook event falls within the expected
 	 * timeframe after the last time an event was expected.
 	 *
@@ -373,7 +439,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		// The timeframe from the expected event has not passed yet, assume things will still work.
-		if ( time() < $expected + $timeframe ) {
+		if ( time() < ( $expected + $timeframe ) ) {
 			return true;
 		}
 

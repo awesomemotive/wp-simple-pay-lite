@@ -45,25 +45,13 @@ class Shortcodes {
 	public function register_shortcodes() {
 
 		add_shortcode( 'simpay', array( $this, 'print_public_form' ) );
-		add_shortcode( 'simpay_preview', array( $this, 'print_preview_form' ) );
 		add_shortcode( 'simpay_payment_receipt', array( $this, 'print_payment_receipt' ), 10, 2 );
 
 		// Deprecated.
-		add_shortcode( 'simpay_error', array( $this, 'print_errors' ) );
+		add_shortcode( 'simpay_error', '__return_empty_string' );
+		add_shortcode( 'simpay_preview', '__return_empty_string' );
 
 		do_action( 'simpay_add_shortcodes' );
-	}
-
-	/**
-	 * Error message shortcode
-	 *
-	 * @since unknown
-	 * @since 3.6.0 Deprecated. Prints nothing.
-	 *
-	 * @return string
-	 */
-	public function print_errors() {
-		return '';
 	}
 
 	/**
@@ -112,37 +100,6 @@ class Shortcodes {
 		}
 
 		return $html;
-	}
-
-	/**
-	 * Shortcode to render payment form preview.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param array $attributes Shortcode attributes.
-	 * @return string
-	 */
-	public function print_preview_form( $attributes ) {
-
-		$args = shortcode_atts(
-			array(
-				'id' => null,
-			),
-			$attributes
-		);
-
-		$id = absint( $args['id'] );
-
-		if ( $id > 0 ) {
-
-			$form_post = get_post( $id );
-
-			if ( $form_post && current_user_can( 'manage_options' ) ) {
-				return self::form_html( $id );
-			}
-		}
-
-		return '';
 	}
 
 	/**

@@ -34,6 +34,13 @@ class Installation {
 
 		self::create_pages();
 
+		// Set activation redirect transient.
+		set_transient(
+			'simpay_activation_redirect',
+			true,
+			( MINUTE_IN_SECONDS * 5 )
+		);
+
 		do_action( 'simpay_activated' );
 	}
 

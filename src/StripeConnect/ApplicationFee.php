@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin: Application fee
+ * Stripe Connect: Application fee
  *
  * @package SimplePay
  * @subpackage Core

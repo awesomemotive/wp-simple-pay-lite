@@ -12,13 +12,17 @@
 namespace SimplePay\Core\Admin;
 
 use SimplePay\Core\EventManagement\SubscriberInterface;
+use SimplePay\Core\License\LicenseAwareInterface;
+use SimplePay\Core\License\LicenseAwareTrait;
 
 /**
  * AdminBranding class.
  *
  * @since 4.4.0
  */
-class AdminBranding implements SubscriberInterface {
+class AdminBranding implements SubscriberInterface, LicenseAwareInterface {
+
+	use LicenseAwareTrait;
 
 	/**
 	 * {@inheritdoc}
@@ -45,6 +49,12 @@ class AdminBranding implements SubscriberInterface {
 			'simple-pay' !== $current_screen->post_type
 		) {
 			return;
+		}
+
+		$logo_url = '';
+
+		if ( true === $this->license->is_lite() ) {
+			$logo_url = simpay_pro_upgrade_url( 'header-logo' );
 		}
 
 		// @todo use a ViewLoader

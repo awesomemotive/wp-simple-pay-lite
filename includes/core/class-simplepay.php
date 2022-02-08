@@ -93,23 +93,7 @@ final class SimplePay {
 		register_activation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'activate' ) );
 		register_deactivation_hook( SIMPLE_PAY_MAIN_FILE, array( 'SimplePay\Core\Installation', 'deactivate' ) );
 
-		add_action( 'init', array( $this, 'setup_preview_form' ) );
-
 		do_action( 'simpay_loaded' );
-	}
-
-	/**
-	 * Load the preview class.
-	 *
-	 * @since 3.0.0
-	 */
-	public function setup_preview_form() {
-
-		if ( ! isset( $_GET['simpay-preview'] ) ) {
-			return '';
-		}
-
-		new Preview();
 	}
 
 	/**
@@ -183,7 +167,6 @@ final class SimplePay {
 
 		// Stripe Connect functionality.
 		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/admin.php' );
 
 		// reCAPTCHA.
 		require_once( SIMPLE_PAY_INC . 'core/recaptcha/index.php' );
@@ -242,7 +225,6 @@ final class SimplePay {
 
 		// Usage tracking functionality.
 		require_once( SIMPLE_PAY_INC . 'core/admin/usage-tracking/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/admin/usage-tracking/settings.php' );
 
 		new Admin\Assets();
 		new Admin\Menus();

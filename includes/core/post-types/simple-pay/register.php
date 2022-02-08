@@ -95,7 +95,7 @@ function register() {
 		'show_ui'              => true,
 		'show_in_menu'         => true,
 		'show_in_nav_menus'    => false,
-		'show_in_rest'         => false,
+		'show_in_rest'         => true,
 		'show_in_admin_bar'    => true,
 		'archive_in_nav_menus' => false,
 		'query_var'            => 'simpay-preview',
@@ -112,6 +112,42 @@ function register() {
 	register_post_type( 'simple-pay', $args );
 }
 add_action( 'init', __NAMESPACE__ . '\\register' );
+
+/**
+ * Registers additional fields for the REST API response.
+ *
+ * @since 4.4.2
+ *
+ * @return void
+ */
+function add_rest_fields() {
+	register_rest_field(
+		'simple-pay',
+		'payment_form_title',
+		array(
+			'get_callback' => function( $payment_form ) {
+				return get_post_meta( $payment_form['id'], '_company_name', true );
+			},
+			'schema'       => array(
+				'type' => 'string',
+			)
+		)
+	);
+
+	register_rest_field(
+		'simple-pay',
+		'payment_form_description',
+		array(
+			'get_callback' => function( $payment_form ) {
+				return get_post_meta( $payment_form['id'], '_item_description', true );
+			},
+			'schema'       => array(
+				'type' => 'string',
+			)
+		)
+	);
+}
+add_action( 'rest_api_init', __NAMESPACE__ . '\\add_rest_fields' );
 
 /**
  * Filters the Post's (Payment Form) preview link.

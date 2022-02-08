@@ -62,6 +62,14 @@ class Setting {
 	public $description;
 
 	/**
+	 * Setting schema.
+	 *
+	 * @since 4.4.2
+	 * @var array<mixed>
+	 */
+	public $schema;
+
+	/**
 	 * Setting value.
 	 *
 	 * @since 4.0.0
@@ -104,6 +112,8 @@ class Setting {
 	 *   @type string        $section Setting section ID.
 	 *   @type string        $subsection Setting subsection ID.
 	 *   @type string        $label Setting label.
+	 *   @type string        $description Setting description.
+	 *   @type array<mixed>  $schema Setting schema.
 	 *   @type int           $priority Setting priority.
 	 *   @type callable|null $output Setting output.
 	 *   @type array         $toggles {
@@ -120,6 +130,7 @@ class Setting {
 			'section'    => '',
 			'subsection' => '',
 			'label'      => '',
+			'schema'	 => array(),
 			'priority'   => 10,
 			'output'     => null,
 			'toggles'    => array(),
@@ -147,6 +158,9 @@ class Setting {
 		if ( empty( $this->label ) ) {
 			$this->label = $this->id;
 		}
+
+		// Schema.
+		$this->schema = $args['schema'];
 
 		// Priority.
 		$this->priority = floatval( $args['priority'] );

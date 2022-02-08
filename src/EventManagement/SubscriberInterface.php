@@ -30,17 +30,17 @@ interface SubscriberInterface {
 	 *
 	 * Example:
 	 *
-	 *  * array( 'hook_name' => 'method_name' )
-	 *  * array( 'hook_name' => array( 'method_name', $priority ) )
-	 *  * array( 'hook_name' => array( 'method_name', $priority, $accepted_args ) )
-	 *  * array( 'hook_name' => array(
-	 *      array( 'method_name_1', $priority_1, $accepted_args_1 ) ),
-	 *      array( 'method_name_2', $priority_2, $accepted_args_2 ) )
-	 *    )
+	 *  array( 'hook_name' => 'method_name' )
+	 *  array( 'hook_name' => array( 'method_name', $priority ) )
+	 *  array( 'hook_name' => array( 'method_name', $priority, $accepted_args ) )
+	 *  array( 'hook_name' => array(
+	 *    array( 'method_name_1', $priority_1, $accepted_args_1 ) ),
+	 *    array( 'method_name_2', $priority_2, $accepted_args_2 ) )
+	 *  )
 	 *
 	 * @since 4.4.0
 	 *
-	 * @return array<string, string|array<int|string, int|string>>
+	 * @return array<mixed>
 	 */
 	public function get_subscribed_events();
 

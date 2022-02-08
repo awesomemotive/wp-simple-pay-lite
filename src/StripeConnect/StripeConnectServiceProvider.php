@@ -32,6 +32,7 @@ class StripeConnectServiceProvider extends AbstractPluginServiceProvider {
 	 */
 	public function get_subscribers() {
 		return array(
+			'stripe-connect-connection-subscriber',
 			'stripe-connect-application-fee',
 		);
 	}
@@ -42,6 +43,13 @@ class StripeConnectServiceProvider extends AbstractPluginServiceProvider {
 	public function register() {
 		$container = $this->getContainer();
 
+		// Connection.
+		$container->share(
+			'stripe-connect-connection-subscriber',
+			ConnectionSubscriber::class
+		);
+
+		// Application fee.
 		$container->share(
 			'stripe-connect-application-fee',
 			ApplicationFee::class

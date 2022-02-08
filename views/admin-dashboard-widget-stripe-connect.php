@@ -38,11 +38,7 @@ $docs_url = simpay_docs_link(
 	</p>
 
 	<p>
-		<a href="<?php echo esc_url( simpay_get_stripe_connect_url() ); ?>" class="wpsp-stripe-connect">
-			<span>
-				<?php esc_html_e( 'Connect with Stripe', 'simple-pay' ); ?>
-			</span>
-		</a>
+		<?php echo simpay_get_stripe_connect_button() // PHPCS:ignore: WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 		<a href="<?php echo esc_url( $docs_url ); ?>" class="button button-secondary" target="_blank" rel="noopener noreferrer" style="margin-left: 5px;">
 			<?php
