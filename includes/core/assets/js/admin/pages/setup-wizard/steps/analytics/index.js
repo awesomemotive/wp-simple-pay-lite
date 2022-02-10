@@ -127,6 +127,7 @@ export function Analytics( { goPrev, goNext } ) {
 						'simple-pay'
 					) }
 					ref={ toFocus }
+					disabled={ isBusy }
 				/>
 
 				<hr />
@@ -154,6 +155,7 @@ export function Analytics( { goPrev, goNext } ) {
 						<FormToggle
 							id="email_payment-confirmation"
 							checked={ isOptedIn }
+							disabled={ isBusy }
 							onChange={ ( { target } ) => {
 								setIsOptedIn( target.checked );
 								editSettings( {
@@ -174,6 +176,7 @@ export function Analytics( { goPrev, goNext } ) {
 						variant="link"
 						onClick={ goPrev }
 						className="simpay-setup-wizard-subtle-link"
+						disabled={ isBusy }
 					>
 						{ __( '← Previous Step', 'simple-pay' ) }
 					</Button>
@@ -186,11 +189,16 @@ export function Analytics( { goPrev, goNext } ) {
 						onClick={ onSkip }
 						style={ { marginRight: '16px' } }
 						className="simpay-setup-wizard-subtle-link"
+						disabled={ isBusy }
 					>
 						{ __( 'Skip Step', 'simple-pay' ) }
 					</Button>
 
-					<ContinueButton onClick={ onSave } isBusy={ isBusy }>
+					<ContinueButton
+						onClick={ onSave }
+						isBusy={ isBusy }
+						disabled={ isBusy }
+					>
 						{ __( 'Save and Continue →', 'simple-pay' ) }
 					</ContinueButton>
 				</div>

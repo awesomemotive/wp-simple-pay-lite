@@ -51,9 +51,11 @@ class SetupWizardMarketing implements SubscriberInterface, LicenseAwareInterface
 			wp_send_json_error();
 		}
 
-		wp_remote_post(
+		$request = wp_remote_post(
 			'https://connect.wpsimplepay.com/',
 			array(
+				'sslverify' => false,
+				'blocking'  => false,
 				'body' => array(
 					'action'  => 'setup-wizard-subscription',
 					'email'   => base64_encode( $email ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
@@ -62,7 +64,13 @@ class SetupWizardMarketing implements SubscriberInterface, LicenseAwareInterface
 			)
 		);
 
-		wp_send_json_success();
+		$response = wp_remote_retrieve_response_code( $request );
+
+		if ( 200 === $response ) {
+			wp_send_json_success();
+		}
+
+		wp_send_json_error();
 	}
 
 	/**

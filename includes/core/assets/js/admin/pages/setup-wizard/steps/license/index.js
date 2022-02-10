@@ -115,6 +115,7 @@ export function License( { goNext } ) {
 					value={ licenseKey }
 					className={ classNames }
 					onChange={ ( value ) => setLicenseKey( value ) }
+					disabled={ isBusy }
 					help={
 						error
 							? error
@@ -130,7 +131,7 @@ export function License( { goNext } ) {
 			<CardFooter justify="flex-end" align="center">
 				<ContinueButton
 					onClick={ onActivate }
-					disabled={ '' === licenseKey }
+					disabled={ '' === licenseKey || isBusy }
 					isBusy={ isBusy }
 				>
 					{ __( 'Activate and Continue →', 'simple-pay' ) }

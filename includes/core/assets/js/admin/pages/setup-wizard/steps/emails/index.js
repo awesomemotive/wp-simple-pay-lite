@@ -148,9 +148,7 @@ export function Emails( { goPrev, goNext } ) {
 						<li className="simpay-setup-wizard-toggle-list__child">
 							<TextControl
 								label={ __( 'Send to:', 'simple-pay' ) }
-								value={
-									emailPaymentNotificationTo || adminEmail
-								}
+								value={ emailPaymentNotificationTo }
 								onChange={ ( value ) =>
 									editSettings( {
 										'email_payment-notification_to': value,

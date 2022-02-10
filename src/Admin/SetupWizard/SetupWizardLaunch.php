@@ -55,7 +55,7 @@ class SetupWizardLaunch implements SubscriberInterface {
 		}
 
 		// Plugin has been previously installed, do not redirect.
-		if ( get_option( 'simpay_installed' ) ) {
+		if ( ! empty( simpay_get_secret_key() ) ) {
 			return;
 		}
 

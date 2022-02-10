@@ -232,9 +232,16 @@ function __unstable_add_payment_amount( $post_id ) {
 						$prices = simpay_get_payment_form_prices( $form );
 
 						if ( ! empty( $prices ) ) {
-							$price = current( $prices );
-
+							$price    = current( $prices );
 							$currency = $price->currency;
+
+							$amount = simpay_format_currency(
+								$price->unit_amount,
+								$price->currency,
+								false
+							);
+
+							$current_amount = $amount;
 						} else {
 							$currency = strtolower(
 								simpay_get_setting( 'currency', 'USD' )
@@ -251,6 +258,14 @@ function __unstable_add_payment_amount( $post_id ) {
 								),
 								$form
 							);
+
+							$amount = simpay_format_currency(
+								$price->unit_amount,
+								$price->currency,
+								false
+							);
+
+							$current_amount = '0.00';
 						}
 
 						$classes = array(
@@ -258,12 +273,6 @@ function __unstable_add_payment_amount( $post_id ) {
 							'simpay-field-tiny',
 							'simpay-field-amount',
 							'simpay-price-amount',
-						);
-
-						$amount = simpay_format_currency(
-							$price->unit_amount,
-							$price->currency,
-							false
 						);
 
 						$placeholder = simpay_format_currency(
@@ -300,7 +309,7 @@ function __unstable_add_payment_amount( $post_id ) {
 								'type'    => 'standard',
 								'subtype' => 'hidden',
 								'name'    => '_simpay_prices[0][unit_amount_current]',
-								'value'   => $amount,
+								'value'   => $current_amount,
 							)
 						);
 

@@ -19,7 +19,7 @@ import {
 
 const { adminUrl } = simpaySetupWizard;
 
-export function Welcome( { goNext } ) {
+export function Welcome( { goNext, hasPrev } ) {
 	const toFocus = useRef();
 
 	useLayoutEffect( () => {
@@ -56,7 +56,7 @@ export function Welcome( { goNext } ) {
 				</ContinueButton>
 			</Card>
 
-			<CloseWizard />
+			<CloseWizard isFirst={ true } />
 		</SetupWizard>
 	);
 }

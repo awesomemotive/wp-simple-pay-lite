@@ -123,6 +123,7 @@ export function Stripe( { goNext, goPrev, hasPrev } ) {
 							variant="link"
 							onClick={ goPrev }
 							className="simpay-setup-wizard-subtle-link"
+							disabled={ isConnecting || isRedirecting }
 						>
 							{ __( '← Previous Step', 'simple-pay' ) }
 						</Button>
@@ -134,6 +135,7 @@ export function Stripe( { goNext, goPrev, hasPrev } ) {
 						href={ stripeConnectUrl }
 						onClick={ () => setIsRedirecting( true ) }
 						isBusy={ isConnecting || isRedirecting }
+						disabled={ isConnecting || isRedirecting }
 						ref={ toFocus }
 					>
 						{ isConnecting ? (

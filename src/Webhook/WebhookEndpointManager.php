@@ -122,7 +122,10 @@ class WebhookEndpointManager {
 					'enabled_events' => $this->get_event_whitelist(),
 					'connect'        => false,
 					'api_version'    => SIMPLE_PAY_STRIPE_API_VERSION, // @phpstan-ignore-line
-					'description'    => 'WP Simple Pay (WordPress plugin) endpoint.'
+					'description'    => sprintf(
+						'WP Simple Pay (WordPress plugin) endpoint (%s Mode)',
+						simpay_is_test_mode() ? 'Test' : 'Live'
+					),
 				),
 				$this->get_api_request_args()
 			);
@@ -215,6 +218,13 @@ class WebhookEndpointManager {
 			simpay_update_setting(
 				"{$prefix}_webhook_endpoint_secret",
 				$endpoint->secret
+			);
+
+			// Clear out from a previous connection.
+		} else {
+			simpay_update_setting(
+				"{$prefix}_webhook_endpoint_secret",
+				''
 			);
 		}
 
