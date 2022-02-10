@@ -286,7 +286,7 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 * New: Add "WP Simple Pay" payment form block.
 * New: Load payment form preview in an isolated environment. Add helper links.
 * New: Link branding bar logo to website.
-* Fix: Ensure defaultl $1.00 amount can be saved on initial form publish.
+* Fix: Ensure default $1.00 amount can be saved on initial form publish.
 * Fix: Do not display empty form state when searching for payment forms.
 * Fix: Update reCAPTCHA setup description.
 * Fix: Ensure "Test Mode" can be toggled when there is no active connection.
