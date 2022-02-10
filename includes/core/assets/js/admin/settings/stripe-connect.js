@@ -14,6 +14,10 @@ import domReady from '@wordpress/dom-ready';
 export function toggleStripeConnectNotice( newMode, initialMode ) {
 	const notice = document.getElementById( 'simpay-test-mode-toggle-notice' );
 
+	if ( ! notice ) {
+		return;
+	}
+
 	// Only show a notice when the mode changes.
 	if ( newMode === initialMode ) {
 		notice.style.display = 'none';
@@ -49,7 +53,6 @@ function accountInfo() {
 	wp.ajax.send( 'simpay_stripe_connect_account_information', {
 		data: {
 			nonce: containerEl.dataset.nonce,
-			account_id: containerEl.dataset.accountId,
 		},
 		success: ( response ) => {
 			containerEl.querySelector( 'p' ).innerHTML = response.message;

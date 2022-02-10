@@ -60,6 +60,10 @@ function register_subsections( $subsections ) {
 		)
 	);
 
+	if ( empty( simpay_get_secret_key() ) ) {
+		return;
+	}
+
 	// Locale.
 	$subsections->add(
 		new Settings\Subsection(
@@ -95,14 +99,6 @@ add_action( 'simpay_register_settings', __NAMESPACE__ . '\\register_settings' );
  * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
  */
 function register_account_settings( $settings ) {
-	// Hide submit button if there is no Stripe connection.
-	if ( empty( simpay_get_secret_key() ) && false === simpay_can_site_manage_stripe_keys() ) {
-		add_filter(
-			'simpay_admin_page_settings_keys_submit',
-			'__return_false'
-		);
-	}
-
 	// Account.
 	$settings->add(
 		new Settings\Setting(
@@ -124,11 +120,11 @@ function register_account_settings( $settings ) {
 
 					// Need some sort of key (from a Connect account or manual) to check status.
 					if ( simpay_check_keys_exist() ) {
-						$html .= '<div id="simpay-stripe-account-info" class="simpay-stripe-account-info notice inline" data-account-id="' . simpay_get_account_id() . '" data-nonce="' . wp_create_nonce( 'simpay-stripe-connect-information' ) . '"><p><span class="spinner is-active"></span> <em>' . esc_html__( 'Retrieving account information...', 'stripe' ) . '</em></p></div>';
+						$html .= '<div id="simpay-stripe-account-info" class="simpay-stripe-account-info notice inline" data-nonce="' . wp_create_nonce( 'simpay-stripe-connect-information' ) . '"><p><span class="spinner is-active"></span> <em>' . esc_html__( 'Retrieving account information...', 'stripe' ) . '</em></p></div>';
 					}
 
 					if ( false === simpay_get_account_id() || ! simpay_check_keys_exist() ) {
-						$html .= '<a href="' . esc_url( simpay_get_stripe_connect_url() ) . '" class="wpsp-stripe-connect"><span>' . __( 'Connect with Stripe', 'stripe' ) . '</span></a>';
+						$html .= simpay_get_stripe_connect_button();
 					} else {
 						$html .= '<p id="simpay-stripe-auth-error-account-actions" style="display: none;">' . sprintf(
 							/* translators: %1$s Stripe payment mode. %2$s Opening anchor tag for reconnecting to Stripe, do not translate. %3$s Opening anchor tag for disconnecting Stripe, do not translate. %4$s Closing anchor tag, do not translate. */
@@ -192,11 +188,6 @@ function register_account_settings( $settings ) {
 		)
 	);
 
-	// Do not add additional fields until there is a connection.
-	if ( empty( simpay_get_secret_key() ) && false === simpay_can_site_manage_stripe_keys() ) {
-		return;
-	}
-
 	// Keys.
 	$keys = array(
 		'test_publishable_key' => esc_html__( 'Test Publishable Key', 'stripe' ),
@@ -220,6 +211,9 @@ function register_account_settings( $settings ) {
 						'regular-text',
 					),
 					'priority'   => $priority,
+					'schema'     => array(
+						'type' => 'string',
+					),
 				)
 			)
 		);
@@ -271,15 +265,28 @@ function register_account_settings( $settings ) {
 						'<a href="https://dashboard.stripe.com" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 						Utils\get_external_link_markup() . '</a>'
 					) .
-					sprintf(
-						'<div id="simpay-test-mode-toggle-notice" class="notice inline notice-warning hidden" style="margin-top: 15px;">%s</div>',
-						$toggle_notice
+					(
+						! empty( simpay_get_secret_key() ) ?
+							sprintf(
+								'<div id="simpay-test-mode-toggle-notice" class="notice inline notice-warning hidden" style="margin-top: 15px;">%s</div>',
+								$toggle_notice
+							)
+							: ''
 					)
 				),
 				'priority'    => 40,
+				'schema'      => array(
+					'type' => 'string',
+					'enum' => array( 'enabled', 'disabled' ),
+				),
 			)
 		)
 	);
+
+	// Do not add additional fields until there is a connection.
+	if ( empty( simpay_get_secret_key() ) && false === simpay_can_site_manage_stripe_keys() ) {
+		return;
+	}
 
 	// Country.
 	$settings->add(
@@ -298,6 +305,9 @@ function register_account_settings( $settings ) {
 					)
 				),
 				'priority'    => 60,
+				'schema'      => array(
+					'type' => 'string',
+				),
 			)
 		)
 	);
@@ -326,6 +336,9 @@ function register_locale_settings( $settings ) {
 						'Specify "Auto-detect" to display Stripe Checkout in the user\'s preferred language, if available.',
 						'stripe'
 					)
+				),
+				'schema'     => array(
+					'type' => 'string',
 				),
 			)
 		)

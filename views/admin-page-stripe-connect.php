@@ -17,6 +17,11 @@ $docs_url = simpay_docs_link(
 	'global-settings',
 	true
 );
+
+// Help avoid errors if URL is not passed to the view.
+if ( ! isset( $redirect_url ) ) {
+	$redirect_url = '';
+}
 ?>
 
 <style>.page-title-action, #show-settings-link, .search-box { display: none; }</style>
@@ -31,7 +36,7 @@ $docs_url = simpay_docs_link(
 		<strong>
 			<?php
 			esc_html_e(
-				'You need to connect your Stripe account before creating a payment form.',
+				'You need to connect your Stripe account before proceeding.',
 				'simple-pay'
 			);
 			?>
@@ -48,11 +53,7 @@ $docs_url = simpay_docs_link(
 	</p>
 
 	<section>
-		<a href="<?php echo esc_url( simpay_get_stripe_connect_url() ); ?>" class="wpsp-stripe-connect">
-			<span>
-				<?php esc_html_e( 'Connect with Stripe', 'simple-pay' ); ?>
-			</span>
-		</a>
+		<?php echo simpay_get_stripe_connect_button( $redirect_url ) // PHPCS:ignore: WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</section>
 
 	<section>

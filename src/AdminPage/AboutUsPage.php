@@ -11,31 +11,17 @@
 
 namespace SimplePay\Core\AdminPage;
 
+use SimplePay\Core\License\LicenseAwareInterface;
+use SimplePay\Core\License\LicenseAwareTrait;
+
 /**
  * AboutUsPage class.
  *
  * @since 4.4.0
  */
-class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterface {
+class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterface, LicenseAwareInterface {
 
-	/**
-	 * Plugin license.
-	 *
-	 * @since 4.4.0
-	 * @var \SimplePay\Core\License\License
-	 */
-	private $license;
-
-	/**
-	 * AboutUsPage.
-	 *
-	 * @since 4.4.0
-	 *
-	 * @param \SimplePay\Core\License\License $license Plugin license.
-	 */
-	public function __construct( $license ) {
-		$this->license = $license;
-	}
+	use LicenseAwareTrait;
 
 	/**
 	 * {@inheritdoc}

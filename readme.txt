@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 4.9.8
 Tested up to: 5.9
-Stable tag: 4.4.1
+Stable tag: 4.4.2
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -279,6 +279,20 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 9. Settings: Site-wide defaults
 
 == Changelog ==
+
+= 4.4.2 - February 10, 2022 =
+
+* New: Add "Setup Wizard" for new installs.
+* New: Add "WP Simple Pay" payment form block.
+* New: Load payment form preview in an isolated environment. Add helper links.
+* New: Link branding bar logo to website.
+* Fix: Ensure default $1.00 amount can be saved on initial form publish.
+* Fix: Do not display empty form state when searching for payment forms.
+* Fix: Update reCAPTCHA setup description.
+* Fix: Ensure "Test Mode" can be toggled when there is no active connection.
+* Fix: Only show published pages in settings dropdowns.
+* Fix: Redirect back to relevant page when connecting to Stripe.
+* Dev: Update test matrix against WordPress 5.9.
 
 = 4.4.1 - January 11, 2022 =
 

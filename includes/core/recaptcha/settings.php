@@ -80,6 +80,9 @@ function register_settings( $settings ) {
 					'regular-text',
 				),
 				'priority'   => 20,
+				'schema'     => array(
+					'type' => 'string',
+				),
 			)
 		)
 	);
@@ -97,6 +100,9 @@ function register_settings( $settings ) {
 					'regular-text',
 				),
 				'priority'   => 30,
+				'schema'     => array(
+					'type' => 'string',
+				),
 			)
 		)
 	);
@@ -128,6 +134,9 @@ function register_settings( $settings ) {
 					)
 				),
 				'priority'    => 40,
+				'schema'      => array(
+					'type' => 'string',
+				),
 			)
 		)
 	);
@@ -147,16 +156,12 @@ function setup_description() {
 	<div class="notice inline simpay-recaptcha-feedback" style="display: none;"><p></p></div>
 	<?php endif; ?>
 
-	<p><?php esc_html_e( 'reCAPTCHA can help automatically protect your custom payment forms from spam and fraud.', 'stripe' ); ?></p>
-
-	<br />
-
 	<p>
 	<?php
 	echo wp_kses_post(
 		sprintf(
 			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-			__( 'To enable reCAPTCHA %1$sregister your site with Google%2$s with reCAPTCHA v3 to retrieve the necessary credentials.', 'stripe' ),
+			__( 'reCAPTCHA is a free anti-spam service from Google which helps to protect your website from spam and abuse while letting real people pass through with ease. To enable reCAPTCHA %1$sregister your site with Google%2$s with reCAPTCHA v3 to retrieve the necessary credentials.', 'stripe' ),
 			'<a href="https://www.google.com/recaptcha/admin/create" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 			Utils\get_external_link_markup() . '</a>'
 		)
@@ -167,16 +172,25 @@ function setup_description() {
 	<br />
 
 	<p>
-	<?php
-	echo wp_kses_post(
-		sprintf(
-			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-			__( 'Have questions about reCAPTCHA? %1$sView the reCAPTCHA documentation%2$s', 'stripe' ),
-			'<a href="' . simpay_docs_link( '', 'recaptcha', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
-			Utils\get_external_link_markup() . '</a>'
-		)
-	);
-	?>
+		<a href="https://www.google.com/recaptcha/admin/create" target="_blank" rel="noopener noreferrer"  class="button button-secondary">
+			<?php
+			esc_html_e( 'Sign Up for reCAPTCHA', 'stripe' );
+			?>
+		</a>
+	</p>
+
+	<p class="simpay-stripe-connect-help description">
+		<span class="dashicons dashicons-editor-help"></span>
+		<?php
+		echo wp_kses_post(
+			sprintf(
+				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+				__( '%1$sView our reCAPTCHA documentation%2$s  to learn more and for step-by-step instructions.', 'stripe' ),
+				'<a href="' . simpay_docs_link( '', 'recaptcha', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+				Utils\get_external_link_markup() . '</a>'
+			)
+		);
+		?>
 	</p>
 
 	<?php

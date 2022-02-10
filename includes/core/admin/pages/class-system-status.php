@@ -97,6 +97,13 @@ class System_Status {
 	 * @since 3.0.0
 	 */
 	public static function html() {
+		$setup_wizard_url = add_query_arg(
+			array(
+				'post_type' => 'simple-pay',
+				'page'      => 'simpay-setup-wizard',
+			),
+			admin_url( 'edit.php' )
+		);
 		?>
 
 		<div class="wrap">
@@ -127,6 +134,15 @@ class System_Status {
 								);
 								?>
 							</a>
+
+							<?php
+							/**
+							 * Provides a way to output additional buttons at the top of the system report.
+							 *
+							 * @since 4.4.2
+							 */
+							do_action( '__unstable_simpay_system_report_actions' );
+							?>
 						</div>
 					</div>
 

@@ -77,14 +77,11 @@ add_action( 'simpay_register_collections', __NAMESPACE__ . '\\register_subsectio
  * Registers settings.
  *
  * @since 4.0.0
+ * @since 4.4.2 Always register settings to collection regardless of admin context.
  *
  * @param \SimplePay\Core\Utils\Collections $registry Collections registry.
  */
 function register_settings( $registry ) {
-	if ( ! is_admin() ) {
-		return;
-	}
-
 	// Add Settings Sections registry to Collections registry.
 	$settings = new Setting_Collection();
 	$registry->add( 'settings', $settings );
@@ -107,19 +104,6 @@ add_action( 'simpay_register_collections', __NAMESPACE__ . '\\register_settings'
  * @since 4.0.0
  */
 function register_wp_settings_api() {
-	// Register the single option that stores all settings.
-	register_setting(
-		'simpay_settings',
-		'simpay_settings',
-		array(
-			'type'              => 'array',
-			'description'       => '',
-			'sanitize_callback' => 'SimplePay\\Core\\Settings\\save_wp_settings_api',
-			'default'           => array(),
-			'show_in_rest'      => false,
-		)
-	);
-
 	// Register subsections.
 	// Used to output settings fields on the page.
 	//
@@ -188,6 +172,116 @@ function register_wp_settings_api() {
 add_action( 'admin_init', __NAMESPACE__ . '\\register_wp_settings_api' );
 
 /**
+ * Builds schema for registered settings.
+ *
+ * @since 4.4.2
+ *
+ * @return array<mixed>
+ */
+function get_api_schema() {
+	$settings = Utils\get_collection( 'settings' );
+	$schema   = array(
+		'type'       => 'object',
+		'properties' => array(),
+		'default'    => array(),
+	);
+
+	foreach ( $settings->get_items() as $setting ) {
+		if ( empty( $setting->schema ) ) {
+			continue;
+		}
+
+		$schema['properties'][ $setting->id ] = $setting->schema;
+
+		if ( isset( $setting->schema['default'] ) ) {
+			$schema['default'][ $setting->id ] = $setting->schema['default'];
+		}
+	}
+
+	return $schema;
+}
+
+/**
+ * Removes unregistered or schema-less settings from the setting value when being retrieved by the REST API.
+ *
+ * This prevents `rest_validate_value_from_schema()` from failing and nullifying the value.
+ *
+ * @since 4.4.2
+ *
+ * @param null   $value The setting value to validate. Return null to retrieve the value without modification.
+ * @param string $name The setting name.
+ * @return array<mixed>
+ */
+function pre_validate_rest_api_setting( $value, $name ) {
+	if ( 'simpay_settings' !== $name ) {
+		return $value;
+	}
+
+	$registered_settings = Utils\get_collection( 'settings' );
+
+	if ( false === $registered_settings ) {
+		return $value;
+	}
+
+	$settings = array();
+
+	foreach ( $registered_settings->get_items() as $setting ) {
+		if ( empty( $setting->schema ) ) {
+			continue;
+		}
+
+		$default = isset( $setting->schema['default'] )
+			? $setting->schema['default']
+			: '';
+
+		$persisted_setting = simpay_get_setting(
+			$setting->id,
+			$default
+		);
+
+		if ( empty( $persisted_setting ) ) {
+			continue;
+		}
+
+		$settings[ $setting->id ] = $persisted_setting;
+	}
+
+	return $settings;
+}
+add_filter(
+	'rest_pre_get_setting',
+	__NAMESPACE__ . '\\pre_validate_rest_api_setting',
+	10,
+	2
+);
+
+/**
+ * Registers the setting within the WordPress settings API.
+ *
+ * @since 4.4.2
+ * @since 4.4.2 Extracted to its own callback to run on `init`.
+ *
+ * @return void
+ */
+function register_wp_setting() {
+	register_setting(
+		'simpay_settings',
+		'simpay_settings',
+		array(
+			'type'              => 'object',
+			'description'       => '',
+			'sanitize_callback' => 'SimplePay\\Core\\Settings\\save_wp_settings_api',
+			'default'           => array(),
+			'show_in_rest'      => array(
+				'schema' => get_api_schema(),
+			),
+		)
+	);
+}
+add_action( 'admin_init', __NAMESPACE__ . '\\register_wp_setting', 99 );
+add_action( 'rest_api_init', __NAMESPACE__ . '\\register_wp_setting', 99 );
+
+/**
  * Saves the registered settings.
  *
  * @since 4.0.0
@@ -205,6 +299,15 @@ function save_wp_settings_api( $to_save ) {
 	// Current user cannot manage options, return current value.
 	if ( true !== current_user_can( 'manage_options' ) ) {
 		return $saved_settings;
+	}
+
+	// If this is a REST API request, sanitize via API schema.
+	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
+		return rest_sanitize_value_from_schema(
+			$to_save,
+			get_api_schema(),
+			'simpay_settings'
+		);
 	}
 
 	$settings = Utils\get_collection( 'settings' );

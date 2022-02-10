@@ -28,7 +28,7 @@ class Setting_Collection extends Utils\Collection_Prioritized {
 	 *
 	 * @since 4.0.0
 	 *
-	 * @param \SimplePay\Core\Settings\Settting $setting Settings arguments.
+	 * @param \SimplePay\Core\Settings\Setting $setting Settings arguments.
 	 * @return \WP_Error|true True on successful addition, otherwise a \WP_Error object.
 	 */
 	public function add( $setting ) {

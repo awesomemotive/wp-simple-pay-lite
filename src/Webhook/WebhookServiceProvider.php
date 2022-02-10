@@ -24,7 +24,9 @@ class WebhookServiceProvider extends AbstractPluginServiceProvider {
 	 * {@inheritdoc}
 	 */
 	public function get_services() {
-		return array();
+		return array(
+			'webhook-endpoint-manager',
+		);
 	}
 
 	/**
@@ -33,6 +35,8 @@ class WebhookServiceProvider extends AbstractPluginServiceProvider {
 	public function get_subscribers() {
 		return array(
 			'webhook-none-received-notice',
+			'webhook-stripe-connect-sync',
+			'webhook-endpoint-health-check',
 		);
 	}
 
@@ -42,6 +46,27 @@ class WebhookServiceProvider extends AbstractPluginServiceProvider {
 	public function register() {
 		$container = $this->getContainer();
 
+		// Manager.
+		$container->share(
+			'webhook-endpoint-manager',
+			WebhookEndpointManager::class
+		);
+
+		// Stripe Connect sync.
+		$container->share(
+			'webhook-stripe-connect-sync',
+			StripeConnectSync::class
+		)
+			->withArgument( $container->get( 'webhook-endpoint-manager' ) );
+
+		// Endpoint health check.
+		$container->share(
+			'webhook-endpoint-health-check',
+			EndpointHealthCheck::class
+		)
+			->withArgument( $container->get( 'webhook-endpoint-manager' ) );
+
+		// No webhook received notice.
 		$container->share(
 			'webhook-none-received-notice',
 			NoneReceivedNotice::class

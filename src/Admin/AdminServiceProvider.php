@@ -26,7 +26,10 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 	 * {@inheritdoc}
 	 */
 	public function get_services() {
-		return array();
+		return array(
+			'admin-page-about-us',
+			'admin-page-setup-wizard',
+		);
 	}
 
 	/**
@@ -69,18 +72,28 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @return \SimplePay\Core\AdminPage\AdminPageInterface[] Admin pages to register.
+	 * @return array<\SimplePay\Core\AdminPage\AdminPageInterface> Admin pages to register.
 	 */
 	private function get_pages() {
 		$container = $this->getContainer();
-		$pages     = array();
 
-		$license = $container->get( 'license' );
+		// Setup wizard.
+		$container->share(
+			'admin-page-setup-wizard',
+			AdminPage\SetupWizardPage::class
+		);
 
-		if ( $license instanceof \SimplePay\Core\License\License ) {
-			// "About Us" page.
-			$pages[] = new AdminPage\AboutUsPage( $license );
-		}
+		// About Us.
+		$container->share(
+			'admin-page-about-us',
+			AdminPage\AboutUsPage::class
+		);
+
+		/** @var array<\SimplePay\Core\AdminPage\AdminPageInterface> $pages */
+		$pages = array(
+			$container->get( 'admin-page-setup-wizard' ),
+			$container->get( 'admin-page-about-us' ),
+		);
 
 		return $pages;
 	}

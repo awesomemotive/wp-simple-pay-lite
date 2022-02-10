@@ -85,8 +85,6 @@ function stripe_connect() {
 		return false;
 	}
 
-	simpay_stripe_connect_button_css();
-
 	ob_start();
 	?>
 
@@ -95,9 +93,7 @@ function stripe_connect() {
 </p>
 
 <p>
-	<a href="<?php echo esc_url( simpay_get_stripe_connect_url() ); ?>" class="wpsp-stripe-connect"><span>
-		<?php esc_html_e( 'Connect with Stripe', 'stripe' ); ?>
-	</span></a>
+	<?php echo simpay_get_stripe_connect_button(); // PHPCS:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 	<a href="<?php echo esc_url( simpay_docs_link( '', 'stripe-setup', 'global-notice', true ) ); ?>" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="margin-left: 5px;">
 		<?php esc_html_e( 'Learn More', 'stripe' ); ?>

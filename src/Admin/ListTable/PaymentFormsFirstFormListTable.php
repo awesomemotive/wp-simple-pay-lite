@@ -34,7 +34,7 @@ class PaymentFormsFirstFormListTable extends WP_Posts_List_Table {
 	 * @return void
 	 */
 	public function display() {
-		if ( $this->has_items() ) {
+		if ( $this->has_items() || isset( $_GET['s'] ) ) {
 			parent::display();
 		} else {
 			// @todo use a ViewLoader

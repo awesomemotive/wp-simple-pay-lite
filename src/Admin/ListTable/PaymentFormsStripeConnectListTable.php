@@ -34,8 +34,16 @@ class PaymentFormsStripeConnectListTable extends WP_Posts_List_Table {
 	 * @return void
 	 */
 	public function display() {
+		$redirect_url = add_query_arg(
+			array(
+				'post_type'           => 'simple-pay',
+				'simpay-is-connected' => true,
+			),
+			admin_url( 'edit.php' )
+		);
+
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-stripe-connect.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-page-stripe-connect.php'; // @phpstan-ignore-line
 	}
 
 }

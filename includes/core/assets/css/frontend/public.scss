@@ -58,7 +58,11 @@ $error-text-color: #eb1c26;
 
 // Test mode badge.
 .simpay-test-mode-badge-container {
-	text-align: center;
+
+	.simpay-checkout-form--embedded &,
+	.simpay-modal__content & {
+		text-align: center;
+	}
 
 	.simpay-test-mode-badge {
 		color: #a04903;
@@ -73,5 +77,28 @@ $error-text-color: #eb1c26;
 		background: #ffde92;
 		display: inline-flex;
 		align-items: center;
+	}
+}
+
+.simpay-form-preview {
+	padding: 50px;
+
+	&-button {
+
+	}
+
+	&-notice {
+		background-color: rgba(250, 230, 1, 0.1);
+		margin-bottom: 50px;
+		padding: 1em;
+		border-radius: 4px;
+		display: inline-block;
+
+		p {
+			font-family: $base-font;
+			font-size: 16px;
+			color: $base-text-color;
+			margin: 0;
+		}
 	}
 }

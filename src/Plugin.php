@@ -135,18 +135,32 @@ final class Plugin {
 	 * @return \SimplePay\Vendor\League\Container\ServiceProvider\ServiceProviderInterface[]
 	 */
 	private function get_service_providers() {
+		global $wp_version;
+
 		$service_providers = array(
+			new FormPreview\FormPreviewServiceProvider,
 			new License\LicenseServiceProvider,
 			new StripeConnect\StripeConnectServiceProvider,
 			new Webhook\WebhookServiceProvider,
 		);
 
+		if ( version_compare( $wp_version, '5.6', '>=' ) ) {
+			$service_providers[] = new Block\BlockServiceProvider;
+		}
+
 		if ( is_admin() ) {
+			global $wp_version;
+
 			$admin_service_providers = array(
 				new Admin\AdminServiceProvider,
 				new Admin\Addon\AddonServiceProvider,
 				new Admin\Education\EducationServiceProvider,
 			);
+
+			if ( version_compare( $wp_version, '5.5', '>=' ) ) {
+				$admin_service_providers[] =
+					new Admin\SetupWizard\SetupWizardServiceProvider;
+			}
 
 			return array_merge( $admin_service_providers, $service_providers );
 		}

@@ -28,6 +28,7 @@ const {
 window.wpsp = {
 	hooks,
 	paymentForms,
+	initPaymentForm,
 	api: {
 		charges,
 		customers,
@@ -69,8 +70,9 @@ function initPaymentForms() {
  * Initializes a Payment Form given a jQuery object.
  *
  * @param {jQuery} $paymentForm jQuery Payment Form object.
+ * @param {Object|boolean} __unstableFormVars Form data. Will be pulled from page source if not set.
  */
-function initPaymentForm( $paymentForm ) {
+function initPaymentForm( $paymentForm, __unstableFormVars = false ) {
 	// Add the form instance count to the wrapper element to allow selectors
 	// such as #payment-form-123[data-simpay-form-instance="2"].
 	//
@@ -83,10 +85,18 @@ function initPaymentForm( $paymentForm ) {
 	$paymentForm.attr( 'data-simpay-form-instance', formCount );
 
 	// Retrieve localized form data.
-	const forms = window.simplePayForms;
-	const formId = $paymentForm.data( 'simpay-form-id' );
+	let paymentFormData, formId;
 
-	const paymentFormData = forms[ formId ];
+	if ( false === __unstableFormVars ) {
+		const forms = window.simplePayForms;
+
+		formId = $paymentForm.data( 'simpay-form-id' );
+		paymentFormData = forms[ formId ];
+	} else {
+		paymentFormData = __unstableFormVars;
+		formId = __unstableFormVars.id;
+	}
+
 	const {
 		type: formType,
 		form: { prices, livemode, config = {} },

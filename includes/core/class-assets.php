@@ -27,7 +27,7 @@ class Assets {
 	 * @since 3.0.0
 	 * @var array
 	 */
-	private $scripts = array();
+	public $scripts = array();
 
 	/**
 	 * Styles.

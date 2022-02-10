@@ -268,3 +268,10 @@
 		}
 	}
 }
+
+/**
+ * Hide menu items that should not be launched directly.
+ */
+#adminmenu a[href*="page=simpay-setup-wizard"] {
+	display: none;
+}

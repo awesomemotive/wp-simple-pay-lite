@@ -1,0 +1,33 @@
+div[data-type="simpay/payment-form"] {
+
+	.components-placeholder__fieldset {
+		display: block;
+
+		select {
+			max-width: none;
+		}
+	}
+
+	em.simpay-total-amount-value {
+		font-style: normal;
+	}
+
+	// The <Disabled /> component adds a disabled attribute to the button, which is
+	// styled by https://checkout.stripe.com/v3/checkout/button.css
+	.stripe-button-el:disabled {
+		background-image: linear-gradient(#28a0e5,#015e94);
+		box-shadow: 0 1px 0 rgb(0, 0, 0, 0.20);
+
+		span {
+			text-shadow: 0 -1px 0 rgb(0, 0, 0, 0.25);
+			color: #fff;
+			background: #1275ff;
+			background-image: linear-gradient(#7dc5ee,#008cdd 85%,#30a2e4);
+		}
+	}
+
+	// Lower opacity as the form is initialized.
+	.is-loading .wp-block-simpay-payment-form {
+		opacity: 0.65;
+	}
+}

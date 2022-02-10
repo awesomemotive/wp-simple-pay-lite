@@ -1,0 +1,3 @@
+div[data-type="simpay/payment-form"] .components-placeholder__fieldset{display:block}div[data-type="simpay/payment-form"] .components-placeholder__fieldset select{max-width:none}div[data-type="simpay/payment-form"] em.simpay-total-amount-value{font-style:normal}div[data-type="simpay/payment-form"] .stripe-button-el:disabled{background-image:linear-gradient(#28a0e5, #015e94);box-shadow:0 1px 0 rgba(0,0,0,.2)}div[data-type="simpay/payment-form"] .stripe-button-el:disabled span{text-shadow:0 -1px 0 rgba(0,0,0,.25);color:#fff;background:#1275ff;background-image:linear-gradient(#7dc5ee, #008cdd 85%, #30a2e4)}div[data-type="simpay/payment-form"] .is-loading .wp-block-simpay-payment-form{opacity:.65}
+
+/*# sourceMappingURL=simpay-block-payment-form.min.css.map*/
