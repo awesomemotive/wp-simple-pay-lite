@@ -1109,9 +1109,11 @@ select.simpay-currency-symbol {
 /**
  * Screen Options
  */
-.post-php.post-type-simple-pay {
+.post-php.post-type-simple-pay,
+.post-new-php.post-type-simple-pay {
 
-	#screen-meta-links {
+	#slugdiv,
+	label[for="slugdiv-hide"] {
 		display: none;
 	}
 }

@@ -122,7 +122,12 @@ class Default_Form extends Form {
 			"simpay-{$form_display_type}-form-wrap",
 		);
 
-		echo '<div id="simpay-' . $form_display_type . '-form-wrap-' . $this->id . '" class="' . esc_attr( implode( ' ', $classes ) ) . '">';
+		printf(
+			'<div id="simpay-%1$s-form-wrap-%2$s" data-id="simpay-form-%2$s-wrap" class="%3$s">',
+			$form_display_type,
+			$this->id,
+			esc_attr( implode( ' ', $classes ) )
+		);
 
 			do_action( 'simpay_form_' . absint( $this->id ) . '_before_payment_form', $this );
 

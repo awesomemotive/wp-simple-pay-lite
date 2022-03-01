@@ -32,6 +32,7 @@ function onLeavePage( initialValues ) {
 			{ hash: true }
 		);
 		delete newFormValues.simpay_form_settings_tab;
+		delete newFormValues.simpay_save_preview;
 
 		if ( JSON.stringify( newFormValues ) !== initialValues ) {
 			event.preventDefault();

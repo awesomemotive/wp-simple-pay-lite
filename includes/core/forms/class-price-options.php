@@ -64,6 +64,11 @@ class PriceOptions {
 			return $this->prices;
 		}
 
+		// Do not create price options if the form is still an auto-draft.
+		if ( 'auto-draft' === $this->form->post->post_status ) {
+			return array();
+		}
+
 		// Current mode has not been modified the most recently.
 		if ( false === $this->is_current_mode_latest() ) {
 			$prices = $this->sync();

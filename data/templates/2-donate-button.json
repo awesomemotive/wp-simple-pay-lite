@@ -1,0 +1,53 @@
+{
+	"id": "20746d04-3d3d-45cd-9681-445c8bfac479",
+	"license": [
+		"lite",
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"non-profit"
+	],
+	"keywords": [
+		"stripe checkout",
+		"donate"
+	],
+	"slug": "donate-button",
+	"name": "Donate Button",
+	"description": "Display a single button and collect donations with Stripe Checkout.",
+	"url": "",
+	"data": {
+		"title": "Donate",
+		"description": "Help support our cause",
+		"type": "stripe_checkout",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": "Price Options"
+			},
+			{
+				"type": "checkout_button"
+			},
+			{
+				"type": "payment_button",
+				"text": "Donate"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		],
+		"extra": {
+			"_enable_billing_address": "yes",
+			"_enable_shipping_address": "yes",
+			"_checkout_submit_type": "donate"
+		}
+	}
+}

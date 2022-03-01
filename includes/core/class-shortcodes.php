@@ -81,22 +81,7 @@ class Shortcodes {
 				return '';
 			}
 
-			// Pending or Draft forms.
-			if ( in_array( $form_post->post_status, array( 'pending', 'draft' ), true ) ) {
-
-				// Only output if the current user can edit the form.
-				if ( current_user_can( 'edit_posts', $form_post->id ) ) {
-					$html .= '<strong>';
-					$html .= esc_html__( 'This payment form is currently unpublished and will not be able to accept payments until it is published.', 'stripe' );
-					$html .= '</strong>';
-
-					$html .= self::form_html( $id );
-				}
-
-				// Published forms.
-			} else {
-				$html .= self::form_html( $id );
-			}
+			$html .= self::form_html( $id );
 		}
 
 		return $html;

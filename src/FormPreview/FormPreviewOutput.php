@@ -62,6 +62,7 @@ class FormPreviewOutput implements SubscriberInterface {
 
 		wp_enqueue_script( 'clipboard' );
 		wp_enqueue_script( 'wp-a11y' );
+		wp_enqueue_style( 'dashicons' );
 
 		wp_head();
 		?>
@@ -88,7 +89,21 @@ class FormPreviewOutput implements SubscriberInterface {
 				);
 				?>
 			</p>
-			<p>
+
+			<?php if ( in_array( get_post_status( $id ), array( 'pending', 'draft' ), true ) ) : ?>
+				<p>
+					<strong>
+						<?php
+						esc_html_e(
+							'This payment form is currently unpublished and will not be able to accept payments until it is published.',
+							'simple-pay'
+						);
+						?>
+					</strong>
+				</p>
+			<?php endif; ?>
+
+			<p style="margin-top: 20px;">
 				<?php
 				esc_html_e(
 					'To add your payment form to a page, use the "WP Simple Pay" block, or embed the shortcode.',
@@ -96,15 +111,11 @@ class FormPreviewOutput implements SubscriberInterface {
 				);
 				?>
 			</p>
-			<p style="margin-top: 10px; display: flex; align-items: center;">
-				<a href="<?php echo esc_url( $edit_form_url ); ?>" class="button">
-					<?php esc_html_e( 'Edit Form', 'simple-pay' ); ?>
-				</a>
 
+			<p style="display: flex; align-items: center;">
 				<button
 					data-clipboard-text='[simpay id="<?php echo esc_attr( (string) $id ); ?>"]'
 					data-copied="<?php echo esc_attr__( 'Copied!', 'simple-pay' ); ?>"
-					style="margin-left: 8px;"
 					class="simpay-copy-button button"
 				>
 					<?php esc_html_e( 'Copy Shortcode', 'simple-pay' ); ?>
@@ -118,6 +129,15 @@ class FormPreviewOutput implements SubscriberInterface {
 				>
 					<?php esc_html_e( 'Copy Block', 'simple-pay' ); ?>
 				</button>
+			</p>
+
+			<p style="margin-top: 20px;">
+				<a href="<?php echo esc_url( $edit_form_url ); ?>" style="text-decoration: none; display: flex; align-items: center;">
+					<span class="dashicons dashicons-edit"></span>
+					<span style="margin-left: 5px;">
+						<?php esc_html_e( 'Continue Editing', 'simple-pay' ); ?>
+					</span>
+				</a>
 			</p>
 		</div>
 

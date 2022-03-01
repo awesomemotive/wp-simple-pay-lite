@@ -1,0 +1,95 @@
+/* global simpayFormBuilderTemplateExplorer */
+
+/**
+ * WordPress dependencies
+ */
+import { Button, Modal } from '@wordpress/components';
+import { __, sprintf } from '@wordpress/i18n';
+import { Icon, check, lock } from '@wordpress/icons';
+import { addQueryArgs } from '@wordpress/url';
+import { createInterpolateElement } from '@wordpress/element';
+
+const {
+	alreadyPurchasedUrl,
+	licenseLevel,
+	upgradeUrl,
+} = simpayFormBuilderTemplateExplorer;
+const baseClassName = 'simpay-form-template-explorer-upgrade';
+
+function UpgradeModal( { template, setIsShowingUpgradeModal } ) {
+	return (
+		<Modal
+			title={ __( 'Upgrade Required', 'simple-pay' ) }
+			onRequestClose={ () => setIsShowingUpgradeModal( false ) }
+			className={ baseClassName }
+		>
+			<div className={ `${ baseClassName }__content` }>
+				<Icon icon={ lock } size="48px" />
+
+				<h3 className={ `${ baseClassName }__title` }>
+					{ sprintf(
+						/* translators: %s Template name */
+						__( 'Unlock the "%s" Template', 'simple-pay' ),
+						template.name
+					) }
+				</h3>
+
+				<p className={ `${ baseClassName }__description` }>
+					{ sprintf(
+						/* translators: %s Template name */
+						__(
+							'We\'re sorry, the "%s" template is not available on your plan. Please upgrade your plan to unlock all these awesome features.',
+							'simple-pay'
+						),
+						template.name
+					) }
+				</p>
+
+				<Button
+					isPrimary
+					variant="primary"
+					href={ addQueryArgs( upgradeUrl, {
+						utm_content: template.name,
+					} ) }
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{ 'lite' === licenseLevel
+						? __( 'Upgrade to Pro', 'simple-pay' )
+						: __( 'Upgrade Now', 'simple-pay' ) }
+				</Button>
+
+				{ 'lite' === licenseLevel && (
+					<p className={ `${ baseClassName }__discount` }>
+						<Icon icon={ check } />
+						{ createInterpolateElement(
+							// eslint-disable-next-line @wordpress/i18n-translator-comments
+							__(
+								'<strong>Bonus:</strong> WP Simple Pay Lite users get <highlight>50%% off</highlight> regular price, automatically applied at checkout.',
+								'simple-pay'
+							),
+							{
+								strong: (
+									// eslint-disable-next-line jsx-a11y/anchor-has-content
+									<strong />
+								),
+
+								highlight: <u />,
+							}
+						) }
+					</p>
+				) }
+
+				<a
+					href={ alreadyPurchasedUrl }
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{ __( 'Already purchased?', 'simple-pay' ) }
+				</a>
+			</div>
+		</Modal>
+	);
+}
+
+export default UpgradeModal;

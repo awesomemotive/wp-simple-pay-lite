@@ -1,0 +1,73 @@
+{
+	"id": "46c15e72-102c-4dfa-8855-f19919eab18f",
+	"license": [
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"recurring"
+	],
+	"keywords": [
+		"service",
+		"subscription"
+	],
+	"slug": "recurring-services-form",
+	"name": "Recurring Services Form",
+	"description": "Automatically collect multiple payments on a set schedule.",
+	"url": "",
+	"data": {
+		"title": "Subscribe to Service",
+		"description": "Sign up for our service.",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": "Service Level",
+				"display_type": "list"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"label": "Bronze Service",
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 2000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"label": "Silver Service"
+			},
+			{
+				"unit_amount": 3000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"label": "Gold Service"
+			}
+		]
+	}
+}

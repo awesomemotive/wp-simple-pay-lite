@@ -1,0 +1,50 @@
+{
+	"id": "ec0e97c2-6dda-4a7a-9f85-83969ff452eb",
+	"license": [
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business"
+	],
+	"keywords": [
+		"on-site"
+	],
+	"slug": "payment-form",
+	"name": "Payment Form",
+	"description": "Collect credit card payments with a basic form.",
+	"url": "",
+	"data": {
+		"title": "Payment Form",
+		"description": "Collect credit card payments",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

@@ -47,7 +47,12 @@ function add_stripe_checkout( $post_id ) {
 			</th>
 			<td>
 				<?php
-				$image_url = simpay_get_saved_meta( $post_id, '_image_url' );
+				$image_url = simpay_get_payment_form_setting(
+					$post_id,
+					'_image_url',
+					'',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
 
 				simpay_print_field(
 					array(
@@ -113,7 +118,12 @@ function add_stripe_checkout( $post_id ) {
 			</th>
 			<td>
 				<?php
-				$checkout_submit_type = simpay_get_saved_meta( $post_id, '_checkout_submit_type', 'pay' );
+				$checkout_submit_type = simpay_get_payment_form_setting(
+					$post_id,
+					'_checkout_submit_type',
+					'pay',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
 
 				simpay_print_field(
 					array(
@@ -126,7 +136,10 @@ function add_stripe_checkout( $post_id ) {
 							'donate' => esc_html__( 'Donate', 'stripe' ),
 							'pay'    => esc_html__( 'Pay', 'stripe' ),
 						),
-						'description' => esc_html__( 'Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button.', 'stripe' ),
+						'description' => esc_html__(
+							'Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button.',
+							'stripe'
+						),
 					)
 				);
 				?>
@@ -151,7 +164,12 @@ function add_stripe_checkout( $post_id ) {
 			</th>
 			<td>
 				<?php
-				$enable_shipping_address = simpay_get_saved_meta( $post_id, '_enable_shipping_address', 'no' );
+				$enable_shipping_address = simpay_get_payment_form_setting(
+					$post_id,
+					'_enable_shipping_address',
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
 
 				simpay_print_field(
 					array(
@@ -159,7 +177,10 @@ function add_stripe_checkout( $post_id ) {
 						'name'        => '_enable_shipping_address',
 						'id'          => '_enable_shipping_address',
 						'value'       => $enable_shipping_address,
-						'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s shipping address.', 'stripe' ),
+						'description' => esc_html__(
+							'If enabled, Checkout will always collect the customer\'s shipping address.',
+							'stripe'
+						),
 					)
 				);
 				?>
@@ -174,7 +195,12 @@ function add_stripe_checkout( $post_id ) {
 			</th>
 			<td>
 				<?php
-				$enable_billing_address = simpay_get_saved_meta( $post_id, '_enable_billing_address', 'no' );
+				$enable_billing_address = simpay_get_payment_form_setting(
+					$post_id,
+					'_enable_billing_address',
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
 
 				simpay_print_field(
 					array(
@@ -182,7 +208,10 @@ function add_stripe_checkout( $post_id ) {
 						'name'        => '_enable_billing_address',
 						'id'          => '_enable_billing_address',
 						'value'       => $enable_billing_address,
-						'description' => esc_html__( 'If enabled, Checkout will always collect the customer’s billing address. If not, Checkout will only collect the billing address when necessary.', 'stripe' ),
+						'description' => esc_html__(
+							'If enabled, Checkout will always collect the customer\'s billing address. If not, Checkout will only collect the billing address when necessary.',
+							'stripe'
+						),
 					)
 				);
 				?>
@@ -197,10 +226,11 @@ function add_stripe_checkout( $post_id ) {
 			</th>
 			<td>
 				<?php
-				$enable_phone = simpay_get_saved_meta(
+				$enable_phone = simpay_get_payment_form_setting(
 					$post_id,
 					'_enable_phone',
-					'no'
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
 				);
 
 				simpay_print_field(

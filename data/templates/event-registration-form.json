@@ -1,0 +1,90 @@
+{
+	"id": "1add317a-7318-439c-b4b0-c18cfe557436",
+	"license": [
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business"
+	],
+	"keywords": [
+		"event",
+		"register"
+	],
+	"slug": "event-registration-form",
+	"name": "Event Registration Form",
+	"description": "Collect payments and attendee information for your event.",
+	"url": "",
+	"data": {
+		"title": "Event Registration",
+		"description": "Join us at our event.",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": "Ticket",
+				"display_type": "dropdown"
+			},
+			{
+				"type": "number",
+				"label": "Quantity",
+				"default": 1,
+				"required": "yes",
+				"quantity": "yes"
+			},
+			{
+				"type": "dropdown",
+				"label": "T-Shirt Size",
+				"options": "Small, Medium, Large, X-Large, XX-Large",
+				"required": "yes"
+			},
+			{
+				"type": "payment_request_button"
+			},
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "address",
+				"billing-container-label": "",
+				"required": "yes"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button",
+				"label": "Register"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 3500,
+				"label": "General Admission",
+				"default": true
+			},
+			{
+				"unit_amount": 10000,
+				"label": "VIP Package"
+			}
+		]
+	}
+}
