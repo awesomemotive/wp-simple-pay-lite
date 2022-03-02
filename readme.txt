@@ -280,6 +280,14 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
+= 4.4.3 - March 3, 2022 =
+
+* New: Payment Form Templates - choose from premade templates to quickly create payment forms.
+* New: Elementor - select a payment form to launch in a "Button", "Price Table," or "Call to Action" widget.
+* New: Divi - select a payment form to launch in the "Button", "Price Table", or "Call to Action" module.
+* Fix: Ensure screen options can be used to hide additional metaboxes added to payment form settings.
+* Fix: Ensure classic editor payment form inserter displays payment form title.
+
 = 4.4.2 - February 10, 2022 =
 
 * New: Add "Setup Wizard" for new installs.
