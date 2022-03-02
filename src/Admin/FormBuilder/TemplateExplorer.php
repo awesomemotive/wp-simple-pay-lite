@@ -124,11 +124,20 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function maybe_show_template_explorer( $post ) {
+		// We are not adding a payment form, do not show the explorer.
+		if (
+			! isset( $_GET['post_type'] ) ||
+			'simple-pay' !== sanitize_text_field( $_GET['post_type'] )
+		) {
+			return;
+		}
+
 		// A payment form template is in the URL, do not show the explorer.
 		if ( isset( $_GET['simpay-template'] ) ) {
 			return;
 		}
 
+		// The payment form has already been created, do not show the explorer.
 		if ( 'auto-draft' !== $post->post_status ) {
 			return;
 		}

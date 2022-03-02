@@ -242,7 +242,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 
 				document.querySelector( "%1$s" ).addEventListener( "click", function( event ) {
 					event.preventDefault();
-					var buttons = form.querySelectorAll( \'#simpay-%2$s-payment-button, #simpay-modal-control-%2$s\' );
+					var buttons = form.querySelectorAll( \'.simpay-payment-btn, #simpay-modal-control-%2$s\' );
 
 					if ( buttons ) {
 						buttons.forEach( function( button ) {
@@ -274,7 +274,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 
 				document.querySelector( "%1$s .et_pb_button" ).addEventListener( "click", function( event ) {
 					event.preventDefault();
-					var buttons = form.querySelectorAll( \'#simpay-%2$s-payment-button, #simpay-modal-control-%2$s\' );
+					var buttons = form.querySelectorAll( \'.simpay-payment-btn, #simpay-modal-control-%2$s\' );
 
 					if ( buttons ) {
 						buttons.forEach( function( button ) {
@@ -307,7 +307,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 
 				document.querySelector( "%1$s .et_pb_button" ).addEventListener( "click", function( event ) {
 					event.preventDefault();
-					var buttons = form.querySelectorAll( \'#simpay-%2$s-payment-button, #simpay-modal-control-%2$s\' );
+					var buttons = form.querySelectorAll( \'.simpay-payment-btn, #simpay-modal-control-%2$s\' );
 
 					if ( buttons ) {
 						buttons.forEach( function( button ) {
@@ -432,7 +432,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 				return false;
 			case 'overlay':
 				return true;
-			case 'stripe_checkout':
+			default:
 				/** @var array<string, array<string, array<string>>> $custom_fields */
 				$custom_fields = simpay_get_saved_meta(
 					$form_id,
@@ -451,10 +451,8 @@ class ExtensionSubscriber implements SubscriberInterface {
 					}
 				}
 
-				return 2 === count( $_custom_fields );
+				return count( $_custom_fields ) <= 2;
 		}
-
-		return false;
 	}
 
 }

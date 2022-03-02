@@ -211,9 +211,6 @@ function register_account_settings( $settings ) {
 						'regular-text',
 					),
 					'priority'   => $priority,
-					'schema'     => array(
-						'type' => 'string',
-					),
 				)
 			)
 		);
