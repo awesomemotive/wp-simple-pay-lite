@@ -167,7 +167,7 @@ Additional alternative payment methods are supported by WP Simple Pay and Stripe
 - [Bancontact](https://demo.wpsimplepay.com/bancontact-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [giropay](https://demo.wpsimplepay.com/giropay-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [Przelewy24](https://demo.wpsimplepay.com/przelewy24-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- FTX
+- FPX
 
 = Customized payment confirmation details =
 
