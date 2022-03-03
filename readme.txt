@@ -155,7 +155,7 @@ Anyone with a browser and device combination that allows one of these options wi
 
 = Accept ACH and Alternative Payment Methods =
 
-Give your customers the option to pay directly from their bank accounts with ACH debit payments and take advantage of lower fees. ACH payments on Stripe cost 0.80%, capped at $5, with no monthly fees or verification fees.
+Give your U.S. customers the option to pay directly from their bank accounts with ACH debit payments and take advantage of lower fees. ACH payments on Stripe cost 0.80%, capped at $5, with no monthly fees or verification fees.
 
 [Try our ACH debit payment demos](https://demo.wpsimplepay.com/ach-debit-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
@@ -167,6 +167,7 @@ Additional alternative payment methods are supported by WP Simple Pay and Stripe
 - [Bancontact](https://demo.wpsimplepay.com/bancontact-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [giropay](https://demo.wpsimplepay.com/giropay-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [Przelewy24](https://demo.wpsimplepay.com/przelewy24-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+- FPX
 
 = Customized payment confirmation details =
 
@@ -270,15 +271,16 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Screenshots ==
 
-1. Desktop Stripe Checkout example
-2. Mobile Stripe Checkout example
-3. Payment forms listing
-4. Payment form settings: One-time amount
-5. Payment form settings: Payment button
-6. Payment form settings: Stripe Checkout display
-7. Settings: Payment confirmation details
-8. Settings: Connect with Stripe, Test mode
-9. Settings: Site-wide defaults
+1. Payment form template selection
+2. Payment form settings: General
+3. Payment form settings: Set amount, Button text
+4. Payment form settings: Stripe Checkout options
+5. Desktop Stripe Checkout example
+6. Mobile Stripe Checkout example
+7. Payment forms listing
+8. Global settings: Currency
+9. Global settings: Connect with Stripe, Test mode
+10. Global settings: Payment confirmation details
 
 == Changelog ==
 
