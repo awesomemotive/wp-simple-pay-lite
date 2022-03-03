@@ -13,8 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use SimplePay\Core\Utils;
-use SimplePay\Core\Abstracts\Form;
 use SimplePay\Core\Forms\Default_Form;
+use SimplePay\Core\Post_Types\Simple_Pay\Edit_Form;
 use SimplePay\Core\Settings;
 
 /**
@@ -1225,4 +1225,255 @@ function simpay_can_use_payment_request_button() {
 	$can_use = apply_filters( 'simpay_can_use_payment_request_button', $can_use, $country );
 
 	return $can_use;
+}
+
+/**
+ * Get the stored date format for the datepicker
+ *
+ * @return string
+ */
+function simpay_get_date_format() {
+    return simpay_get_setting( 'date_format', 'mm/dd/yy' );
+}
+
+/**
+ * Returns a payment form setting value retrieved from a template or the database.
+ *
+ * This should only be used when editing a payment form in the admin.
+ * Use `simpay_get_saved_meta()` for retrieving the value from the database.
+ *
+ * @since 4.4.3
+ *
+ * @param int        $form_id Payment form ID.
+ * @param string     $setting Payment form setting.
+ * @param mixed      $default Payment form setting default.
+ * @param null|array $template Optional. Payment form template ID. If not set the value will be
+ *                             returned from the database. Default null.
+ */
+function simpay_get_payment_form_setting(
+	$form_id,
+	$setting,
+	$default,
+	$template = null
+) {
+	// Use a template.
+	if ( $template !== null ) {
+		switch ( $setting ) {
+			// Top level attributes.
+			case 'title':
+			case 'description':
+			case 'type':
+			case 'fields':
+			case 'prices':
+				$setting = $template['data'][ $setting ];
+				break;
+
+			// Format simplified payment methods.
+			case 'payment_methods':
+				$methods = $template['data']['payment_methods'];
+				$setting = array();
+
+				foreach ( $methods as $method ) {
+					$setting[ $method ] = array(
+						'id' => $method,
+					);
+				}
+
+				break;
+
+			// Lower level settings.
+			default:
+				$setting = isset( $template['data']['extra'][ $setting ] )
+					? $template['data']['extra'][ $setting ]
+					: $default;
+		}
+
+		// Pull the value from the database.
+	} else {
+		$meta_map = array(
+			'title'           => '_company_name',
+			'description'     => '_item_description',
+			'type'            => '_form_display_type',
+			'payment_methods' => '_payment_methods',
+			'fields'          => '_custom_fields',
+		);
+
+		// Pull the value from the database.
+		$setting_db = simpay_get_saved_meta(
+			$form_id,
+			isset( $meta_map[ $setting ] ) ? $meta_map[ $setting ] : $setting,
+			$default
+		);
+
+		switch ( $setting ) {
+			// Flatten custom fields.
+			case 'fields':
+				// If pulling from the database, flatten.
+				if ( $setting_db !== $default ) {
+					$setting = Edit_Form\get_custom_fields_flat( $setting_db );
+
+					// Passed default is already flattened.
+				} else {
+					$setting = $default;
+				}
+
+				break;
+
+			// Pull the payment methods for the correct context.
+			case 'payment_methods':
+				$type = simpay_get_payment_form_setting(
+					$form_id,
+					'type',
+					'embedded',
+					$template
+				);
+
+				$context = 'stripe_checkout' === $type
+					? 'stripe-checkout'
+					: 'stripe-elements';
+
+				$setting = isset( $setting_db[ $context ] )
+					? $setting_db[ $context ]
+					: array(
+						'card' => array(
+							'id' => 'card',
+						),
+					);
+
+				break;
+
+				// Use the value directly.
+			default:
+				$setting = $setting_db;
+		}
+	}
+
+	return $setting;
+}
+
+function __unstable_simpay_get_form_template_category_name( $category_slug ) {
+	$categories = array(
+		'business'   => __( 'Business', 'stripe' ),
+		'non-profit' => __( 'Non-Profit', 'stripe' ),
+		'recurring'  => __( 'Subscriptions', 'stripe' ),
+	);
+
+	return isset( $categories[ $category_slug ] )
+		? $categories[ $category_slug ]
+		: $category_slug;
+}
+
+/**
+ * Returns a list of payment form templates.
+ *
+ * @since 4.4.3
+ *
+ * @return array<mixed>
+ */
+function __unstable_simpay_get_payment_form_templates() {
+	$template_files = glob( SIMPLE_PAY_DIR . '/data/templates/*.json' );
+
+	if ( false === $template_files ) {
+		return array();
+	}
+
+	$templates = array();
+	$currency  = strtolower(
+		simpay_get_setting( 'currency', 'USD' )
+	);
+
+	foreach ( $template_files as $template_file ) {
+		$data = json_decode( file_get_contents( $template_file ), true );
+
+		// Skip invalid templates.
+		if ( ! is_array( $data ) ) {
+			continue;
+		}
+
+		// Pull category names.
+		if ( isset( $data['categories'] ) ) {
+			$categories = $data['categories'];
+			$data['categories'] = array();
+
+			foreach ( $categories as $category_slug ) {
+				$data['categories'][ $category_slug ] =
+					__unstable_simpay_get_form_template_category_name(
+						$category_slug
+					);
+			}
+		}
+
+		// Use the store currency if one is not set.
+		foreach ( $data['data']['prices'] as $k => $price ) {
+			if ( ! isset( $price['currency'] ) ) {
+				$price['data'][ $k ]['currency'] = $currency;
+			}
+		}
+
+		$templates[] = $data;
+	}
+
+	return $templates;
+}
+
+/**
+ * Attempts to locate a payment form template via the `template` URL parameter.
+ *
+ * @since 4.4.3
+ *
+ * @return null|array<mixed>
+ */
+function __unstable_simpay_get_payment_form_template_from_url() {
+	$id = isset( $_GET['simpay-template'] )
+		? sanitize_text_field( $_GET['simpay-template'] )
+		: null;
+
+	return __unstable_simpay_get_payment_form_template( $id );
+}
+
+/**
+ * Returns a payment form template for a given an ID.
+ *
+ * @since 4.4.3
+ *
+ * @param string $id Template ID.
+ * @return null|array<mixed> Template data, or null if not found.
+ */
+function __unstable_simpay_get_payment_form_template( $id ) {
+	$templates = __unstable_simpay_get_payment_form_templates();
+	$template  = wp_list_filter(
+		$templates,
+		array(
+			'id' => $id,
+		)
+	);
+
+	return empty( $template ) ? null : current( $template );
+}
+
+/**
+ * Returns an list of payment form titles keyed by ID.
+ *
+ * @since 4.4.3
+ *
+ * @return array<int, string>
+ */
+function simpay_get_form_list_options() {
+	static $options = array();
+
+	if ( empty( $options ) ) {
+		$forms = get_posts(
+			array(
+				'post_type'      => 'simple-pay',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+			)
+		);
+
+		foreach ( $forms as $form_id ) {
+			$options[ $form_id ] = get_the_title( $form_id );
+		};
+	}
+
+	return $options;
 }

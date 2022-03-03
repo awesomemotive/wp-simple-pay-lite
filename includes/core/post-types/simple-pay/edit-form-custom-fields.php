@@ -244,6 +244,91 @@ function get_custom_fields_grouped( $options = array() ) {
 }
 
 /**
+ * Retrieves a form's custom fields.
+ *
+ * Formats legacy data in to a consumable structure.
+ * Legacy structure has field types grouped under a `type` index.
+ *
+ * @see \SimplePay\Pro\Post_Types\Simple_Pay\Util\get_custom_fields()
+ *
+ * @since 4.4.3
+ * @since 4.4.3 Introduced in Core namespace. Keeps duplicate code due to fragility of legacy code.
+ *
+ * array(2) {
+ *  ["text"]=>
+ *  array(2) {
+ *    [3]=>
+ *    array(8) {
+ *      ["id"]=>
+ *      string(0) ""
+ *      ["order"]=>
+ *      string(1) "1"
+ *    }
+ *    [4]=>
+ *    array(8) {
+ *      ["id"]=>
+ *      string(0) ""
+ *      ["order"]=>
+ *      string(1) "2"
+ *    }
+ *  }
+ *  ["payment_button"]=>
+ *  array(1) {
+ *    [3]=>
+ *    array(6) {
+ *      ["id"]=>
+ *      string(0) ""
+ *      ["order"]=>
+ *      string(1) "3"
+ *    }
+ *  }
+ *
+ * Create a flat list sorted by each field's `order` key.
+ *
+ * @param int $post_id Current Payment Form ID.
+ * @return array Flattened and sorted custom fields.
+ */
+function get_custom_fields_flat( $custom_fields ) {
+	$sorted_fields = array();
+	$count         = 0;
+
+	if ( ! $custom_fields || ! is_array( $custom_fields ) ) {
+		return $sorted_fields;
+	}
+
+	foreach ( $custom_fields as $type => $fields ) {
+		foreach ( $fields as $field ) {
+			$field['type'] = $type;
+
+			if ( ! isset( $field['order'] ) ) {
+				$field['order'] = $count;
+			}
+
+			if ( 'payment_button' === $field['type'] ) {
+				$field['order'] = 9999;
+			}
+
+			$sorted_fields[] = $field;
+		}
+
+		$count++;
+	}
+
+	uasort(
+		$sorted_fields,
+		function( $a, $b ) {
+			if ( floatval( $a['order'] ) === floatval( $b['order'] ) ) {
+				return 0;
+			}
+
+			return ( floatval( $a['order'] ) < floatval( $b['order'] ) ) ? -1 : 1;
+		}
+	);
+
+	return $sorted_fields;
+}
+
+/**
  * Adds "Custom Fields" Payment Form settings tab content.
  *
  * Lite does not have true custom fields -- these are standard
@@ -256,9 +341,22 @@ function get_custom_fields_grouped( $options = array() ) {
  */
 function add_custom_fields( $post_id ) {
 	$counter = 1;
-	$fields  = get_post_meta( $post_id, '_custom_fields', true );
-	$field   = isset( $fields['payment_button'] )
-		? current( $fields['payment_button'] )
+	$fields  = simpay_get_payment_form_setting(
+		$post_id,
+		'fields',
+		array(),
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
+	$payment_button = wp_list_filter(
+		$fields,
+		array(
+			'type' => 'payment_button',
+		)
+	);
+
+	$field = ! empty( $payment_button )
+		? current( $payment_button )
 		: array();
 	?>
 

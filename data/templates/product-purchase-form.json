@@ -1,0 +1,93 @@
+{
+	"id": "c37fc67b-5f6c-4c49-9900-ff066fccf50b",
+	"license": [
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business"
+	],
+	"keywords": [
+		"ship",
+		"product"
+	],
+	"slug": "product-purchse-form",
+	"name": "Product Purchase Form",
+	"description": "Offer the purchase of a product with variations.",
+	"url": "",
+	"data": {
+		"title": "Purchase Form",
+		"description": "Configure your product for delivery.",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "number",
+				"label": "Quantity",
+				"default": 1,
+				"required": "yes",
+				"quantity": "yes"
+			},
+			{
+				"type": "dropdown",
+				"label": "Size",
+				"options": "Small, Medium, Large",
+				"required": "yes"
+			},
+			{
+				"type": "dropdown",
+				"label": "Color",
+				"options": "Red, Blue, Green",
+				"required": "yes"
+			},
+			{
+				"type": "total_amount"
+			},
+			{
+				"type": "payment_request_button"
+			},
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number"
+			},
+			{
+				"type": "address",
+				"billing-container-label": "",
+				"collect-shipping": "yes",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button",
+				"text": "Complete Purchase"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"default": true
+			}
+		]
+	}
+}

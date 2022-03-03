@@ -93,6 +93,17 @@ abstract class AbstractPluginServiceProvider extends AbstractServiceProvider {
 	abstract public function get_subscribers();
 
 	/**
+	 * Returns a list of child service providers.
+	 *
+	 * @since 4.4.3
+	 *
+	 * @return array<\SimplePay\Core\AbstractPluginServiceProvider>
+	 */
+	public function get_service_providers() {
+		return array();
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	abstract public function register();

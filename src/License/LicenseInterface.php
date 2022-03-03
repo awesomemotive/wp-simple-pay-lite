@@ -82,6 +82,22 @@ interface LicenseInterface {
 	public function is_valid();
 
 	/**
+	 * Returns the license level name.
+	 *
+	 * @since 4.4.3
+	 * @return string
+	 */
+	public function get_level();
+
+	/**
+	 * Returns the license key.
+	 *
+	 * @since 4.4.3
+	 * @return null|string
+	 */
+	public function get_key();
+
+	/**
 	 * Determines if a license (install) is Lite.
 	 *
 	 * @since 4.4.0

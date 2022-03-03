@@ -358,6 +358,7 @@ function simpay_payment_form_add_missing_custom_fields(
 			// Remove unnecessary fields.
 			unset( $fields['card'] );
 			unset( $fields['checkout_button'] );
+			unset( $fields['payment_request_button'] );
 	}
 
 	// Ensure "Price Selector" is always present.

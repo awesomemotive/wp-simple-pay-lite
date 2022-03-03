@@ -1,0 +1,48 @@
+{
+	"id": "53e12229-1cef-4313-9f97-e5f75b98af841",
+	"license": [
+		"lite",
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business"
+	],
+	"keywords": [
+		"stripe checkout"
+	],
+	"slug": "payment-button",
+	"name": "Payment Button",
+	"description": "Display a single button and collect payments with Stripe Checkout.",
+	"url": "",
+	"data": {
+		"title": "Payment Button",
+		"description": "Collect a payment with Stripe Checkout",
+		"type": "stripe_checkout",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": "Price Options"
+			},
+			{
+				"type": "checkout_button"
+			},
+			{
+				"type": "payment_button",
+				"text": "Pay Now",
+				"processing_text": "Processing..."
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

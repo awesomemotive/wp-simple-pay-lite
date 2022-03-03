@@ -1,0 +1,64 @@
+{
+	"id": "546ec148-fcec-4156-99cb-bb3547db7c4d",
+	"license": [
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"recurring"
+	],
+	"keywords": [
+		"subscription"
+	],
+	"slug": "product-subscription-form",
+	"name": "Product Subscription Form",
+	"description": "Bill customers on a recurring basis for a product.",
+	"url": "",
+	"data": {
+		"title": "Product Subscription",
+		"description": "Subscribe to our product.",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": "Payment Options",
+				"display_type": "list"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1500,
+				"label": "Monthly",
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 10000,
+				"recurring": {
+					"interval": "year",
+					"interval_count": 1
+				},
+				"label": "Yearly (Save $80!)"
+			}
+		]
+	}
+}

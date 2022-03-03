@@ -231,7 +231,47 @@ function __unstable_add_payment_amount( $post_id ) {
 						<?php
 						$prices = simpay_get_payment_form_prices( $form );
 
-						if ( ! empty( $prices ) ) {
+						// @todo cleanup, remove duplication in Pro.
+						if ( empty( $prices ) ) {
+							$template = __unstable_simpay_get_payment_form_template_from_url();
+
+							// Generate from a template.
+							if ( ! empty( $template ) ) {
+								foreach ( $template['data']['prices'] as $price ) {
+									$price = new PriceOption( $price, $form );
+									$price->__unstable_unsaved = true;
+
+									$prices[ wp_generate_uuid4() ] = $price;
+								}
+
+								// Single price option fallback.
+							} else {
+								$currency = strtolower(
+									simpay_get_setting( 'currency', 'USD' )
+								);
+
+								$prices = array(
+									wp_generate_uuid4() => new PriceOption(
+										array(
+											'unit_amount' => simpay_get_currency_minimum( $currency ),
+											'currency'    => $currency,
+										),
+										$form
+									),
+								);
+							}
+
+							$price    = current( $prices );
+							$currency = $price->currency;
+
+							$amount = simpay_format_currency(
+								$price->unit_amount,
+								$price->currency,
+								false
+							);
+
+							$current_amount = '0.00';
+						} else {
 							$price    = current( $prices );
 							$currency = $price->currency;
 
@@ -242,30 +282,6 @@ function __unstable_add_payment_amount( $post_id ) {
 							);
 
 							$current_amount = $amount;
-						} else {
-							$currency = strtolower(
-								simpay_get_setting( 'currency', 'USD' )
-							);
-
-							$price = new PriceOption(
-								array(
-									'unit_amount' => simpay_get_currency_minimum(
-										$currency
-									),
-									'currency'    => $currency,
-									'default'     => true,
-									'can_recur'   => false,
-								),
-								$form
-							);
-
-							$amount = simpay_format_currency(
-								$price->unit_amount,
-								$price->currency,
-								false
-							);
-
-							$current_amount = '0.00';
 						}
 
 						$classes = array(

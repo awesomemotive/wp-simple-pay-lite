@@ -28,31 +28,30 @@ function simpay_get_stripe_checkout_locales() {
  */
 function simpay_insert_form_button() {
 	global $pagenow, $typenow;
-	$output = '';
+
+	$allowed_pages = array(
+		'post.php',
+		'page.php',
+		'post-new.php',
+		'post-edit.php',
+	);
 
 	// Only run in post/page creation and edit screens.
-	if ( in_array(
-		$pagenow,
-		array(
-			'post.php',
-			'page.php',
-			'post-new.php',
-			'post-edit.php',
-		)
-	) && $typenow != 'simple-pay'
-	) {
-
-		$img_url = SIMPLE_PAY_INC_URL . 'core/assets/images/icon.png';
-		$icon    = '<span class="wp-media-buttons-icon" id="simpay-insert-form-button"><img src="' . esc_url( $img_url ) . '" width="30" style="margin-left: -12px; margin-top: -12px;" /></span>';
-
-		// TODO Remove image & use SVG icon eventually.
-
-		$output = '<a href="#TB_inline?height=300&inlineId=simpay-insert-form" title="' . esc_attr__( 'Insert Payment Form', 'stripe' ) . '" class="thickbox button simpay-thickbox">' . $icon . esc_html__( 'Insert Payment Form', 'stripe' ) . '</a>';
+	if ( ! in_array( $pagenow, $allowed_pages, true ) || 'simpay_form' === $typenow ) {
+		return;
 	}
 
-	echo $output;
-}
+	$icon = sprintf(
+		'<span class="wp-media-buttons-icon" id="simpay-insert-form-button"><img src="%s" width="30" style="margin-left: -12px; margin-top: -7px;" /></span>',
+		esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/icon.png' )
+	);
 
+	printf(
+		'<a href="#TB_inline?height=300&inlineId=simpay-insert-form" title="%1$s" class="thickbox button simpay-thickbox">%2$s</a>',
+		esc_attr__( 'Insert Payment Form', 'stripe' ),
+		$icon . esc_html__( 'Insert Payment Form', 'stripe' )
+	); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+}
 add_action( 'media_buttons', 'simpay_insert_form_button', 11 );
 
 /**
@@ -61,17 +60,27 @@ add_action( 'media_buttons', 'simpay_insert_form_button', 11 );
 function simpay_admin_footer_insert_form() {
 	global $pagenow, $typenow;
 
+	$allowed_pages = array(
+		'post.php',
+		'page.php',
+		'post-new.php',
+		'post-edit.php',
+	);
+
 	// Only run in post/page creation and edit screens.
-	if ( in_array(
-		$pagenow,
+	if ( ! in_array( $pagenow, $allowed_pages, true ) || 'simpay_form' === $typenow ) {
+		return;
+	}
+
+	$forms = simpay_get_form_list_options();
+
+	$add_new_url = add_query_arg(
 		array(
-			'post.php',
-			'page.php',
-			'post-new.php',
-			'post-edit.php',
-		)
-	) && $typenow != 'simple-pay'
-	) { ?>
+			'post_type' => 'simple-pay',
+		),
+		admin_url( 'post-new.php' )
+    );
+	?>
 		<script type="text/javascript">
 			function insertSimpayForm() {
 				var id = jQuery( '#simpay-form-list' ).val();
@@ -83,6 +92,12 @@ function simpay_admin_footer_insert_form() {
 
 		<div id="simpay-insert-form" style="display: none;">
 			<div class="wrap">
+				<?php if ( empty ( $forms ) ) : ?>
+                You have not created any payment forms. Would you like to <a href="<?php echo esc_url( $add_new_url ); ?>">create one</a>?
+                    <p class="submit">
+                        <a id="simpay-cancel-insert-form" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'stripe' ); ?></a>
+                    </p>
+				<?php else : ?>
 				<p><?php esc_html_e( 'Select a payment form to add to your post or page.', 'stripe' ); ?></p>
 				<div>
 					<?php echo simpay_get_forms_list(); ?>
@@ -91,12 +106,11 @@ function simpay_admin_footer_insert_form() {
 					<input type="button" id="simpay-insert-form" class="button-primary" value="<?php esc_attr_e( 'Insert Payment Form', 'stripe' ); ?>" onclick="insertSimpayForm();" />
 					<a id="simpay-cancel-insert-form" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'stripe' ); ?></a>
 				</p>
+				<?php endif; ?>
 			</div>
 		</div>
-		<?php
-	}
+	<?php
 }
-
 add_action( 'admin_footer', 'simpay_admin_footer_insert_form' );
 
 
@@ -106,25 +120,19 @@ add_action( 'admin_footer', 'simpay_admin_footer_insert_form' );
  * @return string
  */
 function simpay_get_forms_list() {
-
-	$args = array(
-		'numberposts' => -1,
-		'post_type'   => 'simple-pay',
-		'orderby'     => 'title',
-		'order'       => 'ASC',
-	);
-
-	$forms = get_posts( $args );
+    $forms = simpay_get_form_list_options();
 
 	$options = '';
 
 	if ( ! empty( $forms ) ) {
-		foreach ( $forms as $k => $v ) {
-			/* translators: (no title) is the default placed in the dropdown for the form list button on posts/pages if the form was not named */
-			$options .= '<option value="' . esc_attr( $v->ID ) . '">' . ( ! empty( $v->post_title ) ? $v->post_title : esc_html__( '(no title)', 'stripe' ) ) . '</option>';
+		foreach ( $forms as $form_id => $form_title ) {
+            $options .= sprintf(
+                '<option value="%1$s">%2$s</option>',
+                esc_attr( $form_id ),
+                esc_html( $form_title )
+            );
 		}
 	}
-
 	return '<select id="simpay-form-list">' . $options . '</select>';
 }
 

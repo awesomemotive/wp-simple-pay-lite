@@ -87,27 +87,46 @@ final class Plugin {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @return \SimplePay\Core\PluginContainer
+	 * @return \SimplePay\Vendor\League\Container\Container
 	 */
 	public function register() {
 		if ( ! $this->container instanceof PluginContainer ) {
 			$this->container = $this->setup_container();
 		}
 
-		// Register service providers.
-		foreach ( $this->get_service_providers() as $service_provider ) {
-			$this->container->addServiceProvider( $service_provider );
-		}
+		// Attach service provider subscribers to the event manager.
+		$this->add_service_providers( $this->get_service_providers() );
 
-		// Find event manager.
+		return $this->container;
+	}
+
+	/**
+	 * Registers service providers (and their child subscribers) with the container.
+	 *
+	 * @since 4.4.3
+	 *
+	 * @param array<\SimplePay\Vendor\League\Container\ServiceProvider\ServiceProviderInterface> $service_providers
+	 *                                                                                           Service providers.
+	 * @return void
+	 */
+	private function add_service_providers( $service_providers ) {
 		$events = $this->container->get( 'event-manager' );
 
 		if ( ! $events instanceof EventManager ) {
-			return $this->container;
+			return;
 		}
 
-		// Attach service provider subscribers to the event manager.
-		foreach ( $this->get_service_providers() as $service_provider ) {
+		// Register service providers.
+		foreach ( $service_providers as $service_provider ) {
+			if ( ! $service_provider instanceof AbstractPluginServiceProvider ) {
+				continue;
+			}
+
+			$this->container->addServiceProvider( $service_provider );
+		}
+
+		// Attach subscribers.
+		foreach ( $service_providers as $service_provider ) {
 			if ( ! $service_provider instanceof AbstractPluginServiceProvider ) {
 				continue;
 			}
@@ -122,9 +141,15 @@ final class Plugin {
 					$events->add_subscriber( $subscriber );
 				}
 			}
-		}
 
-		return $this->container;
+			/** @var array<\SimplePay\Vendor\League\Container\ServiceProvider\ServiceProviderInterface> $child_service_providers */
+			$child_service_providers = $service_provider->get_service_providers();
+
+			// Walk through child service providers.
+			if ( ! empty( $child_service_providers ) ) {
+				$this->add_service_providers( $child_service_providers );
+			}
+		}
 	}
 
 	/**
@@ -132,7 +157,7 @@ final class Plugin {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @return \SimplePay\Vendor\League\Container\ServiceProvider\ServiceProviderInterface[]
+	 * @return array<\SimplePay\Vendor\League\Container\ServiceProvider\ServiceProviderInterface>
 	 */
 	private function get_service_providers() {
 		global $wp_version;
@@ -140,6 +165,7 @@ final class Plugin {
 		$service_providers = array(
 			new FormPreview\FormPreviewServiceProvider,
 			new License\LicenseServiceProvider,
+			new Integration\IntegrationServiceProvider,
 			new StripeConnect\StripeConnectServiceProvider,
 			new Webhook\WebhookServiceProvider,
 		);
@@ -160,6 +186,11 @@ final class Plugin {
 			if ( version_compare( $wp_version, '5.5', '>=' ) ) {
 				$admin_service_providers[] =
 					new Admin\SetupWizard\SetupWizardServiceProvider;
+			}
+
+			if ( version_compare( $wp_version, '5.6', '>=' ) ) {
+				$admin_service_providers[] =
+					new Admin\FormBuilder\FormBuilderServiceProvider;
 			}
 
 			return array_merge( $admin_service_providers, $service_providers );

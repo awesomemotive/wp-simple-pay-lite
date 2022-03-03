@@ -32,6 +32,10 @@ function add_preview_action( $post ) {
 		return;
 	}
 
+	if ( 'auto-draft' === $post->post_status ) {
+		return;
+	}
+
 	$preview_link   = esc_url( get_preview_post_link( $post ) );
 	$preview_button = sprintf(
 		'%1$s<span class="screen-reader-text"> %2$s</span>',
@@ -86,6 +90,37 @@ function add_shortcode_action( $post ) {
 	<?php
 }
 add_action( 'post_submitbox_misc_actions', __NAMESPACE__ . '\\add_shortcode_action' );
+
+/**
+ * Redirects to the preview during the "Save and Preview" action.
+ *
+ * @since 4.4.3
+ *
+ * @param string $location Redirect location.
+ * @param int    $post_id Post ID.
+ */
+function redirect_post_save_preview( $location, $post_id ) {
+	if (
+		! isset( $_POST['simpay_save_preview'] ) ||
+		'preview' !== sanitize_text_field( $_POST['simpay_save_preview'] )
+	) {
+		return $location;
+	}
+
+	$post_type = get_post_type( $post_id );
+
+	if ( 'simple-pay' !== $post_type ) {
+		return $location;
+	}
+
+	return esc_url( get_preview_post_link( $post_id ) );
+}
+add_filter(
+	'redirect_post_location',
+	__NAMESPACE__ . '\\redirect_post_save_preview',
+	10,
+	2
+);
 
 /**
  * Adds the Payment Form settings metabox.
@@ -500,11 +535,6 @@ function settings_tabs( $post ) {
  * @param int $post_id Current Payment Form ID.
  */
 function add_display_options( $post_id ) {
-	$form_display_type = simpay_get_saved_meta(
-		$post_id,
-		'_form_display_type',
-		'embedded'
-	);
 	?>
 
 	<table>
@@ -529,10 +559,11 @@ function add_display_options( $post_id ) {
 				</th>
 				<td style="border-bottom: 0; padding-bottom: 0;">
 					<?php
-					$company_name = simpay_get_saved_meta(
+					$title = simpay_get_payment_form_setting(
 						$post_id,
-						'_company_name',
-						false
+						'title',
+						get_bloginfo( 'name' ),
+						__unstable_simpay_get_payment_form_template_from_url()
 					);
 
 					simpay_print_field(
@@ -541,9 +572,7 @@ function add_display_options( $post_id ) {
 							'subtype'     => 'text',
 							'name'        => '_company_name',
 							'id'          => '_company_name',
-							'value'       => ( false !== $company_name && ! empty( $company_name ) )
-								? $company_name
-								: get_bloginfo( 'name' ),
+							'value'       => $title,
 							'class'       => array(
 								'simpay-field-text',
 							),
@@ -573,10 +602,11 @@ function add_display_options( $post_id ) {
 				</th>
 				<td>
 					<?php
-					$description = simpay_get_saved_meta(
+					$description = simpay_get_payment_form_setting(
 						$post_id,
-						'_item_description',
-						false
+						'description',
+						false,
+						__unstable_simpay_get_payment_form_template_from_url()
 					);
 
 					simpay_print_field(
@@ -585,9 +615,9 @@ function add_display_options( $post_id ) {
 							'subtype'     => 'text',
 							'name'        => '_item_description',
 							'id'          => '_item_description',
-							'value'       => false !== $description
-								? $description
-								: get_bloginfo( 'description' ),
+							'value'       => false === $description
+								? get_bloginfo( 'description' )
+								: $description,
 							'class'       => array(
 								'simpay-field-text',
 							),
@@ -632,7 +662,12 @@ function _add_payment_success_page( $post_id ) {
 		</th>
 		<td>
 			<?php
-			$success_redirect_type = simpay_get_saved_meta( $post_id, '_success_redirect_type', 'default' );
+			$success_redirect_type = simpay_get_payment_form_setting(
+				$post_id,
+				'_success_redirect_type',
+				'default',
+				__unstable_simpay_get_payment_form_template_from_url()
+			);
 
 			simpay_print_field(
 				array(
@@ -660,14 +695,24 @@ function _add_payment_success_page( $post_id ) {
 
 			<div class="simpay-show-if" data-if="_success_redirect_type" data-is="page" style="margin-top: 8px;">
 				<?php
+				$success_redirect_page = simpay_get_payment_form_setting(
+					$post_id,
+					'_success_redirect_page',
+					'',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
 				simpay_print_field(
 					array(
 						'type'        => 'select',
 						'page_select' => 'page_select',
 						'name'        => '_success_redirect_page',
 						'id'          => '_success_redirect_page',
-						'value'       => simpay_get_saved_meta( $post_id, '_success_redirect_page', '' ),
-						'description' => __( 'Choose a page from your site to redirect to after a successful transaction.', 'stripe' ),
+						'value'       => $success_redirect_page,
+						'description' => __(
+							'Choose a page from your site to redirect to after a successful transaction.',
+							'stripe'
+						),
 					)
 				);
 				?>
@@ -675,6 +720,13 @@ function _add_payment_success_page( $post_id ) {
 
 			<div class="simpay-show-if" data-if="_success_redirect_type" data-is="redirect" style="margin-top: 8px;">
 				<?php
+				$success_redirect_url = simpay_get_payment_form_setting(
+					$post_id,
+					'_success_redirect_url',
+					'',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
 				simpay_print_field(
 					array(
 						'type'        => 'standard',
@@ -685,8 +737,11 @@ function _add_payment_success_page( $post_id ) {
 							'simpay-field-text',
 						),
 						'placeholder' => 'https://',
-						'value'       => simpay_get_saved_meta( $post_id, '_success_redirect_url', '' ),
-						'description' => __( 'Enter a custom redirect URL for successful transactions.', 'stripe' ),
+						'value'       => $success_redirect_url,
+						'description' => __(
+							'Enter a custom redirect URL for successful transactions.',
+							'stripe'
+						),
 					)
 				);
 				?>
