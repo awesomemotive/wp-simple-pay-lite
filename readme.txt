@@ -26,7 +26,7 @@ Stripe Checkout is a drop-in payment flow optimized for the highest conversion. 
 - Integration with Stripe Checkout hosted forms
 - Custom branding on Stripe Checkout forms
 - Collect billing & shipping addresses
-- Support for [stripe-country-support]
+- Support for 30+ languages, 45+ countries, and 135+ currencies
 - Apple Pay & Google Pay with Stripe Checkout
 - PCI compliant & SCA-ready for secure payments
 - Smart fraud protection & spam prevention
