@@ -92,7 +92,7 @@ class PaymentFormControl {
 		$content .= sprintf(
 			'<script>( function( $ ) { $( \'%1$s .elementor-button\' ).click( function( e ) { e.preventDefault(); $( \'%1$s .simpay-payment-btn\' ).click(); $( \'%1$s #simpay-modal-control-%2$d\' ).click(); } ); } )( jQuery );</script>',
 			$widget->get_unique_selector(), // @phpstan-ignore-line
-			(int) $settings['simpay_payment_form'],
+			(int) $settings['simpay_payment_form']
 		);
 
 		return $content;
