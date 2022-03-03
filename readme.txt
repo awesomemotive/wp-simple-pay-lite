@@ -271,15 +271,16 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Screenshots ==
 
-1. Desktop Stripe Checkout example
-2. Mobile Stripe Checkout example
-3. Payment forms listing
-4. Payment form settings: One-time amount
-5. Payment form settings: Payment button
-6. Payment form settings: Stripe Checkout display
-7. Settings: Payment confirmation details
-8. Settings: Connect with Stripe, Test mode
-9. Settings: Site-wide defaults
+1. Payment form template selection
+2. Payment form settings: General
+3. Payment form settings: Set amount, Button text
+4. Payment form settings: Stripe Checkout options
+5. Desktop Stripe Checkout example
+6. Mobile Stripe Checkout example
+7. Payment forms listing
+8. Global settings: Currency
+9. Global settings: Connect with Stripe, Test mode
+10. Global settings: Payment confirmation details
 
 == Changelog ==
 
