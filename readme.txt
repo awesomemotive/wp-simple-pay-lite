@@ -155,7 +155,7 @@ Anyone with a browser and device combination that allows one of these options wi
 
 = Accept ACH and Alternative Payment Methods =
 
-Give your customers the option to pay directly from their bank accounts with ACH debit payments and take advantage of lower fees. ACH payments on Stripe cost 0.80%, capped at $5, with no monthly fees or verification fees.
+Give your U.S. customers the option to pay directly from their bank accounts with ACH debit payments and take advantage of lower fees. ACH payments on Stripe cost 0.80%, capped at $5, with no monthly fees or verification fees.
 
 [Try our ACH debit payment demos](https://demo.wpsimplepay.com/ach-debit-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
@@ -167,6 +167,7 @@ Additional alternative payment methods are supported by WP Simple Pay and Stripe
 - [Bancontact](https://demo.wpsimplepay.com/bancontact-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [giropay](https://demo.wpsimplepay.com/giropay-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [Przelewy24](https://demo.wpsimplepay.com/przelewy24-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+- FTX
 
 = Customized payment confirmation details =
 
