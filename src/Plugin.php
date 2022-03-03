@@ -200,4 +200,3 @@ final class Plugin {
 	}
 
 }
-
