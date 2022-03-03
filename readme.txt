@@ -22,40 +22,42 @@ Stripe Checkout is a drop-in payment flow optimized for the highest conversion. 
 
 = WP Simple Pay features =
 
-- Create unlimited payment forms integrated with Stripe Checkout
-- Display your brand or product image on Stripe Checkout pages
-- Option to collect customer billing & shipping addresses
-- Option to verify zip/postal code without an address
-- Apple Pay & Google Pay support with Stripe Checkout
-- Support for 30+ languages, 45+ countries, and 135+ currencies
-- reCAPTCHA v3 invisible verification support
-- PCI DSS compliant and Strong Customer Authentication (SCA) support for improved security
+- Embeddable payment buttons
+- Integration with Stripe Checkout hosted forms
+- Custom branding on Stripe Checkout forms
+- Collect billing & shipping addresses
+- Support for [stripe-country-support]
+- Apple Pay & Google Pay with Stripe Checkout
+- PCI compliant & SCA-ready for secure payments
+- Smart fraud protection & spam prevention
 - [AffiliateWP](https://affiliatewp.com/) integration
-- Custom payment success & failure pages
-- Toggle between test & live modes
+- Page builder integrations (Divi, Elementor)
 - Developer-friendly for building custom integrations
+- Embeddable payment buttons
 
 = WP Simple Pay Pro features =
 
 If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to get these powerful features:
 
-- Drag & drop form design controls
-- Unlimited custom fields to capture additional data
-- Custom amounts – let customers enter an amount to pay
-- Create custom payment receipt and notification emails
-- Create and manage coupon codes
-- Create and manage tax rates
-- On-site checkout (no redirect) with custom forms
-- Embedded & overlay form display options
+- On-site payment forms (no redirect)
+- Drag & drop payment form builder
+- Custom form fields to capture additional data
+- Mobile-optimized embedded & overlay forms
 - Apple Pay & Google Pay support with custom forms
-- ACH debit payment support
-- Alternate payment support: iDEAL, Alipay, Bancontact, giropay and more
-- Stripe Subscription support
-- Subscription installment plans
-- Subscription setup fees
-- Subscription trial periods
-- Send subscribers payment renewal reminders
-- Priority customer support
+- Custom payment receipt emails
+- User-entered amounts (great for donations)
+- Coupon code management
+- Tax rate management
+- Accept ACH payments from U.S. bank accounts
+- Accept alternative payments (iDEAL, Alipay, giropay, SEPA, Bancontact, Przelewy24, FPX)
+- Accept recurring payments
+- Create installment plans
+- Charge initial setup fees
+- Offer free trials
+- One-time & recurring toggle
+- Coupon duration settings
+- User-managed subscriptions
+- Send renewal reminders
 
 By upgrading to WP Simple Pay Pro you also get access to one-on-one help from our knowledgeable support team and our extensive documentation site.
 
