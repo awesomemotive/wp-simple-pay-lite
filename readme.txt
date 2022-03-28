@@ -284,6 +284,15 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
+= 4.4.4 - March 30, 2022 =
+
+* New: Display a notice to site admins and do not output a form without price options.
+* New: Add Stripe Instant Payouts education.
+* New: Add additional payment form templates.
+* Fix: Add more specific UTM arguments to URLs.
+* Fix: Add additional opinionated styles to form preview notice.
+* Fix: Update "Tested up to" to `5.9`.
+
 = 4.4.3 - March 3, 2022 =
 
 * New: Payment Form Templates - choose from premade templates to quickly create payment forms.
