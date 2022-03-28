@@ -12,9 +12,9 @@
 use SimplePay\Core\Utils;
 
 $docs_url = simpay_docs_link(
-	'',
+	'comprehensive guide',
 	'first-payment-form',
-	'global-settings',
+	'no-forms-first',
 	true
 );
 
@@ -31,7 +31,7 @@ $new_url = add_query_arg(
 <div class="simpay-landing-zone">
 
 	<h2 class="simpay-landing-zone__title">
-		<?php esc_html_e( '🚀 Create Your First Payment Form', 'simple-pay' ); ?>
+		<?php esc_html_e( '🚀 Create Your First Payment Form', 'stripe' ); ?>
 	</h2>
 
 	<p class="simpay-landing-zone__subtitle">
@@ -39,7 +39,7 @@ $new_url = add_query_arg(
 			<?php
 			esc_html_e(
 				'It looks like you haven\'t created any payment forms yet.',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</strong>
@@ -49,7 +49,7 @@ $new_url = add_query_arg(
 		<?php
 		esc_html_e(
 			'You can use WP Simple Pay to build payment forms with just a few clicks.',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -60,7 +60,7 @@ $new_url = add_query_arg(
 
 	<section>
 		<a href="<?php echo esc_url( $new_url ); ?>" class="button button-primary button-large">
-			<?php esc_html_e( 'Create Your Payment Form', 'simple-pay' ); ?>
+			<?php esc_html_e( 'Create Your Payment Form', 'stripe' ); ?>
 		</a>
 	</section>
 
@@ -72,7 +72,7 @@ $new_url = add_query_arg(
 				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				__(
 					'Need some help? Check out our %1$scomprehensive guide%2$s',
-					'simple-pay'
+					'stripe'
 				),
 				'<a href="' . esc_url( $docs_url ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 				Utils\get_external_link_markup() . '</a>'

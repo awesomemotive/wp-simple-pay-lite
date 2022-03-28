@@ -44,20 +44,20 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 				'title'           => _x(
 					'WP Simple Pay',
 					'block title',
-					'simple-pay'
+					'stripe'
 				),
 				'description'     => _x(
 					'Display a WP Simple Pay payment form.',
 					'block description',
-					'simple-pay'
+					'stripe'
 				),
 				'category'        => 'widgets',
 				'keywords'        => array(
-					_x( 'form', 'block keyword', 'simple-pay' ),
-					_x( 'payment', 'block keyword', 'simple-pay' ),
-					_x( 'stripe', 'block keyword', 'simple-pay' ),
-					_x( 'simple pay', 'block keyword', 'simple-pay' ),
-					_x( 'wp simple pay', 'block keyword', 'simple-pay' ),
+					_x( 'form', 'block keyword', 'stripe' ),
+					_x( 'payment', 'block keyword', 'stripe' ),
+					_x( 'stripe', 'block keyword', 'stripe' ),
+					_x( 'simple pay', 'block keyword', 'stripe' ),
+					_x( 'wp simple pay', 'block keyword', 'stripe' ),
 				),
 				'attributes'      => array(
 					'formId'          => array(

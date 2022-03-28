@@ -118,7 +118,7 @@ function register_page_settings( $settings ) {
 							sprintf(
 								/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 								__( 'Have questions about payment success and failure pages? %1$sView the Payment Confirmation documentation%2$s', 'stripe' ),
-								'<a href="' . esc_url( simpay_docs_link( '', 'setting-payment-success-failure-pages', 'global-settings', true ) ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+								'<a href="' . esc_url( simpay_docs_link( 'View the Payment Confirmation documentation', 'setting-payment-success-failure-pages', 'payment-confirmation-settings', true ) ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 								Utils\get_external_link_markup() . '</a>'
 							),
 							array(

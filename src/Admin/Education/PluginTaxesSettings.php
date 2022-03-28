@@ -51,7 +51,7 @@ class PluginTaxesSettings extends AbstractProductEducation implements Subscriber
 				'label'    => esc_html_x(
 					'Taxes',
 					'settings subsection label',
-					'simple-pay'
+					'stripe'
 				),
 				'priority' => 20,
 			)
@@ -97,7 +97,10 @@ class PluginTaxesSettings extends AbstractProductEducation implements Subscriber
 			true
 		);
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'global-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'taxes',
+			'Collect Taxes and Additional Fees'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 

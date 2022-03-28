@@ -57,9 +57,10 @@ class SetupWizardMarketing implements SubscriberInterface, LicenseAwareInterface
 				'sslverify' => false,
 				'blocking'  => false,
 				'body' => array(
-					'action'  => 'setup-wizard-subscription',
-					'email'   => base64_encode( $email ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-					'license' => $this->get_license_name(),
+					'action'   => 'setup-wizard-subscription',
+					'email'    => base64_encode( $email ), // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+					'license'  => $this->get_license_name(),
+					'site_url' => home_url(),
 				),
 			)
 		);

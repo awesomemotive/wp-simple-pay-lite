@@ -297,6 +297,7 @@ class Default_Form extends Form {
 		$custom_fields = simpay_get_saved_meta( $this->id, '_custom_fields' );
 
 		$payment_text         = __( 'Pay with Card', 'stripe' );
+		$payment_trial_text   = __( 'Start Trial', 'stripe' );
 		$payment_loading_text = __( 'Please Wait...', 'stripe' );
 
 		// Payment Button (Embed + Stripe Checkout).
@@ -307,6 +308,11 @@ class Default_Form extends Form {
 			// Base.
 			if ( ! empty( $payment_button['text'] ) ) {
 				$payment_text = $payment_button['text'];
+			}
+
+			// Trial.
+			if ( ! empty( $payment_button['trial_text'] ) ) {
+				$payment_trial_text = $payment_button['trial_text'];
 			}
 
 			// Processing.
@@ -321,6 +327,7 @@ class Default_Form extends Form {
 
 		$strings['strings'] = array(
 			'paymentButtonText'        => esc_html( $payment_text ),
+			'paymentButtonTrialText'   => esc_html( $payment_trial_text ),
 			'paymentButtonLoadingText' => esc_html( $payment_loading_text ),
 		);
 

@@ -100,21 +100,19 @@ class Customer_Controller extends Controller {
 	 */
 	public function create_item( $request ) {
 		try {
+			// Do not proceed if attempting to set the PaymentMethod or Source (legacy flow).
+			if ( isset( $request['payment_method_id'], $request['source_id' ] ) ) {
+				throw new \Exception(
+					__( 'Unable to complete payment.', 'stripe' )
+				);
+			}
+
 			// Locate form.
 			if ( ! isset( $request['form_id'] ) ) {
 				throw new \Exception(
 					__( 'Unable to locate payment form.', 'stripe' )
 				);
 			}
-
-			// Gather Payment Method information.
-			$source_id = isset( $request['source_id'] )
-				? $request['source_id']
-				: null;
-
-			$payment_method_id = isset( $request['payment_method_id'] )
-				? $request['payment_method_id']
-				: null;
 
 			// Gather <form> information.
 			$form_id     = $request['form_id'];
@@ -132,19 +130,10 @@ class Customer_Controller extends Controller {
 			// Handle legacy hook.
 			Legacy\Hooks\simpay_pre_process_form( $form, $form_data, $form_values );
 
-			$customer_args = wp_parse_args(
-				Payments\Customer\get_args_from_payment_form_request(
-					$form,
-					$form_data,
-					$form_values
-				),
-				array(
-					'source'           => $source_id,
-					'payment_method'   => $payment_method_id,
-					'invoice_settings' => array(
-						'default_payment_method' => $payment_method_id,
-					)
-				)
+			$customer_args = Payments\Customer\get_args_from_payment_form_request(
+				$form,
+				$form_data,
+				$form_values
 			);
 
 			// Add separately to avoid overwriting existing metadata.

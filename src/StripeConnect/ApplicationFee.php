@@ -53,13 +53,13 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			return $message;
 		}
 
-		$upgrade_url = simpay_pro_upgrade_url( 'global-settings' );
+		$upgrade_url = simpay_pro_upgrade_url( 'stripe-account-settings' );
 
 		$message .= '<br/ ><br />' . sprintf(
 			/* translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
 			__(
 				'%1$sPay as you go pricing%2$s: 2%% fee per-transaction + Stripe fees. %3$sUpgrade to Pro%4$s for no added fees and priority support.',
-				'simple-pay'
+				'stripe'
 			),
 			'<strong>',
 			'</strong>',

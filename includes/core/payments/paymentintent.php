@@ -404,3 +404,51 @@ function get_payment_args_from_form_request(
 		'currency' => $currency,
 	);
 }
+
+/**
+ * Sets the customer's default payment method to the card used to make the payment.
+ *
+ * Only applies to card payments made on-site. This is to maintain backwards compatibility
+ * with previous versions that force-set the default payment method on customer creation.
+ *
+ * @since 4.4.4
+ *
+ * @param \SimplePay\Vendor\Stripe\Event         $event Webhook event.
+ * @param \SimplePay\Vendor\Stripe\PaymentIntent $paymentintent PaymentIntent.
+ * @return void
+ */
+function set_card_default_payment_method( $event, $payment_intent ) {
+	$form_id = isset( $payment_intent->metadata->simpay_form_id )
+		? $payment_intent->metadata->simpay_form_id
+		: 0;
+	$form    = simpay_get_form( $form_id );
+
+	if ( false === $form ) {
+		return;
+	}
+
+	$pm_types = $payment_intent->payment_method_types;
+
+	if (
+		'stripe_checkout' === $form->get_display_type() ||
+		! in_array( 'card', $pm_types, true )
+	) {
+		return;
+	}
+
+	API\Customers\update(
+		$payment_intent->customer->id,
+		array(
+			'invoice_settings' => array(
+				'default_payment_method' => $payment_intent->payment_method,
+			),
+		),
+		$form->get_api_request_args()
+	);
+}
+add_action(
+	'simpay_webhook_payment_intent_succeeded',
+	__NAMESPACE__ . '\\set_card_default_payment_method',
+	5,
+	2
+);

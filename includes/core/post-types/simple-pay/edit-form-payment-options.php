@@ -408,7 +408,10 @@ function __add_tax_rates_upsell() {
 			</th>
 			<td>
 				<?php
-				$upgrade_url = simpay_pro_upgrade_url( 'form-settings' );
+				$upgrade_url = simpay_pro_upgrade_url(
+					'payment-form-payment-settings',
+					'Upgrade to WP Simple Pay Pro to collect taxes or additional fees on payments.'
+				);
 
 				echo wp_kses(
 					sprintf( '

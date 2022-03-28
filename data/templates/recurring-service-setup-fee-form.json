@@ -1,0 +1,61 @@
+{
+	"id": "03a82a3c-f9bd-42c2-92e9-e48b7f827c46",
+	"license": [
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"recurring"
+	],
+	"keywords": [
+		"fee",
+		"setup",
+		"service",
+		"subscription"
+	],
+	"slug": "recurring-service-setup-fee-form",
+	"name": "Recurring Services with Setup Fee Form",
+	"description": "Charge an additional amount to setup a recurring service.",
+	"url": "",
+	"data": {
+		"title": "Subscribe to Service",
+		"description": "Sign up for our service.",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"line_items": [
+					{
+						"unit_amount": 2500
+					}
+				],
+				"default": true
+			}
+		]
+	}
+}

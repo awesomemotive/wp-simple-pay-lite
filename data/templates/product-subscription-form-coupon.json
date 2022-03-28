@@ -1,0 +1,70 @@
+{
+	"id": "9c99931b-599b-471f-b39d-2607c8283c19",
+	"license": [
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"recurring"
+	],
+	"keywords": [
+		"subscription",
+		"coupon",
+		"discount"
+	],
+	"slug": "product-subscription-form-coupon",
+	"name": "Product Subscription with Coupon",
+	"description": "Bill customers on a recurring basis for a product, accept coupons",
+	"url": "",
+	"data": {
+		"title": "Product Subscription",
+		"description": "Subscribe to our product.",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": "Payment Options",
+				"display_type": "list"
+			},
+			{
+				"type": "coupon",
+				"label": "Coupon Code"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1500,
+				"label": "Monthly",
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 10000,
+				"recurring": {
+					"interval": "year",
+					"interval_count": 1
+				},
+				"label": "Yearly (Save $80!)"
+			}
+		]
+	}
+}

@@ -34,7 +34,7 @@
 			<?php
 			esc_html_e(
 				'Upgrade Your License Today and Save',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</h3>
@@ -42,35 +42,35 @@
 		<ul>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Accept Recurring Payments', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Accept Recurring Payments', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Installment Plans', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Create Installment Plans', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Initial Setup Fees', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Charge Initial Setup Fees', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Free Trial Periods', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Offer Free Trials', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Send Renewal Reminders', 'simple-pay' ); ?>
+				<?php esc_html_e( 'One-Time & Recurring Toggle', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'User Subscription Management', 'simple-pay' ); ?>
+				<?php esc_html_e( 'User-Managed Subscriptions', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Stripe Customer Portal Integration', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Send Renewal Reminders', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Plus much more...', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Plus much more...', 'stripe' ); ?>
 			</li>
 		</ul>
 

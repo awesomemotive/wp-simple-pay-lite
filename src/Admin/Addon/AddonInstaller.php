@@ -49,7 +49,7 @@ class AddonInstaller implements SubscriberInterface {
 			wp_send_json_error(
 				esc_html__(
 					'Plugin activation is disabled for you on this site.',
-					'simple-pay'
+					'stripe'
 				)
 			);
 		}
@@ -69,11 +69,11 @@ class AddonInstaller implements SubscriberInterface {
 			if ( ! is_wp_error( $activate ) ) {
 				if ( $type === 'plugin' ) {
 					wp_send_json_success(
-						esc_html__( 'Plugin activated.', 'simple-pay' )
+						esc_html__( 'Plugin activated.', 'stripe' )
 					);
 				} else {
 					wp_send_json_success(
-						esc_html__( 'Addon activated.', 'simple-pay' )
+						esc_html__( 'Addon activated.', 'stripe' )
 					);
 				}
 			}
@@ -83,7 +83,7 @@ class AddonInstaller implements SubscriberInterface {
 			wp_send_json_error(
 				esc_html__(
 					'Could not activate the plugin. Please activate it on the Plugins page.',
-					'simple-pay'
+					'stripe'
 				)
 			);
 		}
@@ -91,7 +91,7 @@ class AddonInstaller implements SubscriberInterface {
 		wp_send_json_error(
 			esc_html__(
 				'Could not activate the addon. Please activate it on the Plugins page.',
-				'simple-pay'
+				'stripe'
 			)
 		);
 	}
@@ -112,7 +112,7 @@ class AddonInstaller implements SubscriberInterface {
 			wp_send_json_error(
 				esc_html__(
 					'Plugin deactivation is disabled for you on this site.',
-					'simple-pay'
+					'stripe'
 				)
 			);
 		}
@@ -130,11 +130,11 @@ class AddonInstaller implements SubscriberInterface {
 
 			if ( $type === 'plugin' ) {
 				wp_send_json_success(
-					esc_html__( 'Plugin deactivated.', 'simple-pay' )
+					esc_html__( 'Plugin deactivated.', 'stripe' )
 				);
 			} else {
 				wp_send_json_success(
-					esc_html__( 'Addon deactivated.', 'simple-pay' )
+					esc_html__( 'Addon deactivated.', 'stripe' )
 				);
 			}
 		}
@@ -142,7 +142,7 @@ class AddonInstaller implements SubscriberInterface {
 		wp_send_json_error(
 			esc_html__(
 				'Could not deactivate the addon. Please deactivate from the Plugins page.',
-				'simple-pay'
+				'stripe'
 			)
 		);
 	}
@@ -160,7 +160,7 @@ class AddonInstaller implements SubscriberInterface {
 
 		$generic_error = esc_html__(
 			'There was an error while performing your request.',
-			'simple-pay'
+			'stripe'
 		);
 
 		$type = ! empty( $_POST['type'] )
@@ -175,11 +175,11 @@ class AddonInstaller implements SubscriberInterface {
 		$error = $type === 'plugin'
 			? esc_html__(
 				'Could not install the plugin. Please download and install it manually.',
-				'simple-pay'
+				'stripe'
 			)
 			: esc_html__(
 				'Could not install the addon. Please download it from wpforms.com and install it manually.',
-				'simple-pay'
+				'stripe'
 			);
 
 		/** @var string $plugin */
@@ -264,8 +264,8 @@ class AddonInstaller implements SubscriberInterface {
 		// Check for permissions.
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			$result['msg'] = $type === 'plugin'
-				? esc_html__( 'Plugin installed.', 'simple-pay' )
-				: esc_html__( 'Addon installed.', 'simple-pay' );
+				? esc_html__( 'Plugin installed.', 'stripe' )
+				: esc_html__( 'Addon installed.', 'stripe' );
 
 			wp_send_json_success( $result );
 		}
@@ -277,8 +277,8 @@ class AddonInstaller implements SubscriberInterface {
 		if ( ! is_wp_error( $activated ) ) {
 			$result['is_activated'] = true;
 			$result['msg']          = $type === 'plugin'
-				? esc_html__( 'Plugin installed & activated.', 'simple-pay' )
-				: esc_html__( 'Addon installed & activated.', 'simple-pay' );
+				? esc_html__( 'Plugin installed & activated.', 'stripe' )
+				: esc_html__( 'Addon installed & activated.', 'stripe' );
 
 			wp_send_json_success( $result );
 		}

@@ -26,7 +26,7 @@
 			>
 				<div class="simpay-teaser-float__card">
 					<h2>
-						<?php esc_html_e( 'Create On-Site Payment Forms', 'simple-pay' ); ?>
+						<?php esc_html_e( 'Create On-Site Payment Forms', 'stripe' ); ?>
 					</h2>
 
 					<p>
@@ -36,7 +36,7 @@
 								/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. */
 								__(
 									'Keep customers on-site with payment forms %1$sembedded%2$s directly on your website or inside of an %1$soverlay%2$s.',
-									'simple-pay'
+									'stripe'
 								),
 								'<strong>',
 								'</strong>'

@@ -285,13 +285,19 @@ function simpay_ga_url( $base_url, $utm_medium, $utm_content = false ) {
  * @since 3.0.0
  *
  * @param string $utm_medium utm_medium parameter.
+ * @param string $utm_content Optional. utm_content parameter.
  * @return string
  */
-function simpay_pro_upgrade_url( $utm_medium ) {
+function simpay_pro_upgrade_url( $utm_medium, $utm_content = '' ) {
 	return apply_filters(
 		'simpay_upgrade_link',
-		simpay_ga_url( 'https://wpsimplepay.com/lite-vs-pro', $utm_medium ),
-		$utm_medium
+		simpay_ga_url(
+			'https://wpsimplepay.com/lite-vs-pro',
+			$utm_medium,
+			$utm_content
+		),
+		$utm_medium,
+		$utm_content
 	);
 }
 
@@ -319,13 +325,13 @@ function simpay_docs_link( $text, $slug, $utm_medium, $plain = false ) {
 	// Add GA campaign params in both cases.
 	if ( $plain ) {
 
-		return simpay_ga_url( $url, $utm_medium );
+		return simpay_ga_url( $url, $utm_medium, $text );
 
 	} else {
 
 		$html  = '';
 		$html .= '<div class="simpay-docs-link-wrap">';
-		$html .= '<a href="' . simpay_ga_url( $url, $utm_medium ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $text );
+		$html .= '<a href="' . simpay_ga_url( $url, $utm_medium, $text ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $text );
 		$html .= '<span class="dashicons dashicons-editor-help"></span>';
 		$html .= '</a>';
 		$html .= '</div>';

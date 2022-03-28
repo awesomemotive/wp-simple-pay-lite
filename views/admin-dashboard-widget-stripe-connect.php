@@ -10,9 +10,9 @@
  */
 
 $docs_url = simpay_docs_link(
-	'',
+	'Learn More',
 	'stripe-setup',
-	'global-settings',
+	'dashboard-widget-connect',
 	true
 );
 ?>
@@ -23,7 +23,7 @@ $docs_url = simpay_docs_link(
 		<?php
 		esc_html_e(
 			'Connect with Stripe to use WP Simple Pay',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</h2>
@@ -32,7 +32,7 @@ $docs_url = simpay_docs_link(
 		<?php
 		esc_html_e(
 			'Stripe Connect is the most secure, safe and reliable way to integrate Stripe with your website. Connect now to start accepting payments with WP Simple Pay.',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -44,7 +44,7 @@ $docs_url = simpay_docs_link(
 			<?php
 			esc_html_e(
 				'Learn More',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</a>

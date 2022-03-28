@@ -8,34 +8,28 @@ import { isEmpty } from 'lodash';
 /**
  * WordPress dependencies
  */
-import {
-	Button,
-	FormToggle,
-	Spinner,
-	TextControl,
-} from '@wordpress/components';
+import { Button, Spinner, Popover, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import {
-	createInterpolateElement,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from '@wordpress/element';
+import { useLayoutEffect, useRef, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
+import { Icon, info } from '@wordpress/icons';
 
 /**
  * Internal dependencies
  */
+import {
+	AnalyticsFaq,
+	AnalyticsOptIn,
+	AnalyticsLabel,
+	AnalyticsToggle,
+} from './styles';
 import { CardFooter, CardBody, ContinueButton } from './../../components';
 import { useSettings } from './../../hooks';
 
 const {
 	adminEmail: bootAdminEmail,
 	subscribeNonce,
-	isLite,
 	ajaxUrl,
-	analyticsDocsUrl,
 } = simpaySetupWizard;
 
 export function Analytics( { goPrev, goNext } ) {
@@ -47,9 +41,12 @@ export function Analytics( { goPrev, goNext } ) {
 		saveSettings,
 	} = useSettings();
 
-	const [ isOptedIn, setIsOptedIn ] = useState( '0' === isLite );
+	const [ isOptedIn, setIsOptedIn ] = useState( true );
 	const [ adminEmail, setAdminEmail ] = useState( bootAdminEmail );
 	const [ isBusy, setIsBusy ] = useState( false );
+	const [ isShowingAnalyticsFaq, setIsShowingAnalyticsFaq ] = useState(
+		false
+	);
 
 	const toFocus = useRef();
 
@@ -59,14 +56,6 @@ export function Analytics( { goPrev, goNext } ) {
 		}
 
 		toFocus.current.focus();
-	}, [ rawSettings ] );
-
-	useEffect( () => {
-		if ( ! settings || ! settings.usage_tracking_opt_in ) {
-			return;
-		}
-
-		setIsOptedIn( 'yes' === settings.usage_tracking_opt_in );
 	}, [ rawSettings ] );
 
 	if ( isEmpty( settings ) ) {
@@ -87,6 +76,12 @@ export function Analytics( { goPrev, goNext } ) {
 	 */
 	function onSave() {
 		setIsBusy( true );
+
+		// Force an edit to the settings to ensure unchanged settings are saved.
+		editSettings( {
+			usage_tracking_opt_in: isOptedIn ? 'yes' : 'no',
+		} );
+
 		saveSettings(); // Always save settings.
 
 		// eslint-disable-next-line no-undef
@@ -118,12 +113,12 @@ export function Analytics( { goPrev, goNext } ) {
 				</p>
 
 				<TextControl
-					label={ __( 'Your email address:', 'simple-pay' ) }
+					label={ __( 'Your Email Address:', 'simple-pay' ) }
 					value={ adminEmail }
 					className="simpay-setup-wizard-large-input"
 					onChange={ ( value ) => setAdminEmail( value ) }
 					help={ __(
-						'Your email is needed, so you can receive recommendations.',
+						'Your email is needed so you receive recommendations.',
 						'simple-pay'
 					) }
 					ref={ toFocus }
@@ -132,41 +127,45 @@ export function Analytics( { goPrev, goNext } ) {
 
 				<hr />
 
-				<ul className="simpay-setup-wizard-toggle-list">
-					<li>
-						<label htmlFor="email_payment-confirmation">
-							<strong>
-								{ __( 'Send usage analytics', 'simple-pay' ) }
-							</strong>
-							<p>
-								{ createInterpolateElement(
-									__(
-										'Get improved features by sharing data via <a>usage analytics</a> that shows us how you are using WP Simple Pay.',
-										'simple-pay'
-									),
-									{
-										// eslint-disable-next-line jsx-a11y/anchor-has-content
-										a: <a href={ analyticsDocsUrl } />,
-									}
-								) }
-							</p>
-						</label>
+				<AnalyticsOptIn>
+					<AnalyticsLabel>
+						{ __(
+							'Help make WP Simple Pay better for everyone',
+							'simple-pay'
+						) }
 
-						<FormToggle
-							id="email_payment-confirmation"
-							checked={ isOptedIn }
-							disabled={ isBusy }
-							onChange={ ( { target } ) => {
-								setIsOptedIn( target.checked );
-								editSettings( {
-									usage_tracking_opt_in: target.checked
-										? 'yes'
-										: 'no',
-								} );
-							} }
-						/>
-					</li>
-				</ul>
+						<div>
+							{ isShowingAnalyticsFaq && (
+								<AnalyticsFaq position="top center">
+									{ __(
+										'By allowing us to track usage data we can better help you because we know which WordPress configurations, themes, and plugins we should test.',
+										'simple-pay'
+									) }
+								</AnalyticsFaq>
+							) }
+							<Icon
+								size={ 20 }
+								icon={ info }
+								onMouseEnter={ () =>
+									setIsShowingAnalyticsFaq( true )
+								}
+								onMouseLeave={ () =>
+									setIsShowingAnalyticsFaq( false )
+								}
+							/>
+						</div>
+					</AnalyticsLabel>
+
+					<AnalyticsToggle
+						label={ __( 'Yes, count me in', 'simple-pay' ) }
+						id="email_payment-confirmation"
+						checked={ isOptedIn }
+						disabled={ isBusy }
+						onChange={ ( checked ) => {
+							setIsOptedIn( checked );
+						} }
+					/>
+				</AnalyticsOptIn>
 			</CardBody>
 
 			<CardFooter justify="space-between" align="center">

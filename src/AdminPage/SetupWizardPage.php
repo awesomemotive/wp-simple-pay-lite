@@ -35,14 +35,14 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 	 * {@inheritdoc}
 	 */
 	public function get_menu_title() {
-		return __( 'Setup Wizard', 'simple-pay' );
+		return __( 'Setup Wizard', 'stripe' );
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function get_page_title() {
-		return __( 'Setup Wizard', 'simple-pay' );
+		return __( 'Setup Wizard', 'stripe' );
 	}
 
 	/**
@@ -102,7 +102,8 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 					),
 					'accountLicensesUrl'  => simpay_ga_url(
 						'https://wpsimplepay.com/my-account/licenses/',
-						'setup-wizard'
+						'setup-wizard',
+						'WP Simple Pay account'
 					),
 					'newFormUrl'          => add_query_arg(
 						array(
@@ -137,19 +138,19 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 						)
 					),
 					'donationsDocsUrl'    => simpay_docs_link(
-						'',
+						'Accept Donations',
 						'accepting-donations-form-setup',
 						'setup-wizard',
 						true
 					),
 					'invoicesDocsUrl'     => simpay_docs_link(
-						'',
+						'Reconcile Invoices',
 						'invoice-payment-form-set-up',
 						'setup-wizard',
 						true
 					),
 					'analyticsDocsUrl'    => simpay_docs_link(
-						'',
+						'usage analytics',
 						'advanced-settings',
 						'setup-wizard',
 						true

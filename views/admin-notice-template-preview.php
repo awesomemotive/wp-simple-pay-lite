@@ -23,7 +23,7 @@ $template_name = isset( $template['name'] ) ? $template['name'] : '';
 			sprintf(
 				__(
 					'You are creating a payment form using the "%1$s" template. %2$sUse a different template &rarr;%3$s',
-					'simple-pay'
+					'stripe'
 				),
 				'<strong>' . esc_html( $template_name ) . '</strong>',
 				'<a href="' . esc_url( $new_url ) . '">',

@@ -146,8 +146,8 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 		// We are already showing the parent item in test mode.
 		if ( simpay_is_test_mode() ) {
 			$label = (
-				__( 'WP Simple Pay', 'simple-pay' ) .
-				' <span class="simpay-test-mode-badge">' . __( 'Test Mode', 'simple-pay' ) . '</span>' .
+				__( 'WP Simple Pay', 'stripe' ) .
+				' <span class="simpay-test-mode-badge">' . __( 'Test Mode', 'stripe' ) . '</span>' .
 				$this->get_bubble_markup( '1' )
 			);
 
@@ -158,7 +158,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 			) );
 		} else {
 			$label = (
-				__( 'WP Simple Pay', 'simple-pay' ) .
+				__( 'WP Simple Pay', 'stripe' ) .
 				$this->get_bubble_markup( '1' )
 			);
 
@@ -181,7 +181,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 				'id'     => 'simpay-webhook-none-received',
 				'title'  => esc_html__(
 					'Notifications',
-					'simple-pay'
+					'stripe'
 				) . $this->get_bubble_markup( '' ),
 				'href'   => $webhooks_url,
 			)
@@ -238,7 +238,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 					'label'    => esc_html_x(
 						'Stripe',
 						'settings section label',
-						'simple-pay'
+						'stripe'
 					) . $this->get_bubble_markup( '' ),
 					'priority' => 20,
 				)
@@ -271,7 +271,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 					'label'    => esc_html_x(
 						'Webhooks',
 						'settings subsection label',
-						'simple-pay'
+						'stripe'
 					) . $this->get_bubble_markup( '1' ),
 					'priority' => 20,
 				)
@@ -292,9 +292,9 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		$docs_url = simpay_docs_link(
-			'',
+			'Learn more',
 			'webhooks',
-			'global-settings',
+			'webhook-settings',
 			true
 		);
 
@@ -430,7 +430,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 	 * @return bool
 	 */
 	public function received_expected_event() {
-		$timeframe = MINUTE_IN_SECONDS * 5;
+		$timeframe = MINUTE_IN_SECONDS * 15;
 		$expected  = $this->get_most_recent_expected_event();
 
 		// No event was expected, then we can't assume anything went wrong.

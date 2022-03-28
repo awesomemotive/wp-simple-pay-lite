@@ -1,3 +1,10 @@
+@import "~@wordpress/base-styles/colors";
+@import "~@wordpress/base-styles/variables";
+@import "~@wordpress/base-styles/mixins";
+@import "~@wordpress/base-styles/breakpoints";
+@import "~@wordpress/base-styles/animations";
+@import "~@wordpress/base-styles/z-index";
+
 @import './settings.scss';
 
 .button.button-large.simpay-button-large {
@@ -404,6 +411,23 @@
 
 	// simpay-panel-field is the wrapping tr element for each setting field on the form settings pages
 	.simpay-panel-field {
+
+		&--requires-upgrade {
+			position: relative;
+
+			td {
+
+				> div {
+					margin-right: 80px;
+
+					.button-small {
+						position: absolute;
+						top: calc(50% - 13px);
+						right: 18px;
+					}
+				}
+			}
+		}
 
 		&,
 		> td,
@@ -1295,6 +1319,89 @@ select.simpay-currency-symbol {
 }
 
 /**
+ * Upgrade modal via jQuery UI.
+ *
+ * @see @wpsimplepay/utils/upgrade-modal.js
+ * @see ./src/Admin/Education/UpgradeModal.php
+ * @see ./views/admin-education-upgrade-modal.php
+ */
+.simpay-upgrade-modal {
+	padding: 0 !important;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	&__content {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: $grid-unit-20 $grid-unit-40 $grid-unit-40;
+
+		> .dashicons {
+			color: #333;
+			font-size: 48px;
+			width: 48px;
+			height: 48px;
+		}
+	}
+
+	&__title {
+		font-size: 22px;
+		line-height: 1.5;
+		display: block;
+		margin: $grid-unit-15 0 0;
+	}
+
+	&__description {
+		color: #777;
+		font-size: 16px;
+		margin: $grid-unit-20 0 $grid-unit-30;
+
+		strong {
+			color: #333;
+		}
+	}
+
+	&__discount {
+		font-size: 15px;
+		text-align: center;
+		margin: $grid-unit-20 calc($grid-unit-40 * -1) calc($grid-unit * 2.5);
+		padding: $grid-unit-30 $grid-unit-50 $grid-unit-20;
+		background-color: #fcf9e8;
+		position: relative;
+
+		svg {
+			background: #00a32a;
+			fill: white;
+			border-radius: 50%;
+			border: 4px solid white;
+			width: 32px;
+			height: 32px;
+			position: absolute;
+			top: -16px;
+			left: 50%;
+			margin-left: -16px;
+		}
+
+		u {
+			text-decoration: none;
+			font-weight: bold;
+			color: #00a32a;
+		}
+	}
+
+	.button-large {
+		font-size: 16px;
+		font-weight: bold;
+		margin: 0 0 15px;
+		padding: 8px 30px !important;
+		height: auto;
+	}
+}
+
+/**
  * Teasers
  */
 .simpay-teaser-float {
@@ -1441,6 +1548,33 @@ select.simpay-currency-symbol {
 
 		&:after {
 			top: 15px;
+		}
+	}
+}
+
+.simpay-teaser-form-setting {
+	position: relative;
+
+	.simpay-external-link .dashicons-external {
+		margin: 1px 0 0 2px;
+	}
+
+	.simpay-notice-dismiss {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		font-size: 20px;
+		color: #666;
+		text-decoration: none;
+		margin-left: 5px;
+		padding: 6px 10px;
+		z-index: 2;
+
+		&:hover,
+		&:active,
+		&:focus {
+			color: #666;
+			text-decoration: none;
 		}
 	}
 }

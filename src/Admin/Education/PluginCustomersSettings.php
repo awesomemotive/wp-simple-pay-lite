@@ -56,7 +56,7 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 				'label'    => esc_html_x(
 					'Subscription Management',
 					'settings subsection label',
-					'simple-pay'
+					'stripe'
 				),
 				'priority' => 60,
 			)
@@ -82,7 +82,7 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 				'label'   => esc_html_x(
 					'General',
 					'settings subsection label',
-					'simple-pay'
+					'stripe'
 				),
 			)
 		);
@@ -119,7 +119,10 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 			true
 		);
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'global-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'subscription-management-settings',
+			'Allow Customers to Manage Subscriptions'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 		$license         = $this->license;

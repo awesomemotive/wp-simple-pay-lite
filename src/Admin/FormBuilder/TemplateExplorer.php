@@ -173,7 +173,8 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 				),
 				'suggestUrl'          => simpay_ga_url(
 					'https://wpsimplepay.com/payment-form-template-suggestion/',
-					'template-explorer'
+					'template-explorer',
+					'suggest a template'
 				),
 				'upgradeUrl'          => simpay_ga_url(
 					(
@@ -182,10 +183,11 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 							// add_query_arg escapes this, which doesn't play nicely on the client.
 							: 'https://wpsimplepay.com/pricing?license_key=' . $this->license->get_key()
 					),
-					'template-explorer'
+					'template-explorer',
+					$is_lite ? 'Upgrade to Pro' : 'Upgrade Now'
 				),
 				'alreadyPurchasedUrl' => simpay_docs_link(
-					'',
+					'Already purchased?',
 					(
 						$is_lite
 							? 'upgrading-wp-simple-pay-lite-to-pro'

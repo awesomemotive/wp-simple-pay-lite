@@ -30,7 +30,7 @@
 				<?php
 				esc_html_e(
 					'Need your customers to sign up for recurring payments?',
-					'simple-pay'
+					'stripe'
 				);
 				?>
 			</h2>
@@ -42,7 +42,7 @@
 					/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 					__(
 						'%1$sUpgrade your license%2$s to accept recurring payments from your customers. You can also create installment plans, charge setup fees, and include free trials.',
-						'simple-pay'
+						'stripe'
 					),
 					sprintf(
 						'<a href="%s" target="_blank" rel="noopener noreferrer">',
@@ -82,7 +82,7 @@
 						/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 						__(
 							'Already have a license that supports subscriptions? %1$sActivate your license%2$s',
-							'simple-pay'
+							'stripe'
 						),
 						sprintf(
 							'<a href="%s">',

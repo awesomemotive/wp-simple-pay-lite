@@ -236,11 +236,25 @@ function save_product( $post_id, $post, $form ) {
 		} else {
 			$product_args['description'] = sanitize_text_field( $description );
 
-			$product = API\Products\update(
-				$form_product,
-				$product_args,
-				$form->get_api_request_args()
-			);
+			// Try to update an existing product.
+			try {
+				$product = API\Products\update(
+					$form_product,
+					$product_args,
+					$form->get_api_request_args()
+				);
+
+				// Create a new one if the previous cannot be updated.
+			} catch ( \Exception $e ) {
+				$product = API\Products\create(
+					$product_args,
+					$form->get_api_request_args()
+				);
+
+				update_post_meta( $form->id, $product_key, $product->id );
+
+				$form_product = $product->id;
+			}
 		}
 	} catch ( ApiErrorException $e ) {
 		$error->add(

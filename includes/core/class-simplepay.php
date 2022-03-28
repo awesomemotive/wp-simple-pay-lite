@@ -220,9 +220,6 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/notices.php' );
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/plugin-upgrade-notice.php' );
 
-		// Promos (Lite-only).
-		require_once( SIMPLE_PAY_INC . 'core/admin/notices/promos.php' );
-
 		// Usage tracking functionality.
 		require_once( SIMPLE_PAY_INC . 'core/admin/usage-tracking/functions.php' );
 

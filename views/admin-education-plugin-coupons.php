@@ -17,21 +17,21 @@
 
 <div class="wrap">
 	<h1 class="wp-heading-inline">
-		<?php esc_html_e( 'Coupons', 'simple-pay' ); ?>
+		<?php esc_html_e( 'Coupons', 'stripe' ); ?>
 	</h1>
 	<hr class="wp-header-end">
 
 	<div class="simpay-landing-zone">
 
 		<h2 class="simpay-landing-zone__title">
-			<?php echo esc_html_e( '🏷 Offer Coupon Codes to Customers', 'simple-pay' ); ?>
+			<?php echo esc_html_e( '🏷 Offer Coupon Codes to Customers', 'stripe' ); ?>
 		</h2>
 
 		<p class="simpay-landing-zone__subtitle">
 			<?php
 			esc_html_e(
 				'Allow fixed amount or percentage discounts to one-time or recurring payments with WP Simple Pay Pro. Limit coupon code redemptions by count, date, or specific payment forms.',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</p>
@@ -44,16 +44,16 @@
 
 			<ul>
 				<li>
-					<?php esc_html_e( 'Fixed amount or percentage discounts', 'simple-pay' ); ?>
+					<?php esc_html_e( 'Fixed amount or percentage discounts', 'stripe' ); ?>
 				</li>
 				<li>
-					<?php esc_html_e( 'Restrict coupons to specific payment forms', 'simple-pay' ); ?>
+					<?php esc_html_e( 'Restrict coupons to specific payment forms', 'stripe' ); ?>
 				</li>
 				<li>
-					<?php esc_html_e( 'Apply to a specific number of invoices', 'simple-pay' ); ?>
+					<?php esc_html_e( 'Apply to a specific number of invoices', 'stripe' ); ?>
 				</li>
 				<li>
-					<?php esc_html_e( 'Add unlimited coupon codes', 'simple-pay' ); ?>
+					<?php esc_html_e( 'Add unlimited coupon codes', 'stripe' ); ?>
 				</li>
 			</ul>
 		</section>

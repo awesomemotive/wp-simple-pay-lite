@@ -330,12 +330,12 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 */
 	private function get_default_field_args() {
 		return array(
-			'label'           => esc_html__( 'WP Simple Pay', 'siple-pay' ),
+			'label'           => esc_html__( 'WP Simple Pay', 'stripe' ),
 			'type'            => 'select',
 			'options'         => $this->get_payment_form_options(),
 			'description'     => esc_html__(
 				'WP Simple Pay form ID.',
-				'simple-pay'
+				'stripe'
 			),
 		);
 	}
@@ -394,7 +394,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 			);
 
 			$options = array(
-				'0' => __( 'Select a form&hellip;', 'simple-pay' ),
+				'0' => __( 'Select a form&hellip;', 'stripe' ),
 			);
 
 			foreach ( $forms as $form_id ) {

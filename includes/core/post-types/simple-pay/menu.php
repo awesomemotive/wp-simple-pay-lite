@@ -78,7 +78,11 @@ function __unstable_add_upgrade_item() {
 	$submenu['edit.php?post_type=simple-pay'][99] = array(
 		__( 'Upgrade to Pro', 'stripe' ),
 		'manage_options',
-		simpay_ga_url( 'https://wpsimplepay.com/lite-vs-pro/', 'admin-menu' ),
+		simpay_ga_url(
+			'https://wpsimplepay.com/lite-vs-pro/',
+			'admin-menu',
+			'Upgrade to Pro'
+		)
 	);
 }
 add_action( 'admin_menu', __NAMESPACE__ . '\\__unstable_add_upgrade_item', 99 );

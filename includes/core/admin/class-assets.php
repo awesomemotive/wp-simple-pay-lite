@@ -166,10 +166,11 @@ class Assets {
 					'simpay-admin',
 					'simpayAdmin',
 					array(
-						'siteTitle' => get_bloginfo( 'name' ),
-						'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
-						'nonce'     => wp_create_nonce( 'simpay-admin' ),
-						'i18n'      => array(
+						'siteTitle'    => get_bloginfo( 'name' ),
+						'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+						'nonce'        => wp_create_nonce( 'simpay-admin' ),
+						'licenseLevel' => simpay_get_license()->get_level(),
+						'i18n'         => array(
 							'dateFormat'            => simpay_get_date_format(),
 							'leavePageConfirm'      => esc_html__(
 								'The changes you made will be lost if you navigate away from this page.',

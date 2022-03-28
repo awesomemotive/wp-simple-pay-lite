@@ -52,7 +52,7 @@ class PluginEmailSettings extends AbstractProductEducation implements Subscriber
 				'label'    => esc_html_x(
 					'Emails',
 					'settings subsection label',
-					'simple-pay'
+					'stripe'
 				),
 				'priority' => 60,
 			)
@@ -78,7 +78,7 @@ class PluginEmailSettings extends AbstractProductEducation implements Subscriber
 				'label'   => esc_html_x(
 					'General',
 					'settings subsection label',
-					'simple-pay'
+					'stripe'
 				),
 			)
 		);
@@ -136,7 +136,7 @@ class PluginEmailSettings extends AbstractProductEducation implements Subscriber
 			? sanitize_text_field( $_GET['subsection'] )
 			: 'general';
 
-		$title = __( '️📨 Customize Emails Receipts and More', 'simple-pay' );
+		$title = __( '️📨 Customize Emails Receipts and More', 'stripe' );
 
 		if ( 'general' !== $subsection && $subsections->get_item( $subsection ) ) {
 			/** @var \SimplePay\Core\Settings\Subsection $obj */
@@ -144,13 +144,16 @@ class PluginEmailSettings extends AbstractProductEducation implements Subscriber
 
 			if ( $obj instanceof \SimplePay\Core\Settings\Subsection ) {
 				$title = sprintf(
-					__( 'Customize the "%s" Email', 'simple-pay' ),
+					__( 'Customize the "%s" Email', 'stripe' ),
 					esc_html( $obj->label )
 				);
 			}
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'global-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'email-settings',
+			'Customize Emails Receipts and More'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 
@@ -170,9 +173,9 @@ class PluginEmailSettings extends AbstractProductEducation implements Subscriber
 	 */
 	private function get_registered_emails() {
 		return array(
-			'payment-receipt'      => __( 'Payment Confirmation', 'simple-pay' ),
-			'payment-notification' => __( 'Payment Notification', 'simple-pay' ),
-			'upcoming-invoice'     => __( 'Upcoming Invoice', 'simple-pay' ),
+			'payment-receipt'      => __( 'Payment Confirmation', 'stripe' ),
+			'payment-notification' => __( 'Payment Notification', 'stripe' ),
+			'upcoming-invoice'     => __( 'Upcoming Invoice', 'stripe' ),
 		);
 	}
 

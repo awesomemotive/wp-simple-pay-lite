@@ -12,9 +12,9 @@
 use SimplePay\Core\Utils;
 
 $docs_url = simpay_docs_link(
-	'',
+	'View the Stripe Connect documentation',
 	'stripe-setup',
-	'global-settings',
+	'no-forms-connect',
 	true
 );
 
@@ -29,7 +29,7 @@ if ( ! isset( $redirect_url ) ) {
 <div class="simpay-landing-zone">
 
 	<h2 class="simpay-landing-zone__title">
-		<?php esc_html_e( '👋 You\'re Almost Ready!', 'simple-pay' ); ?>
+		<?php esc_html_e( '👋 You\'re Almost Ready!', 'stripe' ); ?>
 	</h2>
 
 	<p class="simpay-landing-zone__subtitle">
@@ -37,7 +37,7 @@ if ( ! isset( $redirect_url ) ) {
 			<?php
 			esc_html_e(
 				'You need to connect your Stripe account before proceeding.',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</strong>
@@ -47,7 +47,7 @@ if ( ! isset( $redirect_url ) ) {
 		<?php
 		esc_html_e(
 			'WP Simple Pay requires Stripe Connect for the highest reliability and security. Connect now to start accepting payments instantly.',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -64,7 +64,7 @@ if ( ! isset( $redirect_url ) ) {
 				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				__(
 					'Have questions about connecting with Stripe? %1$sView the Stripe Connect documentation%2$s',
-					'simple-pay'
+					'stripe'
 				),
 				'<a href="' . esc_url( $docs_url ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 				Utils\get_external_link_markup() . '</a>'

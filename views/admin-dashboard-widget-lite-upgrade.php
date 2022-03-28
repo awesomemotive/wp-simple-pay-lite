@@ -18,7 +18,7 @@ $upgrade_url = simpay_pro_upgrade_url( 'dashboard-widget' );
 		<?php
 		esc_html_e(
 			'You are using WP Simple Pay Lite',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</h2>
@@ -27,7 +27,7 @@ $upgrade_url = simpay_pro_upgrade_url( 'dashboard-widget' );
 		<?php
 		esc_html_e(
 			'Upgrade to WP Simple Pay Pro to unlock on-site payment forms, custom fields, subscriptions, tax rates, and more.',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -37,7 +37,7 @@ $upgrade_url = simpay_pro_upgrade_url( 'dashboard-widget' );
 			<?php
 			esc_html_e(
 				'Upgrade Now',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</a>

@@ -1,0 +1,58 @@
+{
+	"id": "86d08d6b-8e84-4e59-9177-cf946bb9f910",
+	"license": [
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business",
+		"alternative"
+	],
+	"keywords": [
+		"apple",
+		"google",
+		"microsoft",
+		"express",
+		"on-site"
+	],
+	"slug": "payment-request-form",
+	"name": "Apple Pay / Google Pay Form",
+	"description": "Collect payments with Apple Pay and Google Pay.",
+	"url": "",
+	"data": {
+		"title": "Apple Pay / Google Pay Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "payment_request_button"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

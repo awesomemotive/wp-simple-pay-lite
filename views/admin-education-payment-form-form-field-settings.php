@@ -19,7 +19,7 @@
 <div class="simpay-teaser-float">
 	<div class="simpay-teaser-float__card">
 		<h2>
-			<?php esc_html_e( '📝 Custom Fields + Custom Data', 'simple-pay' ); ?>
+			<?php esc_html_e( '📝 Custom Fields + Custom Data', 'stripe' ); ?>
 		</h2>
 
 		<p>
@@ -29,7 +29,7 @@
 					/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. */
 					__(
 						'Collect as little or as much data as you need on your payment forms. Add a variety of field types to capture more data for each payment record: %1$snumbers, dates, checkboxes, drop-downs and more%2$s.',
-						'simple-pay'
+						'stripe'
 					),
 					'<strong>',
 					'</strong>'
@@ -42,7 +42,7 @@
 		</p>
 
 		<select style="display: block; margin: 20px auto;">
-			<option value=""><?php esc_html_e( 'See available custom fields&hellip;', 'simple-pay' ); ?></option>
+			<option value=""><?php esc_html_e( 'See available custom fields&hellip;', 'stripe' ); ?></option>
 			<?php foreach ( $field_groups as $group => $options ) : ?>
 				<optgroup label="<?php echo esc_attr( $group ); ?>">
 					<?php foreach ( $options as $option ) : ?>

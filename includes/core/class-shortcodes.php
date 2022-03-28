@@ -131,6 +131,31 @@ class Shortcodes {
 			$form = simpay_get_form( $form_id );
 
 			if ( false !== $form ) {
+				$prices = simpay_get_payment_form_prices( $form );
+
+				if ( empty( $prices ) ) {
+					if ( current_user_can( 'manage_options' ) ) {
+						$edit_prices_url = add_query_arg(
+							array(
+								'post'   => $form->id,
+								'action' => 'edit',
+							),
+							admin_url( 'post.php' )
+						);
+
+						return wp_kses_post(
+							sprintf(
+								/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+								__( 'Attention: The payment form does not have prices configured. %1$sAdd price options%2$s to collect payments.', 'stripe' ),
+								'<a href="' . esc_url( $edit_prices_url ) . '#payment-options-settings-panel">',
+								'</a>'
+							)
+						);
+					}
+
+					return;
+				}
+
 				ob_start();
 
 				$form->html();

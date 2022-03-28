@@ -80,25 +80,47 @@ $error-text-color: #eb1c26;
 	}
 }
 
-.simpay-form-preview {
+html body.simpay-form-preview {
 	padding: 50px;
+	background: #ffffff;
+	font-family: sans-serif ;
 
-	&-button {
-
+	&:before,
+	&:after {
+		display: none;
 	}
 
-	&-notice {
-		background-color: rgba(250, 230, 1, 0.1);
+	.simpay-form-preview-notice {
+		background: #fafafa;
 		margin-bottom: 50px;
-		padding: 1em;
-		border-radius: 4px;
+		padding: 5px 20px;
 		display: inline-block;
+		border: 1px solid #ddd;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+
+		&-button {
+			background-color: #428bca;
+			color: #fff;
+			font-size: 16px;
+			line-height: 1.2;
+			padding: 6px 12px;
+			font-weight: normal;
+			text-shadow: none;
+			border: 1px solid #2d6ca2;
+			box-shadow: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+
+		&-section {
+			margin: 10px 0;
+		}
 
 		p {
 			font-family: $base-font;
 			font-size: 16px;
 			color: $base-text-color;
-			margin: 0;
+			margin: 15px 0;
 		}
 	}
 }

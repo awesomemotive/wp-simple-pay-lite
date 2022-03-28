@@ -1,0 +1,56 @@
+{
+	"id": "5201e546-8de6-42dc-9e5f-d3cc51813fa2",
+	"license": [
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business"
+	],
+	"keywords": [
+		"on-site",
+		"coupon",
+		"discount"
+	],
+	"slug": "payment-form-coupon",
+	"name": "Payment Form with Coupon",
+	"description": "Collect credit card payments with a basic form, accept coupons.",
+	"url": "",
+	"data": {
+		"title": "Payment Form with Coupon",
+		"description": "Collect credit card payments",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "coupon",
+				"label": "Coupon Code"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

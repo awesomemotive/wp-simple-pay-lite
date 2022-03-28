@@ -46,7 +46,10 @@ export const STEPS = {
 		},
 		{
 			id: 'analytics',
-			title: __( 'Help Improve WP Simple Pay', 'simple-pay' ),
+			title: __(
+				'Help Improve WP Simple Pay + Smart Recommendations',
+				'simple-pay'
+			),
 			content: Analytics,
 		},
 		{

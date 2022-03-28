@@ -105,8 +105,8 @@ export default {
 			jQuery( embeddedHtml ).html() === submitBtn.find( 'span' ).html()
 		) {
 			if ( 0 === cart.getTotal() ) {
-				const { startTrial } = formData;
-				submitBtn.find( 'span' ).text( startTrial );
+				const { checkoutButtonTrialText } = formData;
+				submitBtn.find( 'span' ).text( checkoutButtonTrialText );
 			} else {
 				const formatted = formatCurrency(
 					cart.isZeroDecimal()

@@ -140,7 +140,8 @@ function __unstable_simpay_get_payment_form_prices_subscription_price( $prices )
  * @since 4.1.0
  *
  * @param \SimplePay\Core\PaymentForm\PriceOption[] $prices Prices list.
- * @return \SimplePay\Core\PaymentForm\PriceOption Default price, or first price.
+ * @return false|\SimplePay\Core\PaymentForm\PriceOption Default price, or first price.
+ *                                                       False if no prices are found.
  */
 function simpay_get_payment_form_default_price( $prices ) {
 	$price = current(
@@ -280,6 +281,10 @@ function simpay_payment_form_add_missing_custom_fields(
 					(
 						isset( $payment_methods['stripe-elements']['sepa-debit'] ) &&
 						isset( $payment_methods['stripe-elements']['sepa-debit']['id'] )
+					) ||
+					(
+						isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
+						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
 					)
 				)
 			) {
@@ -300,6 +305,44 @@ function simpay_payment_form_add_missing_custom_fields(
 					'id'    => 'simpay_' . $form_id . '_email',
 					'label' => 'Email Address',
 				);
+
+				$count++;
+			}
+
+			// Ensure "Address" exists and is required if using Klarna.
+			if (
+				! isset( $fields['address'] ) &&
+				(
+					(
+						isset( $payment_methods['stripe-elements']['klarna'] ) &&
+						isset( $payment_methods['stripe-elements']['klarna']['id'] )
+					) ||
+					(
+						isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
+						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
+					)
+				)
+			) {
+				$args = array(
+					'uid'                     => $count,
+					'id'                      => 'simpay_' . $form_id . '_address',
+					'billing-container-label' => 'Billing Address',
+					'label-street'            => 'Street Address',
+					'label-city'              => 'City',
+					'label-state'             => 'State',
+					'label-zip'               => 'Postal Code',
+					'label-country'           => 'Country',
+					'required'                => 'yes',
+				);
+
+				if (
+					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
+					isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
+				) {
+					$args['collect-shipping'] = 'yes';
+				}
+
+				$fields['address'][] = $args;
 
 				$count++;
 			}
@@ -408,6 +451,7 @@ function simpay_payment_form_add_missing_custom_fields(
 			array(
 				'customer_name',
 				'email',
+				'address',
 				'plan_select',
 				'custom_amount',
 				'recurring_amount_toggle',

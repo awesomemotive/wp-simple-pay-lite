@@ -109,12 +109,12 @@ class SetupWizardLaunch implements SubscriberInterface {
 				'id'         => 'setup-wizard',
 				'section'    => 'general',
 				'subsection' => 'advanced',
-				'label'      => esc_html__( 'Setup Wizard', 'simple-pay' ),
+				'label'      => esc_html__( 'Setup Wizard', 'stripe' ),
 				'output'     => function() {
 					printf(
 						'<a href="%s" class="button button-secondary">%s</a>',
 						esc_url( $this->get_wizard_url() ),
-						esc_html__( 'Launch Setup Wizard', 'simple-pay' )
+						esc_html__( 'Launch Setup Wizard', 'stripe' )
 					); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				},
 				'priority'   => 60,
@@ -138,7 +138,7 @@ class SetupWizardLaunch implements SubscriberInterface {
 			<?php
 			esc_html_e(
 				'Launch Setup Wizard',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</a>

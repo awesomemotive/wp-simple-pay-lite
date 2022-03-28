@@ -95,7 +95,7 @@ function stripe_connect() {
 <p>
 	<?php echo simpay_get_stripe_connect_button(); // PHPCS:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
-	<a href="<?php echo esc_url( simpay_docs_link( '', 'stripe-setup', 'global-notice', true ) ); ?>" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="margin-left: 5px;">
+	<a href="<?php echo esc_url( simpay_docs_link( 'Learn More', 'stripe-setup', 'global-notice', true ) ); ?>" target="_blank" rel="noopener noreferrer" class="button button-secondary" style="margin-left: 5px;">
 		<?php esc_html_e( 'Learn More', 'stripe' ); ?>
 	</a>
 </p>

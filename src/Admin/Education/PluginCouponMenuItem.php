@@ -43,8 +43,8 @@ class PluginCouponMenuItem extends AbstractProductEducation implements Subscribe
 	public function menu_item() {
 		add_submenu_page(
 			'edit.php?post_type=simple-pay',
-			__( 'Coupons', 'simple-pay' ),
-			__( 'Coupons', 'simple-pay' ),
+			__( 'Coupons', 'stripe' ),
+			__( 'Coupons', 'stripe' ),
 			'manage_options',
 			'simpay_coupons',
 			array( $this, 'upsell' )
@@ -75,7 +75,10 @@ class PluginCouponMenuItem extends AbstractProductEducation implements Subscribe
 			true
 		);
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'coupons' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'coupons',
+			'Offer Coupon Codes to Customers'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 
