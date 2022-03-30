@@ -34,7 +34,7 @@ Stripe Checkout is a drop-in payment flow optimized for the highest conversion. 
 - Page builder integrations (Divi, Elementor)
 - Developer-friendly for building custom integrations
 - Embeddable payment buttons
-= Pre-made payment form templates
+- Pre-made payment form templates
 
 = WP Simple Pay Pro features =
 
