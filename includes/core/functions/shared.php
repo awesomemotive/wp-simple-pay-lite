@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use SimplePay\Core\License;
 use SimplePay\Core\Utils;
 use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Post_Types\Simple_Pay\Edit_Form;
@@ -124,23 +125,35 @@ function simpay_update_setting( $setting, $value ) {
 }
 
 /**
+ * Returns the current license.
+ *
+ * @since 4.4.4
+ *
+ * @return \SimplePay\Core\License\License
+ */
+function simpay_get_license() {
+	if ( true === defined( 'SIMPLE_PAY_LICENSE_KEY' ) ) {
+		$key = SIMPLE_PAY_LICENSE_KEY; // @phpstan-ignore-line
+	} else {
+		$key = get_option( 'simpay_license_key', '' );
+	}
+
+	/** @var string $key */
+	$key = trim( $key );
+
+	return new License\License( $key );
+}
+
+/**
  * Check the user's license to see if subscriptions are enabled or not
+ *
+ * @since 3.0.0
+ * @since 4.4.4 Deprecated. Use simpay_get_license()->is_subscriptions_enabled() instead.
  *
  * @return bool
  */
 function simpay_subscriptions_enabled() {
-
-	$license_data = get_option( 'simpay_license_data' );
-
-	if ( ! empty( $license_data ) && 'valid' === $license_data->license ) {
-		$price_id = $license_data->price_id;
-
-		if ( '1' !== $price_id ) {
-			return true;
-		}
-	}
-
-	return false;
+	return simpay_get_license()->is_subscriptions_enabled();
 }
 
 /**
@@ -1353,9 +1366,10 @@ function simpay_get_payment_form_setting(
 
 function __unstable_simpay_get_form_template_category_name( $category_slug ) {
 	$categories = array(
-		'business'   => __( 'Business', 'stripe' ),
-		'non-profit' => __( 'Non-Profit', 'stripe' ),
-		'recurring'  => __( 'Subscriptions', 'stripe' ),
+		'business'    => __( 'Business', 'stripe' ),
+		'non-profit'  => __( 'Non-Profit', 'stripe' ),
+		'recurring'   => __( 'Subscriptions', 'stripe' ),
+		'alternative' => __( 'Alternative Payment Methods', 'stripe' ),
 	);
 
 	return isset( $categories[ $category_slug ] )
@@ -1390,6 +1404,28 @@ function __unstable_simpay_get_payment_form_templates() {
 			continue;
 		}
 
+		// Adjust licenses if needed.
+		// Templates that utilize "enhanced" subscription functionality should only continue to be available
+		// for "Plus" license holders if they have been grandfathered in.
+		$enhanced_subscription_functionality = array(
+			'product-installment-plan-form',
+			'recurring-service-trial-period-form',
+			'recurring-service-setup-fee-form',
+		);
+
+		if (
+			in_array( $data['slug'], $enhanced_subscription_functionality, true ) &&
+			false === simpay_get_license()->is_enhanced_subscriptions_enabled()
+		) {
+			$plus = array_search( 'plus', $data['license'], true );
+
+			if ( false !== $plus ) {
+				unset( $data['license'][ $plus ] );
+			}
+
+			$data['license'] = array_values( $data['license'] );
+		}
+
 		// Pull category names.
 		if ( isset( $data['categories'] ) ) {
 			$categories = $data['categories'];
@@ -1405,8 +1441,18 @@ function __unstable_simpay_get_payment_form_templates() {
 
 		// Use the store currency if one is not set.
 		foreach ( $data['data']['prices'] as $k => $price ) {
+			// Top level amounts.
 			if ( ! isset( $price['currency'] ) ) {
-				$price['data'][ $k ]['currency'] = $currency;
+				$data['data']['prices'][ $k ]['currency'] = $currency;
+			}
+
+			// Line items.
+			if ( isset( $data['data']['prices'][ $k ]['line_items'] ) ) {
+				foreach ( $data['data']['prices'][ $k ]['line_items'] as $line_k => $line_item ) {
+					if ( ! isset( $line_item['currency'] ) ) {
+						$data['data']['prices'][ $k ]['line_items'][ $line_k ]['currency'] = $currency;
+					}
+				}
 			}
 		}
 

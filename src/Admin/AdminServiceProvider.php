@@ -29,6 +29,9 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 		return array(
 			'admin-page-about-us',
 			'admin-page-setup-wizard',
+			'admin-notice-update-available',
+			'admin-notice-five-star-rating',
+			'admin-notice-license-upgrade-top-of-page',
 		);
 	}
 
@@ -102,22 +105,37 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 	 * Returns a list of admin notices to register.
 	 *
 	 * @since 4.4.1
+	 * @since 4.4.4 Register notices against container to take advantage of dependency injection.
 	 *
-	 * @return \SimplePay\Core\AdminNotice\AdminNoticeInterface[] Admin notices to register.
+	 * @return array<\SimplePay\Core\AdminNotice\AdminNoticeInterface> Admin notices to register.
 	 */
 	private function get_notices() {
 		$container = $this->getContainer();
-		$notices   = array();
 
-		$license = $container->get( 'license' );
+		// Update Available.
+		$container->share(
+			'admin-notice-update-available',
+			AdminNotice\UpdateAvailableNotice::class
+		);
 
-		if ( $license instanceof \SimplePay\Core\License\License ) {
-			// "Update Available" notice.
-			$notices[] = new AdminNotice\UpdateAvailableNotice( $license );
+		// Five Star Rating.
+		$container->share(
+			'admin-notice-five-star-rating',
+			AdminNotice\FiveStarRatingNotice::class
+		);
 
-			// "5 Star Rating" notice.
-			$notices[] = new AdminNotice\FiveStarRatingNotice( $license );
-		}
+		// License Upgrade (top of page).
+		$container->share(
+			'admin-notice-license-upgrade-top-of-page',
+			AdminNotice\LicenseUpgradeTopOfPageNotice::class
+		);
+
+		/** @var array<\SimplePay\Core\AdminNotice\AdminNoticeInterface> */
+		$notices = array(
+			$container->get( 'admin-notice-update-available' ),
+			$container->get( 'admin-notice-five-star-rating' ),
+			$container->get( 'admin-notice-license-upgrade-top-of-page' )
+		);
 
 		return $notices;
 	}

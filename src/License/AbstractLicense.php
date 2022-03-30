@@ -11,6 +11,8 @@
 
 namespace SimplePay\Core\License;
 
+use stdClass;
+
 /**
  * AbstractLicense abstract.
  *
@@ -46,6 +48,11 @@ abstract class AbstractLicense implements LicenseInterface {
 	/**
 	 * {@inheritdoc}
 	 */
+	abstract public function get_date_created();
+
+	/**
+	 * {@inheritdoc}
+	 */
 	abstract public function get_status();
 
 	/**
@@ -65,6 +72,56 @@ abstract class AbstractLicense implements LicenseInterface {
 	 */
 	public function is_valid() {
 		return 'valid' === $this->get_status();
+	}
+
+	/**
+	 * Determines if the current license has access to subscription functionality.
+	 *
+	 * @since 4.4.4
+	 *
+	 * @return bool
+	 */
+	public function is_subscriptions_enabled() {
+		// Invalid, so no subscriptions.
+		if ( false === $this->is_valid() ) {
+			return false;
+		}
+
+		// Lite, so no subscriptions.
+		if ( true === $this->is_lite() ) {
+			return false;
+		}
+
+		return $this->is_pro( 'plus', '>=' );
+	}
+
+	/**
+	 * Determines if the current license has access to enhanced subscription functionality.
+	 *
+	 * @since 4.4.4
+	 *
+	 * @return bool
+	 */
+	public function is_enhanced_subscriptions_enabled() {
+		// Not valid, so no subscriptions.
+		if ( false === $this->is_subscriptions_enabled() ) {
+			return false;
+		}
+
+		// Grandfather Plus or higher to all subscription features when purchased
+		// before March 30, 2022.
+		/** @var string $created */
+		$created = $this->get_date_created();
+
+		if (
+			$this->is_pro( 'plus', '=' ) &&
+			strtotime( $created ) < strtotime( '2022-03-30 23:23:59' )
+		) {
+			return true;
+		}
+
+		// Available to Professional or higher.
+		return $this->is_pro( 'professional', '>=' );
 	}
 
 	/**
@@ -138,5 +195,23 @@ abstract class AbstractLicense implements LicenseInterface {
 			default:
 				return false;
 		}
+	}
+
+	/**
+	 * Returns the license data from the cache or remote response.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @return object
+	 */
+	protected function get_license_data() {
+		$license_data = get_option( 'simpay_license_data', '' );
+
+		if ( empty( $license_data ) ) {
+			return new stdClass;
+		}
+
+		/** @var object $license_data */
+		return $license_data;
 	}
 }

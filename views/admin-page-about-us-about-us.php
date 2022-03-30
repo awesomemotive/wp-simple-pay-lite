@@ -19,16 +19,16 @@
 	<figure>
 		<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL ); // @phpstan-ignore-line ?>/core/assets/images/about/team.png" alt="<?php esc_attr_e( 'The WP Simple Pay Team photo', 'simple-pay' ); ?>">
 		<figcaption>
-			<?php esc_html_e( 'The WP Simple Pay Team', 'simple-pay' ); ?><br>
+			<?php esc_html_e( 'The WP Simple Pay Team', 'stripe' ); ?><br>
 		</figcaption>
 	</figure>
 
 	<h3>
-		<?php esc_html_e( 'Hello and welcome to WP Simple Pay, the #1 Stripe payments plugin for WordPress. At WP Simple Pay, we build software that helps you create secure, conversion-optimized payment forms for your website in minutes.', 'simple-pay' ); ?>
+		<?php esc_html_e( 'Hello and welcome to WP Simple Pay, the #1 Stripe payments plugin for WordPress. At WP Simple Pay, we build software that helps you create secure, conversion-optimized payment forms for your website in minutes.', 'stripe' ); ?>
 	</h3>
 
 	<p>
-		<?php esc_html_e( 'Over the years, we found that many website owners just needed a simple, reliable way to accept one-time and recurring payments without setting up a shopping cart or hiring a developer.', 'simple-pay' ); ?>
+		<?php esc_html_e( 'Over the years, we found that many website owners just needed a simple, reliable way to accept one-time and recurring payments without setting up a shopping cart or hiring a developer.', 'stripe' ); ?>
 	</p>
 
 	<p>
@@ -36,7 +36,7 @@
 		printf(
 			wp_kses(
 				/* translators: %1$s - Stripe URL. */
-				__( 'Our goal is to take the pain out of creating payment forms and make it easy. WP Simple Pay connects the best payment processor (<a href="%1$s" target="_blank" rel="noopener noreferrer">Stripe</a>) with WordPress. No other plugins are required.', 'simple-pay' ),
+				__( 'Our goal is to take the pain out of creating payment forms and make it easy. WP Simple Pay connects the best payment processor (<a href="%1$s" target="_blank" rel="noopener noreferrer">Stripe</a>) with WordPress. No other plugins are required.', 'stripe' ),
 				array(
 					'a' => array(
 						'href'   => array(),
@@ -55,7 +55,7 @@
 		printf(
 			wp_kses(
 				/* translators: %1$s - WPBeginner URL. */
-				__( 'WP Simple Pay is brought to you by the same team that’s behind the largest WordPress resource site, <a href="%1$s" target="_blank" rel="noopener noreferrer">WPBeginner</a>, and all of the following best-of-class software.', 'simple-pay' ),
+				__( 'WP Simple Pay is brought to you by the same team that’s behind the largest WordPress resource site, <a href="%1$s" target="_blank" rel="noopener noreferrer">WPBeginner</a>, and all of the following best-of-class software.', 'stripe' ),
 				array(
 					'a' => array(
 						'href'   => array(),
@@ -70,7 +70,7 @@
 	</p>
 
 	<p>
-		<?php esc_html_e( 'Yup, we know a thing or two about building awesome products that customers love.', 'simple-pay' ); ?>
+		<?php esc_html_e( 'Yup, we know a thing or two about building awesome products that customers love.', 'stripe' ); ?>
 	</p>
 
 </div>
@@ -97,7 +97,7 @@
 						<?php
 						printf(
 							/* translators: Addon status label. */
-							esc_html__( 'Status: %s', 'simple-pay' ),
+							esc_html__( 'Status: %s', 'stripe' ),
 							'<span class="status-label ' . esc_attr( $plugin_data['status_class'] ) . '">' . wp_kses_post( $plugin_data['status_text'] ) . '</span>'
 						);
 						?>
@@ -110,7 +110,7 @@
 						</button>
 					<?php else : ?>
 						<a href="<?php echo esc_url( $details['wporg'] ); ?>" target="_blank" rel="noopener noreferrer" class="simpay-external-link">
-							<?php esc_html_e( 'WordPress.org', 'simple-pay' ); ?>
+							<?php esc_html_e( 'WordPress.org', 'stripe' ); ?>
 							<span aria-hidden="true" class="dashicons dashicons-external"></span>
 						</a>
 					<?php endif; ?>

@@ -34,6 +34,7 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 	 */
 	public function get_subscribers() {
 		return array(
+			'admin-education-upgrade-modal',
 			'admin-education-dashboard-widget',
 			'admin-education-payment-forms-stripe-connect',
 			'admin-education-payment-forms-first-form',
@@ -45,6 +46,7 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			'admin-education-payment-form-settings',
 			'admin-education-settings-upgrade',
 			'admin-education-license-settings-upgrade',
+			'admin-education-instant-payouts',
 		);
 	}
 
@@ -53,6 +55,12 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 	 */
 	public function register() {
 		$container = $this->getContainer();
+
+		// Upgrade modal.
+		$container->share(
+			'admin-education-upgrade-modal',
+			UpgradeModal::class
+		);
 
 		// Payment Forms: Stripe Connect
 		$container->share(
@@ -127,6 +135,12 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			)
 				->withArgument( $license );
 		}
+
+		// Instant payouts.
+		$container->share(
+			'admin-education-instant-payouts',
+			InstantPayouts::class
+		);
 	}
 
 }

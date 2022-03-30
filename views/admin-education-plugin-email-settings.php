@@ -26,7 +26,7 @@
 		<?php
 		esc_html_e(
 			'Send white-label emails with WP Simple Pay Pro. Gain complete control over emails with payment-specific information, custom content, and enhanced delivery options.',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -39,16 +39,16 @@
 
 		<ul>
 			<li>
-				<?php esc_html_e( 'Dynamic email merge tags', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Dynamic email merge tags', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Completely customizable content', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Completely customizable content', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Enhanced delivery options', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Enhanced delivery options', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'White-label (no Stripe branding)', 'simple-pay' ); ?>
+				<?php esc_html_e( 'White-label (no Stripe branding)', 'stripe' ); ?>
 			</li>
 		</ul>
 	</section>

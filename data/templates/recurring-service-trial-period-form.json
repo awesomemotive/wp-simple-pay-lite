@@ -1,0 +1,57 @@
+{
+	"id": "df64055c-3fdc-43d4-bc4c-f58e232160e6",
+	"license": [
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"recurring"
+	],
+	"keywords": [
+		"trial",
+		"free",
+		"service",
+		"subscription"
+	],
+	"slug": "recurring-service-trial-period-form",
+	"name": "Recurring Services with Trial Period Form",
+	"description": "Collect multiple payments after a set trial period.",
+	"url": "",
+	"data": {
+		"title": "Start Your Trial",
+		"description": "Try our service free for 30 days.",
+		"type": "embedded",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1,
+					"trial_period_days": 30
+				},
+				"default": true
+			}
+		]
+	}
+}

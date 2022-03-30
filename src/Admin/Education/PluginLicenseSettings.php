@@ -55,7 +55,10 @@ class PluginLicenseSettings extends AbstractProductEducation implements Subscrib
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'global-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'license-settings',
+			'Upgrade Your License Today and Save'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin: 5 star review request
+ * Admin notice: 5 star review request
  *
  * @package SimplePay
  * @subpackage Core
@@ -18,16 +18,16 @@ $feedback_url = $data['feedback_url'];
 
 <div class="simpay-admin-notice-five-star-rating" data-step="1">
 	<p>
-		<?php esc_html_e( 'Are you enjoying WP Simple Pay?', 'simple-pay' ); ?>
+		<?php esc_html_e( 'Are you enjoying WP Simple Pay?', 'stripe' ); ?>
 	</p>
 
 	<p style="display: flex; align-items: center;">
 		<button type="button" class="button button-primary" data-navigate="3">
-			<?php esc_html_e( 'Yes', 'simple-pay' ); ?>
+			<?php esc_html_e( 'Yes', 'stripe' ); ?>
 		</button>
 
 		<button type="button" class="button button-link" data-navigate="2" style="margin-left: 10px;">
-			<?php esc_html_e( 'Not really', 'simple-pay' ); ?>
+			<?php esc_html_e( 'Not really', 'stripe' ); ?>
 		</button>
 	</p>
 </div>
@@ -37,18 +37,18 @@ $feedback_url = $data['feedback_url'];
 		<?php
 		esc_html_e(
 			'We\'re sorry to hear you aren\'t enjoying WP Simple Pay. We would love a chance to improve. Could you take a minute and let us know what we can do better?',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
 
 	<p style="display: flex; align-items: center;">
 		<a href="<?php echo esc_url( $feedback_url ); ?>" class="button button-primary simpay-notice-dismiss" target="_blank" rel="noopener noreferrer">
-			<?php esc_html_e( 'Give feedback', 'simple-pay' ); ?>
+			<?php esc_html_e( 'Give feedback', 'stripe' ); ?>
 		</a>
 
 		<button type="button" class="button button-link simpay-notice-dismiss" style="margin-left: 10px;">
-			<?php esc_html_e( 'No thanks', 'simple-pay' ); ?>
+			<?php esc_html_e( 'No thanks', 'stripe' ); ?>
 		</button>
 	</p>
 </div>
@@ -58,7 +58,7 @@ $feedback_url = $data['feedback_url'];
 		<?php
 		esc_html_e(
 			'That\'s awesome! Could you please do me a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -69,7 +69,7 @@ $feedback_url = $data['feedback_url'];
 			echo wp_kses(
 				__(
 					'~ Phil Derksen<br>Founder at WP Simple Pay',
-					'simple-pay'
+					'stripe'
 				),
 				array(
 					'br' => array(),
@@ -81,11 +81,11 @@ $feedback_url = $data['feedback_url'];
 
 	<p style="display: flex; align-items: center;">
 		<a href="https://wordpress.org/support/plugin/stripe/reviews/?filter=5#new-post" class="button button-primary simpay-notice-dismiss" target="_blank" rel="noopener noreferrer">
-			<?php esc_html_e( 'Ok, you deserve it', 'simple-pay' ); ?>
+			<?php esc_html_e( 'Ok, you deserve it', 'stripe' ); ?>
 		</a>
 
 		<button type="button" class="button button-link simpay-notice-dismiss" style="margin-left: 10px;">
-			<?php esc_html_e( 'I already did', 'simple-pay' ); ?>
+			<?php esc_html_e( 'I already did', 'stripe' ); ?>
 		</button>
 	</p>
 </div>

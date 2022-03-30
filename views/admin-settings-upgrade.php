@@ -32,7 +32,7 @@
 			<?php
 			esc_html_e(
 				'Upgrade to WP Simple Pay Pro Today and Save',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</h3>
@@ -40,43 +40,43 @@
 		<ul>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Unlimited Custom Form Fields', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Custom Form Fields', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Drag & Drop Payment Form Builder', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Drag & Drop Payment Form Builder', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'On-Site Payment Forms', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Custom Payment Receipt Emails', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Custom Payment Receipt Emails', 'simple-pay' ); ?>
+				<?php esc_html_e( 'User-Entered Amounts', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'User-Entered Amounts', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Coupon Code Management', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Coupon Codes', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Tax Rate Management', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Apple Pay & Google Pay', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Apple Pay & Google Pay', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'ACH Debit Payments', 'simple-pay' ); ?>
+				<?php esc_html_e( 'ACH Debit Payments', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Accept Recurring Payments', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Accept Recurring Payments', 'stripe' ); ?>
 			</li>
 			<li>
 				<div class="dashicons dashicons-yes"></div>
-				<?php esc_html_e( 'Plus much more...', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Plus much more...', 'stripe' ); ?>
 			</li>
 		</ul>
 

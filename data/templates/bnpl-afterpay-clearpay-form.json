@@ -1,0 +1,53 @@
+{
+	"id": "e1336366-a8d6-4e6b-8ece-7ab476d96e28",
+	"license": [
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business",
+		"alternative"
+	],
+	"keywords": [
+		"buy now",
+		"pay later",
+		"on-site"
+	],
+	"slug": "afterpay-clearpay-form",
+	"name": "Afterpay/Clearpay (Buy Now, Pay Later) Form",
+	"description": "Offer buy now, pay later payments with Afterpay/Clearpay.",
+	"url": "",
+	"data": {
+		"title": "Afterpay/Clearpay (Buy Now, Pay Later) Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [
+			"afterpay-clearpay",
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500
+			}
+		]
+	}
+}

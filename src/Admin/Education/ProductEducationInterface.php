@@ -24,9 +24,10 @@ interface ProductEducationInterface {
 	 * @since 4.4.0
 	 *
 	 * @param string $utm_medium utm_medium parameter.
+	 * @param string $utm_content Optional. utm_content parameter.
 	 * @return string
 	 */
-	public function get_upgrade_button_url( $utm_medium );
+	public function get_upgrade_button_url( $utm_medium, $utm_content = '' );
 
 	/**
 	 * Returns the upgrade button text for product education.

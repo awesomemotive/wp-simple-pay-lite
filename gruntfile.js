@@ -55,6 +55,8 @@ module.exports = function( grunt ) {
 			files: {
 				src: [
 					'includes/**/*.php',
+					'views/**/*.php',
+					'src/**/*.php',
 					'stripe-checkout.php',
 					'uninstall.php'
 				],

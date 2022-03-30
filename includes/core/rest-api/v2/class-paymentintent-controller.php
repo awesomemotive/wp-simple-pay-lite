@@ -58,20 +58,6 @@ class PaymentIntent_Controller extends Controller {
 				'schema' => array( $this, 'get_public_item_schema' ),
 			)
 		);
-
-		register_rest_route(
-			$this->namespace,
-			$this->rest_base . '/confirm',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'confirm_item' ),
-					'permission_callback' => array( $this, 'create_item_permissions_check' ),
-					'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::CREATABLE ),
-				),
-				'schema' => array( $this, 'get_public_item_schema' ),
-			)
-		);
 	}
 
 	/**
@@ -111,10 +97,14 @@ class PaymentIntent_Controller extends Controller {
 	public function create_item( $request ) {
 		try {
 			// Payment Method type.
-			$payment_method_type = isset( $request['payment_method_type'] ) ? $request['payment_method_type'] : 'card';
+			$payment_method_type = isset( $request['payment_method_type'] )
+				? $request['payment_method_type']
+				: 'card';
 
 			// Gather customer information.
-			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : false;
+			$customer_id = isset( $request['customer_id'] )
+				? $request['customer_id']
+				: false;
 
 			if ( ! $customer_id ) {
 				throw new \Exception( __( 'A customer must be provided.', 'stripe' ) );
@@ -143,34 +133,25 @@ class PaymentIntent_Controller extends Controller {
 
 			// Generate arguments based on form data.
 			$paymentintent_args = array_merge(
-				Payments\PaymentIntent\get_args_from_payment_form_request( $form, $form_data, $form_values, $customer_id ),
+				Payments\PaymentIntent\get_args_from_payment_form_request(
+					$form,
+					$form_data,
+					$form_values,
+					$customer_id
+				),
 				array(
-					'customer' => $customer_id,
-					'expand'   => array(
+					'customer'             => $customer_id,
+					'expand'               => array(
 						'customer',
 					),
+					'payment_method_types' => array( $payment_method_type ),
 				)
 			);
 
-			$paymentintent_args['payment_method_types'] = array( $payment_method_type );
+			$off_session_pms = array( 'ach-debit', 'card', 'sepa_debit' );
 
-			// @todo Move this to more Payment Method-specific areas.
-			switch ( $payment_method_type ) {
-				case 'card':
-					$payment_method_id = isset( $request['payment_method_id'] )
-						? $request['payment_method_id']
-						: false;
-
-					if ( false === $payment_method_id ) {
-						throw new \Exception( __( 'A Payment Method is required.', 'stripe' ) );
-					}
-
-					$paymentintent_args['payment_method'] = $payment_method_id;
-
-					break;
-				case 'sepa_debit':
-					$paymentintent_args['setup_future_usage'] = 'off_session';
-					break;
+			if ( in_array( $payment_method_type, $off_session_pms, true ) ) {
+				$paymentintent_args['setup_future_usage'] = 'off_session';
 			}
 
 			/**
@@ -219,7 +200,7 @@ class PaymentIntent_Controller extends Controller {
 				$customer_id
 			);
 
-			return $this->generate_payment_response( $paymentintent, $form, $form_data, $form_values, $customer_id );
+			return new \WP_REST_Response( $paymentintent );
 		} catch ( \Exception $e ) {
 			return new \WP_REST_Response(
 				array(
@@ -230,103 +211,4 @@ class PaymentIntent_Controller extends Controller {
 		}
 	}
 
-	/**
-	 * Confirms a PaymentIntent.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param \WP_REST_Request $request {
-	 *   Incoming REST API request data.
-	 *
-	 *   @type string $payment_intent_id PaymentIntent ID.
-	 *   @type string $customer_id Customer ID.
-	 *   @type int    $form_id Form ID used to generate PaymentIntent data.
-	 *   @type array  $form_data Client-generated formData information.
-	 *   @type array  $form_values Values of named fields in the payment form.
-	 * }
-	 * @throws \Exception When required data is missing or cannot be verified.
-	 * @return \WP_REST_Response
-	 */
-	public function confirm_item( $request ) {
-		try {
-			// Gather PaymentIntent information.
-			$paymentintent_id = isset( $request['payment_intent_id'] ) ? $request['payment_intent_id'] : false;
-
-			if ( ! $paymentintent_id ) {
-				throw new \Exception( __( 'Unable to locate PaymentIntent', 'stripe' ) );
-			}
-
-			// Gather customer information.
-			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : false;
-
-			if ( ! $customer_id ) {
-				throw new \Exception( __( 'A customer must be provided.', 'stripe' ) );
-			}
-
-			// Gather <form> information.
-			$form_id     = $request['form_id'];
-			$form_data   = $request['form_data'];
-			$form_values = $request['form_values'];
-
-			$form = simpay_get_form( $form_id );
-
-			if ( false === $form ) {
-				throw new \Exception(
-					__( 'Unable to locate payment form.', 'stripe' )
-				);
-			}
-
-			$paymentintent = Payments\PaymentIntent\confirm(
-				$paymentintent_id,
-				$form->get_api_request_args()
-			);
-
-			return $this->generate_payment_response( $paymentintent, $form, $form_data, $form_values, $customer_id );
-		} catch ( \Exception $e ) {
-			return new \WP_REST_Response(
-				array(
-					'message' => Utils\handle_exception_message( $e ),
-				),
-				400
-			);
-		}
-	}
-
-	/**
-	 * Generates a payment response based on the PaymentIntent status.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param \SimplePay\Vendor\Stripe\PaymentIntent $paymentintent Stripe PaymentIntent.
-	 * @param \SimplePay\Core\Abstracts\Form         $form Form instance.
-	 * @param array                                  $form_data Form data generated by the client.
-	 * @param array                                  $form_values Values of named fields in the payment form.
-	 * @param int                                    $customer_id Stripe Customer ID.
-	 * @return \WP_REST_Response
-	 */
-	private function generate_payment_response( $paymentintent, $form, $form_data, $form_values, $customer_id ) {
-		$response = new \WP_REST_Response( $paymentintent );
-
-		/**
-		 * Allows further processing based on a PaymentIntent's status change.
-		 *
-		 * @since 3.6.0
-		 *
-		 * @param \SimplePay\Vendor\Stripe\PaymentIntent          $paymentintent Stripe PaymentIntent.
-		 * @param \SimplePay\Core\Abstracts\Form $form Form instance.
-		 * @param array                          $form_data Form data generated by the client.
-		 * @param array                          $form_values Values of named fields in the payment form.
-		 * @param int                            $customer_id Stripe Customer ID.
-		 */
-		do_action(
-			'simpay_after_paymentintent_response_from_payment_form_request',
-			$paymentintent,
-			$form,
-			$form_data,
-			$form_values,
-			$customer_id
-		);
-
-		return $response;
-	}
 }

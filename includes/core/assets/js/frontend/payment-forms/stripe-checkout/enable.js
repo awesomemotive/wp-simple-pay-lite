@@ -11,7 +11,10 @@ const { convertToDollars, formatCurrency } = window.spShared;
  */
 function enable( paymentForm ) {
 	const { cart, __unstableLegacyFormData } = paymentForm;
-	const { startTrial, paymentButtonText } = __unstableLegacyFormData;
+	const {
+		paymentButtonText,
+		paymentButtonTrialText,
+	} = __unstableLegacyFormData;
 
 	// Remove a loading class indicator.
 	paymentForm.removeClass( 'simpay-checkout-form--loading' );
@@ -22,7 +25,7 @@ function enable( paymentForm ) {
 	submitButtonEl.prop( 'disabled', false ).removeClass( 'simpay-disabled' );
 
 	if ( 0 === cart.getTotal() ) {
-		submitButtonEl.find( 'span' ).text( startTrial );
+		submitButtonEl.find( 'span' ).text( paymentButtonTrialText );
 	} else {
 		const formatted = formatCurrency(
 			cart.isZeroDecimal()

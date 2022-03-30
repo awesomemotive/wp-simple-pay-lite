@@ -42,8 +42,8 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_upgrade_button_url( $utm_medium ) {
-		return simpay_pro_upgrade_url( $utm_medium );
+	public function get_upgrade_button_url( $utm_medium, $utm_content = '' ) {
+		return simpay_pro_upgrade_url( $utm_medium, $utm_content );
 	}
 
 	/**
@@ -51,9 +51,9 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 	 */
 	public function get_upgrade_button_text() {
 		if ( true === $this->license->is_lite() ) {
-			$text = __( 'Upgrade to WP Simple Pay Pro', 'simple-pay' );
+			$text = __( 'Upgrade to WP Simple Pay Pro', 'stripe' );
 		} else {
-			$text = __( 'Upgrade Now', 'simple-pay' );
+			$text = __( 'Upgrade Now', 'stripe' );
 		}
 
 		return $text;
@@ -63,7 +63,7 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 	 * {@inheritdoc}
 	 */
 	public function get_upgrade_button_subtext() {
-		return __( 'Special Upgrade Offer - Save 50%', 'simple-pay' );
+		return __( 'Special Upgrade Offer - Save 50%', 'stripe' );
 	}
 
 }

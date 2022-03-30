@@ -7,6 +7,7 @@ import { Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
+import { Icon, lock } from '@wordpress/icons';
 
 /**
  * Internal dependencies
@@ -41,13 +42,17 @@ function TemplateListItem( { template } ) {
 			>
 				{ needsUpgrade && (
 					<div className={ `${ baseClassName }-list-item__badge` }>
-						{ __( 'Pro', 'simple-pay' ) }
+						<Icon icon={ lock } size="16px" />
 					</div>
 				) }
 
 				<div
 					id={ template.id }
-					className={ `${ baseClassName }-list-item__name` }
+					className={ `${ baseClassName }-list-item__name ${
+						needsUpgrade
+							? `${ baseClassName }-list-item__name--is-locked`
+							: ''
+					}` }
 				>
 					{ template.name }
 				</div>

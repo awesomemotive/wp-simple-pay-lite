@@ -127,7 +127,7 @@ function get_custom_field_types() {
 			'repeatable' => false,
 		),
 		'card'                    => array(
-			'label'      => esc_html__( 'Payment Methods (Card, ACH, etc)', 'stripe' ),
+			'label'      => esc_html__( 'Payment Methods', 'stripe' ),
 			'type'       => 'card',
 			'category'   => 'payment',
 			'active'     => true,
@@ -459,4 +459,8 @@ function add_custom_fields( $post_id ) {
 	 */
 	do_action( 'simpay_admin_after_custom_fields' );
 }
-add_action( 'simpay_form_settings_meta_payment_options_panel', __NAMESPACE__ . '\\add_custom_fields' );
+add_action(
+	'simpay_form_settings_meta_payment_options_panel',
+	__NAMESPACE__ . '\\add_custom_fields',
+	15
+);

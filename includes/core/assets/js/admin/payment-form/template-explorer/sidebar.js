@@ -42,32 +42,32 @@ function TemplateCategoriesList( {
 	);
 }
 
-// function TemplatesExplorerSearch( { filterValue, setFilterValue } ) {
-// 	return (
-// 		<div className={ `${ baseClassName }-search` }>
-// 			<SearchControl
-// 				onChange={ setFilterValue }
-// 				value={ filterValue }
-// 				label={ __( 'Search for templates', 'simple-pay' ) }
-// 				placeholder={ __( 'Search', 'simple-pay' ) }
-// 			/>
-// 		</div>
-// 	);
-// }
+function TemplatesExplorerSearch( { filterValue, setFilterValue } ) {
+	return (
+		<div className={ `${ baseClassName }-search` }>
+			<SearchControl
+				onChange={ setFilterValue }
+				value={ filterValue }
+				label={ __( 'Search for templates', 'simple-pay' ) }
+				placeholder={ __( 'Search', 'simple-pay' ) }
+			/>
+		</div>
+	);
+}
 
 function TemplateExplorerSidebar( {
 	selectedCategory,
 	templateCategories,
 	onClickCategory,
 	filterValue,
-	// setFilterValue,
+	setFilterValue,
 } ) {
 	return (
 		<div className={ baseClassName }>
-			{ /* <TemplatesExplorerSearch
+			<TemplatesExplorerSearch
 				filterValue={ filterValue }
 				setFilterValue={ setFilterValue }
-			/> */ }
+			/>
 
 			{ ! filterValue && (
 				<TemplateCategoriesList

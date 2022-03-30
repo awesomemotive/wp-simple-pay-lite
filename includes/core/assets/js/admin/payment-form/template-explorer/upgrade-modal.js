@@ -1,6 +1,11 @@
 /* global simpayFormBuilderTemplateExplorer */
 
 /**
+ * External dependencies
+ */
+import { upperFirst } from 'lodash';
+
+/**
  * WordPress dependencies
  */
 import { Button, Modal } from '@wordpress/components';
@@ -35,13 +40,19 @@ function UpgradeModal( { template, setIsShowingUpgradeModal } ) {
 				</h3>
 
 				<p className={ `${ baseClassName }__description` }>
-					{ sprintf(
-						/* translators: %s Template name */
-						__(
-							'We\'re sorry, the "%s" template is not available on your plan. Please upgrade your plan to unlock all these awesome features.',
-							'simple-pay'
+					{ createInterpolateElement(
+						sprintf(
+							/* translators: %$ss Template name. %2$s Minimum license level. */
+							__(
+								'We\'re sorry, the "%1$s" template is not available on your plan. Please upgrade to the <strong>%2$s</strong> plan or higher to unlock this and other awesome features.',
+								'simple-pay'
+							),
+							template.name,
+							upperFirst( template.license[ 0 ] )
 						),
-						template.name
+						{
+							strong: <strong />,
+						}
 					) }
 				</p>
 
@@ -65,7 +76,7 @@ function UpgradeModal( { template, setIsShowingUpgradeModal } ) {
 						{ createInterpolateElement(
 							// eslint-disable-next-line @wordpress/i18n-translator-comments
 							__(
-								'<strong>Bonus:</strong> WP Simple Pay Lite users get <highlight>50%% off</highlight> regular price, automatically applied at checkout.',
+								'<strong>Bonus:</strong> WP Simple Pay Lite users get <highlight>50% off</highlight> regular price, automatically applied at checkout.',
 								'simple-pay'
 							),
 							{

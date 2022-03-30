@@ -26,7 +26,7 @@
 		>
 			<div class="simpay-teaser-float__card">
 				<h2>
-					<?php esc_html_e( 'Offer Multiple Payment Methods', 'simple-pay' ); ?>
+					<?php esc_html_e( 'Offer Multiple Payment Methods', 'stripe' ); ?>
 				</h2>
 
 				<p>
@@ -36,7 +36,7 @@
 							/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. */
 							__(
 								'Increase conversions by offering customers the ability to pay in multiple payment methods such as %1$sACH Debit, iDEAL, Alipay, SEPA Direct Debit, Bancontact, giropay and more.%2$s',
-								'simple-pay'
+								'stripe'
 							),
 							'<strong>',
 							'</strong>'

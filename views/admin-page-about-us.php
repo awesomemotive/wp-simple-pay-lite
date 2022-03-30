@@ -20,7 +20,7 @@
 
 <div class="wrap">
 	<h1 class="wp-heading-inline">
-		<?php esc_html_e( 'About Us', 'simple-pay' ); ?>
+		<?php esc_html_e( 'About Us', 'stripe' ); ?>
 	</h1>
 	<hr class="wp-header-end">
 
@@ -33,7 +33,7 @@
 
 		<?php if ( true === $license->is_lite() ) : ?>
 			<a href="<?php echo esc_url( simpay_pro_upgrade_url( 'about-us' ) ); ?>" class="nav-tab" rel="noopener noreferrer" target="_blank">
-				<?php esc_html_e( 'Lite vs. Pro', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Lite vs. Pro', 'stripe' ); ?>
 			</a>
 		<?php endif; ?>
 	</h2>

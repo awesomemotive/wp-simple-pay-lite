@@ -71,7 +71,10 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'form-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'form-settings-form-type',
+			'Create On-Site Payment Forms'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 
@@ -98,7 +101,10 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'form-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'form-settings-payment',
+			'Multiple Price Options & Subscriptions'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 
@@ -125,7 +131,10 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'form-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'form-settings-subscription',
+			'Need your customers to sign up for recurring payments?'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 
@@ -149,7 +158,10 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 	 * @return void
 	 */
 	public function form_fields() {
-		$upgrade_url     = $this->get_upgrade_button_url( 'form-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'form-settings-fields',
+			'Custom Fields + Custom Data'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 		$field_groups    = Edit_Form\get_custom_fields_grouped();
@@ -177,7 +189,10 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url( 'form-settings' );
+		$upgrade_url     = $this->get_upgrade_button_url(
+			'form-settings-payment-methods',
+			'Offer Multiple Payment Methods (Stripe Checkout)'
+		);
 		$upgrade_text    = $this->get_upgrade_button_text();
 		$upgrade_subtext = $this->get_upgrade_button_subtext();
 

@@ -24,7 +24,7 @@
 	>
 		<div class="simpay-teaser-float__card">
 			<h2>
-				<?php esc_html_e( 'Multiple Price Options & Subscriptions', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Multiple Price Options & Subscriptions', 'stripe' ); ?>
 			</h2>
 
 			<p>
@@ -34,7 +34,7 @@
 						/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. */
 						__(
 							'Allow customers to choose between multiple price options, currencies, and more. Accept %1$srecurring payments%2$s, create installment plans, charge setup fees, and include free trials.',
-							'simple-pay'
+							'stripe'
 						),
 						'<strong>',
 						'</strong>'

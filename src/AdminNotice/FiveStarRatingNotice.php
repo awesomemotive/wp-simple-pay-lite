@@ -80,7 +80,8 @@ class FiveStarRatingNotice extends AbstractAdminNotice {
 		return array(
 			'feedback_url' => simpay_ga_url(
 				'https://wpsimplepay.com/plugin-feedback/',
-				'admin-notice'
+				'admin-notice',
+				'Give Feedback'
 			),
 		);
 	}

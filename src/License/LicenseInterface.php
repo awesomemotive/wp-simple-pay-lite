@@ -59,35 +59,27 @@ interface LicenseInterface {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @return 'unlimited'|string
+	 * @return 'unlimited'|string|null
 	 */
 	public function get_expiration();
+
+	/**
+	 * Returns the license's creation date.
+	 *
+	 * @since 4.4.4
+	 *
+	 * @return null|string
+	 */
+	public function get_date_created();
 
 	/**
 	 * Returns the license's status.
 	 *
 	 * @since 4.4.0
 	 *
-	 * @return 'empty'|'valid'|'valid-forever'|'expired'|'disabled'|'revoked'|'invalid'|'inactive'|'deactivated'|'failed'|'site_inactive'|'item_name_mismatch'|'invalid_item_id'|'no_activations_left'|null
+	 * @return 'empty'|'valid'|'expired'|'disabled'|'revoked'|'invalid'|'inactive'|'deactivated'|'failed'|'site_inactive'|'item_name_mismatch'|'invalid_item_id'|'no_activations_left'|null
 	 */
 	public function get_status();
-
-	/**
-	 * Determines if a license is valid.
-	 *
-	 * @since 4.4.0
-	 *
-	 * @return bool
-	 */
-	public function is_valid();
-
-	/**
-	 * Returns the license level name.
-	 *
-	 * @since 4.4.3
-	 * @return string
-	 */
-	public function get_level();
 
 	/**
 	 * Returns the license key.
@@ -98,7 +90,16 @@ interface LicenseInterface {
 	public function get_key();
 
 	/**
-	 * Determines if a license (install) is Lite.
+	 * Determines if the current license is valid.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @return bool
+	 */
+	public function is_valid();
+
+	/**
+	 * Determines if the current license is Lite.
 	 *
 	 * @since 4.4.0
 	 *
@@ -107,14 +108,23 @@ interface LicenseInterface {
 	public function is_lite();
 
 	/**
-	 * Determines if a license is Pro.
+	 * Determines if the current license is a specific type of Pro license.
 	 *
 	 * @since 4.4.0
 	 *
-	 * @param 'personal'|'plus'|'professional' $tier License tier. Default personal.
-	 * @param '>'|'>='                         $comparison Tier comparision. Default greater or equal to.
+	 * @param string $tier License tier/level.
+	 * @param string $comparison PHP comparison string.
 	 * @return bool
 	 */
 	public function is_pro( $tier = 'personal', $comparison = '>=' );
+
+	/**
+	 * Returns the current license level name.
+	 *
+	 * @since 4.4.0
+	 *
+	 * @return string 'lite'|'personal'|'plus'|'professional'|'ultimate'|'elite'
+	 */
+	public function get_level();
 
 }

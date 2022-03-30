@@ -12,33 +12,17 @@
 namespace SimplePay\Core\AdminNotice;
 
 use Sandhills\Utils\Persistent_Dismissible;
-use SimplePay\Core\License\License;
+use SimplePay\Core\License\LicenseAwareInterface;
+use SimplePay\Core\License\LicenseAwareTrait;
 
 /**
  * AbstractAdminNotice abstract.
  *
- * @since x.x.
+ * @since 4.4.0
  */
-abstract class AbstractAdminNotice implements AdminNoticeInterface {
+abstract class AbstractAdminNotice implements AdminNoticeInterface, LicenseAwareInterface {
 
-	/**
-	 * Plugin license.
-	 *
-	 * @since 4.4.1
-	 * @var \SimplePay\Core\License\License
-	 */
-	protected $license;
-
-	/**
-	 * AbstractAdminNotice.
-	 *
-	 * @since 4.4.1.
-	 *
-	 * @param \SimplePay\Core\License\License $license Plugin license.
-	 */
-	public function __construct( License $license ) {
-		$this->license = $license;
-	}
+	use LicenseAwareTrait;
 
 	/**
 	 * {@inheritdoc}
@@ -125,9 +109,11 @@ abstract class AbstractAdminNotice implements AdminNoticeInterface {
 	/**
 	 * Returns the notice attributes.
 	 *
+	 * @since 4.4.1
+	 *
 	 * @return array<string, string>
 	 */
-	private function get_attributes() {
+	protected function get_attributes() {
 		$attributes = array();
 
 		// class.

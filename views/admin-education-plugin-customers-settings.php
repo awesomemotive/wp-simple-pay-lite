@@ -11,7 +11,7 @@
  * @var string $upgrade_url The upgrade URL.
  * @var string $upgrade_text The upgrade button text.
  * @var string $upgrade_subtext The upgrade button subtext.
- * @var string $license Plugin license key.
+ * @var \SimplePay\Core\License\License $license Plugin license.
  */
 
 use SimplePay\Core\Utils;
@@ -24,7 +24,7 @@ use SimplePay\Core\Utils;
 		<?php
 		esc_html_e(
 			'🙋‍♀️ Allow Customers to Manage Subscriptions',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</h2>
@@ -36,7 +36,7 @@ use SimplePay\Core\Utils;
 				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				__(
 					'Remind customers about upcoming invoices and give them an opportunity to update their payment method on file or cancel their subscription. Supports both on-site management or the %1$sStripe Customer portal%2$s.',
-					'simple-pay'
+					'stripe'
 				),
 				'<a href="https://stripe.com/blog/billing-customer-portal" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 				Utils\get_external_link_markup() . '</a>'
@@ -71,7 +71,7 @@ use SimplePay\Core\Utils;
 						/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 						__(
 							'%1$sStripe Customer portal%2$s support',
-							'simple-pay'
+							'stripe'
 						),
 						'<a href="https://stripe.com/blog/billing-customer-portal" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 						Utils\get_external_link_markup() . '</a>'
@@ -91,13 +91,13 @@ use SimplePay\Core\Utils;
 				?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Cancel immediately or at end of cycle', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Cancel immediately or at end of cycle', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Upcoming invoice reminders', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Upcoming invoice reminders', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Upgrade or downgrade subscriptions', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Upgrade or downgrade subscriptions', 'stripe' ); ?>
 			</li>
 		</ul>
 	</section>
@@ -114,10 +114,12 @@ use SimplePay\Core\Utils;
 		<?php endif; ?>
 	</section>
 
+	<?php if ( false === $license->is_lite() ) : ?>
 	<section>
 		<small>
-			<?php esc_html_e( 'Plus or higher license required for subscription capabilities', 'simple-pay' ); ?><br />
+			<?php esc_html_e( 'Available in the Plus plan or higher', 'stripe' ); ?><br />
 		</small>
 	</section>
+	<?php endif; ?>
 
 </div>

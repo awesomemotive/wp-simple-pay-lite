@@ -32,7 +32,7 @@ class PaymentFormControl {
 		$widget->start_controls_section( // @phpstan-ignore-line
 			sprintf( 'simpay-%s', $widget->get_name() ), // @phpstan-ignore-line
 			array(
-				'label' => esc_html__( 'WP Simple Pay', 'simple-pay' ),
+				'label' => esc_html__( 'WP Simple Pay', 'stripe' ),
 				'tab'   => Elementor\Controls_Manager::TAB_CONTENT, // @phpstan-ignore-line
 			)
 		);
@@ -40,7 +40,7 @@ class PaymentFormControl {
 		$widget->add_control( // @phpstan-ignore-line
 			'simpay_payment_form',
 			array(
-				'label'       => __( 'Payment Form', 'simple-pay' ),
+				'label'       => __( 'Payment Form', 'stripe' ),
 				'type'        => Elementor\Controls_Manager::SELECT, // @phpstan-ignore-line
 				'separator'   => 'after',
 				'label_block' => true,
@@ -118,7 +118,7 @@ class PaymentFormControl {
 			);
 
 			$options = array(
-				'0' => __( 'Select a form&hellip;', 'simple-pay' ),
+				'0' => __( 'Select a form&hellip;', 'stripe' ),
 			);
 
 			foreach ( $forms as $form_id ) {

@@ -243,6 +243,10 @@ body.simpay-template-explorer-open {
 			position: relative;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+
+			&--is-locked {
+				padding-right: 30px;
+			}
 		}
 
 		&-list-item__description {
@@ -285,19 +289,16 @@ body.simpay-template-explorer-open {
 		}
 
 		&-list-item__badge {
-			background-color: #bbbbbb;
-			border-radius: 9px;
-			color: #ffffff;
-			display: block;
-			font-size: 8px;
-			font-weight: 700;
-			letter-spacing: .5px;
-			line-height: 8px;
-			padding: 5px 8px;
+			background: #fff;
+			padding: 4px;
 			position: absolute;
-			right: 10px;
-			text-transform: uppercase;
-			top: 10px;
+			right: calc($grid-unit-20 - 6px);
+			top: 14px;
+			z-index: 2;
+
+			svg {
+				fill: #777;
+			}
 		}
 
 		&-suggest {
@@ -379,6 +380,10 @@ body.simpay-template-explorer-open {
 		color: #777;
 		font-size: 16px;
 		margin: $grid-unit-20 0 $grid-unit-30;
+
+		strong {
+			color: #1d2327;
+		}
 	}
 
 	.components-button.is-primary {

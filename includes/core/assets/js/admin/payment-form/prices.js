@@ -6,6 +6,11 @@
 import domReady from '@wordpress/dom-ready';
 
 /**
+ * Internal dependencies
+ */
+import { upgradeModal } from '@wpsimplepay/utils';
+
+/**
  * Updates the display label as settings change.
  *
  * @param {HTMLElement} priceEl Price container element.
@@ -154,7 +159,7 @@ function onToggleAmountType( priceEl, toggle ) {
 
 	toggle.classList.add( 'button-primary' );
 	recurringSettings.style.display =
-		'recurring' === amountType ? 'block' : 'none';
+		'recurring' === amountType ? 'table' : 'none';
 
 	// Hide "optional recur" setting.
 	const canRecurSetting = priceEl.querySelector(
@@ -185,7 +190,7 @@ function onToggleCanRecur( priceEl, checkbox ) {
 		'.simpay-price-recurring-settings'
 	);
 
-	recurringSettings.style.display = checkbox.checked ? 'block' : 'none';
+	recurringSettings.style.display = checkbox.checked ? 'table' : 'none';
 }
 
 /**
@@ -454,8 +459,26 @@ function bindPriceOptions() {
 			_.each( amountTypeToggles, ( amountTypeToggle ) =>
 				amountTypeToggle.addEventListener( 'click', ( e ) => {
 					e.preventDefault();
-					onToggleAmountType( priceEl, e.target );
-					onChangeLabel( priceEl );
+
+					const {
+						available,
+						upgradeTitle,
+						upgradeDescription,
+						upgradeUrl,
+						upgradePurchasedUrl,
+					} = e.target.dataset;
+
+					if ( 'no' === available ) {
+						upgradeModal( {
+							title: upgradeTitle,
+							description: upgradeDescription,
+							url: upgradeUrl,
+							purchasedUrl: upgradePurchasedUrl,
+						} );
+					} else {
+						onToggleAmountType( priceEl, e.target );
+						onChangeLabel( priceEl );
+					}
 				} )
 			);
 		}
@@ -471,9 +494,30 @@ function bindPriceOptions() {
 		);
 
 		if ( canRecurToggle ) {
-			canRecurToggle.addEventListener( 'click', ( { target } ) => {
-				onToggleCanRecur( priceEl, target );
-				onChangeLabel( priceEl );
+			canRecurToggle.addEventListener( 'click', ( e ) => {
+				const { target } = e;
+				const {
+					available,
+					upgradeTitle,
+					upgradeDescription,
+					upgradeUrl,
+					upgradePurchasedUrl,
+				} = target.dataset;
+
+				if ( 'no' === available ) {
+					target.checked = false;
+					e.preventDefault();
+
+					upgradeModal( {
+						title: upgradeTitle,
+						description: upgradeDescription,
+						url: upgradeUrl,
+						purchasedUrl: upgradePurchasedUrl,
+					} );
+				} else {
+					onToggleCanRecur( priceEl, target );
+					onChangeLabel( priceEl );
+				}
 			} );
 
 			if ( 'recurring' !== amountType ) {
@@ -506,10 +550,13 @@ function bindPriceOptions() {
 			'.simpay-price-recurring-interval-count'
 		);
 
+		onChangeRecurring( priceEl );
+
 		recurringIntervalCount.addEventListener( 'keyup', () => {
 			onChangeRecurring( priceEl );
 			onChangeLabel( priceEl );
 		} );
+
 		recurringIntervalCount.addEventListener( 'change', () => {
 			onChangeRecurring( priceEl );
 			onChangeLabel( priceEl );

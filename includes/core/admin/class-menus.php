@@ -150,7 +150,7 @@ class Menus {
 			$documentation_url = simpay_ga_url(
 				'https://docs.wpsimplepay.com/',
 				'plugin-listing-link',
-				false
+				'Documentation'
 			);
 
 			$links[] = sprintf(
@@ -163,7 +163,7 @@ class Menus {
 			$support_url = simpay_ga_url(
 				'https://wpsimplepay.com/support',
 				'plugin-listing-link',
-				false
+				'Support'
 			);
 
 			$links[] = sprintf(

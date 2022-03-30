@@ -1,0 +1,53 @@
+{
+	"id": "a0668a50-8b04-4231-8bf5-54264cf7030a",
+	"license": [
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"business",
+		"alternative"
+	],
+	"keywords": [
+		"buy now",
+		"pay later",
+		"on-site"
+	],
+	"slug": "klarna-form",
+	"name": "Klarna (Buy Now, Pay Later) Form",
+	"description": "Offer buy now, pay later payments with Klarna.",
+	"url": "",
+	"data": {
+		"title": "Klarna (Buy Now, Pay Later) Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [
+			"klarna",
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500
+			}
+		]
+	}
+}

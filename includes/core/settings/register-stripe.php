@@ -148,7 +148,7 @@ function register_account_settings( $settings ) {
 								'Connecting to a different Stripe account requires recreating your payment forms and tax rates. Are you sure you want to disconnect?',
 								'stripe'
 							),
-							'<a href="' . esc_url( simpay_docs_link( '', 'switching-stripe-accounts', 'global-settings', true ) ) . '" class="simpay-external-link" rel="noopener noreferrer" target="_blank">' . esc_html__( 'Review the documentation', 'stripe' ) . Utils\get_external_link_markup() . '</a>'
+							'<a href="' . esc_url( simpay_docs_link( 'Review the documentation', 'switching-stripe-accounts', 'stripe-account-settings', true ) ) . '" class="simpay-external-link" rel="noopener noreferrer" target="_blank">' . esc_html__( 'Review the documentation', 'stripe' ) . Utils\get_external_link_markup() . '</a>'
 						);
 
 						$html .= '<p id="simpay-stripe-unactivated-account-actions" style="display: none;"><a href="' . esc_url( simpay_get_stripe_disconnect_url() ) . '">' .
@@ -161,7 +161,7 @@ function register_account_settings( $settings ) {
 					$html .= sprintf(
 						/* translators: %1$s Opening anchor tag for Stripe Connect documentation, do not translate. %2$s Closing anchor tag, do not translate. */
 						__( 'Have questions about connecting with Stripe? %1$sView the Stripe Connect documentation%2$s', 'stripe' ),
-						'<a href="' . simpay_docs_link( '', 'stripe-setup', 'global-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+						'<a href="' . simpay_docs_link( 'View the Stripe Connect documentation', 'stripe-setup', 'stripe-account-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 						Utils\get_external_link_markup() . '</a>'
 					);
 					$html .= '</span></p>';

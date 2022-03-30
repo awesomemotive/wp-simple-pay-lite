@@ -22,9 +22,10 @@ trait LicenseAwareTrait {
 	 * License.
 	 *
 	 * @since 4.4.1
+	 * @since 4.4.4 Set visibility to protected.
 	 * @var \SimplePay\Core\License\LicenseInterface
 	 */
-	private $license;
+	protected $license;
 
 	/**
 	 * {@inheritdoc}

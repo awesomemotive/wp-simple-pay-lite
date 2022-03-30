@@ -56,13 +56,13 @@ class AdminNoticeSubscriber implements SubscriberInterface {
 	/**
 	 * Adds an admin notice to be registered.
 	 *
-	 * @since x.x.
+	 * @since 4.4.1
 	 *
-	 * @param \SimplePay\Core\AdminNotice\AdminNoticeInterface $page Admin page.
+	 * @param \SimplePay\Core\AdminNotice\AdminNoticeInterface $notice Admin notice.
 	 * @return void
 	 */
-	private function add_admin_notice( AdminNoticeInterface $page ) {
-		$this->notices[] = $page;
+	private function add_admin_notice( AdminNoticeInterface $notice ) {
+		$this->notices[] = $notice;
 	}
 
 	/**

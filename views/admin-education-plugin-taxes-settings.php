@@ -18,14 +18,14 @@
 <div class="simpay-landing-zone">
 
 	<h2 class="simpay-landing-zone__title">
-		<?php echo esc_html_e( '💸 Collect Taxes and Additional Fees', 'simple-pay' ); ?>
+		<?php echo esc_html_e( '💸 Collect Taxes and Additional Fees', 'stripe' ); ?>
 	</h2>
 
 	<p class="simpay-landing-zone__subtitle">
 		<?php
 		esc_html_e(
 			'Add tax rates to your payment forms or charge an additional amount to help cover processing fees with WP Simple Pay Pro.',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -38,16 +38,16 @@
 
 		<ul>
 			<li>
-				<?php esc_html_e( 'Exclusive or inclusive tax rates', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Exclusive or inclusive tax rates', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Supports on-site and Stripe Checkout forms', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Supports on-site and Stripe Checkout forms', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Combine multiple tax rates', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Combine multiple tax rates', 'stripe' ); ?>
 			</li>
 			<li>
-				<?php esc_html_e( 'Customize labels for added taxes and fees', 'simple-pay' ); ?>
+				<?php esc_html_e( 'Customize labels for added taxes and fees', 'stripe' ); ?>
 			</li>
 		</ul>
 	</section>

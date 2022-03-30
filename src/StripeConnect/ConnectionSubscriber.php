@@ -11,6 +11,7 @@
 
 namespace SimplePay\Core\StripeConnect;
 
+use Exception;
 use SimplePay\Core\API;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
@@ -110,7 +111,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 					__(
 						'There was an error getting your Stripe credentials. Please %1$stry again%2$s. If you continue to have this problem, please contact support.',
-						'simple-pay'
+						'stripe'
 					),
 					'<a href="' . esc_url( $stripe_account_settings_url ) . '">',
 					'</a>'
@@ -185,6 +186,11 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		update_option( 'simpay_stripe_connect_account_id', false );
 		update_option( 'simpay_stripe_connect_type', false );
 
+		// Clear cached objects.
+		global $wpdb;
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_simpay\_stripe\_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_simpay\_stripe\_%'" );
+
 		$redirect = Settings\get_url(
 			array(
 				'section'    => 'stripe',
@@ -205,7 +211,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 	 */
 	public function get_account_information_json() {
 		$unknown_error = array(
-			'message' => esc_html__( 'Unable to retrieve account information.', 'simple-pay' ),
+			'message' => esc_html__( 'Unable to retrieve account information.', 'stripe' ),
 		);
 
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -217,8 +223,8 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		}
 
 		$mode = simpay_is_test_mode()
-			? __( 'test', 'simple-pay' )
-			: __( 'live', 'simple-pay' );
+			? __( 'test', 'stripe' )
+			: __( 'live', 'stripe' );
 
 		$connect = sprintf(
 			'<div style="margin-top: 8px;">%s</div>',
@@ -228,11 +234,11 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		$access_string = class_exists( 'SimplePay\Pro\SimplePayPro', false )
 			? __(
 				'You cannot manage this account in Stripe to configure features such as Subscriptions, Webhooks, or Coupons.',
-				'simple-pay'
+				'stripe'
 			)
 			: __(
 				'You cannot manage this account in Stripe.',
-				'simple-pay'
+				'stripe'
 			);
 
 		$dev_account_error = array(
@@ -241,7 +247,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					/* translators: %1$s Opening strong tag, do not translate. %2$s Closing anchor tag, do not translate. */
 					__(
 						'You are currently connected to a %1$stemporary%2$s Stripe account, which can only be used for testing purposes.',
-						'simple-pay'
+						'stripe'
 					),
 					'<strong>',
 					'</strong>'
@@ -263,7 +269,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 				'simpay_sk_mismatch',
 				__(
 					'Invalid Secret Key. Secret Key should begin with <code>sk_</code>.',
-					'simple-pay'
+					'stripe'
 				)
 			);
 		}
@@ -274,7 +280,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 				'simpay_pk_mismatch',
 				__(
 					'Invalid Publishable Key. Publishable Key should begin with <code>pk_</code>.',
-					'simple-pay'
+					'stripe'
 				)
 			);
 		}
@@ -286,7 +292,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					'simpay_pk_mode_mismatch',
 					__(
 						'Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_test_</code>.',
-						'simple-pay'
+						'stripe'
 					)
 				);
 			}
@@ -297,7 +303,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					'simpay_sk_mode_mismatch',
 					__(
 						'Invalid Secret Key for current mode. Secret Key should begin with <code>sk_test_</code>.',
-						'simple-pay'
+						'stripe'
 					)
 				);
 			}
@@ -308,7 +314,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					'simpay_pk_mode_mismatch',
 					__(
 						'Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_live_</code>.',
-						'simple-pay'
+						'stripe'
 					)
 				);
 			}
@@ -319,7 +325,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					'simpay_sk_mode_mismatch',
 					__(
 						'Invalid Secret Key for current mode. Secret Key should begin with <code>sk_live_</code>.',
-						'simple-pay'
+						'stripe'
 					)
 				);
 			}
@@ -333,7 +339,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 						$key_errors->get_error_message(),
 						__(
 							'If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually.',
-							'simple-pay'
+							'stripe'
 						),
 						$connect
 					)
@@ -383,7 +389,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 				$message = (
 					$display_name .
 					$email .
-					esc_html__( 'Administrator (Owner)', 'simple-pay' )
+					esc_html__( 'Administrator (Owner)', 'stripe' )
 				);
 
 				/**
@@ -409,7 +415,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					array(
 						'message' => esc_html__(
 							'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually.',
-							'simple-pay'
+							'stripe'
 						) . $connect,
 					)
 				);
@@ -435,7 +441,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					'message' => (
 						sprintf(
 							/* translators: %1$s Stripe payment mode.*/
-							__( 'Your manually managed %1$s mode API keys are valid.', 'simple-pay' ),
+							__( 'Your manually managed %1$s mode API keys are valid.', 'stripe' ),
 							'<strong>' . $mode . '</strong>'
 						)
 					),
@@ -448,7 +454,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 						'<span style="color: red;">' .
 							sprintf(
 								/* translators: %1$s Stripe payment mode.*/
-								__( 'Your manually managed %1$s mode API keys are invalid.', 'simple-pay' ),
+								__( 'Your manually managed %1$s mode API keys are invalid.', 'stripe' ),
 								'<strong>' . $mode . '</strong>'
 							)
 						. '</span>'
@@ -488,6 +494,22 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 
 		$type = $this->license->is_lite() ? 'lite' : 'pro';
 		update_option( 'simpay_stripe_connect_type', $type );
+
+		// Try to set the account country.
+		try {
+			$account = Stripe_API::request(
+				'Account',
+				'retrieve',
+				$data['stripe_user_id'],
+				array(
+					'api_key' => simpay_get_secret_key(),
+				)
+			);
+
+			simpay_update_setting( 'account_country', $account->country );
+		} catch ( Exception $e ) {
+			// Do nothing.
+		}
 	}
 
 }

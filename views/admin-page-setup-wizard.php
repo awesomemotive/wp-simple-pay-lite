@@ -55,7 +55,7 @@
 
 <div class="wrap">
 	<h1 class="wp-heading-inline">
-		<?php esc_html_e( 'Setup Wizard', 'simple-pay' ); ?>
+		<?php esc_html_e( 'Setup Wizard', 'stripe' ); ?>
 	</h1>
 	<hr class="wp-header-end">
 </div>

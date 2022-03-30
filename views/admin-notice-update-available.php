@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin: Update available notice
+ * Admin notice: Update available notice
  *
  * @package SimplePay
  * @subpackage Core
@@ -28,7 +28,7 @@ $update_url = $data['update_url'];
 				<?php
 				esc_html_e(
 					'Did you know you\'re running an outdated version of WP Simple Pay?',
-					'simple-pay'
+					'stripe'
 				);
 				?>
 			</strong><br />
@@ -36,13 +36,13 @@ $update_url = $data['update_url'];
 			<?php
 			esc_html_e(
 				'Update WP Simple Pay now for improved security and access to the latest features.',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</div>
 	</div>
 
 	<a href="<?php echo esc_url( $update_url ); ?>" class="button button-primary">
-		<?php esc_html_e( 'Update Now', 'simple-pay' ); ?>
+		<?php esc_html_e( 'Update Now', 'stripe' ); ?>
 	</a>
 </div>

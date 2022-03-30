@@ -221,46 +221,50 @@ function register_currency_settings( $settings ) {
  * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
  */
 function register_advanced_settings( $settings ) {
-	/**
-	 * Filters if Usage Tracking should be enabled by default.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @param bool
-	 */
-	$default = apply_filters( 'simpay_usage_tracking_enabled_default', false );
+	$license = simpay_get_license();
 
-	$settings->add(
-		new Settings\Setting_Checkbox(
-			array(
-				'id'          => 'usage_tracking_opt_in',
-				'section'     => 'general',
-				'subsection'  => 'advanced',
-				'label'       => esc_html_x(
-					'Usage Analytics',
-					'setting label',
-					'stripe'
-				),
-				'input_label' => esc_html__( 'Allow usage analytics', 'stripe' ),
-				'value'       => simpay_get_setting(
-					'usage_tracking_opt_in',
-					false === $default ? 'no' : 'yes'
-				),
-				'description' => wpautop(
-					esc_html__(
-						'Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked.',
+	if ( true === $license->is_lite() ) {
+		/**
+		 * Filters if Usage Tracking should be enabled by default.
+		 *
+		 * @since 4.0.0
+		 *
+		 * @param bool
+		 */
+		$default = apply_filters( 'simpay_usage_tracking_enabled_default', false );
+
+		$settings->add(
+			new Settings\Setting_Checkbox(
+				array(
+					'id'          => 'usage_tracking_opt_in',
+					'section'     => 'general',
+					'subsection'  => 'advanced',
+					'label'       => esc_html_x(
+						'Usage Analytics',
+						'setting label',
 						'stripe'
-					)
-				),
-				'priority'    => 30,
-				'schema'      => array(
-					'type'    => 'string',
-					'enum'    => array( 'yes', 'no' ),
-					'default' => false === $default ? 'no' : 'yes',
-				),
+					),
+					'input_label' => esc_html__( 'Allow usage analytics', 'stripe' ),
+					'value'       => simpay_get_setting(
+						'usage_tracking_opt_in',
+						false === $default ? 'no' : 'yes'
+					),
+					'description' => wpautop(
+						esc_html__(
+							'Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked.',
+							'stripe'
+						)
+					),
+					'priority'    => 30,
+					'schema'      => array(
+						'type'    => 'string',
+						'enum'    => array( 'yes', 'no' ),
+						'default' => false === $default ? 'no' : 'yes',
+					),
+				)
 			)
-		)
-	);
+		);
+	}
 
 	// Save Settings.
 	$settings->add(

@@ -1,0 +1,56 @@
+{
+	"id": "7c1efe0a-2c73-4456-875a-5c96cf69db71",
+	"license": [
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"non-profit",
+		"alternative"
+	],
+	"keywords": [
+		"ach",
+		"debit",
+		"on-site"
+	],
+	"slug": "ach-debit-form",
+	"name": "ACH Debit Form",
+	"description": "Accept ACH debit payments directly from bank accounts (U.S. only).",
+	"url": "",
+	"data": {
+		"title": "ACH Debit Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [
+			"ach-debit",
+			"card"
+		],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 10000,
+				"currency": "usd"
+			}
+		]
+	}
+}

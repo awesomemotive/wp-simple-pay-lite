@@ -10,9 +10,9 @@
  */
 
 $docs_url = simpay_docs_link(
-	'',
+	'Learn more',
 	'first-payment-form',
-	'global-settings',
+	'dashboard-widget-first-form',
 	true
 );
 
@@ -30,7 +30,7 @@ $new_url = add_query_arg(
 		<?php
 		esc_html_e(
 			'Create Your First Payment Form to Start Collecting Payments',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</h2>
@@ -39,7 +39,7 @@ $new_url = add_query_arg(
 		<?php
 		esc_html_e(
 			'You can use WP Simple Pay to easily collect payments with just a few clicks.',
-			'simple-pay'
+			'stripe'
 		);
 		?>
 	</p>
@@ -49,7 +49,7 @@ $new_url = add_query_arg(
 			<?php
 			esc_html_e(
 				'Create Your Payment Form',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</a>
@@ -58,7 +58,7 @@ $new_url = add_query_arg(
 			<?php
 			esc_html_e(
 				'Learn More',
-				'simple-pay'
+				'stripe'
 			);
 			?>
 		</a>

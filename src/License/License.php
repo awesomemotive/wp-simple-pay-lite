@@ -11,8 +11,6 @@
 
 namespace SimplePay\Core\License;
 
-use stdClass;
-
 /**
  * License class.
  *
@@ -77,10 +75,18 @@ class License extends AbstractLicense {
 	private $expiration;
 
 	/**
+	 * License creation date.
+	 *
+	 * @since 4.4.4
+	 * @var string|null
+	 */
+	private $date_created;
+
+	/**
 	 * License status.
 	 *
 	 * @since 4.4.0
-	 * @var 'empty'|'valid'|'valid-forever'|'expired'|'disabled'|'revoked'|'invalid'|'inactive'|'deactivated'|'failed'|'site_inactive'|'item_name_mismatch'|'invalid_item_id'|'no_activations_left'|null
+	 * @var 'empty'|'valid'|'expired'|'disabled'|'revoked'|'invalid'|'inactive'|'deactivated'|'failed'|'site_inactive'|'item_name_mismatch'|'invalid_item_id'|'no_activations_left'|null
 	 */
 	private $status;
 
@@ -173,11 +179,28 @@ class License extends AbstractLicense {
 
 		$data = $this->get_license_data();
 
-		if ( isset( $data->expiration ) ) {
-			$this->expiration = $data->expiration;
+		if ( isset( $data->expires ) ) {
+			$this->expiration = $data->expires;
 		}
 
 		return $this->expiration;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_date_created() {
+		if ( $this->date_created ) {
+			return $this->date_created;
+		}
+
+		$data = $this->get_license_data();
+
+		if ( isset( $data->date_created ) ) {
+			$this->date_created = $data->date_created;
+		}
+
+		return $this->date_created;
 	}
 
 	/**
@@ -195,24 +218,6 @@ class License extends AbstractLicense {
 		}
 
 		return $this->status;
-	}
-
-	/**
-	 * Returns the license data from the cache or remote response.
-	 *
-	 * @since 4.4.0
-	 *
-	 * @return object
-	 */
-	private function get_license_data() {
-		$license_data = get_option( 'simpay_license_data', '' );
-
-		if ( empty( $license_data ) ) {
-			return new stdClass;
-		}
-
-		/** @var object $license_data */
-		return $license_data;
 	}
 
 }
