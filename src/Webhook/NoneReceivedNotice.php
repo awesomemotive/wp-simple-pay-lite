@@ -451,8 +451,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 			return false;
 		}
 
-		// Time between received and expected is less than the timeframe, all is well.
-		return ( $received - $expected ) < $timeframe;
+		return $received > $expected;
 	}
 
 	/**

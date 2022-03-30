@@ -115,7 +115,7 @@ abstract class AbstractLicense implements LicenseInterface {
 
 		if (
 			$this->is_pro( 'plus', '=' ) &&
-			strtotime( $created ) < strtotime( '2022-02-30 23:23:59' )
+			strtotime( $created ) < strtotime( '2022-03-30 23:23:59' )
 		) {
 			return true;
 		}

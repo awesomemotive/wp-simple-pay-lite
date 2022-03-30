@@ -15,11 +15,11 @@
 		"on-site"
 	],
 	"slug": "klarna-form",
-	"name": "Klarna (Buy Now Pay Later) Form",
-	"description": "Offer buy now pay later payments with Klarna.",
+	"name": "Klarna (Buy Now, Pay Later) Form",
+	"description": "Offer buy now, pay later payments with Klarna.",
 	"url": "",
 	"data": {
-		"title": "Klarna (Buy Now Pay Later) Form",
+		"title": "Klarna (Buy Now, Pay Later) Form",
 		"description": "",
 		"type": "embedded",
 		"payment_methods": [

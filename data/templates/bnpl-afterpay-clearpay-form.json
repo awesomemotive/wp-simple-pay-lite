@@ -15,11 +15,11 @@
 		"on-site"
 	],
 	"slug": "afterpay-clearpay-form",
-	"name": "Afterpay/Clearpay (Buy Now Pay Later) Form",
-	"description": "Offer buy now pay later payments with Afterpay/Clearpay.",
+	"name": "Afterpay/Clearpay (Buy Now, Pay Later) Form",
+	"description": "Offer buy now, pay later payments with Afterpay/Clearpay.",
 	"url": "",
 	"data": {
-		"title": "Afterpay/Clearpay (Buy Now Pay Later) Form",
+		"title": "Afterpay/Clearpay (Buy Now, Pay Later) Form",
 		"description": "",
 		"type": "embedded",
 		"payment_methods": [
