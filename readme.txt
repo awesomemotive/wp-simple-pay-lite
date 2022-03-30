@@ -161,7 +161,7 @@ Give your U.S. customers the option to pay directly from their bank accounts wit
 
 [Try our ACH debit payment demos](https://demo.wpsimplepay.com/ach-debit-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
-= Accept Buy Now, Pay Later Payments =
+= Accept Buy Now, Pay Later Payments with Klarna and Afterpay/Clearpay =
 
 With a buy now, pay later payment method enabled, your customers get more payment flexibility, allowing them to purchase what they want now and pay over time. Your business receives the full payment upfront and is protected from fraud, while your customers pay nothing or only a portion of the total upfront without fees.
 
