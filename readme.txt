@@ -34,6 +34,7 @@ Stripe Checkout is a drop-in payment flow optimized for the highest conversion. 
 - Page builder integrations (Divi, Elementor)
 - Developer-friendly for building custom integrations
 - Embeddable payment buttons
+= Pre-made payment form templates
 
 = WP Simple Pay Pro features =
 
@@ -51,13 +52,14 @@ If you need more functionality, you can [upgrade to WP Simple Pay Pro](https://w
 - Accept ACH payments from U.S. bank accounts
 - Accept alternative payments (iDEAL, Alipay, giropay, SEPA, Bancontact, Przelewy24, FPX)
 - Accept recurring payments
+- One-time & recurring toggle
+- User-managed subscriptions
+- Send renewal reminders
 - Create installment plans
 - Charge initial setup fees
 - Offer free trials
-- One-time & recurring toggle
 - Coupon duration settings
-- User-managed subscriptions
-- Send renewal reminders
+- Buy Now, Pay Later with Klarna & Afterpay/Clearpay
 
 By upgrading to WP Simple Pay Pro you also get access to one-on-one help from our knowledgeable support team and our extensive documentation site.
 
@@ -153,13 +155,22 @@ Anyone with a browser and device combination that allows one of these options wi
 
 [Try our Apple Pay & Google Pay demos](https://demo.wpsimplepay.com/apple-pay-google-pay/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
-= Accept ACH and Alternative Payment Methods =
+= Accept ACH Debit Payments =
 
 Give your U.S. customers the option to pay directly from their bank accounts with ACH debit payments and take advantage of lower fees. ACH payments on Stripe cost 0.80%, capped at $5, with no monthly fees or verification fees.
 
 [Try our ACH debit payment demos](https://demo.wpsimplepay.com/ach-debit-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
-Additional alternative payment methods are supported by WP Simple Pay and Stripe, with more on the way. Feel free to explore these demos:
+= Accept Buy Now, Pay Later Payments =
+
+With a buy now, pay later payment method enabled, your customers get more payment flexibility, allowing them to purchase what they want now and pay over time. Your business receives the full payment upfront and is protected from fraud, while your customers pay nothing or only a portion of the total upfront without fees.
+
+[Try our Klarna buy now, pay later demo](https://demo.wpsimplepay.com/klarna-payments/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[Try our Afterpay/Clearpay buy now, pay later demo](https://demo.wpsimplepay.com/afterpay-clearpay-payments/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+
+= More Alternative Payment Methods =
+
+Even more alternative payment methods are supported by WP Simple Pay and Stripe. Check out these demos:
 
 - [iDEAL](https://demo.wpsimplepay.com/ideal-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [SEPA Direct Debit](https://demo.wpsimplepay.com/sepa-direct-debit-payment-method/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
