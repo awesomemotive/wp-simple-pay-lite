@@ -46,9 +46,6 @@ class Menus {
 		// Links and meta content in plugins page.
 		add_filter( 'plugin_action_links_' . self::$plugin, array( __CLASS__, 'plugin_action_links' ), 10, 5 );
 
-		// Show if test mode is active in admin bar menu.
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ) );
-
 		add_filter( 'admin_footer_text', array( $this, 'add_footer_text' ) );
 	}
 
@@ -72,39 +69,6 @@ class Menus {
 			'</strong>',
 			'<a href="https://wordpress.org/support/plugin/stripe/reviews/?filter=5#new-post" rel="noopener noreferrer" target="_blank">',
 			'</a>'
-		);
-	}
-
-
-	/**
-	 * Display admin bar test mode active.
-	 *
-	 * @return bool
-	 */
-	public function admin_bar_menu() {
-		global $wp_admin_bar;
-
-		if ( ! simpay_is_test_mode() ) {
-			return false;
-		}
-
-		$stripe_test_mode_url = Settings\get_url( array(
-			'section'    => 'stripe',
-			'subsection' => 'account',
-			'setting'    => 'test_mode-enabled',
-		) );
-
-		$wp_admin_bar->add_menu(
-			array(
-				'id'     => 'simpay-admin-bar-test-mode',
-				'href'   => $stripe_test_mode_url,
-				'parent' => 'top-secondary',
-				'title'  => (
-					__( 'WP Simple Pay', 'stripe' ) .
-					' <span class="simpay-test-mode-badge">' . __( 'Test Mode', 'stripe' ) . '</span>'
-				),
-				'meta'   => array( 'class' => 'simpay-admin-bar-test-mode' ),
-			)
 		);
 	}
 

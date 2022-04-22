@@ -65,19 +65,6 @@ class Notice_Manager {
 				'callback'    => 'SimplePay\Core\Admin\Notices\stripe_connect',
 			),
 			// Pro only.
-			// @todo Use a proper registry so this can be placed in the correct location.
-			'plaid_redirect_uri' => array(
-				'dismissible' => true,
-				'type'        => 'warning',
-				'callback'    => function () {
-					if ( ! class_exists( 'SimplePay\Pro\Admin\Plaid_Redirect_URI' ) ) {
-						return false;
-					}
-
-					$service = new \SimplePay\Pro\Admin\Plaid_Redirect_URI;
-					return $service->notice();
-				},
-			),
 			'coupon_management'  => array(
 				'dismissible' => true,
 				'type'        => 'info',

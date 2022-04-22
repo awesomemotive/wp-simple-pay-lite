@@ -65,10 +65,6 @@
 			<?php esc_html_e( 'Learn More', 'stripe' ); ?>
 		</a>
 
-		<a href="<?php echo esc_url( $verify_url ); ?>" style="margin-left: 5px;">
-			<?php esc_html_e( 'I have configured webhooks in Stripe', 'stripe' ); ?>
-		</a>
-
 		<a href="<?php echo esc_url( $dismiss_url ); ?>" style="margin-left: auto;">
 			<?php esc_html_e( 'Do not show again', 'stripe' ); ?>
 		</a>

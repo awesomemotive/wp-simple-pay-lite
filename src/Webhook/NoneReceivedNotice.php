@@ -14,6 +14,9 @@ namespace SimplePay\Core\Webhook;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
+use SimplePay\Core\NotificationInbox\Notification;
+use SimplePay\Core\NotificationInbox\NotificationAwareInterface;
+use SimplePay\Core\NotificationInbox\NotificationAwareTrait;
 use SimplePay\Core\Settings;
 use SimplePay\Pro\Webhooks\Database\Query as WebhookDatabase;
 
@@ -22,9 +25,10 @@ use SimplePay\Pro\Webhooks\Database\Query as WebhookDatabase;
  *
  * @since 4.4.1
  */
-class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
+class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, NotificationAwareInterface {
 
 	use LicenseAwareTrait;
+	use NotificationAwareTrait;
 
 	/**
 	 * The most recent event timestamp.
@@ -77,28 +81,20 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 			'simpay_after_charge_from_payment_form_request'           =>
 				'log_expected_event',
 
-			// Show a notice bubble in the admin bar.
-			'admin_bar_menu'                                          =>
-				array( 'maybe_show_admin_bar_bubble', 20 ),
-
-			// Show a notice bubble in the admin menu.
-			'simpay_settings_menu_name'                               =>
-				'maybe_show_menu_bubble',
-
-			// Show a notice bubble in the settings tab/subtabs.
-			'simpay_register_settings_sections'                       =>
-				'maybe_show_settings_section_bubble',
-			'simpay_register_settings_subsections'                    =>
-				'maybe_show_settings_subsection_bubble',
-
 			// Show a notice in the setting.
 			'__unstable_simpay_before_webhook_setting'                =>
 				'maybe_show_setting_notice',
 
 			// Clear the "expected" flag when a user claims they have verified their settings.
+			'wpsp_transition_notification_dismissed' =>
+				array( 'clear_expected_event_flag', 10, 3 ),
+
 			'admin_init'                                              =>
 				array(
-					array( 'clear_expected_event' ),
+					// Adds a notification to the inbox if the expected event is not received.
+					array( 'maybe_add_notification' ),
+
+					// Allow permanently dismissing the notice/notification.
 					array( 'dismiss_expected_event' )
 				),
 		);
@@ -121,160 +117,50 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 	}
 
 	/**
-	 * Shows a notice bubble and submenu item in the admin bar if no expected
-	 * webhook event was received.
+	 * Adds a notification if an event has not been received.
 	 *
-	 * @since 4.4.1
+	 * @since 4.x.x
 	 *
 	 * @return void
 	 */
-	public function maybe_show_admin_bar_bubble() {
-		if (
-			false === is_admin() ||
-			true === $this->received_expected_event()
-		) {
+	public function maybe_add_notification() {
+		if ( true === $this->received_expected_event() ) {
 			return;
 		}
 
-		global $wp_admin_bar;
-
-		$webhooks_url = Settings\get_url( array(
-			'section'    => 'stripe',
-			'subsection' => 'webhooks',
-		) );
-
-		// We are already showing the parent item in test mode.
-		if ( simpay_is_test_mode() ) {
-			$label = (
-				__( 'WP Simple Pay', 'stripe' ) .
-				' <span class="simpay-test-mode-badge">' . __( 'Test Mode', 'stripe' ) . '</span>' .
-				$this->get_bubble_markup( '1' )
-			);
-
-			$url = Settings\get_url( array(
-				'section'    => 'stripe',
-				'subsection' => 'account',
-				'setting'    => 'test_mode-enabled',
-			) );
-		} else {
-			$label = (
-				__( 'WP Simple Pay', 'stripe' ) .
-				$this->get_bubble_markup( '1' )
-			);
-
-			$url = $webhooks_url;
-		}
-
-		$wp_admin_bar->add_menu(
+		$this->notifications->restore(
 			array(
-				'id'     => 'simpay-admin-bar-test-mode',
-				'href'   => $url,
-				'parent' => 'top-secondary',
-				'title'  => $label,
-				'meta'   => array( 'class' => 'simpay-admin-bar-test-mode' ),
-			)
-		);
-
-		$wp_admin_bar->add_menu(
-			array(
-				'parent' => 'simpay-admin-bar-test-mode',
-				'id'     => 'simpay-webhook-none-received',
-				'title'  => esc_html__(
-					'Notifications',
+				'type'           => 'error',
+				'source'         => 'internal',
+				'title'          => __(
+					'An expected webhook event was not received.',
 					'stripe'
-				) . $this->get_bubble_markup( '' ),
-				'href'   => $webhooks_url,
-			)
-		);
-	}
-
-	/**
-	 * Shows a notice bubble in the admin menu if no expected webhook event was
-	 * received.
-	 *
-	 * @since 4.4.1
-	 *
-	 * @param string $name Menu item name.
-	 * @return string
-	 */
-	public function maybe_show_menu_bubble( $name ) {
-		if ( true === $this->received_expected_event() ) {
-			return $name;
-		}
-
-		// Show 2 if the license is not valid.
-		// @todo use a true inbox system count.
-		if ( false === $this->license->is_valid() ) {
-			return $name;
-		}
-
-		return $name . $this->get_bubble_markup( '1' );
-	}
-
-	/**
-	 * Reregisters the "Stripe" settings section with a new label, including a
-	 * bubble, if no expected webhook event was received.
-	 *
-	 * @since 4.4.1
-	 *
-     * @param \SimplePay\Core\Settings\Section_Collection<\SimplePay\Core\Settings\Section> $sections Sections collection.
-	 * @return void
-	 */
-	public function maybe_show_settings_section_bubble( Settings\Section_Collection $sections ) {
-		if ( true === $this->received_expected_event() ) {
-			return;
-		}
-
-		// Don't show a redundant bubble when viewing the section.
-		if ( isset( $_GET['tab'] ) && 'stripe' === sanitize_text_field( $_GET['tab'] ) ) {
-			return;
-		}
-
-		// Reregister with the bubble.
-		$sections->add(
-			new Settings\Section(
-				array(
-					'id'       => 'stripe',
-					'label'    => esc_html_x(
-						'Stripe',
-						'settings section label',
-						'stripe'
-					) . $this->get_bubble_markup( '' ),
-					'priority' => 20,
-				)
-			)
-		);
-	}
-
-	/**
-	 * Reregisters the "Stripe > Webhook" settings subsection with a new label,
-	 * including a bubble, if no expected webhook event was received.
-	 *
-	 * @since 4.4.1
-	 *
-     * @param \SimplePay\Core\Settings\Subsection_Collection<\SimplePay\Core\Settings\Subsection> $subsections Subsections collection.
-	 * @return void
-	 */
-	public function maybe_show_settings_subsection_bubble(
-		Settings\Subsection_Collection $subsections
-	) {
-		if ( true === $this->received_expected_event() ) {
-			return;
-		}
-
-		// Reregister with the bubble.
-		$subsections->add(
-			new Settings\Subsection(
-				array(
-					'id'       => 'webhooks',
-					'section'  => 'stripe',
-					'label'    => esc_html_x(
-						'Webhooks',
-						'settings subsection label',
-						'stripe'
-					) . $this->get_bubble_markup( '1' ),
-					'priority' => 20,
-				)
+				),
+				'slug'           => 'webhook-event-expected',
+				'content'        => __(
+					'An expected webhook event has not been received. Please ensure you have properly configured your webhook endpoint in Stripe to avoid interruption of functionality.',
+					'stripe'
+				),
+				'actions'        => array(
+					array(
+						'type' => 'primary',
+						'text' => __( 'Webhook Settings', 'stripe' ),
+						'url'  => Settings\get_url(
+							array(
+								'section'    => 'stripe',
+								'subsection' => 'webhooks',
+							)
+						)
+					),
+					array(
+						'type' => 'secondary',
+						'text' => __( 'Learn More', 'stripe' ),
+						'url'  => 'https://docs.wpsimplepay.com/article/webhooks',
+					),
+				),
+				'conditions'     => array(),
+				'start'          => date( 'Y-m-d H:i:s', time() ),
+				'end'            => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
 			)
 		);
 	}
@@ -326,50 +212,44 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 	}
 
 	/**
-	 * Clears the expected event flag when a user clicks "I have configured the Stripe webhooks".
+	 * Clears the expected event flag when a user dismisses the notification.
 	 *
 	 * This will hide the notices until the next expected event is received.
 	 *
 	 * @since 4.4.1
 	 *
+	 * @param mixed $old_value Old value.
+	 * @param mixed $new_value New value.
+	 * @param int $notification_id Notification ID.
 	 * @return void
 	 */
-	public function clear_expected_event() {
+	public function clear_expected_event_flag( $old_value, $new_value, $notification_id ) {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
-		if (
-			! isset( $_GET['action'] ) ||
-			'simpay_verify_webhook' !== sanitize_text_field( $_GET['action'] )
-		) {
+		$notification = $this->notifications->get( $notification_id );
+
+		if ( ! $notification instanceof Notification ) {
 			return;
 		}
 
-		$nonce = isset( $_GET['nonce'] )
-			? sanitize_text_field( $_GET['nonce'] )
-			: '';
-
-		if ( ! wp_verify_nonce( $nonce, 'simpay_verify_webhook' ) ) {
+		// Ensure we are dismissing the relevant notification.
+		if ( 'webhook-event-expected' !== $notification->slug ) {
 			return;
 		}
 
+		if ( '0' !== $old_value ) {
+			return;
+		}
+
+		// Clear the flag.
 		$option_key = sprintf(
 			'simpay_webhook_event_expected_%s',
 			simpay_is_test_mode() ? 'test' : 'live'
 		);
 
 		delete_option( $option_key );
-
-		$settings_url = Settings\get_url(
-			array(
-				'section'    => 'stripe',
-				'subsection' => 'webhooks',
-			)
-		);
-
-		wp_safe_redirect( esc_url_raw( $settings_url ) );
-		exit;
 	}
 
 	/**
@@ -533,21 +413,6 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface {
 		/** @var string $expected */
 
 		return (int) $expected;
-	}
-
-	/**
-	 * Returns the markup for the notice bubble.
-	 *
-	 * @since 4.4.1
-	 *
-	 * @param string $content Bubble content.
-	 * @return string
-	 */
-	private function get_bubble_markup( $content ) {
-		return sprintf(
-			'<span class="simpay-settings-bubble simpay-no-webhooks-bubble wp-ui-notification">%1$s</span>',
-			$content
-		);
 	}
 
 }

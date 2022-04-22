@@ -17,7 +17,6 @@ import './payment-forms';
 
 // Don't expose api.apiRequest to window.
 const {
-	charges,
 	customers,
 	paymentintents,
 	sessions,
@@ -30,7 +29,6 @@ window.wpsp = {
 	paymentForms,
 	initPaymentForm,
 	api: {
-		charges,
 		customers,
 		paymentintents,
 		sessions,

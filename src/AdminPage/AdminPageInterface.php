@@ -19,6 +19,17 @@ namespace SimplePay\Core\AdminPage;
 interface AdminPageInterface {
 
 	/**
+	 * Returns the menu position.
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure
+	 *
+	 * @since 4.4.0
+	 *
+	 * @return int
+	 */
+	public function get_position();
+
+	/**
 	 * Returns the capability required to view the page.
 	 *
 	 * @since 4.4.0

@@ -1,0 +1,182 @@
+@import "~@wordpress/base-styles/colors";
+@import "~@wordpress/base-styles/variables";
+@import "~@wordpress/base-styles/mixins";
+@import "~@wordpress/base-styles/breakpoints";
+@import "~@wordpress/base-styles/animations";
+@import "~@wordpress/base-styles/z-index";
+
+@include wordpress-admin-schemes();
+
+.simpay-notifications-body-locked {
+	overflow: hidden;
+
+	ul#adminmenu a.wp-has-current-submenu:after,
+	ul#adminmenu > li.current > a.current:after {
+		border-right-color: #797979;
+	}
+}
+
+.simpay-notifications-panel {
+	background-color: $white;
+	height: 100%;
+	width: 100%;
+	max-width: 570px;
+	position: fixed;
+	z-index: 1053;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow-x: hidden;
+	transition: 0.5s;
+	transform: translateX(0%);
+
+	.admin-bar & {
+		height: calc(100% - $admin-bar-height-big);
+		top: $admin-bar-height-big;
+
+		@include break-medium {
+			height: calc(100% - $admin-bar-height);
+			top: $admin-bar-height;
+		}
+	}
+
+	&__header {
+		font-size: 15px;
+		font-weight: bold;
+		padding: $grid-unit-15 $grid-unit-30;
+		background-color: #007cba;
+		background-color: var(--wp-admin-theme-color);
+		position: sticky;
+		top: 0;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&,
+		.components-button {
+			color: $white;
+
+			&:focus {
+				box-shadow: 0 0 0 var(--wp-admin-border-width-focus) rgba(255, 255, 255, 0.2);
+			}
+		}
+	}
+
+	&__loading,
+	&__none {
+		padding: $grid-unit-30;
+	}
+
+	&__none {
+		font-size: 16px;
+		color: $gray-700;
+	}
+}
+
+.simpay-notifications-backdrop {
+	position: fixed;
+	z-index: 1052;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: $black;
+	border: 0;
+	box-shadow: none;
+	appearance: none;
+	opacity: 0.5;
+	transition: 0.5s;
+
+	@include break-medium {
+
+		&,
+		.folded &,
+		.auto-fold.folded & {
+			left: $admin-sidebar-width-collapsed;
+		}
+	}
+
+	@include break-large {
+		.auto-fold & {
+			left: $admin-sidebar-width;
+		}
+	}
+}
+
+.simpay-notifications-notification {
+	display: flex;
+	gap: $grid-unit-15;
+	margin-bottom: $grid-unit-30;
+	padding: $grid-unit-30;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	&__icon {
+		margin-top: 4px;
+
+		&-success {
+			color: $alert-green;
+		}
+
+		&-info {
+			color: #005ae0;
+		}
+
+		&-warning {
+			color: $alert-yellow;
+		}
+
+		&-error {
+			color: $alert-red;
+		}
+	}
+
+	&__body {
+		flex: 1;
+	}
+
+	&__header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 5px;
+		margin: 1px 0 7px;
+	}
+
+	&__title {
+		line-height: 1.5;
+		color: $gray-900;
+		flex: 1;
+		font-size: 16px;
+		font-weight: 600;
+		margin: 0 $grid-unit-30 0 0;
+	}
+
+	&__date {
+		color: $gray-700;
+		font-size: 12px;
+		margin-top: 3px;
+	}
+
+	&__content {
+
+		p {
+			margin: $grid-unit-15 0;
+		}
+	}
+
+	&__actions {
+		flex-wrap: wrap;
+		display: flex;
+		align-items: center;
+		gap: $grid-unit-15;
+		margin-top: $grid-unit-15;
+
+		.components-button.is-link {
+			color: $gray-700;
+		}
+	}
+}

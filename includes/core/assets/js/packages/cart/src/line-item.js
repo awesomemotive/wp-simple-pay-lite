@@ -192,7 +192,9 @@ export const LineItem = class LineItem {
 		const nonZeroLineItems = this.cart
 			.getLineItems()
 			.filter( ( lineItem ) => {
-				return 0 !== lineItem.getUnitPrice();
+				return (
+					! lineItem.hasFreeTrial() && 0 !== lineItem.getUnitPrice()
+				);
 			} );
 
 		return Math.round( cartDiscount / nonZeroLineItems.length );
@@ -206,10 +208,7 @@ export const LineItem = class LineItem {
 	 * @return {number} Cart line item subtotal.
 	 */
 	getSubtotal() {
-		const hasTrial =
-			this.subscription && false !== this.subscription.isTrial;
-
-		if ( hasTrial ) {
+		if ( this.hasFreeTrial() ) {
 			return 0;
 		}
 
@@ -277,6 +276,23 @@ export const LineItem = class LineItem {
 	 */
 	getTotal() {
 		return this.getSubtotal() + this.getTax();
+	}
+
+	/**
+	 * Determines if the line item has a free trial.
+	 *
+	 * @since 4.4.5
+	 *
+	 * @return {bool} If the line item has a free trial.
+	 */
+	hasFreeTrial() {
+		const { price } = this;
+
+		if ( ! price ) {
+			return false;
+		}
+
+		return price.recurring && price.recurring.trial_period_days;
 	}
 };
 

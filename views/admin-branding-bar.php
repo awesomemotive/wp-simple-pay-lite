@@ -29,6 +29,10 @@
 
 		<span class="simpay-branding-bar__divider">/</span>
 	</div>
+	<div class="simpay-branding-bar__actions">
+		<div id="simpay-branding-bar-notifications"></div>
+	</div>
+	<div class="clear"></div>
 </div>
 
 <script>

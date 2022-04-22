@@ -36,6 +36,12 @@
 				"label": ""
 			},
 			{
+				"type": "address",
+				"billing-container-label": "",
+				"collect-shipping": "yes",
+				"required": "yes"
+			},
+			{
 				"type": "card",
 				"label": "",
 				"icons": "yes"

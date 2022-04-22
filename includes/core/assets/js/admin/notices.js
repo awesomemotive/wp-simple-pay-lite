@@ -6,11 +6,6 @@
 import domReady from '@wordpress/dom-ready';
 
 /**
- * Internal dependencies.
- */
-import './settings/usage-tracking.js';
-
-/**
  * Opens the "Upgrade to Pro" menu item in a new tab.
  */
 function upgradeToProLink() {
@@ -23,35 +18,6 @@ function upgradeToProLink() {
 	}
 
 	upgradeLinkEl.setAttribute( 'target', '_blank' );
-}
-
-/**
- * Appends a notification bubble to the parent menu item if one exists in the admin bar.
- */
-function menuNameBubble() {
-	const adminBarMenuBubbleEl = document.querySelector(
-		'.simpay-admin-bar-test-mode .simpay-settings-bubble'
-	);
-
-	// No bubble is present, do nothing.
-	if ( ! adminBarMenuBubbleEl ) {
-		return;
-	}
-
-	const menuItemEl = document.querySelector(
-		'#menu-posts-simple-pay .wp-menu-name'
-	);
-
-	// No menu item is present, do nothing.
-	if ( ! menuItemEl ) {
-		return;
-	}
-
-	const newBubble = adminBarMenuBubbleEl.cloneNode( true );
-	newBubble.innerHTML = '';
-
-	// Append the bubble to the admin menu item.
-	menuItemEl.appendChild( newBubble );
 }
 
 /**
@@ -102,7 +68,6 @@ function fiveStarRatingNotice() {
 domReady( () => {
 	fiveStarRatingNotice();
 	upgradeToProLink();
-	menuNameBubble();
 
 	jQuery( '.simpay-notice' ).each( function () {
 		const notice = jQuery( this );

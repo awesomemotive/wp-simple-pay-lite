@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit323b1658233e53f12501ad347cfb3e86
+class ComposerStaticInit3c92020a34095b37aebd87d886a830f3
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -25,6 +25,10 @@ class ComposerStaticInit323b1658233e53f12501ad347cfb3e86
         'I' => 
         array (
             'Interop\\Container\\' => 18,
+        ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
         ),
         'B' => 
         array (
@@ -61,6 +65,10 @@ class ComposerStaticInit323b1658233e53f12501ad347cfb3e86
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
         ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
         'BerlinDB\\' => 
         array (
             0 => __DIR__ . '/..' . '/berlindb/core/src',
@@ -74,9 +82,9 @@ class ComposerStaticInit323b1658233e53f12501ad347cfb3e86
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit323b1658233e53f12501ad347cfb3e86::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit323b1658233e53f12501ad347cfb3e86::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit323b1658233e53f12501ad347cfb3e86::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3c92020a34095b37aebd87d886a830f3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3c92020a34095b37aebd87d886a830f3::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3c92020a34095b37aebd87d886a830f3::$classMap;
 
         }, null, ClassLoader::class);
     }

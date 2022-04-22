@@ -1523,3 +1523,60 @@ function simpay_get_form_list_options() {
 
 	return $options;
 }
+
+/**
+ * Appends UTM parameters to a given URL.
+ *
+ * @since 3.0.0
+ * @since 4.4.0 Removed $raw parameter. Update utm_source to WordPress.
+ *              Move utm_content to utm_medium. Add support for dynamic utm_content.
+ *
+ * @param string $base_url Base URL.
+ * @param string $utm_medium utm_medium parameter.
+ * @param string $utm_content Optional. utm_content parameter.
+ * @return string $url Full Google Analytics campaign URL.
+ */
+function simpay_ga_url( $base_url, $utm_medium, $utm_content = false ) {
+	/**
+	 * Filters the UTM campaign for generated links.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param string $utm_campaign
+	 */
+	$utm_campaign = apply_filters( 'simpay_utm_campaign', 'lite-plugin' );
+
+	$url = add_query_arg(
+		array(
+			'utm_source'   => 'WordPress',
+			'utm_campaign' => $utm_campaign,
+			'utm_medium'   => $utm_medium,
+			'utm_content'  => $utm_content,
+		),
+		$base_url
+	);
+
+	return esc_url( $url );
+}
+
+/**
+ * URL for upgrading to Pro (or another Pro licecnse).
+ *
+ * @since 3.0.0
+ *
+ * @param string $utm_medium utm_medium parameter.
+ * @param string $utm_content Optional. utm_content parameter.
+ * @return string
+ */
+function simpay_pro_upgrade_url( $utm_medium, $utm_content = '' ) {
+	return apply_filters(
+		'simpay_upgrade_link',
+		simpay_ga_url(
+			'https://wpsimplepay.com/lite-vs-pro',
+			$utm_medium,
+			$utm_content
+		),
+		$utm_medium,
+		$utm_content
+	);
+}

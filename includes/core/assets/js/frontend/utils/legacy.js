@@ -29,7 +29,7 @@ export default {
 	 */
 	setCoreFinalAmount( spFormElem, formData ) {
 		// Backwards compat.
-		formData.finalAmount = spFormElem.cart.getTotal();
+		formData.finalAmount = spFormElem.cart.getTotalDueToday();
 
 		jQuery( document.body ).trigger( 'simpayFinalizeCoreAmount', [
 			spFormElem,
@@ -104,14 +104,14 @@ export default {
 		if (
 			jQuery( embeddedHtml ).html() === submitBtn.find( 'span' ).html()
 		) {
-			if ( 0 === cart.getTotal() ) {
+			if ( 0 === cart.getTotalDueToday() ) {
 				const { checkoutButtonTrialText } = formData;
 				submitBtn.find( 'span' ).text( checkoutButtonTrialText );
 			} else {
 				const formatted = formatCurrency(
 					cart.isZeroDecimal()
-						? cart.getTotal()
-						: convertToDollars( cart.getTotal() ),
+						? cart.getTotalDueToday()
+						: convertToDollars( cart.getTotalDueToday() ),
 					true,
 					cart.getCurrencySymbol(),
 					cart.isZeroDecimal()

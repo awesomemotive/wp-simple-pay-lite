@@ -13,5 +13,6 @@ return array(
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'League\\Container\\' => array($vendorDir . '/league/container/src'),
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
+    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'BerlinDB\\' => array($vendorDir . '/berlindb/core/src'),
 );

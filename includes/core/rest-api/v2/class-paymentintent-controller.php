@@ -148,7 +148,7 @@ class PaymentIntent_Controller extends Controller {
 				)
 			);
 
-			$off_session_pms = array( 'ach-debit', 'card', 'sepa_debit' );
+			$off_session_pms = array( 'card', 'sepa_debit' );
 
 			if ( in_array( $payment_method_type, $off_session_pms, true ) ) {
 				$paymentintent_args['setup_future_usage'] = 'off_session';

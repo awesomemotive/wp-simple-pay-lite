@@ -177,11 +177,6 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/legacy/hooks.php' );
 		require_once( SIMPLE_PAY_INC . 'core/legacy/class-payment-form.php' );
 
-		// Cron functionality.
-		$cron = new Cron();
-		$cron->init();
-		$cron->schedule_events();
-
 		// Rate Limiting.
 		$rate_limiting = new Utils\Rate_Limiting();
 		$rate_limiting->init();
@@ -219,9 +214,6 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/functions/admin.php' );
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/notices.php' );
 		require_once( SIMPLE_PAY_INC . 'core/admin/functions/plugin-upgrade-notice.php' );
-
-		// Usage tracking functionality.
-		require_once( SIMPLE_PAY_INC . 'core/admin/usage-tracking/functions.php' );
 
 		new Admin\Assets();
 		new Admin\Menus();

@@ -281,3 +281,35 @@ function bulk_updated_messages( $bulk_messages, $bulk_counts ) {
 	return $bulk_messages;
 }
 add_filter( 'bulk_post_updated_messages', __NAMESPACE__ . '\\bulk_updated_messages', 10, 2 );
+
+/**
+ * Remove non-WP Simple Pay metaboxes from the edit screen.
+ *
+ * @since 4.4.5
+ *
+ * @param string $post_type Current post type.
+ * @return void
+ */
+function remove_other_metaboxes( $post_type ){
+	if ( 'simple-pay' !== $post_type ) {
+		return;
+	}
+
+	$keep = array(
+		'submitdiv',
+		'simpay-payment-form-settings'
+	);
+
+    global $wp_meta_boxes;
+
+	foreach ( $wp_meta_boxes['simple-pay'] as $context_id => $contexts ) {
+		foreach ( $contexts as $priorities ) {
+			foreach ( $priorities as $metabox ) {
+				if ( ! in_array( $metabox['id'], $keep, true ) ) {
+					remove_meta_box( $metabox['id'], 'simple-pay', $context_id );
+				}
+			}
+		}
+	}
+}
+add_action( 'add_meta_boxes', __NAMESPACE__ . '\\remove_other_metaboxes', 99 );

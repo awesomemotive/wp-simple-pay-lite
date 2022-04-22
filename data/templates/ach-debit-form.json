@@ -17,11 +17,11 @@
 		"on-site"
 	],
 	"slug": "ach-debit-form",
-	"name": "ACH Debit Form",
+	"name": "ACH Direct Debit Form",
 	"description": "Accept ACH debit payments directly from bank accounts (U.S. only).",
 	"url": "",
 	"data": {
-		"title": "ACH Debit Form",
+		"title": "ACH Direct Debit Form",
 		"description": "",
 		"type": "embedded",
 		"payment_methods": [
@@ -29,6 +29,11 @@
 			"card"
 		],
 		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
 			{
 				"type": "email",
 				"label": "Email Address"

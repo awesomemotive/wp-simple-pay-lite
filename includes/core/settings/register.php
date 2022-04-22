@@ -282,6 +282,35 @@ add_action( 'admin_init', __NAMESPACE__ . '\\register_wp_setting', 99 );
 add_action( 'rest_api_init', __NAMESPACE__ . '\\register_wp_setting', 99 );
 
 /**
+ * Merges settings sent by the REST API with the existing settings.
+ *
+ * We do not expose some settings (like API keys) to the REST API so we need to ensure
+ * they persist when the serialized simpay_settings option is updated via the REST API.
+ *
+ * @since 4.4.5
+ *
+ * @param array<mixed> $new_value New settings.
+ * @param array<mixed> $old_value Old settings.
+ * @return array<mixed> Merged settings if a REST API request.
+ */
+function merge_rest_api_updates( $new_value, $old_value ) {
+	if ( 0 === did_action( 'rest_api_init' ) ) {
+		return $new_value;
+	}
+
+	return array_merge(
+		$old_value,
+		$new_value
+	);
+}
+add_filter(
+	'pre_update_option_simpay_settings',
+	__NAMESPACE__ . '\\merge_rest_api_updates',
+	10,
+	2
+);
+
+/**
  * Saves the registered settings.
  *
  * @since 4.0.0

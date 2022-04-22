@@ -285,6 +285,10 @@ function simpay_payment_form_add_missing_custom_fields(
 					(
 						isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
 						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
+					) ||
+					(
+						isset( $payment_methods['stripe-elements']['ach-debit'] ) &&
+						isset( $payment_methods['stripe-elements']['ach-debit']['id'] )
 					)
 				)
 			) {
