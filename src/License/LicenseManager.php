@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\License;
@@ -14,7 +14,7 @@ namespace SimplePay\Core\License;
 /**
  * LicenseManager class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class LicenseManager {
 
@@ -24,7 +24,7 @@ class LicenseManager {
 	 * Note: This method does no permission or security checks. Those should be done by
 	 * the service or subscriber consuming this service.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $license License key to activate.
 	 * @return bool|\SimplePay\Core\License\License False on failure, or License.
@@ -73,7 +73,7 @@ class LicenseManager {
 	 * Note: This method does no permission or security checks. Those should be done by
 	 * the service or subscriber consuming this service.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $license License key to deactivate.
 	 * @return bool|\SimplePay\Core\License\License False on failure, or License.

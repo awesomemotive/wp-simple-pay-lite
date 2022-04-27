@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\NotificationInbox\NotificationImporter;
@@ -21,14 +21,14 @@ use stdClass;
 /**
  * RemoteNotificationImporter class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class RemoteNotificationImporter extends AbstractNotificationImporter implements SubscriberInterface, NotificationImporterInterface {
 
 	/**
 	 * Remote API URL.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string
 	 */
 	private $api_endpoint_url;
@@ -36,7 +36,7 @@ class RemoteNotificationImporter extends AbstractNotificationImporter implements
 	/**
 	 * Scheduler.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\Scheduler\SchedulerInterface
 	 */
 	private $scheduler;
@@ -44,7 +44,7 @@ class RemoteNotificationImporter extends AbstractNotificationImporter implements
 	/**
 	 * NotificationImporter.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string                                       $api_endpoint_url Remote API endpoint URL.
 	 * @param \SimplePay\Core\Scheduler\SchedulerInterface $scheduler Scheduler.
@@ -80,7 +80,7 @@ class RemoteNotificationImporter extends AbstractNotificationImporter implements
 	 * @todo A single schedule should be setup that pulls any registered importers.
 	 * Currently this is only used for the remote notification importer.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return void
 	 */

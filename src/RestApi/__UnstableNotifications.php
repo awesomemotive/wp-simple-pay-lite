@@ -9,7 +9,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\RestApi;
@@ -23,14 +23,14 @@ use WP_REST_Server;
 /**
  * Notifications class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class __UnstableNotifications implements SubscriberInterface {
 
 	/**
 	 * Notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\NotificationInbox\NotificationRepository
 	 */
 	private $notifications;
@@ -38,7 +38,7 @@ class __UnstableNotifications implements SubscriberInterface {
 	/**
 	 * __UnstableNotifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 */
 	public function __construct( NotificationRepository $notifications ) {
 		$this->notifications = $notifications;
@@ -56,7 +56,7 @@ class __UnstableNotifications implements SubscriberInterface {
 	/**
 	 * Registers the REST API route for GET /wpsp/v2/notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return void
 	 */
@@ -130,7 +130,7 @@ class __UnstableNotifications implements SubscriberInterface {
 	/**
 	 * Determines if the current user can manage notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return bool
 	 */
@@ -141,7 +141,7 @@ class __UnstableNotifications implements SubscriberInterface {
 	/**
 	 * Lists notifications for a given status.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \WP_REST_Request $request REST API request.
 	 * @return \WP_REST_Response REST API response.
@@ -176,7 +176,7 @@ class __UnstableNotifications implements SubscriberInterface {
 	/**
 	 * Dismisses a notification.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \WP_REST_Request $request REST API request.
 	 * @return \WP_REST_Response REST API response.

@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, WP Simple Pay, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\AdminBar;
@@ -18,14 +18,14 @@ use SimplePay\Core\Settings;
 /**
  * AdminBarSubscriber class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class AdminBarSubscriber implements SubscriberInterface {
 
 	/**
 	 * Notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\NotificationInbox\NotificationRepository
 	 */
 	private $notifications;
@@ -33,7 +33,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 	/**
 	 * AdminBarSubscriber.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param null|\SimplePay\Core\NotificationInbox\NotificationRepository $notifications Notifications
 	 */
@@ -55,7 +55,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 	/**
 	 * Adds a menu bar item and chidlren.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar WP_Admin_Bar instance.
 	 * @return void
@@ -71,8 +71,10 @@ class AdminBarSubscriber implements SubscriberInterface {
 		// Show the notification count on the frontend and on non-WPSP admin screens.
 		$use_notification_inbox = (
 			$this->notifications instanceof NotificationRepository &&
-			! is_admin() ||
-			( is_admin() && ! simpay_is_admin_screen() )
+			(
+				! is_admin() ||
+				( is_admin() && ! simpay_is_admin_screen() ) // @phpstan-ignore-line
+			)
 		);
 		$notifications_string   = '';
 		$notifications          = 0;
@@ -180,7 +182,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 	/**
 	 * Returns markup for a notification bubble.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $inner HTML to be inside the bubble.
 	 * @return string

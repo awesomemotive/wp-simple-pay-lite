@@ -119,7 +119,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 	/**
 	 * Adds a notification if an event has not been received.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return void
 	 */

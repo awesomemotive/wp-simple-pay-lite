@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2021, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\Scheduler;
@@ -18,14 +18,14 @@ use SimplePay\Core\EventManagement\SubscriberInterface;
  * WpCronScheduler class.
  *
  * @link https://developer.wordpress.org/plugins/cron/scheduling-wp-cron-events/
- * @since 4.x.x
+ * @since 4.4.5
  */
 class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 
 	/**
 	 * Event management.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\EventManagement\EventManager
 	 */
 	private $events;
@@ -33,7 +33,7 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 	/**
 	 * WpCronScheduler.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \SimplePay\Core\EventManagement\EventManager $events Event management.
 	 */
@@ -122,7 +122,7 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 	/**
 	 * Adds custom recurrence schedules to WordPress' defaults.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<string, array<string, int|string>> $schedules A list of registered recurrence schedules.
 	 * @return array<string, array<string, int|string>> A list of registered recurrence schedules.
@@ -137,7 +137,7 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 	/**
 	 * Returns a list of custom recurrence schedules.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return array<string, array<string, int|string>> A list of custom recurrence schedules.
 	 */
@@ -153,7 +153,7 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 	/**
 	 * Returns a registered recurrence schedule based on a given interval.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param int $interval Schedule interval.
 	 * @return string|false Registered recurrence schedule if registered, or false.

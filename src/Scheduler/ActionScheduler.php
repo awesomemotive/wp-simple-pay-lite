@@ -8,7 +8,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\Scheduler;
@@ -16,14 +16,14 @@ namespace SimplePay\Core\Scheduler;
 /**
  * ActionScheduler class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class ActionScheduler implements SchedulerInterface {
 
 	/**
 	 * Group name.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string
 	 */
 	const GROUP = 'simpay';

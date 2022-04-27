@@ -11,6 +11,7 @@ import moment from 'moment';
 import { __ } from '@wordpress/i18n';
 import { Button } from '@wordpress/components';
 import { addQueryArgs, getAuthority } from '@wordpress/url';
+import { autop } from '@wordpress/autop';
 
 const baseClassName = 'simpay-notifications-notification';
 const { isLite } = simpayNotifications;
@@ -105,9 +106,10 @@ function Notification( { notification, onDismissNotification } ) {
 					) }
 				</div>
 
-				<div className={ `${ baseClassName }__content` }>
-					<p>{ content }</p>
-				</div>
+				<div
+					className={ `${ baseClassName }__content` }
+					dangerouslySetInnerHTML={ { __html: autop( content ) } }
+				/>
 
 				<div className={ `${ baseClassName }__actions` }>
 					{ actions.map( ( { type: actionType, text, url } ) => (

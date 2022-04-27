@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\NotificationInbox;
@@ -17,7 +17,7 @@ use SimplePay\Vendor\League\Container\ServiceProvider\BootableServiceProviderInt
 /**
  * NotificationInboxServiceProvider class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class NotificationInboxServiceProvider extends AbstractPluginServiceProvider implements BootableServiceProviderInterface {
 
@@ -95,7 +95,7 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 	/**
 	 * Returns the API URL for remote notifications to import.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return string
 	 */

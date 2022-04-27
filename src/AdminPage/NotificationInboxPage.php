@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\AdminPage;
@@ -16,14 +16,14 @@ use SimplePay\Core\NotificationInbox\NotificationRepository;
 /**
  * NotificationInboxPage class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class NotificationInboxPage extends AbstractAdminPage implements AdminSecondaryPageInterface {
 
 	/**
 	 * Notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\NotificationInbox\NotificationRepository
 	 */
 	private $notifications;
@@ -31,7 +31,7 @@ class NotificationInboxPage extends AbstractAdminPage implements AdminSecondaryP
 	/**
 	 * NotificationInboxPage.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \SimplePay\Core\NotificationInbox\NotificationRepository $notifications Notification repository.
 	 */

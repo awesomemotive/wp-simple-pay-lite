@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\License;
@@ -20,7 +20,7 @@ use SimplePay\Core\Settings;
 /**
  * LicenseNotificationSubscriber class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAwareInterface, NotificationAwareInterface {
 
@@ -46,7 +46,7 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 	/**
 	 * Adds a notification to the inbox if a license is missing.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return void
 	 */
@@ -96,7 +96,7 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 	/**
 	 * Dismisses the missing license notification when the license data is updated and valid.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \stdClass $value New license data.
 	 * @return \stdClass License data.

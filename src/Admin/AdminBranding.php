@@ -73,7 +73,7 @@ class AdminBranding implements SubscriberInterface, LicenseAwareInterface {
 	 *
 	 * @todo This probably should go somewhere better.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return void
 	 */
@@ -83,7 +83,7 @@ class AdminBranding implements SubscriberInterface, LicenseAwareInterface {
 		/**
 		 * Filters the notification inbox output.
 		 *
-		 * @since 4.x.x
+		 * @since 4.4.5
 		 *
 		 * @param bool $use_notification_inbox If the notification inbox should be utilized.
 		 */

@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\NotificationInbox;
@@ -16,14 +16,14 @@ use SimplePay\Core\Model\AbstractModel;
 /**
  * Notification class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class Notification extends AbstractModel {
 
 	/**
 	 * Notification ID.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var int
 	 */
 	public $id;
@@ -31,7 +31,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification remote ID.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var int
 	 */
 	public $remote_id;
@@ -39,7 +39,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification source.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string
 	 */
 	public $source;
@@ -47,7 +47,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification title.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string
 	 */
 	public $title;
@@ -55,7 +55,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification slug.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string
 	 */
 	public $slug;
@@ -63,7 +63,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification content.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string
 	 */
 	public $content;
@@ -71,7 +71,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification actions.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var array<array<string, string>>
 	 */
 	public $actions;
@@ -79,7 +79,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification type.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string
 	 */
 	public $type;
@@ -87,7 +87,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification conditions.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var array<string>
 	 */
 	public $conditions;
@@ -95,7 +95,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification start date timestamp.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var int
 	 */
 	public $start;
@@ -103,7 +103,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification end date timestamp.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var int
 	 */
 	public $end;
@@ -111,7 +111,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification dismissed.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var bool
 	 */
 	public $dismissed;
@@ -119,7 +119,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification dismissibility.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var bool
 	 */
 	public $is_dismissible;
@@ -127,7 +127,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification creation date timestamp.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var int
 	 */
 	public $date_created;
@@ -135,7 +135,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification modification date timestamp.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var int
 	 */
 	public $date_modified;
@@ -143,7 +143,7 @@ class Notification extends AbstractModel {
 	/**
 	 * Notification.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $data Data to create an model from.
 	 */

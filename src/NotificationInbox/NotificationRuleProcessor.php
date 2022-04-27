@@ -14,7 +14,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\NotificationInbox;
@@ -25,7 +25,7 @@ use SimplePay\Core\License\LicenseAwareTrait;
 /**
  * NotificationRuleProcessor class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class NotificationRuleProcessor implements LicenseAwareInterface {
 
@@ -34,7 +34,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	/**
 	 * Determines if all conditions have been met.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<string> $conditions Conditions to check.
 	 * @return bool
@@ -74,7 +74,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	/**
 	 * Returns only license-level conditions.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<string> $conditions Conditions to check.
 	 * @return array<string>
@@ -91,7 +91,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	/**
 	 * Returns only version-number conditions.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<string> $conditions Conditions to check.
 	 * @return array<string>
@@ -108,7 +108,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	/**
 	 * Determines if the current license level matches the condition.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<string> $license_levels License level to check against current.
 	 * @return bool
@@ -120,7 +120,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	/**
 	 * Determines if two version numbers match or falls within the wildcard.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $current_version Current version.
 	 * @param string $compare_version Version to compare with. This can either be an exact version number or a
@@ -179,7 +179,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	 *
 	 * @todo Pull from a source of truth.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @return array<string>
 	 */
 	private function get_valid_license_levels() {
@@ -196,7 +196,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	/**
 	 * Determines if a condition is a license level.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $condition Condition to check if it is a license level.
 	 * @return bool
@@ -212,7 +212,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 	/**
 	 * Determines if a condition is a version number.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $condition Condition to check if it is a version number.
 	 * @return bool

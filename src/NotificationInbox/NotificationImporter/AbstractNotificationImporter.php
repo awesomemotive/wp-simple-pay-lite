@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\NotificationInbox\NotificationImporter;
@@ -19,14 +19,14 @@ use SimplePay\Core\NotificationInbox\NotificationRuleProcessor;
 /**
  * AbstractNotificationImporter class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 abstract class AbstractNotificationImporter implements NotificationImporterInterface {
 
 	/**
 	 * Notification repository.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\NotificationInbox\NotificationRepository
 	 */
 	protected $notifications;
@@ -34,7 +34,7 @@ abstract class AbstractNotificationImporter implements NotificationImporterInter
 	/**
 	 * Notification rule processor.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\NotificationInbox\NotificationRuleProcessor
 	 */
 	protected $rule_processor;
@@ -42,7 +42,7 @@ abstract class AbstractNotificationImporter implements NotificationImporterInter
 	/**
 	 * NotificationImporter.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \SimplePay\Core\NotificationInbox\NotificationRepository $notifications Notification repository.
 	 * @param \SimplePay\Core\NotificationInbox\NotificationRuleProcessor $rule_processor Notification rule processor.
@@ -94,7 +94,7 @@ abstract class AbstractNotificationImporter implements NotificationImporterInter
 	/**
 	 * Parses notification data returned from a fetch.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $notification_data Notification data.
 	 * @return array<string, array<array<string>|string>|string> Parsed notification data.
@@ -196,7 +196,7 @@ abstract class AbstractNotificationImporter implements NotificationImporterInter
 	/**
 	 * Validates notification data returned from the API.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $notification Notification.
 	 * @return bool

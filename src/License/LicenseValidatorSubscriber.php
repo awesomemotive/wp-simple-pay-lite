@@ -8,7 +8,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\License;
@@ -18,7 +18,7 @@ use SimplePay\Core\EventManagement\SubscriberInterface;
 /**
  * LicenseValidatorSubscriber class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class LicenseValidatorSubscriber implements SubscriberInterface, LicenseAwareInterface {
 
@@ -27,7 +27,7 @@ class LicenseValidatorSubscriber implements SubscriberInterface, LicenseAwareInt
 	/**
 	 * License management.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\License\LicenseManager
 	 */
 	private $manager;
@@ -35,7 +35,7 @@ class LicenseValidatorSubscriber implements SubscriberInterface, LicenseAwareInt
 	/**
 	 * LicenseValidatorSubscriber.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \SimplePay\Core\License\LicenseManager $manager License manager.
 	 * @return void
@@ -60,7 +60,7 @@ class LicenseValidatorSubscriber implements SubscriberInterface, LicenseAwareInt
 	/**
 	 * Validates an existing license key.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return void
 	 */

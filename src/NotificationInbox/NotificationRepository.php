@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\NotificationInbox;
@@ -16,14 +16,14 @@ use SimplePay\Core\Repository\BerlinDbRepository;
 /**
  * NotificationRepository class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class NotificationRepository extends BerlinDbRepository {
 
 	/**
 	 * Notification rule processor.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Core\NotificationInbox\NotificationRuleProcessor
 	 */
 	private $rule_processor;
@@ -31,7 +31,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * NotificationImporter.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \SimplePay\Core\NotificationInbox\NotificationRuleProcessor $rule_processor Notification rule processor.
 	 */
@@ -47,7 +47,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Restores an existing notification (updating arguments), or creates a new one.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $args Arguments to create the notification with.
 	 * @return null|\SimplePay\Core\Model\ModelInterface
@@ -106,7 +106,7 @@ class NotificationRepository extends BerlinDbRepository {
 	 * @link https://github.com/berlindb/core/blob/bdea8cb238b71248d714e9c46bd8596fdbb4c9e7/src/Database/Query.php#L1943
 	 * @link https://bugs.php.net/bug.php?id=62115
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param int $notification_id Notification ID.
 	 * @param array<mixed> $args Arguments to update the notification with.
@@ -126,7 +126,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Dismisses a notification.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param int|string $id_or_slug Notification ID or slug.
 	 * @return null|\SimplePay\Core\Model\ModelInterface
@@ -153,7 +153,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Retrieves a notification by slug.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $slug Notification slug.
 	 * @return null|\SimplePay\Core\Model\ModelInterface
@@ -168,7 +168,7 @@ class NotificationRepository extends BerlinDbRepository {
 	 * This does not use COUNT(*) syntax because we want to revalidate unread
 	 * notifications for the current environment.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $args Query arguments.
 	 * @return int
@@ -194,7 +194,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Returns the number of read notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $args Query arguments.
 	 * @return int
@@ -208,7 +208,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Returns all unread (not dismissed) notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $args Query arguments.
 	 * @return array<\SimplePay\Core\Model\ModelInterface>
@@ -234,7 +234,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Returns all read (dismissed) notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $args Query arguments.
 	 * @return array<\SimplePay\Core\Model\ModelInterface>
@@ -248,7 +248,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Returns query arguments for retrieving unread notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return array<mixed>
 	 */
@@ -274,7 +274,7 @@ class NotificationRepository extends BerlinDbRepository {
 	/**
 	 * Returns query arguments for retrieving read notifications.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return array<mixed>
 	 */

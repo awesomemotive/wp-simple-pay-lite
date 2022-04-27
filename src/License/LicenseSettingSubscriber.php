@@ -8,7 +8,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\License;
@@ -22,7 +22,7 @@ use SimplePay\Core\Settings;
 /**
  * LicenseSettingSubscriber class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInterface, NotificationAwareInterface {
 
@@ -46,7 +46,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 	/**
 	 * Registers settings subsections.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \SimplePay\Core\Settings\Subsection_Collection $subsections Subsections collection.
 	 * @return void
@@ -72,7 +72,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 	/**
 	 * Registers the settings.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
 	 * @return void
@@ -96,7 +96,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 	/**
 	 * Returns the UI for the license setting.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return string|bool
 	 */
@@ -142,7 +142,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 	/**
 	 * Get license feedback, based on a specific status.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @return string
 	 */

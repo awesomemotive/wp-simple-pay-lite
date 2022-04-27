@@ -10,7 +10,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.x.x
+ * @since 4.4.5
  */
 
 namespace SimplePay\Core\Repository;
@@ -21,14 +21,14 @@ use stdClass;
 /**
  * BerlinDbRepository class.
  *
- * @since 4.x.x
+ * @since 4.4.5
  */
 class BerlinDbRepository extends BerlinDbQuery implements RepositoryInterface {
 
 	/**
 	 * Item shape.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var string Fully qualified class name.
 	 */
 	protected $shape;
@@ -36,7 +36,7 @@ class BerlinDbRepository extends BerlinDbQuery implements RepositoryInterface {
 	/**
 	 * Item query.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 * @var \SimplePay\Vendor\BerlinDB\Database\Query
 	 */
 	protected $query;
@@ -44,7 +44,7 @@ class BerlinDbRepository extends BerlinDbQuery implements RepositoryInterface {
 	/**
 	 * BerlinDbRepository.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param string $shape Item shape in the form of a fully qualified class name.
 	 * @param string $query BerlinDB Query class in the form of a fully qualified class name.
@@ -58,7 +58,7 @@ class BerlinDbRepository extends BerlinDbQuery implements RepositoryInterface {
 	/**
 	 * Shapes a single item to a model given a set of data.
 	 *
-	 * @since 4.x.x
+	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $data Model data.
 	 * @return \SimplePay\Core\Model\ModelInterface
@@ -164,7 +164,7 @@ class BerlinDbRepository extends BerlinDbQuery implements RepositoryInterface {
 			_doing_it_wrong(
 				__METHOD__,
 				__( 'Counting results via a query is not allowed. Use the ::count() method.', 'stripe' ),
-				'4.x.x'
+				'4.4.5'
 			);
 		}
 
