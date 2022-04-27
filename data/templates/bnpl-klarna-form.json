@@ -32,6 +32,11 @@
 				"label": "Email Address"
 			},
 			{
+				"type": "address",
+				"billing-container-label": "",
+				"required": "yes"
+			},
+			{
 				"type": "plan_select",
 				"label": ""
 			},

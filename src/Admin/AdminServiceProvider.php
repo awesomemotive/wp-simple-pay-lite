@@ -11,9 +11,11 @@
 
 namespace SimplePay\Core\Admin;
 
+use Exception;
 use SimplePay\Core\AbstractPluginServiceProvider;
 use SimplePay\Core\AdminNotice;
 use SimplePay\Core\AdminPage;
+use SimplePay\Core\NotificationInbox\NotificationRepository;
 
 /**
  * AdminServiceProvider class.
@@ -27,11 +29,13 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 	 */
 	public function get_services() {
 		return array(
+			'admin-page-notification-inbox',
 			'admin-page-about-us',
 			'admin-page-setup-wizard',
 			'admin-notice-update-available',
 			'admin-notice-five-star-rating',
 			'admin-notice-license-upgrade-top-of-page',
+			'admin-notice-license-missing',
 		);
 	}
 
@@ -92,12 +96,32 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminPage\AboutUsPage::class
 		);
 
-		/** @var array<\SimplePay\Core\AdminPage\AdminPageInterface> $pages */
 		$pages = array(
 			$container->get( 'admin-page-setup-wizard' ),
 			$container->get( 'admin-page-about-us' ),
 		);
 
+		// Add notification inbox page if notifications are being used.
+		try {
+			$notifications = $container->get( 'notification-inbox-repository' );
+
+			if (
+				$notifications instanceof NotificationRepository &&
+				$notifications->get_unread_count() > 0
+			) {
+				$container->share(
+					'admin-page-notification-inbox',
+					AdminPage\NotificationInboxPage::class
+				)
+					->withArgument( $notifications );
+
+				$pages[] = $container->get( 'admin-page-notification-inbox' );
+			}
+		} catch ( Exception $e ) {
+			// Do not add.
+		}
+
+		/** @var array<\SimplePay\Core\AdminPage\AdminPageInterface> $pages */
 		return $pages;
 	}
 
@@ -130,11 +154,18 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminNotice\LicenseUpgradeTopOfPageNotice::class
 		);
 
+		// License key missing.
+		$container->share(
+			'admin-notice-license-missing',
+			AdminNotice\LicenseMissingNotice::class
+		);
+
 		/** @var array<\SimplePay\Core\AdminNotice\AdminNoticeInterface> */
 		$notices = array(
 			$container->get( 'admin-notice-update-available' ),
 			$container->get( 'admin-notice-five-star-rating' ),
-			$container->get( 'admin-notice-license-upgrade-top-of-page' )
+			$container->get( 'admin-notice-license-upgrade-top-of-page' ),
+			$container->get( 'admin-notice-license-missing' ),
 		);
 
 		return $notices;

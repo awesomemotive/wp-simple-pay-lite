@@ -19,6 +19,7 @@ body.simpay-template-explorer-open {
 	.notice,
 	#screen-meta,
 	#screen-meta-links,
+	#poststuff,
 	#wpfooter {
 		display: none !important;
 	}
@@ -117,9 +118,6 @@ body.simpay-template-explorer-open {
 		padding-bottom: 0;
 	}
 
-	+ #poststuff {
-		display: none;
-	}
 }
 
 // Container.

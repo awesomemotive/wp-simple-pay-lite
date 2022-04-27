@@ -243,6 +243,12 @@ export const Cart = class Cart {
 	 */
 	getSubtotal() {
 		return this.getLineItems().reduce( ( subtotal, lineItem ) => {
+			// Return early if the line item has a trial.
+			if ( lineItem.hasFreeTrial() ) {
+				return subtotal;
+			}
+
+			// Add the subtotal of a line item without a trial.
 			return ( subtotal += Math.round(
 				lineItem.getUnitPrice() * lineItem.getQuantity()
 			) );
@@ -315,6 +321,10 @@ export const Cart = class Cart {
 		const taxRateAmounts = {};
 
 		lineItems.forEach( ( lineItem ) => {
+			if ( lineItem.hasFreeTrial() ) {
+				return;
+			}
+
 			const lineExclusiveTax = lineItem.getTax();
 			const lineTaxableAmount = lineItem.getTaxableAmount();
 			const lineInclusiveTaxAmount = lineItem.getInclusiveTaxAmount();
@@ -412,6 +422,25 @@ export const Cart = class Cart {
 	}
 
 	/**
+	 * Retrieves the total due today.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @return {number} Cart total due today.
+	 */
+	getTotalDueToday() {
+		return this.getLineItems().reduce( ( total, lineItem ) => {
+			// Return current total if the line item has a free trial.
+			if ( lineItem.hasFreeTrial() ) {
+				return total;
+			}
+
+			// Add line item total to existing total.
+			return ( total += lineItem.getTotal() );
+		}, 0 );
+	}
+
+	/**
 	 * Retrieves the recurring total.
 	 *
 	 * Calculates amounts manually by applying the whole discount to the line item.
@@ -428,6 +457,105 @@ export const Cart = class Cart {
 		recurringSubtotal = Math.round(
 			recurringSubtotal - this.getDiscount()
 		);
+
+		const taxRates = this.getTaxRates();
+		const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
+
+		const inclusiveTaxAmount = Math.round(
+			recurringSubtotal - recurringSubtotal / ( 1 + taxRate )
+		);
+
+		const postInclusiveTaxAmount = Math.round(
+			recurringSubtotal - inclusiveTaxAmount
+		);
+		const taxAmount = taxRates.reduce(
+			( tax, { percentage, calculation } ) => {
+				if ( 'inclusive' === calculation ) {
+					return tax;
+				}
+
+				return ( tax += Math.round(
+					postInclusiveTaxAmount * ( percentage / 100 )
+				) );
+			},
+			0
+		);
+
+		return Math.round( recurringSubtotal + taxAmount );
+	}
+
+	/**
+	 * Retrieves the recurring total without a discount.
+	 *
+	 * @since 4.4.5
+	 *
+	 * @return {number} Cart recurring total.
+	 */
+	getRecurringNoDiscountTotal() {
+		const recurring = this.getLineItem( 'base' );
+		const recurringSubtotal =
+			recurring.getUnitPrice() * recurring.getQuantity();
+
+		const taxRates = this.getTaxRates();
+		const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
+
+		const inclusiveTaxAmount = Math.round(
+			recurringSubtotal - recurringSubtotal / ( 1 + taxRate )
+		);
+
+		const postInclusiveTaxAmount = Math.round(
+			recurringSubtotal - inclusiveTaxAmount
+		);
+		const taxAmount = taxRates.reduce(
+			( tax, { percentage, calculation } ) => {
+				if ( 'inclusive' === calculation ) {
+					return tax;
+				}
+
+				return ( tax += Math.round(
+					postInclusiveTaxAmount * ( percentage / 100 )
+				) );
+			},
+			0
+		);
+
+		return Math.round( recurringSubtotal + taxAmount );
+	}
+
+	/**
+	 * Retrieves the recurring amount for the next invoice.
+	 *
+	 * @since 4.4.5
+	 *
+	 * @return {number} Cart reucurring total due today.
+	 */
+	getNextInvoiceTotal() {
+		const recurring = this.getLineItem( 'base' );
+		const coupon = this.getCoupon();
+		const {
+			percent_off: couponPercentOff,
+			amount_off: couponAmountOff,
+			duration: couponDuration,
+		} = coupon;
+
+		let recurringSubtotal =
+			recurring.getUnitPrice() * recurring.getQuantity();
+
+		// Calculate the discount for the next invoice.
+		// Cannot use getDiscount() because it discounts off the amount due today.
+		if ( coupon && couponDuration !== 'once' ) {
+			let discount = 0;
+
+			if ( couponPercentOff ) {
+				discount += Math.round(
+					recurringSubtotal * ( couponPercentOff / 100 )
+				);
+			} else if ( couponAmountOff ) {
+				discount += couponAmountOff;
+			}
+
+			recurringSubtotal = Math.round( recurringSubtotal - discount );
+		}
 
 		const taxRates = this.getTaxRates();
 		const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
@@ -501,5 +629,18 @@ export const Cart = class Cart {
 		this.items.push( lineitem );
 
 		return lineitem;
+	}
+
+	/**
+	 * Determines if the cart has a free trial item.
+	 *
+	 * @since 4.4.5
+	 */
+	hasFreeTrial() {
+		return (
+			this.getLineItems().filter( ( lineItem ) =>
+				lineItem.hasFreeTrial()
+			).length > 0
+		);
 	}
 };

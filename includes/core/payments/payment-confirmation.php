@@ -125,6 +125,22 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 		$payment_confirmation_data['paymentintents'] = $paymentintents->data;
 	}
 
+	// Retrieves any SetupIntents linked to the customer.
+	$setupintents = API\SetupIntents\all(
+		array(
+			'customer' => $customer->id,
+			'limit'    => 1,
+			'expand'   => array(
+				'data.payment_method',
+			),
+		),
+		$form->get_api_request_args()
+	);
+
+	if ( $setupintents ) {
+		$payment_confirmation_data['setupintents'] = $setupintents->data;
+	}
+
 	/**
 	 * Filters the payment confirmation data.
 	 *

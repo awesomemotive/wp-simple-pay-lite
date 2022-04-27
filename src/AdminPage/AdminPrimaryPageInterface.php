@@ -33,15 +33,4 @@ interface AdminPrimaryPageInterface extends AdminPageInterface {
 	 */
 	public function get_icon();
 
-	/**
-	 * Returns the menu position.
-	 *
-	 * @link https://developer.wordpress.org/reference/functions/add_menu_page/#menu-structure
-	 *
-	 * @since 4.4.0
-	 *
-	 * @return int
-	 */
-	public function get_position();
-
 }

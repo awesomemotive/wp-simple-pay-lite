@@ -63,6 +63,10 @@ abstract class AbstractLicense implements LicenseInterface {
 			return null;
 		}
 
+		if ( defined( 'SIMPLE_PAY_LICENSE_KEY' ) ) {
+			return SIMPLE_PAY_LICENSE_KEY;
+		}
+
 		/** @var string */
 		return get_option( 'simpay_license_key', '' );
 	}

@@ -43,3 +43,25 @@ function create( $setupintent_args = array(), $api_request_args = array() ) {
 
 	return $setupintent;
 }
+
+/**
+ * Retrieves SetupIntents.
+ *
+ * @since 3.8.0
+ *
+ * @param array $args Query arguments.
+ * @param array $api_request_args {
+ *   Additional request arguments to send to the Stripe API when making a request.
+ *
+ *   @type string $api_key API Secret Key to use.
+ * }
+ * @return object
+ */
+function all( $args = array(), $api_request_args = array() ) {
+	return Stripe_API::request(
+		'SetupIntent',
+		'all',
+		$args,
+		$api_request_args
+	);
+}

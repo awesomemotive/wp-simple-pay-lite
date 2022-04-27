@@ -164,84 +164,88 @@
 	}
 }
 
-.post-type-simple-pay .simpay-settings-upgrade {
-	padding: 25px 20px 30px;
-	position: relative;
+.simple-pay_page_simpay_settings,
+.post-type-simple-pay {
 
-	&__inner {
-		text-align: center;
-		max-width: 750px;
-		margin: 0 auto;
-	}
+	.simpay-settings-upgrade {
+		padding: 25px 20px 30px;
+		position: relative;
 
-	h3,
-	h4 {
-		line-height: 1;
-		margin: 1rem 0;
-	}
-
-	h4 {
-		color: #428bca;
-		font-size: 18px;
-	}
-
-	h3 {
-		font-size: 26px;
-	}
-
-	ul {
-		max-width: 550px;
-		margin: 25px auto 13px;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	li {
-		font-size: 15px;
-		text-align: center;
-		margin-bottom: 12px;
-		width: 100%;
-
-		@media screen and (min-width: 782px) {
-			text-align: left;
-			width: 50%;
+		&__inner {
+			text-align: center;
+			max-width: 750px;
+			margin: 0 auto;
 		}
-	}
 
-	.button.button-large {
-		font-size: 17px;
-		line-height: 30px;
-		padding: 10px 20px;
-	}
+		h3,
+		h4 {
+			line-height: 1;
+			margin: 1rem 0;
+		}
 
-	small {
-		color: #666;
-		margin: 15px 0 0;
-		display: block;
-	}
+		h4 {
+			color: #428bca;
+			font-size: 18px;
+		}
 
-	.dashicons {
-		color: #428bca;
-	}
+		h3 {
+			font-size: 26px;
+		}
 
-	.button-link {
-		position: absolute;
-		top: 0;
-		right: 0;
-		font-size: 20px;
-		color: #666;
-		font-weight: bold;
-		text-decoration: none;
-		margin-left: 5px;
-		padding: 6px 10px;
-		z-index: 2;
+		ul {
+			max-width: 550px;
+			margin: 25px auto 13px;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
 
-		&:hover,
-		&:active,
-		&:focus {
+		li {
+			font-size: 15px;
+			text-align: center;
+			margin-bottom: 12px;
+			width: 100%;
+
+			@media screen and (min-width: 782px) {
+				text-align: left;
+				width: 50%;
+			}
+		}
+
+		.button.button-large {
+			font-size: 17px;
+			line-height: 30px;
+			padding: 10px 20px;
+		}
+
+		small {
 			color: #666;
+			margin: 15px 0 0;
+			display: block;
+		}
+
+		.dashicons {
+			color: #428bca;
+		}
+
+		.button-link {
+			position: absolute;
+			top: 0;
+			right: 0;
+			font-size: 20px;
+			color: #666;
+			font-weight: bold;
 			text-decoration: none;
+			margin-left: 5px;
+			padding: 6px 10px;
+			z-index: 2;
+
+			&:hover,
+			&:active,
+			&:focus {
+				color: #666;
+				text-decoration: none;
+			}
 		}
 	}
 }
@@ -1133,19 +1137,15 @@ select.simpay-currency-symbol {
 /**
  * Screen Options
  */
-.post-php.post-type-simple-pay,
-.post-new-php.post-type-simple-pay {
+.post-new-php,
+.post-php,
+.edit-php {
 
-	#slugdiv,
-	label[for="slugdiv-hide"] {
-		display: none;
-	}
-}
+	&.post-type-simple-pay {
 
-.edit-php.post-type-simple-pay .metabox-prefs {
-
-	label:first-of-type {
-		display: none;
+		#screen-meta-links {
+			display: none;
+		}
 	}
 }
 
@@ -1162,6 +1162,7 @@ select.simpay-currency-symbol {
 	&__title {
 		display: flex;
 		align-items: center;
+		float: left;
 	}
 
 	&__logo {
@@ -1174,6 +1175,50 @@ select.simpay-currency-symbol {
 		font-size: 23px;
 		font-weight: 400;
 		margin: 0 15px;
+	}
+
+	&__actions {
+		float: right;
+		margin-top: 4px;
+	}
+
+	&__actions-button {
+		cursor: pointer;
+		margin-left: 10px;
+		padding: 10px;
+		width: 40px;
+		height: 40px;
+		background-color: #f3f4f5;
+		border-radius: 50%;
+		border: 0;
+		box-shadow: none;
+		position: relative;
+		transition: background-color 0.2s ease;
+
+		&:hover {
+			background-color: #e5e5e5;
+		}
+
+		&:active,
+		&:focus {
+			box-shadow: 0 0 0 2px var(--wp-admin-theme-color);
+		}
+	}
+
+	&__actions-button-count {
+		font-weight: 600;
+		font-size: 10px;
+		line-height: 16px;
+		color: #fff;
+		margin: 0;
+		background-color: #df2a4a;
+		border-radius: 100%;
+		width: 16px;
+		height: 16px;
+		position: absolute;
+		top: -8px;
+		left: 50%;
+		margin-left: -8px;
 	}
 
 	.wp-heading-inline {

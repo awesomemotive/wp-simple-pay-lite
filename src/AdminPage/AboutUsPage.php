@@ -26,6 +26,13 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 	/**
 	 * {@inheritdoc}
 	 */
+	public function get_position() {
+		return 99;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_capability_requirement() {
 		return 'manage_options';
 	}

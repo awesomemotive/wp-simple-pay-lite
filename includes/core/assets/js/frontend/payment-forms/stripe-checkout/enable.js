@@ -24,13 +24,13 @@ function enable( paymentForm ) {
 
 	submitButtonEl.prop( 'disabled', false ).removeClass( 'simpay-disabled' );
 
-	if ( 0 === cart.getTotal() ) {
+	if ( 0 === cart.getTotalDueToday() ) {
 		submitButtonEl.find( 'span' ).text( paymentButtonTrialText );
 	} else {
 		const formatted = formatCurrency(
 			cart.isZeroDecimal()
-				? cart.getTotal()
-				: convertToDollars( cart.getTotal() ),
+				? cart.getTotalDueToday()
+				: convertToDollars( cart.getTotalDueToday() ),
 			true,
 			cart.getCurrencySymbol(),
 			cart.isZeroDecimal()

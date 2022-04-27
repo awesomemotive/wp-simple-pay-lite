@@ -1,6 +1,5 @@
 export * from './api-request.js';
 
-export * as charges from './charges.js';
 export * as customers from './customers.js';
 export * as paymentintents from './paymentintents.js';
 export * as sessions from './sessions.js';

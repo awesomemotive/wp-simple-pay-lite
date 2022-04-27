@@ -34,13 +34,12 @@ class LicenseServiceProvider extends AbstractPluginServiceProvider implements Bo
 	 * {@inheritdoc}
 	 */
 	public function get_subscribers() {
-		return array();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function register() {
+		return array(
+			'license-validator-subscriber',
+			'license-management-subscriber',
+			'license-setting-susbcriber',
+			'license-notification-subscriber',
+		);
 	}
 
 	/**
@@ -61,6 +60,42 @@ class LicenseServiceProvider extends AbstractPluginServiceProvider implements Bo
 				array( $this->container->get( 'license' ) )
 			);
 		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function register() {
+		$container = $this->getContainer();
+
+		// Activate/deactivate helper.
+		$container->share( 'license-manager', LicenseManager::class );
+
+		// Daily license check.
+		$container->share(
+			'license-validator-subscriber',
+			LicenseValidatorSubscriber::class
+		)
+			->withArgument( $container->get( 'license-manager' ) );
+
+		// AJAX activate/deactivate subscriber.
+		$container->share(
+			'license-management-subscriber',
+			LicenseManagementSubscriber::class
+		)
+			->withArgument( $container->get( 'license-manager' ) );
+
+		// Setting UI subscriber.
+		$container->share(
+			'license-setting-susbcriber',
+			LicenseSettingSubscriber::class
+		);
+
+		// Notification inbox subscriber.
+		$container->share(
+			'license-notification-subscriber',
+			LicenseNotificationSubscriber::class
+		);
 	}
 
 	/**

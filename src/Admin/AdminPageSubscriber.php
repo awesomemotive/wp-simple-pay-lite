@@ -95,7 +95,8 @@ class AdminPageSubscriber implements SubscriberInterface {
 					$page->get_menu_title(),
 					$page->get_capability_requirement(),
 					$page->get_page_slug(),
-					array( $page, 'render' )
+					array( $page, 'render' ),
+					$page->get_position()
 				);
 			}
 		}

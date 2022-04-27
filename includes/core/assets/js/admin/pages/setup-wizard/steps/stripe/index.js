@@ -38,10 +38,17 @@ const { stripeConnectUrl } = simpaySetupWizard;
 export function Stripe( { goNext, goPrev, hasPrev } ) {
 	const [ isConnecting, setIsConnecting ] = useState( false );
 	const [ isRedirecting, setIsRedirecting ] = useState( false );
-	const isConnectingFlag = getQueryArg(
+
+	const isConnectedFlag = getQueryArg(
 		window.location.href,
 		'stripe-is-connected'
 	);
+
+	const isNotConnectedFlag = getQueryArg(
+		window.location.href,
+		'wpsp_gateway_connect_error'
+	);
+
 	const toFocus = useRef();
 
 	useLayoutEffect( () => {
@@ -55,7 +62,7 @@ export function Stripe( { goNext, goPrev, hasPrev } ) {
 	const { createSuccessNotice } = useDispatch( 'core/notices' );
 
 	useEffect( () => {
-		if ( ! isConnectingFlag ) {
+		if ( ! isConnectedFlag || isNotConnectedFlag ) {
 			return;
 		}
 
@@ -78,7 +85,23 @@ export function Stripe( { goNext, goPrev, hasPrev } ) {
 		return () => {
 			clearTimeout( goNextTimeout );
 		};
-	}, [ isConnectingFlag ] );
+	}, [ isConnectedFlag ] );
+
+	useEffect( () => {
+		if ( ! isNotConnectedFlag ) {
+			return;
+		}
+
+		createSuccessNotice(
+			__(
+				'Unable to connect to Stripe. Please try again.',
+				'simple-pay'
+			),
+			{
+				type: 'snackbar',
+			}
+		);
+	}, [ isNotConnectedFlag ] );
 
 	return (
 		<>

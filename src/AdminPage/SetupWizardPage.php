@@ -27,6 +27,13 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 	/**
 	 * {@inheritdoc}
 	 */
+	public function get_position() {
+		return 99;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_capability_requirement() {
 		return 'manage_options';
 	}

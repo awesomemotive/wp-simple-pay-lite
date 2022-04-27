@@ -31,28 +31,9 @@ use SimplePay\Core\Utils;
 
 	<p class="simpay-landing-zone__subtitle">
 		<?php
-		echo wp_kses(
-			sprintf(
-				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-				__(
-					'Remind customers about upcoming invoices and give them an opportunity to update their payment method on file or cancel their subscription. Supports both on-site management or the %1$sStripe Customer portal%2$s.',
-					'stripe'
-				),
-				'<a href="https://stripe.com/blog/billing-customer-portal" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
-				Utils\get_external_link_markup() . '</a>'
-			),
-			array(
-				'sup'  => array(),
-				'a'    => array(
-					'href'   => true,
-					'class'  => true,
-					'target' => true,
-					'rel'    => true,
-				),
-				'span' => array(
-					'class' => 'screen-reader-text',
-				),
-			)
+		esc_html_e(
+			'Remind customers about upcoming invoices and give them an opportunity to update their payment method on file or cancel their subscription. Supports both on-site management or the Stripe Customer portal.',
+			'stripe'
 		);
 		?>
 	</p>

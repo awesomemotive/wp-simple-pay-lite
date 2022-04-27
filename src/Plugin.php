@@ -11,6 +11,7 @@
 
 namespace SimplePay\Core;
 
+use Exception;
 use SimplePay\Core\EventManagement\EventManager;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 
@@ -56,6 +57,15 @@ final class Plugin {
 	 * @return void
 	 */
 	public function load() {
+		// Load Action Scheduler before plugins loaded.
+		// https://actionscheduler.org/usage/#loading-action-scheduler
+		if (
+			! defined( 'SIMPAY_SCHEDULER_WP_CRON' ) ||
+			false === SIMPAY_SCHEDULER_WP_CRON
+		) {
+			require_once dirname( $this->file ) . '/lib/woocommerce/action-scheduler/action-scheduler.php';
+		}
+
 		// Run slightly early to gain access to legacy registries.
 		add_action( 'plugins_loaded', array( $this, 'register' ), 5 );
 	}
@@ -77,6 +87,29 @@ final class Plugin {
 		$this->container->share(
 			'event-manager',
 			EventManagement\EventManager::class
+		);
+
+		// Scheduler.
+		$this->container->share(
+			'scheduler',
+			function() {
+				$events = $this->container->get( 'event-manager' );
+
+				if ( ! $events instanceof EventManager ) {
+					return;
+				}
+
+				// Allow fallback to default WordPress cron.
+				// @todo abstract as a more robust factory?
+				if (
+					defined( 'SIMPAY_SCHEDULER_WP_CRON' ) &&
+					true === SIMPAY_SCHEDULER_WP_CRON
+				) {
+					return new Scheduler\WpCronScheduler( $events );
+				}
+
+				return new Scheduler\ActionScheduler;
+			}
 		);
 
 		return $this->container;
@@ -135,10 +168,14 @@ final class Plugin {
 			$subscribers = $service_provider->get_subscribers();
 
 			foreach ( $subscribers as $subscriber_id ) {
-				$subscriber = $this->container->get( $subscriber_id );
+				try {
+					$subscriber = $this->container->get( $subscriber_id );
 
-				if ( $subscriber instanceof SubscriberInterface ) {
-					$events->add_subscriber( $subscriber );
+					if ( $subscriber instanceof SubscriberInterface ) {
+						$events->add_subscriber( $subscriber );
+					}
+				} catch ( Exception $e ) {
+					// Do not subscribe.
 				}
 			}
 
@@ -163,15 +200,21 @@ final class Plugin {
 		global $wp_version;
 
 		$service_providers = array(
+			new AdminBar\AdminBarServiceProvider,
 			new FormPreview\FormPreviewServiceProvider,
-			new License\LicenseServiceProvider,
 			new Integration\IntegrationServiceProvider,
+			new License\LicenseServiceProvider,
+			new RestApi\RestApiServiceProvider,
 			new StripeConnect\StripeConnectServiceProvider,
 			new Webhook\WebhookServiceProvider,
 		);
 
 		if ( version_compare( $wp_version, '5.6', '>=' ) ) {
 			$service_providers[] = new Block\BlockServiceProvider;
+		}
+
+		if ( version_compare( $wp_version, '5.7', '>=' ) ) {
+			$service_providers[] = new NotificationInbox\NotificationInboxServiceProvider;
 		}
 
 		if ( is_admin() ) {

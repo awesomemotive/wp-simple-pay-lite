@@ -5,7 +5,7 @@
  * @package     Database
  * @subpackage  Table
  * @copyright   Copyright (c) 2021
- * @license     https://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @license     https://opensource.org/licenses/MIT MIT
  * @since       1.0.0
  */
 namespace SimplePay\Vendor\BerlinDB\Database;
@@ -159,6 +159,24 @@ abstract class Table extends Base {
 			$this->maybe_upgrade();
 		}
 	}
+
+	/**
+ 	 * Compatibility for clone() method for PHP versions less than 7.0.
+ 	 *
+ 	 * See: https://github.com/sugarcalendar/core/issues/105
+ 	 *
+ 	 * This shim will be removed at a later date.
+ 	 *
+ 	 * @since 2.0.20
+ 	 *
+ 	 * @param string $function
+ 	 * @param array  $args
+ 	 */
+ 	public function __call( $function = '', $args = array() ) {
+ 		if ( 'clone' === $function ) {
+ 			call_user_func_array( array( $this, '_clone' ), $args );
+ 		}
+ 	}
 
 	/** Abstract **************************************************************/
 
