@@ -297,6 +297,13 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
+= Stripe Payment Forms v4.4.6 - June X, 2022 =
+
+* New: Dashboard Widget Report - view transaction amounts from the last 7 or 30 days.
+* New: Introduce "Help" panel. Quickly find documentation or request support.
+* Fix: Display relevant Stripe API error when saving payment forms.
+* Dev: Initialize `stripe.js` with Stripe API version.
+
 = Stripe Payment Forms v4.4.5 - April 27, 2022 =
 
 * New: Stay up to date with WP Simple Pay via the notification inbox.
