@@ -11,7 +11,11 @@
 
 namespace SimplePay\Core\Transaction;
 
+use Exception;
 use SimplePay\Core\EventManagement\SubscriberInterface;
+use SimplePay\Core\License\LicenseAwareInterface;
+use SimplePay\Core\License\LicenseAwareTrait;
+use SimplePay\Core\Payments\Stripe_Checkout\Session;
 use SimplePay\Core\StripeConnect\ApplicationFee;
 use stdClass;
 
@@ -20,7 +24,9 @@ use stdClass;
  *
  * @since 4.4.6
  */
-class TransactionObserver implements SubscriberInterface {
+class TransactionObserver implements SubscriberInterface, LicenseAwareInterface {
+
+	use LicenseAwareTrait;
 
 	/**
 	 * Transaction repository.
@@ -58,7 +64,7 @@ class TransactionObserver implements SubscriberInterface {
 	 * {@inheritdoc}
 	 */
 	public function get_subscribed_events() {
-		return array(
+		$observe = array(
 			// Initial one time payment.
 			'simpay_after_paymentintent_from_payment_form_request'    =>
 				array( 'add_on_payment_intent', 10, 4 ),
@@ -82,6 +88,14 @@ class TransactionObserver implements SubscriberInterface {
 					array( 'update_on_invoice', 10, 3 ),
 				),
 		);
+
+		// Update Checkout Session in Lite when viewing confirmation.
+		if ( true === $this->license->is_lite() ) {
+			$observe['_simpay_payment_confirmation'] =
+				array( 'update_on_checkout_session_lite' );
+		}
+
+		return $observe;
 	}
 
 	/**
@@ -447,6 +461,97 @@ class TransactionObserver implements SubscriberInterface {
 				'application_fee' => $this->application_fee->has_application_fee(),
 			)
 		);
+	}
+
+	/**
+	 * Updates a transaction's totals when viewing the [simpay_payment_receipt]
+	 * shortcode in Lite, which cannot rely on webhooks.
+	 *
+	 * @since 4.4.6
+	 *
+	 * @param array<string, mixed> $payment_confirmation_data Payment confirmation data.
+	 * @return void
+	 */
+	public function update_on_checkout_session_lite( $payment_confirmation_data ) {
+		// Session ID is not available, do nothing.
+		if ( ! isset( $_GET['session_id' ] ) ) {
+			return;
+		}
+
+		$session_id  = sanitize_text_field( $_GET['session_id'] );
+		$transaction = $this->transactions->get_by_object_id( $session_id );
+
+		// Transaction cannot be found, do nothing.
+		if ( ! $transaction instanceof Transaction ) {
+			return;
+		}
+
+		/** @var \SimplePay\Core\Abstracts\Form|false $form */
+		$form = $payment_confirmation_data['form'];
+
+		if ( false === $form ) {
+			return;
+		}
+
+		try {
+			$session = Session\retrieve(
+				array(
+					'id'     => $session_id,
+					'expand' => array(
+						'customer',
+						'payment_intent',
+					)
+				),
+				$form->get_api_request_args()
+			);
+
+			/** @var \SimplePay\Vendor\Stripe\Customer $customer */
+			$customer       = $session->customer;
+			/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
+			$payment_intent = $session->payment_intent;
+
+			$object    = 'payment_intent';
+			$object_id = $payment_intent->id;
+
+			/**
+			 * @var \stdClass $default_totals
+			 * @property int $amount_shipping
+			 * @property int $amount_discount
+			 * @property int $amount_tax
+			 */
+			$default_totals                  = new stdClass;
+			$default_totals->amount_shipping = 0;
+			$default_totals->amount_discount = 0;
+			$default_totals->amount_tax      = 0;
+
+			/**
+			 * @var \stdClass $totals
+			 * @property int $amount_shipping
+			 * @property int $amount_discount
+			 * @property int $amount_tax
+			 */
+			$totals = null !== $session->total_details
+				? $session->total_details
+				: $default_totals;
+
+			$this->transactions->update(
+				$transaction->id,
+				array(
+					'object'          => $object,
+					'object_id'       => $object_id,
+					'amount_total'    => $session->amount_total,
+					'amount_subtotal' => $session->amount_subtotal,
+					'amount_shipping' => $totals->amount_shipping,
+					'amount_discount' => $totals->amount_discount,
+					'amount_tax'      => $totals->amount_tax,
+					'email'           => $customer->email,
+					'customer_id'     => $customer->id,
+					'status'          => 'succeeded',
+				)
+			);
+		} catch ( Exception $e ) {
+			// Do nothing if Session cannot be found.
+		}
 	}
 
 	/**
