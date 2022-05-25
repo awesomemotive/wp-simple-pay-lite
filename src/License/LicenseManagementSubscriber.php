@@ -157,7 +157,10 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 			wp_send_json_error( $unknown_error );
 		}
 
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'simpay-manage-license' ) ) {
+		if (
+			! isset( $_POST['nonce'] ) ||
+			! wp_verify_nonce( $_POST['nonce'], 'simpay-manage-license' )
+		) {
 			wp_send_json_error( $unknown_error );
 		}
 
@@ -173,21 +176,21 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 		if ( true === $license->is_valid() ) {
 			wp_send_json_success(
 				array(
-					'message'      => esc_html__(
+					'message' => esc_html__(
 						'License activated.',
 						'stripe'
 					),
-					'license_data' => $license,
+					'license' => $license->to_array(),
 				)
 			);
 		} else {
 			wp_send_json_error(
 				array(
-					'message'      => esc_html__(
+					'message' => esc_html__(
 						'Unable to activate license.',
 						'stripe'
 					),
-					'license_data' => $license,
+					'license' => $license->to_array(),
 				)
 			);
 		}
@@ -212,7 +215,10 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 			wp_send_json_error( $unknown_error );
 		}
 
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'simpay-manage-license' ) ) {
+		if (
+			! isset( $_POST['nonce'] ) ||
+			! wp_verify_nonce( $_POST['nonce'], 'simpay-manage-license' )
+		) {
 			wp_send_json_error( $unknown_error );
 		}
 
@@ -228,21 +234,21 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 		if ( false === $license->is_valid() ) {
 			wp_send_json_success(
 				array(
-					'message'      => esc_html__(
-						'License deactivate.',
+					'message' => esc_html__(
+						'License deactivated.',
 						'stripe'
 					),
-					'license_data' => $license,
+					'license' => $license->to_array(),
 				)
 			);
 		} else {
 			wp_send_json_error(
 				array(
-					'message'      => esc_html__(
+					'message' => esc_html__(
 						'Unable to deactivate license.',
 						'stripe'
 					),
-					'license_data' => $license,
+					'license' => $license->to_array(),
 				)
 			);
 		}

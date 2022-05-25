@@ -28,6 +28,10 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 	 * {@inheritdoc}
 	 */
 	public function get_subscribed_events() {
+		if ( false === $this->is_license_valid() ) {
+			return array();
+		}
+
 		return array(
 			'admin_init'    => 'maybe_restrict_template',
 			'edit_form_top' => 'maybe_show_template_explorer',
@@ -179,9 +183,9 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 				'upgradeUrl'          => simpay_ga_url(
 					(
 						$is_lite
-							? 'https://wpsimplepay.com/lite-vs-pro'
+							? 'https://wpsimplepay.com/lite-vs-pro/'
 							// add_query_arg escapes this, which doesn't play nicely on the client.
-							: 'https://wpsimplepay.com/pricing?license_key=' . $this->license->get_key()
+							: 'https://wpsimplepay.com/pricing/?license_key=' . $this->license->get_key()
 					),
 					'template-explorer',
 					$is_lite ? 'Upgrade to Pro' : 'Upgrade Now'
@@ -256,6 +260,34 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 			10,
 			2
 		);
+	}
+
+	/**
+	 * Determines if the current license is valid and the Templat Explorer can be used.
+	 *
+	 * @since 4.4.6
+	 *
+	 * @return bool
+	 */
+	private function is_license_valid() {
+		if ( $this->license->is_lite() ) {
+			return true;
+		}
+
+		if ( empty( $this->license->get_key() ) ) {
+			return false;
+		}
+
+		switch ( $this->license->get_status() ) {
+			case 'expired':
+				if ( ! $this->license->is_in_grace_period() ) {
+					return false;
+				}
+			case 'invalid':
+				return false;
+		}
+
+		return true;
 	}
 
 }

@@ -53,7 +53,9 @@ class StripeConnectServiceProvider extends AbstractPluginServiceProvider {
 		$container->share(
 			'stripe-connect-application-fee',
 			ApplicationFee::class
-		);
+		)
+			->withArgument( $container->get( 'scheduler' ) )
+			->withArgument( $container->get( 'transaction-repository' ) );
 	}
 
 }

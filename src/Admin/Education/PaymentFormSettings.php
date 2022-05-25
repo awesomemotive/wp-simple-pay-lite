@@ -71,12 +71,20 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'form-settings-form-type',
-			'Create On-Site Payment Forms'
+		$utm_medium            = 'form-settings-form-type';
+		$utm_content           = 'Create On-Site Payment Forms';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-type-settings.php'; // @phpstan-ignore-line
@@ -101,12 +109,20 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'form-settings-payment',
-			'Multiple Price Options & Subscriptions'
+		$utm_medium            = 'form-settings-payment';
+		$utm_content           = 'Multiple Price Options & Subscriptions';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-payment-settings.php'; // @phpstan-ignore-line
@@ -131,20 +147,20 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'form-settings-subscription',
-			'Need your customers to sign up for recurring payments?'
+		$utm_medium            = 'form-settings-subscription';
+		$utm_content           = 'Need your customers to sign up for recurring payments?';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
-
-		$activate_url = Settings\get_url(
-			array(
-				'section' => 'license',
-			)
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
 		);
-
-		$license_key = get_option( 'simpay_license_key', '' );
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-subscription-settings.php'; // @phpstan-ignore-line
@@ -158,13 +174,22 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 	 * @return void
 	 */
 	public function form_fields() {
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'form-settings-fields',
-			'Custom Fields + Custom Data'
+
+		$utm_medium            = 'form-settings-fields';
+		$utm_content           = 'Custom Fields + Custom Data';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
-		$field_groups    = Edit_Form\get_custom_fields_grouped();
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
+		$field_groups          = Edit_Form\get_custom_fields_grouped();
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-form-field-settings.php'; // @phpstan-ignore-line
@@ -189,12 +214,20 @@ class PaymentFormSettings extends AbstractProductEducation implements Subscriber
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'form-settings-payment-methods',
-			'Offer Multiple Payment Methods (Stripe Checkout)'
+		$utm_medium            = 'form-settings-payment-methods';
+		$utm_content           = 'Offer Multiple Payment Methods (Stripe Checkout)';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
 
 		$icons = array(
 			'<svg height="30" width="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h32v32H0z" fill="#e3e8ee"></path><path d="M26 11H6v-.938C6 9.2 6.56 8.5 7.25 8.5h17.5c.69 0 1.25.7 1.25 1.563zm0 3.125v8.125c0 .69-.56 1.25-1.25 1.25H7.25c-.69 0-1.25-.56-1.25-1.25v-8.125zM11 18.5a1.25 1.25 0 0 0 0 2.5h1.25a1.25 1.25 0 0 0 0-2.5z" fill="#697386"></path></g></svg>',

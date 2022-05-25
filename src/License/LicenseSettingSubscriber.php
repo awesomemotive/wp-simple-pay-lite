@@ -14,9 +14,6 @@
 namespace SimplePay\Core\License;
 
 use SimplePay\Core\EventManagement\SubscriberInterface;
-use SimplePay\Core\NotificationInbox\Notification;
-use SimplePay\Core\NotificationInbox\NotificationAwareInterface;
-use SimplePay\Core\NotificationInbox\NotificationAwareTrait;
 use SimplePay\Core\Settings;
 
 /**
@@ -24,10 +21,9 @@ use SimplePay\Core\Settings;
  *
  * @since 4.4.5
  */
-class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInterface, NotificationAwareInterface {
+class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInterface {
 
 	use LicenseAwareTrait;
-	use NotificationAwareTrait;
 
 	/**
 	 * {@inheritdoc}

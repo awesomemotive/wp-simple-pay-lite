@@ -179,20 +179,6 @@ function setup_description() {
 		</a>
 	</p>
 
-	<p class="simpay-stripe-connect-help description">
-		<span class="dashicons dashicons-editor-help"></span>
-		<?php
-		echo wp_kses_post(
-			sprintf(
-				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-				__( '%1$sView our reCAPTCHA documentation%2$s  to learn more and for step-by-step instructions.', 'stripe' ),
-				'<a href="' . simpay_docs_link( 'View our reCAPTCHA documentation', 'recaptcha', 'recaptcha-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
-				Utils\get_external_link_markup() . '</a>'
-			)
-		);
-		?>
-	</p>
-
 	<?php
 	// No keys are entered.
 	if ( ! has_keys() ) {

@@ -12,9 +12,9 @@
 namespace SimplePay\Core\License;
 
 use SimplePay\Core\EventManagement\SubscriberInterface;
-use SimplePay\Core\NotificationInbox\Notification;
 use SimplePay\Core\NotificationInbox\NotificationAwareInterface;
 use SimplePay\Core\NotificationInbox\NotificationAwareTrait;
+use SimplePay\Core\NotificationInbox\NotificationRepository;
 use SimplePay\Core\Settings;
 
 /**
@@ -35,11 +35,20 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 			return array();
 		}
 
+		// Alert via Notification Inbox if availble. Global admin notice is shown as well.
+		if ( ! $this->notifications instanceof NotificationRepository ) {
+			return array();
+		}
+
 		return array(
 			'admin_init'                            =>
-				'add_missing_license_notification',
+				array(
+					array( 'add_missing_license_notification' ),
+					array( 'add_expiring_license_notification' ),
+					array( 'add_expired_license_notification' )
+				),
 			'pre_update_option_simpay_license_data' =>
-				'dismiss_missing_license_notification',
+				'dismiss_license_notifications',
 		);
 	}
 
@@ -51,27 +60,28 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 	 * @return void
 	 */
 	public function add_missing_license_notification() {
+		// License key is not empty.
 		if ( ! empty( $this->license->get_key() ) ) {
 			return;
 		}
 
 		$this->notifications->restore(
 			array(
-				'type'           => 'info',
+				'type'           => 'error',
 				'source'         => 'internal',
 				'title'          => __(
-					'Activate WP Simple Pay Pro',
+					'WP Simple Pay Pro is Not Fully Activated!',
 					'stripe'
 				),
 				'slug'           => 'missing-license',
-				'content'        => __(
-					'Enter and activate your license key to enable automatic updates.',
+				'content'        => esc_html__(
+					'Add your WP Simple Pay Pro license key to start creating payment forms, enable automatic updates, and complete activation.',
 					'stripe'
 				),
 				'actions'        => array(
 					array(
 						'type' => 'primary',
-						'text' => __( 'Add License Key', 'stripe' ),
+						'text' => __( 'Complete Activation', 'stripe' ),
 						'url'  => Settings\get_url(
 							array(
 								'section'    => 'general',
@@ -89,29 +99,192 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 				'start'          => date( 'Y-m-d H:i:s', time() ),
 				'end'            => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
 				'is_dismissible' => false,
-			)
+			),
+			function() {
+				$this->notifications->dismiss( 'expired-license' );
+				$this->notifications->dismiss( 'expiring-license' );
+			}
 		);
 	}
 
 	/**
-	 * Dismisses the missing license notification when the license data is updated and valid.
+	 * Adds a notification to the inbox if a license is expiring.
 	 *
-	 * @since 4.4.5
+	 * @since 4.4.6
+	 *
+	 * @return void
+	 */
+	public function add_expiring_license_notification() {
+		// Empty license key, another notification is already showing.
+		if ( empty( $this->license->get_key() ) ) {
+			return;
+		}
+
+		// Expired license key, another notification is already showing.
+		if ( ! $this->license->is_valid() ) {
+			return;
+		}
+
+		// License is not set to expire.
+		if ( ! $this->license->is_expiring() ) {
+			return;
+		}
+
+		/** @var string $expiration */
+		$expiration = $this->license->get_expiration();
+
+		// Lifetime license, no need to show.
+		if ( 'lifetime' === $expiration ) {
+			return;
+		}
+
+		/** @var string $date_format */
+		$date_format = get_option( 'date_format', 'Y-m-d' );
+
+		$line1 = sprintf(
+			__(
+				'Your WP Simple Pay Pro license is set to expire on %s.',
+				'stripe'
+			),
+			(
+				'<strong style="color: #cc1818;">' .
+				date( $date_format, (int)  strtotime( $expiration ) ) .
+				'</strong>'
+			)
+		);
+
+		$line2 = esc_html__(
+			'An active license key is required to create and edit payment forms, enable automatic updates, and to keep WP Simple Pay Pro fully activated.',
+			'stripe'
+		);
+
+		$this->notifications->restore(
+			array(
+				'type'           => 'error',
+				'source'         => 'internal',
+				'slug'           => 'expiring-license',
+				'title'          => __(
+					'WP Simple Pay Pro is Expiring Soon!',
+					'stripe'
+				),
+				'content'        => $line1 . ' ' . $line2,
+				'actions'        => array(
+					array(
+						'type' => 'primary',
+						'text' => __( 'Renew License', 'stripe' ),
+						'url'  => 'https://wpsimplepay.com/my-account/licenses',
+					),
+					array(
+						'type' => 'secondary',
+						'text' => __( 'Learn More', 'stripe' ),
+						'url'  => 'https://docs.wpsimplepay.com/articles/activate-wp-simple-pay-pro-license/',
+					),
+				),
+				'conditions'     => array(),
+				'start'          => date( 'Y-m-d H:i:s', time() ),
+				'end'            => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
+				'is_dismissible' => false,
+			),
+			function() {
+				$this->notifications->dismiss( 'missing-license' );
+				$this->notifications->dismiss( 'expired-license' );
+			}
+		);
+	}
+
+	/**
+	 * Adds a notification to the inbox if a license is expired.
+	 *
+	 * @since 4.4.6
+	 *
+	 * @return void
+	 */
+	public function add_expired_license_notification() {
+		// License key is empty, another notification is already showing.
+		if ( empty( $this->license->get_key() ) ) {
+			return;
+		}
+
+		// License key is not expired, another notification is already showing.
+		if ( 'expired' !== $this->license->get_status() ) {
+			return;
+		}
+
+		/** @var string $expiration */
+		$expiration = $this->license->get_expiration();
+
+		if ( $this->license->is_in_grace_period() ) {
+			/** @var string $date_format */
+			$date_format = get_option( 'date_format', 'Y-m-d' );
+
+			$content = sprintf(
+				__(
+					'We have extended WP Simple Pay Pro functionality until %s, at which point functionality will become limited. Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality.',
+					'stripe'
+				),
+				date(
+					$date_format,
+					strtotime( $expiration ) + ( DAY_IN_SECONDS * 14 )
+				)
+			);
+		} else {
+			$content = __(
+				'Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality.',
+				'stripe'
+			);
+		}
+
+		$this->notifications->restore(
+			array(
+				'type'           => 'error',
+				'source'         => 'internal',
+				'title'          => __(
+					'[IMPORTANT] Your WP Simple Pay Pro License Has Expired!',
+					'stripe'
+				),
+				'slug'           => 'expired-license',
+				'content'        => $content,
+				'actions'        => array(
+					array(
+						'type' => 'primary',
+						'text' => __( 'Renew License', 'stripe' ),
+						'url'  => 'https://wpsimplepay.com/my-account/licenses/',
+					),
+					array(
+						'type' => 'secondary',
+						'text' => __( 'Learn More', 'stripe' ),
+						'url'  => 'https://docs.wpsimplepay.com/articles/activate-wp-simple-pay-pro-license/',
+					),
+				),
+				'conditions'     => array(),
+				'start'          => date( 'Y-m-d H:i:s', time() ),
+				'end'            => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
+				'is_dismissible' => false,
+			),
+			function() {
+				$this->notifications->dismiss( 'missing-license' );
+				$this->notifications->dismiss( 'expiring-license' );
+			}
+		);
+	}
+
+	/**
+	 * Dismisses all license notifications when the license data is updated.
+	 * Allows individual notifications to restore themselves on the next page load.
+	 *
+	 * @since 4.4.6
 	 *
 	 * @param \stdClass $value New license data.
 	 * @return \stdClass License data.
 	 */
-	public function dismiss_missing_license_notification( $value ) {
+	public function dismiss_license_notifications( $value ) {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return $value;
 		}
 
-		// Interacting with the license data object, not the License class.
-		if ( 'valid' !== $value->license ) {
-			return $value;
-		}
-
 		$this->notifications->dismiss( 'missing-license' );
+		$this->notifications->dismiss( 'expiring-license' );
+		$this->notifications->dismiss( 'expired-license' );
 
 		return $value;
 	}

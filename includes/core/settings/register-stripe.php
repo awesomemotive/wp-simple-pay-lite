@@ -156,16 +156,6 @@ function register_account_settings( $settings ) {
 						'</a></p>';
 					}
 
-					$html .= '<p class="simpay-stripe-connect-help description">';
-					$html .= '<span class="dashicons dashicons-editor-help"></span><span>';
-					$html .= sprintf(
-						/* translators: %1$s Opening anchor tag for Stripe Connect documentation, do not translate. %2$s Closing anchor tag, do not translate. */
-						__( 'Have questions about connecting with Stripe? %1$sView the Stripe Connect documentation%2$s', 'stripe' ),
-						'<a href="' . simpay_docs_link( 'View the Stripe Connect documentation', 'stripe-setup', 'stripe-account-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
-						Utils\get_external_link_markup() . '</a>'
-					);
-					$html .= '</span></p>';
-
 					// Only show buttons if we are managing keys, but none exist.
 					// Otherwise the fields are auto shown.
 					if ( simpay_can_site_manage_stripe_keys() ) {

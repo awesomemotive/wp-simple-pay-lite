@@ -33,8 +33,8 @@ function get_requirements_list() {
 	return array(
 		'wp'       => array(
 			'name'     => 'WordPress',
-			'requires' => '4.9.0',
-			'met'      => version_compare( get_bloginfo( 'version' ), '4.9.0', '>=' ),
+			'requires' => '5.2',
+			'met'      => version_compare( get_bloginfo( 'version' ), '5.2', '>=' ),
 		),
 		'php'      => array(
 			'name'     => 'PHP',

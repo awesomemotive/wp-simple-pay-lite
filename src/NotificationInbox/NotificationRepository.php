@@ -50,9 +50,10 @@ class NotificationRepository extends BerlinDbRepository {
 	 * @since 4.4.5
 	 *
 	 * @param array<mixed> $args Arguments to create the notification with.
+	 * @param null|callable $callback Callback if the notification is actually restored.
 	 * @return null|\SimplePay\Core\Model\ModelInterface
 	 */
-	public function restore( $args = array() ) {
+	public function restore( $args, $callback = null ) {
 		if ( empty( $args['slug'] ) || ! is_string( $args['slug'] ) ) {
 			return null;
 		}
@@ -62,10 +63,9 @@ class NotificationRepository extends BerlinDbRepository {
 		// Add a new one if it does not exist already.
 		if ( ! $notification instanceof Notification ) {
 			return $this->add( $args );
-		}
 
-		// Undismiss and update if previously dismissed.
-		if ( $notification instanceof Notification ) {
+			// Undismiss and update if previously dismissed.
+		} else {
 			if ( false === $notification->dismissed ) {
 				return $notification;
 			}
@@ -95,12 +95,42 @@ class NotificationRepository extends BerlinDbRepository {
 				)
 			);
 
+			if (
+				$notification instanceof Notification &&
+				is_callable( $callback )
+			) {
+				call_user_func( $callback, $notification );
+			}
+
 			return $notification;
 		}
 	}
 
 	/**
-	 * Update a notification.
+	 * Adds a notification.
+	 *
+	 * Converts array values to (JSON) strings to avoid a PHP notice in array_diff_assoc.
+	 * @link https://github.com/berlindb/core/blob/bdea8cb238b71248d714e9c46bd8596fdbb4c9e7/src/Database/Query.php#L1943
+	 * @link https://bugs.php.net/bug.php?id=62115
+	 *
+	 * @since 4.4.6
+	 *
+	 * @param array<mixed> $args Arguments to update the notification with.
+	 */
+	public function add( $args = array() ) {
+		if ( isset( $args['conditions'] ) && is_array( $args['conditions'] ) ) {
+			$args['conditions'] = wp_json_encode( $args['conditions'] );
+		}
+
+		if ( isset( $args['actions'] ) && is_array( $args['actions'] ) ) {
+			$args['actions'] = wp_json_encode( $args['actions'] );
+		}
+
+		return parent::add( $args );
+	}
+
+	/**
+	 * Updates a notification.
 	 *
 	 * Converts array values to (JSON) strings to avoid a PHP notice in array_diff_assoc.
 	 * @link https://github.com/berlindb/core/blob/bdea8cb238b71248d714e9c46bd8596fdbb4c9e7/src/Database/Query.php#L1943
@@ -112,11 +142,11 @@ class NotificationRepository extends BerlinDbRepository {
 	 * @param array<mixed> $args Arguments to update the notification with.
 	 */
 	public function update( $notification_id, $args = array() ) {
-		if ( isset( $args['conditions'] ) ) {
+		if ( isset( $args['conditions'] ) && is_array( $args['conditions'] ) ) {
 			$args['conditions'] = wp_json_encode( $args['conditions'] );
 		}
 
-		if ( isset( $args['actions'] ) ) {
+		if ( isset( $args['actions'] ) && is_array( $args['actions'] ) ) {
 			$args['actions'] = wp_json_encode( $args['actions'] );
 		}
 

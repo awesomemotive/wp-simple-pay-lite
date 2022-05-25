@@ -228,39 +228,39 @@ function onChangeRecurring( priceEl ) {
 	const recurringIntervalValue =
 		recurringInterval.options[ recurringInterval.selectedIndex ].value;
 
+	// Limit each interval to maximum 1 year (imposed by Stripe).
+	switch ( recurringIntervalValue ) {
+		case 'day':
+			if ( recurringIntervalCountValue > 365 ) {
+				recurringIntervalCount.value = 365;
+			}
+			break;
+		case 'week':
+			if ( recurringIntervalCountValue > 52 ) {
+				recurringIntervalCount.value = 52;
+			}
+			break;
+		case 'month':
+			if ( recurringIntervalCountValue > 12 ) {
+				recurringIntervalCount.value = 12;
+			}
+			break;
+		case 'year':
+			if ( recurringIntervalCountValue > 1 ) {
+				recurringIntervalCount.value = 1;
+			}
+			break;
+	}
+
 	// Update the recurring interval pluralization based on the count value.
 	const pluralizations = JSON.parse( recurringInterval.dataset.intervals );
 
 	[ ...recurringInterval.options ].forEach( ( { value }, i ) => {
 		recurringInterval.options[ i ].text =
-			recurringIntervalCountValue === 1
+			parseInt( recurringIntervalCount.value ) === 1
 				? pluralizations[ value ][ 0 ]
 				: pluralizations[ value ][ 1 ];
 	} );
-
-	// Limit each interval to maximum 5 years (imposed by Stripe).
-	switch ( recurringIntervalValue ) {
-		case 'day':
-			if ( recurringIntervalCountValue > 1825 ) {
-				recurringIntervalCount.value = 1825;
-			}
-			break;
-		case 'week':
-			if ( recurringIntervalCountValue > 260 ) {
-				recurringIntervalCount.value = 260;
-			}
-			break;
-		case 'month':
-			if ( recurringIntervalCountValue > 60 ) {
-				recurringIntervalCount.value = 60;
-			}
-			break;
-		case 'year':
-			if ( recurringIntervalCountValue > 5 ) {
-				recurringIntervalCount.value = 5;
-			}
-			break;
-	}
 }
 
 /**

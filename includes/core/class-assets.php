@@ -120,7 +120,7 @@ class Assets {
 					'wp-util',
 					'wp-api',
 					'wp-a11y',
-					( $has_wp_polyfill ? 'wp-polyfill' : 'simpay-polyfill' ),
+					'wp-polyfill',
 					'simpay-accounting',
 					'simpay-shared',
 				),

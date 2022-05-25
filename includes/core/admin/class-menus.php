@@ -92,7 +92,7 @@ class Menus {
 		if ( ! class_exists( 'SimplePay\Pro\SimplePayPro', false ) ) {
 			$links[] = sprintf(
 				'<a href="%s" target="_blank" rel="noopener noreferrer" class="simpay-upgrade-link">%s</a>',
-				simpay_ga_url( 'https://wpsimplepay.com/lite-vs-pro/', 'admin-menu' ),
+				simpay_pro_upgrade_url( 'admin-menu', 'Upgrade to Pro' ),
 				esc_html__( 'Upgrade to Pro', 'stripe' )
 			);
 		}

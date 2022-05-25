@@ -32,6 +32,17 @@ class Installation {
 
 		update_option( 'simpay_dismiss_ssl', false );
 
+		// Record installation time.
+		add_option( 'simpay_installed', time() );
+
+		// Record the start of the customer journey.
+		//
+		// This is separate from simpay_installed to ensure we can accurately
+		// calculate the length between the start of the journey and an achievement.
+		// Using simpay_installed would be innacurate as it was set when the plugin
+		// was updated to 4.4.1.
+		add_option( 'simpay_customer_journey_start', time() );
+
 		self::create_pages();
 
 		// Set activation redirect transient.

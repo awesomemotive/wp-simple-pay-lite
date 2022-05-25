@@ -23,9 +23,9 @@ interface LicenseAwareInterface {
 	 *
 	 * @since 4.1.1
 	 *
-	 * @param \SimplePay\Core\License\LicenseInterface $license License.
+	 * @param \SimplePay\Core\License\License $license License.
 	 * @return void
 	 */
-	public function set_license( LicenseInterface $license );
+	public function set_license( License $license );
 
 }

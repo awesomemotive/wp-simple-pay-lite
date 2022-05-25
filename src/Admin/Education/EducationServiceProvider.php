@@ -13,7 +13,7 @@ namespace SimplePay\Core\Admin\Education;
 
 use SimplePay\Core\AbstractPluginServiceProvider;
 use SimplePay\Core\DashboardWidget\ProductEducationDashboardWidget;
-use SimplePay\Core\License\LicenseInterface;
+use SimplePay\Core\License\License;
 
 /**
  * EducationServiceProvider class.
@@ -76,7 +76,7 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 
 		$license = $container->get( 'license' );
 
-		if ( $license instanceof LicenseInterface ) {
+		if ( $license instanceof License ) {
 			// Dashboard widget.
 			$widget = new ProductEducationDashboardWidget( $license );
 

@@ -11,7 +11,7 @@
 
 namespace SimplePay\Core\Admin\Education;
 
-use SimplePay\Core\License\LicenseInterface;
+use SimplePay\Core\License\License;
 
 /**
  * AbstractProductEducation abstract.
@@ -24,7 +24,7 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 	 * License.
 	 *
 	 * @since 4.4.0
-	 * @var \SimplePay\Core\License\LicenseInterface
+	 * @var \SimplePay\Core\License\License
 	 */
 	protected $license;
 
@@ -33,9 +33,9 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @param \SimplePay\Core\License\LicenseInterface $license Plugin license.
+	 * @param \SimplePay\Core\License\License $license Plugin license.
 	 */
-	public function __construct( LicenseInterface $license ) {
+	public function __construct( License $license ) {
 		$this->license = $license;
 	}
 
@@ -53,7 +53,7 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 		if ( true === $this->license->is_lite() ) {
 			$text = __( 'Upgrade to WP Simple Pay Pro', 'stripe' );
 		} else {
-			$text = __( 'Upgrade Now', 'stripe' );
+			$text = __( 'See Upgrade Options', 'stripe' );
 		}
 
 		return $text;
@@ -62,8 +62,72 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_upgrade_button_subtext() {
-		return __( 'Special Upgrade Offer - Save 50%', 'stripe' );
+	public function get_already_purchased_url( $utm_medium, $utm_content = '' ) {
+		return simpay_docs_link(
+			$utm_content,
+			$this->license->is_lite()
+				? 'upgrading-wp-simple-pay-lite-to-pro'
+				: 'activate-wp-simple-pay-pro-license',
+			$utm_medium,
+			true
+		);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function get_upgrade_button_subtext( $upgrade_url ) {
+		if ( true === $this->license->is_lite() ) {
+			return wp_kses(
+				sprintf(
+					/* translators: %1$s Opening bold tag, do not translate. %2$s Closing bold tag, do not translate. %3$s Opening underline tag, do not translate. %4$s Closing underline tag, do not translate. %5$s Opening anchor tag, do not translate. %6$s Closing anchor tag, do not translate. */
+					__(
+						'%1$sBonus%2$s: WP Simple Pay Lite users get %3$s50%% off%4$s regular price, automatically applied at checkout. %5$sUpgrade to Pro →%6$s',
+						'stripe'
+					),
+					'<strong>',
+					'</strong>',
+					'<u>',
+					'</u>',
+					'<a href="' . esc_url( $upgrade_url ) . '" rel="noopener noreferrer" target="_blank">',
+					'</a>'
+				),
+				array(
+					'strong' => array(),
+					'u'      => array(),
+					'a'      => array(
+						'href'   => true,
+						'target' => true,
+						'rel'    => true,
+					)
+				)
+			);
+		} else {
+			return wp_kses(
+				sprintf(
+					/* translators: %1$s Opening bold tag, do not translate. %2$s Closing bold tag, do not translate. %3$s Opening underline tag, do not translate. %4$s Closing underline tag, do not translate. %5$s Opening anchor tag, do not translate. %6$s Closing anchor tag, do not translate. */
+					__(
+						'%1$sBonus%2$s: WP Simple Pay Pro users get %3$s50%% off%4$s upgrade pricing, automatically applied at checkout. %5$sSee upgrade options →%6$s',
+						'stripe'
+					),
+					'<strong>',
+					'</strong>',
+					'<u>',
+					'</u>',
+					'<a href="' . esc_url( $upgrade_url ) . '" rel="noopener noreferrer" target="_blank">',
+					'</a>'
+				),
+				array(
+					'strong' => array(),
+					'u'      => array(),
+					'a'      => array(
+						'href'   => true,
+						'target' => true,
+						'rel'    => true,
+					)
+				)
+			);
+		}
 	}
 
 }

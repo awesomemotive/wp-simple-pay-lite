@@ -119,13 +119,20 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 			true
 		);
 
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'subscription-management-settings',
-			'Allow Customers to Manage Subscriptions'
+		$utm_medium            = 'subscription-management-settings';
+		$utm_content           = 'Allow Customers to Manage Subscriptions';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
-		$license         = $this->license;
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-customers-settings.php'; // @phpstan-ignore-line

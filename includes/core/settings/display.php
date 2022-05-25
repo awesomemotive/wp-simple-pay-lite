@@ -123,7 +123,7 @@ function secondary_nav( $current_subsection ) {
 			?>
 		<a
 			href="<?php echo esc_url( $url ); ?>"
-			class="simpay-settings-subsections__subsection <?php echo esc_attr( $active_class ); ?>"
+			class="simpay-settings-subsections__subsection simpay-settings-subsection-<?php echo esc_attr( $tab->id ); ?> <?php echo esc_attr( $active_class ); ?>"
 		>
 			<?php echo wp_kses_post( $tab->label ); ?>
 		</a>
@@ -172,6 +172,13 @@ function page() {
 			settings_errors();
 			primary_nav( $section );
 			secondary_nav( $subsection );
+
+			/**
+			 * Allows output before a settings subsection.
+			 *
+			 * @since 4.4.6
+			 */
+			do_action( 'simpay_admin_page_settings_' . $page . '_before' );
 			?>
 
 			<form method="post" action="options.php">

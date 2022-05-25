@@ -426,24 +426,17 @@ class System_Status {
 					$parent_theme   = $parent_theme_export = '-';
 
 					if ( $is_child_theme ) {
-						if ( version_compare( $wp_version, '3.4', '<' ) ) {
+						$parent        = wp_get_theme( $active_theme->Template );
+						$parent_theme  = '<dl>';
+						$parent_theme .= '<dt>' . __( 'Name', 'stripe' ) . '</dt>';
+						$parent_theme .= '<dd>' . $parent->Name . '</dd>';
+						$parent_theme .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
+						$parent_theme .= '<dd>' . $parent->Author . '</dd>';
+						$parent_theme .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
+						$parent_theme .= '<dd>' . $parent->Version . '</dd>';
+						$parent_theme .= '</dl>';
 
-							$parent_theme = $parent_theme_export = $active_theme['Template'];
-
-						} else {
-
-							$parent        = wp_get_theme( $active_theme->Template );
-							$parent_theme  = '<dl>';
-							$parent_theme .= '<dt>' . __( 'Name', 'stripe' ) . '</dt>';
-							$parent_theme .= '<dd>' . $parent->Name . '</dd>';
-							$parent_theme .= '<dt>' . __( 'Author', 'stripe' ) . '</dt>';
-							$parent_theme .= '<dd>' . $parent->Author . '</dd>';
-							$parent_theme .= '<dt>' . __( 'Version', 'stripe' ) . '</dt>';
-							$parent_theme .= '<dd>' . $parent->Version . '</dd>';
-							$parent_theme .= '</dl>';
-
-							$parent_theme_export = strip_tags( $parent->Name ) . ' - ' . $parent->Version;
-						}
+						$parent_theme_export = strip_tags( $parent->Name ) . ' - ' . $parent->Version;
 					}
 
 					$sections['theme'] = array(

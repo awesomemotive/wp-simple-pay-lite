@@ -549,19 +549,4 @@ function __unstable_print_tag_list( $description, $tags ) { // phpcs:ignore PHPC
 			$description
 		);
 	}
-
-	printf(
-		(
-			'<p class="simpay-stripe-connect-help description">' .
-			'<span class="dashicons dashicons-editor-help"></span>' .
-			'<span>%s</span>' .
-			'</p>'
-		),
-		sprintf(
-			/* translators: %1$s Opening anchor tag for template tag documentation, do not translate. %2$s Closing anchor tag, do not translate. */
-			__( 'Have questions about template tags? %1$sView the template tags documentation%2$s', 'stripe' ),
-			'<a href="' . simpay_docs_link( '', 'configuring-payment-confirmation-display', 'payment-confirmation-settings', true ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
-			Utils\get_external_link_markup() . '</a>'
-		)
-	);
 }

@@ -28,10 +28,11 @@ const {
 	ajaxUrl,
 	accountLicensesUrl,
 	licenseNonce,
-	existingLicense,
+	license,
 } = simpaySetupWizard;
+const { key: existingLicense } = license;
 
-export function License( { goNext } ) {
+export function License( { goNext, setLicenseData } ) {
 	const [ licenseKey, setLicenseKey ] = useState( existingLicense );
 	const [ isBusy, setIsBusy ] = useState( false );
 	const [ error, setError ] = useState( null );
@@ -63,12 +64,14 @@ export function License( { goNext } ) {
 			method: 'POST',
 			body,
 		} )
-			.then( ( { success, data: { message } } ) => {
+			.then( ( { success, data: { message, license } } ) => {
 				if ( ! success ) {
 					throw {
 						message,
 					};
 				}
+
+				setLicenseData( license );
 
 				createSuccessNotice( __( 'License activated', 'simple-pay' ), {
 					type: 'snackbar',

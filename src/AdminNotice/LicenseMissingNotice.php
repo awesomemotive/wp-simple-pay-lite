@@ -35,7 +35,7 @@ class LicenseMissingNotice extends AbstractAdminNotice implements LicenseAwareIn
 	 * {@inheritdoc}
 	 */
 	public function get_type() {
-		return 'info';
+		return 'error';
 	}
 
 	/**
@@ -81,6 +81,17 @@ class LicenseMissingNotice extends AbstractAdminNotice implements LicenseAwareIn
 			'general' === sanitize_text_field( $_GET['tab'] ) &&
 			'license' === sanitize_text_field( $_GET['subsection'] ) &&
 			'simpay_settings' === sanitize_text_field( $_GET['page'] )
+		) {
+			return false;
+		}
+
+		// Add or edit payment form (full page notice is shown instead).
+		$screen = get_current_screen();
+
+		if (
+			null !== $screen &&
+			'simple-pay' === $screen->id &&
+			in_array( $screen->base, array( 'post', 'post-new' ), true )
 		) {
 			return false;
 		}

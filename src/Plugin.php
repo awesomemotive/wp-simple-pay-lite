@@ -201,11 +201,13 @@ final class Plugin {
 
 		$service_providers = array(
 			new AdminBar\AdminBarServiceProvider,
+			new CustomerSuccess\CustomerSuccessServiceProvider,
 			new FormPreview\FormPreviewServiceProvider,
 			new Integration\IntegrationServiceProvider,
 			new License\LicenseServiceProvider,
 			new RestApi\RestApiServiceProvider,
 			new StripeConnect\StripeConnectServiceProvider,
+			new Transaction\TransactionServiceProvider,
 			new Webhook\WebhookServiceProvider,
 		);
 
@@ -214,6 +216,7 @@ final class Plugin {
 		}
 
 		if ( version_compare( $wp_version, '5.7', '>=' ) ) {
+			$service_providers[] = new Help\HelpServiceProvider;
 			$service_providers[] = new NotificationInbox\NotificationInboxServiceProvider;
 		}
 

@@ -17,6 +17,7 @@ use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\NotificationInbox\Notification;
 use SimplePay\Core\NotificationInbox\NotificationAwareInterface;
 use SimplePay\Core\NotificationInbox\NotificationAwareTrait;
+use SimplePay\Core\NotificationInbox\NotificationRepository;
 use SimplePay\Core\Settings;
 use SimplePay\Pro\Webhooks\Database\Query as WebhookDatabase;
 
@@ -70,7 +71,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 			return array();
 		}
 
-		return array(
+		$subscribers = array(
 			// Log when an incoming event should be expected.
 			'simpay_after_checkout_session_from_payment_form_request' =>
 				'log_expected_event',
@@ -89,15 +90,19 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 			'wpsp_transition_notification_dismissed' =>
 				array( 'clear_expected_event_flag', 10, 3 ),
 
+			// Allow permanently dismissing the notice/notification.
 			'admin_init'                                              =>
 				array(
-					// Adds a notification to the inbox if the expected event is not received.
-					array( 'maybe_add_notification' ),
-
-					// Allow permanently dismissing the notice/notification.
 					array( 'dismiss_expected_event' )
 				),
 		);
+
+		// Alert via Notification Inbox if available.
+		if ( $this->notifications instanceof NotificationRepository ) {
+			$subscribers['admin_init'][] = array( 'maybe_add_notification' );
+		}
+
+		return $subscribers;
 	}
 
 	/**

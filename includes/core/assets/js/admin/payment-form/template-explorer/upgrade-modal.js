@@ -67,37 +67,70 @@ function UpgradeModal( { template, setIsShowingUpgradeModal } ) {
 				>
 					{ 'lite' === licenseLevel
 						? __( 'Upgrade to Pro', 'simple-pay' )
-						: __( 'Upgrade Now', 'simple-pay' ) }
+						: __( 'See Upgrade Options', 'simple-pay' ) }
 				</Button>
-
-				{ 'lite' === licenseLevel && (
-					<p className={ `${ baseClassName }__discount` }>
-						<Icon icon={ check } />
-						{ createInterpolateElement(
-							// eslint-disable-next-line @wordpress/i18n-translator-comments
-							__(
-								'<strong>Bonus:</strong> WP Simple Pay Lite users get <highlight>50% off</highlight> regular price, automatically applied at checkout.',
-								'simple-pay'
-							),
-							{
-								strong: (
-									// eslint-disable-next-line jsx-a11y/anchor-has-content
-									<strong />
-								),
-
-								highlight: <u />,
-							}
-						) }
-					</p>
-				) }
 
 				<a
 					href={ alreadyPurchasedUrl }
 					target="_blank"
 					rel="noopener noreferrer"
+					className={ `${ baseClassName }__purchased` }
 				>
 					{ __( 'Already purchased?', 'simple-pay' ) }
 				</a>
+
+				<p className={ `${ baseClassName }__discount` }>
+					<Icon icon={ check } />
+					{ 'lite' === licenseLevel
+						? createInterpolateElement(
+								// eslint-disable-next-line @wordpress/i18n-translator-comments
+								__(
+									'<strong>Bonus:</strong> WP Simple Pay Lite users get <highlight>50% off</highlight> regular price, automatically applied at checkout. <upgrade>Upgrade to Pro →</upgrade>',
+									'simple-pay'
+								),
+								{
+									strong: (
+										// eslint-disable-next-line jsx-a11y/anchor-has-content
+										<strong />
+									),
+									highlight: <u />,
+									upgrade: (
+										// eslint-disable-next-line jsx-a11y/anchor-has-content
+										<a
+											href={ addQueryArgs( upgradeUrl, {
+												utm_content: template.name,
+											} ) }
+											target="_blank"
+											rel="noopener noreferrer"
+										/>
+									),
+								}
+						  )
+						: createInterpolateElement(
+								// eslint-disable-next-line @wordpress/i18n-translator-comments
+								__(
+									'<strong>Bonus:</strong> WP Simple Pay Pro users get <highlight>50% off</highlight> upgrade pricing, automatically applied at checkout. <upgrade>See Upgrade Options →</upgrade>',
+									'simple-pay'
+								),
+								{
+									strong: (
+										// eslint-disable-next-line jsx-a11y/anchor-has-content
+										<strong />
+									),
+									highlight: <u />,
+									upgrade: (
+										// eslint-disable-next-line jsx-a11y/anchor-has-content
+										<a
+											href={ addQueryArgs( upgradeUrl, {
+												utm_content: template.name,
+											} ) }
+											target="_blank"
+											rel="noopener noreferrer"
+										/>
+									),
+								}
+						  ) }
+				</p>
 			</div>
 		</Modal>
 	);
