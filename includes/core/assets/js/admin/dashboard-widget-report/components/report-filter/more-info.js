@@ -7,7 +7,7 @@ import { Button, Flex, Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { createInterpolateElement } from '@wordpress/element';
 
-const { webhooks_url: webhooksUrl } = simpayAdminDashboardWidgetReport;
+const { webhooks_url: webhooksUrl, license } = simpayAdminDashboardWidgetReport;
 
 function MoreInfo( { setIsOpen } ) {
 	return (
@@ -25,20 +25,22 @@ function MoreInfo( { setIsOpen } ) {
 				) }
 			</p>
 
-			<p style={ { marginBottom: '2rem' } }>
-				{ createInterpolateElement(
-					__(
-						'Transaction data requires <url>webhooks to be properly configured</url> to populate correctly.',
-						'simple-pay'
-					),
-					{
-						url: (
-							// eslint-disable-next-line jsx-a11y/anchor-has-content
-							<a href={ webhooksUrl } />
+			{ false === license.is_lite && (
+				<p style={ { marginBottom: '2rem' } }>
+					{ createInterpolateElement(
+						__(
+							'Transaction data requires <url>webhooks to be properly configured</url> to populate correctly.',
+							'simple-pay'
 						),
-					}
-				) }
-			</p>
+						{
+							url: (
+								// eslint-disable-next-line jsx-a11y/anchor-has-content
+								<a href={ webhooksUrl } />
+							),
+						}
+					) }
+				</p>
+			) }
 
 			<Flex>
 				<Button variant="link" onClick={ () => setIsOpen( false ) }>

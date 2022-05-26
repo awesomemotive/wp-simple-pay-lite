@@ -218,6 +218,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 			array(
 				'i18n'               => array(),
 				'user_id'            => $user_id,
+				'license'            => $this->license->to_array(),
 				'currencies'         => array_keys( simpay_get_currencies() ),
 				'default_currency'   => strtolower( $default_currency ),
 				'default_date_range' => $default_date_range,

@@ -166,7 +166,7 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 
 		if ( $curr_total > 0 && $prev_total > 0 ) {
 			$delta = round(
-				( max( $prev_total, $curr_total ) - min( $prev_total, $curr_total ) ) / $prev_total
+				( ( $curr_total - $prev_total ) / $prev_total ) * 100
 			);
 		}
 
@@ -192,7 +192,7 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 						'thousand_separator' => simpay_get_thousand_separator(),
 						'decimal_separator'  => simpay_get_decimal_separator(),
 					),
-					'total'             => $total,
+					'total'             => $curr_total,
 					'delta'             => $delta,
 					'forms'             => array(
 						'top'       => $forms['top'],
