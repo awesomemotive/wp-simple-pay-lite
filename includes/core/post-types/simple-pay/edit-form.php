@@ -175,10 +175,6 @@ function get_form_settings( $post ) {
 		'simpay-panel',
 		'simpay-panel-hidden',
 	);
-
-	if ( class_exists( '\SimplePay\Pro\Lite_Helper', false ) ) {
-		$panel_classes[] = 'simpay-panel--has-help';
-	}
 	?>
 
 <style>

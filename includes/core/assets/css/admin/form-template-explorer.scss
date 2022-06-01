@@ -392,11 +392,19 @@ body.simpay-template-explorer-open {
 		height: auto;
 	}
 
+	&__purchased {
+		color: #555;
+		display: inline-block;
+		margin: $grid-unit-10 0;
+	}
+
 	&__discount {
 		font-size: 15px;
 		text-align: center;
-		margin: $grid-unit-20 calc($grid-unit-40 * -1) calc($grid-unit * 2.5);
-		padding: $grid-unit-30 $grid-unit-50 $grid-unit-20;
+		margin: $grid-unit-30 calc($grid-unit-40 * -1) calc($grid-unit-30 * -1);
+		padding: $grid-unit-40 $grid-unit-50 $grid-unit-30;
+		border-bottom-left-radius: $radius-block-ui;
+		border-bottom-right-radius: $radius-block-ui;
 		background-color: #fcf9e8;
 		position: relative;
 
@@ -417,6 +425,10 @@ body.simpay-template-explorer-open {
 			text-decoration: none;
 			font-weight: bold;
 			color: #00a32a;
+		}
+
+		a {
+			text-decoration: none;
 		}
 	}
 }

@@ -4,7 +4,7 @@
  * WordPress dependencies
  */
 import '@wordpress/notices';
-import { render } from '@wordpress/element';
+import { render, useState } from '@wordpress/element';
 import { Popover, SlotFillProvider } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
 import { getQueryArg } from '@wordpress/url';
@@ -26,11 +26,13 @@ import {
 import { useStepNavigation } from './hooks';
 import { Welcome } from './steps';
 
-const { isLite, adminUrl } = simpaySetupWizard;
+const { license, adminUrl } = simpaySetupWizard;
+const { is_lite: isLite } = license;
 
 function SetupWizardApp() {
-	const wizardSteps = STEPS[ '1' === isLite ? 'lite' : 'pro' ];
+	const wizardSteps = STEPS[ true === isLite ? 'lite' : 'pro' ];
 	const currentStepId = getQueryArg( window.location.href, 'step' );
+	const [ licenseData, setLicenseData ] = useState( license );
 
 	const { currentStep, goNext, goPrev, hasNext, hasPrev } = useStepNavigation(
 		{
@@ -78,6 +80,8 @@ function SetupWizardApp() {
 							goNext={ goNext }
 							hasNext={ hasNext }
 							hasPrev={ hasPrev }
+							licenseData={ licenseData }
+							setLicenseData={ setLicenseData }
 						/>
 					</Card>
 

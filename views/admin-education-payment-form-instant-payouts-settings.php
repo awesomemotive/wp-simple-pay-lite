@@ -32,7 +32,7 @@ use SimplePay\Core\Utils;
 				</div>
 			</th>
 
-			<td>
+			<td style="border-bottom: 0;">
 				<?php
 				echo wp_kses(
 					sprintf(

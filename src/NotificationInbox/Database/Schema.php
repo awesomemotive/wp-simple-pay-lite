@@ -81,11 +81,12 @@ class Schema extends BerlinDBSchema {
 
 		// slug.
 		array(
-			'name'     => 'slug',
-			'type'     => 'varchar',
-			'length'   => '255',
-			'sortable' => true,
-			'validate' => 'sanitize_title',
+			'name'      => 'slug',
+			'type'      => 'varchar',
+			'length'    => '255',
+			'sortable'  => true,
+			'validate'  => 'sanitize_title',
+			'cache_key' => 'slug',
 		),
 
 		// content.
@@ -105,7 +106,6 @@ class Schema extends BerlinDBSchema {
 			'unsigned'   => true,
 			'searchable' => true,
 			'sortable'   => false,
-			'validate'   => 'wp_json_encode',
 		),
 
 		// conditions.
@@ -115,7 +115,6 @@ class Schema extends BerlinDBSchema {
 			'unsigned'   => true,
 			'searchable' => true,
 			'sortable'   => false,
-			'validate'   => 'wp_json_encode',
 		),
 
 		// start.
@@ -147,6 +146,7 @@ class Schema extends BerlinDBSchema {
 			'sortable'   => false,
 			'allow_null' => false,
 			'transition' => true,
+			'cache_key'  => 'dismissed',
 		),
 
 		// is_dismissible.

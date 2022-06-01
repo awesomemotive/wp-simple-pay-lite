@@ -35,9 +35,15 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 	 * {@inheritdoc}
 	 */
 	public function get_subscribers() {
-		return array(
+		$subscribers = array(
 			'notification-inbox-remote-importer',
 		);
+
+		if ( is_admin() ) {
+			$subscribers[] = 'notification-inbox-ui';
+		}
+
+		return $subscribers;
 	}
 
 	/**
@@ -90,6 +96,12 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 			->withArgument( $container->get( 'scheduler' ) )
 			->withArgument( $container->get( 'notification-inbox-repository' ) )
 			->withArgument( $container->get( 'notification-inbox-rule-processor' ) );
+
+		// UI.
+		$container->share(
+			'notification-inbox-ui',
+			NotificationInboxUi::class
+		);
 	}
 
 	/**

@@ -33,7 +33,8 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider {
 	 */
 	public function get_subscribers() {
 		return array(
-			'rest-api-unstable-notifications'
+			'rest-api-unstable-notifications',
+			'rest-api-unstable-dashboard-widget-report',
 		);
 	}
 
@@ -43,7 +44,7 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider {
 	public function register() {
 		$container = $this->getContainer();
 
-		// Notifications
+		// Notifications.
 		try {
 			$notifications = $container->get( 'notification-inbox-repository' );
 
@@ -55,6 +56,12 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider {
 		} catch ( Exception $e ) {
 			// Do not register endpoint if notifications aren't being used.
 		}
+
+		// Dashboard widget report.
+		$container->share(
+			'rest-api-unstable-dashboard-widget-report',
+			__UnstableDashboardWidgetReport::class
+		);
 	}
 
 }

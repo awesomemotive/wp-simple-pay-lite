@@ -30,7 +30,14 @@
 		<span class="simpay-branding-bar__divider">/</span>
 	</div>
 	<div class="simpay-branding-bar__actions">
-		<div id="simpay-branding-bar-notifications"></div>
+		<?php
+		/**
+		 * Allows output in the WP Simple Pay branding bar "actions" section.
+		 *
+		 * @since 4.4.6
+		 */
+		do_action( 'simpay_admin_branding_bar_actions' );
+		?>
 	</div>
 	<div class="clear"></div>
 </div>

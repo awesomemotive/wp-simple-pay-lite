@@ -136,7 +136,7 @@ function validate_recaptcha( $token, $action ) {
 
 	switch ( $threshold ) {
 		case 'aggressive':
-			$minimum_score = '0.80';
+			$minimum_score = '0.20';
 			break;
 		default:
 			$minimum_score = '0.50';

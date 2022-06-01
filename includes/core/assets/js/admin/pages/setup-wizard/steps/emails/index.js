@@ -1,5 +1,3 @@
-/* global simpaySetupWizard */
-
 /**
  * External dependencies
  */
@@ -23,9 +21,7 @@ import { useLayoutEffect, useRef } from '@wordpress/element';
 import { CardFooter, CardBody, ContinueButton } from './../../components';
 import { useSettings } from './../../hooks';
 
-const { adminEmail } = simpaySetupWizard;
-
-export function Emails( { goPrev, goNext } ) {
+export function Emails( { goPrev, goNext, licenseData } ) {
 	const {
 		settings,
 		rawSettings,
@@ -64,10 +60,17 @@ export function Emails( { goPrev, goNext } ) {
 
 	const {
 		'email_payment-confirmation': emailPaymentConfirmation,
-		'email_upcoming-invoice': emailUpcomingInvoice,
 		'email_payment-notification': emailPaymentNotification,
 		'email_payment-notification_to': emailPaymentNotificationTo,
+		'email_upcoming-invoice': emailUpcomingInvoice,
+		'email_invoice-confirmation': emailInvoiceConfirmation,
 	} = settings;
+	const {
+		features: {
+			subscriptions: hasSubscriptions,
+			enhanced_subscriptions: hasEnhancedSubscriptions,
+		},
+	} = licenseData;
 
 	return (
 		<>
@@ -89,29 +92,6 @@ export function Emails( { goPrev, goNext } ) {
 							onChange={ ( { target } ) =>
 								editSettings( {
 									'email_payment-confirmation': target.checked
-										? 'yes'
-										: 'no',
-								} )
-							}
-						/>
-					</li>
-
-					<li>
-						<label htmlFor="email_upcoming-invoice">
-							<h3>{ __( 'Upcoming Invoice', 'simple-pay' ) }</h3>
-							<p>
-								{ __(
-									'Remind customers of upcoming invoices and allow payment method changes.',
-									'simple-pay'
-								) }
-							</p>
-						</label>
-						<FormToggle
-							id="email_upcoming-invoice"
-							checked={ 'no' !== emailUpcomingInvoice }
-							onChange={ ( { target } ) =>
-								editSettings( {
-									'email_upcoming-invoice': target.checked
 										? 'yes'
 										: 'no',
 								} )
@@ -152,6 +132,60 @@ export function Emails( { goPrev, goNext } ) {
 								onChange={ ( value ) =>
 									editSettings( {
 										'email_payment-notification_to': value,
+									} )
+								}
+							/>
+						</li>
+					) }
+
+					{ hasEnhancedSubscriptions && (
+						<li>
+							<label htmlFor="email_invoice-confirmation">
+								<h3>
+									{ __( 'Invoice Receipt', 'simple-pay' ) }
+								</h3>
+								<p>
+									{ __(
+										'Send a payment receipt email to the customer upon successful invoice.',
+										'simple-pay'
+									) }
+								</p>
+							</label>
+							<FormToggle
+								id="email_payment-confirmation"
+								checked={ 'no' !== emailInvoiceConfirmation }
+								onChange={ ( { target } ) =>
+									editSettings( {
+										'email_invoice-confirmation': target.checked
+											? 'yes'
+											: 'no',
+									} )
+								}
+							/>
+						</li>
+					) }
+
+					{ hasSubscriptions && (
+						<li>
+							<label htmlFor="email_upcoming-invoice">
+								<h3>
+									{ __( 'Upcoming Invoice', 'simple-pay' ) }
+								</h3>
+								<p>
+									{ __(
+										'Remind customers of upcoming invoices and allow payment method changes.',
+										'simple-pay'
+									) }
+								</p>
+							</label>
+							<FormToggle
+								id="email_upcoming-invoice"
+								checked={ 'no' !== emailUpcomingInvoice }
+								onChange={ ( { target } ) =>
+									editSettings( {
+										'email_upcoming-invoice': target.checked
+											? 'yes'
+											: 'no',
 									} )
 								}
 							/>

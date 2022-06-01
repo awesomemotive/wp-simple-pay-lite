@@ -150,12 +150,20 @@ class PluginEmailSettings extends AbstractProductEducation implements Subscriber
 			}
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'email-settings',
-			'Customize Emails Receipts and More'
+		$utm_medium            = 'email-settings';
+		$utm_content           = 'Customize Email Receipts and More';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-email-settings.php'; // @phpstan-ignore-line

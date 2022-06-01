@@ -100,46 +100,6 @@ add_action( 'simpay_register_settings', __NAMESPACE__ . '\\register_settings' );
  * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
  */
 function register_page_settings( $settings ) {
-	// Setup.
-	$settings->add(
-		new Settings\Setting(
-			array(
-				'id'         => 'payment-confirmations-setup',
-				'section'    => 'payment-confirmations',
-				'subsection' => 'pages',
-				'label'      => esc_html_x(
-					'Setup',
-					'setting label',
-					'stripe'
-				),
-				'output'     => function() {
-					echo wpautop(
-						wp_kses(
-							sprintf(
-								/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-								__( 'Have questions about payment success and failure pages? %1$sView the Payment Confirmation documentation%2$s', 'stripe' ),
-								'<a href="' . esc_url( simpay_docs_link( 'View the Payment Confirmation documentation', 'setting-payment-success-failure-pages', 'payment-confirmation-settings', true ) ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
-								Utils\get_external_link_markup() . '</a>'
-							),
-							array(
-								'a'    => array(
-									'href'   => true,
-									'class'  => true,
-									'target' => true,
-									'rel'    => true,
-								),
-								'span' => array(
-									'class' => 'screen-reader-text',
-								),
-							)
-						)
-					);
-				},
-				'priority'   => 5,
-			)
-		)
-	);
-
 	global $wpdb;
 
 	$pages = $wpdb->get_results(

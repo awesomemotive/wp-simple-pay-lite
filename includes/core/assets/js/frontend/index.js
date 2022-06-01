@@ -166,10 +166,12 @@ function initPaymentForm( $paymentForm, __unstableFormVars = false ) {
 	// Attach a Stripe instance to the Payment Form jQuery object.
 	const {
 		key: publishableKey,
+		stripe_api_version: apiVersion,
 		elementsLocale,
 	} = paymentFormData.stripe.strings;
 
 	$paymentForm.stripeInstance = Stripe( publishableKey, {
+		apiVersion,
 		locale: elementsLocale || 'auto',
 	} );
 

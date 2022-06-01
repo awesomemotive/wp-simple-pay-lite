@@ -300,11 +300,15 @@ function remove_other_metaboxes( $post_type ){
 		'simpay-payment-form-settings'
 	);
 
-    global $wp_meta_boxes;
+	global $wp_meta_boxes;
 
 	foreach ( $wp_meta_boxes['simple-pay'] as $context_id => $contexts ) {
 		foreach ( $contexts as $priorities ) {
 			foreach ( $priorities as $metabox ) {
+				if ( ! $metabox ) {
+					continue;
+				}
+
 				if ( ! in_array( $metabox['id'], $keep, true ) ) {
 					remove_meta_box( $metabox['id'], 'simple-pay', $context_id );
 				}

@@ -844,15 +844,12 @@ function simpay_get_currencies() {
 		'BBD' => '&#36;',
 		'BDT' => '&#2547;&nbsp;',
 		'BGN' => '&#1083;&#1074;.',
-		'BHD' => '.&#x62f;.&#x628;',
 		'BIF' => 'Fr',
 		'BMD' => '&#36;',
 		'BND' => '&#36;',
 		'BOB' => 'Bs.',
 		'BRL' => '&#82;&#36;',
 		'BSD' => '&#36;',
-		'BTC' => '&#3647;',
-		'BTN' => 'Nu.',
 		'BWP' => 'P',
 		'BYR' => 'Br',
 		'BZD' => '&#36;',
@@ -863,8 +860,6 @@ function simpay_get_currencies() {
 		'CNY' => '&yen;',
 		'COP' => '&#36;',
 		'CRC' => '&#x20a1;',
-		'CUC' => '&#36;',
-		'CUP' => '&#36;',
 		'CVE' => '&#36;',
 		'CZK' => '&#75;&#269;',
 		'DJF' => 'Fr',
@@ -872,15 +867,12 @@ function simpay_get_currencies() {
 		'DOP' => 'RD&#36;',
 		'DZD' => '&#x62f;.&#x62c;',
 		'EGP' => 'EGP',
-		'ERN' => 'Nfk',
 		'ETB' => 'Br',
 		'EUR' => '&euro;',
 		'FJD' => '&#36;',
 		'FKP' => '&pound;',
 		'GBP' => '&pound;',
 		'GEL' => '&#x10da;',
-		'GGP' => '&pound;',
-		'GHS' => '&#x20b5;',
 		'GIP' => '&pound;',
 		'GMD' => 'D',
 		'GNF' => 'Fr',
@@ -893,22 +885,15 @@ function simpay_get_currencies() {
 		'HUF' => '&#70;&#116;',
 		'IDR' => 'Rp',
 		'ILS' => '&#8362;',
-		'IMP' => '&pound;',
 		'INR' => '&#8377;',
-		'IQD' => '&#x639;.&#x62f;',
-		'IRR' => '&#xfdfc;',
 		'ISK' => 'Kr.',
-		'JEP' => '&pound;',
 		'JMD' => '&#36;',
-		'JOD' => '&#x62f;.&#x627;',
 		'JPY' => '&yen;',
 		'KES' => 'KSh',
 		'KGS' => '&#x43b;&#x432;',
 		'KHR' => '&#x17db;',
 		'KMF' => 'Fr',
-		'KPW' => '&#x20a9;',
 		'KRW' => '&#8361;',
-		'KWD' => '&#x62f;.&#x643;',
 		'KYD' => '&#36;',
 		'KZT' => 'KZT',
 		'LAK' => '&#8365;',
@@ -916,7 +901,6 @@ function simpay_get_currencies() {
 		'LKR' => '&#xdbb;&#xdd4;',
 		'LRD' => '&#36;',
 		'LSL' => 'L',
-		'LYD' => '&#x644;.&#x62f;',
 		'MAD' => '&#x62f;. &#x645;.',
 		'MDL' => 'L',
 		'MGA' => 'Ar',
@@ -937,17 +921,14 @@ function simpay_get_currencies() {
 		'NOK' => '&#107;&#114;',
 		'NPR' => '&#8360;',
 		'NZD' => '&#36;',
-		'OMR' => '&#x631;.&#x639;.',
 		'PAB' => 'B/.',
 		'PEN' => 'S/.',
 		'PGK' => 'K',
 		'PHP' => '&#8369;',
 		'PKR' => '&#8360;',
 		'PLN' => '&#122;&#322;',
-		'PRB' => '&#x440;.',
 		'PYG' => '&#8370;',
 		'QAR' => '&#x631;.&#x642;',
-		'RMB' => '&yen;',
 		'RON' => 'lei',
 		'RSD' => '&#x434;&#x438;&#x43d;.',
 		'RUB' => '&#8381;',
@@ -962,12 +943,9 @@ function simpay_get_currencies() {
 		'SOS' => 'Sh',
 		'SRD' => '&#36;',
 		'STD' => 'Db',
-		'SYP' => '&#x644;.&#x633;',
 		'SZL' => 'L',
 		'THB' => '&#3647;',
 		'TJS' => '&#x405;&#x41c;',
-		'TMT' => 'm',
-		'TND' => '&#x62f;.&#x62a;',
 		'TOP' => 'T&#36;',
 		'TRY' => '&#8378;',
 		'TTD' => '&#36;',
@@ -978,7 +956,6 @@ function simpay_get_currencies() {
 		'USD' => '&#36;',
 		'UYU' => '&#36;',
 		'UZS' => 'UZS',
-		'VEF' => 'Bs F',
 		'VND' => '&#8363;',
 		'VUV' => 'Vt',
 		'WST' => 'T',
@@ -1546,17 +1523,17 @@ function simpay_ga_url( $base_url, $utm_medium, $utm_content = false ) {
 	 */
 	$utm_campaign = apply_filters( 'simpay_utm_campaign', 'lite-plugin' );
 
-	$url = add_query_arg(
-		array(
-			'utm_source'   => 'WordPress',
-			'utm_campaign' => $utm_campaign,
-			'utm_medium'   => $utm_medium,
-			'utm_content'  => $utm_content,
-		),
-		$base_url
+	$args =  array(
+		'utm_source'   => 'WordPress',
+		'utm_campaign' => $utm_campaign,
+		'utm_medium'   => $utm_medium,
 	);
 
-	return esc_url( $url );
+	if ( ! empty( $utm_content ) ) {
+		$args['utm_content'] = $utm_content;
+	}
+
+	return esc_url( add_query_arg( $args, $base_url ) );
 }
 
 /**
@@ -1572,7 +1549,7 @@ function simpay_pro_upgrade_url( $utm_medium, $utm_content = '' ) {
 	return apply_filters(
 		'simpay_upgrade_link',
 		simpay_ga_url(
-			'https://wpsimplepay.com/lite-vs-pro',
+			'https://wpsimplepay.com/lite-vs-pro/',
 			$utm_medium,
 			$utm_content
 		),

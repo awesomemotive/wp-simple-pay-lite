@@ -59,7 +59,8 @@ function getGaUrl( url, utmMedium, utmContent ) {
 		return url;
 	}
 
-	return addQueryArgs( url, {
+	return addQueryArgs( url.replace( /\/?$/, '/' ), {
+		utm_source: 'WordPress',
 		utm_campaign: '1' === isLite ? 'lite-plugin' : 'pro-plugin',
 		utm_medium: utmMedium,
 		utm_content: utmContent,

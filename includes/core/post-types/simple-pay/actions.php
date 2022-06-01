@@ -10,9 +10,9 @@
 
 namespace SimplePay\Core\Post_Types\Simple_Pay\Actions;
 
+use Exception;
 use SimplePay\Core\API;
-
-use Stripe\Exception\ApiErrorException;
+use SimplePay\Vendor\Stripe\Exception\ApiErrorException;
 use WP_Error;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -264,10 +264,29 @@ function save_product( $post_id, $post, $form ) {
 				'status' => $e->getHttpStatus(),
 			)
 		);
+	} catch ( Exception $e ) {
+		$error->add(
+			'simpay-update-payment-form',
+			$e->getMessage(),
+			array(
+				'status' => 500,
+			)
+		);
 	}
 
 	if ( ! empty( $error->errors ) ) {
-		wp_die( $error->get_error_message() );
+		$redirect = add_query_arg(
+			array(
+				'post_type'               => 'simple-pay',
+				'post'                    => $post_id,
+				'action'                  => 'edit',
+				'simpay-stripe-api-error' => $error->get_error_message(),
+			),
+			admin_url( 'post.php' )
+		);
+
+		wp_safe_redirect( $redirect );
+		exit;
 	}
 
 	return $product;
@@ -507,12 +526,31 @@ function save_prices( $post_id, $post, $form ) {
 							'status' => $e->getHttpStatus(),
 						)
 					);
+				} catch ( Exception $e ) {
+					$error->add(
+						'simpay-update-payment-form',
+						$e->getMessage(),
+						array(
+							'status' => 500,
+						)
+					);
 				}
 			}
 		}
 
 		if ( ! empty( $error->errors ) ) {
-			wp_die( $error->get_error_message() );
+			$redirect = add_query_arg(
+				array(
+					'post_type'               => 'simple-pay',
+					'post'                    => $post_id,
+					'action'                  => 'edit',
+					'simpay-stripe-api-error' => $error->get_error_message(),
+				),
+				admin_url( 'post.php' )
+			);
+
+			wp_safe_redirect( $redirect );
+			exit;
 		}
 
 		// Label.

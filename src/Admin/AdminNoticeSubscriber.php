@@ -74,11 +74,11 @@ class AdminNoticeSubscriber implements SubscriberInterface {
 	 */
 	public function output_notices() {
 		foreach ( $this->notices as $notice ) {
-			if ( true === $notice->is_dismissed() ) {
+			if ( false === $notice->should_display() ) {
 				continue;
 			}
 
-			if ( false === $notice->should_display() ) {
+			if ( true === $notice->is_dismissed() ) {
 				continue;
 			}
 

@@ -70,6 +70,11 @@ class LicenseUpgradeTopOfPageNotice extends AbstractAdminNotice {
 		/** @var \SimplePay\Core\License\License $license */
 		$license = $this->license;
 
+		// Pro without a license, show nothing. They will be promoted elsewhere.
+		if ( false === $this->license->is_lite() && empty( $this->license->get_key() ) ) {
+			return false;
+		}
+
 		// Grandfathered Plus, Professional or higher license, show nothing.
 		if (
 			(

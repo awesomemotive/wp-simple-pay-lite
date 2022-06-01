@@ -36,6 +36,8 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			'admin-notice-five-star-rating',
 			'admin-notice-license-upgrade-top-of-page',
 			'admin-notice-license-missing',
+			'admin-notice-license-expired',
+			'admin-notice-stripe-api-error',
 		);
 	}
 
@@ -160,12 +162,26 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminNotice\LicenseMissingNotice::class
 		);
 
+		// License key expired.
+		$container->share(
+			'admin-notice-license-expired',
+			AdminNotice\LicenseExpiredNotice::class
+		);
+
+		// Stripe API error.
+		$container->share(
+			'admin-notice-stripe-api-error',
+			AdminNotice\StripeApiErrorNotice::class
+		);
+
 		/** @var array<\SimplePay\Core\AdminNotice\AdminNoticeInterface> */
 		$notices = array(
 			$container->get( 'admin-notice-update-available' ),
 			$container->get( 'admin-notice-five-star-rating' ),
 			$container->get( 'admin-notice-license-upgrade-top-of-page' ),
 			$container->get( 'admin-notice-license-missing' ),
+			$container->get( 'admin-notice-license-expired' ),
+			$container->get( 'admin-notice-stripe-api-error' ),
 		);
 
 		return $notices;

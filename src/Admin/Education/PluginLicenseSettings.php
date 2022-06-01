@@ -55,12 +55,20 @@ class PluginLicenseSettings extends AbstractProductEducation implements Subscrib
 			return;
 		}
 
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'license-settings',
-			'Upgrade Your License Today and Save'
+		$utm_medium            = 'license-settings';
+		$utm_content           = 'See Upgrade Options';
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
 		);
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
+		);
 
 		include_once SIMPLE_PAY_DIR . 'views/admin-license-settings-upgrade.php'; // @phpstan-ignore-line
 	}

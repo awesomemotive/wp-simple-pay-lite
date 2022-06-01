@@ -32,6 +32,7 @@ class FormBuilderServiceProvider extends AbstractPluginServiceProvider {
 	 */
 	public function get_subscribers() {
 		return array(
+			'form-builder-license-check',
 			'form-builder-template-explorer',
 		);
 	}
@@ -42,6 +43,13 @@ class FormBuilderServiceProvider extends AbstractPluginServiceProvider {
 	public function register() {
 		$container = $this->getContainer();
 
+		// License check.
+		$container->share(
+			'form-builder-license-check',
+			LicenseCheck::class
+		);
+
+		// Template explorer.
 		$container->share(
 			'form-builder-template-explorer',
 			TemplateExplorer::class

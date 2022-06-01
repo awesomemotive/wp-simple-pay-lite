@@ -64,18 +64,6 @@ class Notice_Manager {
 				'type'        => 'info',
 				'callback'    => 'SimplePay\Core\Admin\Notices\stripe_connect',
 			),
-			// Pro only.
-			'coupon_management'  => array(
-				'dismissible' => true,
-				'type'        => 'info',
-				'callback'    => function() {
-					if ( ! class_exists( 'SimplePay\Pro\Coupons\Coupon' ) ) {
-						return false;
-					}
-
-					return \SimplePay\Pro\Coupons\Admin\__unstable_new_management_notice();
-				}
-			)
 		);
 
 		add_action( 'admin_notices', array( __CLASS__, 'show_notices' ) );

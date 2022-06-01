@@ -173,7 +173,7 @@
 
 		&__inner {
 			text-align: center;
-			max-width: 750px;
+			max-width: 700px;
 			margin: 0 auto;
 		}
 
@@ -246,6 +246,38 @@
 				color: #666;
 				text-decoration: none;
 			}
+		}
+	}
+
+	.simpay-upgrade-btn-subtext {
+		margin: 40px 0 0;
+		padding: 30px 35px 20px;
+		background-color: #fcf9e8;
+		border: 3px solid #ebe29a;
+		border-radius: 4px;
+		position: relative;
+
+		svg {
+			background: #00a32a;
+			fill: white;
+			border-radius: 50%;
+			border: 3px solid #ebe29a;
+			width: 28px;
+			height: 28px;
+			position: absolute;
+			top: -14px;
+			left: 50%;
+			margin-left: -14px;
+		}
+
+		u {
+			text-decoration: none;
+			font-weight: bold;
+			color: #00a32a;
+		}
+
+		a {
+			text-decoration: none;
 		}
 	}
 }
@@ -410,6 +442,16 @@
 					width: 100%;
 				}
 			}
+
+			&:last-child {
+				> tbody:last-child {
+					> tr:last-child {
+						> td {
+							border-bottom: 0;
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -536,10 +578,6 @@
 
 	// simpay-panel is the main wrapper for all of our form settings
 	.simpay-panel {
-
-		&.simpay-panel--has-help {
-			padding-bottom: 48px;
-		}
 
 		// Promo under payment form settings
 		.simpay-promo-under-box {
@@ -780,9 +818,39 @@
 }
 
 .simpay-upgrade-btn-subtext {
-	font-size: 14px;
-	color: green;
-	margin-top: 5px;
+	color: #3c434a;
+    font-size: 14px;
+	line-height: 1.5;
+    text-align: center;
+	margin: 40px 0 0;
+	padding: 30px 35px 20px;
+    background-color: #fcf9e8;
+	border: 3px solid #ebe29a;
+	border-radius: 4px;
+    position: relative;
+
+	svg {
+		background: #00a32a;
+		fill: white;
+		border-radius: 50%;
+		border: 3px solid #ebe29a;
+		width: 28px;
+		height: 28px;
+		position: absolute;
+		top: -14px;
+		left: 50%;
+		margin-left: -14px;
+	}
+
+	u {
+		text-decoration: none;
+		font-weight: bold;
+		color: #00a32a;
+	}
+
+	a {
+		text-decoration: none;
+	}
 }
 
 .post-type-simple-pay {
@@ -1180,11 +1248,18 @@ select.simpay-currency-symbol {
 	&__actions {
 		float: right;
 		margin-top: 4px;
+		display: flex;
+		align-items: center;
+
+		> div {
+			margin-left: 10px;
+			min-width: 40px; /** Help prevent Popover jumping by ensuring a rectangle exists to calculate from. */
+		}
 	}
 
 	&__actions-button {
+		color: #000;
 		cursor: pointer;
-		margin-left: 10px;
 		padding: 10px;
 		width: 40px;
 		height: 40px;
@@ -1194,6 +1269,8 @@ select.simpay-currency-symbol {
 		box-shadow: none;
 		position: relative;
 		transition: background-color 0.2s ease;
+		box-sizing: border-box;
+		display: block;
 
 		&:hover {
 			background-color: #e5e5e5;
@@ -1361,6 +1438,11 @@ select.simpay-currency-symbol {
 		line-height: 30px;
 		padding: 10px 20px;
 	}
+
+	&__purchased {
+		display: block;
+		margin: 15px 0 0;
+	}
 }
 
 /**
@@ -1412,8 +1494,8 @@ select.simpay-currency-symbol {
 	&__discount {
 		font-size: 15px;
 		text-align: center;
-		margin: $grid-unit-20 calc($grid-unit-40 * -1) calc($grid-unit * 2.5);
-		padding: $grid-unit-30 $grid-unit-50 $grid-unit-20;
+		margin: $grid-unit-40 calc($grid-unit-40 * -1) calc($grid-unit-40 * -1);
+		padding: $grid-unit-30 $grid-unit-50;
 		background-color: #fcf9e8;
 		position: relative;
 
@@ -1558,28 +1640,42 @@ select.simpay-currency-symbol {
 		top: 170px;
 	}
 
+	.simpay-upgrade-btn-subtext {
+		margin: 24px -30px -30px;
+		padding: 32px 40px 24px;
+		border-bottom-left-radius: 2px;
+		border-bottom-right-radius: 2px;
+		border: 0;
+
+		svg {
+			border-color: #fff;
+		}
+	}
+
 	&--inline {
 		margin: 40px 30px 30px;
 
 		.simpay-teaser-float__card {
-			padding: 22px;
+			padding: 30px;
 			box-shadow: 0 0 12px 6px rgb(0 0 0 / 16%);
 		}
 
 		#poststuff & h2,
 		h2 {
-			font-size: 18px;
+			font-size: 20px;
 		}
 
 		p {
-			font-size: 14px;
-			margin: 0.50rem 0 0.75rem;
+			font-size: 15px;
+			margin: 0.75rem 0;
 		}
 
 		.button.button-large {
 			font-size: 15px;
 			line-height: 24px;
+			margin: 1rem 0;
 			padding: 8px 14px;
+			display: inline-block;
 		}
 
 		&:before,

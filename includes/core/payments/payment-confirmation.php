@@ -15,6 +15,7 @@ use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Payments\Stripe_Checkout\Session;
 use SimplePay\Core\Payments\Stripe_API;
 use SimplePay\Core\Payments\PaymentIntent;
+use SimplePay\Pro\Emails;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -161,11 +162,23 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
  * @return string
  */
 function get_one_time_amount_message_default() {
-	$message  = __( 'Thanks for your purchase. Here are the details of your payment:', 'stripe' ) . "\n\n";
-	$message .= '<strong>' . esc_html__( 'Item:', 'stripe' ) . '</strong>' . ' {form-title}' . "\n";
-	$message .= '<strong>' . esc_html__( 'Description:', 'stripe' ) . '</strong>' . ' {form-description}' . "\n";
-	$message .= '<strong>' . esc_html__( 'Payment Date:', 'stripe' ) . '</strong>' . ' {charge-date}' . "\n";
-	$message .= '<strong>' . esc_html__( 'Payment Amount: ', 'stripe' ) . '</strong>' . '{total-amount}' . "\n";
+	$license = simpay_get_license();
+	$is_lite = $license->is_lite();
+	$has_email = false;
+
+	if ( false === $is_lite ) {
+		$email = Emails\get( 'payment-confirmation' );
+
+		$has_email = false !== $email && $email->is_enabled();
+	}
+
+	$message = '';
+
+	if ( true === $has_email ) {
+		$message = 'Thank you. Your payment of {total-amount} has been received. Please check your email for additional information.';
+	} else {
+		$message = 'Thank you. Your payment of {total-amount} has been received.';
+	}
 
 	return $message;
 }

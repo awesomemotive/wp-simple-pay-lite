@@ -162,10 +162,9 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 						'setup-wizard',
 						true
 					),
-					'isLite'              => $this->license->is_lite() ? 1 : 0,
+					'license'             => $this->license->to_array(),
 					'subscribeNonce'      => wp_create_nonce( 'simpay-setup-wizard-subscribe' ),
 					'licenseNonce'        => wp_create_nonce( 'simpay-manage-license' ),
-					'existingLicense'     => get_option( 'simpay_license_key', '' ),
 				)
 			);
 

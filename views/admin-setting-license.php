@@ -22,7 +22,7 @@ use SimplePay\Core\Utils;
 <p>
 	<?php
 	esc_html_e(
-		'A valid license key is required for access to automatic updates and support.',
+		'A valid license key is required to enable automatic updates and fully activate WP Simple Pay Pro.',
 		'stripe'
 	);
 	?>

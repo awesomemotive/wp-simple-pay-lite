@@ -696,6 +696,7 @@ abstract class Form {
 
 		// Key is required so we always include it.
 		$strings['strings']['key'] = $this->publishable_key;
+		$strings['strings']['stripe_api_version'] = SIMPLE_PAY_STRIPE_API_VERSION;
 
 		// Redirect URLs.
 		$strings['strings']['success_url'] = $this->payment_success_page;

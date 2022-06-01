@@ -23,14 +23,14 @@ trait LicenseAwareTrait {
 	 *
 	 * @since 4.4.1
 	 * @since 4.4.4 Set visibility to protected.
-	 * @var \SimplePay\Core\License\LicenseInterface
+	 * @var \SimplePay\Core\License\License
 	 */
 	protected $license;
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set_license( LicenseInterface $license ) {
+	public function set_license( License $license ) {
 		$this->license = $license;
 	}
 

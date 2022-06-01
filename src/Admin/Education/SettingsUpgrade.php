@@ -59,11 +59,19 @@ class SettingsUpgrade extends AbstractProductEducation implements SubscriberInte
 			return;
 		}
 
-		$upgrade_text    = $this->get_upgrade_button_text();
-		$upgrade_subtext = $this->get_upgrade_button_subtext();
-		$upgrade_url     = $this->get_upgrade_button_url(
-			'global-settings',
-			$upgrade_text
+		$upgrade_text          = $this->get_upgrade_button_text();
+		$utm_medium            = 'global-settings';
+		$utm_content           = $upgrade_text;
+		$upgrade_url           = $this->get_upgrade_button_url(
+			$utm_medium,
+			$utm_content
+		);
+		$upgrade_subtext       = $this->get_upgrade_button_subtext(
+			$upgrade_url
+		);
+		$already_purchased_url = $this->get_already_purchased_url(
+			$utm_medium,
+			$utm_content
 		);
 
 		include_once SIMPLE_PAY_DIR . 'views/admin-settings-upgrade.php'; // @phpstan-ignore-line
