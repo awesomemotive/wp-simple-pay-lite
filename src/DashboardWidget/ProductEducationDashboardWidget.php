@@ -250,7 +250,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 		$recommended_plugin = $this->get_recommended_plugin();
 
 		$dismissed_recommended_plugin = (bool) Notice_Manager::is_notice_dismissed(
-			'simpay-dashboard-widget-recommended-plugin',
+			'simpay-dashboard-widget-recommended-plugin'
 		);
 
 		// Load view.
@@ -324,7 +324,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 							'action' => 'install-plugin',
 							'plugin' => rawurlencode( $plugin['slug'] )
 						),
-						self_admin_url( 'update.php' ),
+						self_admin_url( 'update.php' )
 					),
 					'install-plugin_' . $plugin['slug']
 				);

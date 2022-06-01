@@ -47,7 +47,7 @@ class CustomerAchievements {
 	 *
 	 * @return int|null
 	 */
-	public function get_achievement( string $achievement ) {
+	public function get_achievement( $achievement ) {
 		$achievements = $this->get_all_achievements();
 
 		if ( ! isset( $achievements[ $achievement ] ) ) {
