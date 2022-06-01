@@ -45,6 +45,7 @@ class CustomerAchievements {
 	 *
 	 * @since 4.4.6
 	 *
+	 * @param string $achievement Achievement ID.
 	 * @return int|null
 	 */
 	public function get_achievement( $achievement ) {

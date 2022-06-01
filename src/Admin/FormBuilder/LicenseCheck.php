@@ -129,10 +129,6 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 	public function maybe_remove_meta_boxes() {
 		$remove = false;
 
-		if ( false === $this->is_missing_in_grace_period() ) {
-			$remove = true;
-		}
-
 		switch ( $this->license->get_status() ) {
 			case 'expired':
 				if ( ! $this->license->is_in_grace_period() ) {
@@ -143,6 +139,14 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 			case 'invalid':
 				$remove = true;
 				break;
+		}
+
+		$is_missing = empty( $this->license->get_key() );
+		$installed  = get_option( 'simpay_installed', time() );
+
+		// If the license key has not been entered, give a 24 hour grace period.
+		if ( $is_missing && ! ( time() - $installed < ( HOUR_IN_SECONDS * 24 ) ) ) {
+			$remove = true;
 		}
 
 		if ( ! $remove ) {
@@ -162,20 +166,6 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Determines if the license is missing and still within a 24 hour grace period.
-	 *
-	 * @since 4.4.6
-	 *
-	 * @return bool
-	 */
-	private function is_missing_in_grace_period() {
-		$is_missing = empty( $this->license->get_key() );
-		$installed  = get_option( 'simpay_installed', time() );
-
-		return $is_missing && ( time() - $installed < ( HOUR_IN_SECONDS * 24 ) );
 	}
 
 }
