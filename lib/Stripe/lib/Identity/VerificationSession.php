@@ -58,7 +58,7 @@ class VerificationSession extends \SimplePay\Vendor\Stripe\ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\VerificationSession the canceled verification session
+     * @return \SimplePay\Vendor\Stripe\Identity\VerificationSession the canceled verification session
      */
     public function cancel($params = null, $opts = null)
     {
@@ -75,7 +75,7 @@ class VerificationSession extends \SimplePay\Vendor\Stripe\ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\VerificationSession the redacted verification session
+     * @return \SimplePay\Vendor\Stripe\Identity\VerificationSession the redacted verification session
      */
     public function redact($params = null, $opts = null)
     {

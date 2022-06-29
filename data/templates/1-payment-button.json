@@ -31,9 +31,6 @@
 				"label": "Price Options"
 			},
 			{
-				"type": "checkout_button"
-			},
-			{
 				"type": "payment_button",
 				"text": "Pay Now",
 				"processing_text": "Processing..."

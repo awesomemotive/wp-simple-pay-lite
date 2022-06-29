@@ -32,9 +32,6 @@
 				"label": "Price Options"
 			},
 			{
-				"type": "checkout_button"
-			},
-			{
 				"type": "payment_button",
 				"text": "Donate"
 			}

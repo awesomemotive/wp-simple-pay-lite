@@ -61,6 +61,7 @@ class Stripe_API {
 		$logger = Stripe::getLogger();
 		$logger->error(
 			sprintf(
+				/* translators: %s Stripe API function. */
 				__(
 					'Calling %s directly is discouraged. Please use API wrappers or pass the Stripe API key via the ::request() static method.',
 					'stripe'

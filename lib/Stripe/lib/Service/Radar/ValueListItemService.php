@@ -16,7 +16,7 @@ class ValueListItemService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Radar\ValueListItem>
      */
     public function all($params = null, $opts = null)
     {

@@ -11,6 +11,11 @@ import serialize from 'form-serialize';
 import domReady from '@wordpress/dom-ready';
 
 /**
+ * Internal dependencies
+ */
+import { maybeBlockSelectWithUpgradeModal } from '@wpsimplepay/utils';
+
+/**
  * Alerts the user when they are about to leave unsaved changes.
  *
  * @since 4.4.1
@@ -155,6 +160,37 @@ function requireFormTitle() {
 }
 
 /**
+ * Handles product education when attempting configuring a form type in Lite.
+ *
+ * @since 4.4.7
+ */
+function formType() {
+	const selector = document.getElementById( 'form-type-select' );
+	const overlay = document.getElementById( 'is-overlay' );
+
+	selector.addEventListener( 'change', function ( e ) {
+		const {
+			target: { options, selectedIndex },
+		} = e;
+		const option = options[ selectedIndex ];
+		const type = option.value;
+
+		if ( 'on-site' === type ) {
+			maybeBlockSelectWithUpgradeModal( e );
+		}
+
+		if ( 'off-site' === type ) {
+			overlay.querySelector( 'input' ).checked = false;
+		}
+
+		overlay.style.display =
+			'yes' === option.dataset.available && 'on-site' === type
+				? 'block'
+				: 'none';
+	} );
+}
+
+/**
  * DOM ready.
  */
 domReady( () => {
@@ -167,6 +203,7 @@ domReady( () => {
 		delete formValues.simpay_form_settings_tab;
 		onLeavePage( JSON.stringify( formValues ) );
 
+		formType();
 		reCaptchaFeedback();
 		requireFormTitle();
 	}

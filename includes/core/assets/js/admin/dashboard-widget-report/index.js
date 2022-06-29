@@ -33,10 +33,10 @@ function DashboardWidgetReport() {
 
 	// Ensure the User record is resolved on load to prevent an undefined
 	// index when attempting to update the user meta later.
-	useSelect(
+	const user = useSelect(
 		( select ) => {
 			const { getEntityRecord } = select( 'core' );
-			getEntityRecord( 'root', 'user', userId );
+			return getEntityRecord( 'root', 'user', userId );
 		},
 		[ userId ]
 	);
@@ -45,6 +45,10 @@ function DashboardWidgetReport() {
 	 * Fetch API data when the currency or range changes.
 	 */
 	useEffect( () => {
+		if ( ! user ) {
+			return;
+		}
+
 		const path = addQueryArgs( '/wpsp/v2/report/dashboard-widget', {
 			range,
 			currency,
@@ -66,22 +70,31 @@ function DashboardWidgetReport() {
 				type: 'FINISH_RESOLUTION',
 			} );
 
-			// Save preferences.
-			editEntityRecord( 'root', 'user', userId, {
-				meta: {
-					simpay_dashboard_widget_report_date_range: range,
-					simpay_dashboard_widget_report_currency: currency,
-				},
-			} );
+			// Save preferences if they have changed.
+			if (
+				range !== user.meta.simpay_dashboard_widget_report_date_range ||
+				currency !== user.meta.simpay_dashboard_widget_report_currency
+			) {
+				editEntityRecord( 'root', 'user', userId, {
+					meta: {
+						simpay_dashboard_widget_report_date_range: range,
+						simpay_dashboard_widget_report_currency: currency,
+					},
+				} );
 
-			saveEditedEntityRecord( 'root', 'user', userId );
+				saveEditedEntityRecord( 'root', 'user', userId );
+			}
 		} );
-	}, [ range, currency ] );
+	}, [ range, currency, user ] );
 
 	return (
 		<>
 			<div className="simpay-admin-dashboard-widget-report__chart">
-				<PeriodOverPeriodChart report={ report.data } range={ range } />
+				<PeriodOverPeriodChart
+					report={ report.data }
+					range={ range }
+					user={ user }
+				/>
 			</div>
 
 			<div className="simpay-admin-dashboard-widget-report__data">

@@ -227,6 +227,7 @@ final class Plugin {
 				new Admin\AdminServiceProvider,
 				new Admin\Addon\AddonServiceProvider,
 				new Admin\Education\EducationServiceProvider,
+				new Admin\SiteHealth\SiteHealthServiceProvider,
 			);
 
 			if ( version_compare( $wp_version, '5.5', '>=' ) ) {

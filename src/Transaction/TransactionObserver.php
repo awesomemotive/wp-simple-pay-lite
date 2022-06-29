@@ -322,7 +322,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'email'           => $checkout_session->customer_email,
 				'customer_id'     => $checkout_session->customer,
 				'subscription_id' => $checkout_session->subscription,
-				'status'		  => $checkout_session->status, // @phpstan-ignore-line
+				'status'		  => $checkout_session->status,
 				'application_fee' => $this->application_fee->has_application_fee(),
 			)
 		);

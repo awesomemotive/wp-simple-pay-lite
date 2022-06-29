@@ -356,6 +356,46 @@ class Checkout_Session_Controller extends Controller {
 			);
 		}
 
+		// Promotion codes.
+		$enable_coupons = 'yes' === simpay_get_saved_meta(
+			$form->id,
+			'_enable_promotion_codes',
+			'no'
+		);
+
+		if ( true === $enable_coupons ) {
+			$session_args['allow_promotion_codes'] = true;
+		}
+
+		// Tax ID.
+		$enable_tax_id = 'yes' === simpay_get_saved_meta(
+			$form->id,
+			'_enable_tax_id',
+			'no'
+		);
+
+		if ( true === $enable_tax_id ) {
+			$session_args['tax_id_collection'] = array(
+				'enabled' => true,
+			);
+		}
+
+		// Adjustable quantity.
+		$enable_quantity = 'yes' === simpay_get_saved_meta(
+			$form->id,
+			'_enable_quantity',
+			'no'
+		);
+
+		if ( true === $enable_quantity ) {
+			foreach ( $session_args['line_items'] as $k => $line_item ) {
+				$session_args['line_items'][ $k ]['adjustable_quantity'] = array(
+					'enabled' => true,
+					'minimum' => 1,
+				);
+			}
+		}
+
 		// Add PaymentIntent data.
 		$payment_intent_data = Payments\PaymentIntent\get_args_from_payment_form_request(
 			$form,

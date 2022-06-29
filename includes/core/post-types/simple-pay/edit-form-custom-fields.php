@@ -76,7 +76,7 @@ function get_custom_field_types() {
 			'active'     => true,
 			'repeatable' => false,
 		),
-		'tax_id'                 => array(
+		'tax_id'                  => array(
 			'label'      => esc_html__( 'Tax ID', 'stripe' ),
 			'type'       => 'tax_id',
 			'category'   => 'customer',
@@ -285,7 +285,7 @@ function get_custom_fields_grouped( $options = array() ) {
  *
  * Create a flat list sorted by each field's `order` key.
  *
- * @param int $post_id Current Payment Form ID.
+ * @param array $custom_fields Custom fields from the database.
  * @return array Flattened and sorted custom fields.
  */
 function get_custom_fields_flat( $custom_fields ) {
@@ -329,17 +329,109 @@ function get_custom_fields_flat( $custom_fields ) {
 }
 
 /**
- * Adds "Custom Fields" Payment Form settings tab content.
+ * Adds Lite education in the "Form Fields" payment form setting tab.
  *
- * Lite does not have true custom fields -- these are standard
- * form settings which are removed and replaced with true
- * custom fields in Pro.
- *
- * @since 3.8.0
+ * @since 4.4.7
  *
  * @param int $post_id Current Payment Form ID.
  */
-function add_custom_fields( $post_id ) {
+function __unstable_add_custom_fields( $post_id ) {
+	$field_groups = get_custom_fields_grouped();
+
+	if ( empty( $field_groups ) ) {
+		return;
+	}
+
+	$upgrade_title = esc_html__(
+		'Unlock Custom Fields',
+		'stripe'
+	);
+
+	$upgrade_description = __(
+		'We\'re sorry, adding custom fields is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+		'stripe'
+	);
+
+	$upgrade_url = simpay_pro_upgrade_url(
+		'form-custom-fields-settings',
+		'Custom fields'
+	);
+
+	$upgrade_purchased_url = simpay_docs_link(
+		'Custom fields (already purchased)',
+		'upgrading-wp-simple-pay-lite-to-pro',
+		'form-custom-field-settings',
+		true
+	);
+	?>
+
+	<table>
+		<tbody class="simpay-panel-section">
+			<tr class="simpay-panel-field">
+				<th>
+					<label for="custom-field-select">
+						<?php esc_html_e( 'Form Fields', 'stripe' ); ?>
+					</label>
+				</th>
+				<td style="border-bottom: 0;">
+					<div class="toolbar toolbar-top">
+						<select class="simpay-field-select">
+							<option value=""><?php esc_html_e( 'Choose a field&hellip;', 'stripe' ); ?></option>
+								<?php foreach ( $field_groups as $group => $options ) : ?>
+									<optgroup label="<?php echo esc_attr( $group ); ?>">
+										<?php foreach ( $options as $option ) : ?>
+											<option>
+												<?php echo esc_html( $option['label'] ); ?>
+											</option>
+										<?php endforeach; ?>
+									</optgroup>
+								<?php endforeach; ?>
+							</optgroup>
+						</select>
+
+						<button
+							id="simpay-add-field-lite"
+							type="button"
+							class="button add-field"
+							data-available="no"
+							data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
+							data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
+							data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
+							data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+						>
+							<?php esc_html_e( 'Add Field', 'stripe' ); ?>
+						</button>
+					</div>
+				</td>
+			</tr>
+			<tr class="simpay-panel-field">
+				<td>
+					<div id="simpay-custom-fields-wrap" class="panel simpay-metaboxes-wrapper">
+						<div class="simpay-custom-fields simpay-metaboxes ui-sortable">
+							<?php __unstable_payment_button_field( $post_id ); ?>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<?php
+}
+add_action(
+	'simpay_form_settings_meta_form_display_panel',
+	__NAMESPACE__ . '\\__unstable_add_custom_fields'
+);
+
+/**
+ * Outputs the "Payment Button" "custom" field for Lite.
+ *
+ * @since 4.4.7
+ *
+ * @param int $post_id Payment form ID.
+ * @return void
+ */
+function __unstable_payment_button_field( $post_id ) {
 	$counter = 1;
 	$fields  = simpay_get_payment_form_setting(
 		$post_id,
@@ -360,107 +452,107 @@ function add_custom_fields( $post_id ) {
 		: array();
 	?>
 
-<table>
-	<tbody class="simpay-panel-section">
-		<tr class="simpay-panel-field">
-			<th>
-				<label for="<?php echo esc_attr( 'simpay-payment-button-text-' . $counter ); ?>">
-					<?php esc_html_e( 'Button Text', 'stripe' ); ?>
-				</label>
-			</th>
-			<td>
-				<?php
-				simpay_print_field(
-					array(
-						'type'        => 'standard',
-						'subtype'     => 'text',
-						'name'        => '_simpay_custom_field[payment_button][' . $counter . '][text]',
-						'id'          => 'simpay-payment-button-text-' . $counter,
-						'value'       => isset( $field['text'] ) ? $field['text'] : '',
-						'class'       => array(
-							'simpay-field-text',
-							'simpay-label-input',
-						),
-						'attributes'  => array(
-							'data-field-key' => $counter,
-						),
-						'placeholder' => esc_attr__( 'Pay with Card', 'stripe' ),
-					)
-				);
-				?>
-			</td>
-		</tr>
+	<div class="postbox simpay-field-metabox simpay-metabox simpay-custom-field-payment-button" data-type="payment_button" style="border-radius: 4px;">
+		<h2 class="simpay-hndle" style="padding: 10px 12px;">
+			<span class="custom-field-dashicon dashicons dashicons-menu-alt2" style="cursor: move;"></span>
 
-		<tr class="simpay-panel-field">
-			<th>
-				<label for="<?php echo esc_attr( 'simpay-processing-button-text' . $counter ); ?>">
-					<?php esc_html_e( 'Button Processing Text', 'stripe' ); ?>
-				</label>
-			</th>
-			<td>
-				<?php
-				simpay_print_field(
-					array(
-						'type'        => 'standard',
-						'subtype'     => 'text',
-						'name'        => '_simpay_custom_field[payment_button][' . $counter . '][processing_text]',
-						'id'          => 'simpay-processing-button-text-' . $counter,
-						'value'       => isset( $field['processing_text'] ) ? $field['processing_text'] : '',
-						'class'       => array(
-							'simpay-field-text',
-							'simpay-label-input',
-						),
-						'attributes'  => array(
-							'data-field-key' => $counter,
-						),
-						'placeholder' => esc_attr__( 'Please Wait...', 'stripe' ),
-					)
-				);
-				?>
-			</td>
-		</tr>
+			<strong class="simpay-price-label-display">
+				<?php esc_html_e( 'Payment Button', 'stripe' ); ?>
+			</strong>
+		</h2>
 
-		<tr class="simpay-panel-field">
-			<th>
-				<label for="<?php echo esc_attr( 'simpay-payment-button-style-' . $counter ); ?>">
-					<?php esc_html_e( 'Button Style', 'stripe' ); ?>
-				</label>
-			</th>
-			<td>
-				<?php
-				simpay_print_field(
-					array(
-						'type'    => 'radio',
-						'name'    => '_simpay_custom_field[payment_button][' . $counter . '][style]',
-						'id'      => esc_attr( 'simpay-payment-button-style-' . $counter ),
-						'value'   => isset( $field['style'] )
-							? $field['style']
-							: 'stripe',
-						'class'   => array( 'simpay-multi-toggle' ),
-						'options' => array(
-							'stripe' => esc_html__( 'Stripe blue', 'stripe' ),
-							'none'   => esc_html__( 'Default', 'stripe' ),
-						),
-						'inline'  => 'inline',
-					)
-				);
-				?>
-			</td>
-		</tr>
-	</tbody>
-</table>
+		<div class="simpay-field-data simpay-metabox-content inside" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
+			<table>
+				<tbody>
+					<tr class="simpay-panel-field">
+						<th>
+							<label for="<?php echo esc_attr( 'simpay-payment-button-text-' . $counter ); ?>">
+								<?php esc_html_e( 'Button Text', 'stripe' ); ?>
+							</label>
+						</th>
+						<td>
+							<?php
+							simpay_print_field(
+								array(
+									'type'        => 'standard',
+									'subtype'     => 'text',
+									'name'        => '_simpay_custom_field[payment_button][' . $counter . '][text]',
+									'id'          => 'simpay-payment-button-text-' . $counter,
+									'value'       => isset( $field['text'] ) ? $field['text'] : '',
+									'class'       => array(
+										'simpay-field-text',
+										'simpay-label-input',
+									),
+									'attributes'  => array(
+										'data-field-key' => $counter,
+									),
+									'placeholder' => esc_attr__( 'Pay with Card', 'stripe' ),
+								)
+							);
+							?>
+						</td>
+					</tr>
+
+					<tr class="simpay-panel-field">
+						<th>
+							<label for="<?php echo esc_attr( 'simpay-processing-button-text' . $counter ); ?>">
+								<?php esc_html_e( 'Button Processing Text', 'stripe' ); ?>
+							</label>
+						</th>
+						<td>
+							<?php
+							simpay_print_field(
+								array(
+									'type'        => 'standard',
+									'subtype'     => 'text',
+									'name'        => '_simpay_custom_field[payment_button][' . $counter . '][processing_text]',
+									'id'          => 'simpay-processing-button-text-' . $counter,
+									'value'       => isset( $field['processing_text'] ) ? $field['processing_text'] : '',
+									'class'       => array(
+										'simpay-field-text',
+										'simpay-label-input',
+									),
+									'attributes'  => array(
+										'data-field-key' => $counter,
+									),
+									'placeholder' => esc_attr__( 'Please Wait...', 'stripe' ),
+								)
+							);
+							?>
+						</td>
+					</tr>
+
+					<tr class="simpay-panel-field">
+						<th>
+							<label for="<?php echo esc_attr( 'simpay-payment-button-style-' . $counter ); ?>">
+								<?php esc_html_e( 'Button Style', 'stripe' ); ?>
+							</label>
+						</th>
+						<td style="border-bottom: 0;">
+							<?php
+							simpay_print_field(
+								array(
+									'type'    => 'radio',
+									'name'    => '_simpay_custom_field[payment_button][' . $counter . '][style]',
+									'id'      => esc_attr( 'simpay-payment-button-style-' . $counter ),
+									'value'   => isset( $field['style'] )
+										? $field['style']
+										: 'stripe',
+									'class'   => array( 'simpay-multi-toggle' ),
+									'options' => array(
+										'stripe' => esc_html__( 'Stripe blue', 'stripe' ),
+										'none'   => esc_html__( 'Default', 'stripe' ),
+									),
+									'inline'  => 'inline',
+								)
+							);
+							?>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 	<?php
-	/**
-	 * Allows further content after "Custom" Fields" Payment Form
-	 * settings tab content.
-	 *
-	 * @since 3.0.0
-	 */
-	do_action( 'simpay_admin_after_custom_fields' );
 }
-add_action(
-	'simpay_form_settings_meta_payment_options_panel',
-	__NAMESPACE__ . '\\add_custom_fields',
-	15
-);

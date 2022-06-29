@@ -40,6 +40,7 @@ if (
 		<?php
 		echo wp_kses(
 			sprintf(
+				/* translators: Plugin name. */
 				__( 'Recommended Plugin: %s', 'stripe' ),
 				'<strong>' . esc_html( $plugin_name ) . '</strong>'
 			),

@@ -47,6 +47,10 @@ class AdminBarSubscriber implements SubscriberInterface {
 	 * {@inheritdoc}
 	 */
 	public function get_subscribed_events() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return array();
+		}
+
 		return array(
 			'admin_bar_menu' => array( 'add_menu_item', 999 ),
 		);

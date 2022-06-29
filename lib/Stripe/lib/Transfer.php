@@ -30,7 +30,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property string|\SimplePay\Vendor\Stripe\Charge $destination_payment If the destination is a SimplePay\Vendor\Stripe account, this will be the ID of the payment that the destination account received for the transfer.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
- * @property \SimplePay\Vendor\Stripe\Collection $reversals A list of reversals that have been applied to the transfer.
+ * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\TransferReversal> $reversals A list of reversals that have been applied to the transfer.
  * @property bool $reversed Whether the transfer has been fully reversed. If the transfer is only partially reversed, this attribute will still be false.
  * @property null|string|\SimplePay\Vendor\Stripe\Charge $source_transaction ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.
  * @property null|string $source_type The source balance this transfer came from. One of <code>card</code>, <code>fpx</code>, or <code>bank_account</code>.
@@ -77,7 +77,7 @@ class Transfer extends ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection the list of transfer reversals
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\TransferReversal> the list of transfer reversals
      */
     public static function allReversals($id, $params = null, $opts = null)
     {

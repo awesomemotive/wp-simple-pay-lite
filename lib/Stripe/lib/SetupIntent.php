@@ -43,11 +43,13 @@ namespace SimplePay\Vendor\Stripe;
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property null|string|\SimplePay\Vendor\Stripe\StripeObject $application ID of the Connect application that created the SetupIntent.
+ * @property bool $attach_to_self <p>If present, the SetupIntent's payment method will be attached to the in-context SimplePay\Vendor\Stripe Account.</p><p>It can only be used for this SimplePay\Vendor\Stripe Account’s own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.</p>
  * @property null|string $cancellation_reason Reason for cancellation of this SetupIntent, one of <code>abandoned</code>, <code>requested_by_customer</code>, or <code>duplicate</code>.
- * @property null|string $client_secret <p>The client secret of this SetupIntent. Used for client-side retrieval using a publishable key.</p><p>The client secret can be used to complete payment setup from your frontend. It should not be stored, logged, embedded in URLs, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.</p>
+ * @property null|string $client_secret <p>The client secret of this SetupIntent. Used for client-side retrieval using a publishable key.</p><p>The client secret can be used to complete payment setup from your frontend. It should not be stored, logged, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.</p>
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|string|\SimplePay\Vendor\Stripe\Customer $customer <p>ID of the Customer this SetupIntent belongs to, if one exists.</p><p>If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.</p>
  * @property null|string $description An arbitrary string attached to the object. Often useful for displaying to users.
+ * @property null|string[] $flow_directions <p>Indicates the directions of money movement for which this payment method is intended to be used.</p><p>Include <code>inbound</code> if you intend to use the payment method as the origin to pull funds from. Include <code>outbound</code> if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.</p>
  * @property null|\SimplePay\Vendor\Stripe\ErrorObject $last_setup_error The error encountered in the previous SetupIntent confirmation.
  * @property null|string|\SimplePay\Vendor\Stripe\SetupAttempt $latest_attempt The most recent SetupAttempt for this SetupIntent.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
@@ -106,6 +108,23 @@ class SetupIntent extends ApiResource
     public function confirm($params = null, $opts = null)
     {
         $url = $this->instanceUrl() . '/confirm';
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
+        $this->refreshFrom($response, $opts);
+
+        return $this;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SetupIntent the verified setup intent
+     */
+    public function verifyMicrodeposits($params = null, $opts = null)
+    {
+        $url = $this->instanceUrl() . '/verify_microdeposits';
         list($response, $opts) = $this->_request('post', $url, $params, $opts);
         $this->refreshFrom($response, $opts);
 

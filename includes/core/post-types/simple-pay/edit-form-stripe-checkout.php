@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param int $post_id Current Payment Form ID.
  */
 function add_stripe_checkout( $post_id ) {
+	$license = simpay_get_license();
 	?>
 <table>
 	<tbody class="simpay-panel-section">
@@ -45,7 +46,7 @@ function add_stripe_checkout( $post_id ) {
 					<?php esc_html_e( 'Image', 'stripe' ); ?>
 				</label>
 			</th>
-			<td>
+			<td style="border-bottom: 0; padding-bottom: 0;">
 				<?php
 				$image_url = simpay_get_payment_form_setting(
 					$post_id,
@@ -73,40 +74,13 @@ function add_stripe_checkout( $post_id ) {
 				<button type="button" class="simpay-media-uploader button button-secondary" style="margin-top: 4px;"><?php esc_html_e( 'Choose Image', 'stripe' ); ?></button>
 
 				<p class="description">
-					<?php esc_html_e( 'Image to show on the Stripe.com Checkout page.', 'stripe' ); ?>
+					<?php esc_html_e( 'Displayed conditionally based on payment form settings.', 'stripe' ); ?>
 				</p>
 
 				<div class="simpay-image-preview-wrap <?php echo( empty( $image_url ) ? 'simpay-panel-hidden' : '' ); ?>">
 					<a href="#" class="simpay-remove-image-preview simpay-remove-icon" aria-label="<?php esc_attr_e( 'Remove image', 'stripe' ); ?>" title="<?php esc_attr_e( 'Remove image', 'stripe' ); ?>"></a>
 					<img src="<?php echo esc_attr( $image_url ); ?>" class="simpay-image-preview" />
 				</div>
-			</td>
-		</tr>
-
-		<tr class="simpay-panel-field">
-			<th>
-				<?php esc_html_e( 'Submit Button Color', 'stripe' ); ?>
-			</th>
-			<td>
-				<p class="description">
-					<?php
-					echo wp_kses(
-						sprintf(
-							/* translators: %1$s Anchor opening tag, do not translate. %2$s Closing anchor tag, do not translate. */
-							__( 'Adjust the Stripe Checkout submit button color in the Stripe %1$sBranding settings%2$s', 'stripe' ),
-							'<a href="https://dashboard.stripe.com/account/branding" target="_blank" rel="noopener noreferrer">',
-							'</a>'
-						),
-						array(
-							'a' => array(
-								'href'   => true,
-								'target' => true,
-								'rel'    => true,
-							),
-						)
-					);
-					?>
-				</p>
 			</td>
 		</tr>
 
@@ -137,12 +111,32 @@ function add_stripe_checkout( $post_id ) {
 							'pay'    => esc_html__( 'Pay', 'stripe' ),
 						),
 						'description' => esc_html__(
-							'Describes the type of transaction being performed by Checkout in order to customize relevant text on the page, such as the submit button.',
+							'Determines relevant text on the Stripe.com Checkout page, such as the submit button.',
 							'stripe'
 						),
 					)
 				);
 				?>
+
+				<p class="description">
+					<?php
+					echo wp_kses(
+						sprintf(
+							/* translators: %1$s Anchor opening tag, do not translate. %2$s Closing anchor tag, do not translate. */
+							__( 'Adjust the submit button color in the Stripe %1$sBranding settings%2$s', 'stripe' ),
+							'<a href="https://dashboard.stripe.com/account/branding" target="_blank" rel="noopener noreferrer">',
+							'</a>'
+						),
+						array(
+							'a' => array(
+								'href'   => true,
+								'target' => true,
+								'rel'    => true,
+							),
+						)
+					);
+					?>
+				</p>
 			</td>
 		</tr>
 
@@ -160,7 +154,9 @@ function add_stripe_checkout( $post_id ) {
 
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_enable_shipping_address"><?php esc_html_e( 'Require Shipping Address', 'stripe' ); ?></label>
+				<strong>
+					<?php esc_html_e( 'Customer Information', 'stripe' ); ?>
+				</strong>
 			</th>
 			<td>
 				<?php
@@ -173,27 +169,19 @@ function add_stripe_checkout( $post_id ) {
 
 				simpay_print_field(
 					array(
-						'type'        => 'checkbox',
-						'name'        => '_enable_shipping_address',
-						'id'          => '_enable_shipping_address',
-						'value'       => $enable_shipping_address,
-						'description' => esc_html__(
-							'If enabled, Checkout will always collect the customer\'s shipping address.',
+						'type'  => 'checkbox',
+						'name'  => '_enable_shipping_address',
+						'id'    => '_enable_shipping_address',
+						'text'  => esc_html__(
+							'Collect Shipping Address',
 							'stripe'
 						),
+						'value' => $enable_shipping_address,
 					)
 				);
 				?>
-			</td>
-		</tr>
+				<div style="height: 8px;"></div>
 
-		<tr class="simpay-panel-field">
-			<th>
-				<label for="_enable_billing_address">
-					<?php esc_html_e( 'Require Billing Address', 'stripe' ); ?>
-				</label>
-			</th>
-			<td>
 				<?php
 				$enable_billing_address = simpay_get_payment_form_setting(
 					$post_id,
@@ -204,27 +192,19 @@ function add_stripe_checkout( $post_id ) {
 
 				simpay_print_field(
 					array(
-						'type'        => 'checkbox',
-						'name'        => '_enable_billing_address',
-						'id'          => '_enable_billing_address',
-						'value'       => $enable_billing_address,
-						'description' => esc_html__(
-							'If enabled, Checkout will always collect the customer\'s billing address. If not, Checkout will only collect the billing address when necessary.',
+						'type'  => 'checkbox',
+						'name'  => '_enable_billing_address',
+						'id'    => '_enable_billing_address',
+						'text'  => esc_html__(
+							'Collect Billing Address',
 							'stripe'
 						),
+						'value' => $enable_billing_address,
 					)
 				);
 				?>
-			</td>
-		</tr>
+				<div style="height: 8px;"></div>
 
-		<tr class="simpay-panel-field">
-			<th>
-				<label for="_enable_phone">
-					<?php esc_html_e( 'Require Phone Number', 'stripe' ); ?>
-				</label>
-			</th>
-			<td>
 				<?php
 				$enable_phone = simpay_get_payment_form_setting(
 					$post_id,
@@ -235,17 +215,146 @@ function add_stripe_checkout( $post_id ) {
 
 				simpay_print_field(
 					array(
-						'type'        => 'checkbox',
-						'name'        => '_enable_phone',
-						'id'          => '_enable_phone',
-						'value'       => $enable_phone,
-						'description' => esc_html__(
-							'If enabled, Checkout will always collect the customer\'s phone number.',
+						'type'  => 'checkbox',
+						'name'  => '_enable_phone',
+						'id'    => '_enable_phone',
+						'value' => $enable_phone,
+						'text'  => esc_html__(
+							'Collect Phone Number',
 							'stripe'
 						),
 					)
 				);
 				?>
+				<div style="height: 8px;"></div>
+
+				<?php
+				$license = simpay_get_license();
+
+				$enable_tax_id = simpay_get_payment_form_setting(
+					$post_id,
+					'_enable_tax_id',
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
+				$upgrade_title = __(
+					'Unlock Customer Tax IDs',
+					'stripe'
+				);
+
+				$upgrade_description = __(
+					'We\'re sorry, collecting customer tax IDs is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+					'stripe'
+				);
+
+				$upgrade_url = simpay_pro_upgrade_url(
+					'form-stripe-checkout-settings',
+					'Stripe Checkout tax ID'
+				);
+
+				$upgrade_purchased_url = simpay_docs_link(
+					'Stripe Checkout tax ID (already purchased)',
+					'upgrading-wp-simple-pay-lite-to-pro',
+					'form-stripe-checkout-settings',
+					true
+				);
+				?>
+
+				<label for="_enable_tax_id" class="simpay-field-bool">
+					<input
+						name="_enable_tax_id"
+						type="checkbox"
+						id="_enable_tax_id"
+						class="simpay-field simpay-field-checkbox simpay-field simpay-field-checkboxes"
+						value="yes"
+						<?php checked( true, 'yes' === $enable_tax_id ); ?>
+						data-available="<?php echo $license->is_lite() ? 'no' : 'yes'; ?>"
+						data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
+						data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
+						data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
+						data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+					/><?php esc_html_e( 'Collect Tax ID', 'stripe' ); ?>
+				</label>
+			</td>
+		</tr>
+
+		<tr class="simpay-panel-field">
+			<th>
+				<strong><?php esc_html_e( 'Other', 'stripe' ); ?></strong>
+			</th>
+			<td>
+				<?php
+				$enable_quantity = simpay_get_payment_form_setting(
+					$post_id,
+					'_enable_quantity',
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
+				simpay_print_field(
+					array(
+						'type'  => 'checkbox',
+						'name'  => '_enable_quantity',
+						'id'    => '_enable_quantity',
+						'value' => $enable_quantity,
+						'text'  => esc_html__(
+							'Allow quantity adjustment',
+							'stripe'
+						),
+					)
+				);
+				?>
+				<div style="height: 8px;"></div>
+
+				<?php
+				$enable_promotion_codes = simpay_get_payment_form_setting(
+					$post_id,
+					'_enable_promotion_codes',
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
+				$upgrade_title = __(
+					'Unlock Coupon Codes',
+					'stripe'
+				);
+
+				$upgrade_description = __(
+					'We\'re sorry, using coupons with is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+					'stripe'
+				);
+
+				$upgrade_url = simpay_pro_upgrade_url(
+					'form-stripe-checkout-settings',
+					'Stripe Checkout coupons'
+				);
+
+				$upgrade_purchased_url = simpay_docs_link(
+					'Stripe Checkout coupons (already purchased)',
+					$license->is_lite()
+						? 'upgrading-wp-simple-pay-lite-to-pro'
+						: 'activate-wp-simple-pay-pro-license',
+					'form-stripe-checkout-settings',
+					true
+				);
+				?>
+
+				<label for="_enable_promotion_codes" class="simpay-field-bool">
+					<input
+						name="_enable_promotion_codes"
+						type="checkbox"
+						id="_enable_promotion_codes"
+						class="simpay-field simpay-field-checkbox simpay-field simpay-field-checkboxes"
+						value="yes"
+						<?php checked( true, 'yes' === $enable_promotion_codes ); ?>
+						data-available="<?php echo $license->is_lite() ? 'no' : 'yes'; ?>"
+						data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
+						data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
+						data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
+						data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+					/><?php esc_html_e( 'Allow coupons', 'stripe' ); ?>
+				</label>
 			</td>
 		</tr>
 
@@ -272,33 +381,3 @@ function add_stripe_checkout( $post_id ) {
 	do_action( 'simpay_admin_after_stripe_checkout' );
 }
 add_action( 'simpay_form_settings_meta_stripe_checkout_panel', __NAMESPACE__ . '\\add_stripe_checkout' );
-
-/**
- * Outputs "Company Name" and "Item Description" fields in the
- * "Stripe Checkout Display" Payment Form settings tab.
- *
- * @since 3.8.0
- *
- * @param int $post_id Current Payment Form ID.
- */
-function add_company_info( $post_id ) {
-	_doing_it_wrong(
-		__FUNCTION__,
-		esc_html__( 'No longer used.', 'stripe' ),
-		'4.1.0'
-	);
-}
-
-/**
- * Outputs a link back to "Custom Form Fields" when viewing the
- * "Stripe Checkout Display" Payment Form settings tab.
- *
- * @since 3.8.0
- */
-function add_custom_form_fields_link() {
-	_doing_it_wrong(
-		__FUNCTION__,
-		esc_html__( 'No longer used.', 'stripe' ),
-		'4.1.0'
-	);
-}

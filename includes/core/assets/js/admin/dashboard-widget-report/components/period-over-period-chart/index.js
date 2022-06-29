@@ -40,7 +40,7 @@ import {
 import { useDatasets, useTooltip } from './hooks';
 import { Tooltip as TooltipComponent, XAxisRange } from './components';
 
-function LineChart( { report } ) {
+function LineChart( { user, report } ) {
 	const chartRef = useRef( null );
 	const [ tooltip, setTooltip ] = useTooltip();
 	const datasets = useDatasets( report ? report.chart.datasets : [] );
@@ -50,7 +50,7 @@ function LineChart( { report } ) {
 		height: '300px',
 	};
 
-	if ( ! report ) {
+	if ( ! report || ! user ) {
 		return (
 			<div
 				style={ {

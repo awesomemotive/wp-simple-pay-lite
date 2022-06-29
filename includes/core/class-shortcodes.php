@@ -65,10 +65,14 @@ class Shortcodes {
 	public function print_public_form( $attributes ) {
 		$args = shortcode_atts(
 			array(
-				'id' => null,
+				'id'            => null,
+				'instanceid'    => null,
+				'isbuttonblock' => '0',
 			),
 			$attributes
 		);
+
+		$args['isbuttonblock'] = (bool) $args['isbuttonblock'];
 
 		$id   = absint( $args['id'] );
 		$html = '';
@@ -81,7 +85,7 @@ class Shortcodes {
 				return '';
 			}
 
-			$html .= self::form_html( $id );
+			$html .= self::form_html( $id, $args );
 		}
 
 		return $html;
@@ -92,10 +96,11 @@ class Shortcodes {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param int $form_id Payment Form ID.
+	 * @param int                  $form_id Payment Form ID.
+	 * @param array<string, mixed> $atts Shortcode attributes.
 	 * @return string
 	 */
-	private function form_html( $form_id ) {
+	private function form_html( $form_id, $atts ) {
 		if ( false === simpay_is_rest_api_enabled() ) {
 			return wpautop(
 				esc_html__(
@@ -159,6 +164,10 @@ class Shortcodes {
 				ob_start();
 
 				$form->html();
+
+				if ( true === $atts['isbuttonblock'] ) {
+					$this->print_button_block_script( $form_id, $atts );
+				}
 
 				return ob_get_clean();
 			} else {
@@ -302,5 +311,33 @@ class Shortcodes {
 		);
 
 		return $before_html . $content . $after_html;
+	}
+
+	/**
+	 * Prints the inline script to launch a payment form from a core button block.
+	 *
+	 * @since 4.4.7
+	 *
+	 * @param int $form_id Payment form ID.
+	 * @param array<string, mixed> $atts Shortcode attributes.
+	 * @return void
+	 */
+	private function print_button_block_script( $form_id, $atts ) {
+		printf(
+			'<script>
+				( function( $ ) {
+					$( \'#simpay-block-button-%1$s\' ).parent().find( \'.wp-block-button__link\' ).click( function( e ) {
+						e.preventDefault();
+						$( this ).addClass( \'is-busy\' );
+						$( \'#simpay-block-button-%1$s .simpay-payment-btn\' )
+							.click();
+						$( \'#simpay-block-button-%1$s #simpay-modal-control-%2$d\' )
+							.click();
+					} );
+				} )( jQuery );
+			</script>',
+			esc_js( $atts['instanceid'] ),
+			esc_js( $form_id )
+		);
 	}
 }

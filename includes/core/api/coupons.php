@@ -35,12 +35,30 @@ function create( $coupon_args, $api_request_args = array() ) {
 	$defaults    = array();
 	$coupon_args = wp_parse_args( $coupon_args, $defaults );
 
-	return Stripe_API::request(
+	// Create a Coupon.
+	$coupon = Stripe_API::request(
 		'Coupon',
 		'create',
 		$coupon_args,
 		$api_request_args
 	);
+
+	// Also create a promotional code.
+	// Promotional code is never exposed to the user, but is needed to redeem
+	// a coupon with Stripe Checkout.
+	Stripe_API::request(
+		'PromotionCode',
+		'create',
+		array(
+			'coupon'          => $coupon->id,
+			'code'            => $coupon->name,
+			'expires_at'      => $coupon->redeem_by,
+			'max_redemptions' => $coupon->max_redemptions,
+		),
+		$api_request_args
+	);
+
+	return $coupon;
 }
 
 /**

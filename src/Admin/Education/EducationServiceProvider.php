@@ -43,7 +43,6 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			'admin-education-plugin-customers-settings',
 			'admin-education-plugin-taxes-settings',
 			'admin-education-plugin-coupons',
-			'admin-education-payment-form-settings',
 			'admin-education-settings-upgrade',
 			'admin-education-license-settings-upgrade',
 			'admin-education-instant-payouts',
@@ -62,13 +61,13 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			UpgradeModal::class
 		);
 
-		// Payment Forms: Stripe Connect
+		// Payment Forms: Stripe Connect.
 		$container->share(
 			'admin-education-payment-forms-stripe-connect',
 			PaymentFormsStripeConnect::class
 		);
 
-		// Payment Forms: First Form
+		// Payment Forms: First Form.
 		$container->share(
 			'admin-education-payment-forms-first-form',
 			PaymentFormsFirstForm::class
@@ -111,13 +110,6 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			$container->share(
 				'admin-education-plugin-coupons',
 				PluginCouponMenuItem::class
-			)
-				->withArgument( $license );
-
-			// "Form Fields" payment form settings teaser.
-			$container->share(
-				'admin-education-payment-form-settings',
-				PaymentFormSettings::class
 			)
 				->withArgument( $license );
 

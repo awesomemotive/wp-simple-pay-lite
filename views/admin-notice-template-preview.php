@@ -21,6 +21,7 @@ $template_name = isset( $template['name'] ) ? $template['name'] : '';
 		<?php
 		echo wp_kses(
 			sprintf(
+				/* translators: %1$s Payment form template name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate. */
 				__(
 					'You are creating a payment form using the "%1$s" template. %2$sUse a different template &rarr;%3$s',
 					'stripe'

@@ -13,6 +13,7 @@ namespace SimplePay\Vendor\Stripe;
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
+ * @property null|string|\SimplePay\Vendor\Stripe\StripeObject $application ID of the Connect Application that created the subscription.
  * @property null|float $application_fee_percent A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's SimplePay\Vendor\Stripe account.
  * @property \SimplePay\Vendor\Stripe\StripeObject $automatic_tax
  * @property int $billing_cycle_anchor Determines the date of the first full invoice, and, for plans with <code>month</code> or <code>year</code> intervals, the day of the month for subsequent invoices.
@@ -29,9 +30,10 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string|\SimplePay\Vendor\Stripe\PaymentMethod $default_payment_method ID of the default payment method for the subscription. It must belong to the customer associated with the subscription. This takes precedence over <code>default_source</code>. If neither are set, invoices will use the customer's <a href="https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method">invoice_settings.default_payment_method</a> or <a href="https://stripe.com/docs/api/customers/object#customer_object-default_source">default_source</a>.
  * @property null|string|\SimplePay\Vendor\Stripe\Account|\SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source $default_source ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If <code>default_payment_method</code> is also set, <code>default_payment_method</code> will take precedence. If neither are set, invoices will use the customer's <a href="https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method">invoice_settings.default_payment_method</a> or <a href="https://stripe.com/docs/api/customers/object#customer_object-default_source">default_source</a>.
  * @property null|\SimplePay\Vendor\Stripe\TaxRate[] $default_tax_rates The tax rates that will apply to any subscription item that does not have <code>tax_rates</code> set. Invoices created will have their <code>default_tax_rates</code> populated from the subscription.
+ * @property null|string $description The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in SimplePay\Vendor\Stripe surfaces.
  * @property null|\SimplePay\Vendor\Stripe\Discount $discount Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis.
  * @property null|int $ended_at If the subscription has ended, the date the subscription ended.
- * @property \SimplePay\Vendor\Stripe\Collection $items List of subscription items, each with an attached price.
+ * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\SubscriptionItem> $items List of subscription items, each with an attached price.
  * @property null|string|\SimplePay\Vendor\Stripe\Invoice $latest_invoice The most recent invoice this subscription has generated.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -44,6 +46,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string|\SimplePay\Vendor\Stripe\SubscriptionSchedule $schedule The schedule attached to the subscription
  * @property int $start_date Date when the subscription was first created. The date might differ from the <code>created</code> date due to backdating.
  * @property string $status <p>Possible values are <code>incomplete</code>, <code>incomplete_expired</code>, <code>trialing</code>, <code>active</code>, <code>past_due</code>, <code>canceled</code>, or <code>unpaid</code>.</p><p>For <code>collection_method=charge_automatically</code> a subscription moves into <code>incomplete</code> if the initial payment attempt fails. A subscription in this state can only have metadata and default_source updated. Once the first invoice is paid, the subscription moves into an <code>active</code> state. If the first invoice is not paid within 23 hours, the subscription transitions to <code>incomplete_expired</code>. This is a terminal state, the open invoice will be voided and no further invoices will be generated.</p><p>A subscription that is currently in a trial period is <code>trialing</code> and moves to <code>active</code> when the trial period is over.</p><p>If subscription <code>collection_method=charge_automatically</code> it becomes <code>past_due</code> when payment to renew it fails and <code>canceled</code> or <code>unpaid</code> (depending on your subscriptions settings) when SimplePay\Vendor\Stripe has exhausted all payment retry attempts.</p><p>If subscription <code>collection_method=send_invoice</code> it becomes <code>past_due</code> when its invoice is not paid by the due date, and <code>canceled</code> or <code>unpaid</code> if it is still not paid by an additional deadline after that. Note that when a subscription has a status of <code>unpaid</code>, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.</p>
+ * @property null|string|\SimplePay\Vendor\Stripe\TestHelpers\TestClock $test_clock ID of the test clock this subscription belongs to.
  * @property null|int $trial_end If the subscription has a trial, the end of that trial.
  * @property null|int $trial_start If the subscription has a trial, the beginning of that trial.
  */
@@ -54,9 +57,11 @@ class Subscription extends ApiResource
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Retrieve;
+    use ApiOperations\Search;
     use ApiOperations\Update;
 
     const PAYMENT_BEHAVIOR_ALLOW_INCOMPLETE = 'allow_incomplete';
+    const PAYMENT_BEHAVIOR_DEFAULT_INCOMPLETE = 'default_incomplete';
     const PAYMENT_BEHAVIOR_ERROR_IF_INCOMPLETE = 'error_if_incomplete';
     const PAYMENT_BEHAVIOR_PENDING_IF_INCOMPLETE = 'pending_if_incomplete';
 
@@ -114,5 +119,22 @@ class Subscription extends ApiResource
         $url = $this->instanceUrl() . '/discount';
         list($response, $opts) = $this->_request('delete', $url, $params, $opts);
         $this->refreshFrom(['discount' => null], $opts, true);
+
+        return $this;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SearchResult<Subscription> the subscription search results
+     */
+    public static function search($params = null, $opts = null)
+    {
+        $url = '/v1/subscriptions/search';
+
+        return self::_searchResource($url, $params, $opts);
     }
 }

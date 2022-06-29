@@ -52,6 +52,10 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 	 * {@inheritdoc}
 	 */
 	public function can_register() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return false;
+		}
+
 		global $wp_version;
 
 		// If the minimum WordPress for the report is met there will always be something to show.

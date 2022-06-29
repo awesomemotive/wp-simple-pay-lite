@@ -34,6 +34,7 @@ namespace SimplePay\Vendor\Stripe\Issuing;
  * @property \SimplePay\Vendor\Stripe\StripeObject[] $request_history History of every time <code>pending_request</code> was approved/denied, either by you directly or by SimplePay\Vendor\Stripe (e.g. based on your <code>spending_controls</code>). If the merchant changes the authorization by performing an <a href="https://stripe.com/docs/issuing/purchases/authorizations">incremental authorization</a>, you can look at this field to see the previous requests for the authorization.
  * @property string $status The current status of the authorization in its lifecycle.
  * @property \SimplePay\Vendor\Stripe\Issuing\Transaction[] $transactions List of <a href="https://stripe.com/docs/api/issuing/transactions">transactions</a> associated with this authorization.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $treasury <a href="https://stripe.com/docs/api/treasury">Treasury</a> details related to this authorization if it was created on a <a href="https://stripe.com/docs/api/treasury/financial_accounts">FinancialAccount</a>.
  * @property \SimplePay\Vendor\Stripe\StripeObject $verification_data
  * @property null|string $wallet The digital wallet used for this authorization. One of <code>apple_pay</code>, <code>google_pay</code>, or <code>samsung_pay</code>.
  */
@@ -51,7 +52,7 @@ class Authorization extends \SimplePay\Vendor\Stripe\ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Authorization the approved authorization
+     * @return \SimplePay\Vendor\Stripe\Issuing\Authorization the approved authorization
      */
     public function approve($params = null, $opts = null)
     {
@@ -68,7 +69,7 @@ class Authorization extends \SimplePay\Vendor\Stripe\ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Authorization the declined authorization
+     * @return \SimplePay\Vendor\Stripe\Issuing\Authorization the declined authorization
      */
     public function decline($params = null, $opts = null)
     {

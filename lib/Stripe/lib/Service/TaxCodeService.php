@@ -7,7 +7,7 @@ namespace SimplePay\Vendor\Stripe\Service;
 class TaxCodeService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
-     * A list of <a href="https://stripe.com/docs/tax/tax-codes">all tax codes
+     * A list of <a href="https://stripe.com/docs/tax/tax-categories">all tax codes
      * available</a> to add to Products in order to allow specific tax calculations.
      *
      * @param null|array $params
@@ -15,7 +15,7 @@ class TaxCodeService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\TaxCode>
      */
     public function all($params = null, $opts = null)
     {

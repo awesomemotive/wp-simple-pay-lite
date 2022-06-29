@@ -18,6 +18,7 @@ namespace SimplePay\Vendor\Stripe\Issuing;
  * @property string $cvc The card's CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with <a href="https://stripe.com/docs/api/expanding_objects">the <code>expand</code> parameter</a>. Additionally, it's only available via the <a href="https://stripe.com/docs/api/issuing/cards/retrieve">&quot;Retrieve a card&quot; endpoint</a>, not via &quot;List all cards&quot; or any other endpoint.
  * @property int $exp_month The expiration month of the card.
  * @property int $exp_year The expiration year of the card.
+ * @property null|string $financial_account The financial account this card is attached to.
  * @property string $last4 The last 4 digits of the card number.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -29,6 +30,7 @@ namespace SimplePay\Vendor\Stripe\Issuing;
  * @property \SimplePay\Vendor\Stripe\StripeObject $spending_controls
  * @property string $status Whether authorizations can be approved on this card.
  * @property string $type The type of the card.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $wallets Information relating to digital wallets (like Apple Pay and Google Pay).
  */
 class Card extends \SimplePay\Vendor\Stripe\ApiResource
 {

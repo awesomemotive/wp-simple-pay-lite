@@ -55,7 +55,7 @@ let spAdmin = {};
 				'_success_redirect_type',
 				'_subscription_type',
 				'_subscription_custom_amount',
-				'_form_display_type',
+				'_form_type',
 				'.simpay-total-amount-label-recurring',
 				'.simpay-total-amount-label-tax',
 				'.simpay-shipping-address',
@@ -70,7 +70,7 @@ let spAdmin = {};
 				let isCustomFieldToggle = false;
 
 				if ( '.' !== input.substring( 0, 1 ) ) {
-					inputEl = `input[name="${ input }"]`;
+					inputEl = `[name="${ input }"]`;
 				} else {
 					inputEl = input;
 					isCustomFieldToggle = true;
@@ -121,6 +121,10 @@ let spAdmin = {};
 
 				// Trigger initial state.
 				$( inputEl ).filter( ':checked' ).trigger( 'change' );
+
+				if ( $( inputEl ).is( 'select' ) ) {
+					$( inputEl ).trigger( 'change' );
+				}
 			} );
 
 			// Stripe Connect toggle notice.

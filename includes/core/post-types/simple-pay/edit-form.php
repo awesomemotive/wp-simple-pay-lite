@@ -399,7 +399,7 @@ function settings_tabs( $post ) {
 	$tabs['form_display'] = array(
 		'label'  => esc_html__( 'Form Fields', 'stripe' ),
 		'target' => 'custom-form-fields-settings-panel',
-		'icon'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20,3H4C2.897,3,2,3.897,2,5v14c0,1.103,0.897,2,2,2h16c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z M4,19V5h16 l0.002,14H4z"></path><path d="M6 7H18V9H6zM6 11H18V13H6zM6 15H12V17H6z"></path></svg>',
+		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>',
 	);
 
 	if ( has_action( 'simpay_form_settings_meta_subscription_display_panel' ) ) {
@@ -412,7 +412,7 @@ function settings_tabs( $post ) {
 	$tabs['stripe_checkout'] = array(
 		'label'  => esc_html__( 'Stripe Checkout', 'stripe' ),
 		'target' => 'stripe-checkout-settings-panel',
-		'icon'   => '<svg width="24" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.148,2.971C18.789,2.372,18.132,2,17.434,2H6.566C5.868,2,5.211,2.372,4.852,2.971L2.143,7.485 C2.049,7.641,2,7.818,2,8c0,1.006,0.386,1.914,1,2.618V19c0,1.103,0.897,2,2,2h4h6h4c1.103,0,2-0.897,2-2v-8.382 C21.614,9.914,22,9.006,22,8c0-0.182-0.049-0.359-0.143-0.515L19.148,2.971z M19.984,8.251C19.86,9.235,19.018,10,18,10 c-1.103,0-2-0.897-2-2c0-0.068-0.025-0.128-0.039-0.192l0.02-0.004L15.22,4h2.214L19.984,8.251z M10.819,4h2.361l0.813,4.065 C13.958,9.137,13.08,10,12,10s-1.958-0.863-1.993-1.935L10.819,4z M6.566,4H8.78L8.02,7.804l0.02,0.004C8.025,7.872,8,7.932,8,8 c0,1.103-0.897,2-2,2c-1.018,0-1.86-0.765-1.984-1.749L6.566,4z M10,19v-3h4v3H10z M16,19v-3c0-1.103-0.897-2-2-2h-4 c-1.103,0-2,0.897-2,2v3H5v-7.142C5.321,11.941,5.652,12,6,12c1.193,0,2.267-0.525,3-1.357C9.733,11.475,10.807,12,12,12 s2.267-0.525,3-1.357C15.733,11.475,16.807,12,18,12c0.348,0,0.679-0.059,1-0.142V19H16z"></path></svg>',
+		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>',
 	);
 
 	/**
@@ -480,23 +480,29 @@ function settings_tabs( $post ) {
 				),
 				'span'    => true,
 				'svg'     => array(
-					'class'       => true,
-					'style'       => true,
-					'xmlns'       => true,
-					'width'       => true,
-					'height'      => true,
-					'viewbox'     => true,
-					'aria-hidden' => true,
-					'role'        => true,
-					'focusable'   => true,
-					'fill'        => true,
-					'fill-rule'   => true,
+					'class'        => true,
+					'style'        => true,
+					'xmlns'        => true,
+					'width'        => true,
+					'height'       => true,
+					'viewbox'      => true,
+					'aria-hidden'  => true,
+					'role'         => true,
+					'focusable'    => true,
+					'fill'         => true,
+					'fill-rule'    => true,
+					'stroke'       => true,
+					'stroke-width' => true,
 				),
 				'path'    => array(
-					'fill'      => true,
-					'fill-rule' => true,
-					'd'         => true,
-					'transform' => true,
+					'fill'            => true,
+					'fill-rule'       => true,
+					'd'               => true,
+					'transform'       => true,
+					'stroke'          => true,
+					'stroke-width'    => true,
+					'stroke-linecap'  => true,
+					'stroke-linejoin' => true,
 				),
 				'polygon' => array(
 					'fill'      => true,
@@ -512,8 +518,8 @@ function settings_tabs( $post ) {
 <li
 	class="simpay-<?php echo esc_attr( $key ); ?>-settings simpay-<?php echo esc_attr( $key ); ?>-tab <?php echo esc_attr( implode( ' ', $class ) ); ?>"
 	data-tab="<?php echo esc_attr( $key ); ?>"
-	data-if="_form_display_type"
-	data-is="stripe_checkout"
+	data-if="_form_type"
+	data-is="off-site"
 >
 		<?php echo $html; // WPCS: XSS okay. ?>
 </li>
@@ -564,15 +570,15 @@ function add_display_options( $post_id ) {
 
 					simpay_print_field(
 						array(
-							'type'        => 'standard',
-							'subtype'     => 'text',
-							'name'        => '_company_name',
-							'id'          => '_company_name',
-							'value'       => $title,
-							'class'       => array(
+							'type'       => 'standard',
+							'subtype'    => 'text',
+							'name'       => '_company_name',
+							'id'         => '_company_name',
+							'value'      => $title,
+							'class'      => array(
 								'simpay-field-text',
 							),
-							'attributes'  => array(
+							'attributes' => array(
 								'required' => true,
 							),
 						)
@@ -607,19 +613,116 @@ function add_display_options( $post_id ) {
 
 					simpay_print_field(
 						array(
-							'type'        => 'standard',
-							'subtype'     => 'text',
-							'name'        => '_item_description',
-							'id'          => '_item_description',
-							'value'       => false === $description
+							'type'    => 'standard',
+							'subtype' => 'text',
+							'name'    => '_item_description',
+							'id'      => '_item_description',
+							'value'   => false === $description
 								? get_bloginfo( 'description' )
 								: $description,
-							'class'       => array(
+							'class'   => array(
 								'simpay-field-text',
 							),
 						)
 					);
 					?>
+				</td>
+			</tr>
+
+			<tr class="simpay-panel-field">
+				<th>
+					<label for="_form_type">
+						<?php esc_html_e( 'Type', 'stripe' ); ?>
+					</label>
+				</th>
+				<td>
+					<?php
+					$license = simpay_get_license();
+					$type    = simpay_get_payment_form_setting(
+						$post_id,
+						'type',
+						'stripe_checkout',
+						__unstable_simpay_get_payment_form_template_from_url()
+					);
+
+					$upgrade_title = __(
+						'Unlock On-Site Payment Forms',
+						'stripe'
+					);
+
+					/* translators: %s Payment form type. */
+					$upgrade_description = __(
+						'We\'re sorry, on-site payment forms are not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+						'stripe'
+					);
+
+					$upgrade_url = simpay_pro_upgrade_url(
+						'form-general-settings',
+						'Form type'
+					);
+
+					$upgrade_purchased_url = simpay_docs_link(
+						'Form type (already purchased)',
+						$license->is_lite()
+							? 'upgrading-wp-simple-pay-lite-to-pro'
+							: 'activate-wp-simple-pay-pro-license',
+						'form-general-settings',
+						true
+					);
+					?>
+
+					<select
+						id="form-type-select"
+						name="_form_type"
+					>
+						<option
+							data-available="<?php echo $license->is_lite() ? 'no' : 'yes'; ?>"
+							value="on-site"
+							data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
+							data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
+							data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
+							data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+							data-prev-value="off-site"
+							<?php selected( true, 'stripe_checkout' !== $type ); ?>
+						>
+							<?php
+							esc_html_e(
+								'On-site payment form',
+								'stripe'
+							);
+							?>
+						</option>
+						<option
+							value="off-site"
+							<?php selected( true, 'stripe_checkout' === $type ); ?>
+						>
+							<?php
+							esc_html_e(
+								'Off-site Stripe Checkout form',
+								'stripe'
+							);
+							?>
+					</select>
+
+					<label
+						for="is-overlay-checkbox"
+						id="is-overlay"
+						style="margin: 10px 0 -4px 0; display: <?php echo 'stripe_checkout' === $type ? 'none' : 'block'; ?>"
+					>
+						<input
+							id="is-overlay-checkbox"
+							name="_is_overlay"
+							type="checkbox"
+							<?php checked( true, 'overlay' === $type ); ?>
+						/>
+
+						<?php
+						esc_html_e(
+							'Open in an overlay modal',
+							'stripe'
+						);
+						?>
+					</label>
 				</td>
 			</tr>
 
@@ -786,7 +889,7 @@ function __unstable_add_recaptcha() {
 				array(
 					'siteKey' => reCAPTCHA\get_key( 'site' ),
 					'i18n'    => array(
-						'enabled' => '<span class="dashicons dashicons-yes"></span>' . esc_html__( 'Enabled', 'stripe' ),
+						'enabled'  => '<span class="dashicons dashicons-yes"></span>' . esc_html__( 'Enabled', 'stripe' ),
 						'disabled' => '<span class="dashicons dashicons-no"></span>' . esc_html__( 'Disabled', 'stripe' ),
 					),
 				)
@@ -797,15 +900,17 @@ function __unstable_add_recaptcha() {
 				array(
 					'section'    => 'general',
 					'subsection' => 'recaptcha',
-					'setting'    => 'recaptcha_site_key'
+					'setting'    => 'recaptcha_site_key',
 				)
 			);
 
 			$description = $recaptcha
+				/* translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				? __(
 					'%1$sConfigure reCAPTCHA%2$s to adjust anti-spam protection.',
 					'stripe'
 				)
+				/* translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				: __(
 					'%1$sEnable reCAPTCHA%2$s to add anti-spam protection.',
 					'stripe'

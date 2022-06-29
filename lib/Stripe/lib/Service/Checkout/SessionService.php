@@ -14,7 +14,7 @@ class SessionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Checkout\Session>
      */
     public function all($params = null, $opts = null)
     {
@@ -33,7 +33,7 @@ class SessionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem>
      */
     public function allLineItems($parentId, $params = null, $opts = null)
     {
@@ -53,6 +53,25 @@ class SessionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     public function create($params = null, $opts = null)
     {
         return $this->request('post', '/v1/checkout/sessions', $params, $opts);
+    }
+
+    /**
+     * A Session can be expired when it is in one of these statuses: <code>open</code>.
+     *
+     * After it expires, a customer can’t complete a Session and customers loading the
+     * Session see a message saying the Session is expired.
+     *
+     * @param string $id
+     * @param null|array $params
+     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Checkout\Session
+     */
+    public function expire($id, $params = null, $opts = null)
+    {
+        return $this->request('post', $this->buildPath('/v1/checkout/sessions/%s/expire', $id), $params, $opts);
     }
 
     /**

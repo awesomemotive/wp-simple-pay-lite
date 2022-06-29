@@ -50,8 +50,12 @@ class AdminBranding implements SubscriberInterface, LicenseAwareInterface {
 
 		// Not on a WP Simple Pay page, show nothing.
 		if (
-			'simple-pay' !== $current_screen->post_type &&
-			'edit.php?post_type=simple-pay' !== $current_screen->parent_file
+			(
+				! empty( $current_screen->post_type ) &&
+				'simple-pay' !== $current_screen->post_type
+			) ||
+			'edit.php?post_type=simple-pay' !== $current_screen->parent_file ||
+			isset( $_GET['tab'], $_GET['simpay'] )
 		) {
 			return;
 		}

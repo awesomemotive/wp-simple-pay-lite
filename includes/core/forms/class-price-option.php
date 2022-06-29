@@ -509,6 +509,7 @@ class PriceOption {
 
 		if ( null !== $this->unit_amount_min ) {
 			$label = sprintf(
+				/* translators: %s Minimum price. */
 				__( 'starting at %s', 'stripe' ),
 				$label
 			);

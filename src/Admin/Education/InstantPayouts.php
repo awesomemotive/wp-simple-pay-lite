@@ -38,7 +38,7 @@ class InstantPayouts implements SubscriberInterface, LicenseAwareInterface {
 			// Form settings.
 			'simpay_form_settings_meta_payment_options_panel' => array(
 				'output_form_settings_notice',
-				$this->license->is_lite() ? 10 : 9
+				4,
 			),
 		);
 	}
@@ -159,7 +159,7 @@ class InstantPayouts implements SubscriberInterface, LicenseAwareInterface {
 			'ca',
 			'sg',
 			'us',
-			'gb'
+			'gb',
 		);
 
 		/** @var string $account_country */

@@ -66,7 +66,7 @@ use SimplePay\Core\Utils;
 					Utils\get_external_link_markup() . '</a>'
 				),
 				array(
-					'a' => array(
+					'a'    => array(
 						'href'   => true,
 						'rel'    => true,
 						'target' => true,

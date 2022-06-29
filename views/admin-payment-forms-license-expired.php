@@ -22,6 +22,7 @@
 		<?php
 		echo esc_html(
 			sprintf(
+				/* translators: Payment form action. "Creating" or "Editing". */
 				__( '🔐 Payment Form %s is Disabled!', 'stripe' ),
 				$action
 			)

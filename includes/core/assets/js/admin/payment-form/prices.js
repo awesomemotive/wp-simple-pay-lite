@@ -8,7 +8,83 @@ import domReady from '@wordpress/dom-ready';
 /**
  * Internal dependencies
  */
-import { upgradeModal } from '@wpsimplepay/utils';
+import {
+	maybeBlockButtonWithUpgradeModal,
+	upgradeModal,
+} from '@wpsimplepay/utils';
+
+/**
+ * Toggles price option label display if there is more than one price option.
+ *
+ * @since 4.4.7
+ */
+function togglePriceOptionSingle() {
+	const priceListEl = document.getElementById( 'simpay-prices' );
+
+	if ( ! priceListEl ) {
+		return;
+	}
+
+	const priceListCount = priceListEl.querySelectorAll( '.simpay-price' )
+		.length;
+
+	// Label.
+	document
+		.querySelectorAll( '.simpay-price-label-default' )
+		.forEach(
+			( labelEl ) =>
+				( labelEl.style.display =
+					priceListCount > 1 ? 'none' : 'block' )
+		);
+
+	document
+		.querySelectorAll( '.simpay-price-label-display' )
+		.forEach(
+			( labelEl ) =>
+				( labelEl.style.display =
+					priceListCount > 1 ? 'block' : 'none' )
+		);
+
+	// Label field.
+	document
+		.querySelectorAll( '.simpay-price-option-label' )
+		.forEach(
+			( labelEl ) =>
+				( labelEl.style.display =
+					priceListCount > 1 ? 'block' : 'none' )
+		);
+
+	// Actions.
+	document
+		.querySelectorAll( '.simpay-price-default-check' )
+		.forEach(
+			( labelEl ) =>
+				( labelEl.style.display =
+					priceListCount > 1 ? 'block' : 'none' )
+		);
+
+	// Price Select custom field.
+	const priceSelectFieldEls = document.querySelectorAll(
+		'.simpay-panel-field-price-select'
+	);
+
+	if ( priceSelectFieldEls.length > 0 ) {
+		priceSelectFieldEls.forEach(
+			( priceSelectFieldEl ) =>
+				( priceSelectFieldEl.style.display =
+					priceListCount > 1 ? 'table-row' : 'none' )
+		);
+
+		const priceSelectFieldNoticeEl = document.querySelector(
+			'.simpay-panel-field-price-select-notice'
+		);
+
+		if ( priceSelectFieldNoticeEl ) {
+			priceSelectFieldNoticeEl.style.display =
+				priceListCount === 1 ? 'table-row' : 'none';
+		}
+	}
+}
 
 /**
  * Updates the display label as settings change.
@@ -302,6 +378,9 @@ function onToggleDefault( priceEl ) {
 function onRemove( priceEl ) {
 	priceEl.remove();
 	ensureDefaultPrice();
+
+	// Toggle label fields.
+	togglePriceOptionSingle();
 }
 
 /**
@@ -330,6 +409,9 @@ function onAddPrice( buttonEl ) {
 
 			// Reenable button.
 			buttonEl.classList.remove( 'disabled' );
+
+			// Toggle label fields.
+			togglePriceOptionSingle();
 		},
 		error: ( { message } ) => {
 			alert( message );
@@ -373,6 +455,9 @@ function onAddPlan( buttonEl ) {
 
 			// Reenable button.
 			buttonEl.classList.remove( 'disabled' );
+
+			// Toggle label fields.
+			togglePriceOptionSingle();
 		},
 		error: ( { message } ) => {
 			alert( message );
@@ -589,6 +674,9 @@ function bindPriceOptions() {
 			onRemove( priceEl );
 		} );
 	} );
+
+	// Toggle label fields.
+	togglePriceOptionSingle();
 }
 
 /**
@@ -630,6 +718,66 @@ function addPrice() {
 }
 
 /**
+ * Shows an upgrade modal when a Lite user presses "Add Price".
+ *
+ * @since 4.4.7
+ */
+function addPriceLite() {
+	const addPriceEl = document.getElementById( 'simpay-add-price-lite' );
+
+	if ( ! addPriceEl ) {
+		return;
+	}
+
+	addPriceEl.addEventListener( 'click', maybeBlockButtonWithUpgradeModal );
+}
+
+/**
+ * Shows an upgrade modal when a Lite user presses "Subscription".
+ *
+ * @since 4.4.7
+ */
+function amountTypeLite() {
+	const amountTypeEl = document.getElementById( 'simpay-amount-type-lite' );
+
+	if ( ! amountTypeEl ) {
+		return;
+	}
+
+	amountTypeEl.addEventListener( 'click', maybeBlockButtonWithUpgradeModal );
+}
+
+/**
+ * Shows an upgrade modal when a Lite user checks option recurring.
+ *
+ * @since 4.4.7
+ */
+function canRecurLite() {
+	const canRecurEl = document.getElementById( 'simpay-can-recur-lite' );
+
+	if ( ! canRecurEl ) {
+		return;
+	}
+
+	canRecurEl.addEventListener( 'click', maybeBlockButtonWithUpgradeModal );
+}
+
+/**
+ * Shows an upgrade modal when a Lite user checks custom amount.
+ *
+ * @since 4.4.7
+ */
+function customLite() {
+	const customEl = document.getElementById( 'simpay-custom-lite' );
+
+	if ( ! customEl ) {
+		return;
+	}
+
+	customEl.addEventListener( 'click', maybeBlockButtonWithUpgradeModal );
+}
+
+/**
  * Binds events for adding an existing (legacy) Stripe Plan.
  */
 function addPlan() {
@@ -665,4 +813,8 @@ domReady( () => {
 	bindAdvancedOptions();
 	addPlan();
 	addPrice();
+	addPriceLite();
+	amountTypeLite();
+	canRecurLite();
+	customLite();
 } );
