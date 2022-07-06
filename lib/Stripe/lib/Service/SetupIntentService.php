@@ -14,7 +14,7 @@ class SetupIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\SetupIntent>
      */
     public function all($params = null, $opts = null)
     {
@@ -123,5 +123,21 @@ class SetupIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
     public function update($id, $params = null, $opts = null)
     {
         return $this->request('post', $this->buildPath('/v1/setup_intents/%s', $id), $params, $opts);
+    }
+
+    /**
+     * Verifies microdeposits on a SetupIntent object.
+     *
+     * @param string $id
+     * @param null|array $params
+     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SetupIntent
+     */
+    public function verifyMicrodeposits($id, $params = null, $opts = null)
+    {
+        return $this->request('post', $this->buildPath('/v1/setup_intents/%s/verify_microdeposits', $id), $params, $opts);
     }
 }

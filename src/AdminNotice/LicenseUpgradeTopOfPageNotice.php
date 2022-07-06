@@ -121,8 +121,8 @@ class LicenseUpgradeTopOfPageNotice extends AbstractAdminNotice {
 				);
 				break;
 			default:
-				/* translators: %s license level. */
 				$message = sprintf(
+					/* translators: License level. */
 					__(
 						'You\'re using WP Simple Pay with a %s license.',
 						'stripe'

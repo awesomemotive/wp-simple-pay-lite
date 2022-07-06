@@ -69,7 +69,7 @@ $error-text-color: #eb1c26;
 		text-align: center;
 		text-transform: uppercase;
 		font-size: 10px;
-		font-family: sans-serif;
+		font-family: $base-font;
 		line-height: 10px;
 		font-weight: 700;
 		padding: 5px 7px;
@@ -81,35 +81,75 @@ $error-text-color: #eb1c26;
 }
 
 html body.simpay-form-preview {
-	padding: 50px;
-	background: #ffffff;
-	font-family: sans-serif ;
+	font-family: $base-font;
+	margin: 50px;
+	background: #428bca;
+	box-sizing: border-box;
+
+	*,
+	&:before,
+	&:after {
+		box-sizing: border-box;
+	}
 
 	&:before,
 	&:after {
 		display: none;
 	}
 
+	.simpay-form-preview-wrap {
+		margin: 0 auto;
+		max-width: 460px;
+		padding: 30px;
+		background: white;
+		border-radius: 4px;
+		box-shadow: 0 25px 50px -12px rgb(0, 0, 0, 0.25);
+	}
+
 	.simpay-form-preview-notice {
-		background: #fafafa;
-		margin-bottom: 50px;
-		padding: 5px 20px;
-		display: inline-block;
-		border: 1px solid #ddd;
-		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+		text-align: center;
+		margin: 0 auto 25px;
+		max-width: 440px;
+		border-radius: 4px;
+
+		&-actions {
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+		}
+
+		&-button,
+		&-button-link {
+			color: #fff;
+			font-family: $base-font;
+			font-weight: bold;
+			font-size: 15px;
+			line-height: 1;
+			text-shadow: none;
+			text-transform: none;
+			margin: 5px;
+		}
 
 		&-button {
-			background-color: #428bca;
-			color: #fff;
-			font-size: 16px;
-			line-height: 1.2;
-			padding: 6px 12px;
-			font-weight: normal;
-			text-shadow: none;
-			border: 1px solid #2d6ca2;
+			background-color: #2d6ca2;
+			padding: 8px 12px;
 			box-shadow: none;
+			border: 0;
 			border-radius: 4px;
 			cursor: pointer;
+		}
+
+		&-button-link {
+			color: #fff;
+			font-size: 15px;
+			font-weight: bold;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+
+			span:first-child {
+				margin-right: 4px;
+			}
 		}
 
 		&-section {
@@ -118,9 +158,23 @@ html body.simpay-form-preview {
 
 		p {
 			font-family: $base-font;
-			font-size: 16px;
-			color: $base-text-color;
+			font-size: 15px;
+			color: rgba(255, 255, 255, 0.85);
+			line-height: 1.45;
 			margin: 15px 0;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
+	}
+
+	form:not(.simpay-checkout-form--overlay) {
+		margin-bottom: 0;
+		max-width: 400px;
 	}
 }

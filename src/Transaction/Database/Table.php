@@ -33,7 +33,7 @@ class Table extends BerlinDBTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected $version = 202200516000;
+	protected $version = 202206170001;
 
 	/**
 	 * {@inheritdoc}
@@ -42,9 +42,10 @@ class Table extends BerlinDBTable {
 
 	/**
 	 * {@inheritdoc}
-	 * @var array<string, string>
 	 */
-	protected $upgrades = array();
+	protected $upgrades = array( // @phpstan-ignore-line
+		'202206170001' => 202206170001,
+	);
 
 	/**
 	 * {@inheritdoc}
@@ -54,7 +55,7 @@ class Table extends BerlinDBTable {
 		$this->schema = "
 			id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 			form_id bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-			object varchar(255) NOT NULL,
+			object varchar(100) NOT NULL,
 			_object_id varchar(255) DEFAULT NULL,
 			livemode tinyint(1) NOT NULL DEFAULT 0,
 			amount_total bigint(20) NOT NULL,
@@ -66,7 +67,7 @@ class Table extends BerlinDBTable {
 			email varchar(255) DEFAULT NULL,
 			customer_id varchar(255) DEFAULT NULL,
 			subscription_id varchar(255) DEFAULT NULL,
-			status varchar(255) NOT NULL,
+			status varchar(50) NOT NULL,
 			application_fee tinyint(1) NOT NULL DEFAULT false,
 			ip_address varchar(128) NOT NULL,
 			date_created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -80,8 +81,41 @@ class Table extends BerlinDBTable {
 			KEY customer_id (customer_id),
 			KEY email (email),
 			KEY subscription_id (subscription_id),
-			KEY object_status (object,status)
+			KEY object_status (object(100),status(50))
 			";
+	}
+
+	/**
+	 * Upgrade to version 202206170001.
+	 *  - Change the length of column `object` to `varchar(100)`.
+	 *  - Change the length of column `status` to `varchar(50)`.
+	 *  - Update the `object_status` index to reflect the new length of `object` and `status`.
+	 *
+	 * @since 4.4.7
+	 *
+	 * @return bool
+	 */
+	protected function __202206170001() {
+		// Set column `object` length.
+		$this->get_db()->query(
+			"ALTER TABLE {$this->table_name} MODIFY COLUMN `object` varchar(100) NOT NULL"
+		);
+
+		// Set column `status` length.
+		$this->get_db()->query(
+			"ALTER TABLE {$this->table_name} MODIFY COLUMN `status` varchar(50) NOT NULL"
+		);
+
+		// Update the `object_status` index.
+		$this->get_db()->query(
+			"DROP INDEX object_status ON {$this->table_name}"
+		);
+
+		$this->get_db()->query(
+			"ALTER TABLE {$this->table_name} ADD INDEX object_status (`object`(100), `status`(50))"
+		);
+
+		return $this->is_success( true );
 	}
 
 }

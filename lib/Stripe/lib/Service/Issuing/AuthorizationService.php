@@ -16,7 +16,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Issuing\Authorization>
      */
     public function all($params = null, $opts = null)
     {

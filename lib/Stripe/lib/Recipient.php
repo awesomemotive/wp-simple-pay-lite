@@ -19,7 +19,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property null|\SimplePay\Vendor\Stripe\BankAccount $active_account Hash describing the current account on the recipient, if there is one.
- * @property null|\SimplePay\Vendor\Stripe\Collection $cards
+ * @property null|\SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Card> $cards
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|string|\SimplePay\Vendor\Stripe\Card $default_card The default card to use for creating transfers to this recipient.
  * @property null|string $description An arbitrary string attached to the object. Often useful for displaying to users.

@@ -15,7 +15,7 @@ class ApplicationFeeService extends \SimplePay\Vendor\Stripe\Service\AbstractSer
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\ApplicationFee>
      */
     public function all($params = null, $opts = null)
     {
@@ -35,7 +35,7 @@ class ApplicationFeeService extends \SimplePay\Vendor\Stripe\Service\AbstractSer
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\ApplicationFeeRefund>
      */
     public function allRefunds($parentId, $params = null, $opts = null)
     {

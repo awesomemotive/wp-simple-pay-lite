@@ -43,19 +43,6 @@ function add_items() {
 		'SimplePay\\Core\\Settings\\page'
 	);
 
-	// System Report.
-	add_submenu_page(
-		'edit.php?post_type=simple-pay',
-		__( 'System Report', 'stripe' ),
-		__( 'System Report', 'stripe' ),
-		'manage_options',
-		'simpay_system_status',
-		function () {
-			$page = new Pages\System_Status();
-			$page->html();
-		}
-	);
-
 	/**
 	 * Allows further menu items to be added.
 	 *

@@ -13,6 +13,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property int $amount_subtotal Total before any discounts or taxes are applied.
  * @property int $amount_total Total after discounts and taxes are applied.
+ * @property null|string|\SimplePay\Vendor\Stripe\StripeObject $application ID of the Connect Application that created the quote.
  * @property null|int $application_fee_amount The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's SimplePay\Vendor\Stripe account. Only applicable if there are no line items with recurring prices on the quote.
  * @property null|float $application_fee_percent A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's SimplePay\Vendor\Stripe account. Only applicable if there are line items with recurring prices on the quote.
  * @property \SimplePay\Vendor\Stripe\StripeObject $automatic_tax
@@ -30,7 +31,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string $header A header that will be displayed on the quote PDF.
  * @property null|string|\SimplePay\Vendor\Stripe\Invoice $invoice The invoice that was created from this quote.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $invoice_settings All invoices will be billed using the specified settings.
- * @property \SimplePay\Vendor\Stripe\Collection $line_items A list of items the customer is being quoted for.
+ * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> $line_items A list of items the customer is being quoted for.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|string $number A unique number that identifies this particular quote. This number is assigned once the quote is <a href="https://stripe.com/docs/quotes/overview#finalize">finalized</a>.
@@ -40,6 +41,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string|\SimplePay\Vendor\Stripe\Subscription $subscription The subscription that was created or updated from this quote.
  * @property \SimplePay\Vendor\Stripe\StripeObject $subscription_data
  * @property null|string|\SimplePay\Vendor\Stripe\SubscriptionSchedule $subscription_schedule The subscription schedule that was created or updated from this quote.
+ * @property null|string|\SimplePay\Vendor\Stripe\TestHelpers\TestClock $test_clock ID of the test clock this quote belongs to.
  * @property \SimplePay\Vendor\Stripe\StripeObject $total_details
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $transfer_data The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the invoices.
  */
@@ -66,8 +68,6 @@ class Quote extends ApiResource
      * @param null|array|string $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return \SimplePay\Vendor\Stripe\File the created file
      */
     public function pdf($readBodyChunkCallable, $params = null, $opts = null)
     {
@@ -138,7 +138,7 @@ class Quote extends ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection list of LineItems
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> list of LineItems
      */
     public static function allComputedUpfrontLineItems($id, $params = null, $opts = null)
     {
@@ -157,7 +157,7 @@ class Quote extends ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection list of LineItems
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> list of LineItems
      */
     public static function allLineItems($id, $params = null, $opts = null)
     {

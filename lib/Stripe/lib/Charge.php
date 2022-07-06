@@ -32,6 +32,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string|\SimplePay\Vendor\Stripe\Account $destination ID of an existing, connected SimplePay\Vendor\Stripe account to transfer funds to if <code>transfer_data</code> was specified in the charge request.
  * @property null|string|\SimplePay\Vendor\Stripe\Dispute $dispute Details about the dispute if the charge has been disputed.
  * @property bool $disputed Whether the charge has been disputed.
+ * @property null|string|\SimplePay\Vendor\Stripe\BalanceTransaction $failure_balance_transaction ID of the balance transaction that describes the reversal of the balance on your account due to payment failure.
  * @property null|string $failure_code Error code explaining reason for charge failure if available (see <a href="https://stripe.com/docs/api#errors">the errors section</a> for a list of codes).
  * @property null|string $failure_message Message to user further explaining reason for charge failure if available.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $fraud_details Information on fraud assessments for the charge.
@@ -39,17 +40,17 @@ namespace SimplePay\Vendor\Stripe;
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|string|\SimplePay\Vendor\Stripe\Account $on_behalf_of The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the <a href="https://stripe.com/docs/connect/charges-transfers">Connect documentation</a> for details.
- * @property null|string|\SimplePay\Vendor\Stripe\Order $order ID of the order this charge is for if one exists.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $outcome Details about whether the payment was accepted, and why. See <a href="https://stripe.com/docs/declines">understanding declines</a> for details.
  * @property bool $paid <code>true</code> if the charge succeeded, or was successfully authorized for later capture.
  * @property null|string|\SimplePay\Vendor\Stripe\PaymentIntent $payment_intent ID of the PaymentIntent associated with this charge, if one exists.
  * @property null|string $payment_method ID of the payment method used in this charge.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $payment_method_details Details about the payment method at the time of the transaction.
+ * @property \SimplePay\Vendor\Stripe\StripeObject $radar_options Options to configure Radar. See <a href="https://stripe.com/docs/radar/radar-session">Radar Session</a> for more information.
  * @property null|string $receipt_email This is the email address that the receipt for this charge was sent to.
  * @property null|string $receipt_number This is the transaction number that appears on email receipts sent for this charge. This attribute will be <code>null</code> until a receipt has been sent.
  * @property null|string $receipt_url This is the URL to view the receipt for this charge. The receipt is kept up-to-date to the latest state of the charge, including any refunds. If the charge is for an Invoice, the receipt will be stylized as an Invoice receipt.
  * @property bool $refunded Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false.
- * @property \SimplePay\Vendor\Stripe\Collection $refunds A list of refunds that have been applied to the charge.
+ * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Refund> $refunds A list of refunds that have been applied to the charge.
  * @property null|string|\SimplePay\Vendor\Stripe\Review $review ID of the review associated with this charge if one exists.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $shipping Shipping information for the charge.
  * @property null|\SimplePay\Vendor\Stripe\Account|\SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source $source This is a legacy field that will be removed in the future. It contains the Source, Card, or BankAccount object used for the charge. For details about the payment method used for this charge, refer to <code>payment_method</code> or <code>payment_method_details</code> instead.
@@ -68,6 +69,7 @@ class Charge extends ApiResource
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Retrieve;
+    use ApiOperations\Search;
     use ApiOperations\Update;
 
     const STATUS_FAILED = 'failed';
@@ -142,5 +144,20 @@ class Charge extends ApiResource
         $this->refreshFrom($response, $opts);
 
         return $this;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SearchResult<Charge> the charge search results
+     */
+    public static function search($params = null, $opts = null)
+    {
+        $url = '/v1/charges/search';
+
+        return self::_searchResource($url, $params, $opts);
     }
 }

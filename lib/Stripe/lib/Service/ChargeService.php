@@ -15,7 +15,7 @@ class ChargeService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Charge>
      */
     public function all($params = null, $opts = null)
     {
@@ -27,9 +27,10 @@ class ChargeService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      * of the two-step payment flow, where first you <a href="#create_charge">created a
      * charge</a> with the capture option set to false.
      *
-     * Uncaptured payments expire exactly seven days after they are created. If they
-     * are not captured by that point in time, they will be marked as refunded and will
-     * no longer be capturable.
+     * Uncaptured payments expire a set number of days after they are created (<a
+     * href="/docs/charges/placing-a-hold">7 by default</a>). If they are not captured
+     * by that point in time, they will be marked as refunded and will no longer be
+     * capturable.
      *
      * @param string $id
      * @param null|array $params
@@ -80,6 +81,26 @@ class ChargeService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     public function retrieve($id, $params = null, $opts = null)
     {
         return $this->request('get', $this->buildPath('/v1/charges/%s', $id), $params, $opts);
+    }
+
+    /**
+     * Search for charges you’ve previously created using Stripe’s <a
+     * href="/docs/search#search-query-language">Search Query Language</a>. Don’t use
+     * search in read-after-write flows where strict consistency is necessary. Under
+     * normal operating conditions, data is searchable in less than a minute.
+     * Occasionally, propagation of new or updated data can be up to an hour behind
+     * during outages. Search functionality is not available to merchants in India.
+     *
+     * @param null|array $params
+     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SearchResult<\SimplePay\Vendor\Stripe\Charge>
+     */
+    public function search($params = null, $opts = null)
+    {
+        return $this->requestSearchResult('get', '/v1/charges/search', $params, $opts);
     }
 
     /**

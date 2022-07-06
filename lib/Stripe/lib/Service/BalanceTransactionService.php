@@ -19,7 +19,7 @@ class BalanceTransactionService extends \SimplePay\Vendor\Stripe\Service\Abstrac
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\BalanceTransaction>
      */
     public function all($params = null, $opts = null)
     {

@@ -144,6 +144,7 @@ class PluginEmailSettings extends AbstractProductEducation implements Subscriber
 
 			if ( $obj instanceof \SimplePay\Core\Settings\Subsection ) {
 				$title = sprintf(
+					/* translators: Email label. */
 					__( 'Customize the "%s" Email', 'stripe' ),
 					esc_html( $obj->label )
 				);

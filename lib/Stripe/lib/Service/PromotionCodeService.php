@@ -14,7 +14,7 @@ class PromotionCodeService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\PromotionCode>
      */
     public function all($params = null, $opts = null)
     {
@@ -38,7 +38,10 @@ class PromotionCodeService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
     }
 
     /**
-     * Retrieves the promotion code with the given ID.
+     * Retrieves the promotion code with the given ID. In order to retrieve a promotion
+     * code by the customer-facing <code>code</code> use <a
+     * href="/docs/api/promotion_codes/list">list</a> with the desired
+     * <code>code</code>.
      *
      * @param string $id
      * @param null|array $params

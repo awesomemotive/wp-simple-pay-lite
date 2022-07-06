@@ -51,7 +51,7 @@ class Schema extends BerlinDBSchema {
 		array(
 			'name'       => 'object',
 			'type'       => 'varchar',
-			'length'     => '255',
+			'length'     => '100',
 			'allow_null' => false,
 			'validate'   => 'sanitize_text_field',
 		),
@@ -164,7 +164,7 @@ class Schema extends BerlinDBSchema {
 		array(
 			'name'       => 'status',
 			'type'       => 'varchar',
-			'length'     => '255',
+			'length'     => '50',
 			'allow_null' => false,
 			'validate'   => 'sanitize_text_field',
 		),

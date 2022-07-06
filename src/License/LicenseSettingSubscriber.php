@@ -169,6 +169,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 				$expiration = strtotime( $expiration );
 
 				return sprintf(
+					/* translators: License expiration date. */
 					__( 'Your license key expired on %1$s', 'stripe' ),
 					date( $date_format, $expiration )
 				);

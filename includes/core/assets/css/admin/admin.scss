@@ -341,6 +341,10 @@
 			margin: 0;
 			padding: 0;
 
+			&:first-child {
+				margin-top: -1px;
+			}
+
 			&:last-child {
 				margin-bottom: 20px;
 
@@ -350,17 +354,49 @@
 			}
 
 			&.active {
+				margin-left: -1px;
+				box-shadow: 0 1px 1px rgb(0, 0, 0, 0.04);
+				position: relative;
+
+				&:focus:after {
+					display: none;
+				}
+
+				&:before,
+				&:after {
+					content: '';
+					width: calc(100% + 1px);
+					height: 1px;
+					background: #ccd0d4;
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					z-index: 2;
+				}
+
+				&:after {
+					top: auto;
+					bottom: 0;
+				}
 
 				a {
-					padding-left: 14px;
 					font-weight: bold;
 					background-color: #fff;
 					position: relative;
-					box-shadow:
-						inset 4px 0 currentColor,
-						inset 0 -1px 0 #fff,
-						0 1px 1px rgba(0, 0, 0, 0.04);
 					margin-right: -1px;
+
+					&:before {
+						content: '';
+						position: absolute;
+						top: 0;
+						left: 0;
+						bottom: 0;
+						width: 4px;
+						height: 100%;
+						background: currentColor;
+						z-index: 3;
+					}
 
 					@media screen and (max-width: 782px) {
 						margin-right: 0;
@@ -369,12 +405,11 @@
 			}
 
 			.simpay-tab-item {
-				border-bottom: 1px solid #ccd0d4;
 				display: flex;
 				align-items: center;
 				line-height: 20px;
 				margin: 0;
-				padding: 10px;
+				padding: 10px 10px 10px 14px;
 				text-decoration: none;
 				transition: all 0.05s ease-in-out;
 
@@ -390,7 +425,7 @@
 				&:focus {
 					outline: 0;
 					position: relative;
-					z-index: 2;
+					z-index: 3;
 					box-shadow: inset 0 0 0 2px currentColor;
 				}
 			}
@@ -619,9 +654,73 @@
 
 	} // end .simpay-panel
 
+
+	.simpay-metabox-content {
+		margin-bottom: -1px;
+		background-color: #f5f5f5;
+		border: 1px solid #c3c4c7;
+		border-width: 1px 0;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+		position: relative;
+	}
+
 	.simpay-show-if,
 	.simpay-panel-hidden {
 		display: none;
+	}
+
+	.simpay-payment-methods {
+		border: 1px solid #ccd0d4;
+		border-radius: 4px;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	}
+
+	.simpay-panel-field-payment-method {
+		display: block;
+		border-top: 1px solid #ccd0d4;
+		padding: 7px;
+		box-sizing: border-box;
+
+		&:first-child {
+			border-top: 0;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
+		}
+
+		input[type="checkbox"] {
+			margin-top: 0;
+			margin-right: 8px;
+		}
+
+		&__help {
+			color: #666;
+			text-decoration: none;
+			margin-right: 5px;
+
+			.dashicons {
+				font-size: 18px;
+				width: 18px;
+				height: 18px;
+			}
+		}
+
+		&__restrictions {
+			margin-left: 65px;
+		}
+
+		&__icon {
+			border-radius: 3px;
+			overflow: hidden;
+			margin: 0 8px 0 5px;
+			width: 30px;
+			height: 30px;
+			flex-shrink: 0;
+
+			svg {
+				width: 30px;
+				height: 30px;
+			}
+		}
 	}
 }
 
@@ -1065,69 +1164,6 @@
 	.dashicons {
 		margin-right: 4px;
 	}
-}
-
-.simpay-system-status-report-panel {
-
-	margin: 20px 0;
-
-	thead th {
-		font-weight: bold;
-	}
-
-	tbody td,
-	thead th {
-		font-size: 14px;
-		vertical-align: top;
-	}
-
-	tbody {
-
-		.label {
-			width: 30%;
-		}
-
-		tr:nth-child(odd) td {
-			background-color: rgba(0, 0, 0, 0.02);
-		}
-
-	}
-
-	dl {
-		margin: 0;
-		padding: 0;
-	}
-
-	dt {
-
-		float: left;
-		font-style: italic;
-		margin: 0 4px 0 0;
-
-	}
-
-	dd {
-		margin: 0;
-	}
-
-	mark {
-
-		background-color: transparent;
-		font-weight: bold;
-
-		&.ok {
-			color: green;
-		}
-
-		&.error {
-			color: red;
-		}
-
-		&.warning {
-			color: #ffb900;
-		}
-	}
-
 }
 
 .simpay-currency-field {
@@ -1693,29 +1729,48 @@ select.simpay-currency-symbol {
 	}
 }
 
-.simpay-teaser-form-setting {
+.simpay-instant-payouts-notice {
+	color: #000;
 	position: relative;
+	margin: 18px 18px 0;
+	padding: 14px;
+	border-radius: 4px;
+	background: #f5f5ff;
+
+	a {
+		color: #635aff;
+	}
 
 	.simpay-external-link .dashicons-external {
 		margin: 1px 0 0 2px;
 	}
 
+	strong {
+		font-size: 14px;
+	}
+
+	p {
+		margin: 5px 0 0 23px;
+	}
+
 	.simpay-notice-dismiss {
-		position: absolute;
-		top: 8px;
-		right: 8px;
 		font-size: 20px;
-		color: #666;
+		color: #b0b0f0;
+		font-weight: bold;
+		line-height: 1;
+		position: absolute;
+		top: 0;
+		right: 5px;
 		text-decoration: none;
-		margin-left: 5px;
-		padding: 6px 10px;
+		padding: 0 5px;
 		z-index: 2;
 
 		&:hover,
 		&:active,
 		&:focus {
-			color: #666;
+			color: #9191ef;
 			text-decoration: none;
+			background: none;
 		}
 	}
 }

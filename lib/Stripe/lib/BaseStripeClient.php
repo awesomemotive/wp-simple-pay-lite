@@ -183,6 +183,30 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
     }
 
     /**
+     * Sends a request to Stripe's API.
+     *
+     * @param string $method the HTTP method
+     * @param string $path the path of the request
+     * @param array $params the parameters of the request
+     * @param array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts the special modifiers of the request
+     *
+     * @return \SimplePay\Vendor\Stripe\SearchResult of ApiResources
+     */
+    public function requestSearchResult($method, $path, $params, $opts)
+    {
+        $obj = $this->request($method, $path, $params, $opts);
+        if (!($obj instanceof \SimplePay\Vendor\Stripe\SearchResult)) {
+            $received_class = \get_class($obj);
+            $msg = "Expected to receive `SimplePay\Vendor\Stripe\\SearchResult` object from SimplePay\Vendor\Stripe API. Instead received `{$received_class}`.";
+
+            throw new \SimplePay\Vendor\Stripe\Exception\UnexpectedValueException($msg);
+        }
+        $obj->setFilters($params);
+
+        return $obj;
+    }
+
+    /**
      * @param \SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\AuthenticationException

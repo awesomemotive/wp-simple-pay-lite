@@ -30,6 +30,7 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 	public function get_services() {
 		return array(
 			'admin-page-notification-inbox',
+			'admin-page-system-report',
 			'admin-page-about-us',
 			'admin-page-setup-wizard',
 			'admin-notice-update-available',
@@ -92,6 +93,12 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminPage\SetupWizardPage::class
 		);
 
+		// System Report.
+		$container->share(
+			'admin-page-system-report',
+			AdminPage\SystemReportPage::class
+		);
+
 		// About Us.
 		$container->share(
 			'admin-page-about-us',
@@ -100,6 +107,7 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 
 		$pages = array(
 			$container->get( 'admin-page-setup-wizard' ),
+			$container->get( 'admin-page-system-report' ),
 			$container->get( 'admin-page-about-us' ),
 		);
 

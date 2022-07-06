@@ -34,6 +34,7 @@
 
 		echo wp_kses(
 			sprintf(
+				/* translators: %1$s Payment mode. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate. */
 				__(
 					'Expected %1$s webhook events have not been received. Please ensure you have properly configured your %2$s webhook endpoint in Stripe and signing secrets below to avoid interruption of functionality.',
 					'stripe'

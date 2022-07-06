@@ -14,7 +14,7 @@ class WebhookEndpointService extends \SimplePay\Vendor\Stripe\Service\AbstractSe
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\WebhookEndpoint>
      */
     public function all($params = null, $opts = null)
     {

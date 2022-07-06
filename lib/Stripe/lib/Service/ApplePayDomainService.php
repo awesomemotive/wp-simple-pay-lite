@@ -14,7 +14,7 @@ class ApplePayDomainService extends \SimplePay\Vendor\Stripe\Service\AbstractSer
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\ApplePayDomain>
      */
     public function all($params = null, $opts = null)
     {

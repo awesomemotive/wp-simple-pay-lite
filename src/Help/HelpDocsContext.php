@@ -86,8 +86,8 @@ class HelpDocsContext implements LicenseAwareInterface {
 
 		$map = array(
 			// Coupons.
-			'coupons'     => 'coupons',
-			'coupons/add' => 'add coupons',
+			'coupons'                                     => 'coupons',
+			'coupons/add'                                 => 'add coupons',
 
 			// Settings.
 			'settings/general/license'                    => 'activate license',
@@ -191,7 +191,7 @@ class HelpDocsContext implements LicenseAwareInterface {
 				$context = 'settings/general/license';
 			}
 		} else {
-			$section = sanitize_text_field( $_GET['tab'] );
+			$section    = sanitize_text_field( $_GET['tab'] );
 			$subsection = isset( $_GET['subsection'] )
 				? sanitize_text_field( $_GET['subsection'] )
 				: '';

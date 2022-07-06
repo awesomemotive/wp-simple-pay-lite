@@ -143,6 +143,27 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_enable_phone', $enable_phone );
 
+	// Promotion codes.
+	$enable_promotion_codes = isset( $_POST['_enable_promotion_codes'] )
+		? 'yes'
+		: 'no';
+
+	update_post_meta(
+		$post_id,
+		'_enable_promotion_codes',
+		$enable_promotion_codes
+	);
+
+	// Tax ID.
+	$enable_tax_id = isset( $_POST['_enable_tax_id'] ) ? 'yes' : 'no';
+
+	update_post_meta( $post_id, '_enable_tax_id', $enable_tax_id );
+
+	// Quantity.
+	$enable_quantity = isset( $_POST['_enable_quantity'] ) ? 'yes' : 'no';
+
+	update_post_meta( $post_id, '_enable_quantity', $enable_quantity );
+
 	// Custom fields.
 	// Handles "Button Text" and "Button Processing Text".
 	$fields = isset( $_POST['_simpay_custom_field'] )
@@ -682,6 +703,7 @@ function duplicate() {
 	update_post_meta(
 		$duplicate,
 		'_company_name',
+		/* translators: %s Payment form name. */
 		sprintf( __( '%s - Duplicate', 'stripe' ), $form_name )
 	);
 

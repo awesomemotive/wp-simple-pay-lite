@@ -11,6 +11,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\AccountService $accounts
  * @property \SimplePay\Vendor\Stripe\Service\ApplePayDomainService $applePayDomains
  * @property \SimplePay\Vendor\Stripe\Service\ApplicationFeeService $applicationFees
+ * @property \SimplePay\Vendor\Stripe\Service\Apps\AppsServiceFactory $apps
  * @property \SimplePay\Vendor\Stripe\Service\BalanceService $balance
  * @property \SimplePay\Vendor\Stripe\Service\BalanceTransactionService $balanceTransactions
  * @property \SimplePay\Vendor\Stripe\Service\BillingPortal\BillingPortalServiceFactory $billingPortal
@@ -26,15 +27,16 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\ExchangeRateService $exchangeRates
  * @property \SimplePay\Vendor\Stripe\Service\FileLinkService $fileLinks
  * @property \SimplePay\Vendor\Stripe\Service\FileService $files
+ * @property \SimplePay\Vendor\Stripe\Service\FinancialConnections\FinancialConnectionsServiceFactory $financialConnections
  * @property \SimplePay\Vendor\Stripe\Service\Identity\IdentityServiceFactory $identity
  * @property \SimplePay\Vendor\Stripe\Service\InvoiceItemService $invoiceItems
  * @property \SimplePay\Vendor\Stripe\Service\InvoiceService $invoices
  * @property \SimplePay\Vendor\Stripe\Service\Issuing\IssuingServiceFactory $issuing
  * @property \SimplePay\Vendor\Stripe\Service\MandateService $mandates
  * @property \SimplePay\Vendor\Stripe\Service\OAuthService $oauth
- * @property \SimplePay\Vendor\Stripe\Service\OrderReturnService $orderReturns
  * @property \SimplePay\Vendor\Stripe\Service\OrderService $orders
  * @property \SimplePay\Vendor\Stripe\Service\PaymentIntentService $paymentIntents
+ * @property \SimplePay\Vendor\Stripe\Service\PaymentLinkService $paymentLinks
  * @property \SimplePay\Vendor\Stripe\Service\PaymentMethodService $paymentMethods
  * @property \SimplePay\Vendor\Stripe\Service\PayoutService $payouts
  * @property \SimplePay\Vendor\Stripe\Service\PlanService $plans
@@ -48,6 +50,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\ReviewService $reviews
  * @property \SimplePay\Vendor\Stripe\Service\SetupAttemptService $setupAttempts
  * @property \SimplePay\Vendor\Stripe\Service\SetupIntentService $setupIntents
+ * @property \SimplePay\Vendor\Stripe\Service\ShippingRateService $shippingRates
  * @property \SimplePay\Vendor\Stripe\Service\Sigma\SigmaServiceFactory $sigma
  * @property \SimplePay\Vendor\Stripe\Service\SkuService $skus
  * @property \SimplePay\Vendor\Stripe\Service\SourceService $sources
@@ -57,9 +60,11 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\TaxCodeService $taxCodes
  * @property \SimplePay\Vendor\Stripe\Service\TaxRateService $taxRates
  * @property \SimplePay\Vendor\Stripe\Service\Terminal\TerminalServiceFactory $terminal
+ * @property \SimplePay\Vendor\Stripe\Service\TestHelpers\TestHelpersServiceFactory $testHelpers
  * @property \SimplePay\Vendor\Stripe\Service\TokenService $tokens
  * @property \SimplePay\Vendor\Stripe\Service\TopupService $topups
  * @property \SimplePay\Vendor\Stripe\Service\TransferService $transfers
+ * @property \SimplePay\Vendor\Stripe\Service\Treasury\TreasuryServiceFactory $treasury
  * @property \SimplePay\Vendor\Stripe\Service\WebhookEndpointService $webhookEndpoints
  */
 class StripeClient extends BaseStripeClient
