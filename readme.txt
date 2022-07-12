@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.0
-Stable tag: 4.4.7
+Stable tag: 4.4.7.1
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -296,6 +296,10 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 10. Global payment form settings: Payment confirmation details
 
 == Changelog ==
+
+= Stripe Payment Forms v4.4.7.1 - July 12, 2022 =
+
+* Fix: Only enqueue button block scripts in the block editor.
 
 = Stripe Payment Forms v4.4.7 - July 6, 2022 =
 
