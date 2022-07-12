@@ -297,6 +297,10 @@ The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
+= Stripe Payment Forms v4.4.7.1 - July 12, 2022 =
+
+* Fix: Only enqueue button block scripts in the block editor.
+
 = Stripe Payment Forms v4.4.7 - July 6, 2022 =
 
 * New: Add support for launching off-site Stripe Checkout forms with the core block editor button block.
