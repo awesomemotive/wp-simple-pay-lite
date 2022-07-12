@@ -63,7 +63,8 @@ class BlockServiceProvider extends AbstractPluginServiceProvider {
 		$container->share( 'block-payment-form', PaymentFormBlock::class );
 
 		// Button.
-		$container->share( 'block-button', ButtonBlock::class );
+		$container->share( 'block-button', ButtonBlock::class )
+			->withArgument( $container->get( 'event-manager' ) );
 
 		/** @var array<\SimplePay\Core\Block\BlockInterface> $blocks */
 		$blocks = array(

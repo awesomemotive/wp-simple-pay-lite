@@ -6,7 +6,7 @@
  * @subpackage Core
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.4.2
+ * @since 4.4.7
  */
 
 namespace SimplePay\Core\Block;
@@ -19,9 +19,42 @@ namespace SimplePay\Core\Block;
 class ButtonBlock extends AbstractBlock {
 
 	/**
+	 * Event manager.
+	 *
+	 * @since 4.4.7.1
+	 * @var \SimplePay\Core\EventManagement\EventManager $events Event manager.
+	 */
+	private $events;
+
+	/**
+	 * ButtonBlock
+	 *
+	 * @since 4.4.7.1
+	 *
+	 * @param \SimplePay\Core\EventManagement\EventManager $events Event manager.
+	 */
+	public function __construct( $events ) {
+		$this->events = $events;
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function register() {
+		$this->events->add_callback(
+			'enqueue_block_editor_assets',
+			array( $this, 'enqueue_block_editor_assets' )
+		);
+	}
+
+	/**
+	 * Enqueues block editor assets.
+	 *
+	 * @since 4.4.7.1
+	 *
+	 * @return void
+	 */
+	public function enqueue_block_editor_assets() {
 		$asset_file = SIMPLE_PAY_INC . '/core/assets/js/simpay-block-button.min.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset_file ) ) {
@@ -72,7 +105,7 @@ class ButtonBlock extends AbstractBlock {
 
 				$options[] = array(
 					'label' => get_the_title( $form_id ),
-					'value' => (int) $form_id
+					'value' => (int) $form_id,
 				);
 			};
 		}
