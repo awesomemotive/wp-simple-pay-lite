@@ -69,7 +69,7 @@ By upgrading to WP Simple Pay Pro, you also get access to one-on-one help from o
 
 > Brian Casel, Founder of Audience Ops
 
-There is a small 2% credit card fee per-transaction plus Stripe fees while using WP Simple Pay Lite. [Upgrade to Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) for no added credit card form fees and priority support.
+There is a small 3% credit card fee per-transaction plus Stripe fees while using WP Simple Pay Lite. [Upgrade to Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) for no added credit card form fees and priority support.
 
 = Who is WP Simple Pay For? =
 
@@ -270,9 +270,9 @@ Payment forms are embedded via shortcodes and can be placed anywhere a shortcode
 
 Stripe has a per-transaction charge which varies by country. [See Stripe’s pricing](https://stripe.com/pricing) for details.
 
-Besides Stripe's pricing, WP Simple Pay charges an additional 2% fee for transactions processed through WP Simple Pay Lite (the free version of the plugin).
+Besides Stripe's pricing, WP Simple Pay charges an additional 3% fee for transactions processed through WP Simple Pay Lite (the free version of the plugin).
 
-The 2% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
+The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
 
 = Can I offer coupon codes to my site visitors? =
 
