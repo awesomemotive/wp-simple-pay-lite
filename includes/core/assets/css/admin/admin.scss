@@ -1729,8 +1729,8 @@ select.simpay-currency-symbol {
 	}
 }
 
-.simpay-instant-payouts-notice {
-	color: #000;
+.simpay-form-settings-notice {
+	color: #1d2327;
 	position: relative;
 	margin: 18px 18px 0;
 	padding: 14px;
@@ -1805,5 +1805,12 @@ select.simpay-currency-symbol {
  */
 
 #wpsp-api-keys-row-hide {
+	display: none;
+}
+
+/**
+ * Preview button
+ */
+.post-type-simple-pay #post-preview:not(.simpay-preview-button) {
 	display: none;
 }

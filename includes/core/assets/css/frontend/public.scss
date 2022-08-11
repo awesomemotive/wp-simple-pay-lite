@@ -80,6 +80,7 @@ $error-text-color: #eb1c26;
 	}
 }
 
+html body.simpay-payment-page,
 html body.simpay-form-preview {
 	font-family: $base-font;
 	margin: 50px;
@@ -114,7 +115,7 @@ html body.simpay-form-preview {
 
 		&-actions {
 			display: flex;
-			justify-content: space-around;
+			justify-content: center;
 			flex-wrap: wrap;
 		}
 
@@ -177,4 +178,106 @@ html body.simpay-form-preview {
 		margin-bottom: 0;
 		max-width: 400px;
 	}
+}
+
+html body.simpay-payment-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.simpay-payment-page-wrap {
+		margin: 0 auto;
+		max-width: 460px;
+		padding: 1.5rem;
+		background: white;
+		border-radius: 4px;
+		box-shadow: 0 25px 50px -12px rgb(0, 0, 0, 0.25);
+	}
+
+	.simpay-payment-page-wrap img {
+		max-width: 100%;
+		max-height: 125px;
+		margin: 0 auto 1.5rem;
+		display: block;
+	}
+
+	.simpay-embedded-heading:not(.simpay-heading) {
+		display: none;
+	}
+
+	.simpay-payment-page-footer {
+		text-align: center;
+		font-family: $base-font;
+		font-size: 15px;
+		color: rgba(255, 255, 255, 0.85);
+		line-height: 1.45;
+		margin: 25px auto;
+		max-width: 440px;
+		border-radius: 4px;
+	}
+
+	.simpay-payment-page-powered-by {
+		color: #fff;
+		text-align: center;
+		font-family: $base-font;
+		font-size: 14px;
+		text-decoration: none;
+		margin-top: 24px;
+		display: block;
+		align-items: center;
+		opacity: 0.65;
+
+		&:hover {
+			opacity: 1;
+		}
+
+		img {
+			vertical-align: middle;
+			width: 200px;
+			margin-left: 10px;
+		}
+	}
+
+	.simpay-payment-receipt-wrap {
+		max-width: 400px;
+
+		p {
+			color: $base-text-color;
+			font-size: 15px;
+			font-family: $base-font;
+			line-height: 1.5;
+		}
+
+		p:only-child {
+			margin: 0;
+		}
+
+		p:first-of-type {
+			margin-top: 0;
+		}
+
+		p:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+
+	// Set width to 90vw when less than 500px.
+	@media (max-width: 500px) {
+		margin: 20px;
+
+		.simpay-payment-page-wrap {
+			width: 100%;
+			min-width: 0;
+			padding: 1rem;
+		}
+
+		.simpay-payment-page-wrap img {
+			margin-bottom: 1rem;
+		}
+
+		.simpay-embedded-heading.simpay-styled {
+			margin-bottom: 1rem;
+		}
+	}
+
 }

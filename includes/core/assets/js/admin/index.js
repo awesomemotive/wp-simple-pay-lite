@@ -56,6 +56,7 @@ let spAdmin = {};
 				'_subscription_type',
 				'_subscription_custom_amount',
 				'_form_type',
+				'_enable_payment_page',
 				'.simpay-total-amount-label-recurring',
 				'.simpay-total-amount-label-tax',
 				'.simpay-shipping-address',
@@ -188,34 +189,39 @@ let spAdmin = {};
 		handleRemoveImagePreviewClick( e ) {
 			e.preventDefault();
 
-			spFormSettings.find( '.simpay-image-preview-wrap' ).hide();
+			$( e.target )
+				.parents( 'td' )
+				.find( '.simpay-image-preview-wrap' )
+				.val( '' )
+				.hide();
 
-			spFormSettings.find( '#_image_url' ).val( '' );
+			$( e.target )
+				.parents( 'td' )
+				.find( '.simpay-field-image-url' )
+				.val( '' );
+
+			$( e.target )
+				.parents( 'td' )
+				.find( '.simpay-remove-image-preview' )
+				.hide();
 		},
 
 		addMediaFields() {
-			let simpayMediaUploader;
-
 			$( '.simpay-media-uploader' ).on( 'click', function ( e ) {
 				e.preventDefault();
 
-				// This is our button
-				window.simpayMediaUploaderInputField = $( this );
-
-				// If the uploader object has already been created, reopen the dialog
-				if ( simpayMediaUploader ) {
-					simpayMediaUploader.open();
-					return;
-				}
-
 				// Extend the wp.media object
-				simpayMediaUploader = wp.media.frames.file_frame = wp.media( {
-					title: spGeneral.i18n.mediaTitle,
-					button: {
-						text: spGeneral.i18n.mediaButtonText,
-					},
-					multiple: false,
-				} );
+				const simpayMediaUploader = ( wp.media.frames.file_frame = wp.media(
+					{
+						title: spGeneral.i18n.mediaTitle,
+						button: {
+							text: spGeneral.i18n.mediaButtonText,
+						},
+						multiple: false,
+					}
+				) );
+
+				const $that = $( this );
 
 				// When a file is selected, grab the URL and set it as the text field's value
 				simpayMediaUploader.on( 'select', function () {
@@ -224,15 +230,29 @@ let spAdmin = {};
 							.get( 'selection' )
 							.first()
 							.toJSON(),
-						inputField = $( '#_image_url' ), // Get the field previous to our button, aka our input field.
+						inputField = $that
+							.parents( 'td' )
+							.find( '.simpay-field-image-url' ), // Get the field previous to our button, aka our input field.
 						image =
 							'id' === inputField.data( 'fvalue' )
 								? attachment.id
 								: attachment.url;
 
 					// Update our image preview
-					$( '.simpay-image-preview-wrap' ).show();
-					$( '.simpay-image-preview' ).prop( 'src', image );
+					$that
+						.parents( 'td' )
+						.find( '.simpay-image-preview-wrap' )
+						.show();
+
+					$that
+						.parents( 'td' )
+						.find( '.simpay-remove-image-preview' )
+						.show();
+
+					$that
+						.parents( 'td' )
+						.find( '.simpay-image-preview' )
+						.prop( 'src', image );
 
 					inputField.val( image );
 				} );

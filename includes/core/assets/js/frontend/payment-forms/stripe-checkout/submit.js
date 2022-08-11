@@ -13,10 +13,17 @@ import { customers, sessions } from '@wpsimplepay/api';
  * @param {PaymentForm} paymentForm
  */
 async function submit( paymentForm ) {
-	const { error: onError, __unstableLegacyFormData } = paymentForm;
+	const {
+		error: onError,
+		disable: disableForm,
+		__unstableLegacyFormData,
+	} = paymentForm;
 
 	let customerId = null;
 	const { hasCustomerFields } = __unstableLegacyFormData;
+
+	onError( '' );
+	disableForm();
 
 	// Only generate a custom Customer if we need to map on-page form fields.
 	if ( hasCustomerFields ) {
@@ -28,7 +35,11 @@ async function submit( paymentForm ) {
 	}
 
 	// Generate a Checkout Session.
-	const { sessionId } = await sessions.create(
+	const {
+		sessionId,
+		session: { url },
+		redirect_type: redirectType,
+	} = await sessions.create(
 		{
 			customer_id: customerId,
 		},
@@ -36,17 +47,21 @@ async function submit( paymentForm ) {
 	);
 
 	// Redirect to Stripe.
-	return paymentForm.stripeInstance
-		.redirectToCheckout( {
-			sessionId,
-		} )
-		.then( ( result ) => {
-			if ( result.error ) {
-				onError( result.error );
-			}
+	if ( 'stripe' === redirectType ) {
+		return paymentForm.stripeInstance
+			.redirectToCheckout( {
+				sessionId,
+			} )
+			.then( ( result ) => {
+				if ( result.error ) {
+					onError( result.error );
+				}
 
-			return result;
-		} );
+				return result;
+			} );
+	}
+
+	window.location.href = url;
 }
 
 export default submit;

@@ -72,6 +72,7 @@ class PaymentIntent_Controller extends Controller {
 		$checks = array(
 			'rate_limit',
 			'form_nonce',
+			'required_fields',
 			'customer_nonce',
 		);
 
@@ -125,6 +126,12 @@ class PaymentIntent_Controller extends Controller {
 			if ( false === $form ) {
 				throw new \Exception(
 					esc_html__( 'Unable to locate payment form.', 'stripe' )
+				);
+			}
+
+			if ( 'stripe_checkout' === $form->get_display_type() ) {
+				throw new \Exception(
+					esc_html__( 'Invalid request. Please try again.', 'stripe' )
 				);
 			}
 

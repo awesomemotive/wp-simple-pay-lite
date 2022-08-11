@@ -50,7 +50,20 @@ class FormPreviewOutput implements SubscriberInterface {
 			);
 		}
 
-		$id = absint( $_GET['simpay-preview'] );
+		$id   = absint( $_GET['simpay-preview'] );
+		$form = simpay_get_form( $id );
+
+		if ( false === $form ) {
+			wp_safe_redirect(
+				add_query_arg(
+					array(
+						'post_type' => 'simple-pay',
+					),
+					admin_url( 'edit.php' )
+				)
+			);
+			exit;
+		}
 
 		$edit_form_url = add_query_arg(
 			array(
@@ -59,6 +72,11 @@ class FormPreviewOutput implements SubscriberInterface {
 			),
 			admin_url( 'post.php' )
 		);
+
+		$payment_page_enabled = get_post_meta( $id, '_enable_payment_page', true );
+		$payment_page_url     = 'yes' === $payment_page_enabled
+			? get_permalink( $id )
+			: '';
 
 		wp_enqueue_script( 'clipboard' );
 		wp_enqueue_script( 'wp-a11y' );

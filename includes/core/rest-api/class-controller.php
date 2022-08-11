@@ -45,7 +45,7 @@ abstract class Controller extends WP_REST_Controller {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @param array $checks List of permission checks to call.
+	 * @param array            $checks List of permission checks to call.
 	 * @param \WP_REST_Request $request Incoming REST API request data.
 	 * @return \WP_Error|true Error if a permission check fails.
 	 */
@@ -151,6 +151,100 @@ abstract class Controller extends WP_REST_Controller {
 	}
 
 	/**
+	 * Determines if the REST API request contains all required fields.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @param \WP_REST_Request $request Incoming REST API request data.
+	 * @return \WP_Error|true Error if the required fields are missing.
+	 */
+	protected function check_required_fields( $request ) {
+		$invalid_request = new \WP_Error(
+			'rest_forbidden',
+			__( 'Invalid request. Please try again.', 'stripe' ),
+			array(
+				'status' => rest_authorization_required_code(),
+			)
+		);
+
+		if ( ! isset( $request['form_id'] ) ) {
+			return $invalid_request;
+		}
+
+		$form_id = intval( $request['form_id'] );
+		$form    = simpay_get_form( $form_id );
+
+		if ( false === $form ) {
+			return $invalid_request;
+		}
+
+		$form_values   = $request['form_values'];
+		$custom_fields = simpay_get_saved_meta( $form->id, '_custom_fields' );
+
+		foreach ( $custom_fields as $custom_field_type => $custom_field_types ) {
+			foreach ( $custom_field_types as $field ) {
+				if ( ! isset( $field['required'] ) ) {
+					continue;
+				}
+
+				// Check custom fields.
+				if ( isset( $field['metadata'] ) ) {
+					if ( empty( $field['metadata'] ) ) {
+						$id = isset( $field['uid'] )
+							? $field['uid']
+							: '';
+
+						$meta_key = 'simpay-form-' . $form->id . '-field-' . $id;
+					} else {
+						$meta_key = $field['metadata'];
+					}
+
+					if ( empty( $form_values['simpay_field'][ $meta_key ] ) ) {
+						return $invalid_request;
+					}
+				}
+
+				// Check Customer fields.
+				switch ( $custom_field_type ) {
+					case 'address':
+						$address_parts = array(
+							'line1',
+							'city',
+							'state',
+							'postal_code',
+							'country',
+						);
+
+						foreach ( $address_parts as $address_part ) {
+							if ( empty( $form_values[ 'simpay_billing_address_' . $address_part ] ) ) {
+								return $invalid_request;
+							}
+						}
+
+						break;
+					case 'tax_id':
+						if (
+							empty( $form_values['simpay_tax_id'] ) ||
+							empty( $form_values['simpay_tax_id_type'] )
+						) {
+							return $invalid_request;
+						}
+
+						break;
+					case 'customer_name':
+					case 'telephone':
+					case 'email':
+						if ( empty( $form_values[ 'simpay_' . $custom_field_type ] ) ) {
+							return $invalid_request;
+						}
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Determines if the REST API request contains a valid Customer nonce.
 	 *
 	 * @since 4.2.0
@@ -220,4 +314,5 @@ abstract class Controller extends WP_REST_Controller {
 
 		return true;
 	}
+
 }

@@ -90,7 +90,7 @@ function register() {
 		'labels'               => $labels,
 		'menu_icon'            => \simpay_get_svg_icon_url(),
 		'public'               => false,
-		'publicly_queryable'   => false,
+		'publicly_queryable'   => true,
 		'exclude_from_search'  => true,
 		'show_ui'              => true,
 		'show_in_menu'         => true,
@@ -98,12 +98,12 @@ function register() {
 		'show_in_rest'         => true,
 		'show_in_admin_bar'    => true,
 		'archive_in_nav_menus' => false,
-		'query_var'            => 'simpay-preview',
 		'rewrite'              => false,
 		'capability_type'      => 'post',
 		'map_meta_cap'         => true,
 		'has_archive'          => false,
 		'hierarchical'         => false,
+		'exclude_from_search'  => true,
 		'supports'             => array(
 			'title',
 		),
@@ -150,6 +150,35 @@ function add_rest_fields() {
 add_action( 'rest_api_init', __NAMESPACE__ . '\\add_rest_fields' );
 
 /**
+ * Filters the Post's (Payment Form) link.
+ *
+ * @since 3.8.0
+ * @since 4.5.0 Adds compatibility with Payment Pages.
+ *
+ * @param string   $link Permalink.
+ * @param \WP_Post $post Current Payment Form (post) object.
+ * @return string
+ */
+function permalink( $link, $post ) {
+	if ( 'simple-pay' !== get_post_type( $post ) ) {
+		return $link;
+	}
+
+	$payment_page_enabled = get_post_meta(
+		$post->ID,
+		'_enable_payment_page',
+		true
+	);
+
+	if ( 'yes' !== $payment_page_enabled ) {
+		return $link;
+	}
+
+	return home_url( $post->post_name );
+}
+add_filter( 'post_type_link', __NAMESPACE__ . '\\permalink', 10, 2 );
+
+/**
  * Filters the Post's (Payment Form) preview link.
  *
  * @since 3.8.0
@@ -175,20 +204,6 @@ function previewlink( $link, $post ) {
 add_filter( 'preview_post_link', __NAMESPACE__ . '\\previewlink', 10, 2 );
 
 /**
- * Filters the Post's (Payment Form) link.
- *
- * @since 3.8.0
- *
- * @param string   $link Permalink.
- * @param \WP_Post $post Current Payment Form (post) object.
- * @return string
- */
-function permalink( $link, $post ) {
-	return previewlink( $link, $post );
-}
-add_filter( 'post_type_link', __NAMESPACE__ . '\\permalink', 10, 2 );
-
-/**
  * Adds messages for general actions.
  *
  * @since 3.8.0
@@ -199,7 +214,7 @@ add_filter( 'post_type_link', __NAMESPACE__ . '\\permalink', 10, 2 );
 function updated_messages( $messages ) {
 	global $post;
 
-	$open  = '<a href="' . get_permalink( $post->ID ) . '" target="_blank" rel="noopener noreferrer">';
+	$open  = '<a href="' . get_preview_post_link( $post ) . '" target="_blank" rel="noopener noreferrer">';
 	$close = '</a>';
 
 	$messages['simple-pay'] = array(

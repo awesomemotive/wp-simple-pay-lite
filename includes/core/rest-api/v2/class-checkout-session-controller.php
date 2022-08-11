@@ -73,6 +73,7 @@ class Checkout_Session_Controller extends Controller {
 		$checks = array(
 			'rate_limit',
 			'form_nonce',
+			'required_fields',
 		);
 
 		return $this->permission_checks( $checks, $request );
@@ -167,10 +168,15 @@ class Checkout_Session_Controller extends Controller {
 				$customer_id
 			);
 
+			$license = simpay_get_license();
+
 			return new \WP_REST_Response(
 				array(
-					'sessionId' => $session->id,
-					'session'   => $session,
+					'sessionId'     => $session->id,
+					'session'       => $session,
+					'redirect_type' => $license->is_pro( 'professional' )
+						? 'manual'
+						: 'stripe',
 				)
 			);
 		} catch ( \Exception $e ) {
@@ -191,6 +197,7 @@ class Checkout_Session_Controller extends Controller {
 	 * @param array                         $form_values Values of named fields in the payment form.
 	 * @param int                           $customer_id Stripe Customer ID.
 	 * @return array
+	 * @throws \Exception If payment form data is invalid.
 	 */
 	function get_args_from_payment_form_request(
 		$form,

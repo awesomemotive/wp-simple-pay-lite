@@ -78,6 +78,7 @@ class Customer_Controller extends Controller {
 		$checks = array(
 			'rate_limit',
 			'form_nonce',
+			'required_fields',
 		);
 
 		return $this->permission_checks( $checks, $request );
@@ -101,7 +102,7 @@ class Customer_Controller extends Controller {
 	public function create_item( $request ) {
 		try {
 			// Do not proceed if attempting to set the PaymentMethod or Source (legacy flow).
-			if ( isset( $request['payment_method_id'], $request['source_id' ] ) ) {
+			if ( isset( $request['payment_method_id'], $request['source_id'] ) ) {
 				throw new \Exception(
 					__( 'Unable to complete payment.', 'stripe' )
 				);

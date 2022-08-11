@@ -257,7 +257,18 @@ function simpay_get_form( $form_id ) {
 		$form = new Default_Form( $form_id );
 	}
 
-	if ( 0 === $form->id ) {
+	// Associated WP_Post cannot be found, invalid.
+	if ( 0 === $form->id || null === $form->post ) {
+		return false;
+	}
+
+	// Associated WP_Post is trashed, invalid.
+	if ( 'trash' === $form->post->post_status ) {
+		return false;
+	}
+
+	// Associated WP_Post is not published, and the current user cannot manage options, invalid.
+	if ( 'publish' !== $form->post->post_status && ! current_user_can( 'manage_options' ) ) {
 		return false;
 	}
 
@@ -516,21 +527,22 @@ function simpay_shared_script_variables() {
 	);
 
 	$strings['strings'] = array(
-		'currency'                 => simpay_get_setting( 'currency', 'USD' ),
-		'currencySymbol'           => html_entity_decode(
+		'currency'                                => simpay_get_setting( 'currency', 'USD' ),
+		'currencySymbol'                          => html_entity_decode(
 			simpay_get_saved_currency_symbol()
 		),
-		'currencyPosition'         => simpay_get_currency_position(),
-		'decimalSeparator'         => simpay_get_decimal_separator(),
-		'thousandSeparator'        => simpay_get_thousand_separator(),
-		'ajaxurl'                  => admin_url( 'admin-ajax.php' ),
-		'customAmountLabel'        => esc_html__(
+		'currencyPosition'                        => simpay_get_currency_position(),
+		'decimalSeparator'                        => simpay_get_decimal_separator(),
+		'thousandSeparator'                       => simpay_get_thousand_separator(),
+		'ajaxurl'                                 => admin_url( 'admin-ajax.php' ),
+		/* translators: %s Minimum price amount. */
+		'customAmountLabel'                       => esc_html__(
 			'starting at %s',
 			'stripe'
 		),
-		'recurringIntervals'       => simpay_get_recurring_intervals(),
+		'recurringIntervals'                      => simpay_get_recurring_intervals(),
 		/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
-		'recurringIntervalDisplay' => esc_html_x(
+		'recurringIntervalDisplay'                => esc_html_x(
 			'%1$s every %2$s %3$s',
 			'recurring interval',
 			'stripe'
@@ -1024,7 +1036,7 @@ function simpay_add_to_array_after( $new_key, $value, $needle, $haystack ) {
 	$new   = array(); // The new array will consist of the opposite of the split + the new element we want to add.
 
 	if ( array_key_exists( $needle, $haystack ) ) {
-		$offset = array_search( $needle, array_keys( $haystack ) );
+		$offset = array_search( $needle, array_keys( $haystack ), true );
 
 		$split = array_slice( $haystack, $offset + 1 );
 		$new   = array_slice( $haystack, 0, $offset + 1 );
@@ -1247,7 +1259,7 @@ function simpay_get_payment_form_setting(
 	$template = null
 ) {
 	// Use a template.
-	if ( $template !== null ) {
+	if ( null !== $template ) {
 		switch ( $setting ) {
 			// Top level attributes.
 			case 'title':
@@ -1341,6 +1353,14 @@ function simpay_get_payment_form_setting(
 	return $setting;
 }
 
+/**
+ * Returns the nicename of a payment form template category.
+ *
+ * @since 4.4.4
+ *
+ * @param string $category_slug Category slug.
+ * @return string
+ */
 function __unstable_simpay_get_form_template_category_name( $category_slug ) {
 	$categories = array(
 		'business'    => __( 'Business', 'stripe' ),
@@ -1405,7 +1425,7 @@ function __unstable_simpay_get_payment_form_templates() {
 
 		// Pull category names.
 		if ( isset( $data['categories'] ) ) {
-			$categories = $data['categories'];
+			$categories         = $data['categories'];
 			$data['categories'] = array();
 
 			foreach ( $categories as $category_slug ) {
@@ -1523,7 +1543,7 @@ function simpay_ga_url( $base_url, $utm_medium, $utm_content = false ) {
 	 */
 	$utm_campaign = apply_filters( 'simpay_utm_campaign', 'lite-plugin' );
 
-	$args =  array(
+	$args = array(
 		'utm_source'   => 'WordPress',
 		'utm_campaign' => $utm_campaign,
 		'utm_medium'   => $utm_medium,

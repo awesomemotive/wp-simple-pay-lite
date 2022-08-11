@@ -25,6 +25,13 @@
 		);
 		?>
 	</title>
+	<?php
+	wp_enqueue_script( 'clipboard' );
+	wp_enqueue_script( 'wp-a11y' );
+	wp_enqueue_style( 'dashicons' );
+
+	wp_head();
+	?>
 </head>
 <body class="simpay-form-preview">
 
@@ -52,6 +59,7 @@
 		<?php endif; ?>
 
 		<div class="simpay-form-preview-notice-actions">
+			<?php if ( false === function_exists( 'has_blocks' ) ) : ?>
 			<button
 				data-clipboard-text='[simpay id="<?php echo esc_attr( (string) $id ); ?>"]'
 				data-copied="<?php echo esc_attr__( 'Copied!', 'stripe' ); ?>"
@@ -59,7 +67,7 @@
 			>
 				<?php esc_html_e( 'Copy Shortcode', 'stripe' ); ?>
 			</button>
-
+			<?php else : ?>
 			<button
 				data-clipboard-text='<!-- wp:simpay/payment-form {"formId":<?php echo esc_attr( (string) $id ); ?>} /-->'
 				data-copied="<?php echo esc_attr__( 'Copied!', 'stripe' ); ?>"
@@ -68,6 +76,16 @@
 			>
 				<?php esc_html_e( 'Copy Block', 'stripe' ); ?>
 			</button>
+			<?php endif; ?>
+
+			<?php if ( ! empty( $payment_page_url ) ) : ?>
+			<a href="<?php echo esc_url( $payment_page_url ); ?>" target="_blank" class="simpay-form-preview-notice-button-link">
+				<span class="dashicons dashicons-admin-links"></span>
+				<span>
+					<?php esc_html_e( 'Payment Page', 'stripe' ); ?>
+				</span>
+			</a>
+			<?php endif; ?>
 
 			<a href="<?php echo esc_url( $edit_form_url ); ?>" class="simpay-form-preview-notice-button-link">
 				<span class="dashicons dashicons-edit"></span>
