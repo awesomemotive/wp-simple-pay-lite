@@ -299,7 +299,7 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 = Stripe Payment Forms v4.5.0 - August 16, 2022 =
 
-* New: Smart tag improvements. Add `{card-brand}`, `{card-last4}`, `{customer-name}` smart tags.
+* New: Use `{customer-name}` smart tag to display the customer's name in payment confirmations.
 * Fix: Hide output of payment forms that are not fully published.
 * Fix: Remove "Edit" from bulk options.
 * Fix: Update composer autoload to avoid namespace conflicts.

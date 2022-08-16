@@ -144,7 +144,7 @@ function parse_content( $content, $payment_confirmation_data ) {
 					 * @param array   $tags_with_keys Payment confirmation smart tags including keys, excluding curly braces.
 					 */
 					$value = apply_filters(
-						sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ),
+						sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 						$value,
 						$payment_confirmation_data,
 						$tag,
@@ -438,7 +438,7 @@ function charge_date( $value, $payment_confirmation_data ) {
 
 	// Localize to current timezone and formatting.
 	$value = get_date_from_gmt(
-		date( 'Y-m-d H:i:s', $first_charge->created ),
+		date( 'Y-m-d H:i:s', $first_charge->created ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		'U'
 	);
 
@@ -604,7 +604,7 @@ add_filter(
  */
 function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 	$tags = array(
-		'form-title' => esc_html__(
+		'form-title'       => esc_html__(
 			'The form\'s title.',
 			'stripe'
 		),
@@ -612,7 +612,7 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 			'The form\'s description.',
 			'stripe'
 		),
-		'total-amount' => esc_html__(
+		'total-amount'     => esc_html__(
 			'The total price of the payment.',
 			'stripe'
 		),
@@ -620,29 +620,32 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 			'The value of the Name form field.',
 			'stripe'
 		),
-		'charge-date'  => esc_html__(
+		'charge-date'      => esc_html__(
 			'The charge date returned from Stripe.',
 			'stripe'
 		),
-		'charge-id'    => esc_html__(
+		'charge-id'        => esc_html__(
 			'The unique charge ID returned from Stripe.',
-			'stripe'
-		),
-		'card-brand'       => esc_html__(
-			'The brand of the card used. Visa, Amex, etc.',
-			'stripe'
-		),
-		'card-last4'       => esc_html__(
-			'The last four digits of the card used.',
-			'stripe'
-		),
-		'payment-type'    => esc_html__(
-			'The type of payment (one-time or recurring).',
 			'stripe'
 		),
 	);
 
 	if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
+		$tags['payment-type'] = esc_html__(
+			'The type of payment (one-time or recurring).',
+			'stripe'
+		);
+
+		$tags['card-brand'] = esc_html__(
+			'The brand of the card used. Visa, Amex, etc.',
+			'stripe'
+		);
+
+		$tags['card-last4'] = esc_html__(
+			'The last four digits of the card used.',
+			'stripe'
+		);
+
 		$tags['tax-amount'] = esc_html__(
 			'The calculated tax amount based on the total and the tax percent setting.',
 			'stripe'
