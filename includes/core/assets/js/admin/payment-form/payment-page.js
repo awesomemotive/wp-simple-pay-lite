@@ -44,6 +44,14 @@ function bindHideBranding() {
  * @since 4.5.0
  */
 function bindColorPicker() {
+	const customColorEl = document.getElementById(
+		'payment-page-background-color-custom'
+	);
+
+	if ( ! customColorEl ) {
+		return;
+	}
+
 	$( '#payment-page-background-color-custom' ).wpColorPicker();
 
 	const customButtonEl = document.querySelector(
