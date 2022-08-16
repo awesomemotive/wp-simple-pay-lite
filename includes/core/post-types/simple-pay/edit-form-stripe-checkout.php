@@ -64,6 +64,7 @@ function add_stripe_checkout( $post_id ) {
 						'value'   => $image_url,
 						'class'   => array(
 							'simpay-field-text',
+							'simpay-field-image-url',
 						),
 					)
 				);

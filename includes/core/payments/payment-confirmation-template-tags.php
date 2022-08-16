@@ -1,6 +1,6 @@
 <?php
 /**
- * Payment confirmation template tags
+ * Payment confirmation smart tags
  *
  * @package SimplePay\Core\Payments\Payment_Confirmation\Template_Tags
  * @copyright Copyright (c) 2022, Sandhills Development, LLC
@@ -12,6 +12,7 @@ namespace SimplePay\Core\Payments\Payment_Confirmation\Template_Tags;
 
 use SimplePay\Core\Utils;
 use SimplePay\Core\Payments;
+use SimplePay\Core\Payments\Stripe_API;
 use function SimplePay\Core\SimplePay;
 
 // Exit if accessed directly.
@@ -20,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Retrieves available template tags used in Payment Confirmation content.
+ * Retrieves available smart tags used in Payment Confirmation content.
  *
  * @since 3.6.0 Removed default values and `type` configuration. Values are computed based
  *              on applied filters, and if nothing is applied they default to an empty string,
@@ -40,10 +41,14 @@ function get_tags( $payment_confirmation_data ) {
 	$tags = array(
 		'form-title',
 		'form-description',
+		'card-brand',
 		'charge-id',
 		'charge-date',
 		'company-name',
+		'customer-name',
 		'item-description',
+		'card-last4',
+		'name-on-card',
 		'total-amount',
 		'payment-type',
 	);
@@ -74,11 +79,11 @@ function get_tags( $payment_confirmation_data ) {
 	}
 
 	/**
-	 * Filters available template tags used in Payment Confirmation content.
+	 * Filters available smart tags used in Payment Confirmation content.
 	 *
 	 * @since unknown
 	 *
-	 * @param array $tags Payment Confirmation template tags.
+	 * @param array $tags Payment Confirmation smart tags.
 	 * @param Payment $payment Deprecated.
 	 */
 	$tags = apply_filters( 'simpay_payment_details_template_tags', $tags, $payment );
@@ -87,7 +92,7 @@ function get_tags( $payment_confirmation_data ) {
 }
 
 /**
- * Parses confirmation content and apply registered template tags.
+ * Parses confirmation content and apply registered smart tags.
  *
  * @since 3.6.0
  *
@@ -120,11 +125,11 @@ function parse_content( $content, $payment_confirmation_data ) {
 			if ( has_filter( sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ) ) ) {
 				foreach ( $tags_with_keys as $tag_with_keys ) {
 					/**
-					 * Filters the value used to replace the template tag with.
+					 * Filters the value used to replace the smart tag with.
 					 *
 					 * @since 3.6.0
-					 * @since 3.7.0 Name of template tag, excluding curly braces.
-					 * @since 3.7.0 Name of template tag with keys, excluding curly braces.
+					 * @since 3.7.0 Name of smart tag, excluding curly braces.
+					 * @since 3.7.0 Name of smart tag with keys, excluding curly braces.
 					 *
 					 * @param string $value Default value (empty string).
 					 * @param array  $payment_confirmation_data {
@@ -135,11 +140,11 @@ function parse_content( $content, $payment_confirmation_data ) {
 					 *   @type object                         $subscriptions Subscriptions associated with the Customer.
 					 *   @type object                         $paymentintents PaymentIntents associated with the Customer.
 					 * }
-					 * @param string  $tag Payment confirmation template tag name, excluding curly braces.
-					 * @param array   $tags_with_keys Payment confirmation template tags including keys, excluding curly braces.
+					 * @param string  $tag Payment confirmation smart tag name, excluding curly braces.
+					 * @param array   $tags_with_keys Payment confirmation smart tags including keys, excluding curly braces.
 					 */
 					$value = apply_filters(
-						sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ),
+						sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 						$value,
 						$payment_confirmation_data,
 						$tag,
@@ -160,7 +165,7 @@ function parse_content( $content, $payment_confirmation_data ) {
  *
  * @since 3.7.0
  *
- * @param string $tag Payment confirmation template tag (and optional keys), excluding curly braces.
+ * @param string $tag Payment confirmation smart tag (and optional keys), excluding curly braces.
  * @param string $value Tag value.
  * @param string $content Payment confirmation content.
  * @return string
@@ -176,7 +181,7 @@ function replace_tag( $tag, $value, $content ) {
  *
  * @since 3.7.0
  *
- * @param string $tag Payment confirmation template tag name, excluding curly braces.
+ * @param string $tag Payment confirmation smart tag name, excluding curly braces.
  * @param string $content Payment confirmation content.
  * @return string $tags_with_keys Tag including keys, excluding curly braces.
  */
@@ -204,7 +209,7 @@ function get_tags_with_keys( $tag, $content ) {
  *
  * @since 3.7.0
  *
- * @param string $tag_with_keys Payment confirmation template tag name including keys, excluding curly braces.
+ * @param string $tag_with_keys Payment confirmation smart tag name including keys, excluding curly braces.
  * @return array List of tag keys.
  */
 function get_tag_keys( $tag_with_keys ) {
@@ -250,6 +255,120 @@ function get_object_property_deep( $keys, $ref ) {
 
 	return $value;
 }
+
+/**
+ * Replaces the {customer-name} template tag with the name of the Customer.
+ *
+ * @since 4.5.0
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function customer_name( $value, $payment_confirmation_data ) {
+
+	if ( empty( $payment_confirmation_data['customer'] ) ) {
+		return $value;
+	}
+
+	return esc_html( $payment_confirmation_data['customer']->name );
+}
+add_filter( 'simpay_payment_confirmation_template_tag_customer-name', __NAMESPACE__ . '\\customer_name', 10, 3 );
+
+/**
+ * Replaces the {card-brand} template tag with the name on the Customer's credit card.
+ *
+ * @since 4.5.0
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type \SimplePay\Core\Payments\Stripe_API   $payment_methods or something
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function card_brand( $value, $payment_confirmation_data ) {
+	// Get all cards.
+	$payment_methods = \SimplePay\Core\Payments\Stripe_API::request(
+		'PaymentMethod',
+		'all',
+		array(
+			'customer' => $payment_confirmation_data['customer']->id,
+			'type'     => 'card',
+		),
+		$payment_confirmation_data['form']->get_api_request_args()
+	);
+
+	if ( empty( $payment_methods->data ) ) {
+		return $value;
+	}
+
+	// Find the most recent card.
+	$card = current( $payment_methods->data );
+
+	if ( empty( $card->card ) ) {
+		return $value;
+	}
+
+	return ucwords( $card->card->brand );
+}
+add_filter( 'simpay_payment_confirmation_template_tag_card-brand', __NAMESPACE__ . '\\card_brand', 10, 3 );
+
+/**
+ * Replaces the {card-last4} template tag with the name on the Customer's credit card.
+ *
+ * @since 4.5.0
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type \SimplePay\Core\Payments\Stripe_API   $payment_methods or something
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function card_last4( $value, $payment_confirmation_data ) {
+	// Get all cards.
+	$payment_methods = \SimplePay\Core\Payments\Stripe_API::request(
+		'PaymentMethod',
+		'all',
+		array(
+			'customer' => $payment_confirmation_data['customer']->id,
+			'type'     => 'card',
+		),
+		$payment_confirmation_data['form']->get_api_request_args()
+	);
+
+	if ( empty( $payment_methods->data ) ) {
+		return $value;
+	}
+
+	// Find the most recent card.
+	$card = current( $payment_methods->data );
+
+	if ( empty( $card->card ) ) {
+		return $value;
+	}
+
+	return ( $card->card->last4 );
+}
+add_filter( 'simpay_payment_confirmation_template_tag_card-last4', __NAMESPACE__ . '\\card_last4', 10, 3 );
 
 /**
  * Replaces {charge-id} with the Customer's first PaymentIntent's first Charge ID.
@@ -319,14 +438,14 @@ function charge_date( $value, $payment_confirmation_data ) {
 
 	// Localize to current timezone and formatting.
 	$value = get_date_from_gmt(
-		date( 'Y-m-d H:i:s', $first_charge->created ),
+		date( 'Y-m-d H:i:s', $first_charge->created ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		'U'
 	);
 
 	$value = date_i18n( get_option( 'date_format' ), $value );
 
 	/**
-	 * Filters the {charge-date} template tag value.
+	 * Filters the {charge-date} smart tag value.
 	 *
 	 * @since 3.0.0
 	 * @deprecated 3.6.0
@@ -475,7 +594,7 @@ add_filter(
 );
 
 /**
- * Returns a list of available template tags and their descriptions.
+ * Returns a list of available smart tags and their descriptions.
  *
  * @todo Temporary until this can be more easily generated through a tag registry.
  *
@@ -485,7 +604,7 @@ add_filter(
  */
 function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 	$tags = array(
-		'form-title' => esc_html__(
+		'form-title'       => esc_html__(
 			'The form\'s title.',
 			'stripe'
 		),
@@ -493,25 +612,40 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 			'The form\'s description.',
 			'stripe'
 		),
-		'total-amount' => esc_html__(
+		'total-amount'     => esc_html__(
 			'The total price of the payment.',
 			'stripe'
 		),
-		'charge-date'  => esc_html__(
+		'customer-name'    => esc_html__(
+			'The value of the Name form field.',
+			'stripe'
+		),
+		'charge-date'      => esc_html__(
 			'The charge date returned from Stripe.',
 			'stripe'
 		),
-		'charge-id'    => esc_html__(
+		'charge-id'        => esc_html__(
 			'The unique charge ID returned from Stripe.',
-			'stripe'
-		),
-		'payment-type'    => esc_html__(
-			'The type of payment (one-time or recurring).',
 			'stripe'
 		),
 	);
 
 	if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
+		$tags['payment-type'] = esc_html__(
+			'The type of payment (one-time or recurring).',
+			'stripe'
+		);
+
+		$tags['card-brand'] = esc_html__(
+			'The brand of the card used. Visa, Amex, etc.',
+			'stripe'
+		);
+
+		$tags['card-last4'] = esc_html__(
+			'The last four digits of the card used.',
+			'stripe'
+		);
+
 		$tags['tax-amount'] = esc_html__(
 			'The calculated tax amount based on the total and the tax percent setting.',
 			'stripe'
@@ -522,14 +656,14 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 }
 
 /**
- * Prints a list of available template tags and their descriptions.
+ * Prints a list of available smart tags and their descriptions.
  *
  * @todo Temporary until this can be more easily generated through a tag registry.
  *
  * @since 4.0.0
  *
- * @param string $description Template tag description.
- * @param array  $tags List of template tags and descriptions.
+ * @param string $description smart tag description.
+ * @param array  $tags List of smart tags and descriptions.
  */
 function __unstable_print_tag_list( $description, $tags ) { // phpcs:ignore PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 	printf(
@@ -539,7 +673,7 @@ function __unstable_print_tag_list( $description, $tags ) { // phpcs:ignore PHPC
 
 	printf(
 		'<p><strong>%s</strong></p>',
-		esc_html__( 'Available template tags:', 'stripe' )
+		esc_html__( 'Available smart tags:', 'stripe' )
 	);
 
 	foreach ( $tags as $tag_id => $description ) {

@@ -59,7 +59,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 	 * @since 3.6.2
 	 *
 	 * @param int   $form_id ID of the form the payment was created from.
-	 * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation template tags.
+	 * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation smart tags.
 	 */
 	$form_id = apply_filters(
 		'simpay_payment_confirmation_form_id',
@@ -147,7 +147,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 	 *
 	 * @since 3.6.0
 	 *
-	 * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation template tags.
+	 * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation smart tags.
 	 */
 	$payment_confirmation_data = apply_filters( 'simpay_payment_confirmation_data', $payment_confirmation_data );
 

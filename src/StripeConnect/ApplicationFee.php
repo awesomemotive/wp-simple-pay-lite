@@ -109,7 +109,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			$message .= sprintf(
 				/* translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
 				__(
-					'%1$sPay as you go pricing%2$s: 2%% fee per-transaction + Stripe fees. %3$sUpgrade to Pro%4$s for no added fees and priority support.',
+					'%1$sPay as you go pricing%2$s: 3%% fee per-transaction + Stripe fees. %3$sUpgrade to Pro%4$s for no added fees and priority support.',
 					'stripe'
 				),
 				'<strong>',
@@ -130,7 +130,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 				$message .= sprintf(
 					/* translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
 					__(
-						'%1$sPay as you go pricing%2$s: 2%% fee per-transaction + Stripe fees. %3$sActivate your license%4$s to remove additional fees and unlock powerful features.',
+						'%1$sPay as you go pricing%2$s: 3%% fee per-transaction + Stripe fees. %3$sActivate your license%4$s to remove additional fees and unlock powerful features.',
 						'stripe'
 					),
 					'<strong>',
@@ -148,7 +148,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 				$message .= sprintf(
 					/* translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
 					__(
-						'%1$sPay as you go pricing%2$s: 2%% fee per-transaction + Stripe fees. %3$sRenew your license%4$s to remove additional fees and unlock powerful features.',
+						'%1$sPay as you go pricing%2$s: 3%% fee per-transaction + Stripe fees. %3$sRenew your license%4$s to remove additional fees and unlock powerful features.',
 						'stripe'
 					),
 					'<strong>',
@@ -177,7 +177,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		$payment_intent_args['application_fee_amount'] = round(
-			$payment_intent_args['amount'] * 0.02,
+			$payment_intent_args['amount'] * 0.03,
 			0
 		);
 
@@ -197,7 +197,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			return $subscription_args;
 		}
 
-		$subscription_args['application_fee_percent'] = 2;
+		$subscription_args['application_fee_percent'] = 3;
 
 		return $subscription_args;
 	}

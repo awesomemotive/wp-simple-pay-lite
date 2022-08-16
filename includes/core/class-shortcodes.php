@@ -110,6 +110,23 @@ class Shortcodes {
 			);
 		}
 
+		if ( ! isset( $_GET['simpay-preview'] ) && 'publish' !== get_post_status( $form_id ) ) {
+			if ( current_user_can( 'manage_options' ) ) {
+				return wp_kses_post(
+					wpautop(
+						sprintf(
+							/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+							__( 'This payment form is currently unpublished. %1$sPreview payment form →%2$s.', 'stripe' ),
+							'<a href="' . esc_url( get_preview_post_link( $form_id ) ) . '">',
+							'</a>'
+						)
+					)
+				);
+			} else {
+				return'';
+			}
+		}
+
 		$has_keys = simpay_check_keys_exist();
 
 		// Show a notice to admins if they have not setup Stripe.
@@ -217,7 +234,7 @@ class Shortcodes {
 			/**
 			 * Filters the content of the confirmation shortcode.
 			 *
-			 * This allows different form types to parse the confirmation template tags differently.
+			 * This allows different form types to parse the confirmation smart tags differently.
 			 *
 			 * @since 3.6.0
 			 *
@@ -283,7 +300,7 @@ class Shortcodes {
 		 * @since 3.7.0 Pass payment confirmation data.
 		 *
 		 * @param string
-		 * @param array  $payment_confirmation_data Array of data to send to the Payment Confirmation template tags.
+		 * @param array  $payment_confirmation_data Array of data to send to the Payment Confirmation smart tags.
 		 */
 		$before_html = apply_filters(
 			'simpay_before_payment_details',
@@ -298,7 +315,7 @@ class Shortcodes {
 		 * @since 3.7.0 Pass payment confirmation data.
 		 *
 		 * @param string
-		 * @param array  $payment_confirmation_data Array of data to send to the Payment Confirmation template tags.
+		 * @param array  $payment_confirmation_data Array of data to send to the Payment Confirmation smart tags.
 		 */
 		$after_html = apply_filters(
 			'simpay_after_payment_details',

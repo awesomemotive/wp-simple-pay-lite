@@ -4,39 +4,18 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit08c6010c3476ae9184e966bd98da33cc
+class ComposerStaticInit274b67ee9371824c320bb5f21b2feecb
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Stripe\\' => 7,
             'SimplePay\\Vendor\\Stripe\\' => 24,
             'SimplePay\\Vendor\\' => 17,
             'SimplePay\\Core\\' => 15,
         ),
-        'P' => 
-        array (
-            'Psr\\Container\\' => 14,
-        ),
-        'L' => 
-        array (
-            'League\\Container\\' => 17,
-        ),
-        'I' => 
-        array (
-            'Interop\\Container\\' => 18,
-        ),
-        'B' => 
-        array (
-            'BerlinDB\\' => 9,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Stripe\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
-        ),
         'SimplePay\\Vendor\\Stripe\\' => 
         array (
             0 => __DIR__ . '/../..' . '/lib/Stripe/lib',
@@ -49,22 +28,6 @@ class ComposerStaticInit08c6010c3476ae9184e966bd98da33cc
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'League\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/container/src',
-        ),
-        'Interop\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
-        ),
-        'BerlinDB\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/berlindb/core/src',
-        ),
     );
 
     public static $classMap = array (
@@ -74,9 +37,9 @@ class ComposerStaticInit08c6010c3476ae9184e966bd98da33cc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit08c6010c3476ae9184e966bd98da33cc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit08c6010c3476ae9184e966bd98da33cc::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit08c6010c3476ae9184e966bd98da33cc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit274b67ee9371824c320bb5f21b2feecb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit274b67ee9371824c320bb5f21b2feecb::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit274b67ee9371824c320bb5f21b2feecb::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -172,7 +172,7 @@ function simpay_charge_created( $paymentintent, $form, $form_values ) {
  *
  * @since 3.6.0
  *
- * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation template tags.
+ * @param array $payment_confirmation_data Array of data to send to the Payment Confirmation smart tags.
  */
 function _transform_payment_confirmation_for_legacy_charge( $payment_confirmation_data, $form, $form_values ) {
 	if ( ! has_action( 'simpay_charge_created' ) ) {

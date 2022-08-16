@@ -15,6 +15,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Removes the Edit option from the bulk options dropdown.
+ *
+ * @since 4.5.0
+ *
+ * @param array $actions payment form actions.
+ * @return array
+ */
+function remove_edit_from_bulk_actions( $actions ) {
+
+	if ( isset( $actions['edit'] ) ) {
+		unset( $actions['edit'] );
+	}
+
+	return $actions;
+}
+add_filter( 'bulk_actions-edit-simple-pay', __NAMESPACE__ . '\\remove_edit_from_bulk_actions', 10, 1 );
+
+/**
  * Appends a previously set `post_title` to the "Company Name" field.
  *
  * @since 4.1.0
@@ -67,6 +85,26 @@ function row_actions( $actions, $post ) {
 
 	// Remove "Quick Edit".
 	unset( $actions['inline hide-if-no-js'] );
+
+	// Update "View" to "View Payment Page", or remove if not enabled.
+	if ( isset( $actions['view'] ) ) {
+		/** @var string $payment_page_enabled */
+		$payment_page_enabled = get_post_meta(
+			$post->ID,
+			'_enable_payment_page',
+			true
+		);
+
+		if ( 'yes' !== $payment_page_enabled ) {
+			unset( $actions['view'] );
+		} else {
+			$actions['view'] = sprintf(
+				'<a href="%s" target="_blank">%s</a>',
+				get_permalink( $post->ID ),
+				esc_html__( 'View Payment Page', 'stripe' )
+			);
+		}
+	}
 
 	// Preview.
 	$actions = simpay_add_to_array_after(

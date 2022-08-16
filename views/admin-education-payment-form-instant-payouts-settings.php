@@ -16,7 +16,7 @@ use SimplePay\Core\Utils;
 ?>
 
 <div
-	class="simpay-notice simpay-instant-payouts-notice"
+	class="simpay-notice simpay-form-settings-notice"
 	data-nonce="<?php echo esc_attr( wp_create_nonce( 'simpay-dismiss-notice-simpay-form-settings-instant-payouts-education' ) ); ?>"
 	data-id="simpay-form-settings-instant-payouts-education"
 	data-lifespan="<?php echo esc_attr( DAY_IN_SECONDS * 180 ); // @phpstan-ignore-line ?>"
