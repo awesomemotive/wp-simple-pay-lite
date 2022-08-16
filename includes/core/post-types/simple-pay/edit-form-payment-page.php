@@ -36,9 +36,11 @@ function payment_page_education() {
 		return;
 	}
 
-	$features_url = simpay_ga_url(
-		'https://wpsimplepay.com/features/payment-pages/',
-		'form-settings-payment-page'
+	$features_url = simpay_docs_link(
+		'Payment Pages',
+		'how-to-use-payment-pages',
+		'form-payment-page-settings',
+		true
 	);
 
 	include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-payment-page-settings.php'; // @phpstan-ignore-line

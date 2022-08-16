@@ -187,8 +187,8 @@ html body.simpay-payment-page {
 
 	.simpay-payment-page-wrap {
 		margin: 0 auto;
-		max-width: 460px;
-		padding: 1.5rem;
+		width: calc(400px + 4rem);
+		padding: 2rem;
 		background: white;
 		border-radius: 4px;
 		box-shadow: 0 25px 50px -12px rgb(0, 0, 0, 0.25);
@@ -197,7 +197,7 @@ html body.simpay-payment-page {
 	.simpay-payment-page-wrap img {
 		max-width: 100%;
 		max-height: 125px;
-		margin: 0 auto 1.5rem;
+		margin: 0 auto 2rem;
 		display: block;
 	}
 
@@ -211,7 +211,7 @@ html body.simpay-payment-page {
 		font-size: 15px;
 		color: rgba(255, 255, 255, 0.85);
 		line-height: 1.45;
-		margin: 25px auto;
+		margin: 2rem auto 1rem;
 		max-width: 440px;
 		border-radius: 4px;
 	}
@@ -222,7 +222,7 @@ html body.simpay-payment-page {
 		font-family: $base-font;
 		font-size: 14px;
 		text-decoration: none;
-		margin-top: 24px;
+		margin-top: 1rem;
 		display: block;
 		align-items: center;
 		opacity: 0.65;
@@ -266,17 +266,10 @@ html body.simpay-payment-page {
 		margin: 20px;
 
 		.simpay-payment-page-wrap {
-			width: 100%;
 			min-width: 0;
-			padding: 1rem;
-		}
-
-		.simpay-payment-page-wrap img {
-			margin-bottom: 1rem;
-		}
-
-		.simpay-embedded-heading.simpay-styled {
-			margin-bottom: 1rem;
+			width: 90vw;
+			padding: 1.5rem;
+			min-width: 0;
 		}
 	}
 
