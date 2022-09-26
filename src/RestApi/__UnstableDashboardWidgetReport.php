@@ -12,6 +12,10 @@
  * @since 4.4.5
  */
 
+// phpcs:disable WordPress.DateTime.RestrictedFunctions.date_date
+// phpcs:disable PEAR.NamingConventions.ValidClassName.StartWithCapital
+// phpcs:disable PEAR.NamingConventions.ValidClassName.Invalid
+
 namespace SimplePay\Core\RestApi;
 
 use DateInterval;
@@ -33,7 +37,7 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 	 */
 	public function get_subscribed_events() {
 		return array(
-			'init' => 'register_meta',
+			'init'          => 'register_meta',
 			'rest_api_init' => array(
 				array( 'register_route' ),
 			),
@@ -60,32 +64,32 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 					'callback'            => array( $this, 'get_report' ),
 					'permission_callback' => array( $this, 'can_view_report' ),
 					'args'                => array(
-						'range'   => array(
-							'description'       => __(
+						'range'    => array(
+							'description' => __(
 								'The date range to retrieve results from. Only predefined ranges are currently supported.',
 								'stripe'
 							),
-							'type'              => 'string',
-							'enum'              => array( 'last7', 'last30' ),
-							'default'           => 'last7',
-							'required'          => false,
+							'type'        => 'string',
+							'enum'        => array( 'last7', 'last30' ),
+							'default'     => 'last7',
+							'required'    => false,
 						),
 						'currency' => array(
-							'description'       => __(
+							'description' => __(
 								'The currency to use for the report.',
 								'stripe'
 							),
-							'type'              => 'string',
-							'default'           => strtolower(
+							'type'        => 'string',
+							'default'     => strtolower(
 								$default_currency
 							),
-							'required'          => false,
-							'minLength'         => 3,
-							'maxLength'         => 3,
-							'pattern'           => '[a-z]{3}',
-						)
+							'required'    => false,
+							'minLength'   => 3,
+							'maxLength'   => 3,
+							'pattern'     => '[a-z]{3}',
+						),
 					),
-				)
+				),
 			)
 		);
 	}
@@ -181,9 +185,9 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 		return new WP_REST_Response(
 			array(
 				'data' => array(
-					'start'             => $start,
-					'end'               => $end,
-					'currency'          => array(
+					'start'    => $start,
+					'end'      => $end,
+					'currency' => array(
 						'code'               => $currency,
 						'symbol'             => simpay_get_currency_symbol(
 							$currency
@@ -192,9 +196,9 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 						'thousand_separator' => simpay_get_thousand_separator(),
 						'decimal_separator'  => simpay_get_decimal_separator(),
 					),
-					'total'             => $curr_total,
-					'delta'             => $delta,
-					'forms'             => array(
+					'total'    => $curr_total,
+					'delta'    => $delta,
+					'forms'    => array(
 						'top'       => $forms['top'],
 						'remaining' => array(
 							'count'           => $forms['remaining']['count'],
@@ -205,7 +209,7 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 							),
 						),
 					),
-					'chart'             => array(
+					'chart'    => array(
 						'datasets' => array(
 							array(
 								'label' => __( 'Current period', 'stripe' ),
@@ -217,9 +221,9 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 								'rgb'   => array( 220, 220, 220 ),
 								'data'  => $datasets[0],
 							),
-						)
+						),
 					),
-				)
+				),
 			)
 		);
 	}
@@ -247,7 +251,7 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 						'required' => false,
 						'type'     => 'string',
 						'enum'     => array( 'last7', 'last30' ),
-					)
+					),
 				),
 			)
 		);
@@ -295,9 +299,12 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 	private function get_datasets( $start, $end, $days, $currency ) {
 		global $wpdb;
 
+		$livemode = simpay_is_test_mode() ? 0 : 1;
+
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT date_format(date_created, '%%Y-%%m-%%d') as date, SUM(amount_total) as amount_total FROM {$wpdb->prefix}wpsp_transactions WHERE currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY date",
+				"SELECT date_format(date_created, '%%Y-%%m-%%d') as date, SUM(amount_total) as amount_total FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY date",
+				$livemode,
 				$currency,
 				$start,
 				$end
@@ -314,7 +321,7 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 		$iterable_days = iterator_to_array( $period );
 
 		// @todo tied to two periods.
-		$datasets      = array(
+		$datasets = array(
 			array_slice( $iterable_days, 0, $days ),
 			array_slice( $iterable_days, $days, $days ),
 		);
@@ -334,10 +341,10 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 				 *
 				 * @return array<string, string|int>
 				 */
-				function( $date, $x ) use( $results, $currency ) {
-					$format = 'Y-m-d';
-					$date   = $date->format( $format );
-					$total  = isset( $results[ $date ] )
+				function( $date, $x ) use ( $results, $currency ) {
+					$format          = 'Y-m-d';
+					$date            = $date->format( $format );
+					$total           = isset( $results[ $date ] )
 						? (int) $results[ $date ]->amount_total
 						: 0;
 					$is_zero_decimal = simpay_is_zero_decimal( $currency );
@@ -378,9 +385,12 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 	private function get_forms( $start, $end, $currency ) {
 		global $wpdb;
 
+		$livemode = simpay_is_test_mode() ? 0 : 1;
+
 		$forms = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT DISTINCT form_id, SUM(amount_total) as amount_total FROM {$wpdb->prefix}wpsp_transactions WHERE currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY form_id ORDER BY amount_total DESC",
+				"SELECT DISTINCT form_id, SUM(amount_total) as amount_total FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY form_id ORDER BY amount_total DESC",
+				$livemode,
 				$currency,
 				$start,
 				$end
@@ -393,7 +403,7 @@ class __UnstableDashboardWidgetReport implements SubscriberInterface {
 				'remaining' => array(
 					'count' => 0,
 					'total' => 0,
-				)
+				),
 			);
 		}
 

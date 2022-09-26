@@ -250,6 +250,12 @@ function simpay_get_form( $form_id ) {
 		$form_id = $form_id->ID;
 	}
 
+	$post_type = get_post_type( $form_id );
+
+	if ( 'simple-pay' !== $post_type ) {
+		return false;
+	}
+
 	/** This filter is documented in includes/core/shortcodes.php */
 	$form = apply_filters( 'simpay_form_view', '', $form_id );
 
@@ -1092,7 +1098,7 @@ function simpay_get_form_address_data( $type, $fields ) {
  * @return string
  */
 function simpay_get_svg_icon_url() {
-	return 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ4OC4yMDEgNDg4LjIwMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDg4LjIwMSA0ODguMjAxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjY1LjIsMzUwLjI1MUgzMy42Yy01LjMsMC05LjYtNC4zLTkuNi05LjZ2LTE4Mi42aDQwOC41djI0YzAsNi42LDUuNCwxMiwxMiwxMnMxMi01LjQsMTItMTJ2LTg2LjUgICAgYzAtMTguNS0xNS4xLTMzLjYtMzMuNi0zMy42SDMzLjZjLTE4LjYsMC0zMy42LDE1LjEtMzMuNiwzMy42djI0NS4xYzAsMTguNSwxNS4xLDMzLjYsMzMuNiwzMy42aDIzMS43YzYuNiwwLDEyLTUuNCwxMi0xMiAgICBTMjcxLjksMzUwLjI1MSwyNjUuMiwzNTAuMjUxeiBNMzMuNiw4NS45NTFoMzg5LjNjNS4zLDAsOS42LDQuMyw5LjYsOS42djM4LjVIMjMuOXYtMzguNUMyMy45LDkwLjI1MSwyOC4zLDg1Ljk1MSwzMy42LDg1Ljk1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNMjQwLjIsMjQ3LjE1MWMwLTYuNi01LjQtMTItMTItMTJIODRjLTYuNiwwLTEyLDUuNC0xMiwxMnM1LjQsMTIsMTIsMTJoMTQ0LjJDMjM0LjksMjU5LjE1MSwyNDAuMiwyNTMuNzUxLDI0MC4yLDI0Ny4xNTEgICAgeiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik04NCwyNzguMTUxYy02LjYsMC0xMiw1LjQtMTIsMTJzNS40LDEyLDEyLDEyaDU3LjdjNi42LDAsMTItNS40LDEyLTEycy01LjQtMTItMTItMTJIODR6IiBmaWxsPSIjRkZGRkZGIi8+CgkJPHBhdGggZD0iTTgyLjYsMjE1LjY1MWgxNDQuMmM2LjYsMCwxMi01LjQsMTItMTJzLTUuNC0xMi0xMi0xMkg4Mi42Yy02LjYsMC0xMiw1LjQtMTIsMTJTNzUuOSwyMTUuNjUxLDgyLjYsMjE1LjY1MXoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNNDc2LjMsMjk4LjI1MWgtMTcuNnYtMjhjMC0zNC43LTI4LjMtNjMtNjMtNjNzLTYzLDI4LjMtNjMsNjN2MjhoLTE3LjZjLTYuNiwwLTEyLDUuNC0xMiwxMnYxMDRjMCw2LjYsNS40LDEyLDEyLDEyICAgIGgxNjEuMWM2LjYsMCwxMi01LjQsMTItMTJ2LTEwNEM0ODguMywzMDMuNTUxLDQ4Mi45LDI5OC4yNTEsNDc2LjMsMjk4LjI1MXogTTM1Ni43LDI3MC4xNTFjMC0yMS41LDE3LjUtMzksMzktMzlzMzksMTcuNSwzOSwzOSAgICB2MjhoLTc4VjI3MC4xNTF6IE00NjQuMyw0MDIuMTUxSDMyNy4xdi04MGgxMzcuMXY4MEg0NjQuM3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K';
+	return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTY5IiBoZWlnaHQ9IjExMyIgdmlld0JveD0iMCAwIDE2OSAxMTMiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNOSAyOVY5MEg4NVY5OUg2QzIuNjg2MjkgOTkgMCA5Ni4zMTM3IDAgOTNWNkMwIDIuNjg2MjkgMi42ODYyOSAwIDYgMEgxNDBDMTQzLjMxNCAwIDE0NiAyLjY4NjI5IDE0NiA2VjlWMjlIMTM3SDg1SDlaIiBmaWxsPSIjYTdhYWFkIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMjMgNThDMjMgNTUuNzkwOSAyNC43OTA5IDU0IDI3IDU0SDY5QzcxLjIwOTEgNTQgNzMgNTUuNzkwOSA3MyA1OEM3MyA2MC4yMDkxIDcxLjIwOTEgNjIgNjkgNjJIMjdDMjQuNzkwOSA2MiAyMyA2MC4yMDkxIDIzIDU4Wk0yMyA3MkMyMyA2OS43OTA5IDI0Ljc5MDkgNjggMjcgNjhINTRDNTYuMjA5MSA2OCA1OCA2OS43OTA5IDU4IDcyQzU4IDc0LjIwOTEgNTYuMjA5MSA3NiA1NCA3NkgyN0MyNC43OTA5IDc2IDIzIDc0LjIwOTEgMjMgNzJaIiBmaWxsPSIjYTdhYWFkIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTEwLjg4NiA3Ni4xMzQ3VjEwNC45ODZIMTYwLjUzNlY3Ni4xMzQ3SDExMC44ODZaTTEwOS4yMzEgNjguMTIwNUMxMDUuNTc1IDY4LjEyMDUgMTAyLjYxMSA3MC45OTEgMTAyLjYxMSA3NC41MzE5VjEwNi41ODlDMTAyLjYxMSAxMTAuMTMgMTA1LjU3NSAxMTMgMTA5LjIzMSAxMTNIMTYyLjE5MUMxNjUuODQ4IDExMyAxNjguODEyIDExMC4xMyAxNjguODEyIDEwNi41ODlWNzQuNTMxOUMxNjguODEyIDcwLjk5MSAxNjUuODQ4IDY4LjEyMDUgMTYyLjE5MSA2OC4xMjA1SDEwOS4yMzFaIiBmaWxsPSIjYTdhYWFkIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTQ4LjEyNCA2OS40NTYyVjYyLjUxMDZDMTQ4LjEyNCA1Ni4zMTQgMTQyLjkzNyA1MS4yOTA3IDEzNi41MzkgNTEuMjkwN0MxMzAuMTQgNTEuMjkwNyAxMjQuOTU0IDU2LjMxNCAxMjQuOTU0IDYyLjUxMDZWNjkuNDU2MkgxMTUuMDIzVjYyLjUxMDZDMTE1LjAyMyA1MS4wMDI3IDEyNC42NTYgNDEuNjczNyAxMzYuNTM5IDQxLjY3MzdDMTQ4LjQyMSA0MS42NzM3IDE1OC4wNTQgNTEuMDAyNyAxNTguMDU0IDYyLjUxMDZWNjkuNDU2MkgxNDguMTI0WiIgZmlsbD0iI2E3YWFhZCIvPgo8L3N2Zz4K';
 }
 
 /**
@@ -1576,4 +1582,110 @@ function simpay_pro_upgrade_url( $utm_medium, $utm_content = '' ) {
 		$utm_medium,
 		$utm_content
 	);
+}
+
+/**
+ * Determines if the current user can install plugins in the current environment.
+ *
+ * @since 4.5.2
+ *
+ * @return bool
+ */
+function simpay_can_install_plugins() {
+	if ( ! current_user_can( 'install_plugins' ) ) {
+		return false;
+	}
+
+	if ( ! wp_is_file_mod_allowed( 'simpay_can_install' ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Determines if the current URL is considered a development environment.
+ *
+ * @since 4.5.2
+ *
+ * @return bool
+ */
+function simpay_is_dev_url( $url = '' ) {
+	// wp_get_environment_type was added in WordPress 5.5.
+	if ( empty( $url ) && function_exists( 'wp_get_environment_type' ) ) {
+		$environment = wp_get_environment_type();
+
+		return in_array( $environment, array( 'local', 'development' ), true );
+	}
+
+	$is_local_url = false;
+
+	if ( empty( $url ) ) {
+		$url = network_site_url( '/' );
+	}
+
+	// Trim it up
+	$url = strtolower( trim( $url ) );
+
+	// Need to get the host...so let's add the scheme so we can use parse_url.
+	if (
+		false === strpos( $url, 'http://' ) &&
+		false === strpos( $url, 'https://' )
+	) {
+		$url = set_url_scheme( $url, 'http' );
+	}
+
+	$url_parts = parse_url( $url );
+	$host      = ! empty( $url_parts['host'] ) ? $url_parts['host'] : false;
+
+	if ( ! empty( $url ) && ! empty( $host ) ) {
+		if ( false !== ip2long( $host ) ) {
+			if ( ! filter_var(
+				$host,
+				FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+			) ) {
+				$is_local_url = true;
+			}
+		} else if ( 'localhost' === $host ) {
+			$is_local_url = true;
+		}
+
+		$tlds_to_check = array(
+			'.local',
+			':8888',
+			':8080',
+			':8081',
+			'.invalid',
+			'.example',
+			'.test',
+		);
+
+		foreach ( $tlds_to_check as $tld ) {
+			if ( false !== strpos( $host, $tld ) ) {
+				$is_local_url = true;
+				break;
+			}
+		}
+
+		if ( substr_count( $host, '.' ) > 1 ) {
+			$subdomains_to_check = array(
+				'dev.',
+				'*.staging.',
+				'beta.',
+				'test.'
+			);
+
+			foreach ( $subdomains_to_check as $subdomain ) {
+				$subdomain = str_replace( '.', '(.)', $subdomain );
+				$subdomain = str_replace( array( '*', '(.)' ), '(.*)', $subdomain );
+
+				if ( preg_match( '/^(' . $subdomain . ')/', $host ) ) {
+					$is_local_url = true;
+					break;
+				}
+			}
+		}
+	}
+
+	return $is_local_url;
 }

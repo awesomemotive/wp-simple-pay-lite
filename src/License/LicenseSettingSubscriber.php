@@ -29,10 +29,6 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 	 * {@inheritdoc}
 	 */
 	public function get_subscribed_events() {
-		if ( true === $this->license->is_lite() ) {
-			return array();
-		}
-
 		return array(
 			'simpay_register_settings_subsections' => 'register_settings_subsection',
 			'simpay_register_settings'             => 'register_setting',
@@ -82,7 +78,28 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 					'subsection' => 'license',
 					'label'      => esc_html__( 'License Key', 'stripe' ),
 					'output'     => function() {
-						return $this->get_setting_ui();
+						// Disable submit button.
+						add_filter(
+							'simpay_admin_page_settings_general_submit',
+							'__return_false'
+						);
+
+						ob_start();
+
+						if ( true === $this->license->is_lite() ) {
+							$this->get_lite_setting_ui();
+						} else {
+							$this->get_pro_setting_ui();
+						}
+
+						/**
+						 * Allows additional output after the license field.
+						 *
+						 * @since 4.4.0
+						 */
+						do_action( '__unstable_simpay_license_field' );
+
+						return ob_get_clean();
 					}
 				)
 			)
@@ -90,13 +107,13 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 	}
 
 	/**
-	 * Returns the UI for the license setting.
+	 * Returns the UI for the Pro license setting.
 	 *
-	 * @since 4.4.5
+	 * @since 4.5.2
 	 *
 	 * @return string|bool
 	 */
-	private function get_setting_ui() {
+	private function get_pro_setting_ui() {
 		// Disable submit button.
 		add_filter( 'simpay_admin_page_settings_general_submit', '__return_false' );
 
@@ -120,19 +137,24 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 			)
 		);
 
-		ob_start();
+		$is_upgraded = isset( $_GET['is_upgraded'] );
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-setting-license.php'; // @phpstan-ignore-line
+	}
 
-		/**
-		 * Allows additional output after the license field.
-		 *
-		 * @since 4.4.0
-		 */
-		do_action( '__unstable_simpay_license_field' );
+	/**
+	 * Returns the UI for the Lite license setting.
+	 *
+	 * @since 4.5.2
+	 *
+	 * @return string|bool
+	 */
+	private function get_lite_setting_ui() {
+		$nonce = wp_create_nonce( 'simpay-connect-url' );
 
-		return ob_get_clean();
+		// @todo use a ViewLoader
+		include_once SIMPLE_PAY_DIR . '/views/admin-setting-lite-license.php'; // @phpstan-ignore-line
 	}
 
 	/**

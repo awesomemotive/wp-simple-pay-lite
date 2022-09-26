@@ -43,8 +43,6 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			'admin-education-plugin-customers-settings',
 			'admin-education-plugin-taxes-settings',
 			'admin-education-plugin-coupons',
-			'admin-education-settings-upgrade',
-			'admin-education-license-settings-upgrade',
 			'admin-education-instant-payouts',
 		);
 	}
@@ -110,20 +108,6 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			$container->share(
 				'admin-education-plugin-coupons',
 				PluginCouponMenuItem::class
-			)
-				->withArgument( $license );
-
-			// Settings upgrade promo.
-			$container->share(
-				'admin-education-settings-upgrade',
-				SettingsUpgrade::class
-			)
-				->withArgument( $license );
-
-			// License settings upgrade promo.
-			$container->share(
-				'admin-education-license-settings-upgrade',
-				PluginLicenseSettings::class
 			)
 				->withArgument( $license );
 		}

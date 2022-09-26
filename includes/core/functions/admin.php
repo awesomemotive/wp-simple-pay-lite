@@ -27,6 +27,11 @@ function simpay_get_stripe_checkout_locales() {
  * Setup the insert form button
  */
 function simpay_insert_form_button() {
+	// Do not run if in Elementor context.
+	if ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) {
+		return;
+	}
+
 	global $pagenow, $typenow;
 
 	$allowed_pages = array(
@@ -58,6 +63,11 @@ add_action( 'media_buttons', 'simpay_insert_form_button', 11 );
  * Load the JS we need for the insert form button
  */
 function simpay_admin_footer_insert_form() {
+	// Do not run if in Elementor context.
+	if ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) {
+		return;
+	}
+
 	global $pagenow, $typenow;
 
 	$allowed_pages = array(
@@ -321,7 +331,7 @@ function simpay_print_shortcode_tip( $post_id, $copy_button_text = '' ) {
 					'span' => array(
 						'class' => true,
 						'style' => true,
-					)
+					),
 				)
 			)
 		);

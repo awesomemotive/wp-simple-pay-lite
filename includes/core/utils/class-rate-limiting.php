@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// phpcs:disable WordPress.PHP.NoSilencedErrors.Discouraged
+
 /**
  * Rate Limiting
  *
@@ -52,6 +54,12 @@ class Rate_Limiting {
 		// Setup the log file.
 		add_action( 'plugins_loaded', array( $this, 'setup_log_file' ), 11 );
 
+		// Maybe schedule the cron to clean up the log file.
+		add_action( 'init', array( $this, 'schedule_cleanup' ) );
+
+		// ...and then hook into the scheduled cleanup.
+		add_action( 'simpay_cleanup_rate_limiting_log', array( $this, 'cleanup_log' ) );
+
 		/**
 		 * Determines if the current rate limit has been exceeded.
 		 *
@@ -76,6 +84,50 @@ class Rate_Limiting {
 		if ( ! is_writeable( $upload_dir['basedir'] ) ) {
 			$this->is_writable = false;
 		}
+	}
+
+	/**
+	 * Schedules a cleanup of the rate limit log entries.
+	 *
+	 * Runs every hour, and clears any card testing logs that are past expiration.
+	 *
+	 * @since 4.5.2
+	 *
+	 * @return void
+	 */
+	public function schedule_cleanup() {
+		if ( ! wp_next_scheduled( 'simpay_cleanup_rate_limiting_log' ) ) {
+			wp_schedule_event(
+				time(),
+				'hourly',
+				'simpay_cleanup_rate_limiting_log'
+			);
+		}
+	}
+
+	/**
+	 * Removes expired entries from the rate limit log (triggered by cron).
+	 *
+	 * @since 4.5.2
+	 *
+	 * @return void
+	 */
+	public function cleanup_log() {
+		$current_logs = $this->get_decoded_file();
+
+		if ( empty( $current_logs ) ) {
+			return;
+		}
+
+		foreach ( $current_logs as $blocking_id => $entry ) {
+			$expiration = ! empty( $entry['timeout'] ) ? $entry['timeout'] : 0;
+
+			if ( $expiration < time() ) {
+				unset( $current_logs[ $blocking_id ] );
+			}
+		}
+
+		$this->write_to_log( $current_logs );
 	}
 
 	/**
@@ -255,7 +307,9 @@ class Rate_Limiting {
 	 * @return string
 	 */
 	public function get_rate_limit_id() {
-		return get_current_ip_address();
+		return isset( $_COOKIE['__stripe_mid'] )
+			? sanitize_text_field( $_COOKIE['__stripe_mid'] )
+			: get_current_ip_address();
 	}
 
 	/**
@@ -275,7 +329,7 @@ class Rate_Limiting {
 	 *
 	 * @return array
 	 */
-	protected function get_decoded_file() {
+	public function get_decoded_file() {
 		$decoded_contents = json_decode( $this->get_file_contents(), true );
 
 		if ( is_null( $decoded_contents ) ) {
@@ -333,6 +387,11 @@ class Rate_Limiting {
 	 * @return void
 	 */
 	public function write_to_log( $content = array() ) {
+		if ( count( $content ) > 200 ) {
+			// Reduce the max number of identifiers to 200.
+			$content = array_slice( $content, -200 );
+		}
+
 		$content = json_encode( $content );
 
 		if ( $this->is_writable ) {

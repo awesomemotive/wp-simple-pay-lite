@@ -59,12 +59,6 @@
 
 </div>
 
-<?php
-if ( true === $is_lite ) :
-	include_once SIMPLE_PAY_DIR . 'views/admin-settings-upgrade.php'; // @phpstan-ignore-line
-endif;
-?>
-
 <div class="simpay-card simpay-doc-suggestions">
 
 	<div class="simpay-doc-suggestion">

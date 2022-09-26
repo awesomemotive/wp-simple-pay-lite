@@ -6,6 +6,7 @@
 import hooks from '@wpsimplepay/hooks';
 import './settings/toggles.js';
 import './settings/test-mode.js';
+import './settings/license.js';
 import { toggleStripeConnectNotice } from './settings/stripe-connect.js';
 import './settings/recaptcha.js';
 import './payment-form';
