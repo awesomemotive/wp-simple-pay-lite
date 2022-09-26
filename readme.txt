@@ -297,6 +297,12 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
+= Stripe Payment Forms v4.5.2 - September 26, 2022 =
+
+* New: Allow licenses to be entered in Lite.
+* Fix: Do not add TinyMCE payment form button to Element TinyMCE instances.
+* Fix: Only show transactions for the global payment mode in the dashboard widget.
+
 = Stripe Payment Forms v4.5.0 - August 16, 2022 =
 
 * New: Use `{customer-name}` smart tag to display the customer's name in payment confirmations.
