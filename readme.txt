@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.0
-Stable tag: 4.5.0
+Stable tag: 4.5.2
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -297,7 +297,7 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 == Changelog ==
 
-= Stripe Payment Forms v4.5.2 - September 26, 2022 =
+= Stripe Payment Forms v4.5.2 - September 27, 2022 =
 
 * New: Allow licenses to be entered in Lite.
 * Fix: Do not add TinyMCE payment form button to Element TinyMCE instances.
