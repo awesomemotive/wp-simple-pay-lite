@@ -72,7 +72,7 @@ function simpay_get_stripe_disconnect_url() {
  *
  * @since unknown
  *
- * @return string $account_id Stripe Account ID.
+ * @return false|string $account_id Stripe Account ID.
  */
 function simpay_get_account_id() {
 	$account_id = get_option( 'simpay_stripe_connect_account_id', false );

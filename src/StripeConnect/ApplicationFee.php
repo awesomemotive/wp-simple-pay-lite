@@ -243,6 +243,11 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	 * @return bool
 	 */
 	public function has_application_fee() {
+		// Must be using Stripe Connect.
+		if ( false === simpay_get_account_id() ) {
+			return false;
+		}
+
 		// Pro.
 		if ( false === $this->license->is_lite() ) {
 			$is_missing = empty( $this->license->get_key() );

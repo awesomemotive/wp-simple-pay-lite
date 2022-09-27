@@ -195,6 +195,7 @@ class PriceOption {
 	 *   }
 	 * }
 	 * @param \SimplePay\Core\Abstract\Form $form Payment Form.
+	 * @throws \Exception If the PriceOption is invalid.
 	 */
 	public function __construct( $price_data, $form ) {
 		if ( false === $form ) {
@@ -296,7 +297,7 @@ class PriceOption {
 					$unit_amount = simpay_convert_amount_to_cents( $unit_amount );
 				}
 
-				if ( has_filter( 'simpay_form_'. $this->form->id . '__default_amount') ) {
+				if ( has_filter( 'simpay_form_' . $this->form->id . '__default_amount' ) ) {
 					$unit_amount = simpay_get_filtered(
 						'_default_amount',
 						simpay_convert_amount_to_dollars( $unit_amount ),
@@ -460,13 +461,17 @@ class PriceOption {
 		// Create a label.
 		$display_price = simpay_format_currency( $amount, $this->currency );
 
-		if ( ! empty( $this->recurring ) && false == $this->can_recur ) {
+		if ( ! empty( $this->recurring ) && false === $this->can_recur ) {
 			$intervals = simpay_get_recurring_intervals();
 			$count     = $this->recurring['interval_count'];
 
 			$label = sprintf(
 				/* translators: %1$s Price option amount. %2$s Recurring interval count. %3$s Recurring interval. */
-				esc_html__( '%1$s every %2$s %3$s', 'stripe' ),
+				esc_html_x(
+					'%1$s every %2$s %3$s',
+					'recurring interval',
+					'stripe'
+				),
 				$display_price,
 				$count,
 				$intervals[ $this->recurring['interval'] ][ 1 === $count ? 0 : 1 ]
@@ -560,21 +565,29 @@ class PriceOption {
 		// Create a label.
 		$display_price = simpay_format_currency( $amount, $this->currency );
 
-		if ( ! empty( $this->recurring ) && false == $this->can_recur ) {
+		if ( ! empty( $this->recurring ) && false === $this->can_recur ) {
 			$intervals = simpay_get_recurring_intervals();
 			$count     = $this->recurring['interval_count'];
 
 			if ( 1 === $count ) {
 				$label = sprintf(
 					/* translators: %1$s Price option amount. %2$s Recurring interval. */
-					esc_html__( '%1$s/%2$s', 'stripe' ),
+					esc_html_x(
+						'%1$s/%2$s',
+						'recurring interval',
+						'stripe'
+					),
 					$display_price,
 					$intervals[ $this->recurring['interval'] ][0]
 				);
 			} else {
 				$label = sprintf(
 					/* translators: %1$s Price option amount. %2$s Price option currency code. %3$s Recurring interval count. %4$s Recurring interval. */
-					esc_html__( '%1$s every %2$s %3$s', 'stripe' ),
+					esc_html_x(
+						'%1$s every %2$s %3$s',
+						'recurring interval',
+						'stripe'
+					),
 					$display_price,
 					$count,
 					$intervals[ $this->recurring['interval'] ][ 1 === $count ? 0 : 1 ]

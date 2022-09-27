@@ -1,9 +1,9 @@
 === Stripe Payment Forms by WP Simple Pay - Best Stripe Payments Plugin for WordPress ===
-Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
+Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.0
-Stable tag: 4.5.0
+Stable tag: 4.5.2
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -296,6 +296,12 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 10. Global payment form settings: Payment confirmation details
 
 == Changelog ==
+
+= Stripe Payment Forms v4.5.2 - September 27, 2022 =
+
+* New: Allow licenses to be entered in Lite.
+* Fix: Do not add TinyMCE payment form button to Element TinyMCE instances.
+* Fix: Only show transactions for the global payment mode in the dashboard widget.
 
 = Stripe Payment Forms v4.5.0 - August 16, 2022 =
 

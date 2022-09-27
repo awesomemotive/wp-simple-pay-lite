@@ -13,11 +13,25 @@
  * @var string                          $feedback License key feedback.
  * @var string                          $refresh_url URL to refresh/reactivate license key.
  * @var string                          $nonce License management nonce.
+ * @var bool                            $is_upgraded If the plugin was upgraded via the in-plugin flow.
  */
 
 use SimplePay\Core\Utils;
 
 ?>
+
+<?php if ( true === $is_upgraded ) : ?>
+	<div class="notice notice-inline notice-info">
+		<p>
+			<?php
+			esc_html_e(
+				'Upgrade complete! You\'re all set to use powerful Pro features.',
+				'stripe'
+			);
+			?>
+		</p>
+	</div>
+<?php endif ?>
 
 <p>
 	<?php

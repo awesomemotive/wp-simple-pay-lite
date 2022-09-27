@@ -205,6 +205,7 @@ final class Plugin {
 			new FormPreview\FormPreviewServiceProvider,
 			new Integration\IntegrationServiceProvider,
 			new License\LicenseServiceProvider,
+			new Connect\ConnectServiceProvider,
 			new PaymentPage\PaymentPageServiceProvider,
 			new RestApi\RestApiServiceProvider,
 			new StripeConnect\StripeConnectServiceProvider,

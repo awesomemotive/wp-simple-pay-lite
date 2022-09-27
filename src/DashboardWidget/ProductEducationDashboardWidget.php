@@ -83,7 +83,9 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 	 * {@inheritdoc}
 	 */
 	public function get_name() {
-		return 'WP Simple Pay';
+		return simpay_is_test_mode()
+			? 'WP Simple Pay ' . simpay_get_test_mode_badge()
+			: 'WP Simple Pay';
 	}
 
 	/**
@@ -156,7 +158,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 			return;
 
 			// .. or show a lite Lite upgrade if on lite.
-		} else if ( true === $this->should_display_lite_upgrade() ) {
+		} elseif ( true === $this->should_display_lite_upgrade() ) {
 			include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-lite-upgrade.php'; // @phpstan-ignore-line
 
 			return;
@@ -279,7 +281,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 					'file' => 'google-analytics-premium/googleanalytics-premium.php',
 				),
 			),
-			'all-in-one-seo-pack/all_in_one_seo_pack.php'       => array(
+			'all-in-one-seo-pack/all_in_one_seo_pack.php' => array(
 				'name' => __( 'AIOSEO', 'stripe' ),
 				'slug' => 'all-in-one-seo-pack',
 				'more' => 'https://aioseo.com/',
@@ -287,7 +289,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 					'file' => 'all-in-one-seo-pack-pro/all_in_one_seo_pack.php',
 				),
 			),
-			'coming-soon/coming-soon.php'                       => array(
+			'coming-soon/coming-soon.php'                 => array(
 				'name' => __( 'SeedProd', 'stripe' ),
 				'slug' => 'coming-soon',
 				'more' => 'https://www.seedprod.com/',
@@ -295,7 +297,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 					'file' => 'seedprod-coming-soon-pro-5/seedprod-coming-soon-pro-5.php',
 				),
 			),
-			'wp-mail-smtp/wp_mail_smtp.php'                     => array(
+			'wp-mail-smtp/wp_mail_smtp.php'               => array(
 				'name' => __( 'WP Mail SMTP', 'stripe' ),
 				'slug' => 'wp-mail-smtp',
 				'more' => 'https://wpmailsmtp.com/',
@@ -326,7 +328,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget {
 					add_query_arg(
 						array(
 							'action' => 'install-plugin',
-							'plugin' => rawurlencode( $plugin['slug'] )
+							'plugin' => rawurlencode( $plugin['slug'] ),
 						),
 						self_admin_url( 'update.php' )
 					),
