@@ -1,5 +1,5 @@
 === Stripe Payment Forms by WP Simple Pay - Best Stripe Payments Plugin for WordPress ===
-Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira
+Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.0
