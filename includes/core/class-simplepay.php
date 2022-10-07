@@ -154,6 +154,7 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/api/tax-rates.php' );
 		require_once( SIMPLE_PAY_INC . 'core/api/customers.php' );
 		require_once( SIMPLE_PAY_INC . 'core/api/paymentmethods.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/paymentintents.php' );
 		require_once( SIMPLE_PAY_INC . 'core/api/setupintents.php' );
 		require_once( SIMPLE_PAY_INC . 'core/api/coupons.php' );
 

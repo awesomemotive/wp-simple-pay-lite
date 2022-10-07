@@ -307,9 +307,20 @@ class Rate_Limiting {
 	 * @return string
 	 */
 	public function get_rate_limit_id() {
-		return isset( $_COOKIE['__stripe_mid'] )
+		$id = isset( $_COOKIE['__stripe_mid'] )
 			? sanitize_text_field( $_COOKIE['__stripe_mid'] )
 			: get_current_ip_address();
+
+		/**
+		 * Filters the rate limiting tracking ID.
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param string $id The rate limiting tracking ID.
+		 */
+		$id = apply_filters( 'simpay_rate_limiting_id', $id );
+
+		return $id;
 	}
 
 	/**

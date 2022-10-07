@@ -724,8 +724,9 @@
 			}
 		}
 
-		&__restrictions {
-			margin-left: 65px;
+		&__restrictions,
+		&__restrictions-ach {
+			margin-left: 72px;
 		}
 
 		&__icon {
@@ -1753,6 +1754,7 @@ select.simpay-currency-symbol {
 }
 
 .simpay-form-settings-notice {
+	font-weight: normal;
 	color: #1d2327;
 	position: relative;
 	margin: 18px 18px 0;
@@ -1795,6 +1797,13 @@ select.simpay-currency-symbol {
 			text-decoration: none;
 			background: none;
 		}
+	}
+
+	// Add a border when output in settings pages (not a white background).
+	.simpay-settings & {
+
+		border: 2px solid #645aff;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 	}
 }
 

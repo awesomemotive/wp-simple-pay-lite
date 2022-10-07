@@ -742,64 +742,92 @@ add_action(
 /**
  * Adds "Tax Rates" upgrade placeholder setting.
  *
- * @since 4.4.0
+ * @since 4.6.0
  *
  * @return void
  */
-function __add_tax_rates_upsell() {
-	if ( class_exists( '\SimplePay\Pro\Lite_Helper', false ) ) {
-		return;
-	}
+function __unstable_add_tax_upsell() {
+	$upgrade_fixed_title = esc_html__(
+		'Unlock "Fixed Rate" Tax Calculation',
+		'stripe'
+	);
+
+	$upgrade_fixed_description = esc_html__(
+		'We\'re sorry, collecting fixed rate taxes is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+		'stripe'
+	);
+
+	$upgrade_fixed_url = simpay_pro_upgrade_url(
+		'form-tax-settings',
+		'Fixed Rate Taxes'
+	);
+
+	$upgrade_fixed_purchased_url = simpay_docs_link(
+		'Fixed Rate Taxes (already purchased)',
+		'upgrading-wp-simple-pay-lite-to-pro',
+		'form-tax-settings',
+		true
+	);
+
+	$upgrade_automatic_title = esc_html__(
+		'Unlock Automatically Calculated Tax Amounts',
+		'stripe'
+	);
+
+	$upgrade_automatic_description = esc_html__(
+		'We\'re sorry, automatically calculating and collecting taxes is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+		'stripe'
+	);
+
+	$upgrade_automatic_url = simpay_pro_upgrade_url(
+		'form-tax-settings',
+		'Automatic Rate Taxes'
+	);
+
+	$upgrade_automatic_purchased_url = simpay_docs_link(
+		'Automatic Rate Taxes (already purchased)',
+		'upgrading-wp-simple-pay-lite-to-pro',
+		'form-tax-settings',
+		true
+	);
 	?>
 
 	<table>
 		<tr class="simpay-panel-field">
 			<th>
-				<label for="_tax_rates">
-					<?php esc_html_e( 'Tax Rates', 'stripe' ); ?>
+				<label for="_tax_status_lite">
+					<?php esc_html_e( 'Tax Collection', 'stripe' ); ?>
 				</label>
 			</th>
 			<td>
-				<?php
-				$upgrade_url = simpay_pro_upgrade_url(
-					'payment-form-payment-settings',
-					'Upgrade to WP Simple Pay Pro to collect taxes or additional fees on payments.'
-				);
-
-				echo wp_kses(
-					sprintf(
-						'<span class="dashicons dashicons-no"></span>%s - ',
-						__( 'Disabled', 'stripe' )
-					),
-					array(
-						'span' => array(
-							'class' => true,
-						),
-					)
-				);
-
-				echo wp_kses(
-					sprintf(
-						/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-						__(
-							'%1$sUpgrade to WP Simple Pay Pro%2$s to collect taxes or additional fees on payments.',
-							'stripe'
-						),
-						'<a href="' . esc_url( $upgrade_url ) . '" target="_blank" rel="noopener noreferrer">',
-						'</a>'
-					),
-					array(
-						'a'    => array(
-							'href'   => true,
-							'target' => true,
-							'rel'    => true,
-						),
-						'span' => array(
-							'class' => true,
-						),
-					)
-				);
-				?>
+				<select id="_tax_status_lite">
+					<option
+						value="none"
+						selected="selected"
+					>
+						<?php esc_html_e( 'None', 'stripe' ); ?>
+					</option>
+					<option
+						data-available="no"
+						data-upgrade-title="<?php echo esc_attr( $upgrade_fixed_title ); ?>"
+						data-upgrade-description="<?php echo esc_attr( $upgrade_fixed_description ); ?>"
+						data-upgrade-url="<?php echo esc_url( $upgrade_fixed_url ); ?>"
+						data-upgrade-purchased-url="<?php echo esc_url( $upgrade_fixed_purchased_url ); ?>"
+						data-prev-value="none"
+					>
+						<?php esc_html_e( 'Global tax rates', 'stripe' ); ?>
+					</option>
+					<option
+						data-available="no"
+						data-upgrade-title="<?php echo esc_attr( $upgrade_automatic_title ); ?>"
+						data-upgrade-description="<?php echo esc_attr( $upgrade_automatic_description ); ?>"
+						data-upgrade-url="<?php echo esc_url( $upgrade_automatic_url ); ?>"
+						data-upgrade-purchased-url="<?php echo esc_url( $upgrade_automatic_purchased_url ); ?>"
+						data-prev-value="none"
+					>
+						<?php esc_html_e( 'Automatically calculated by location', 'stripe' ); ?>
+					</option>
+				</select>
 			</td>
 		</tr>
 	</table>
@@ -808,6 +836,6 @@ function __add_tax_rates_upsell() {
 }
 add_action(
 	'simpay_form_settings_meta_payment_options_panel',
-	__NAMESPACE__ . '\\__add_tax_rates_upsell',
+	__NAMESPACE__ . '\\__unstable_add_tax_upsell',
 	10.5
 );

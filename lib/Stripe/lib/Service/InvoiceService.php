@@ -35,7 +35,7 @@ class InvoiceService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\InvoiceLineItem>
      */
     public function allLines($parentId, $params = null, $opts = null)
     {
@@ -241,7 +241,7 @@ class InvoiceService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Invoice>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\InvoiceLineItem>
      */
     public function upcomingLines($params = null, $opts = null)
     {

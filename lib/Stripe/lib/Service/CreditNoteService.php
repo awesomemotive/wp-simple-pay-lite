@@ -98,7 +98,7 @@ class CreditNoteService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\CreditNote>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\CreditNoteLineItem>
      */
     public function previewLines($params = null, $opts = null)
     {

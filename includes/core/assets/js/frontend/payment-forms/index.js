@@ -75,7 +75,7 @@ async function submitPaymentForm( paymentForm ) {
 			}
 		);
 
-		submit().catch( onError );
+		submit();
 	} catch ( error ) {
 		onError( error );
 	}

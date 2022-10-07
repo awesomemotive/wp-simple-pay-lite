@@ -301,3 +301,93 @@ add_action(
 	10,
 	4
 );
+
+/**
+ * Validates reCAPTCHA before Order preview.
+ *
+ * @since 4.6.0
+ *
+ * @param \WP_REST_Request              $request Incoming REST API request data.
+ * @param SimplePay\Core\Abstracts\Form $form Form instance.
+ * @throws \Exception If reCAPTCHA cannot be validated.
+ */
+function validate_recaptcha_order_preview( $request, $form ) {
+	// Do nothing if no keys set.
+	if ( ! has_keys() ) {
+		return;
+	}
+
+	$recaptcha_token = isset( $request['captcha'], $request['captcha']['recaptcha'] )
+		? sanitize_text_field( $request['captcha']['recaptcha'] )
+		: false;
+
+	// Ensure a token exists.
+	if ( false === $recaptcha_token ) {
+		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
+	}
+
+	// Validate token.
+	$valid = validate_recaptcha(
+		$recaptcha_token,
+		sprintf(
+			'simple_pay_form_%s_%s',
+			$form->id,
+			'order_preview'
+		)
+	);
+
+	if ( false === $valid ) {
+		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
+	}
+}
+add_action(
+	'simpay_before_order_preview_from_payment_form_request',
+	__NAMESPACE__ . '\\validate_recaptcha_order_preview',
+	10,
+	2
+);
+
+/**
+ * Validates reCAPTCHA before Order submission.
+ *
+ * @since 4.6.0
+ *
+ * @param \WP_REST_Request              $request Incoming REST API request data.
+ * @param SimplePay\Core\Abstracts\Form $form Form instance.
+ * @throws \Exception If reCAPTCHA cannot be validated.
+ */
+function validate_recaptcha_order_submit( $request, $form ) {
+	// Do nothing if no keys set.
+	if ( ! has_keys() ) {
+		return;
+	}
+
+	$recaptcha_token = isset( $request['captcha'], $request['captcha']['recaptcha'] )
+		? sanitize_text_field( $request['captcha']['recaptcha'] )
+		: false;
+
+	// Ensure a token exists.
+	if ( false === $recaptcha_token ) {
+		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
+	}
+
+	// Validate token.
+	$valid = validate_recaptcha(
+		$recaptcha_token,
+		sprintf(
+			'simple_pay_form_%s_%s',
+			$form->id,
+			'order_submit'
+		)
+	);
+
+	if ( false === $valid ) {
+		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
+	}
+}
+add_action(
+	'simpay_before_order_submit_from_payment_form_request',
+	__NAMESPACE__ . '\\validate_recaptcha_order_submit',
+	10,
+	2
+);

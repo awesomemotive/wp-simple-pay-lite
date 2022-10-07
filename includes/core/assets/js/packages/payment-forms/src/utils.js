@@ -9,7 +9,7 @@
  */
 export function __unstableUpdatePaymentFormCart( paymentForm, cart ) {
 	const {
-		state: { price, taxRates },
+		state: { price, taxRates, taxStatus },
 	} = paymentForm;
 
 	// Create a cart from the default price.
@@ -23,6 +23,7 @@ export function __unstableUpdatePaymentFormCart( paymentForm, cart ) {
 	cart.update( {
 		currency,
 		taxRates,
+		taxStatus,
 	} );
 
 	cart.addLineItem( {

@@ -359,7 +359,10 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 					)
 				);
 
-				$email        = isset( $account->email ) ? $account->email : '';
+				/** @var string $email */
+				$email = isset( $account->email ) ? $account->email : '';
+
+				/** @var string $display_name */
 				$display_name = isset( $account->display_name )
 					? $account->display_name
 					: '';
@@ -370,6 +373,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 						isset( $account->settings->dashboard ) &&
 						isset( $account->settings->dashboard->display_name )
 					) {
+						/** @var string $display_name */
 						$display_name = $account->settings->dashboard->display_name;
 					}
 				}

@@ -84,9 +84,10 @@ class ButtonBlock extends AbstractBlock {
 	 *
 	 * @since 4.4.7
 	 *
-	 * @return array<string, string>
+	 * @return array<array<string, int|string>>
 	 */
 	private function get_payment_form_options() {
+		/** @var array<array<string, int|string>> $options */
 		static $options = array();
 
 		if ( empty( $options ) ) {
@@ -103,9 +104,12 @@ class ButtonBlock extends AbstractBlock {
 					continue;
 				}
 
-				$options[] = array(
-					'label' => get_the_title( $form_id ),
-					'value' => (int) $form_id,
+				array_push(
+					$options,
+					array(
+						'label' => get_the_title( $form_id ),
+						'value' => intval( $form_id ),
+					)
 				);
 			};
 		}

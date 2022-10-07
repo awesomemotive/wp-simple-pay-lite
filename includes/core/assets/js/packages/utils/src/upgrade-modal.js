@@ -76,8 +76,7 @@ export function maybeBlockButtonWithUpgradeModal( e ) {
  *
  * @since 4.4.7
  *
- * @param {Event} e Click event.
- * @param {HTMLElement} e.target Button being pressed.
+ * @param {Event} e Change event.
  */
 export function maybeBlockSelectWithUpgradeModal( e ) {
 	const { target } = e;

@@ -48,7 +48,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Customer>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\PaymentMethod>
      */
     public function allPaymentMethods($id, $params = null, $opts = null)
     {
@@ -64,7 +64,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source>
      */
     public function allSources($parentId, $params = null, $opts = null)
     {
@@ -154,7 +154,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
+     * @return \SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
      */
     public function createSource($parentId, $params = null, $opts = null)
     {
@@ -218,7 +218,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
+     * @return \SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
      */
     public function deleteSource($parentId, $id, $params = null, $opts = null)
     {
@@ -293,7 +293,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     }
 
     /**
-     * Retrieves a PaymentMethod object.
+     * Retrieves a PaymentMethod object for a given Customer.
      *
      * @param string $parentId
      * @param string $id
@@ -319,7 +319,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
+     * @return \SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
      */
     public function retrieveSource($parentId, $id, $params = null, $opts = null)
     {
@@ -410,7 +410,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     }
 
     /**
-     * Updates a customer’s cash balance.
+     * Changes the settings on a customer’s cash balance.
      *
      * @param string $parentId
      * @param null|array $params
@@ -433,7 +433,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
+     * @return \SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
      */
     public function updateSource($parentId, $id, $params = null, $opts = null)
     {
@@ -448,7 +448,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
+     * @return \SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
      */
     public function verifySource($parentId, $id, $params = null, $opts = null)
     {

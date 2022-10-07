@@ -71,6 +71,7 @@ class Checkout_Session_Controller extends Controller {
 	 */
 	public function create_item_permissions_check( $request ) {
 		$checks = array(
+			'stripe_cookie',
 			'rate_limit',
 			'form_nonce',
 			'required_fields',
@@ -97,6 +98,11 @@ class Checkout_Session_Controller extends Controller {
 	 */
 	public function create_item( $request ) {
 		try {
+			// Payment Method type.
+			$payment_method_type = isset( $request['payment_method_type'] )
+				? sanitize_text_field( $request['payment_method_type'] )
+				: false;
+
 			// Gather customer information.
 			$customer_id = isset( $request['customer_id'] ) ? $request['customer_id'] : '';
 
@@ -121,7 +127,17 @@ class Checkout_Session_Controller extends Controller {
 			// Handle legacy form processing.
 			Legacy\Hooks\simpay_process_form( $form, $form_data, $form_values, $customer_id );
 
-			$session_args = $this->get_args_from_payment_form_request( $form, $form_data, $form_values, $customer_id );
+			$session_args = $this->get_args_from_payment_form_request(
+				$form,
+				$form_data,
+				array_merge(
+					$form_values,
+					array(
+						'payment_method_type' => $payment_method_type,
+					)
+				),
+				$customer_id
+			);
 
 			/**
 			 * Allows processing before a Checkout\Session is created from a payment form request.
@@ -253,8 +269,15 @@ class Checkout_Session_Controller extends Controller {
 		$session_args['success_url'] = esc_url_raw( $form->payment_success_page );
 
 		// Ensure a valid base URL exists.
-		if ( empty( $session_args['success_url'] ) ) {
-			$session_args['success_url'] = esc_url_raw( home_url() );
+		if ( ! wp_http_validate_url( $session_args['success_url'] ) ) {
+			$url = add_query_arg(
+				array(
+					'form_id' => $form->id,
+				),
+				esc_url_raw( home_url() )
+			);
+
+			$session_args['success_url'] = $url;
 		}
 
 		// Avoid escaping the {CHECKOUT_SESSION_ID} tag.
@@ -323,6 +346,13 @@ class Checkout_Session_Controller extends Controller {
 				'unit_amount' => $unit_amount,
 				'product'     => $price->product_id,
 			);
+
+			// Tax behavior.
+			$tax_behavior = get_post_meta( $form->id, '_tax_behavior', true );
+
+			if ( ! empty( $tax_behavior ) && 'unspecified' !== $tax_behavior ) {
+				$price_data['tax_behavior'] = $tax_behavior;
+			}
 
 			$item['price_data'] = $price_data;
 
@@ -414,8 +444,13 @@ class Checkout_Session_Controller extends Controller {
 		// Remove unsupported parameters for Checkout.
 		unset( $payment_intent_data['currency'] );
 		unset( $payment_intent_data['amount'] );
+		unset( $payment_intent_data['amount'] );
 
-		$session_args['payment_intent_data'] = $payment_intent_data;
+		$payment_method_types = $payment_intent_data['payment_method_types'];
+		unset( $payment_intent_data['payment_method_types'] );
+
+		$session_args['payment_intent_data']  = $payment_intent_data;
+		$session_args['payment_method_types'] = $payment_method_types;
 
 		/**
 		 * Filters arguments used to create a Checkout Session from a payment form request.

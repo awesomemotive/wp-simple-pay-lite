@@ -26,6 +26,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\StripeObject $bacs_debit
  * @property \SimplePay\Vendor\Stripe\StripeObject $bancontact
  * @property \SimplePay\Vendor\Stripe\StripeObject $billing_details
+ * @property \SimplePay\Vendor\Stripe\StripeObject $blik
  * @property \SimplePay\Vendor\Stripe\StripeObject $boleto
  * @property \SimplePay\Vendor\Stripe\StripeObject $card
  * @property \SimplePay\Vendor\Stripe\StripeObject $card_present
@@ -46,6 +47,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\StripeObject $oxxo
  * @property \SimplePay\Vendor\Stripe\StripeObject $p24
  * @property \SimplePay\Vendor\Stripe\StripeObject $paynow
+ * @property \SimplePay\Vendor\Stripe\StripeObject $promptpay
  * @property \SimplePay\Vendor\Stripe\StripeObject $radar_options Options to configure Radar. See <a href="https://stripe.com/docs/radar/radar-session">Radar Session</a> for more information.
  * @property \SimplePay\Vendor\Stripe\StripeObject $sepa_debit
  * @property \SimplePay\Vendor\Stripe\StripeObject $sofort

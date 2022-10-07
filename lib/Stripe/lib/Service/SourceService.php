@@ -7,17 +7,19 @@ namespace SimplePay\Vendor\Stripe\Service;
 class SourceService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
+     * List source transactions for a given source.
+     *
      * @param string $id
      * @param null|array $params
      * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Source
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\SourceTransaction>
      */
-    public function allTransactions($id, $params = null, $opts = null)
+    public function allSourceTransactions($id, $params = null, $opts = null)
     {
-        return $this->request('get', $this->buildPath('/v1/sources/%s/source_transactions', $id), $params, $opts);
+        return $this->requestCollection('get', $this->buildPath('/v1/sources/%s/source_transactions', $id), $params, $opts);
     }
 
     /**

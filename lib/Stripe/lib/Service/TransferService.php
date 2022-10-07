@@ -44,20 +44,6 @@ class TransferService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     }
 
     /**
-     * @param string $id
-     * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
-     *
-     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return \SimplePay\Vendor\Stripe\Transfer
-     */
-    public function cancel($id, $params = null, $opts = null)
-    {
-        return $this->request('post', $this->buildPath('/v1/transfers/%s/cancel', $id), $params, $opts);
-    }
-
-    /**
      * To send funds from your SimplePay\Vendor\Stripe account to a connected account, you create a new
      * transfer object. Your <a href="#balance">SimplePay\Vendor\Stripe balance</a> must be able to
      * cover the transfer amount, or you’ll receive an “Insufficient Funds” error.

@@ -27,7 +27,7 @@ class SessionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      * items. There is also a URL where you can retrieve the full (paginated) list of
      * line items.
      *
-     * @param string $parentId
+     * @param string $id
      * @param null|array $params
      * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
@@ -35,9 +35,9 @@ class SessionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem>
      */
-    public function allLineItems($parentId, $params = null, $opts = null)
+    public function allLineItems($id, $params = null, $opts = null)
     {
-        return $this->requestCollection('get', $this->buildPath('/v1/checkout/sessions/%s/line_items', $parentId), $params, $opts);
+        return $this->requestCollection('get', $this->buildPath('/v1/checkout/sessions/%s/line_items', $id), $params, $opts);
     }
 
     /**

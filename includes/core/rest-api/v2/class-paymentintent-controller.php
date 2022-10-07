@@ -70,6 +70,7 @@ class PaymentIntent_Controller extends Controller {
 	 */
 	public function create_item_permissions_check( $request ) {
 		$checks = array(
+			'stripe_cookie',
 			'rate_limit',
 			'form_nonce',
 			'required_fields',
@@ -99,8 +100,8 @@ class PaymentIntent_Controller extends Controller {
 		try {
 			// Payment Method type.
 			$payment_method_type = isset( $request['payment_method_type'] )
-				? $request['payment_method_type']
-				: 'card';
+				? sanitize_text_field( $request['payment_method_type'] )
+				: false;
 
 			// Gather customer information.
 			$customer_id = isset( $request['customer_id'] )
@@ -143,15 +144,19 @@ class PaymentIntent_Controller extends Controller {
 				Payments\PaymentIntent\get_args_from_payment_form_request(
 					$form,
 					$form_data,
-					$form_values,
+					array_merge(
+						array(
+							'payment_method_type' => $payment_method_type,
+						),
+						$form_values
+					),
 					$customer_id
 				),
 				array(
-					'customer'             => $customer_id,
-					'expand'               => array(
+					'customer' => $customer_id,
+					'expand'   => array(
 						'customer',
 					),
-					'payment_method_types' => array( $payment_method_type ),
 				)
 			);
 

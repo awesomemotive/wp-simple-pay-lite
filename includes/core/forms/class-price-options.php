@@ -528,9 +528,10 @@ class PriceOptions {
 	 */
 	private function get_price_args_to_copy( $price, $product_id ) {
 		$args = array(
-			'unit_amount' => $price->unit_amount,
-			'currency'    => $price->currency,
-			'product'     => $product_id,
+			'unit_amount'  => $price->unit_amount,
+			'currency'     => $price->currency,
+			'tax_behavior' => $price->tax_behavior,
+			'product'      => $product_id,
 		);
 
 		if ( isset( $price->metadata ) ) {
@@ -632,6 +633,13 @@ class PriceOptions {
 		// Images. Optional.
 		if ( ! empty( $this->form->image_url ) ) {
 			$product_args['images'] = array( $this->form->image_url );
+		}
+
+		// Tax code.
+		$tax_code = get_post_meta( $this->form->id, '_tax_code', true );
+
+		if ( ! empty( $tax_code ) ) {
+			$product_args['tax_code'] = $tax_code;
 		}
 
 		return $product_args;

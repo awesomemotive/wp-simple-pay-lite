@@ -486,19 +486,11 @@ function charge_amount( $value, $payment_confirmation_data ) {
 		return $value;
 	}
 
-	$charges = current( $payment_confirmation_data['paymentintents'] )->charges;
-
-	// Do nothing if there are no charges available in the PaymentIntent.
-	if ( empty( $charges ) ) {
-		return $value;
-	}
-
-	// Assume and use the first charge in the list.
-	$first_charge = current( $charges->data );
+	$paymentintent = current( $payment_confirmation_data['paymentintents'] );
 
 	$value = simpay_format_currency(
-		$first_charge->amount,
-		$first_charge->currency
+		$paymentintent->amount,
+		$paymentintent->currency
 	);
 
 	return esc_html( $value );

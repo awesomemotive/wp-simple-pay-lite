@@ -73,6 +73,8 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			// Add application fee to one time and subscription payments.
 			'simpay_get_paymentintent_args_from_payment_form_request' =>
 				'maybe_add_one_time_application_fee',
+			'simpay_get_order_args_from_payment_form_request' =>
+				array( 'maybe_add_one_time_order_application_fee', 10, 2 ),
 			'simpay_get_subscription_args_from_payment_form_request'  =>
 				'maybe_add_subscription_application_fee',
 
@@ -182,6 +184,34 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		return $payment_intent_args;
+	}
+
+	/**
+	 * Adds an application fee to Order arguments.
+	 *
+	 * @since 4.4.6
+	 *
+	 * @param array<string, array<string, array<string, float>>> $order_args Order arguments.
+	 * @param \SimplePay\Vendor\Stripe\Order                     $order Order object.
+	 * @return array<string, array<string, array<string, float>>> Order arguments, maybe with an application fee amount.
+	 */
+	public function maybe_add_one_time_order_application_fee( $order_args, $order ) {
+		if ( false === $this->has_application_fee() ) {
+			return $order_args;
+		}
+
+		if ( ! isset( $order_args['payment'] ) ) {
+			$order_args['payment'] = array(
+				'settings' => array(),
+			);
+		}
+
+		$order_args['payment']['settings']['application_fee_amount'] = round(
+			$order->amount_total * 0.03,
+			0
+		);
+
+		return $order_args;
 	}
 
 	/**
