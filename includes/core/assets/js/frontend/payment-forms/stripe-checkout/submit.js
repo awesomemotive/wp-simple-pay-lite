@@ -47,8 +47,9 @@ async function submit( paymentForm ) {
 		.create(
 			{
 				customer_id: customerId,
-				payment_method_type:
-					__unstableLegacyFormData.paymentMethods[ 0 ].id,
+				payment_method_type: __unstableLegacyFormData.paymentMethods
+					? __unstableLegacyFormData.paymentMethods[ 0 ].id
+					: 'card',
 			},
 			paymentForm
 		)
