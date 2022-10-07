@@ -282,6 +282,10 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 [WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) offers on-site payment forms that ensure customers never leave your site.
 
+= Does WP Simple Pay work with WooCommerce? =
+
+No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate with other payment or ecommerce plugins, such as WooCommerce or Easy Digital Downloads.
+
 == Screenshots ==
 
 1. Payment form template selection
@@ -296,6 +300,12 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 10. Global payment form settings: Payment confirmation details
 
 == Changelog ==
+
+= Stripe Payment Forms v4.6.0 - October 11, 2022 =
+
+* New: Add Thailand to list of supported Stripe countries.
+* Fix: Ensure a fallback redirect URL always exists for Stripe Checkout.
+* Fix: Avoid JavaScript error on certain WP Simple Pay admin pages.
 
 = Stripe Payment Forms v4.5.2 - September 27, 2022 =
 
