@@ -446,8 +446,13 @@ class Checkout_Session_Controller extends Controller {
 		unset( $payment_intent_data['amount'] );
 		unset( $payment_intent_data['amount'] );
 
-		$payment_method_types = $payment_intent_data['payment_method_types'];
-		unset( $payment_intent_data['payment_method_types'] );
+		// Payment Method types are only added to the PaymentIntent in Pro.
+		if ( isset( $payment_intent_data['payment_method_types'] ) ) {
+			$payment_method_types = $payment_intent_data['payment_method_types'];
+			unset( $payment_intent_data['payment_method_types'] );
+		} else {
+			$payment_method_types = array( 'card' );
+		}
 
 		$session_args['payment_intent_data']  = $payment_intent_data;
 		$session_args['payment_method_types'] = $payment_method_types;
