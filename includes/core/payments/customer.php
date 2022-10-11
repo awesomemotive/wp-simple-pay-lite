@@ -13,6 +13,7 @@ namespace SimplePay\Core\Payments\Customer;
 use SimplePay\Core\i18n;
 use SimplePay\Core\Legacy;
 use SimplePay\Core\API\Customers;
+use SimplePay\Core\Utils;
 
 use Exception;
 
@@ -159,6 +160,9 @@ function get_args_from_payment_form_request( $form, $form_data, $form_values ) {
 		'phone'    => null,
 		'email'    => null,
 		'metadata' => null,
+		'tax'      => array(
+			'ip_address' => Utils\get_current_ip_address(),
+		),
 	);
 
 	$customer_args = wp_parse_args( $customer_args, $defaults );

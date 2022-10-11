@@ -33,7 +33,7 @@ class OrderService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Order>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem>
      */
     public function allLineItems($id, $params = null, $opts = null)
     {

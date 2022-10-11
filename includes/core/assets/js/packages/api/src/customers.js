@@ -20,14 +20,11 @@ import { apiRequest } from './api-request.js';
  * @return {jqXHR} jQuery XMLHttpRequest object.
  */
 export function create( data = {}, paymentForm ) {
-	const { id, state, __unstableLegacyFormData } = paymentForm;
+	const { id, getFormData } = paymentForm;
 
 	return apiRequest( 'v2/customer', {
 		form_values: serialize( paymentForm[ 0 ], { hash: true } ),
-		form_data: JSON.stringify( {
-			...__unstableLegacyFormData,
-			...state,
-		} ),
+		form_data: getFormData(),
 		form_id: id,
 		...data,
 	} );

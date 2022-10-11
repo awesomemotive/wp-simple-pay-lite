@@ -537,26 +537,39 @@ function simpay_shared_script_variables() {
 		'currencySymbol'                          => html_entity_decode(
 			simpay_get_saved_currency_symbol()
 		),
-		'currencyPosition'                        => simpay_get_currency_position(),
-		'decimalSeparator'                        => simpay_get_decimal_separator(),
-		'thousandSeparator'                       => simpay_get_thousand_separator(),
-		'ajaxurl'                                 => admin_url( 'admin-ajax.php' ),
-		/* translators: %s Minimum price amount. */
-		'customAmountLabel'                       => esc_html__(
+		'currencyPosition'                             => simpay_get_currency_position(),
+		'decimalSeparator'                             => simpay_get_decimal_separator(),
+		'thousandSeparator'                            => simpay_get_thousand_separator(),
+		'ajaxurl'                                      => admin_url( 'admin-ajax.php' ),
+		'customAmountLabel'                            => esc_html__(
 			'starting at %s',
 			'stripe'
 		),
-		'recurringIntervals'                      => simpay_get_recurring_intervals(),
+		'recurringIntervals'                           => simpay_get_recurring_intervals(),
 		/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
-		'recurringIntervalDisplay'                => esc_html_x(
+		'recurringIntervalDisplay'                     => esc_html_x(
 			'%1$s every %2$s %3$s',
 			'recurring interval',
 			'stripe'
 		),
 		/* translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount. */
-		'recurringIntervalDisplayLimitedDiscount' => esc_html_x(
+		'recurringIntervalDisplayLimitedDiscount'      => esc_html_x(
 			'%1$s every %2$s %3$s for %4$s months then %5$s',
 			'recurring interval',
+			'stripe'
+		),
+		/* translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount. */
+		'recurringIntervalDisplayAutomaticTaxDiscount' => esc_html_x(
+			'%1$s every %2$s %3$s until coupon expires',
+			'recurring interval with automatic tax',
+			'stripe'
+		),
+		'addressRequired'                              => esc_html__(
+			'Enter address to calculate',
+			'stripe'
+		),
+		'addressInvalid'                               => esc_html__(
+			'Please enter a valid address',
 			'stripe'
 		),
 	);
@@ -1304,6 +1317,7 @@ function simpay_get_payment_form_setting(
 			'type'            => '_form_display_type',
 			'payment_methods' => '_payment_methods',
 			'fields'          => '_custom_fields',
+			'tax_status'      => '_tax_status',
 		);
 
 		// Pull the value from the database.

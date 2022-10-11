@@ -240,6 +240,14 @@ function save_product( $post_id, $post, $form ) {
 		);
 	}
 
+	// Tax code for automatic tax calculation.
+	$tax_status = get_post_meta( $form->id, '_tax_status', true );
+
+	if ( 'automatic' === $tax_status ) {
+		$tax_code = get_post_meta( $form->id, '_tax_code', true );
+		$product_args['tax_code'] = $tax_code;
+	}
+
 	try {
 		if ( empty( $form_product ) ) {
 			if ( ! empty( $description ) ) {
@@ -498,6 +506,38 @@ function save_prices( $post_id, $post, $form ) {
 			if ( simpay_payment_form_prices_is_defined_price( $price['id'] ) ) {
 				$price_args['id'] = $price['id'];
 
+				// Update tax_behavior if not previously set, and using automatic taxes.
+				$tax_status = get_post_meta( $form->id, '_tax_status', true );
+
+				if ( 'automatic' === $tax_status ) {
+					try {
+						$existing_price = API\Prices\retrieve(
+							$price_args['id'],
+							$form->get_api_request_args()
+						);
+
+						if ( 'unspecified' === $existing_price->tax_behavior ) {
+							$tax_behavior = get_post_meta(
+								$form->id,
+								'_tax_behavior',
+								true
+							);
+
+							if ( ! empty( $tax_behavior ) ) {
+								API\Prices\update(
+									$price_args['id'],
+									array(
+										'tax_behavior' => $tax_behavior,
+									),
+									$form->get_api_request_args()
+								);
+							}
+						}
+					} catch ( Exception $e ) {
+						// Do nothing, it can't be changed if already set.
+					}
+				}
+
 				// Create a new Price.
 			} else {
 				$stripe_price_args = array(
@@ -511,6 +551,20 @@ function save_prices( $post_id, $post, $form ) {
 						'interval'       => $recurring_args['interval'],
 						'interval_count' => $recurring_args['interval_count'],
 					);
+				}
+
+				$tax_status = get_post_meta( $form->id, '_tax_status', true );
+
+				if ( 'automatic' === $tax_status ) {
+					$tax_behavior = get_post_meta(
+						$form->id,
+						'_tax_behavior',
+						true
+					);
+
+					if ( ! empty( $tax_behavior ) ) {
+						$stripe_price_args['tax_behavior'] = $tax_behavior;
+					}
 				}
 
 				try {

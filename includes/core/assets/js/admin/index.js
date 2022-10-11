@@ -57,6 +57,7 @@ let spAdmin = {};
 				'_subscription_type',
 				'_subscription_custom_amount',
 				'_form_type',
+				'_tax_status',
 				'_enable_payment_page',
 				'.simpay-total-amount-label-recurring',
 				'.simpay-total-amount-label-tax',

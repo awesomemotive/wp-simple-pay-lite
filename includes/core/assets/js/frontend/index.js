@@ -5,7 +5,6 @@
  */
 import { default as hooks, doAction } from '@wpsimplepay/hooks';
 import * as paymentForms from '@wpsimplepay/payment-forms';
-import * as api from '@wpsimplepay/api';
 import { default as legacyHelpers } from './utils/legacy.js';
 import './payment-forms';
 
@@ -14,27 +13,10 @@ import './payment-forms';
  *
  * @todo Create automatically with Webpack.
  */
-
-// Don't expose api.apiRequest to window.
-const {
-	customers,
-	paymentintents,
-	sessions,
-	setupintents,
-	subscriptions,
-} = api;
-
 window.wpsp = {
 	hooks,
 	paymentForms,
 	initPaymentForm,
-	api: {
-		customers,
-		paymentintents,
-		sessions,
-		setupintents,
-		subscriptions,
-	},
 };
 
 /**
@@ -100,7 +82,11 @@ function initPaymentForm( $paymentForm, __unstableFormVars = false ) {
 		form: { prices, livemode, config = {} },
 	} = paymentFormData;
 
-	const { taxRates = [], paymentMethods = [] } = config;
+	const {
+		taxRates = [],
+		paymentMethods = [],
+		taxStatus = 'fixed-global',
+	} = config;
 
 	// Merge localized form data in to a semi-simplified object.
 	// Maintained for backwards compatibility.
@@ -150,6 +136,7 @@ function initPaymentForm( $paymentForm, __unstableFormVars = false ) {
 		} ),
 		paymentMethod: _.first( paymentMethods ),
 		taxRates,
+		taxStatus,
 		paymentMethods,
 		livemode,
 		displayType: formData.formDisplayType,
@@ -161,6 +148,24 @@ function initPaymentForm( $paymentForm, __unstableFormVars = false ) {
 			...$paymentForm.state,
 			...updatedState,
 		};
+	};
+
+	// Attach a helper to get the form data/state.
+	$paymentForm.getFormData = function () {
+		const _formData = {
+			...$paymentForm.__unstableLegacyFormData,
+			...$paymentForm.state,
+		};
+
+		// Remove additional data that is not needed and may trigger WAF rules.
+		const {
+			order: _o,
+			customer: _cus,
+			paymentMethods: _pms,
+			...cleanFormData // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#rest_property
+		} = _formData;
+
+		return JSON.stringify( cleanFormData );
 	};
 
 	// Attach a Stripe instance to the Payment Form jQuery object.

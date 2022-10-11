@@ -227,6 +227,61 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	}
 
 	/**
+	 * Returns anit-spam email verification status.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @return string
+	 */
+	private function get_email_verification() {
+		/** @var string $enabled */
+		$enabled = simpay_get_setting(
+			'fraud_email_verification',
+			'no'
+		);
+
+		if ( 'no' === $enabled ) {
+			return 'No';
+		}
+
+		/** @var int $threshold */
+		$threshold = simpay_get_setting(
+			'fraud_email_verification_threshold',
+			3
+		);
+
+		/** @var int|float $timeframe */
+		$timeframe = simpay_get_setting(
+			'fraud_email_verification_timeframe',
+			6
+		);
+
+		return sprintf(
+			'%s: %d events in %d hours',
+			ucfirst( $enabled ),
+			$threshold,
+			$timeframe
+		);
+	}
+
+	/**
+	 * Returns the anti-spam require authentication.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @return string
+	 */
+	private function get_require_authentication() {
+		/** @var string $enabled */
+		$enabled = simpay_get_setting(
+			'fraud_require_authentication',
+			'no'
+		);
+
+		return ucfirst( $enabled );
+	}
+
+	/**
 	 * Filters the debug information to include our plugin-specific site health
 	 * panel in the generated UI.
 	 *
@@ -239,31 +294,39 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		$plugin = array(
 			'label'  => 'WP Simple Pay',
 			'fields' => array(
-				'version'         => array(
+				'version'                  => array(
 					'label' => __( 'Version', 'stripe' ),
 					'value' => $this->get_plugin_version(),
 				),
-				'stripetls'       => array(
+				'stripetls'                => array(
 					'label' => __( 'Stripe TLS', 'stripe' ),
 					'value' => $this->stripe_tls_check(),
 				),
-				'mode'            => array(
+				'mode'                     => array(
 					'label' => __( 'Global Payment Mode', 'stripe' ),
 					'value' => $this->get_test_or_live_mode(),
 				),
-				'recaptcha'       => array(
+				'recaptcha'                => array(
 					'label' => __( 'reCAPTCHA', 'stripe' ),
 					'value' => $this->check_repatcha_keys(),
 				),
-				'rate_limit_file' => array(
+				'rate_limit_file'          => array(
 					'label' => __( 'Rate Limit File', 'stripe' ),
 					'value' => $this->check_rate_limiting_file(),
 				),
-				'recent_webhook'  => array(
+				'fraud_email_verification' => array(
+					'label' => __( 'Email Verification', 'stripe' ),
+					'value' => $this->get_email_verification(),
+				),
+				'fraud_require_auth'       => array(
+					'label' => __( 'Require Authentication', 'stripe' ),
+					'value' => $this->get_require_authentication(),
+				),
+				'recent_webhook'           => array(
 					'label' => __( 'Most Recent Webhook Event', 'stripe' ),
 					'value' => $this->get_latest_webhook_event(),
 				),
-				'webhook_secret'  => array(
+				'webhook_secret'           => array(
 					'label' => __( 'Webhook Secret', 'stripe' ),
 					'value' => $this->get_webhook_secret(),
 				),

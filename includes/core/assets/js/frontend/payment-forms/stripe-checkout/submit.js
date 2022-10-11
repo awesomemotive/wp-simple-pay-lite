@@ -27,24 +27,44 @@ async function submit( paymentForm ) {
 
 	// Only generate a custom Customer if we need to map on-page form fields.
 	if ( hasCustomerFields ) {
+		const customerData = await customers
+			.create( {}, paymentForm )
+			.catch( onError );
+
+		if ( ! customerData ) {
+			return;
+		}
+
 		const {
 			customer: { id },
-		} = await customers.create( {}, paymentForm );
+		} = customerData;
 
 		customerId = id;
 	}
 
 	// Generate a Checkout Session.
+	const session = await sessions
+		.create(
+			{
+				customer_id: customerId,
+				payment_method_type: __unstableLegacyFormData.paymentMethods
+					? __unstableLegacyFormData.paymentMethods[ 0 ].id
+					: 'card',
+			},
+			paymentForm
+		)
+		.catch( onError );
+
+	// Bail if there was an error.
+	if ( ! session ) {
+		return;
+	}
+
 	const {
 		sessionId,
 		session: { url },
 		redirect_type: redirectType,
-	} = await sessions.create(
-		{
-			customer_id: customerId,
-		},
-		paymentForm
-	);
+	} = session;
 
 	// Redirect to Stripe.
 	if ( 'stripe' === redirectType ) {

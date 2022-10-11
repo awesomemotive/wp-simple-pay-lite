@@ -159,11 +159,48 @@ class Stripe_API {
 			delete_transient( $cache_key );
 		}
 
-		return call_user_func(
-			array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
-			$id_or_args,
-			$args,
-			$opts
-		);
+		// Special handling for submitting an order, which cannot use the legacy static handling.
+		// https://github.com/stripe/stripe-php#clientservice-patterns-vs-legacy-patterns
+		if ( 'Order' === $class ) {
+			$stripe = new \SimplePay\Vendor\Stripe\StripeClient(
+				array(
+					'stripe_version' => SIMPLE_PAY_STRIPE_API_VERSION,
+				)
+			);
+
+			switch ( $function ) {
+				case 'reopen':
+					return $stripe->orders->reopen(
+						$id_or_args,
+						array(),
+						$args
+					);
+
+					break;
+				case 'submit':
+					return $stripe->orders->submit(
+						$id_or_args,
+						$args,
+						$opts
+					);
+
+					break;
+				default:
+					return call_user_func(
+						array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
+						$id_or_args,
+						$args,
+						$opts
+					);
+			}
+
+		} else {
+			return call_user_func(
+				array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
+				$id_or_args,
+				$args,
+				$opts
+			);
+		}
 	}
 }

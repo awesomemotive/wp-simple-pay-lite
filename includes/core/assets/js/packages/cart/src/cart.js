@@ -24,6 +24,9 @@ export const Cart = class Cart {
 		this.currency = 'usd';
 		this.taxPercent = 0;
 		this.taxRates = [];
+		this.taxStatus = 'fixed-global';
+		this.taxBehavior = 'exclusive';
+		this.automaticTax = {};
 		this.coupon = false;
 		this.isNonDecimalCurrency = false;
 
@@ -48,6 +51,9 @@ export const Cart = class Cart {
 			currency,
 			taxPercent,
 			taxRates,
+			taxStatus,
+			taxBehavior,
+			automaticTax,
 			coupon,
 			isNonDecimalCurrency,
 		} = {
@@ -75,9 +81,21 @@ export const Cart = class Cart {
 			this.taxPercent = parseFloat( taxPercent );
 		}
 
-		// Tax rates.
+		// Tax.
 		if ( taxRates && Array.isArray( taxRates ) ) {
 			this.taxRates = taxRates;
+		}
+
+		if ( taxStatus && 'string' === typeof taxStatus ) {
+			this.taxStatus = taxStatus;
+		}
+
+		if ( taxBehavior && 'string' === typeof taxBehavior ) {
+			this.taxBehavior = taxBehavior;
+		}
+
+		if ( automaticTax && 'object' === typeof automaticTax ) {
+			this.automaticTax = automaticTax;
 		}
 
 		// Set coupon.
@@ -289,6 +307,10 @@ export const Cart = class Cart {
 	 * @return {number} Cart tax.
 	 */
 	getTax() {
+		if ( 'none' === this.taxStatus ) {
+			return 0;
+		}
+
 		return this.getLineItems().reduce( ( tax, lineItem ) => {
 			return ( tax += lineItem.getTax() );
 		}, 0 );
@@ -429,6 +451,16 @@ export const Cart = class Cart {
 	 * @return {number} Cart total due today.
 	 */
 	getTotalDueToday() {
+		let initialTax = 0;
+
+		if (
+			'exclusive' === this.taxBehavior &&
+			this.automaticTax &&
+			! this.hasFreeTrial()
+		) {
+			initialTax = parseInt( this.automaticTax.amount_tax || initialTax );
+		}
+
 		return this.getLineItems().reduce( ( total, lineItem ) => {
 			// Return current total if the line item has a free trial.
 			if ( lineItem.hasFreeTrial() ) {
@@ -437,7 +469,7 @@ export const Cart = class Cart {
 
 			// Add line item total to existing total.
 			return ( total += lineItem.getTotal() );
-		}, 0 );
+		}, initialTax );
 	}
 
 	/**
@@ -496,28 +528,39 @@ export const Cart = class Cart {
 		const recurringSubtotal =
 			recurring.getUnitPrice() * recurring.getQuantity();
 
-		const taxRates = this.getTaxRates();
-		const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
+		let taxAmount = 0;
 
-		const inclusiveTaxAmount = Math.round(
-			recurringSubtotal - recurringSubtotal / ( 1 + taxRate )
-		);
+		if ( 'automatic' !== this.taxStatus && 'none' !== this.taxStatus ) {
+			const taxRates = this.getTaxRates();
+			const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
 
-		const postInclusiveTaxAmount = Math.round(
-			recurringSubtotal - inclusiveTaxAmount
-		);
-		const taxAmount = taxRates.reduce(
-			( tax, { percentage, calculation } ) => {
-				if ( 'inclusive' === calculation ) {
-					return tax;
-				}
+			const inclusiveTaxAmount = Math.round(
+				recurringSubtotal - recurringSubtotal / ( 1 + taxRate )
+			);
 
-				return ( tax += Math.round(
-					postInclusiveTaxAmount * ( percentage / 100 )
-				) );
-			},
-			0
-		);
+			const postInclusiveTaxAmount = Math.round(
+				recurringSubtotal - inclusiveTaxAmount
+			);
+
+			taxAmount = taxRates.reduce(
+				( tax, { percentage, calculation } ) => {
+					if ( 'inclusive' === calculation ) {
+						return tax;
+					}
+
+					return ( tax += Math.round(
+						postInclusiveTaxAmount * ( percentage / 100 )
+					) );
+				},
+				0
+			);
+		} else if (
+			'automatic' === this.taxStatus &&
+			'exclusive' === this.taxBehavior &&
+			this.automaticTax
+		) {
+			taxAmount = this.automaticTax.upcomingInvoice?.amount_tax || 0;
+		}
 
 		return Math.round( recurringSubtotal + taxAmount );
 	}
@@ -557,28 +600,39 @@ export const Cart = class Cart {
 			recurringSubtotal = Math.round( recurringSubtotal - discount );
 		}
 
-		const taxRates = this.getTaxRates();
-		const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
+		let taxAmount = 0;
 
-		const inclusiveTaxAmount = Math.round(
-			recurringSubtotal - recurringSubtotal / ( 1 + taxRate )
-		);
+		if ( 'automatic' !== this.taxStatus && 'none' !== this.taxStatus ) {
+			const taxRates = this.getTaxRates();
+			const taxRate = this.getTaxPercent( 'inclusive' ) / 100;
 
-		const postInclusiveTaxAmount = Math.round(
-			recurringSubtotal - inclusiveTaxAmount
-		);
-		const taxAmount = taxRates.reduce(
-			( tax, { percentage, calculation } ) => {
-				if ( 'inclusive' === calculation ) {
-					return tax;
-				}
+			const inclusiveTaxAmount = Math.round(
+				recurringSubtotal - recurringSubtotal / ( 1 + taxRate )
+			);
 
-				return ( tax += Math.round(
-					postInclusiveTaxAmount * ( percentage / 100 )
-				) );
-			},
-			0
-		);
+			const postInclusiveTaxAmount = Math.round(
+				recurringSubtotal - inclusiveTaxAmount
+			);
+
+			taxAmount = taxRates.reduce(
+				( tax, { percentage, calculation } ) => {
+					if ( 'inclusive' === calculation ) {
+						return tax;
+					}
+
+					return ( tax += Math.round(
+						postInclusiveTaxAmount * ( percentage / 100 )
+					) );
+				},
+				0
+			);
+		} else if (
+			'automatic' === this.taxStatus &&
+			'exclusive' === this.taxBehavior &&
+			this.automaticTax
+		) {
+			taxAmount = this.automaticTax.upcomingInvoice?.amount_tax || 0;
+		}
 
 		return Math.round( recurringSubtotal + taxAmount );
 	}

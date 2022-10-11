@@ -261,6 +261,13 @@ export const LineItem = class LineItem {
 	 * @return {number} Cart line item tax.
 	 */
 	getTax() {
+		if (
+			'automatic' === this.cart.taxStatus ||
+			'none' === this.cart.taxStatus
+		) {
+			return 0;
+		}
+
 		const taxableAmount = this.getTaxableAmount();
 		const taxPercent = this.cart.getTaxPercent( 'exclusive' );
 
@@ -292,7 +299,11 @@ export const LineItem = class LineItem {
 			return false;
 		}
 
-		return price.recurring && price.recurring.trial_period_days;
+		return (
+			false !== this.subscription &&
+			price.recurring &&
+			price.recurring.trial_period_days
+		);
 	}
 };
 

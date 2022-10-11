@@ -77,6 +77,45 @@ abstract class Controller extends WP_REST_Controller {
 	}
 
 	/**
+	 * Ensures the Stripe cookie has been set by stripe.js.
+	 *
+	 * @since 4.6.0
+	 * @param \WP_REST_Request $request REST API request data.
+	 * @return \WP_Error|true Error if the rate limit has been exceeded.
+	 */
+	protected function check_stripe_cookie( $request ) {
+		$check_stripe_cookie = is_ssl();
+
+		/**
+		 * Determines if the Stripe __stripe_sid cookie is required to proceed.
+		 *
+		 * @since 4.6.0
+		 *
+		 * @param bool $check_stripe_cookie Whether to check for the __stripe_sid cookie.
+		 */
+		$check_stripe_cookie = apply_filters(
+			'simpay_rest_api_check_stripe_cookie',
+			$check_stripe_cookie
+		);
+
+		if (
+			true === $check_stripe_cookie &&
+			! isset( $_COOKIE['__stripe_sid'] )
+		) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__(
+					'Invalid request. Please refresh the page and try again.',
+					'stripe'
+				),
+				array(
+					'status' => rest_authorization_required_code(),
+				)
+			);
+		}
+	}
+
+	/**
 	 * Determines if the REST API request is valid based on the current rate limit.
 	 *
 	 * @since 4.2.0
@@ -199,7 +238,13 @@ abstract class Controller extends WP_REST_Controller {
 						$meta_key = $field['metadata'];
 					}
 
-					if ( empty( $form_values['simpay_field'][ $meta_key ] ) ) {
+					if ( ! isset( $form_values['simpay_field'][ $meta_key ] ) ) {
+						return $invalid_request;
+					}
+
+					$value = trim( $form_values['simpay_field'][ $meta_key ] );
+
+					if ( empty( $value ) ) {
 						return $invalid_request;
 					}
 				}
@@ -216,7 +261,15 @@ abstract class Controller extends WP_REST_Controller {
 						);
 
 						foreach ( $address_parts as $address_part ) {
-							if ( empty( $form_values[ 'simpay_billing_address_' . $address_part ] ) ) {
+							if ( ! isset( $form_values[ 'simpay_billing_address_' . $address_part ] ) ) {
+								return $invalid_request;
+							}
+
+							$value = trim(
+								$form_values[ 'simpay_billing_address_' . $address_part ]
+							);
+
+							if ( empty( $value ) ) {
 								return $invalid_request;
 							}
 						}
@@ -224,9 +277,16 @@ abstract class Controller extends WP_REST_Controller {
 						break;
 					case 'tax_id':
 						if (
-							empty( $form_values['simpay_tax_id'] ) ||
-							empty( $form_values['simpay_tax_id_type'] )
+							! isset( $form_values['simpay_tax_id'] ) ||
+							! isset( $form_values['simpay_tax_id_type'] )
 						) {
+							return $invalid_request;
+						}
+
+						$tax_id   = trim( $form_values['simpay_tax_id'] );
+						$tax_type = trim( $form_values['simpay_tax_id_type'] );
+
+						if ( empty( $tax_id ) || empty( $tax_type ) ) {
 							return $invalid_request;
 						}
 
@@ -234,9 +294,19 @@ abstract class Controller extends WP_REST_Controller {
 					case 'customer_name':
 					case 'telephone':
 					case 'email':
-						if ( empty( $form_values[ 'simpay_' . $custom_field_type ] ) ) {
+						if ( ! isset( $form_values[ 'simpay_' . $custom_field_type ] ) ) {
 							return $invalid_request;
 						}
+
+						$value = trim(
+							$form_values[ 'simpay_' . $custom_field_type ]
+						);
+
+						if ( empty( $value ) ) {
+							return $invalid_request;
+						}
+
+						break;
 				}
 			}
 		}

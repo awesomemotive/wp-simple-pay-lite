@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.0
-Stable tag: 4.5.2
+Stable tag: 4.6.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -282,6 +282,10 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 
 [WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) offers on-site payment forms that ensure customers never leave your site.
 
+= Does WP Simple Pay work with WooCommerce? =
+
+No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate with other payment or ecommerce plugins, such as WooCommerce or Easy Digital Downloads.
+
 == Screenshots ==
 
 1. Payment form template selection
@@ -296,6 +300,12 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 10. Global payment form settings: Payment confirmation details
 
 == Changelog ==
+
+= Stripe Payment Forms v4.6.0 - October 11, 2022 =
+
+* New: Add Thailand to list of supported Stripe countries.
+* Fix: Ensure a fallback redirect URL always exists for Stripe Checkout.
+* Fix: Avoid JavaScript error on certain WP Simple Pay admin pages.
 
 = Stripe Payment Forms v4.5.2 - September 27, 2022 =
 
@@ -326,82 +336,3 @@ The 3% additional fee is removed by [upgrading to WP Simple Pay Pro](https://wps
 * Fix: Ensure UI elements that cannot be used are not shown.
 * Fix: Ensure more compatibility with MySQL indexes.
 * Fix: Update Stripe API PHP library to `8.5.0`.
-
-= Stripe Payment Forms v4.4.6 - June 1, 2022 =
-
-* New: Dashboard Widget Report - view transaction amounts from the last 7 or 30 days.
-* New: Introduce "Help" panel. Quickly find documentation or request support.
-* Fix: Display relevant Stripe API error when saving payment forms.
-* Dev: Initialize `stripe.js` with Stripe API version.
-
-= Stripe Payment Forms v4.4.5 - April 27, 2022 =
-
-* New: Stay up to date with WP Simple Pay via the notification inbox.
-* Fix: Ensure payment form template explorer displays properly with WooCommerce active.
-* Fix: Ensure top of page notice remains dismissed after dismissal.
-* Fix: Ensure setup wizard does not override previously set settings.
-
-= Stripe Payment Forms v4.4.4 - March 30, 2022 =
-
-* New: Display a notice to site admins and do not output a form without price options.
-* New: Add Stripe Instant Payouts education.
-* New: Add additional payment form templates.
-* Fix: Add more specific UTM arguments to URLs.
-* Fix: Add additional opinionated styles to form preview notice.
-* Fix: Update "Tested up to" to `5.9`.
-
-= Stripe Payment Forms v4.4.3 - March 3, 2022 =
-
-* New: Payment Form Templates - choose from premade templates to quickly create payment forms.
-* New: Elementor - select a payment form to launch in a "Button", "Price Table," or "Call to Action" widget.
-* New: Divi - select a payment form to launch in the "Button", "Price Table", or "Call to Action" module.
-* Fix: Ensure screen options can be used to hide additional metaboxes added to payment form settings.
-* Fix: Ensure classic editor payment form inserter displays payment form title.
-
-= Stripe Payment Forms v4.4.2 - February 10, 2022 =
-
-* New: Add "Setup Wizard" for new installs.
-* New: Add "WP Simple Pay" payment form block.
-* New: Load payment form preview in an isolated environment. Add helper links.
-* New: Link branding bar logo to website.
-* Fix: Ensure default $1.00 amount can be saved on initial form publish.
-* Fix: Do not display empty form state when searching for payment forms.
-* Fix: Update reCAPTCHA setup description.
-* Fix: Ensure "Test Mode" can be toggled when there is no active connection.
-* Fix: Only show published pages in settings dropdowns.
-* Fix: Redirect back to relevant page when connecting to Stripe.
-* Dev: Update test matrix against WordPress 5.9.
-
-= Stripe Payment Forms v4.4.1 - January 11, 2022 =
-
-* New: Lite - add a 2% application fee to Checkout Sessions for new Stripe Connect connections.
-* New: Stripe Checkout - Add support for collecting phone numbers.
-* New: Show an alert when leaving unsaved changes on payment forms.
-* New: Add "Copy to clipboard" buttons to payment form shortcodes and system report.
-* New: Add an admin notice requesting a review after 14 days of installation/update.
-* Fix: Update admin bar from "Simple Pay" to "WP Simple Pay".
-* Dev: Update copyright dates.
-
-= Stripe Payment Forms v4.4.0 - December 14, 2021 =
-
-* New: Add additional product education.
-* New: Add product education dashboard widget.
-* New: Add branding to all plugin pages.
-* New: Various plugin UI/UX improvements.
-* New: Show notice if payment form title is empty.
-* New: Add confirmation when disconnecting a Stripe account.
-* New: Add empty states to payment form list when no forms have been created.
-* New: Show global reCAPTCHA and tax settings within payment form settings.
-* New: Alert users of test/live and publishable/secret swapped API credentials.
-* New: Add India, Brazil and United Arab Emirates as a supported account country.
-* New: Automatically retry Stripe API requests on a network failure.
-* Fix: Add consistency to UTM parameters in `*.wpsimplepay.com` outbound links.
-* Fix: Ensure `simpay_get_currencies` filter is called.
-* Fix: Avoid fatal error on the_title filter when used incorrectly by other plugins.
-* Fix: Ensure Stripe API errors are properly output.
-* Fix: Avoid `get_query_var()` usage within admin panel for better compatibility with other plugins.
-* Fix: Do not output PHP warnings when visiting Payment Confirmation page directly.
-* Fix: Show generic error message text when REST API response is invalid JSON.
-* Fix: Rename "Macedonia" to "North Macedonia".
-* Fix: Lighten placeholder colors on Payment Form settings to avoid confusion with values.
-* Dev: Add plugin service container, service providers, and subscriber architecture in `./src`.

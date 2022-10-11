@@ -74,6 +74,11 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function parse_pretty_request( $wp ) {
+		// Do not take over the request if we are returning from a payment method redirect.
+		if ( isset( $_GET['payment_intent'] ) ) {
+			return;
+		}
+
 		if ( ! empty( $wp->query_vars['name'] ) ) {
 			$request = $wp->query_vars['name'];
 		}

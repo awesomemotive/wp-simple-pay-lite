@@ -1,0 +1,2654 @@
+[
+	{
+		"id": "txcd_99999999",
+		"object": "tax_code",
+		"description": "Any tangible or physical good. For jurisdictions that impose a tax, the standard rate is applied.",
+		"name": "General - Tangible Goods"
+	},
+	{
+		"id": "txcd_20030000",
+		"object": "tax_code",
+		"description": "Miscellaneous services. This code will only treat services as taxable if the jurisdiction taxes services generally.",
+		"name": "General - Services"
+	},
+	{
+		"id": "txcd_10000000",
+		"object": "tax_code",
+		"description": "Any electronically supplied good or service.",
+		"name": "General - Electronically Supplied Services"
+	},
+	{
+		"id": "txcd_00000000",
+		"object": "tax_code",
+		"description": "Any nontaxable good or service which can be used to ensure no tax is applied, even for jurisdictions that impose a tax.",
+		"name": "Nontaxable"
+	},
+	{
+		"id": "txcd_10010001",
+		"object": "tax_code",
+		"description": "Cloud service offering infrastructure resources (specifically server storage, RAM, and CPU usage) over the internet. This offering is intended for personal use, rather than for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Infrastructure as a service (IaaS) - personal use"
+	},
+	{
+		"id": "txcd_10101000",
+		"object": "tax_code",
+		"description": "Cloud service offering infrastructure resources (specifically server storage, RAM, and CPU usage) over the internet. This offering is intended for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Infrastructure as a service (IaaS) - business use"
+	},
+	{
+		"id": "txcd_10102000",
+		"object": "tax_code",
+		"description": "Cloud service providing a platform for users to develop, run, and manage applications. This offering is intended for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Platform as a service (PaaS) - business use"
+	},
+	{
+		"id": "txcd_10102001",
+		"object": "tax_code",
+		"description": "Cloud service providing a platform for users to develop, run, and manage applications. This offering is intended for personal use, rather than for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Platform as a Service (PaaS) - personal use"
+	},
+	{
+		"id": "txcd_10103000",
+		"object": "tax_code",
+		"description": "Cloud services software delivered over the internet. The software isn't customized for a specific buyer and they don't download anything. The software is intended for personal use, rather than for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Software as a service (SaaS) - personal use"
+	},
+	{
+		"id": "txcd_10103001",
+		"object": "tax_code",
+		"description": "Cloud services software delivered over the internet. The software isn't customized for a specific buyer and they don't download anything. The software is intended for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Software as a service (SaaS) - business use"
+	},
+	{
+		"id": "txcd_10103100",
+		"object": "tax_code",
+		"description": "Cloud services software delivered over the internet. The software isn't customized for a specific buyer and this model assumes an electronic transfer to the buyer, such as an app download. The software is intended for personal use, rather than for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Software as a service (SaaS) -- electronic download - personal use"
+	},
+	{
+		"id": "txcd_10103101",
+		"object": "tax_code",
+		"description": "Cloud services software delivered over the internet. The software isn't customized for a specific buyer and this model assumes an electronic transfer to the buyer, such as an app download. The software is intended for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Software as a service (SaaS) -- electronic download - business use"
+	},
+	{
+		"id": "txcd_10104001",
+		"object": "tax_code",
+		"description": "Cloud service providing business process outsourcing services over the internet.",
+		"name": "Cloud-based business process as a service"
+	},
+	{
+		"id": "txcd_10201000",
+		"object": "tax_code",
+		"description": "Video or electronic games in the common sense that are transferred electronically. These goods are downloaded to a device with permanent access granted.",
+		"name": "Video Games - downloaded - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10201001",
+		"object": "tax_code",
+		"description": "Video or electronic games in the common sense that are transferred electronically. These goods are downloaded to a device with access that expires after a stated period of time.",
+		"name": "Video Games - downloaded - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10201002",
+		"object": "tax_code",
+		"description": "Video or electronic games in the common sense that are transferred electronically. These goods are downloaded to a device with access that is conditioned upon continued subscription payment.",
+		"name": "Video Games - downloaded - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10201003",
+		"object": "tax_code",
+		"description": "Video or electronic games in the common sense that are transferred electronically. These goods are streamed to a device with access that expires after a stated period of time.",
+		"name": "Video Games - streamed - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10201004",
+		"object": "tax_code",
+		"description": "Video or electronic games in the common sense that are transferred electronically. These goods are streamed to a device with access that is conditioned upon continued subscription payment.",
+		"name": "Video Games - streamed - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10202000",
+		"object": "tax_code",
+		"description": "Prewritten (\"canned\") software that the buyer downloads. The software is intended for personal use, rather than for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Downloadable software - personal use"
+	},
+	{
+		"id": "txcd_10202001",
+		"object": "tax_code",
+		"description": "Prewritten (\"canned\") software that the buyer downloads used for non-recreational purposes, such as antivirus, database, educational, financial, word processing, etc. The software is intended for personal use, rather than for consumption in a commercial enterprise. Note: The distinction between business use and personal use for this tax code is relevant only if you are transacting business in the US.",
+		"name": "Downloadable software - non-recreational"
+	},
+	{
+		"id": "txcd_10202003",
+		"object": "tax_code",
+		"description": "Prewritten (\"canned\") software that the buyer downloads. The software is intended for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Downloadable software - business use"
+	},
+	{
+		"id": "txcd_10203000",
+		"object": "tax_code",
+		"description": "Custom software that the buyer downloads. The software is intended for personal use, rather than for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Downloadable software - custom - personal use"
+	},
+	{
+		"id": "txcd_10203001",
+		"object": "tax_code",
+		"description": "Custom software that the buyer downloads. The software is intended for use by a commercial enterprise. Note: The distinction between business use and personal use for this product tax category is relevant only if you have sales in the US.",
+		"name": "Downloadable software - custom - business use"
+	},
+	{
+		"id": "txcd_10301000",
+		"object": "tax_code",
+		"description": "The recording of a book read aloud and sold with unlimited usage (e.g., a downloaded audio copy of The High Growth Handbook).",
+		"name": "Audiobook"
+	},
+	{
+		"id": "txcd_10302000",
+		"object": "tax_code",
+		"description": "Works that are generally recognized in the ordinary and usual sense as books and are transferred electronically. These goods are downloaded to a device with permanent access granted. These goods include novels, autobiographies, encyclopedias, dictionaries, repair manuals, phone directories, business directories, zip code directories, cookbooks, etc.",
+		"name": "Digital Books - downloaded - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10302001",
+		"object": "tax_code",
+		"description": "Works that are generally recognized in the ordinary and usual sense as books and are transferred electronically. These goods are downloaded to a device with access that expires after a stated period of time. These goods include novels, autobiographies, encyclopedias, dictionaries, repair manuals, phone directories, business directories, zip code directories, cookbooks, etc.",
+		"name": "Digital Books - downloaded - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10302002",
+		"object": "tax_code",
+		"description": "Works that are generally recognized in the ordinary and usual sense as books and are transferred electronically. These goods are downloaded to a device with access that is conditioned upon continued subscription payment. These goods include novels, autobiographies, encyclopedias, dictionaries, repair manuals, phone directories, business directories, zip code directories, cookbooks, etc.",
+		"name": "Digital Books - downloaded - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10302003",
+		"object": "tax_code",
+		"description": "Works that are generally recognized in the ordinary and usual sense as books and are transferred electronically. These goods are viewable (but not downloadable) on a device with access that is conditioned upon continued subscription payment. These goods include novels, autobiographies, encyclopedias, dictionaries, repair manuals, phone directories, business directories, zip code directories, cookbooks, etc.",
+		"name": "Digital Books - viewable only - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10303000",
+		"object": "tax_code",
+		"description": "A digital version of a traditional periodical published at regular intervals with the entire publication or individual articles downloaded to a device with access that is conditioned upon continued subscription payment.",
+		"name": "Digital Magazines/Periodicals - downloadable - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10303001",
+		"object": "tax_code",
+		"description": "A digital version of a traditional magazine published at regular intervals. The publication is accessed via a subscription which also entitles the purchaser to physical copies of the media.",
+		"name": "Digital Magazines/Periodicals - subscription tangible and digital"
+	},
+	{
+		"id": "txcd_10303002",
+		"object": "tax_code",
+		"description": "A digital version of a traditional periodical published at regular intervals with the entire publication or individual articles viewable (but not downloadable) on a device with access that is conditioned upon continued subscription payment.",
+		"name": "Digital Magazines/Periodicals - viewable only - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10303100",
+		"object": "tax_code",
+		"description": "A digital version of a traditional periodical published at regular intervals with the entire publication or individual articles downloaded to a device with permanent access granted. The publication is accessed without a subscription.",
+		"name": "Digital Magazines/Periodicals - downloadable - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10303101",
+		"object": "tax_code",
+		"description": "A digital version of a traditional periodical published at regular intervals with the entire publication or individual articles viewable (but not downloadable) on a device with access that expires after a stated period of time. The publication is accessed without a subscription.",
+		"name": "Digital Magazines/Periodicals - viewable only - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10303102",
+		"object": "tax_code",
+		"description": "A digital version of a traditional periodical published at regular intervals with the entire publication or individual articles viewable (but not downloadable) on a device with permanent access granted. The publication is accessed without a subscription.",
+		"name": "Digital Magazines/Periodicals - viewable only - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10303104",
+		"object": "tax_code",
+		"description": "A digital version of a traditional periodical published at regular intervals with the entire publication or individual articles downloaded to a device with access that expires after a stated period of time. The publication is accessed without a subscription.",
+		"name": "Digital Magazines/Periodicals - downloadable - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10304000",
+		"object": "tax_code",
+		"description": "A digital version of a traditional newspaper published at regular intervals with the entire publication or individual articles downloaded to a device with permanent access granted. The publication is accessed without a subscription.",
+		"name": "Digital Newspapers - downloadable - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10304001",
+		"object": "tax_code",
+		"description": "A digital version of a traditional newspaper published at regular intervals with the entire publication or individual articles viewable (but not downloadable) on a device with access that expires after a stated period of time. The publication is accessed without a subscription.",
+		"name": "Digital Newspapers - viewable only - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10304002",
+		"object": "tax_code",
+		"description": "A digital version of a traditional newspaper published at regular intervals with the entire publication or individual articles viewable (but not downloadable) on a device with permanent access granted. The publication is accessed without a subscription.",
+		"name": "Digital Newspapers - viewable only - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10304003",
+		"object": "tax_code",
+		"description": "A digital version of a traditional newspaper published at regular intervals with the entire publication or individual articles downloaded to a device with access that expires after a stated period of time. The publication is accessed without a subscription.",
+		"name": "Digital Newspapers - downloadable - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10304100",
+		"object": "tax_code",
+		"description": "A digital version of a traditional newspaper published at regular intervals with the entire publication or individual articles downloaded to a device with access that is conditioned upon continued subscription payment.",
+		"name": "Digital Newspapers - downloadable - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10304101",
+		"object": "tax_code",
+		"description": "A digital version of a traditional newspaper published at regular intervals. The publication is accessed via a subscription which also entitles the purchaser to physical copies of the media.",
+		"name": "Digital Newspapers - subscription tangible and digital"
+	},
+	{
+		"id": "txcd_10304102",
+		"object": "tax_code",
+		"description": "A digital version of a traditional newspaper published at regular intervals with the entire publication or individual articles viewable (but not downloadable) on a device with access that is conditioned upon continued subscription payment.",
+		"name": "Digital Newspapers - viewable only - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10305000",
+		"object": "tax_code",
+		"description": "Works that are required as part of a formal academic education program and are transferred electronically. These goods are downloaded to a device with access that expires after a stated period of time.",
+		"name": "Digital School Textbooks - downloaded - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10305001",
+		"object": "tax_code",
+		"description": "Works that are required as part of a formal academic education program and are transferred electronically. These goods are downloaded to a device with permanent access granted.",
+		"name": "Digital School Textbooks - downloaded - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10401000",
+		"object": "tax_code",
+		"description": "Works that result from the fixation of a series of musical, spoken, or other sounds that are transferred electronically. These goods are streamed to a device with access that expires after a stated period of time. These goods include prerecorded or live music, prerecorded or live readings of books or other written materials, prerecorded or live speeches, ringtones, or other sound recordings, but not including audio greeting cards.",
+		"name": "Digital Audio Works - streamed - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10401001",
+		"object": "tax_code",
+		"description": "Works that result from the fixation of a series of musical, spoken, or other sounds that are transferred electronically. These goods are downloaded to a device with access that expires after a stated period of time. These goods include prerecorded or live music, prerecorded or live readings of books or other written materials, prerecorded or live speeches, ringtones, or other sound recordings, but not including audio greeting cards.",
+		"name": "Digital Audio Works - downloaded - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10401100",
+		"object": "tax_code",
+		"description": "Works that result from the fixation of a series of musical, spoken, or other sounds that are transferred electronically. These goods are downloaded to a device with permanent access granted. These goods include prerecorded or live music, prerecorded or live readings of books or other written materials, prerecorded or live speeches, ringtones, or other sound recordings, but not including audio greeting cards.",
+		"name": "Digital Audio Works - downloaded - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10401200",
+		"object": "tax_code",
+		"description": "Works that result from the fixation of a series of musical, spoken, or other sounds that are transferred electronically. These goods are streamed to a device with access that is conditioned upon continued subscription payment. These goods include prerecorded or live music, prerecorded or live readings of books or other written materials, prerecorded or live speeches, ringtones, or other sound recordings, but not including audio greeting cards.",
+		"name": "Digital Audio Works - streamed - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10402000",
+		"object": "tax_code",
+		"description": "A series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any. These goods are streamed to a device with access that expires after a stated period of time. These goods include motion pictures, music videos, animations, news and entertainment programs, and live events, but do not include video greeting cards or video or electronic games.",
+		"name": "Digital Audio Visual Works - streamed - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10402100",
+		"object": "tax_code",
+		"description": "A series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any. These goods are downloaded to a device with permanent access granted. These goods include motion pictures, music videos, animations, news and entertainment programs, and live events, but do not include video greeting cards or video or electronic games.",
+		"name": "Digital Audio Visual Works - downloaded - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10402110",
+		"object": "tax_code",
+		"description": "A series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any. These goods are downloaded to a device with access that expires after a stated period of time. These goods include motion pictures, music videos, animations, news and entertainment programs, and live events, but do not include video greeting cards or video or electronic games.",
+		"name": "Digital Audio Visual Works - downloaded - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10402200",
+		"object": "tax_code",
+		"description": "A series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any. These goods are streamed to a device with access that is conditioned upon continued subscription payment. These goods include motion pictures, music videos, animations, news and entertainment programs, and live events, but do not include video greeting cards or video or electronic games.",
+		"name": "Digital Audio Visual Works - streamed - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10402300",
+		"object": "tax_code",
+		"description": "An audio visual work of a live performance streamed over the internet that you can only access for a limited time during the performance (e.g., a live concert stream).",
+		"name": "Digital video streaming -- live performance (limited use)"
+	},
+	{
+		"id": "txcd_10501000",
+		"object": "tax_code",
+		"description": "Digital images that are downloaded to a device with permanent access granted.",
+		"name": "Digital Photographs/Images - downloaded - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10502000",
+		"object": "tax_code",
+		"description": "Gift card or gift certificate that that you purchase and receive electronically and assumed to be multi-purpose.",
+		"name": "Gift card"
+	},
+	{
+		"id": "txcd_10503000",
+		"object": "tax_code",
+		"description": "Individual digital news articles, newsletters, and other stand-alone documents. These goods are downloaded to a device with permanent access granted. These publications are accessed without a subscription.",
+		"name": "Digital other news or documents - downloadable - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10503001",
+		"object": "tax_code",
+		"description": "Individual digital news articles, newsletters, and other stand-alone documents. These goods are downloaded to a device with access that expires after a stated period of time.",
+		"name": "Digital other news or documents - downloadable - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10503002",
+		"object": "tax_code",
+		"description": "Individual digital news articles, newsletters, and other stand-alone documents. These goods are downloaded to a device with access that is conditioned upon continued subscription payment.",
+		"name": "Digital other news or documents - downloadable - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10503003",
+		"object": "tax_code",
+		"description": "Individual digital news articles, newsletters, and other stand-alone documents. These goods are viewable (but not downloadable) on a device with access that expires after a stated period of time.",
+		"name": "Digital other news or documents - viewable only - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10503004",
+		"object": "tax_code",
+		"description": "Individual digital news articles, newsletters, and other stand-alone documents. These goods are viewable (but not downloadable) on a device with permanent access granted.",
+		"name": "Digital other news or documents - viewable only - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10503005",
+		"object": "tax_code",
+		"description": "Individual digital news articles, newsletters, and other stand-alone documents. These goods are viewable (but not downloadable) on a device with access that is conditioned upon continued subscription payment.",
+		"name": "Digital other news or documents - viewable only - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10504000",
+		"object": "tax_code",
+		"description": "Electronic software documentation or user manuals - For custom software & delivered electronically.",
+		"name": "Electronic software documentation or user manuals - Custom, electronic delivery"
+	},
+	{
+		"id": "txcd_10504003",
+		"object": "tax_code",
+		"description": "Electronic software documentation or user manuals - For prewritten software & delivered electronically.",
+		"name": "Electronic software documentation or user manuals - Prewritten, electronic delivery"
+	},
+	{
+		"id": "txcd_10505000",
+		"object": "tax_code",
+		"description": "The final art used for actual reproduction by photomechanical or other processes or for display purposes, but does not include website or home page design, and that is transferred electronically. These goods are downloaded to a device with access that expires after a stated period of time. These goods include drawings, paintings, designs, photographs, lettering, paste-ups, mechanicals, assemblies, charts, graphs, illustrative materials, etc.",
+		"name": "Digital Finished Artwork - downloaded - non subscription - with limited rights"
+	},
+	{
+		"id": "txcd_10505001",
+		"object": "tax_code",
+		"description": "The final art used for actual reproduction by photomechanical or other processes or for display purposes, but does not include website or home page design, and that is transferred electronically. These goods are downloaded to a device with permanent access granted. These goods include drawings, paintings, designs, photographs, lettering, paste-ups, mechanicals, assemblies, charts, graphs, illustrative materials, etc.",
+		"name": "Digital Finished Artwork - downloaded - non subscription - with permanent rights"
+	},
+	{
+		"id": "txcd_10505002",
+		"object": "tax_code",
+		"description": "The final art used for actual reproduction by photomechanical or other processes or for display purposes, but does not include website or home page design, and that is transferred electronically. These goods are downloaded to a device with access that is conditioned upon continued subscription payment. These goods include drawings, paintings, designs, photographs, lettering, paste-ups, mechanicals, assemblies, charts, graphs, illustrative materials, etc.",
+		"name": "Digital Finished Artwork - downloaded - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10506000",
+		"object": "tax_code",
+		"description": "An electronic greeting \"card\" typically sent via email that contains an audio only message.",
+		"name": "Digital Greeting Cards - Audio Only"
+	},
+	{
+		"id": "txcd_10506001",
+		"object": "tax_code",
+		"description": "An electronic greeting \"card\" typically sent via email that contains a series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any.",
+		"name": "Digital Greeting Cards - Audio Visual"
+	},
+	{
+		"id": "txcd_10506002",
+		"object": "tax_code",
+		"description": "An electronic greeting \"card\" typically sent via email that contains only static images or text, rather than an audio visual or audio only experience.",
+		"name": "Digital Greeting Cards - Static text and/or images only"
+	},
+	{
+		"id": "txcd_10701000",
+		"object": "tax_code",
+		"description": "Online advertising services such as creating and uploading advertisements on the internet. This is a standalone service that doesn’t involve the sale of tangible personal property.",
+		"name": "Website advertising"
+	},
+	{
+		"id": "txcd_10701100",
+		"object": "tax_code",
+		"description": "A service to enable a customer's website to be accessible on the internet.",
+		"name": "Website hosting"
+	},
+	{
+		"id": "txcd_10701200",
+		"object": "tax_code",
+		"description": "A service to design a website or webpage.",
+		"name": "Website design"
+	},
+	{
+		"id": "txcd_10701300",
+		"object": "tax_code",
+		"description": "An online service that allows a customer to create, transform, process, or access data electronically.",
+		"name": "Website data processing"
+	},
+	{
+		"id": "txcd_10701400",
+		"object": "tax_code",
+		"description": "An online service furnishing information to customers, including online search and data comparison.",
+		"name": "Website information services"
+	},
+	{
+		"id": "txcd_10702000",
+		"object": "tax_code",
+		"description": "A subscription service for membership to an online dating platform.",
+		"name": "Online Dating Services"
+	},
+	{
+		"id": "txcd_10804001",
+		"object": "tax_code",
+		"description": "A series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any. These goods are streamed and/or downloaded to a device with access that is conditioned upon continued subscription payment. These goods include motion pictures, music videos, animations, news and entertainment programs, and live events, but do not include video greeting cards or video or electronic games.",
+		"name": "Digital Audio Visual Works - bundle - downloaded and streamed - subscription - with conditional rights"
+	},
+	{
+		"id": "txcd_10804002",
+		"object": "tax_code",
+		"description": "A series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any. These goods can be streamed and/or downloaded to a device with access that expires after a stated period of time. These goods include motion pictures, music videos, animations, news and entertainment programs, and live events, but do not include video greeting cards or video or electronic games.",
+		"name": "Digital Audio Visual Works - bundle - downloaded with limited rights and streamed - non subscription"
+	},
+	{
+		"id": "txcd_10804003",
+		"object": "tax_code",
+		"description": "A series of related images which, when shown in succession, impart an impression of motion, together with accompanying sounds, if any. These goods can be streamed and/or downloaded to a device with permanent access granted. These goods include motion pictures, music videos, animations, news and entertainment programs, and live events, but do not include video greeting cards or video or electronic games.",
+		"name": "Digital Audio Visual Works - bundle - downloaded with permanent rights and streamed - non subscription"
+	},
+	{
+		"id": "txcd_20010001",
+		"object": "tax_code",
+		"description": "A charge to clean, wash or wax a motor vehicle, other than a self-service coin (or credit card) operated washing station. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Car Washing"
+	},
+	{
+		"id": "txcd_20010003",
+		"object": "tax_code",
+		"description": "A charge for the cleaning of tangible personal property, other than motor vehicles or clothing.",
+		"name": "Cleaning of Tangible Personal Property"
+	},
+	{
+		"id": "txcd_20010004",
+		"object": "tax_code",
+		"description": "A charge for janitorial services to commercial buildings, including the cleaning of floors, carpets, walls, windows, fixtures, exterior cleaning, etc.",
+		"name": "Commercial Cleaning Services"
+	},
+	{
+		"id": "txcd_20010006",
+		"object": "tax_code",
+		"description": "A charge for custodial services to residential structures, including the cleaning of floors, carpets, walls, windows, appliances, furniture, fixtures, exterior cleaning, etc. No Tangible Personal Property is transferred.",
+		"name": "Residential Cleaning Services"
+	},
+	{
+		"id": "txcd_20010007",
+		"object": "tax_code",
+		"description": "A charge for the service to maintain the proper operation of home or building gutters through cleaning out debris that could otherwise affect the proper water flow through the gutter system.",
+		"name": "Gutter Cleaning Services"
+	},
+	{
+		"id": "txcd_20020009",
+		"object": "tax_code",
+		"description": "A labor charge to install hardware where the installed property isn't considered permanently attached to the real property.",
+		"name": "Installation of hardware -- nonpermanent"
+	},
+	{
+		"id": "txcd_20020010",
+		"object": "tax_code",
+		"description": "A labor charge to install hardware where the installed property is permanently attached to the real property.",
+		"name": "Installation of hardware -- permanent"
+	},
+	{
+		"id": "txcd_20020018",
+		"object": "tax_code",
+		"description": "A charge separately stated from any sale of the product itself for the installation of tangible personal property. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Installation services"
+	},
+	{
+		"id": "txcd_20030002",
+		"object": "tax_code",
+		"description": "Services provided by a facility for overnight care of an animal not related to veterinary care.",
+		"name": "Pet boarding"
+	},
+	{
+		"id": "txcd_20030003",
+		"object": "tax_code",
+		"description": "Grooming services for an animal such as haircuts, bathing, nail trimming, and flea dips.",
+		"name": "Pet grooming"
+	},
+	{
+		"id": "txcd_20030004",
+		"object": "tax_code",
+		"description": "A charge for providing usage of a parking space.",
+		"name": "Parking Services"
+	},
+	{
+		"id": "txcd_20030005",
+		"object": "tax_code",
+		"description": "Service to train an animal to obey certain commands.",
+		"name": "Pet Services - Obedience Training"
+	},
+	{
+		"id": "txcd_20040001",
+		"object": "tax_code",
+		"description": "Services provided by beauty shops and barber shops, including but not limited to haircutting, hair coloring, shampooing, blow drying, permanents, hair extensions, hair straightening, and hair restorations.",
+		"name": "Hairdressing Services"
+	},
+	{
+		"id": "txcd_20040002",
+		"object": "tax_code",
+		"description": "A charge for personal care services. Please select a more granular product tax category where appropriate.",
+		"name": "Personal Care Services"
+	},
+	{
+		"id": "txcd_20040003",
+		"object": "tax_code",
+		"description": "A charge for the puncturing or penetration of the skin of a person and the insertion of jewelry or other adornment into the opening.",
+		"name": "Body Piercing"
+	},
+	{
+		"id": "txcd_20040004",
+		"object": "tax_code",
+		"description": "Services that provide non-medical care and supervision for infant to school-age children or senior citizens.",
+		"name": "Childcare Services / Adultcare"
+	},
+	{
+		"id": "txcd_20040005",
+		"object": "tax_code",
+		"description": "A service that arranges introductions, for a fee, for strangers seeking romantic partners or friends. This excludes online dating services.",
+		"name": "Dating Services"
+	},
+	{
+		"id": "txcd_20040006",
+		"object": "tax_code",
+		"description": "Services provided by employment agencies to match employees to employers and employers to employees.",
+		"name": "Employment Services"
+	},
+	{
+		"id": "txcd_20040007",
+		"object": "tax_code",
+		"description": "A charge for the cosmetic beauty treatment for the fingernails and toenails, including filing, cutting, shaping and the application of polish.",
+		"name": "Manicure Services"
+	},
+	{
+		"id": "txcd_20040008",
+		"object": "tax_code",
+		"description": "Services where the use of structured touch, include holding, applying pressure, positioning, and mobilizing soft tissue of the body by manual technique. Note: This does not include medical massage prescribed by a physician.",
+		"name": "Massage Services"
+	},
+	{
+		"id": "txcd_20040009",
+		"object": "tax_code",
+		"description": "Personal services typically with the purpose of improving health, beauty and relaxation through treatments such as hair, massages and facials.",
+		"name": "Spa Services"
+	},
+	{
+		"id": "txcd_20040010",
+		"object": "tax_code",
+		"description": "Services for artificial tanning and skin beautification.",
+		"name": "Tanning Services"
+	},
+	{
+		"id": "txcd_20040011",
+		"object": "tax_code",
+		"description": "A charge for the process that uses needles and colored ink to permanently put a mark or design on a person’s skin. Also applying permanent make-up, such as eyelining and other permanent colors to enhance the skin of the face, lips, eyelids, and eyebrows.",
+		"name": "Tattooing Services"
+	},
+	{
+		"id": "txcd_20060000",
+		"object": "tax_code",
+		"description": "A charge for a service performed by providers considered professionals due to the extensive initial and continuing education and/or training requirements, and the likelihood of state or federal licensing requirements. Choose this product tax code for any professional service offering in which a more detailed code is not available.",
+		"name": "Professional Services"
+	},
+	{
+		"id": "txcd_20060001",
+		"object": "tax_code",
+		"description": "The measurement, processing and communication of financial information about economic entities including, but is not limited to, financial accounting, management accounting, auditing, cost containment and auditing services, taxation and accounting information systems; excluding general bookkeeping service.",
+		"name": "Accounting Services"
+	},
+	{
+		"id": "txcd_20060002",
+		"object": "tax_code",
+		"description": "Services rendered for advertising which do not include the exchange of tangible personal property.",
+		"name": "Advertising Services"
+	},
+	{
+		"id": "txcd_20060008",
+		"object": "tax_code",
+		"description": "Services rendered for the compiling and relating of information regarding the history of financial transactions of a person or entity.",
+		"name": "Credit Reporting Services"
+	},
+	{
+		"id": "txcd_20060009",
+		"object": "tax_code",
+		"description": "A service that allows data to be created, transformed, where the service is not performed online. Select \"Website data processing\" if the service is performed online and data is accessed by the customer electronically.",
+		"name": "Tangible services -- data processing"
+	},
+	{
+		"id": "txcd_20060010",
+		"object": "tax_code",
+		"description": "Services performed to collect or adjust past-due debt from borrowers.",
+		"name": "Debt Collection Services"
+	},
+	{
+		"id": "txcd_20060013",
+		"object": "tax_code",
+		"description": "Services provided by a professional trained to apply physical laws and principles of engineering in the design, development, and utilization of machines, materials, instruments, structures, processes, and systems. The services involve any of the following activities: provision of advice, preparation of feasibility studies, preparation of preliminary and final plans and designs, provision of technical services during the construction or installation phase, inspection and evaluation of engineering projects, and related services.",
+		"name": "Engineering Services"
+	},
+	{
+		"id": "txcd_20060017",
+		"object": "tax_code",
+		"description": "Charges for installing, configuring, debugging, modifying, testing, or troubleshooting computer hardware, networks, programs or software. Labor only charge.",
+		"name": "Technical Support Services"
+	},
+	{
+		"id": "txcd_20060021",
+		"object": "tax_code",
+		"description": "Charges associated loss or damage appraisals, inspections, actuarial services, claims adjustment or processing. Investigations as excluded from this definition.",
+		"name": "Insurance Services"
+	},
+	{
+		"id": "txcd_20060022",
+		"object": "tax_code",
+		"description": "Planning and design of interior spaces, including preparation of layout drawings, furniture arranging, design planning and purchasing of furniture, fixtures, and cabinetry, staging, lighting and sound design.",
+		"name": "Interior decorating"
+	},
+	{
+		"id": "txcd_20060026",
+		"object": "tax_code",
+		"description": "Services relating to advocating for the passage or defeat of legislation to members or staff of the government.",
+		"name": "Lobbying Services"
+	},
+	{
+		"id": "txcd_20060027",
+		"object": "tax_code",
+		"description": "Services provided by a licensed or registered professional in the medical field. Examples: Doctor, dentist, nurse, optometrist, etc.",
+		"name": "Medical Professional Services"
+	},
+	{
+		"id": "txcd_20060029",
+		"object": "tax_code",
+		"description": "Services to process employee payroll, including wages, withholding taxes, benefits. etc.",
+		"name": "Payroll Services"
+	},
+	{
+		"id": "txcd_20060030",
+		"object": "tax_code",
+		"description": "Services providing a systematic inquiry, examination, or analysis of people, events or documents through surveillance, background checks, computer searches, fingerprinting, lie detector services, interviews, etc.",
+		"name": "Private Investigator Services"
+	},
+	{
+		"id": "txcd_20060035",
+		"object": "tax_code",
+		"description": "Services which include, but are not limited to, editing, letter writing, proofreading, resume writing, typing or word processing. Doesn't include court reporting and stenographic services.",
+		"name": "Secretarial services"
+	},
+	{
+		"id": "txcd_20060040",
+		"object": "tax_code",
+		"description": "Charges to electronically file a tax return on behalf of the taxpayer. This does not include manual preparation of tax returns.",
+		"name": "Electronic Filing Service"
+	},
+	{
+		"id": "txcd_20060042",
+		"object": "tax_code",
+		"description": "Services related to providing personnel, on a temporary basis, to perform work or labor under the supervision or control of another.",
+		"name": "Temporary help services"
+	},
+	{
+		"id": "txcd_20060044",
+		"object": "tax_code",
+		"description": "A charge for training sessions which provide instruction to the buyer.",
+		"name": "Training services"
+	},
+	{
+		"id": "txcd_20060045",
+		"object": "tax_code",
+		"description": "Live web based training. This does not include video replays of the instruction or course.",
+		"name": "Training Services - Live Virtual"
+	},
+	{
+		"id": "txcd_20060047",
+		"object": "tax_code",
+		"description": "Services related to the art and science of designing and building structures for human habitation or use and includes planning, providing preliminary studies, designs, specifications, working drawings and providing for general administration of construction contracts.",
+		"name": "Architectural Services"
+	},
+	{
+		"id": "txcd_20060048",
+		"object": "tax_code",
+		"description": "The provision of expertise or strategic advice that is presented for consideration and decision-making.",
+		"name": "Consulting Services"
+	},
+	{
+		"id": "txcd_20060049",
+		"object": "tax_code",
+		"description": "Medical procedure performed on an individual that is directed at improving the individual's appearance and that does not meaningfully promote the proper function of the body or prevent or treat illness or disease.",
+		"name": "Cosmetic Medical Procedure"
+	},
+	{
+		"id": "txcd_20060050",
+		"object": "tax_code",
+		"description": "Credit monitoring services are companies consumers pay to keep an eye on your credit files. The services notifies one when they see activity in credit files, so one can determine if that activity is a result of action one took or possibly fraudulent.",
+		"name": "Credit Monitoring Services"
+	},
+	{
+		"id": "txcd_20060051",
+		"object": "tax_code",
+		"description": "Services to track one's credit reports and provide notifications of activity with the intent of avoiding fraud.",
+		"name": "Credit Card Processing Services"
+	},
+	{
+		"id": "txcd_20060052",
+		"object": "tax_code",
+		"description": "Academic classes provided by traditional private education establishments and organizations.",
+		"name": "Educational Services"
+	},
+	{
+		"id": "txcd_20060053",
+		"object": "tax_code",
+		"description": "A charge for an objective visual examination of a house’s systems and physical structure. The charge includes a report of the inspector's findings including pictures, analysis, and recommendations.",
+		"name": "Home Inspection Services"
+	},
+	{
+		"id": "txcd_20060054",
+		"object": "tax_code",
+		"description": "Services relating to or concerned with the law. Such services include, but are not limited to, representation by an attorney (or other person, when permitted) in an administrative or legal proceeding, legal drafting, paralegal services, legal research services, arbitration, mediation, and court reporting services.",
+		"name": "Legal Services"
+	},
+	{
+		"id": "txcd_20060055",
+		"object": "tax_code",
+		"description": "Services for consumer research and testing in connection with the development of particular products or services that the client sells to consumers in the regular course of business.",
+		"name": "Marketing Services"
+	},
+	{
+		"id": "txcd_20060056",
+		"object": "tax_code",
+		"description": "Services to provide outreach designed to influence the general public or other groups by promoting the interests of a service recipient.",
+		"name": "Public Relations"
+	},
+	{
+		"id": "txcd_20060057",
+		"object": "tax_code",
+		"description": "Services that include typing, taking shorthand, and taking and transcribing dictation for others for a consideration.",
+		"name": "Stenographic Services"
+	},
+	{
+		"id": "txcd_20060058",
+		"object": "tax_code",
+		"description": "Self Study web based training, not instructor led. This does not include downloads of video replays.",
+		"name": "Training Services - Self Study Web Based"
+	},
+	{
+		"id": "txcd_20060059",
+		"object": "tax_code",
+		"description": "Personal or small group teaching, designed to help people who need extra help with their studies.",
+		"name": "Tutoring"
+	},
+	{
+		"id": "txcd_20070001",
+		"object": "tax_code",
+		"description": "A charge for monitoring an electronically controlled alarm system for residential or commercial properties to minimize or prevent loss or damage to life, limb, or property.",
+		"name": "Security - Alarm Services"
+	},
+	{
+		"id": "txcd_20070006",
+		"object": "tax_code",
+		"description": "A charge for services related to the eradication of insects, rodents, and other pests.",
+		"name": "Extermination services"
+	},
+	{
+		"id": "txcd_20070007",
+		"object": "tax_code",
+		"description": "A charge for services related to the maintenance of grounds.",
+		"name": "Landscaping services"
+	},
+	{
+		"id": "txcd_20070008",
+		"object": "tax_code",
+		"description": "A charge for services of general lawn and grounds maintenance, including lawn cutting, weeding, yard clean-up, shrub and tree trimming, periodic seeding or aeration, etc. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Lawn Maintenance Services"
+	},
+	{
+		"id": "txcd_20070010",
+		"object": "tax_code",
+		"description": "A charge for services related to the painting of surfaces or the application of wallpaper.",
+		"name": "Painting and wallpapering services"
+	},
+	{
+		"id": "txcd_20070013",
+		"object": "tax_code",
+		"description": "Services related to protecting persons or their property, preventing the theft of goods, merchandise, or money. Responding to alarm signal device, burglar alarm, television camera, still camera, or a mechanical or electronic device installed or used to prevent or detect burglary, theft, shoplifting, pilferage, losses, or other security measures. Providing management and control of crowds for safety and protection.",
+		"name": "Security - Guard Services"
+	},
+	{
+		"id": "txcd_20070016",
+		"object": "tax_code",
+		"description": "Services mapping, detecting or establishing the relative position of points at, above, or below the surface of the earth. These services may include surveying and mapping of areas above or below the surface of the earth, such as the creation of view easements or segregating rights in parcels of land by creating underground utility easements.",
+		"name": "Property Surveying Services"
+	},
+	{
+		"id": "txcd_20080003",
+		"object": "tax_code",
+		"description": "A charge to repair or restore to operating condition a motor vehicle that was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Motor Vehicle Repair"
+	},
+	{
+		"id": "txcd_20080004",
+		"object": "tax_code",
+		"description": "A charge to repair or restore footwear was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Shoe Repair"
+	},
+	{
+		"id": "txcd_20080005",
+		"object": "tax_code",
+		"description": "A charge to repair or restore tangible personal property that was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Repair of Tangible Personal Property"
+	},
+	{
+		"id": "txcd_20080007",
+		"object": "tax_code",
+		"description": "A charge to repair or maintain real property including repairs to HVAC, electrical, flooring, etc.",
+		"name": "Repair services -- real property"
+	},
+	{
+		"id": "txcd_20080008",
+		"object": "tax_code",
+		"description": "A charge to repair or restore to operating condition an aircraft that was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential. Commercial aircraft is excluded.",
+		"name": "Aircraft Repair"
+	},
+	{
+		"id": "txcd_20080009",
+		"object": "tax_code",
+		"description": "A charge to repair or restore to operating condition an appliance (dishwasher, washing machine, refrigerator, etc.) that was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Appliance Repair"
+	},
+	{
+		"id": "txcd_20080010",
+		"object": "tax_code",
+		"description": "A charge to repair or restore to operating condition computer hardware that was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Computer Repair"
+	},
+	{
+		"id": "txcd_20080011",
+		"object": "tax_code",
+		"description": "A separately stated labor charge to cover a piece of furniture previously owned by the customer with new fabric coverings. Any materials transferred as part of the service are separately stated.",
+		"name": "Furniture Reupholstering"
+	},
+	{
+		"id": "txcd_20080012",
+		"object": "tax_code",
+		"description": "A charge to repair or restore jewelry that was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Jewelry Repair"
+	},
+	{
+		"id": "txcd_20080013",
+		"object": "tax_code",
+		"description": "A charge to repair or restore to operating condition a machine that was broken, worn, damaged, defective, or malfunctioning. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Machine Repair"
+	},
+	{
+		"id": "txcd_20090001",
+		"object": "tax_code",
+		"description": "A charge to perform an alteration on a item of clothing by the vendor of the article. The alteration is separately stated from the clothing, but contracted for at the time of the clothing purchase. Alterations could include hemming of a dress, shortening of pants, adjusting the waistline of a garment, etc.",
+		"name": "Garment Alterations - in conjunction with purchase of garment"
+	},
+	{
+		"id": "txcd_20090002",
+		"object": "tax_code",
+		"description": "A charge to perform an alteration on a item of clothing by a service provider other than vendor of the article. The alteration is not linked to the clothing purchase. Alterations could include hemming of a dress, shortening of pants, adjusting the waistline of a garment, etc.",
+		"name": "Garment Alterations - separate from purchase of garment"
+	},
+	{
+		"id": "txcd_20090003",
+		"object": "tax_code",
+		"description": "A charge to have files or documents shredded either onsite or offsite.",
+		"name": "Shredding Service"
+	},
+	{
+		"id": "txcd_20090004",
+		"object": "tax_code",
+		"description": "A charge to a non-commercial customer for the cleaning or renovating clothing by immersion and agitation, spraying, vaporization, or immersion only, in a volatile, commercially moisture-free solvent or by the use of a volatile or inflammable product. This does not include the use of a self-service coin (or credit card) operated cleaning machine.",
+		"name": "Dry Cleaning"
+	},
+	{
+		"id": "txcd_20090006",
+		"object": "tax_code",
+		"description": "A charge to create a finished good from materials supplied by the customer. This is a labor only charge to transform a customer's existing property.",
+		"name": "Fabrication"
+	},
+	{
+		"id": "txcd_20090010",
+		"object": "tax_code",
+		"description": "A charge for the wrapping of articles in a box or bag with paper and other decorative additions. The charge is separately stated from the article. This is not relevant for non-US countries where packaging is added to the price of the product.",
+		"name": "Gift Wrapping - in conjunction with purchase of article"
+	},
+	{
+		"id": "txcd_20090012",
+		"object": "tax_code",
+		"description": "A charge to provide laundry services to clothing. The business customer is the owner of the items being cleaned.",
+		"name": "Linen Services - Laundry only"
+	},
+	{
+		"id": "txcd_20090015",
+		"object": "tax_code",
+		"description": "A charge separately stated from the sale of the product itself that entitles the purchaser to future repair and labor services to return the defective item of tangible personal property to its original state. The warranty contract is mandatory and is required to be purchased on conjunction with the purchased tangible personal property. Motor vehicle warranties are excluded.",
+		"name": "Warranty - Mandatory"
+	},
+	{
+		"id": "txcd_20090018",
+		"object": "tax_code",
+		"description": "A charge separately stated from the sale of the product itself that entitles the purchaser to future repair and labor services to return the defective item of tangible personal property to its original state. The warranty contract is optional to the purchaser. Motor vehicle warranties are excluded.",
+		"name": "Warranty - Optional"
+	},
+	{
+		"id": "txcd_20090022",
+		"object": "tax_code",
+		"description": "A charge separately stated from the sale of the product itself to bring the article to its finished state and in the condition specified by the buyer.",
+		"name": "Assembly - in conjunction with final purchase of article"
+	},
+	{
+		"id": "txcd_20090023",
+		"object": "tax_code",
+		"description": "A charge to assemble goods for a purchaser who will later sell the assembled goods to end consumers.",
+		"name": "Assembly - prior to final purchase of article"
+	},
+	{
+		"id": "txcd_20090024",
+		"object": "tax_code",
+		"description": "A charge to a non-commercial customer for the cleaning or renovating items other than clothing by immersion and agitation, spraying, vaporization, or immersion only, in a volatile, commercially moisture-free solvent or by the use of a volatile or inflammable product. This does not include the use of a self-service coin (or credit card) operated cleaning machine.",
+		"name": "Dry Cleaning - other than clothing"
+	},
+	{
+		"id": "txcd_20090025",
+		"object": "tax_code",
+		"description": "A charge for the wrapping of articles in a box or bag with paper and other decorative additions. The wrapping not linked the purchased of the article(s) and is performed by a party other vendor of the article(s).",
+		"name": "Gift Wrapping - separate from purchase of article"
+	},
+	{
+		"id": "txcd_20090026",
+		"object": "tax_code",
+		"description": "A charge to provide laundry services to linens and the like. This charge is not for clothing items. The business customer is the owner of the items being cleaned.",
+		"name": "Linen Services - Laundry only - other than clothing"
+	},
+	{
+		"id": "txcd_20090027",
+		"object": "tax_code",
+		"description": "A charge to make customer provided meat suitable for human consumption, typically referred to a butcher or slaughter services.",
+		"name": "Meat Processing"
+	},
+	{
+		"id": "txcd_20090028",
+		"object": "tax_code",
+		"description": "A charge for the printing, imprinting, lithographing, mimeographing, photocopying, and similar reproductions of various articles including mailers, catalogs, letterhead, envelopes, business cards, presentation folders, forms, signage, etc. The end result is the transfer of tangible personal property to the customer.",
+		"name": "Printing"
+	},
+	{
+		"id": "txcd_20090029",
+		"object": "tax_code",
+		"description": "A charge for the printing, imprinting, or lithographing on any article supplied by the customer. The customer owns the article throughout the process. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Printing - customer supplied articles"
+	},
+	{
+		"id": "txcd_20090030",
+		"object": "tax_code",
+		"description": "A charge to preserve an animal's body via mounting or stuffing, for the purpose of display or study. The customer provide the animal. This a labor charge, with any non-separately stated property transferred in performing the service considered inconsequential.",
+		"name": "Taxidermy Services"
+	},
+	{
+		"id": "txcd_20090031",
+		"object": "tax_code",
+		"description": "A charge for engraving services performed on goods owned by the purchaser. This is a standalone service not done in conjunction with the sale of the goods.",
+		"name": "Engraving Services - separate from purchase of article"
+	},
+	{
+		"id": "txcd_20090032",
+		"object": "tax_code",
+		"description": "A charge for engraving a good, such as jewelry, in conjunction with the retail purchase of that item. The charge for the engraving services is separately stated from the charge for the good being engraved.",
+		"name": "Engraving Services - in conjunction with purchase of article"
+	},
+	{
+		"id": "txcd_20091000",
+		"object": "tax_code",
+		"description": "An agreement between a service contract provider and a customer where the service provider agrees to repair or replace certain parts on a motor vehicle that has had a failure after the original manufacturer’s warranty has expired. Commonly referred to as extended warranty or protection plan. Contract covers both parts and labor, and is made at the same time as Motor Vehicle purchase but is separately stated.",
+		"name": "Optional Extended Warranty Contract on Motor Vehicle"
+	},
+	{
+		"id": "txcd_20091001",
+		"object": "tax_code",
+		"description": "An agreement between a service contract provider and a customer for prepaid routine maintenance (e.g. oil changes, tire rotations, air filter, spark plugs, transmission and transfer case fluid changes) for a motor vehicle. Contract covers both parts and labor and is made at the same time as Motor Vehicle purchase but is separately stated.",
+		"name": "Optional Maintenance Contract on Motor Vehicle"
+	},
+	{
+		"id": "txcd_20091002",
+		"object": "tax_code",
+		"description": "An agreement between a service contract provider and a customer for prepaid routine maintenance (e.g. oil changes, tire rotations, air filter, spark plugs, transmission and transfer case fluid changes) of a leased motor vehicle. Contract covers both parts and labor.",
+		"name": "Optional Extended Warranty Contract on Leased Motor Vehicle"
+	},
+	{
+		"id": "txcd_20091003",
+		"object": "tax_code",
+		"description": "An agreement between a service contract provider and a customer where the service provider agrees to repair or replace certain parts on a leased motor vehicle that has had a failure after the original manufacturer’s warranty has expired. Commonly referred to as extended warranty or protection plan. Contract covers both parts and labor.",
+		"name": "Optional Maintenance Contract on Leased Motor Vehicle"
+	},
+	{
+		"id": "txcd_20091004",
+		"object": "tax_code",
+		"description": "An agreement between a service contract provider and a customer where the service provider agrees to repair or replace certain parts on a motor vehicle that has had a failure after the original manufacturer’s warranty has expired. Commonly referred to as extended warranty or protection plan. Contract covers both parts and labor and is made after the motor vehicle purchase.",
+		"name": "Optional Extended Warranty Contract on Motor Vehicle - After Market"
+	},
+	{
+		"id": "txcd_20091005",
+		"object": "tax_code",
+		"description": "An agreement between a service contract provider and a customer for prepaid routine maintenance (e.g. oil changes, tire rotations, air filter, spark plugs, transmission and transfer case fluid changes) of a motor vehicle. Contract covers both parts and labor and is made after the motor vehicle purchase.",
+		"name": "Optional Maintenance Contract on Motor Vehicle - After Market"
+	},
+	{
+		"id": "txcd_20100001",
+		"object": "tax_code",
+		"description": "Services under armed private security guard to transport from one place to another any currency, jewels, stocks, bonds, paintings, or other valuables of any kind in a specially equipped motor vehicle that offers a high degree of security. It is assumed that the transport takes place within one country.",
+		"name": "Armored Car Services"
+	},
+	{
+		"id": "txcd_30011000",
+		"object": "tax_code",
+		"description": "Apparel and footwear for people made for general use.",
+		"name": "Clothing and footwear"
+	},
+	{
+		"id": "txcd_30011002",
+		"object": "tax_code",
+		"description": "The clasp used to fasten a belt, sold separately fro the belt.",
+		"name": "Belt Buckle"
+	},
+	{
+		"id": "txcd_30011003",
+		"object": "tax_code",
+		"description": "A belt is band of flexible material worn around a person's waist for supporting clothing. Suspenders are a pair of straps that pass over the shoulders and fasten to the waistband of a pair of trousers or a skirt at the front and back to hold it up.",
+		"name": "Belts or Suspenders"
+	},
+	{
+		"id": "txcd_30011015",
+		"object": "tax_code",
+		"description": "A closed tube of fabric worn about the neck for warmth. It can be pulled over mouth and nose to protect against wind, dust, or other particles.",
+		"name": "Neck Gaiter"
+	},
+	{
+		"id": "txcd_30011020",
+		"object": "tax_code",
+		"description": "A set of standardized clothes worn primarily during attendnce at an educational institution.",
+		"name": "School Uniforms"
+	},
+	{
+		"id": "txcd_30011028",
+		"object": "tax_code",
+		"description": "Clothing or footwear, such as coats, hats, ear muffs, gloves, etc. worn on the human body made of imitation fur materials.",
+		"name": "Fur Clothing - Synthetic"
+	},
+	{
+		"id": "txcd_30011034",
+		"object": "tax_code",
+		"description": "A broad strip of cloth that covers the shoulders, neck, or head for warmth or appearance.",
+		"name": "Scarves"
+	},
+	{
+		"id": "txcd_30011045",
+		"object": "tax_code",
+		"description": "A necktie, or simply a tie, is a piece of cloth worn by men and women for decorative purposes around the neck, resting under the shirt collar and knotted at the throat, and often draped down the chest.",
+		"name": "Neckties"
+	},
+	{
+		"id": "txcd_30011100",
+		"object": "tax_code",
+		"description": "Clothing designed for, and not normally worn except while attending, a formal function, including tuxedos, bridal gowns, and evening gowns.",
+		"name": "Formal or Special Occasion Wear"
+	},
+	{
+		"id": "txcd_30011200",
+		"object": "tax_code",
+		"description": "Children's clothing and footwear including general purpose articles intended to be worn by a person based on certain size or age requirements.",
+		"name": "Children's clothing and footwear"
+	},
+	{
+		"id": "txcd_30011201",
+		"object": "tax_code",
+		"description": "Clothing or footwear, such as coats, hats, ear muffs, gloves, etc. worn on the human body made of the real pelt of an animal.",
+		"name": "Fur Clothing"
+	},
+	{
+		"id": "txcd_30021000",
+		"object": "tax_code",
+		"description": "Clothing, footwear, and accessories worn on a person's body while participating in recreational or sporting activities, and which are not typical for everyday usage. Please select a more granular product tax category where appropriate.",
+		"name": "Athletic Activity Clothing"
+	},
+	{
+		"id": "txcd_30021001",
+		"object": "tax_code",
+		"description": "A band of absorbent material worn around the head or wrist to soak up sweat, especially by participants in physical activity.",
+		"name": "Sweat Bands"
+	},
+	{
+		"id": "txcd_30021200",
+		"object": "tax_code",
+		"description": "Bathing suits, swim trunks, or bathing costumes meant to be worn in or near water.",
+		"name": "Swim suits"
+	},
+	{
+		"id": "txcd_30030001",
+		"object": "tax_code",
+		"description": "Clothing worn while performing an employment role, such as paramedic uniforms, firefighter uniforms, military uniforms, medical attire, law enforcement attire, etc.",
+		"name": "Occupational Uniforms"
+	},
+	{
+		"id": "txcd_30031004",
+		"object": "tax_code",
+		"description": "Clothing and related covering material that is worn within cleanrooms, which require controlled low levels of environmental contaminants such as dusts, microbes, vapors, and aerosol particles.",
+		"name": "Cleanroom Apparel"
+	},
+	{
+		"id": "txcd_30031041",
+		"object": "tax_code",
+		"description": "High-visibility warning clothing to signal the presence of the user in places and situations which may cause potential threats to their health and safety.",
+		"name": "Reflective Apparel"
+	},
+	{
+		"id": "txcd_30031404",
+		"object": "tax_code",
+		"description": "Clothing for human wear and designed as protection of the wearer against injury or disease or as protections against damage or injury of other persons or property but not suitable for general use.",
+		"name": "Protective/Safety Clothing"
+	},
+	{
+		"id": "txcd_30031405",
+		"object": "tax_code",
+		"description": "Clothing worn by an employee during the course of his employment for protection against injury or disease or as protection against damage or injury of other persons or property. Such clothing items are not suitable for general use.",
+		"name": "Protective/Safety Clothing - Occupational Use"
+	},
+	{
+		"id": "txcd_30031406",
+		"object": "tax_code",
+		"description": "Footwear for human wear and designed as protection of the wearer against injury or disease or as protections against damage or injury of other persons or property but not suitable for general use.",
+		"name": "Protective/Safety Footwear"
+	},
+	{
+		"id": "txcd_30031407",
+		"object": "tax_code",
+		"description": "Foowear worn by an employee during the course of his employment for protection against injury or disease or as protection against damage or injury of other persons or property. Such clothing items are not suitable for general use.",
+		"name": "Protective/Safety Footwear - Occupational Use"
+	},
+	{
+		"id": "txcd_30031408",
+		"object": "tax_code",
+		"description": "Equipment type accessories (such as helmets, eyeshields, facemasks, pads, etc) for human wear and designed as protection of the wearer against injury or disease or as protections against damage or injury of other persons or property but not suitable for general use.",
+		"name": "Protective/Safety Equipment"
+	},
+	{
+		"id": "txcd_30031409",
+		"object": "tax_code",
+		"description": "Equipment type accessories (such as helmets, eyeshields, facemasks, pads, etc) worn by an employee during the course of his employment for protection against injury or disease or as protection against damage or injury of other persons or property. Such clothing items are not suitable for general use.",
+		"name": "Protective/Safety Equipment - Occupational Use"
+	},
+	{
+		"id": "txcd_30040003",
+		"object": "tax_code",
+		"description": "A reusable mask made of common fabrics worn over the mouth and nose to act as personal protection from airborne particles or pathogens.",
+		"name": "Cloth Face Masks"
+	},
+	{
+		"id": "txcd_30040005",
+		"object": "tax_code",
+		"description": "Masks and accessories sold separately to be worn for costume purposes for seasonal or cultural holidays or celebrations.",
+		"name": "Costume Masks and Accessories"
+	},
+	{
+		"id": "txcd_30040006",
+		"object": "tax_code",
+		"description": "Apparel worn by a person for seasonal or cultural holidays or celebrations, rather than for everday wear.",
+		"name": "Costumes"
+	},
+	{
+		"id": "txcd_30051302",
+		"object": "tax_code",
+		"description": "Gloves for general use (e.g., leather), but not gloves used for sporting (e.g., baseball, football gloves).",
+		"name": "Gloves (general use)"
+	},
+	{
+		"id": "txcd_30060001",
+		"object": "tax_code",
+		"description": "Bags including handbags, purses, coin purses, fanny packs / bum bags, and diaper / nappy bags.",
+		"name": "Purses and Handbags"
+	},
+	{
+		"id": "txcd_30060004",
+		"object": "tax_code",
+		"description": "A small usually square piece of cloth used for usually personal purposes (such as blowing the nose) or as a clothing accessory.",
+		"name": "Handkerchiefs"
+	},
+	{
+		"id": "txcd_30060005",
+		"object": "tax_code",
+		"description": "Hair notions such as headbands, barrettes, bows, clips, and pins.",
+		"name": "Hair Accessories"
+	},
+	{
+		"id": "txcd_30060006",
+		"object": "tax_code",
+		"description": "A shaped covering for the head worn for warmth, as a fashion item, or as part of a uniform.",
+		"name": "Hats"
+	},
+	{
+		"id": "txcd_30060007",
+		"object": "tax_code",
+		"description": "Jewlery such as necklaces, earrings, rings, and more.",
+		"name": "Jewelry"
+	},
+	{
+		"id": "txcd_30060010",
+		"object": "tax_code",
+		"description": "Articles, although worn on the body, which are not considered clothing or footwear. Examples include armbands, pocket protectors, shoulder boards, sleep masks, etc. Please select a more granular product tax category where appropriate.",
+		"name": "Non-Clothing Accessories"
+	},
+	{
+		"id": "txcd_30060011",
+		"object": "tax_code",
+		"description": "A plastic cap worn in the shower to keep the hair dry.",
+		"name": "Shower Caps"
+	},
+	{
+		"id": "txcd_30060013",
+		"object": "tax_code",
+		"description": "Umbrellas.",
+		"name": "Umbrellas"
+	},
+	{
+		"id": "txcd_30060014",
+		"object": "tax_code",
+		"description": "Wigs, Hairpieces, Hair extensions.",
+		"name": "Wigs, Hairpieces, Hair extensions"
+	},
+	{
+		"id": "txcd_30060015",
+		"object": "tax_code",
+		"description": "Suitcases and baggage typically used for transporting travellers' belongings.",
+		"name": "Luggage"
+	},
+	{
+		"id": "txcd_30060016",
+		"object": "tax_code",
+		"description": "A small timepiece worn typically on a strap on one's wrist.",
+		"name": "Watches"
+	},
+	{
+		"id": "txcd_30060017",
+		"object": "tax_code",
+		"description": "Sunglasses with a lens containing no lens powers to correct vision problems.",
+		"name": "Sunglasses - Non-prescription"
+	},
+	{
+		"id": "txcd_30060018",
+		"object": "tax_code",
+		"description": "A digital wristwatch that provides many other features besides timekeeping. Like a smartphone, a smartwatch has a touchscreen display, which allows you to perform actions by tapping or swiping on the screen. Smartwatches include allow access to apps, similar to apps for smartphones and tablets.",
+		"name": "Watches - Smart"
+	},
+	{
+		"id": "txcd_30060019",
+		"object": "tax_code",
+		"description": "A flat, rectangular case with a handle, often of leather, for carrying books, papers, etc.",
+		"name": "Briefcases"
+	},
+	{
+		"id": "txcd_30060020",
+		"object": "tax_code",
+		"description": "A piece of clothing that you wear over the front of other clothes to keep the clothes clean...eg. a kitchen apron.",
+		"name": "Aprons"
+	},
+	{
+		"id": "txcd_30060021",
+		"object": "tax_code",
+		"description": "A triangular or square piece of cloth tied around the head, face or neck for protective or decorative purposes.",
+		"name": "Bandannas"
+	},
+	{
+		"id": "txcd_30060101",
+		"object": "tax_code",
+		"description": "A small folding case for carrying paper money, credit cards and other flat objects.",
+		"name": "Wallets"
+	},
+	{
+		"id": "txcd_30070001",
+		"object": "tax_code",
+		"description": "A bicycle helmet that is NOT marketed and labeled as being intended for youth.",
+		"name": "Bicycle Helmets - Adult"
+	},
+	{
+		"id": "txcd_30070002",
+		"object": "tax_code",
+		"description": "A bicycle helmet marketed and labeled as being intended for youth.",
+		"name": "Bicycle Helmets - Youth"
+	},
+	{
+		"id": "txcd_30070003",
+		"object": "tax_code",
+		"description": "Footwear worn exclusively while participating in ballet or tap dancing.",
+		"name": "Ballet or Tap Shoes"
+	},
+	{
+		"id": "txcd_30070004",
+		"object": "tax_code",
+		"description": "Gloves worn by baseball/softball participants while hitting.",
+		"name": "Baseball Batting Gloves"
+	},
+	{
+		"id": "txcd_30070005",
+		"object": "tax_code",
+		"description": "Gloves worn while rolling a bowling ball to the support the muscles in the hand and wrist, and to provide extra padding or grip.",
+		"name": "Bowling Gloves"
+	},
+	{
+		"id": "txcd_30070006",
+		"object": "tax_code",
+		"description": "Footwear uniquely designed to be worn while bowling, having a slick smooth sole meant for gliding.",
+		"name": "Bowling Shoes"
+	},
+	{
+		"id": "txcd_30070007",
+		"object": "tax_code",
+		"description": "A heavily padded mitten worn in boxing.",
+		"name": "Boxing Gloves"
+	},
+	{
+		"id": "txcd_30070008",
+		"object": "tax_code",
+		"description": "Athletic footwear having cleats or spikes to improve traction on various playing field surfaces.",
+		"name": "Cleated or Spiked Shoes"
+	},
+	{
+		"id": "txcd_30070009",
+		"object": "tax_code",
+		"description": "Thin, lightweight gloves designed mainly for wide receivers in football to help with grip while catching.",
+		"name": "Football Receiver Gloves"
+	},
+	{
+		"id": "txcd_30070010",
+		"object": "tax_code",
+		"description": "A glove worn by golfers to give a firm grip on the handle of the golf club.",
+		"name": "Golf Gloves"
+	},
+	{
+		"id": "txcd_30070011",
+		"object": "tax_code",
+		"description": "Footwear designed for golf course play, usually spiked (featuring actual cleats on the outsole) or spikeless (featuring a flat outsole with rubber studs or dimples in place of spikes).",
+		"name": "Golf Shoes"
+	},
+	{
+		"id": "txcd_30070012",
+		"object": "tax_code",
+		"description": "Ice Skates.",
+		"name": "Ice Skates"
+	},
+	{
+		"id": "txcd_30070013",
+		"object": "tax_code",
+		"description": "A inflatable sleeveless jacket worn to keep a person afloat when in danger of drowning.",
+		"name": "Life Vests"
+	},
+	{
+		"id": "txcd_30070014",
+		"object": "tax_code",
+		"description": "Clothing apparel/uniforms that are specific to the training and competition of various martial arts.",
+		"name": "Martial Arts Attire"
+	},
+	{
+		"id": "txcd_30070015",
+		"object": "tax_code",
+		"description": "A helmet designed for used when opertating a motorcycle, atv, snowmobile, etc.",
+		"name": "Motorcycle Helmets"
+	},
+	{
+		"id": "txcd_30070017",
+		"object": "tax_code",
+		"description": "A protective device for the mouth that covers the teeth and gums to prevent and reduce injury to the teeth, arches, lips and gums.",
+		"name": "Mouth Guards"
+	},
+	{
+		"id": "txcd_30070018",
+		"object": "tax_code",
+		"description": "Roller Skates or Roller Blades.",
+		"name": "Roller Skates or Roller Blades"
+	},
+	{
+		"id": "txcd_30070019",
+		"object": "tax_code",
+		"description": "A stiff pad worn typically worn under socks to protect the shins when playing soccer, hockey, and other sports.",
+		"name": "Shin Guards"
+	},
+	{
+		"id": "txcd_30070020",
+		"object": "tax_code",
+		"description": "A hard protective pad for the shoulders used in certain sports, such as ice hockey and football.",
+		"name": "Shoulder Pads for Sports"
+	},
+	{
+		"id": "txcd_30070021",
+		"object": "tax_code",
+		"description": "A rigid padded shoe that extends above the ankle, is secured to the foot, and is locked into position in a ski binding.",
+		"name": "Ski Boots"
+	},
+	{
+		"id": "txcd_30070022",
+		"object": "tax_code",
+		"description": "Athletic uniforms not containing protective padding or gear.",
+		"name": "Sport Uniforms"
+	},
+	{
+		"id": "txcd_30070023",
+		"object": "tax_code",
+		"description": "Flippers on the foot or leg and made from rubber or plastic, to aid movement through the water in water sports.",
+		"name": "Swim Fins"
+	},
+	{
+		"id": "txcd_30070024",
+		"object": "tax_code",
+		"description": "Goggles to protect the eyes from material in the water, while swimming.",
+		"name": "Swim Goggles"
+	},
+	{
+		"id": "txcd_30070025",
+		"object": "tax_code",
+		"description": "A close-fitting garment covering most of the body worn for warmth in water sports or diving.",
+		"name": "Wetsuit"
+	},
+	{
+		"id": "txcd_30070026",
+		"object": "tax_code",
+		"description": "An elastic support for the male genitals, worn especially in athletic or other strenuous activity.",
+		"name": "Athletic Supporter"
+	},
+	{
+		"id": "txcd_30070028",
+		"object": "tax_code",
+		"description": "Vests designed primarily for wear while hunting, but which are also adaptable to everyday use.",
+		"name": "Hunting Vests"
+	},
+	{
+		"id": "txcd_30070029",
+		"object": "tax_code",
+		"description": "Clothing, footwear, and accessories for wear while hunting, but that are not adaptable to everyday use.",
+		"name": "Hunting Activity Clothing"
+	},
+	{
+		"id": "txcd_30071000",
+		"object": "tax_code",
+		"description": "Protective gear worn about the human body while participating in athletic, recreational, or sporting activities, and which are not typical for everyday usage. Please select a more granular product tax category where appropriate.",
+		"name": "Sports Activities Equipment"
+	},
+	{
+		"id": "txcd_30080001",
+		"object": "tax_code",
+		"description": "Button covers are clothing accessories that slip over simple buttons for stylistic adornment.",
+		"name": "Button Covers"
+	},
+	{
+		"id": "txcd_30080002",
+		"object": "tax_code",
+		"description": "Items items used to make or repair clothing, including buttons, clasps, fabric, thread, yarn, snaps, hooks, zippers, sequins, fabric dye, and the like.",
+		"name": "Component Clothing Items"
+	},
+	{
+		"id": "txcd_30090005",
+		"object": "tax_code",
+		"description": "Rubber boots worn over regular footwear to prevent them from wet or soiled.",
+		"name": "Overshoes"
+	},
+	{
+		"id": "txcd_30090009",
+		"object": "tax_code",
+		"description": "Over the counter inserts or insoles for in-shoe foot comfort.",
+		"name": "Shoe Inserts"
+	},
+	{
+		"id": "txcd_30090010",
+		"object": "tax_code",
+		"description": "Shoelaces.",
+		"name": "Shoelaces"
+	},
+	{
+		"id": "txcd_31020001",
+		"object": "tax_code",
+		"description": "A piece of cloth or plastic fastened around a baby's neck to keep their clothes clean while eating.",
+		"name": "Bibs"
+	},
+	{
+		"id": "txcd_31020002",
+		"object": "tax_code",
+		"description": "Blankets made to stretch to tightly around babies, and may have features like velcro or specially designed shapes or flaps to facilitate swaddle wrapping.",
+		"name": "Infant Swaddles"
+	},
+	{
+		"id": "txcd_31020003",
+		"object": "tax_code",
+		"description": "A small lightweight blanket used to wrap an infant, eg. after bathing.",
+		"name": "Infant Receiving Blankets"
+	},
+	{
+		"id": "txcd_31030001",
+		"object": "tax_code",
+		"description": "Scented talcum powder or corn starch for use on babies' skin or an ointment or paste for protecting baby's skin.",
+		"name": "Baby powder and diaper cream"
+	},
+	{
+		"id": "txcd_31030003",
+		"object": "tax_code",
+		"description": "Non medicated disposable moistened cleansing wipes. These products do not contain a \"drug facts\" panel or a statement of active ingredients.",
+		"name": "Baby wipes"
+	},
+	{
+		"id": "txcd_31031202",
+		"object": "tax_code",
+		"description": "Disposable diapers for infants.",
+		"name": "Infant diapers"
+	},
+	{
+		"id": "txcd_31031203",
+		"object": "tax_code",
+		"description": "Absorbent single use underpants worn by children during potty training as a transition between diapers and cloth underwear.",
+		"name": "Disposable Toddler Training Pants"
+	},
+	{
+		"id": "txcd_31031204",
+		"object": "tax_code",
+		"description": "One time use diaper liners for capturing solid waste for ease of disposal.",
+		"name": "Diaper Liners - Single Use"
+	},
+	{
+		"id": "txcd_31031205",
+		"object": "tax_code",
+		"description": "Infant washable/reusable cloth diapers.",
+		"name": "Cloth Diapers"
+	},
+	{
+		"id": "txcd_31040001",
+		"object": "tax_code",
+		"description": "A bottle with a teat or nipple in the US made for babies to drink from.",
+		"name": "Baby bottles and nipples"
+	},
+	{
+		"id": "txcd_31040002",
+		"object": "tax_code",
+		"description": "A mechanical device that lactating women use to extract milk from their breasts.",
+		"name": "Breast pumps"
+	},
+	{
+		"id": "txcd_31070001",
+		"object": "tax_code",
+		"description": "Baby or child car seat, including boosters.",
+		"name": "Baby or child car seat"
+	},
+	{
+		"id": "txcd_32010001",
+		"object": "tax_code",
+		"description": "Electronic devices which measure the glucose level in human blood (e.g., blood sugar meters, glucose meters or glucometers).",
+		"name": "Blood glucose monitoring devices"
+	},
+	{
+		"id": "txcd_32010002",
+		"object": "tax_code",
+		"description": "Equipment, devices or chemical reagents which may be used by a diabetic to test or monitor blood or urine.",
+		"name": "Diabetic testing equipment and supplies"
+	},
+	{
+		"id": "txcd_32020002",
+		"object": "tax_code",
+		"description": "A compound, substance or preparation intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease and dispensed legally without a prescription.",
+		"name": "Drugs - over the counter"
+	},
+	{
+		"id": "txcd_32030001",
+		"object": "tax_code",
+		"description": "Male or female condoms used to prevent pregnacy or exposure to sexually transmitted diseases.",
+		"name": "Condoms"
+	},
+	{
+		"id": "txcd_32040005",
+		"object": "tax_code",
+		"description": "Feminine hygiene product designed to absorb the menstrual flow.",
+		"name": "Tampons, pads, and sanitary napkins"
+	},
+	{
+		"id": "txcd_32050001",
+		"object": "tax_code",
+		"description": "Adult disposable diapers.",
+		"name": "Adult disposable diapers"
+	},
+	{
+		"id": "txcd_32050005",
+		"object": "tax_code",
+		"description": "A mask worn on an individual's face that is not intended for repeated use and is typically discarded after each use.",
+		"name": "Disposable face masks"
+	},
+	{
+		"id": "txcd_32050006",
+		"object": "tax_code",
+		"description": "Soaps, cleaning solutions, shampoo, toothpaste, mouthwash, antiperspirants, suntan lotions, etc.",
+		"name": "Grooming and hygiene products"
+	},
+	{
+		"id": "txcd_32050007",
+		"object": "tax_code",
+		"description": "Soaps, cleaning solutions, shampoo, toothpaste, mouthwash, antiperspirants, suntan lotions, and sunscreens that contain medicinal ingredients as described on the product's label.",
+		"name": "Grooming and hygiene products - medicated"
+	},
+	{
+		"id": "txcd_32050009",
+		"object": "tax_code",
+		"description": "A liquid, gel, foam, or wipe generally used to decrease infectious agents on the hands that contain a \"drug facts\" panel or a statement of active ingredients.",
+		"name": "Hand sanitizers"
+	},
+	{
+		"id": "txcd_32050012",
+		"object": "tax_code",
+		"description": "Topical medicated solutions for treating skin acne that contain a \"drug facts\" panel or a statement of active ingredients.",
+		"name": "Medicated acne treatments"
+	},
+	{
+		"id": "txcd_32050013",
+		"object": "tax_code",
+		"description": "Lotions, moisturizers, creams, powders, sprays, etc that promote optimal skin health that do not contain a \"drug facts\" panel or a statement of active ingredients.",
+		"name": "Skin care products"
+	},
+	{
+		"id": "txcd_32050014",
+		"object": "tax_code",
+		"description": "Lotions, moisturizers, creams, powders, sprays, etc that promote optimal skin health and contain a \"drug facts\" panel or a statement of active ingredients.",
+		"name": "Skin care products -- medicated"
+	},
+	{
+		"id": "txcd_32050015",
+		"object": "tax_code",
+		"description": "Over-the-counter nicotine replacement products, including patches, gum, lozenges, sprays and inhalers that contain a \"drug facts\" panel or a statement of active ingredients.",
+		"name": "Smoking cessation products"
+	},
+	{
+		"id": "txcd_32050017",
+		"object": "tax_code",
+		"description": "Toilet tissue or paper primarily used for the removal of feces.",
+		"name": "Toilet tissue"
+	},
+	{
+		"id": "txcd_32050018",
+		"object": "tax_code",
+		"description": "A small brush with a long handle, used for cleaning the teeth.",
+		"name": "Toothbrush"
+	},
+	{
+		"id": "txcd_32050019",
+		"object": "tax_code",
+		"description": "A thick, soft, moist substance used on a brush for cleaning one's teeth.",
+		"name": "Toothpaste"
+	},
+	{
+		"id": "txcd_32060001",
+		"object": "tax_code",
+		"description": "Equipment primarily and customarily used to serve a medical purpose and generally is not useful to a person in the absence of illness or injury and is not worn in or on the body (e.g., hospital beds, commode chairs, bed pans, IV poles, etc.).",
+		"name": "Durable medical equipment"
+	},
+	{
+		"id": "txcd_32070003",
+		"object": "tax_code",
+		"description": "Item that is applied directly to or inside a wound to absorb wound drainage, protect healing tissue, maintain a moist or dry wound environment (as appropriate), or prevent bacterial contamination.",
+		"name": "Wound care supplies -- bandages, dressings, gauze"
+	},
+	{
+		"id": "txcd_32070004",
+		"object": "tax_code",
+		"description": "An item that to treat a wound applied directly. These supplies contain medication such as an antibiotic ointment and are a labeled with a \"drug facts\" panel or a statement of active ingredients.",
+		"name": "Wound care supplies -- bandages, dressings, gauze (medicated)"
+	},
+	{
+		"id": "txcd_32070018",
+		"object": "tax_code",
+		"description": "A collection of mixed supplies and equipment that is used to give medical treatment. Exempt or low rated qualifying medicinal items (e.g., over the counter drugs) make up 51% or more of the value of the kit.",
+		"name": "First aid kits"
+	},
+	{
+		"id": "txcd_32070019",
+		"object": "tax_code",
+		"description": "Single use disposable gloves (latex, nitrile, vinyl, etc) not used for medical purposes.",
+		"name": "Gloves - Disposable (non medical use)"
+	},
+	{
+		"id": "txcd_32070020",
+		"object": "tax_code",
+		"description": "Single use disposable gloves (latex, nitrile, vinyl, etc) that have an application in a first aid or medical setting. This code is intended for sales directly to end consumers that are NOT healthcare providers.",
+		"name": "Gloves - Disposable (medical use)"
+	},
+	{
+		"id": "txcd_32070028",
+		"object": "tax_code",
+		"description": "Items for use in cure, treatment or diagnosis of injury, illness, disease or incapacity, and which is consumed during the use.",
+		"name": "Medical supplies - consumable"
+	},
+	{
+		"id": "txcd_32080001",
+		"object": "tax_code",
+		"description": "Aids that can increase, improve, or assist mobility in the bathroom such as raised toilet seat, tub & shower stool, hand rails, grab bars, etc.",
+		"name": "Bath aids"
+	},
+	{
+		"id": "txcd_32080003",
+		"object": "tax_code",
+		"description": "Equipment which is primarily and customarily used to provide or increase the ability to move from one place to another and is not generally used by persons with normal mobility (e.g., crutches, walkers, and wheelchairs).",
+		"name": "Mobility enhancing equipment"
+	},
+	{
+		"id": "txcd_32080004",
+		"object": "tax_code",
+		"description": "Parts for items such as crutch pads, walker tips, cane tips, crutch tips, etc.",
+		"name": "Repair & replacement parts for mobility enhancing equipment"
+	},
+	{
+		"id": "txcd_32090003",
+		"object": "tax_code",
+		"description": "Corrective lenses, including eyeglasses and contact lenses, sold without a prescription order of a licensed professional.",
+		"name": "Corrective lenses"
+	},
+	{
+		"id": "txcd_32090005",
+		"object": "tax_code",
+		"description": "Batteries specifically labeled and designed to operate hearing aid devices, sold without a prescription order of a licensed professional.",
+		"name": "Hearing aid batteries"
+	},
+	{
+		"id": "txcd_32090006",
+		"object": "tax_code",
+		"description": "Artificial devices to correct or alleviate hearing deficiencies, sold without a prescription order of a licensed professional.",
+		"name": "Hearing aids"
+	},
+	{
+		"id": "txcd_32090007",
+		"object": "tax_code",
+		"description": "A replacement, corrective, or supportive device, worn on or in the body to artificially replace a missing portion of the body, prevent or correct physical deformity, etc. sold without prescription order of a licensed professional.",
+		"name": "Prosthetic device"
+	},
+	{
+		"id": "txcd_32100006",
+		"object": "tax_code",
+		"description": "One-time use medical thermometers for oral, temporal and forehead, or rectal body temperature diagnostics.",
+		"name": "Medical thermometers -- disposable"
+	},
+	{
+		"id": "txcd_32100007",
+		"object": "tax_code",
+		"description": "Multiple use medical thermometers for oral, temporal and forehead, or rectal body temperature diagnostics.",
+		"name": "Medical thermometers -- reusable"
+	},
+	{
+		"id": "txcd_32100008",
+		"object": "tax_code",
+		"description": "Products carrying an ENERGY STAR rating (e.g., light bulbs, appliances, etc.).",
+		"name": "ENERGY STAR products"
+	},
+	{
+		"id": "txcd_33020001",
+		"object": "tax_code",
+		"description": "Ceiling Fans carrying an Energy Star rating.",
+		"name": "Ceiling fans - Energy Star"
+	},
+	{
+		"id": "txcd_33020002",
+		"object": "tax_code",
+		"description": "Domestic air conditioning (central or room) systems carrying Energy Star rating.",
+		"name": "Air conditioners - Energy Star"
+	},
+	{
+		"id": "txcd_33020003",
+		"object": "tax_code",
+		"description": "Domestic gas or oil furnaces carrying an Energy Star rating.",
+		"name": "Furnaces - Energy Star"
+	},
+	{
+		"id": "txcd_33020004",
+		"object": "tax_code",
+		"description": "Domestic air source heat pumps carrying Energy Star rating.",
+		"name": "Heat Pumps - Energy Star"
+	},
+	{
+		"id": "txcd_33020005",
+		"object": "tax_code",
+		"description": "Domestic water heater carrying Energy Star rating.",
+		"name": "Water heater - Energy Star"
+	},
+	{
+		"id": "txcd_33020006",
+		"object": "tax_code",
+		"description": "Domestic appliance carrying an Energy Star Rating which reduces and maintains the level of humidity in the air.",
+		"name": "Dehumidifier - Energy Star"
+	},
+	{
+		"id": "txcd_33020007",
+		"object": "tax_code",
+		"description": "Domestic gas or oil boilers for space or water heating carrying an Energy Star rating.",
+		"name": "Boilers - Energy Star"
+	},
+	{
+		"id": "txcd_33020008",
+		"object": "tax_code",
+		"description": "An in home programmable thermostat, such as a WiFi enabled smart thermostat, carrying an Energy Star rating.",
+		"name": "Programmable Wall Thermostat - Energy Star"
+	},
+	{
+		"id": "txcd_33020009",
+		"object": "tax_code",
+		"description": "Domestic standard size refrigerators carrying Energy Star rating.",
+		"name": "Refrigerators - Energy Star"
+	},
+	{
+		"id": "txcd_33020010",
+		"object": "tax_code",
+		"description": "Domestic dish washing appliances carrying Energy Star rating.",
+		"name": "Dishwashers - Energy Star"
+	},
+	{
+		"id": "txcd_33020011",
+		"object": "tax_code",
+		"description": "Domestic freezers carrying Energy Star rating.",
+		"name": "Freezers- Energy Star"
+	},
+	{
+		"id": "txcd_33020012",
+		"object": "tax_code",
+		"description": "Domestic clothes washing appliances carrying Energy Star rating.",
+		"name": "Clothes Washing Machine - Energy Star"
+	},
+	{
+		"id": "txcd_33020013",
+		"object": "tax_code",
+		"description": "Domestic clothes drying appliances carrying Energy Star rating.",
+		"name": "Clothes drying machine - Energy Star"
+	},
+	{
+		"id": "txcd_33020014",
+		"object": "tax_code",
+		"description": "Non-electric can opener.",
+		"name": "Can opener - manual"
+	},
+	{
+		"id": "txcd_33020200",
+		"object": "tax_code",
+		"description": "Products used for conservation or efficient use of water to be environmental friendly.",
+		"name": "Water efficiency products"
+	},
+	{
+		"id": "txcd_33030001",
+		"object": "tax_code",
+		"description": "Single or multi-pack AA, AAA, c, D, 6-volt or 9-volt batteries, excluding automobile or boat batteries.",
+		"name": "Alkaline Batteries"
+	},
+	{
+		"id": "txcd_33031001",
+		"object": "tax_code",
+		"description": "Mobile phone batteries.",
+		"name": "Mobile Phone Batteries"
+	},
+	{
+		"id": "txcd_33080201",
+		"object": "tax_code",
+		"description": "Wipes used in the process of eliminating or reducing harmful microorganisms from inanimate objects and surfaces.",
+		"name": "Disinfectant wipes"
+	},
+	{
+		"id": "txcd_33080202",
+		"object": "tax_code",
+		"description": "Disposable household paper products such as paper towels, napkins, tissues, plates, cups, bags, etc.",
+		"name": "Disposable household paper products"
+	},
+	{
+		"id": "txcd_33080300",
+		"object": "tax_code",
+		"description": "Includes blankets, pillows, bed linens/sheets, comforters, towels, wash cloths, shower curtains and bath mats.",
+		"name": "Household linens, bedding, towels, and shower curtains"
+	},
+	{
+		"id": "txcd_33100001",
+		"object": "tax_code",
+		"description": "Landscape soil, mulch, compost - residential.",
+		"name": "Landscape Soil/ Mulch/ Compost - Residential"
+	},
+	{
+		"id": "txcd_33100101",
+		"object": "tax_code",
+		"description": "Chemicals for use in non-commercial gardens to produce foods for human consumption.",
+		"name": "Insecticides, herbicides, fungicides"
+	},
+	{
+		"id": "txcd_33100200",
+		"object": "tax_code",
+		"description": "Any substance such as manure or a mixture of nitrates used to make soil more fertile.",
+		"name": "Plant food"
+	},
+	{
+		"id": "txcd_33110001",
+		"object": "tax_code",
+		"description": "Standard incandescent light bulbs carrying an Energy Star rating.",
+		"name": "Incandescent Light Bulbs - Energy Star"
+	},
+	{
+		"id": "txcd_33110002",
+		"object": "tax_code",
+		"description": "Compact Fluorescent light (CFL) bulbs carrying an Energy Star rating.",
+		"name": "Compact Fluorescent Light Bulbs - Energy Star"
+	},
+	{
+		"id": "txcd_33110003",
+		"object": "tax_code",
+		"description": "Light emitting diode (LED) bulbs carrying an Energy Star rating.",
+		"name": "LED Bulbs - Energy Star"
+	},
+	{
+		"id": "txcd_33110004",
+		"object": "tax_code",
+		"description": "Portable self-powered or battery powered light sources, including flashlights, lanterns, emergency glow sticks or light sticks.",
+		"name": "Portable Light Sources"
+	},
+	{
+		"id": "txcd_33110005",
+		"object": "tax_code",
+		"description": "Candles to be used a light source.",
+		"name": "Candles"
+	},
+	{
+		"id": "txcd_33120000",
+		"object": "tax_code",
+		"description": "Qualifying items for purposes of certain sales tax holidays such as cell phone batteries, cell phone chargers, and two-way radios.",
+		"name": "Storm preparedness items"
+	},
+	{
+		"id": "txcd_33120001",
+		"object": "tax_code",
+		"description": "Portable self-powered or battery powered radio, two-way radio, weatherband radio.",
+		"name": "Portable Radios"
+	},
+	{
+		"id": "txcd_33120002",
+		"object": "tax_code",
+		"description": "Non-electric food or beverage cooler.",
+		"name": "Food Storage Cooler"
+	},
+	{
+		"id": "txcd_33120003",
+		"object": "tax_code",
+		"description": "Smoke Detectors.",
+		"name": "Smoke Detectors"
+	},
+	{
+		"id": "txcd_33120004",
+		"object": "tax_code",
+		"description": "Carbon Monoxide Detectors.",
+		"name": "Carbon Monoxide Detectors"
+	},
+	{
+		"id": "txcd_33120005",
+		"object": "tax_code",
+		"description": "Fire Extinguishers.",
+		"name": "Fire Extinguishers"
+	},
+	{
+		"id": "txcd_33120006",
+		"object": "tax_code",
+		"description": "Portable fuel container.",
+		"name": "Portable Fuel Container"
+	},
+	{
+		"id": "txcd_33120007",
+		"object": "tax_code",
+		"description": "Non-electric water container to store water for emergency usage.",
+		"name": "Water storage container"
+	},
+	{
+		"id": "txcd_33120008",
+		"object": "tax_code",
+		"description": "Artificial ice, blue ice, ice packs, reusable ice.",
+		"name": "Artificial Ice"
+	},
+	{
+		"id": "txcd_33120009",
+		"object": "tax_code",
+		"description": "Tarps, plastic sheeting, plastic drop cloths, waterproof sheeting.",
+		"name": "Tarpaulins and Weatherproof Sheeting"
+	},
+	{
+		"id": "txcd_33120010",
+		"object": "tax_code",
+		"description": "Portable generator used to provide light or communications or power appliances during a power outage.",
+		"name": "Portable Generator"
+	},
+	{
+		"id": "txcd_33120011",
+		"object": "tax_code",
+		"description": "Power cords used to connect electrical equipment and devices to power sockets.",
+		"name": "Power cords"
+	},
+	{
+		"id": "txcd_33120012",
+		"object": "tax_code",
+		"description": "An hand held tool with a bladed head on a handle used for hewing, cleaving, chopping, etc.",
+		"name": "Axes/Hatchets"
+	},
+	{
+		"id": "txcd_33120013",
+		"object": "tax_code",
+		"description": "Gas-powered chainsaw.",
+		"name": "Garden chainsaw"
+	},
+	{
+		"id": "txcd_33120014",
+		"object": "tax_code",
+		"description": "Chainsaw accessories include chains, lubricants, motor oil, chain sharpeners, bars, wrenches, carrying cases, repair parts, safety apparel.",
+		"name": "Chainsaw accessories"
+	},
+	{
+		"id": "txcd_33120015",
+		"object": "tax_code",
+		"description": "Plywood, window film, storm shutters, hurricane shutters or other materials specifically designed to protect windows.",
+		"name": "Storm shutters/window protection devices"
+	},
+	{
+		"id": "txcd_33120016",
+		"object": "tax_code",
+		"description": "Ladder used for home emergency evacuation.",
+		"name": "Emergency/rescue ladder"
+	},
+	{
+		"id": "txcd_33120017",
+		"object": "tax_code",
+		"description": "Ropes and Cords and similar fastening products.",
+		"name": "Ropes and Cords"
+	},
+	{
+		"id": "txcd_33120018",
+		"object": "tax_code",
+		"description": "Ground anchor systems and tie down kits for securing property against severe weather.",
+		"name": "Ground Anchor Systems and Tie-down Kits"
+	},
+	{
+		"id": "txcd_33120019",
+		"object": "tax_code",
+		"description": "Duct Tape.",
+		"name": "Duct Tape"
+	},
+	{
+		"id": "txcd_33150001",
+		"object": "tax_code",
+		"description": "WaterSense labeled toilets.",
+		"name": "Toilets - WaterSense"
+	},
+	{
+		"id": "txcd_33150002",
+		"object": "tax_code",
+		"description": "WaterSense labeled urinals.",
+		"name": "Urinals - WaterSense"
+	},
+	{
+		"id": "txcd_33150003",
+		"object": "tax_code",
+		"description": "WaterSense labeled bathroom sink faucets and accessories.",
+		"name": "Bathroom Faucets - WaterSense"
+	},
+	{
+		"id": "txcd_33150004",
+		"object": "tax_code",
+		"description": "WaterSense labeled sprinkler body is the exterior shell that connects to the irrigation system piping and houses the spray nozzle that applies water on the landscape.",
+		"name": "Spray Water Sprinkler Bodies - WaterSense"
+	},
+	{
+		"id": "txcd_33150005",
+		"object": "tax_code",
+		"description": "WaterSense labeled irrigation controllers, which act like a thermostat for your sprinkler system telling it when to turn on and off, use local weather and landscape conditions to tailor watering schedules to actual conditions on the site.",
+		"name": "Irrigation Controls - WaterSense"
+	},
+	{
+		"id": "txcd_33150006",
+		"object": "tax_code",
+		"description": "WaterSense labeled showerheads.",
+		"name": "Showerheads - WaterSense"
+	},
+	{
+		"id": "txcd_34010001",
+		"object": "tax_code",
+		"description": "A type of consumer electronic device used to play vinyl recordings.",
+		"name": "Audio Turntables"
+	},
+	{
+		"id": "txcd_34010002",
+		"object": "tax_code",
+		"description": "Portable audio equipment that plays audio files encoded in MP3 and other audio formats.",
+		"name": "Digital Music Players"
+	},
+	{
+		"id": "txcd_34010003",
+		"object": "tax_code",
+		"description": "A camera that captures moving images and sound and converts them into electronic signals so that they can be saved on a storage device, such as videotape or a hard drive, or viewed on a monitor.",
+		"name": "Video Cameras"
+	},
+	{
+		"id": "txcd_34020001",
+		"object": "tax_code",
+		"description": "A camera that captures photographs in digital memory.",
+		"name": "Digital Cameras"
+	},
+	{
+		"id": "txcd_34020002",
+		"object": "tax_code",
+		"description": "A framed display designed to display preloaded digital images (jpeg or any digital image format). Has slots for flash memory cards and/or an interface for digital photo camera connection.",
+		"name": "Digital Picture Frames"
+	},
+	{
+		"id": "txcd_34020003",
+		"object": "tax_code",
+		"description": "A portable electronic device for reading digital books and periodicals.",
+		"name": "E-Book Readers"
+	},
+	{
+		"id": "txcd_34020004",
+		"object": "tax_code",
+		"description": "Wired and bluetooth headphones and earbuds for audio listening.",
+		"name": "Headphones/Earbuds"
+	},
+	{
+		"id": "txcd_34020005",
+		"object": "tax_code",
+		"description": "Consumer electronics peripherals and accessories. Please select a more granular product tax category where appropriate.",
+		"name": "Consumer Electronics Peripherals/Accessories"
+	},
+	{
+		"id": "txcd_34020006",
+		"object": "tax_code",
+		"description": "Televisions.",
+		"name": "Televisions"
+	},
+	{
+		"id": "txcd_34020027",
+		"object": "tax_code",
+		"description": "Electronic devices bought for personal rather than commercial use. Please select a more granular product tax category where appropriate.",
+		"name": "Consumer Electronics"
+	},
+	{
+		"id": "txcd_34021000",
+		"object": "tax_code",
+		"description": "A portable device for connecting to a telecommunications network in order to transmit and receive voice, video, or other data.",
+		"name": "Mobile Phones"
+	},
+	{
+		"id": "txcd_34021001",
+		"object": "tax_code",
+		"description": "A device for recharging the battery of a mobile phone, especially one consisting of a cable connected to an adaptor which plugs into an electrical socket or usb port.",
+		"name": "Mobile Phone Charging Device/cord"
+	},
+	{
+		"id": "txcd_34022000",
+		"object": "tax_code",
+		"description": "A specialized computer system designed for interactive video gameplay that typically connects to a television or other monitor.",
+		"name": "Video Gaming Console - Fixed"
+	},
+	{
+		"id": "txcd_34022001",
+		"object": "tax_code",
+		"description": "A handheld portable electronic device used for playing video games that has its own screen, speakers and controls in one unit.",
+		"name": "Video Gaming Console - Portable"
+	},
+	{
+		"id": "txcd_34040001",
+		"object": "tax_code",
+		"description": "Typically a lithium-ion remote power source for laptop computers.",
+		"name": "Computer Batteries"
+	},
+	{
+		"id": "txcd_34040002",
+		"object": "tax_code",
+		"description": "Cables with industry standard connection and termination configurations used to connect various peripherals and equipment to computers.",
+		"name": "Computer Cables"
+	},
+	{
+		"id": "txcd_34040003",
+		"object": "tax_code",
+		"description": "Storage drives, hard drives, Zip drives, etc.",
+		"name": "Computer Drives"
+	},
+	{
+		"id": "txcd_34040004",
+		"object": "tax_code",
+		"description": "Computer Keyboards.",
+		"name": "Computer Keyboards"
+	},
+	{
+		"id": "txcd_34040005",
+		"object": "tax_code",
+		"description": "Computer Microphones.",
+		"name": "Computer Microphones"
+	},
+	{
+		"id": "txcd_34040006",
+		"object": "tax_code",
+		"description": "Computer Monitor/Displays.",
+		"name": "Computer Monitor/Displays"
+	},
+	{
+		"id": "txcd_34040007",
+		"object": "tax_code",
+		"description": "Computer Mouse/Pointing Devices.",
+		"name": "Computer Mouse/Pointing Devices"
+	},
+	{
+		"id": "txcd_34040008",
+		"object": "tax_code",
+		"description": "Computer Printer.",
+		"name": "Computer Printer"
+	},
+	{
+		"id": "txcd_34040009",
+		"object": "tax_code",
+		"description": "Computer Speakers.",
+		"name": "Computer Speakers"
+	},
+	{
+		"id": "txcd_34040010",
+		"object": "tax_code",
+		"description": "A docking station is a hardware frame and set of electrical connection interfaces that enable a notebook computer to effectively serve as a desktop computer.",
+		"name": "Docking Stations"
+	},
+	{
+		"id": "txcd_34040011",
+		"object": "tax_code",
+		"description": "A device that makes possible the transmission of data to or from a computer via telephone or other communication lines.",
+		"name": "Modems"
+	},
+	{
+		"id": "txcd_34040012",
+		"object": "tax_code",
+		"description": "A motherboard is the physical component in a computer that contains the computer's basic circuitry and other components.",
+		"name": "Motherboards"
+	},
+	{
+		"id": "txcd_34040013",
+		"object": "tax_code",
+		"description": "A port replicator is an attachment for a notebook computer that allows a number of devices such as a printer, large monitor, and keyboard to be simultaneously connected.",
+		"name": "Port Replicators"
+	},
+	{
+		"id": "txcd_34040014",
+		"object": "tax_code",
+		"description": "A device that connects computer networks to each other, and sends information between networks. The router, as commonly used in the home, is the hardware that allows communication between your personal computers and other connected device and the internet.",
+		"name": "Routers"
+	},
+	{
+		"id": "txcd_34040015",
+		"object": "tax_code",
+		"description": "A device that scans documents and images and converts them into digital data for use on a computer.",
+		"name": "Scanners"
+	},
+	{
+		"id": "txcd_34040016",
+		"object": "tax_code",
+		"description": "A sound card is an expansion component used in computers to receive and send audio.",
+		"name": "Sound Cards"
+	},
+	{
+		"id": "txcd_34040017",
+		"object": "tax_code",
+		"description": "An expansion card that allows the computer to send graphical information to a video display device such as a monitor, TV, or projector. Video cards are often used by gamers in place of integrated graphics due to their extra processing power and video ram.",
+		"name": "Video/Graphics Card"
+	},
+	{
+		"id": "txcd_34040018",
+		"object": "tax_code",
+		"description": "A webcam is a video camera that feeds or streams an image or video in real time to or through a computer to a computer network, such as the Internet. Webcams are typically small cameras that sit on a desk, attach to a user's monitor, or are built into the hardware.",
+		"name": "Web Camera"
+	},
+	{
+		"id": "txcd_35010000",
+		"object": "tax_code",
+		"description": "Books or booklets consisting of text or illustrations bound in a stiffer cover than the pages.",
+		"name": "Books"
+	},
+	{
+		"id": "txcd_35010001",
+		"object": "tax_code",
+		"description": "Children's books including picture books, painting, drawing, and activity books.",
+		"name": "Books for children"
+	},
+	{
+		"id": "txcd_35010400",
+		"object": "tax_code",
+		"description": "Printed religious books and manuals.",
+		"name": "Religious books"
+	},
+	{
+		"id": "txcd_35010500",
+		"object": "tax_code",
+		"description": "Recognized in the ordinary and usual sense as a \"book\", except that the product is audio and delivered electronically or on a CD/DVD instead of in a printed format.",
+		"name": "Audiobook (Physical Copy)"
+	},
+	{
+		"id": "txcd_35020100",
+		"object": "tax_code",
+		"description": "Publications distributed to the public at regular intervals that contains news of general interest.",
+		"name": "Newspapers"
+	},
+	{
+		"id": "txcd_35020200",
+		"object": "tax_code",
+		"description": "Publications, including magazines, distributed on a periodic basis.",
+		"name": "Magazines"
+	},
+	{
+		"id": "txcd_36010001",
+		"object": "tax_code",
+		"description": "Flea and tick products for animal use including soaps, cleaning solutions, and shampoos (e.g., flea collars, flea powder, tick and flea soap, and tick sprays).",
+		"name": "Flea and tick products"
+	},
+	{
+		"id": "txcd_36010002",
+		"object": "tax_code",
+		"description": "Drugs or substance for treating animals and intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease.",
+		"name": "Over-the-counter drugs for animal use - without a prescription"
+	},
+	{
+		"id": "txcd_36010003",
+		"object": "tax_code",
+		"description": "Medical supplies available without a prescription and used in the treatment of companion animals (e.g., first aid items such as bandages and gauze).",
+		"name": "Over-the-counter medical supplies for pets"
+	},
+	{
+		"id": "txcd_36010004",
+		"object": "tax_code",
+		"description": "Food for household pets that is consumed for nutritional value. This code is not intended for food related to working farm animals or animals raised for meat or milk production.",
+		"name": "Pet food"
+	},
+	{
+		"id": "txcd_36010005",
+		"object": "tax_code",
+		"description": "Pet food products offering additional nutrients or functional ingredients.",
+		"name": "Pet vitamins"
+	},
+	{
+		"id": "txcd_37010000",
+		"object": "tax_code",
+		"description": "Personal computers, including laptops, tablets, desktops.",
+		"name": "Personal Computers"
+	},
+	{
+		"id": "txcd_37010003",
+		"object": "tax_code",
+		"description": "Removable storage media such as compact disks, flash drives, thumb drives, flash memory cards.",
+		"name": "Computer Storage Media"
+	},
+	{
+		"id": "txcd_37010036",
+		"object": "tax_code",
+		"description": "Ink catridges for printers.",
+		"name": "Printer Ink"
+	},
+	{
+		"id": "txcd_37030002",
+		"object": "tax_code",
+		"description": "A globe that could be used by a student in a course of study as a reference and to learn the subject being taught.",
+		"name": "Globes - Student"
+	},
+	{
+		"id": "txcd_37030003",
+		"object": "tax_code",
+		"description": "A map that could be used by a student in a course of study as a reference and to learn the subject being taught.",
+		"name": "Maps - Student"
+	},
+	{
+		"id": "txcd_37040001",
+		"object": "tax_code",
+		"description": "Paper suitable for printers.",
+		"name": "Printer Paper"
+	},
+	{
+		"id": "txcd_37050001",
+		"object": "tax_code",
+		"description": "Books that are required or approved for use in conjunction with a curriculum provided by an educational institution.",
+		"name": "School textbooks"
+	},
+	{
+		"id": "txcd_37060001",
+		"object": "tax_code",
+		"description": "Bags designed to carry students' books during the school day. This category does not include backpacks for traveling, hiking, camping, etc.",
+		"name": "Bookbags/Backpacks - Student"
+	},
+	{
+		"id": "txcd_37060002",
+		"object": "tax_code",
+		"description": "Typically a small electonic device with a keyboard and visual display used for making used for making mathematical calculations.",
+		"name": "Calculators"
+	},
+	{
+		"id": "txcd_37060003",
+		"object": "tax_code",
+		"description": "A calendar based notebook to aid in outlining one's daily appointments, classes, activities, etc.",
+		"name": "Daily Planners"
+	},
+	{
+		"id": "txcd_37060008",
+		"object": "tax_code",
+		"description": "Portable locks used by students in a school setting to prevent use, theft, vandalism or harm.",
+		"name": "Padlocks - Student"
+	},
+	{
+		"id": "txcd_37060009",
+		"object": "tax_code",
+		"description": "An item commonly used by a student in a course of study for artwork. This category is limited to the following items...clay and glazes, paints, paintbrushes for artwork, sketch and drawing pads, watercolors.",
+		"name": "School Art Supplies"
+	},
+	{
+		"id": "txcd_37060010",
+		"object": "tax_code",
+		"description": "Reference printed material commonly used by a student in a course of study as a reference and to learn the subject being taught.",
+		"name": "Dictionaries/Thesauruses"
+	},
+	{
+		"id": "txcd_37060011",
+		"object": "tax_code",
+		"description": "Sheet music used by a student in conjunciton with school activities.",
+		"name": "Sheet music - Student"
+	},
+	{
+		"id": "txcd_37060012",
+		"object": "tax_code",
+		"description": "An item commonly used by a student in a course of study. This category is limited to the following items...binders, blackboard chalk, cellophane tape, compasses, composition books, crayons, erasers, folders, glue/paste/glue sticks, highlighters, index cards, index card boxes, legal pads, lunch boxes, markers, notebooks, paper (copy, graph, tracing, manila, colored, construction, notebook), pencils, pencil boxes, pencil sharpeners, pens, posterboard, protractors, rulers, scissors, writing tablets.",
+		"name": "School Supplies"
+	},
+	{
+		"id": "txcd_37060013",
+		"object": "tax_code",
+		"description": "A device that joins pages of paper or similar material by fastening a thin metal staple through the sheets and folding the ends underneath.",
+		"name": "Staplers/Staples"
+	},
+	{
+		"id": "txcd_37060035",
+		"object": "tax_code",
+		"description": "Pins/tacks to secure papers, pictures, calendars, etc. to bulletin boards, walls, etc.",
+		"name": "Push pins/tacks"
+	},
+	{
+		"id": "txcd_37060045",
+		"object": "tax_code",
+		"description": "A handheld computer that is capable of plotting graphs, solving simultaneous equations, and performing other tasks with variables.",
+		"name": "Graphing Calculators"
+	},
+	{
+		"id": "txcd_37060046",
+		"object": "tax_code",
+		"description": "A musical instrument used by a student in conjunciton with school activities.",
+		"name": "Musical instruments - Student"
+	},
+	{
+		"id": "txcd_37070001",
+		"object": "tax_code",
+		"description": "Software prewritten and delivered on tangible media.",
+		"name": "Tangible media -- prewritten software"
+	},
+	{
+		"id": "txcd_40040000",
+		"object": "tax_code",
+		"description": "Food and food ingredients for home consumption.",
+		"name": "Food"
+	},
+	{
+		"id": "txcd_40040004",
+		"object": "tax_code",
+		"description": "Foods and formulas meant for feeding babies and infants.",
+		"name": "Baby food"
+	},
+	{
+		"id": "txcd_40050004",
+		"object": "tax_code",
+		"description": "Food bundle or basket containing food staples combined with tangible personal property, with the food comprising between 50% and 90% of the overall value of the bundle.",
+		"name": "Tangible personal property bundle -- 50-90% food"
+	},
+	{
+		"id": "txcd_40050005",
+		"object": "tax_code",
+		"description": "Food bundle or basket containing food staples combined with tangible personal property, with the food comprising less 90% or more of the overall value of the bundle.",
+		"name": "Tangible personal property bundle -- 90% food or more"
+	},
+	{
+		"id": "txcd_40050006",
+		"object": "tax_code",
+		"description": "Food bundle or basket containing food staples combined with tangible personal property, with the food comprising less than 50% of the overall value of the bundle.",
+		"name": "Tangible personal property bundle -- less than 50% food"
+	},
+	{
+		"id": "txcd_40060003",
+		"object": "tax_code",
+		"description": "Ready to eat foods intended to be consumed on site by people.",
+		"name": "Prepared foods"
+	},
+	{
+		"id": "txcd_40070005",
+		"object": "tax_code",
+		"description": "Snack foods including chips, crisps, puffs, curls or sticks, popped corn, brittle pretzels, salted nuts and salted seeds, granola products and snack mixes. This category does not include items such as crackers, cookies, snack cakes or breakfast cereal.",
+		"name": "Snack foods"
+	},
+	{
+		"id": "txcd_40090001",
+		"object": "tax_code",
+		"description": "Tablet, capsule, powder, softgel, gelcap, or liquid intended that contain a vitamin, mineral, herb, other botanical, or amino acid and is labeled as a dietary supplement identifiable by the \"supplement facts\" box found on the label.",
+		"name": "Dietary supplements"
+	},
+	{
+		"id": "txcd_40090005",
+		"object": "tax_code",
+		"description": "A food which intended to be or is represented for special dietary use solely as a food for infants by reason of its simulation of human milk or its suitability as a complete or partial substitute for human milk.",
+		"name": "Infant formula"
+	},
+	{
+		"id": "txcd_40090008",
+		"object": "tax_code",
+		"description": "Products in various forms that are intended for ingestion and represented as a conventional food and labeled as a nutritional supplement and identifiable by the \"Nutrition Facts\" box found on the label.",
+		"name": "Nutritional supplements"
+	},
+	{
+		"id": "txcd_40100001",
+		"object": "tax_code",
+		"description": "A preparation of natural or artificial sweeteners in combination with chocolate, fruits, nuts, or other ingredients or flavorings in the form of bars, drops, or pieces.",
+		"name": "Candy and sweets"
+	},
+	{
+		"id": "txcd_40100002",
+		"object": "tax_code",
+		"description": "A preparation of natural or artificial sweeteners in combination with chocolate, fruits, nuts, or other ingredients or flavorings in the form of bars, drops, or pieces and that contains flour as an ingredient.",
+		"name": "Candy and sweets -- contains flour"
+	},
+	{
+		"id": "txcd_41030001",
+		"object": "tax_code",
+		"description": "Regular, unsweetened, non carbonated water sold in containers.",
+		"name": "Bottled water"
+	},
+	{
+		"id": "txcd_41030002",
+		"object": "tax_code",
+		"description": "Unsweetened water that is carbonated artificially or naturally, including naturally sparkling mineral water.",
+		"name": "Carbonated bottled water"
+	},
+	{
+		"id": "txcd_41040002",
+		"object": "tax_code",
+		"description": "Carbonated non-alcoholic beverages that contain natural or artificial sweeteners, and zero natural fruit or vegetable juice, not including carbonated water. Includes energy drinks that carry a Nutrition Facts label and contain a blend of energy enhancing ingredients.",
+		"name": "Carbonated soft drinks"
+	},
+	{
+		"id": "txcd_41040003",
+		"object": "tax_code",
+		"description": "Ready to drink non-carbonated beverage containing tea with natural or artificial sweeteners.",
+		"name": "Bottled tea -- non-carbonated (sweetened)"
+	},
+	{
+		"id": "txcd_41040004",
+		"object": "tax_code",
+		"description": "Bottled water for human consumption, containing natural or artificial sweeteners, non-carbonated.",
+		"name": "Bottled water - flavored"
+	},
+	{
+		"id": "txcd_41040005",
+		"object": "tax_code",
+		"description": "Bottled water for human consumption, containing natural or artificial sweeteners, carbonated.",
+		"name": "Bottled water -- carbonated (sweetened)"
+	},
+	{
+		"id": "txcd_41040008",
+		"object": "tax_code",
+		"description": "Non-carbonated, non-alcoholic beverages that contain sweeteners, and zero natural fruit or vegetable juice, such as sweetened cocktail mixes that can be combined with alcohol, but doesn't include flavored water.",
+		"name": "Soft drinks -- non-carbonated"
+	},
+	{
+		"id": "txcd_41050006",
+		"object": "tax_code",
+		"description": "Coffee beans or ground coffee.",
+		"name": "Coffee beans and ground coffee"
+	},
+	{
+		"id": "txcd_41050008",
+		"object": "tax_code",
+		"description": "Tea leaves and tea bags.",
+		"name": "Tea leaves and tea bags"
+	},
+	{
+		"id": "txcd_41060003",
+		"object": "tax_code",
+		"description": "Milk type beverages from non-animal sources, such as soy, rice, almond, coconut, peanut, and hemp.",
+		"name": "Milk substitutes"
+	},
+	{
+		"id": "txcd_41060006",
+		"object": "tax_code",
+		"description": "Milk or milk substitutes, or drinks with bases of milk, coffee, unsweetened tea or cocoa.",
+		"name": "Milk, coffee, tea, and cocoa beverages"
+	},
+	{
+		"id": "txcd_90020001",
+		"object": "tax_code",
+		"description": "Gratuity, otherwise known as a tip, is money that a customer leaves for an employee or employees that is in addition to and separate from the amount due for the goods or services rendered.",
+		"name": "Optional Gratuity"
+	},
+	{
+		"id": "txcd_92010001",
+		"object": "tax_code",
+		"description": "A shipping charge for the delivery of physical goods in conjunction with the sale of these goods. This tax category is not appropriate for stand alone transportation charges that are not associated with the sale of the goods being delivered.",
+		"name": "Shipping"
+	}
+]

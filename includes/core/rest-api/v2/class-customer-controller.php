@@ -76,6 +76,7 @@ class Customer_Controller extends Controller {
 	 */
 	public function create_item_permissions_check( $request ) {
 		$checks = array(
+			'stripe_cookie',
 			'rate_limit',
 			'form_nonce',
 			'required_fields',
@@ -162,10 +163,32 @@ class Customer_Controller extends Controller {
 				$form_values
 			);
 
-			$customer = API\Customers\create(
-				$customer_args,
-				$form->get_api_request_args()
-			);
+			$object_id = ! empty( $request['object_id'] )
+				? sanitize_text_field( $request['object_id'] )
+				: false;
+
+			if ( false === $object_id ) {
+				$customer = API\Customers\create(
+					$customer_args,
+					$form->get_api_request_args()
+				);
+
+				add_filter( 'nonce_life', 'simpay_nonce_life_2_min' );
+
+				$nonce = wp_create_nonce(
+					'simpay_payment_form_customer_' . $customer->id
+				);
+
+				remove_filter( 'nonce_life', 'simpay_nonce_life_2_min' );
+			} else {
+				$customer = API\Customers\update(
+					$object_id,
+					$customer_args,
+					$form->get_api_request_args()
+				);
+
+				$nonce = '';
+			}
 
 			/**
 			 * Allow further processing after a Customer is created from a posted form.
@@ -184,14 +207,6 @@ class Customer_Controller extends Controller {
 				$form_data,
 				$form_values
 			);
-
-			add_filter( 'nonce_life', 'simpay_nonce_life_2_min' );
-
-			$nonce = wp_create_nonce(
-				'simpay_payment_form_customer_' . $customer->id
-			);
-
-			remove_filter( 'nonce_life', 'simpay_nonce_life_2_min' );
 
 			return new \WP_REST_Response(
 				array(

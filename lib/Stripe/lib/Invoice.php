@@ -48,7 +48,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|(string|\SimplePay\Vendor\Stripe\TaxId)[] $account_tax_ids The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
  * @property int $amount_due Final amount due at this time for this invoice. If the invoice's total is smaller than the minimum charge amount, for example, or if there is account credit that can be applied to the invoice, the <code>amount_due</code> may be 0. If there is a positive <code>starting_balance</code> for the invoice (the customer owes money), the <code>amount_due</code> will also take that into account. The charge that gets generated for the invoice will be for the amount specified in <code>amount_due</code>.
  * @property int $amount_paid The amount, in %s, that was paid.
- * @property int $amount_remaining The amount remaining, in %s, that is due.
+ * @property int $amount_remaining The difference between amount_due and amount_paid, in %s.
  * @property null|string|\SimplePay\Vendor\Stripe\StripeObject $application ID of the Connect Application that created the invoice.
  * @property null|int $application_fee_amount The fee in %s that will be applied to the invoice and transferred to the application owner's SimplePay\Vendor\Stripe account when the invoice is paid.
  * @property int $attempt_count Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.
@@ -70,7 +70,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string $customer_tax_exempt The customer's tax exempt status. Until the invoice is finalized, this field will equal <code>customer.tax_exempt</code>. Once the invoice is finalized, this field will no longer be updated.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject[] $customer_tax_ids The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as <code>customer.tax_ids</code>. Once the invoice is finalized, this field will no longer be updated.
  * @property null|string|\SimplePay\Vendor\Stripe\PaymentMethod $default_payment_method ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
- * @property null|string|\SimplePay\Vendor\Stripe\Account|\SimplePay\Vendor\Stripe\AlipayAccount|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\BitcoinReceiver|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source $default_source ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
+ * @property null|string|\SimplePay\Vendor\Stripe\Account|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source $default_source ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
  * @property \SimplePay\Vendor\Stripe\TaxRate[] $default_tax_rates The tax rates applied to this invoice, if any.
  * @property null|string $description An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
  * @property null|\SimplePay\Vendor\Stripe\Discount $discount Describes the current discount applied to this invoice, if there is one. Not populated if there are multiple discounts.
@@ -97,19 +97,23 @@ namespace SimplePay\Vendor\Stripe;
  * @property int $pre_payment_credit_notes_amount Total amount of all pre-payment credit notes issued for this invoice.
  * @property null|string|\SimplePay\Vendor\Stripe\Quote $quote The quote this invoice was generated from.
  * @property null|string $receipt_number This is the transaction number that appears on email receipts sent for this invoice.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $rendering_options Options for invoice PDF rendering.
  * @property int $starting_balance Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance.
  * @property null|string $statement_descriptor Extra information about an invoice for the customer's credit card statement.
  * @property null|string $status The status of the invoice, one of <code>draft</code>, <code>open</code>, <code>paid</code>, <code>uncollectible</code>, or <code>void</code>. <a href="https://stripe.com/docs/billing/invoices/workflow#workflow-overview">Learn more</a>
  * @property \SimplePay\Vendor\Stripe\StripeObject $status_transitions
  * @property null|string|\SimplePay\Vendor\Stripe\Subscription $subscription The subscription that this invoice was prepared for, if any.
  * @property int $subscription_proration_date Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
- * @property int $subtotal Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+ * @property int $subtotal Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
+ * @property null|int $subtotal_excluding_tax The integer amount in %s representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
  * @property null|int $tax The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
  * @property null|string|\SimplePay\Vendor\Stripe\TestHelpers\TestClock $test_clock ID of the test clock this invoice belongs to.
  * @property \SimplePay\Vendor\Stripe\StripeObject $threshold_reason
  * @property int $total Total after discounts and taxes.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject[] $total_discount_amounts The aggregate amounts calculated per discount across all line items.
+ * @property null|int $total_excluding_tax The integer amount in %s representing the total amount of the invoice including all discounts but excluding all tax.
  * @property \SimplePay\Vendor\Stripe\StripeObject[] $total_tax_amounts The aggregate amounts calculated per tax rate for all line items.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $transfer_data The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
  * @property null|int $webhooks_delivered_at Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have <a href="https://stripe.com/docs/billing/webhooks#understand">been exhausted</a>. This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
  */
 class Invoice extends ApiResource
@@ -119,6 +123,7 @@ class Invoice extends ApiResource
     use ApiOperations\All;
     use ApiOperations\Create;
     use ApiOperations\Delete;
+    use ApiOperations\NestedResource;
     use ApiOperations\Retrieve;
     use ApiOperations\Search;
     use ApiOperations\Update;
@@ -126,6 +131,7 @@ class Invoice extends ApiResource
     const BILLING_CHARGE_AUTOMATICALLY = 'charge_automatically';
     const BILLING_SEND_INVOICE = 'send_invoice';
 
+    const BILLING_REASON_AUTOMATIC_PENDING_INVOICE_ITEM_INVOICE = 'automatic_pending_invoice_item_invoice';
     const BILLING_REASON_MANUAL = 'manual';
     const BILLING_REASON_QUOTE_ACCEPT = 'quote_accept';
     const BILLING_REASON_SUBSCRIPTION = 'subscription';
@@ -144,24 +150,6 @@ class Invoice extends ApiResource
     const STATUS_PAID = 'paid';
     const STATUS_UNCOLLECTIBLE = 'uncollectible';
     const STATUS_VOID = 'void';
-
-    use ApiOperations\NestedResource;
-
-    const PATH_LINES = '/lines';
-
-    /**
-     * @param string $id the ID of the invoice on which to retrieve the lines
-     * @param null|array $params
-     * @param null|array|string $opts
-     *
-     * @throws StripeExceptionApiErrorException if the request fails
-     *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\InvoiceLineItem> the list of lines (InvoiceLineItem)
-     */
-    public static function allLines($id, $params = null, $opts = null)
-    {
-        return self::_allNestedResources($id, static::PATH_LINES, $params, $opts);
-    }
 
     /**
      * @param null|array $params
@@ -255,6 +243,24 @@ class Invoice extends ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\InvoiceLineItem> list of InvoiceLineItems
+     */
+    public static function upcomingLines($params = null, $opts = null)
+    {
+        $url = static::classUrl() . '/upcoming/lines';
+        list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
      * @return \SimplePay\Vendor\Stripe\Invoice the voided invoice
      */
     public function voidInvoice($params = null, $opts = null)
@@ -279,5 +285,21 @@ class Invoice extends ApiResource
         $url = '/v1/invoices/search';
 
         return self::_searchResource($url, $params, $opts);
+    }
+
+    const PATH_LINES = '/lines';
+
+    /**
+     * @param string $id the ID of the invoice on which to retrieve the line items
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> the list of line items
+     */
+    public static function allLines($id, $params = null, $opts = null)
+    {
+        return self::_allNestedResources($id, static::PATH_LINES, $params, $opts);
     }
 }
