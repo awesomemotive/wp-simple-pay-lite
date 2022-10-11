@@ -84,7 +84,7 @@ abstract class Controller extends WP_REST_Controller {
 	 * @return \WP_Error|true Error if the rate limit has been exceeded.
 	 */
 	protected function check_stripe_cookie( $request ) {
-		$check_stripe_cookie = true;
+		$check_stripe_cookie = is_ssl();
 
 		/**
 		 * Determines if the Stripe __stripe_sid cookie is required to proceed.

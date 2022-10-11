@@ -275,7 +275,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		/** @var string $enabled */
 		$enabled = simpay_get_setting(
 			'fraud_require_authentication',
-			'yes'
+			'no'
 		);
 
 		return ucfirst( $enabled );
