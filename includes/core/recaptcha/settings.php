@@ -34,7 +34,11 @@ function register_settings_subsection( $subsections ) {
 			array(
 				'id'       => 'recaptcha',
 				'section'  => 'general',
-				'label'    => esc_html_x( 'reCAPTCHA', 'settings subsection label', 'stripe' ),
+				'label'    => esc_html_x(
+					'🛡️ Anti-Spam',
+					'settings subsection label',
+					'stripe'
+				),
 				'priority' => 30,
 			)
 		)
@@ -60,7 +64,11 @@ function register_settings( $settings ) {
 				'id'         => 'recaptcha_setup',
 				'section'    => 'general',
 				'subsection' => 'recaptcha',
-				'label'      => esc_html_x( 'Setup', 'recaptcha setup setting label', 'stripe' ),
+				'label'      => esc_html_x(
+					'Google reCAPTCHA v3',
+					'recaptcha setup setting label',
+					'stripe'
+				),
 				'output'     => __NAMESPACE__ . '\\setup_description',
 				'priority'   => 10,
 			)
@@ -74,7 +82,11 @@ function register_settings( $settings ) {
 				'id'         => 'recaptcha_site_key',
 				'section'    => 'general',
 				'subsection' => 'recaptcha',
-				'label'      => esc_html_x( 'Site Key', 'recaptcha setting label', 'stripe' ),
+				'label'      => esc_html_x(
+					'Site Key',
+					'recaptcha setting label',
+					'stripe'
+				),
 				'value'      => simpay_get_setting( 'recaptcha_site_key', '' ),
 				'classes'    => array(
 					'regular-text',
@@ -94,7 +106,11 @@ function register_settings( $settings ) {
 				'id'         => 'recaptcha_secret_key',
 				'section'    => 'general',
 				'subsection' => 'recaptcha',
-				'label'      => esc_html_x( 'Secret Key', 'recaptcha setting label', 'stripe' ),
+				'label'      => esc_html_x(
+					'Secret Key',
+					'recaptcha setting label',
+					'stripe'
+				),
 				'value'      => simpay_get_setting( 'recaptcha_secret_key', '' ),
 				'classes'    => array(
 					'regular-text',
@@ -161,7 +177,7 @@ function setup_description() {
 	echo wp_kses_post(
 		sprintf(
 			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-			__( 'reCAPTCHA is a free anti-spam service from Google which helps to protect your website from spam and abuse while letting real people pass through with ease. To enable reCAPTCHA %1$sregister your site with Google%2$s with reCAPTCHA v3 to retrieve the necessary credentials.', 'stripe' ),
+			__( 'Google reCAPTCHA is a free anti-spam service from Google which helps to protect your website from spam and abuse while letting real people pass through with ease. To enable reCAPTCHA %1$sregister your site with Google%2$s with reCAPTCHA v3 to retrieve the necessary credentials.', 'stripe' ),
 			'<a href="https://www.google.com/recaptcha/admin/create" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 			Utils\get_external_link_markup() . '</a>'
 		)
@@ -174,7 +190,7 @@ function setup_description() {
 	<p>
 		<a href="https://www.google.com/recaptcha/admin/create" target="_blank" rel="noopener noreferrer"  class="button button-secondary">
 			<?php
-			esc_html_e( 'Sign Up for reCAPTCHA', 'stripe' );
+			esc_html_e( 'Sign Up for reCAPTCHA v3', 'stripe' );
 			?>
 		</a>
 	</p>

@@ -201,6 +201,7 @@ final class Plugin {
 
 		$service_providers = array(
 			new AdminBar\AdminBarServiceProvider,
+			new AntiSpam\AntiSpamServiceProvider,
 			new CustomerSuccess\CustomerSuccessServiceProvider,
 			new FormPreview\FormPreviewServiceProvider,
 			new Integration\IntegrationServiceProvider,

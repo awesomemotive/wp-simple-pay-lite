@@ -891,10 +891,10 @@ function __unstable_add_recaptcha() {
 	<tr class="simpay-panel-field">
 		<th>
 			<label for="_recaptcha">
-				<?php esc_html_e( 'reCAPTCHA Anti-Spam', 'stripe' ); ?>
+				<?php esc_html_e( 'reCAPTCHA v3 Anti-Spam', 'stripe' ); ?>
 			</label>
 		</th>
-		<td>
+		<td style="border-bottom: 0;">
 			<?php
 			$url = add_query_arg(
 				array(
