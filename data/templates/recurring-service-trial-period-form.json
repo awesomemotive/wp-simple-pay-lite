@@ -1,20 +1,8 @@
 {
 	"id": "df64055c-3fdc-43d4-bc4c-f58e232160e6",
-	"license": [
-		"plus",
-		"professional",
-		"ultimate",
-		"elite"
-	],
-	"categories": [
-		"recurring"
-	],
-	"keywords": [
-		"trial",
-		"free",
-		"service",
-		"subscription"
-	],
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "trial", "free", "service", "subscription" ],
 	"slug": "recurring-service-trial-period-form",
 	"name": "Recurring Services with Trial Period Form",
 	"description": "Collect multiple payments after a set trial period.",
@@ -23,9 +11,7 @@
 		"title": "Start Your Trial",
 		"description": "Try our service free for 30 days.",
 		"type": "embedded",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "email",

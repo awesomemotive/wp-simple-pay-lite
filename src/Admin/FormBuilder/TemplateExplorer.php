@@ -203,6 +203,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 				'templates'           => array_values(
 					__unstable_simpay_get_payment_form_templates()
 				),
+				'isLite'              => $is_lite,
 			)
 		);
 
@@ -283,8 +284,10 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 				if ( ! $this->license->is_in_grace_period() ) {
 					return false;
 				}
+				break;
 			case 'invalid':
 				return false;
+				break; // @phpstan-ignore-line unreachable.
 		}
 
 		return true;

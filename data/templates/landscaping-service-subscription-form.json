@@ -1,0 +1,84 @@
+{
+	"id": "8fe5adce-6960-4a36-9cd9-a600426fee50",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "susbcription", "landscaping", "service" ],
+	"slug": "landscaping-service-subscription-form",
+	"name": "Landscaping Service Subscription Form",
+	"description": "Accept payments for a landscaping service recurring subscription.",
+	"url": "",
+	"data": {
+		"title": "Landscaping Service Subscription Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Choose Service"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Payment Amount"
+			},
+			{
+				"type": "text",
+				"label": "Invoice Number",
+				"required": "no",
+				"metadata": "Invoice"
+			},
+			{
+				"type": "text",
+				"label": "Notes for landscaper:",
+				"multiline": "yes",
+				"required": "no",
+				"metadata": "Notes"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "Fontyard Service $55/mo",
+				"unit_amount": 5500,
+				"default": true,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				}
+			},
+			{
+				"label": "Front & Backyard Service $100/mp",
+				"unit_amount": 11000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				}
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "One Time Invoice Payment"
+			}
+		]
+	}
+}

@@ -1,0 +1,67 @@
+{
+	"id": "575db34e-34da-4ee9-9b84-c62df1510bef",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "business-operations" ],
+	"keywords": [ "on-site", "tuition", "education", "fee", "payment" ],
+	"slug": "tuition-fees-payment-form",
+	"name": "Tuition Fees Payment Form",
+	"description": "Collect payment to cover school tuition fees.",
+	"url": "",
+	"data": {
+		"title": "Tuition Fees Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Student Name",
+				"metadata": "Student Name",
+				"placeholder": "If different than payer name",
+				"required": "no"
+			},
+			{
+				"type": "dropdown",
+				"label": "Apply Payment to Following Semester",
+				"metadata": "Semester",
+				"options": "Spring, Fall, Summer Session",
+				"required": "yes"
+			},
+			{
+				"type": "recurring_amount_toggle",
+				"label": "Automatically pay subsequent semesters"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Payment Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "Per Semester Cost",
+				"unit_amount": 127500,
+				"default": true,
+				"can_recur": true,
+				"recurring": {
+					"interval_count": 3
+				}
+			}
+		]
+	}
+}

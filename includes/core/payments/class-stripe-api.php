@@ -160,11 +160,13 @@ class Stripe_API {
 		}
 
 		// Special handling for submitting an order, which cannot use the legacy static handling.
-		// https://github.com/stripe/stripe-php#clientservice-patterns-vs-legacy-patterns
+		// https://github.com/stripe/stripe-php#clientservice-patterns-vs-legacy-patterns.
 		if ( 'Order' === $class ) {
+			Stripe::setApiVersion( '2020-08-27;orders_beta=v4' );
+
 			$stripe = new \SimplePay\Vendor\Stripe\StripeClient(
 				array(
-					'stripe_version' => SIMPLE_PAY_STRIPE_API_VERSION,
+					'stripe_version' => '2020-08-27;orders_beta=v4',
 				)
 			);
 
@@ -193,7 +195,6 @@ class Stripe_API {
 						$opts
 					);
 			}
-
 		} else {
 			return call_user_func(
 				array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),

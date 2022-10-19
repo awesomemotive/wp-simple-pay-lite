@@ -1,0 +1,68 @@
+{
+	"id": "323bc6d4-abfc-4123-b951-e6bf1719a370",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "susbcription", "development", "service" ],
+	"slug": "web-development-services-form",
+	"name": "Web Development Services Form",
+	"description": "Bill clients for freelance web development services.",
+	"url": "",
+	"data": {
+		"title": "Web Development Services Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "text",
+				"label": "Notes for developer:",
+				"multiline": "yes",
+				"required": "no",
+				"metadata": "Note"
+			},
+			{
+				"type": "number",
+				"quantity": "yes",
+				"label": "Number of development hours",
+				"default": 1,
+				"required": "yes",
+				"metadata": "Number of hours"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Enter Payment Amount"
+			},
+			{
+				"type": "recurring_amount_toggle",
+				"label": "Make this a monthly payment"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "Per Development Hour",
+				"unit_amount": 7500,
+				"can_recur": true
+			}
+		]
+	}
+}

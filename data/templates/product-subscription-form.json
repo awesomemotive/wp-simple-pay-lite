@@ -1,17 +1,8 @@
 {
 	"id": "546ec148-fcec-4156-99cb-bb3547db7c4d",
-	"license": [
-		"plus",
-		"professional",
-		"ultimate",
-		"elite"
-	],
-	"categories": [
-		"recurring"
-	],
-	"keywords": [
-		"subscription"
-	],
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "subscription" ],
 	"slug": "product-subscription-form",
 	"name": "Product Subscription Form",
 	"description": "Bill customers on a recurring basis for a product.",
@@ -20,9 +11,7 @@
 		"title": "Product Subscription",
 		"description": "Subscribe to our product.",
 		"type": "embedded",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "email",

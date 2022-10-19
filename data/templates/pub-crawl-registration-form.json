@@ -1,0 +1,52 @@
+{
+	"id": "272e5b2c-6f86-42c0-ab06-6261d0b92c98",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "payment", "register", "pub crawl", "event" ],
+	"slug": "pub-crawl-registration-form",
+	"name": "Pub Crawl Registration Form",
+	"description": "Gather team information and collect a payment for a pub crawl event.",
+	"url": "",
+	"data": {
+		"title": "Pub Crawl Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Team Captain's Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "number",
+				"label": "Number of Crawlers on Your Team",
+				"default": 1,
+				"required": "yes",
+				"quantity": "yes",
+				"metadata": "Number of Crawlers"
+			},
+			{
+				"type": "text",
+				"label": "Team Name",
+				"metadata": "Team Name"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1500
+			}
+		]
+	}
+}

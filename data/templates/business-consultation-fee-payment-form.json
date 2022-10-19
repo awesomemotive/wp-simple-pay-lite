@@ -1,0 +1,53 @@
+{
+	"id": "73b384ca-0131-42c0-a5f9-80b9b3e0c87b",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "business-operations" ],
+	"keywords": [ "consultation", "consultant", "business", "fee", "payment" ],
+	"slug": "business-consultation-fee-payment-form",
+	"name": "Business Consultation Fee Payment Form",
+	"description": "Accept payment for providing business consultation services.",
+	"url": "",
+	"data": {
+		"title": "Business Consultation Fee Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Invoice Number",
+				"metadata": "Invoice Number",
+				"placeholder": "01-123456XX",
+				"required": "yes"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Payment Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Payment Amount",
+				"can_recur": false
+			}
+		]
+	}
+}

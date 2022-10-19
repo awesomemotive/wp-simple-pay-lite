@@ -14,7 +14,9 @@ const baseClassName = 'simpay-form-template-explorer-main__content';
 function SuggestCta() {
 	return (
 		<div className={ `${ baseClassName }-suggest` }>
-			<Icon icon={ commentContent } size="42px" />
+			<div style={ { flexGrow: 0 } }>
+				<Icon icon={ commentContent } size="42px" />
+			</div>
 
 			<div>
 				<h4>{ __( 'We need your help!', 'simple-pay' ) }</h4>

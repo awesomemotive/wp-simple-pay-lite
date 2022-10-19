@@ -1,0 +1,51 @@
+{
+	"id": "ed029780-bbea-4599-bdb3-d4b929831483",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "soccer","payment", "sports", "register" ],
+	"slug": "soccer-club-registration-form",
+	"name": "Soccer Club Registration Form",
+	"description": "Gather team information and collect a payment for a soccer club registration.",
+	"url": "",
+	"data": {
+		"title": "Soccer Club Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Team Coach Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Team Nickname",
+				"metadata": "Team Nickname"
+			},
+			{
+				"type": "dropdown",
+				"label": "Club League Designation",
+				"options": "Rookie League, Junior League, Senior League, Champions League",
+				"required": "yes",
+				"metadata": "League Designation"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 12500
+			}
+		]
+	}
+}

@@ -1,0 +1,59 @@
+{
+	"id": "8124a819-ff7f-43b3-bf8d-4939956403bd",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "candle", "educational", "payment", "register" ],
+	"slug": "candle-making-class-registration-form",
+	"name": "Candle Making Class Registration Form",
+	"description": "Gather attendee information and collect a payment for a candle making class.",
+	"url": "",
+	"data": {
+		"title": "Candle Making Class Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Registrant's Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "number",
+				"label": "Number of Participants",
+				"quantity": "yes",
+				"metadata": "Quantity"
+			},
+			{
+				"type": "dropdown",
+				"label": "Class Class Date",
+				"options": "1st Saturday, 2nd Saturday, 3rd Saturday, 4th Saturday",
+				"required": "yes",
+				"metadata": "Class Day"
+			},
+			{
+				"type": "dropdown",
+				"label": "Choose Class Time",
+				"options": "4:30PM, 6:30PM, 8:30PM",
+				"required": "yes",
+				"metadata": "Class Time"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 7500
+			}
+		]
+	}
+}

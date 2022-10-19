@@ -1,0 +1,53 @@
+{
+	"id": "c64d2d63-9ebb-47ce-8889-4751f62ed3cb",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "payment", "register", "fun run", "event" ],
+	"slug": "fun-run-registration-form",
+	"name": "Fun Run Registration Form",
+	"description": "Gather participant information and collect a payment for a fun run event.",
+	"url": "",
+	"data": {
+		"title": "Fun Run Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "radio",
+				"label": "Runner or Walker",
+				"options": "Runner, Walker",
+				"required": "yes",
+				"metadata": "Runner or Walker"
+			},
+			{
+				"type": "dropdown",
+				"label": "T-Shirt Size",
+				"options": "Small, Medium, Large, X-Large, XX-Large",
+				"required": "yes",
+				"metadata": "T-Shirt Size"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500
+			}
+		]
+	}
+}

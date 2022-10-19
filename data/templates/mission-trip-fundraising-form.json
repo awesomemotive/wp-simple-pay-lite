@@ -1,0 +1,83 @@
+{
+	"id": "62cc07dc-9de4-407b-bf19-a7d789899744",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "fundraising" ],
+	"keywords": [ "church", "donate", "fundraising", "mission trip" ],
+	"slug": "mission-trip-fundraising-form",
+	"name": "Mission Trip Fundraising Form",
+	"description": "Collect donations to help fund a church missions trip.",
+	"url": "",
+	"data": {
+		"title": "Mission Trip Fundraising Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Donor's Name"
+			},
+			{
+				"type": "email",
+				"label": "Contact Email Address"
+			},
+			{
+				"type": "dropdown",
+				"label": "Mission Trip to Help Fund",
+				"options": "Mexico City School Build, Cuban Missionaries Support Fund, General Missions Fund",
+				"required": "yes",
+				"metadata": "Mission Trip Selected"
+			},
+			{
+				"type": "plan_select",
+				"label": "Donation Amount",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Donation Amount"
+			},
+			{
+				"type": "recurring_amount_toggle",
+				"label": "Make this a monthly donation"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Donate {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Other",
+				"can_recur": true
+			}
+		]
+	}
+}

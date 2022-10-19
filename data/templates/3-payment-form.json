@@ -1,18 +1,8 @@
 {
 	"id": "ec0e97c2-6dda-4a7a-9f85-83969ff452eb",
-	"license": [
-		"personal",
-		"plus",
-		"professional",
-		"ultimate",
-		"elite"
-	],
-	"categories": [
-		"business"
-	],
-	"keywords": [
-		"on-site"
-	],
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
 	"slug": "payment-form",
 	"name": "Payment Form",
 	"description": "Collect credit card payments with a basic form.",
@@ -21,9 +11,7 @@
 		"title": "Payment Form",
 		"description": "Collect credit card payments",
 		"type": "embedded",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "email",

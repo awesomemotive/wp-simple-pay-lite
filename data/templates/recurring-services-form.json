@@ -1,18 +1,8 @@
 {
 	"id": "02ff50b2-f55d-4dbe-b274-e265338f9bcc",
-	"license": [
-		"plus",
-		"professional",
-		"ultimate",
-		"elite"
-	],
-	"categories": [
-		"recurring"
-	],
-	"keywords": [
-		"service",
-		"subscription"
-	],
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "service", "subscription" ],
 	"slug": "recurring-services-form",
 	"name": "Recurring Services Form",
 	"description": "Automatically collect multiple payments on a set schedule.",
@@ -21,9 +11,7 @@
 		"title": "Subscribe to Service",
 		"description": "Sign up for our service.",
 		"type": "embedded",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "email",

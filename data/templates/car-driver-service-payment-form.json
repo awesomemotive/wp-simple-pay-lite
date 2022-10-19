@@ -1,0 +1,56 @@
+{
+	"id": "7c350bda-0914-482c-93a6-c403ca8a965a",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "payment", "driver", "service" ],
+	"slug": "car-driver-service-payment-form",
+	"name": "Car Driver Service Payment Form",
+	"description": "Allow clients to pay for a licensed car service pickup.",
+	"url": "",
+	"data": {
+		"title": "Car Driver Service Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "phone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "text",
+				"label": "Car Reservation Number",
+				"required": "yes",
+				"metadata": "Car Reservation Number"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Reservation Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Reservation Payment"
+			}
+		]
+	}
+}

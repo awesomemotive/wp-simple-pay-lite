@@ -1,0 +1,67 @@
+{
+	"id": "0040c6eb-ee27-4706-8b44-46c2f37b9595",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "business-operations" ],
+	"keywords": [ "on-site", "city government", "utilities", "fee", "payment" ],
+	"slug": "city-government-fees-payment-form",
+	"name": "City Government Fees Payment Form",
+	"description": "Accept payment for various city goverment bills and fees.",
+	"url": "",
+	"data": {
+		"title": "City Government Fees Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Account Number",
+				"metadata": "Account Number",
+				"placeholder": "Found in upper left section of statement",
+				"required": "yes"
+			},
+			{
+				"type": "dropdown",
+				"label": "Department to Pay",
+				"metadata": "Department",
+				"options": "Water & Sewer Bill, Electricity Bill, Garabge Collection Fee ($35), Monthly Parking Fee ($75), Business Registry Fee ($125)",
+				"required": "yes"
+			},
+			{
+				"type": "text",
+				"label": "Additional Notes",
+				"metadata": "Notes",
+				"multiline": "yes",
+				"required": "no"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Payment Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Payment Amount",
+				"can_recur": false
+			}
+		]
+	}
+}

@@ -8,13 +8,8 @@
 		"ultimate",
 		"elite"
 	],
-	"categories": [
-		"non-profit"
-	],
-	"keywords": [
-		"stripe checkout",
-		"donate"
-	],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "stripe checkout", "donate" ],
 	"slug": "donate-button",
 	"name": "Donate Button",
 	"description": "Display a single button and collect donations with Stripe Checkout.",
@@ -23,9 +18,7 @@
 		"title": "Donate",
 		"description": "Help support our cause",
 		"type": "stripe_checkout",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "plan_select",

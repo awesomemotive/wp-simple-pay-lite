@@ -1,0 +1,71 @@
+{
+	"id": "9fad2944-b52a-48aa-a1d4-d318892d2996",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "cleaning","service", "subscription" ],
+	"slug": "cleaning-service-subscription-form",
+	"name": "Cleaning Service Subscription Form",
+	"description": "Collect recurring payment for a cleaning service subscription.",
+	"url": "",
+	"data": {
+		"title": "Cleaning Service Subscription Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Service Level",
+				"display_type": "list"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 4000,
+				"label": "Standard Cleaning Service",
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 7000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"label": "Deluxe Cleaning & Carpet Service"
+			},
+			{
+				"unit_amount": 10000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"label": "Ultra Cleaning, Carpet, Kitchen Service"
+			}
+		]
+	}
+}

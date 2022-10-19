@@ -1,21 +1,8 @@
 {
 	"id": "378765dc-9691-4155-91ca-1de02b6ed0b1",
-	"license": [
-		"personal",
-		"plus",
-		"professional",
-		"ultimate",
-		"elite"
-	],
-	"categories": [
-		"non-profit",
-		"alternative"
-	],
-	"keywords": [
-		"sepa",
-		"debit",
-		"on-site"
-	],
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "sepa", "debit", "on-site" ],
 	"slug": "sepa-direct-debit-form",
 	"name": "SEPA Direct Debit Form",
 	"description": "Collect payments through SEPA Direct Debit.",
@@ -24,10 +11,7 @@
 		"title": "SEPA Direct Debit Form",
 		"description": "",
 		"type": "embedded",
-		"payment_methods": [
-			"sepa-debit",
-			"card"
-		],
+		"payment_methods": [ "sepa-debit", "card" ],
 		"fields": [
 			{
 				"type": "email",
