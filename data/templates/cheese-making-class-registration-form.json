@@ -1,0 +1,52 @@
+{
+	"id": "0bd31b12-df17-473a-b056-85333908762f",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "payment", "class", "register", "educational" ],
+	"slug": "cheese-making-class-registration-form",
+	"name": "Cheese Making Class Registration Form",
+	"description": "Gather attendee information and collect a payment for a cheese making class.",
+	"url": "",
+	"data": {
+		"title": "Cheese Making Class Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Registrant's Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "radio",
+				"label": "Single or Couple?",
+				"options": "Single Participant, Couple",
+				"metadata": "Single or Couple"
+			},
+			{
+				"type": "dropdown",
+				"label": "Choose Class Time",
+				"options": "4:30PM, 6:30PM, 8:30PM",
+				"required": "yes",
+				"metadata": "Class Time"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 7500
+			}
+		]
+	}
+}

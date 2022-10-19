@@ -74,27 +74,37 @@ function reCaptchaFeedback() {
 		return;
 	}
 
-	const feedbackNoticeElDesc = document.querySelector(
-		'.simpay-recaptcha-payment-form-description'
-	);
-	const { siteKey, i18n } = simpayGoogleRecaptcha;
+	const { siteKey, i18n, settingsUrl } = simpayGoogleRecaptcha;
+	const checkboxEl = document.getElementById( '_recaptcha' );
 
-	feedbackNoticeElDesc.style.display = 'none';
+	// Launch settings when attempting to check.
+	checkboxEl.addEventListener( 'change', ( e ) => {
+		e.preventDefault();
+		e.target.checked = ! e.target.checked;
 
+		window.open( settingsUrl, '_blank' );
+	} );
+
+	// Do not provide feedback if not already enabled.
+	if ( ! checkboxEl.checked ) {
+		return;
+	}
+
+	// Show feedback.
 	function onError() {
-		feedbackNoticeEl.style.color = '#b32d2e';
+		feedbackNoticeEl.style.color = '#b91c1c';
 		feedbackNoticeEl.style.display = 'inline';
-		feedbackNoticeEl.innerHTML = i18n.disabled;
-
-		feedbackNoticeElDesc.style.display = 'inline-block';
+		feedbackNoticeEl.innerHTML = i18n.invalid;
+		checkboxEl.checked = false;
+		checkboxEl.readOnly = false;
 	}
 
 	function onSuccess() {
-		feedbackNoticeEl.style.color = 'green';
+		feedbackNoticeEl.style.color = '#15803d';
 		feedbackNoticeEl.style.display = 'inline';
-		feedbackNoticeEl.innerHTML = i18n.enabled;
-
-		feedbackNoticeElDesc.style.display = 'inline-block';
+		feedbackNoticeEl.innerHTML = i18n.valid;
+		checkboxEl.checked = true;
+		checkboxEl.readOnly = true;
 	}
 
 	if ( '' === siteKey ) {
@@ -127,6 +137,25 @@ function reCaptchaFeedback() {
 		} catch ( error ) {
 			onError();
 		}
+	} );
+}
+
+/**
+ * Provides feedback for email verification.
+ */
+function emailVerificationFeedback() {
+	const checkboxEl = document.getElementById( '_email_verification' );
+
+	if ( ! checkboxEl ) {
+		return;
+	}
+
+	// Launch settings when attempting to check.
+	checkboxEl.addEventListener( 'change', ( e ) => {
+		e.preventDefault();
+		e.target.checked = ! e.target.checked;
+
+		window.open( e.target.dataset.settingsUrl, '_blank' );
 	} );
 }
 
@@ -205,6 +234,7 @@ domReady( () => {
 
 		formType();
 		reCaptchaFeedback();
+		emailVerificationFeedback();
 		requireFormTitle();
 	}
 } );

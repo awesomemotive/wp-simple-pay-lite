@@ -1,0 +1,76 @@
+{
+	"id": "d39ee544-c070-4c38-b3c5-3c7e346b1caf",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "donations" ],
+	"keywords": [ "disaster", "donate", "donation", "environment", "recovery" ],
+	"slug": "disaster-recovery-donation-form",
+	"name": "Disaster Recovery Donation Form",
+	"description": "Collect donations to contribute towards disaster relief and recovery.",
+	"url": "",
+	"data": {
+		"title": "Disaster Recovery Donation Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "dropdown",
+				"label": "Apply Donation To",
+				"required": "yes",
+				"options": "Food, Shelter, Clothing, Medical, Education, Other"
+			},
+			{
+				"type": "checkbox",
+				"label": "I am interested in volunteering in-person"
+			},
+			{
+				"type": "plan_select",
+				"label": "Donation Amount",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Donation Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Donate {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true
+			},
+			{
+				"unit_amount": 1000
+			},
+			{
+				"unit_amount": 1500
+			},
+			{
+				"unit_amount": 2000
+			},
+			{
+				"unit_amount": 2500
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Other"
+			}
+		]
+	}
+}

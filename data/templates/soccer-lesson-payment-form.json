@@ -1,0 +1,65 @@
+{
+	"id": "e5960e3f-4072-4828-a219-d8bd073a285c",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "soccer", "payment", "coach", "lesson" ],
+	"slug": "soccer-lesson-payment-form",
+	"name": "Soccer Lesson Payment Form",
+	"description": "Collect a payment for a student's monthly soccer lesson.",
+	"url": "",
+	"data": {
+		"title": "Soccer Lesson Payment",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Student Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Lesson Type"
+			},
+			{
+				"type": "dropdown",
+				"label": "Month of Lessons",
+				"options": "January, February, March, April, May, June, July, August, September, October, November, December",
+				"required": "yes",
+				"metadata": "Month"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "4x 30min Private Lesson",
+				"unit_amount": 7500,
+				"default": true
+			},
+			{
+				"label": "4x 1hr Private Lesson",
+				"unit_amount": 15000
+			},
+			{
+				"label": "4x 1hr Group Lesson",
+				"unit_amount": 10000
+			}
+		]
+	}
+}

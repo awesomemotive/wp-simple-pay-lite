@@ -1,0 +1,72 @@
+{
+	"id": "b7d703a7-2ac3-45d0-983c-6dc78129a862",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "donations" ],
+	"keywords": [ "pet", "donate", "donation", "recovery" ],
+	"slug": "animal-recovery-donation-form",
+	"name": "Animal Recovery Donation Form",
+	"description": "Collect donations and raise awareness to help pay for veterinary expenses.",
+	"url": "",
+	"data": {
+		"title": "Animal Recovery Donation Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "dropdown",
+				"label": "Apply Donation To",
+				"required": "yes",
+				"options": "Veterinary Expenses, Food, Shelter, Other"
+			},
+			{
+				"type": "plan_select",
+				"label": "Donation Amount",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Donation Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Donate {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true
+			},
+			{
+				"unit_amount": 1000
+			},
+			{
+				"unit_amount": 1500
+			},
+			{
+				"unit_amount": 2000
+			},
+			{
+				"unit_amount": 2500
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Other"
+			}
+		]
+	}
+}

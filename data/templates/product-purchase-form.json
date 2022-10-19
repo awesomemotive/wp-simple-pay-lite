@@ -1,30 +1,17 @@
 {
 	"id": "c37fc67b-5f6c-4c49-9900-ff066fccf50b",
-	"license": [
-		"personal",
-		"plus",
-		"professional",
-		"ultimate",
-		"elite"
-	],
-	"categories": [
-		"business"
-	],
-	"keywords": [
-		"ship",
-		"product"
-	],
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "variable", "options" ],
 	"slug": "product-purchse-form",
-	"name": "Product Purchase Form",
+	"name": "Variable Product Form",
 	"description": "Offer the purchase of a product with variations.",
 	"url": "",
 	"data": {
 		"title": "Purchase Form",
 		"description": "Configure your product for delivery.",
 		"type": "embedded",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "number",

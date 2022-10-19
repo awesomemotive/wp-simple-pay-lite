@@ -14,7 +14,7 @@ import { Icon, lock } from '@wordpress/icons';
  */
 import UpgradeModal from './upgrade-modal.js';
 
-const { licenseLevel, addNewUrl } = simpayFormBuilderTemplateExplorer;
+const { licenseLevel, addNewUrl, isLite } = simpayFormBuilderTemplateExplorer;
 const baseClassName = 'simpay-form-template-explorer-main__content';
 
 function TemplateListItem( { template } ) {
@@ -26,6 +26,16 @@ function TemplateListItem( { template } ) {
 	const useTemplateUrl = addQueryArgs( addNewUrl, {
 		'simpay-template': template.id,
 	} );
+
+	const demoUrl = addQueryArgs(
+		`https://wpsimplepay.com/templates/${ template.slug }/`,
+		{
+			utm_source: 'WordPress',
+			utm_campaign: '1' === isLite ? 'lite-plugin' : 'pro-plugin',
+			utm_medium: 'template-explorer',
+			utm_content: template.name,
+		}
+	);
 
 	return (
 		<>
@@ -78,20 +88,18 @@ function TemplateListItem( { template } ) {
 							: __( 'Use Template', 'simple-pay' ) }
 					</Button>
 
-					{ template.url &&
-						! (
-							'lite' === licenseLevel &&
-							'payment-button' === template.slug
-						) && (
-							<Button
-								isSecondary
-								variant="secondary"
-								href={ template.url }
-								style={ { marginLeft: '10px' } }
-							>
-								{ __( 'View Demo', 'simple-pay' ) }
-							</Button>
-						) }
+					{ ! Object.keys( template.categories ).includes(
+						'features-functionality'
+					) && (
+						<Button
+							isSecondary
+							variant="secondary"
+							href={ demoUrl }
+							style={ { marginLeft: '10px' } }
+						>
+							{ __( 'View Demo', 'simple-pay' ) }
+						</Button>
+					) }
 				</div>
 			</div>
 		</>

@@ -1885,10 +1885,22 @@ select.simpay-currency-symbol {
 	margin-top: 8px;
 
 	&--valid {
-		color: green;
+		color: #15803d;
 	}
 
 	&--invalid {
-		color: #cc1818;
+		color: #b91c1c;
+	}
+}
+
+.simpay-recaptcha-payment-form-feedback {
+
+	.dashicons {
+		margin-top: -1px;
+		display: inline-block;
+	}
+
+	.dashicons-update-alt {
+		animation: rotation 2s infinite linear;
 	}
 }

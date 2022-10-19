@@ -1,0 +1,54 @@
+{
+	"id": "19947fc7-b677-48ad-9368-e75fe0f5b11b",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "payment", "register", "golf", "tournament" ],
+	"slug": "golf-tournament-registration-form",
+	"name": "Golf Tournament Registration Form",
+	"description": "Gather team information and collect a payment for a golf tournament.",
+	"url": "",
+	"data": {
+		"title": "Golf Tournament Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Team Nickname",
+				"metadata": "Team Nickname"
+			},
+			{
+				"type": "number",
+				"label": "Number of Golfers in Your Group",
+				"default": 1,
+				"required": "yes",
+				"quantity": "yes",
+				"minimum": 1,
+				"maximum": 4,
+				"metadata": "Number of Golfers"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 5000
+			}
+		]
+	}
+}

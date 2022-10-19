@@ -1,0 +1,65 @@
+{
+	"id": "29218b18-b74b-4146-9aa8-54c8596b697a",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "golf", "payment", "coach", "lesson" ],
+	"slug": "golf-lesson-payment-form",
+	"name": "Golf Lesson Payment Form",
+	"description": "Collect a payment for a student's monthly golf lesson.",
+	"url": "",
+	"data": {
+		"title": "Golf Lesson Payment",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Student Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Lesson Type"
+			},
+			{
+				"type": "dropdown",
+				"label": "Month of Lessons",
+				"options": "January, February, March, April, May, June, July, August, September, October, November, December",
+				"required": "yes",
+				"metadata": "Month"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "4x 30min Private Lesson",
+				"unit_amount": 7500,
+				"default": true
+			},
+			{
+				"label": "4x 1hr Private Lesson",
+				"unit_amount": 15000
+			},
+			{
+				"label": "4x 1hr Group Lesson",
+				"unit_amount": 10000
+			}
+		]
+	}
+}

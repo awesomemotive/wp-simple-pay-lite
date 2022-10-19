@@ -1,0 +1,71 @@
+{
+	"id": "eb2e5b6a-3a08-4757-b9e8-49076518b9f3",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "cleaning", "recurring", "service" ],
+	"slug": "cleaning-service-payment-form",
+	"name": "Cleaning Service Payment Form",
+	"description": "Accept payments for a laundry service recurring subscription.",
+	"url": "",
+	"data": {
+		"title": "Cleaning Service Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Service Level",
+				"display_type": "list"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 4000,
+				"label": "Weekly Cleaning Service",
+				"recurring": {
+					"interval": "week",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 7500,
+				"recurring": {
+					"interval": "week",
+					"interval_count": 2
+				},
+				"label": "Bi Weekly Cleaning Service"
+			},
+			{
+				"unit_amount": 14000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"label": "Monthly Cleaning Service"
+			}
+		]
+	}
+}

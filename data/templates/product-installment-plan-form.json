@@ -1,19 +1,8 @@
 {
 	"id": "05387fec-8a7d-423e-8a5d-04e94af41111",
-	"license": [
-		"plus",
-		"professional",
-		"ultimate",
-		"elite"
-	],
-	"categories": [
-		"recurring"
-	],
-	"keywords": [
-		"installment",
-		"service",
-		"subscription"
-	],
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "installment", "service", "subscription" ],
 	"slug": "product-installment-plan-form",
 	"name": "Installment Plan Form",
 	"description": "Collect a specific number of payments in a specific period of time.",
@@ -22,9 +11,7 @@
 		"title": "Installment Plan",
 		"description": "Purchase a product in installments.",
 		"type": "embedded",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "email",

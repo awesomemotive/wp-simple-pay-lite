@@ -59,18 +59,18 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 
 		$subscribers = array(
 			// Add/output settings.
-			'simpay_register_settings'                     => 'add_settings',
-			'simpay_admin_after_form_display_options_rows' =>
-				array( 'add_payment_form_settings', 31 ),
+			'simpay_register_settings'                => 'add_settings',
+			'__unstable_simpay_after_form_anti_spam_settings' =>
+				array( 'add_payment_form_settings' ),
 
 			// Log fraud events.
-			'simpay_webhook_charge_failed'                 =>
+			'simpay_webhook_charge_failed'            =>
 				array( 'log_fraud_event', 10, 2 ),
 
 			// Schedule and cleanup expired verification codes.
-			'init'                                         =>
+			'init'                                    =>
 				'schedule_email_verification_code_cleanup',
-			'simpay_cleanup_email_verification_codes'      =>
+			'simpay_cleanup_email_verification_codes' =>
 				'cleanup_verification_codes',
 		);
 
@@ -274,59 +274,64 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 			'fraud_email_verification',
 			'no'
 		);
-
 		?>
-			<tr class="simpay-panel-field simpay-show-if" data-if="_form_type" data-is="on-site">
-				<th style="border-top: 1px solid #ddd;">
-					<label for="_email_verification">
-						<?php esc_html_e( 'Email Verification', 'stripe' ); ?>
-					</label>
-				</th>
-				<td>
+
+		<div class="simpay-show-if" data-if="_form_type" data-is="on-site" style="margin: 12px 0 0;">
+			<label for="_email_verification" class="simpay-field-bool">
+				<input
+					name="_email_verification"
+					type="checkbox"
+					id="_email_verification"
+					class="simpay-field simpay-field-checkbox simpay-field simpay-field-checkboxes"
+					<?php checked( true, 'yes' === $enabled ); ?>
 					<?php if ( 'yes' === $enabled ) : ?>
-						<span style="color: green;">
-							<span class="dashicons dashicons-yes"></span><?php esc_html_e( 'Enabled', 'stripe' ); ?>
-						</span>
-
-						-
-
-						<?php
-						esc_html_e(
-							'Email addresses must be verified before a payment can be processed when fraud is detected.',
-							'stripe'
-						);
-						?>
-					<?php else : ?>
-						<span style="color: red;">
-							<span class="dashicons dashicons-no"></span><?php esc_html_e( 'Disabled', 'stripe' ); ?>
-						</span>
-
-						-
-
-						<a href="<?php echo esc_url( $settings_url ); ?>" target="_blank">
-							<?php
-							echo wp_kses(
-								sprintf(
-									/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-									__(
-										'%1$sEnable email verification%2$s when fraud is detected for additional anti-spam protection.',
-										'stripe'
-									),
-									'<a href="' . esc_url( $settings_url ) . '" target="_blank">',
-									'</a>'
-								),
-								array(
-									'a' => array(
-										'href'   => true,
-										'target' => true,
-									),
-								)
-							);
-							?>
-						</a>
+						readonly
 					<?php endif; ?>
-				</td>
-			</tr>
+					data-settings-url="<?php echo esc_attr( $settings_url ); ?>"
+				/>
+
+				<?php esc_html_e( 'Email Verification', 'stripe' ); ?>
+			</label>
+
+			<p class="description">
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+						__(
+							'%1$sConfigure email verification settings%2$s to require verification when fraud events are detected.',
+							'stripe'
+						),
+						'<a href="' . esc_url( $settings_url ) . '" target="_blank">',
+						'</a>'
+					),
+					array(
+						'a'    => array(
+							'href'   => true,
+							'target' => true,
+						),
+						'span' => array(
+							'class' => true,
+							'style' => true,
+						),
+					)
+				);
+				?>
+
+				<?php if ( 'yes' === $enabled ) : ?>
+					<span style="color: #15803d;">
+						<span class="dashicons dashicons-shield-alt"></span>
+						<?php esc_html_e( 'Additional protection enabled!', 'stripe' ); ?>
+					</span>
+				<?php else : ?>
+					<span style="color: #b91c1c;">
+						<span class="dashicons dashicons-shield"></span>
+						<?php esc_html_e( 'Disabled — missing additional protection!', 'stripe' ); ?>
+					</span>
+				<?php endif; ?>
+			</p>
+		</div>
+
 		<?php
 	}
 

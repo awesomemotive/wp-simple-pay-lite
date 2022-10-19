@@ -1,0 +1,82 @@
+{
+	"id": "87d4bfd1-f354-4e21-a7cf-3abb5a60bd19",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "donations" ],
+	"keywords": [ "church", "donate", "donation", "tithing" ],
+	"slug": "church-tithing-form",
+	"name": "Church Tithing Form",
+	"description": "Accept tithings for your church through online payments.",
+	"url": "",
+	"data": {
+		"title": "Church Tithing Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Contact Email Address"
+			},
+			{
+				"type": "customer_name",
+				"label": "Family Name"
+			},
+			{
+				"type": "text",
+				"label": "Prayer Note",
+				"required": "yes",
+				"multiline": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Tithe Amount",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Tithe Amount"
+			},
+			{
+				"type": "recurring_amount_toggle",
+				"label": "Make this a monthly tithe"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Donate {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Other",
+				"can_recur": true
+			}
+		]
+	}
+}

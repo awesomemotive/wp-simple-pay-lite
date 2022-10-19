@@ -1,0 +1,89 @@
+{
+	"id": "80aab0a0-58fc-4c1d-80b3-cbfb1b08f3a5",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "donations" ],
+	"keywords": [ "neighborhood", "donate", "donation", "watch" ],
+	"slug": "neighborhood-watch-donation-form",
+	"name": "Neighborhood Watch Donation Form",
+	"description": "Ensure your neighborhood has the funds it needs to effectively keep it safe.",
+	"url": "",
+	"data": {
+		"title": "Neighborhood Watch Donation Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "address",
+				"label": "Home Address",
+				"billing-container-label": "",
+				"default-country": "US",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Donation Amount",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Donation Amount"
+			},
+			{
+				"type": "recurring_amount_toggle",
+				"label": "Make this a monthly donation"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Donate {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Other",
+				"can_recur": true
+			}
+		]
+	}
+}

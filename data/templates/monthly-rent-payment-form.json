@@ -1,0 +1,58 @@
+{
+	"id": "681c0663-39e8-4bfb-8d23-bd5a1a52253c",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "business-operations" ],
+	"keywords": [ "on-site", "rent", "business", "tenant", "payment" ],
+	"slug": "monthly-rent-payment-form",
+	"name": "Monthly Rent Payment Form",
+	"description": "Collect monthly rent payment from tenants.",
+	"url": "",
+	"data": {
+		"title": "Monthly Rent Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Tenant Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "address",
+				"billing-container-label": "Tenant Address",
+				"required": "yes"
+			},
+			{
+				"type": "dropdown",
+				"label": "Apply Rent To",
+				"metadata": "Month",
+				"options": "January, February, March, April, May, June, July, August, September, October, November, December",
+				"required": "yes"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Rent Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 25000,
+				"unit_amount_min": 10000,
+				"label": "Rent Amount",
+				"can_recur": false
+			}
+		]
+	}
+}

@@ -1,0 +1,86 @@
+{
+	"id": "45056b78-55f6-434d-aa14-2ca06025b4a3",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "donations" ],
+	"keywords": [ "alumni", "donate", "donation", "school" ],
+	"slug": "alumni-services-donation-form",
+	"name": "Alumni Services Donation Form",
+	"description": "Collect donations from alunmni to help fund events and gatherings.",
+	"url": "",
+	"data": {
+		"title": "Alumni Services Donation Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "number",
+				"label": "Graduation Year",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Donation Amount",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Donation Amount"
+			},
+			{
+				"type": "recurring_amount_toggle",
+				"label": "Make this a monthly donation"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Donate {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2000,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 2500,
+				"can_recur": true
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Other",
+				"can_recur": true
+			}
+		]
+	}
+}

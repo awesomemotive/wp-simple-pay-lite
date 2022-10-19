@@ -1,0 +1,53 @@
+{
+	"id": "21373c41-4e3f-46f7-b36e-90d0b6988985",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "payment", "register", "marathon", "event" ],
+	"slug": "marathon-run-registration-form",
+	"name": "Marathon Run Registration Form",
+	"description": "Gather participant information and collect a payment for a marathon run event.",
+	"url": "",
+	"data": {
+		"title": "Marathon Run Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "radio",
+				"label": "Marathon Challenge",
+				"options": "Half Marathon (13.1 Miles), Full Marathon (26.2 Miles)",
+				"required": "yes",
+				"metadata": "Marathon Chalenge"
+			},
+			{
+				"type": "dropdown",
+				"label": "T-Shirt Size (awarded after completion of marathon)",
+				"options": "Small, Medium, Large, X-Large, XX-Large",
+				"required": "yes",
+				"metadata": "T-Shirt Size"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500
+			}
+		]
+	}
+}

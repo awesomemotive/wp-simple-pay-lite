@@ -1,0 +1,53 @@
+{
+	"id": "1b9c32fb-2e7f-4663-a3d1-e0ee01b18ec8",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "business-operations" ],
+	"keywords": [ "on-site", "invoice", "business", "fee", "payment" ],
+	"slug": "invoice-reconciliation-payment-form",
+	"name": "Invoice Reconciliation Payment Form",
+	"description": "Collect credit card payments with a basic form.",
+	"url": "",
+	"data": {
+		"title": "Invoice Reconciliation Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Invoice Number",
+				"metadata": "Invoice Number",
+				"placeholder": "01-123456XX",
+				"required": "yes"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Invoice Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Invoice Amount",
+				"can_recur": false
+			}
+		]
+	}
+}

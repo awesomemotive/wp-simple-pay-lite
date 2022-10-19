@@ -533,14 +533,15 @@ function simpay_shared_script_variables() {
 	);
 
 	$strings['strings'] = array(
-		'currency'                                => simpay_get_setting( 'currency', 'USD' ),
-		'currencySymbol'                          => html_entity_decode(
+		'currency'                                     => simpay_get_setting( 'currency', 'USD' ),
+		'currencySymbol'                               => html_entity_decode(
 			simpay_get_saved_currency_symbol()
 		),
 		'currencyPosition'                             => simpay_get_currency_position(),
 		'decimalSeparator'                             => simpay_get_decimal_separator(),
 		'thousandSeparator'                            => simpay_get_thousand_separator(),
 		'ajaxurl'                                      => admin_url( 'admin-ajax.php' ),
+		/* translators: Minimum payment amount. */
 		'customAmountLabel'                            => esc_html__(
 			'starting at %s',
 			'stripe'
@@ -1383,10 +1384,12 @@ function simpay_get_payment_form_setting(
  */
 function __unstable_simpay_get_form_template_category_name( $category_slug ) {
 	$categories = array(
-		'business'    => __( 'Business', 'stripe' ),
-		'non-profit'  => __( 'Non-Profit', 'stripe' ),
-		'recurring'   => __( 'Subscriptions', 'stripe' ),
-		'alternative' => __( 'Alternative Payment Methods', 'stripe' ),
+		'business-operations'    => __( 'Business Operations', 'stripe' ),
+		'donations'              => __( 'Donations', 'stripe' ),
+		'fundraising'            => __( 'Fundraising', 'stripe' ),
+		'products-services'      => __( 'Products & Services', 'stripe' ),
+		'registrations'          => __( 'Registrations', 'stripe' ),
+		'features-functionality' => __( 'Features / Functionality', 'stripe' ),
 	);
 
 	return isset( $categories[ $category_slug ] )
@@ -1638,7 +1641,7 @@ function simpay_is_dev_url( $url = '' ) {
 		$url = network_site_url( '/' );
 	}
 
-	// Trim it up
+	// Trim it up.
 	$url = strtolower( trim( $url ) );
 
 	// Need to get the host...so let's add the scheme so we can use parse_url.
@@ -1656,11 +1659,12 @@ function simpay_is_dev_url( $url = '' ) {
 		if ( false !== ip2long( $host ) ) {
 			if ( ! filter_var(
 				$host,
-				FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+				FILTER_VALIDATE_IP,
+				FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
 			) ) {
 				$is_local_url = true;
 			}
-		} else if ( 'localhost' === $host ) {
+		} elseif ( 'localhost' === $host ) {
 			$is_local_url = true;
 		}
 
@@ -1686,7 +1690,7 @@ function simpay_is_dev_url( $url = '' ) {
 				'dev.',
 				'*.staging.',
 				'beta.',
-				'test.'
+				'test.',
 			);
 
 			foreach ( $subdomains_to_check as $subdomain ) {

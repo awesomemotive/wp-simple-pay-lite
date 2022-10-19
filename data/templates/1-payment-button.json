@@ -8,12 +8,8 @@
 		"ultimate",
 		"elite"
 	],
-	"categories": [
-		"business"
-	],
-	"keywords": [
-		"stripe checkout"
-	],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "stripe checkout", "button" ],
 	"slug": "payment-button",
 	"name": "Payment Button",
 	"description": "Display a single button and collect payments with Stripe Checkout.",
@@ -22,9 +18,7 @@
 		"title": "Payment Button",
 		"description": "Collect a payment with Stripe Checkout",
 		"type": "stripe_checkout",
-		"payment_methods": [
-			"card"
-		],
+		"payment_methods": [ "card" ],
 		"fields": [
 			{
 				"type": "plan_select",

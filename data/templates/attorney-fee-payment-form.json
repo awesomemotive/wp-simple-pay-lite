@@ -1,0 +1,52 @@
+{
+	"id": "2a6e7c6f-92f3-49fd-8d3b-8ecc9faaf853",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "business-operations" ],
+	"keywords": [ "attorney", "legal", "business", "fee", "payment" ],
+	"slug": "attorney-fee-payment-form",
+	"name": "Attorney Fee Payment Form",
+	"description": "Accept payment for legal service provided to a client.",
+	"url": "",
+	"data": {
+		"title": "Attorney Fee Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Client Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Client ID Number",
+				"metadata": "Client ID",
+				"required": "yes"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Payment Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 10000,
+				"unit_amount_min": 10000,
+				"label": "Payment Amount",
+				"can_recur": false
+			}
+		]
+	}
+}

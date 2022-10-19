@@ -1,0 +1,51 @@
+{
+	"id": "5e9aa4d0-c13e-49aa-93e1-33ea7e4bde90",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "payment", "register", "webinar", "life coach" ],
+	"slug": "life-coaching-webinar-registration-form",
+	"name": "Life Coaching Webinar Registration Form",
+	"description": "Gather attendee information and collect a payment for a life coaching webinar event.",
+	"url": "",
+	"data": {
+		"title": "Life Coaching Webinar Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Attendee's Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Twitter Handle",
+				"metadata": "Twitter Handle"
+			},
+			{
+				"type": "dropdown",
+				"label": "Webinar Timeslot",
+				"options": "4:30PM EST, 6:30PM EST",
+				"required": "yes",
+				"metadata": "Webinar Timeslot"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 9000
+			}
+		]
+	}
+}

@@ -1,0 +1,66 @@
+{
+	"id": "dde096b5-dc2e-41a4-a2c0-abda22b08d19",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "susbcription", "laundry", "service" ],
+	"slug": "laundry-service-payment-form",
+	"name": "Laundry Service Payment Form",
+	"description": "Collect payment for laundry services.",
+	"url": "",
+	"data": {
+		"title": "Laundry Service Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Choose Service"
+			},
+			{
+				"type": "number",
+				"label": "Number of laundry bags (we provide)",
+				"quantity": "yes",
+				"default": 1,
+				"minimum": 1,
+				"required": "yes"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "Wash, Air Dry, Fold",
+				"unit_amount": 5500,
+				"default": true
+			},
+			{
+				"label": "Wash, Standard Dry, Fold",
+				"unit_amount": 7500
+			},
+			{
+				"label": "Wash, Hypoallergenic Dry, Fold",
+				"unit_amount": 9500
+			}
+		]
+	}
+}

@@ -1,0 +1,53 @@
+{
+	"id": "d69466c3-d3b6-4933-b1f8-fb3f92c003c9",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "payment", "business", "service" ],
+	"slug": "business-development-coaching-services-form",
+	"name": "Business Development Coaching Services Form",
+	"description": "Accept payment for business coaching services.",
+	"url": "",
+	"data": {
+		"title": "Business Development Coaching Services Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": "Choose Desired Plan"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "4x 30min Private Coaching",
+				"unit_amount": 7500,
+				"default": true
+			},
+			{
+				"label": "4x 1hr Private Coaching",
+				"unit_amount": 15000
+			},
+			{
+				"label": "4x 1hr Group Coaching",
+				"unit_amount": 10000
+			}
+		]
+	}
+}

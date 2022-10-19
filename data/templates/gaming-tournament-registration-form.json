@@ -1,0 +1,56 @@
+{
+	"id": "f380fb47-4243-4828-9870-e25b625f4b42",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "registrations" ],
+	"keywords": [ "payment", "gaming", "register", "tournament" ],
+	"slug": "gaming-tournament-registration-form",
+	"name": "Gaming Tournament Registration Form",
+	"description": "Gather team information and collect a payment for a gaming tournament.",
+	"url": "",
+	"data": {
+		"title": "Gaming Tournament Registration Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Attendee's Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Twitter Handle",
+				"metadata": "Twitter Handle"
+			},
+			{
+				"type": "text",
+				"label": "Team Nickname",
+				"metadata": "Team Nickname"
+			},
+			{
+				"type": "dropdown",
+				"label": "Tournament Timeslot",
+				"options": "Noon, 2:30PM, 4:30PM, 6:30PM",
+				"required": "yes",
+				"metadata": "Webinar Timeslot"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500
+			}
+		]
+	}
+}

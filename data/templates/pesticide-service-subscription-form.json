@@ -1,0 +1,68 @@
+{
+	"id": "7672379e-d2a8-4590-9432-603d243c89c1",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "recurring", "pest control", "service" ],
+	"slug": "pesticide-service-subscription-form",
+	"name": "Pesticide Service Subscription Form",
+	"description": "Automatically bill clients for monthly or bi-monthly pesticide service.",
+	"url": "",
+	"data": {
+		"title": "Pesticide Service Subscription Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "address",
+				"billing-container-label": "Customer Address",
+				"required": "yes"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Service Frequency",
+				"display_type": "list"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 7500,
+				"label": "Monthly Pest Control Service",
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 9000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 2
+				},
+				"label": "Bi Monthly Pest Control Service"
+			}
+		]
+	}
+}

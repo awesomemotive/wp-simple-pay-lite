@@ -1,0 +1,70 @@
+{
+	"id": "d7d2aa4b-35bc-4d8b-92b1-cb92a6f2d4f4",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "susbcription", "hosting", "service" ],
+	"slug": "web-hosting-service-subscription-form",
+	"name": "Web Hosting Service Subscription Form",
+	"description": "Collect recurring payments for web hosting services.",
+	"url": "",
+	"data": {
+		"title": "Web Hosting Service Subscription Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"display_type": "list",
+				"label": "Choose Hosting Package"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1500,
+				"label": "Basic Hosting - 1 Site & Email Address, 25GB Storage",
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 2500,
+				"label": "Standard Hosting - 3 X Sites & Email Addresses, 100GB Storage",
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				}
+			},
+			{
+				"unit_amount": 5000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"label": "Pro Hosting - Unlimited Sites, Email Addresses, Storage"
+			}
+		]
+	}
+}

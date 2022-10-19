@@ -1,0 +1,51 @@
+{
+	"id": "5b63d2ee-b7bc-4242-991c-b9d54a514134",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "payment", "landscaping", "service" ],
+	"slug": "landscaping-service-payment-form",
+	"name": "Landscaping Service Payment Form",
+	"description": "Accept payments for landscaping service or maintenance invoice.",
+	"url": "",
+	"data": {
+		"title": "Landscaping Service Payment",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Invoice Number",
+				"required": "yes",
+				"metadata": "Invoice Number"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Invoice Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Invoice Payment"
+			}
+		]
+	}
+}

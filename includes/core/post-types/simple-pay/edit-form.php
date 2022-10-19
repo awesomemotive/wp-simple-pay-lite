@@ -887,79 +887,112 @@ add_action(
  * @return void
  */
 function __unstable_add_recaptcha() {
+	$url = add_query_arg(
+		array(
+			'render' => reCAPTCHA\get_key( 'site' ),
+		),
+		'https://www.google.com/recaptcha/api.js'
+	);
+
+	wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
+
+	$recaptcha    = reCAPTCHA\has_keys();
+	$settings_url = Settings\get_url(
+		array(
+			'section'    => 'general',
+			'subsection' => 'recaptcha',
+			'setting'    => 'recaptcha_site_key',
+		)
+	);
+
+	wp_localize_script(
+		'simpay-google-recaptcha-v3',
+		'simpayGoogleRecaptcha',
+		array(
+			'siteKey'     => reCAPTCHA\get_key( 'site' ),
+			'i18n'        => array(
+				'valid'   => sprintf(
+					'<span class="dashicons dashicons-shield-alt"></span> %s',
+					esc_html__( 'Additional protection enabled!', 'stripe' )
+				),
+				'invalid' => sprintf(
+					'<span class="dashicons dashicons-shield"></span> %s',
+					esc_html__( 'Invalid configuration — missing additional protection!', 'stripe' )
+				),
+			),
+			'settingsUrl' => $settings_url,
+		)
+	);
 	?>
+
 	<tr class="simpay-panel-field">
 		<th>
-			<label for="_recaptcha">
-				<?php esc_html_e( 'reCAPTCHA v3 Anti-Spam', 'stripe' ); ?>
-			</label>
+			<?php esc_html_e( 'Spam & Fraud Protection', 'stripe' ); ?>
 		</th>
 		<td style="border-bottom: 0;">
+			<div style="margin: 4px 0 0;">
+				<div style="display: flex; align-items: center;">
+					<label for="_recaptcha" class="simpay-field-bool">
+						<input
+							name="_recaptcha"
+							type="checkbox"
+							id="_recaptcha"
+							class="simpay-field simpay-field-checkbox simpay-field simpay-field-checkboxes"
+							<?php checked( true, $recaptcha ); ?>
+							<?php if ( true === $recaptcha ) : ?>
+								readonly
+							<?php endif; ?>
+						/>
+
+						<?php esc_html_e( 'Google reCAPTCHA v3', 'stripe' ); ?>
+					</label>
+				</div>
+				<p class="description">
+					<?php
+					echo wp_kses(
+						sprintf(
+							/* translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+							__(
+								'%1$sConfigure reCAPTCHA settings%2$s to adjust anti-spam protection.',
+								'stripe'
+							),
+							'<a href="' . esc_url( $settings_url ) . '" target="_blank">',
+							'</a>'
+						),
+						array(
+							'a'    => array(
+								'href'   => true,
+								'target' => true,
+							),
+							'span' => array(
+								'class' => true,
+								'style' => true,
+							),
+						)
+					);
+					?>
+
+					<span class="simpay-recaptcha-payment-form-feedback">
+						<?php if ( $recaptcha ) : ?>
+							<span class="dashicons dashicons-update-alt"></span>
+							<?php esc_html_e( 'Verifying credentials…', 'stripe' ); ?>
+						<?php else : ?>
+							<span style="color: #b91c1c;">
+								<span class="dashicons dashicons-shield"></span>
+								<?php esc_html_e( 'Disabled — missing additional protection!', 'stripe' ); ?>
+							</span>
+						<?php endif; ?>
+					</span>
+				</p>
+			</div>
+
 			<?php
-			$url = add_query_arg(
-				array(
-					'render' => reCAPTCHA\get_key( 'site' ),
-				),
-				'https://www.google.com/recaptcha/api.js'
-			);
-
-			wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
-
-			wp_localize_script(
-				'simpay-google-recaptcha-v3',
-				'simpayGoogleRecaptcha',
-				array(
-					'siteKey' => reCAPTCHA\get_key( 'site' ),
-					'i18n'    => array(
-						'enabled'  => '<span class="dashicons dashicons-yes"></span>' . esc_html__( 'Enabled', 'stripe' ),
-						'disabled' => '<span class="dashicons dashicons-no"></span>' . esc_html__( 'Disabled', 'stripe' ),
-					),
-				)
-			);
-
-			$recaptcha    = reCAPTCHA\has_keys();
-			$settings_url = Settings\get_url(
-				array(
-					'section'    => 'general',
-					'subsection' => 'recaptcha',
-					'setting'    => 'recaptcha_site_key',
-				)
-			);
-
-			$description = $recaptcha
-				/* translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-				? __(
-					'%1$sConfigure reCAPTCHA%2$s to adjust anti-spam protection.',
-					'stripe'
-				)
-				/* translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-				: __(
-					'%1$sEnable reCAPTCHA%2$s to add anti-spam protection.',
-					'stripe'
-				);
-
-			echo wp_kses(
-				sprintf(
-					'<span class="simpay-recaptcha-payment-form-feedback">%s</span> <span class="simpay-recaptcha-payment-form-description" style="display: none;">- %s</span>',
-					esc_html( 'Verifying...', 'simple-pay' ),
-					sprintf(
-						$description,
-						'<a href="' . esc_url( $settings_url ) . '" target="_blank">',
-						'</a>'
-					)
-				),
-				array(
-					'a'    => array(
-						'href'   => true,
-						'target' => true,
-					),
-					'span' => array(
-						'class' => true,
-						'style' => true,
-					),
-				)
-			);
-			echo '</div>';
+			/**
+			 * Allows further output in the "Spam & Fraud Protection" section.
+			 *
+			 * @since 4.6.0
+			 */
+			do_action( '__unstable_simpay_after_form_anti_spam_settings' );
 			?>
 		</td>
 	</tr>

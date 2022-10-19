@@ -1,0 +1,51 @@
+{
+	"id": "b796f627-e2eb-41dd-8b14-1e2c5e80ae95",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "payment", "pool cleaning", "service" ],
+	"slug": "pool-cleaning-service-payment-form",
+	"name": "Pool Cleaning Service Payment Form",
+	"description": "Allow clients to pay for a pool cleaning service or maintenance invoice.",
+	"url": "",
+	"data": {
+		"title": "Pool Cleaning Service Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Invoice Number",
+				"required": "yes",
+				"metadata": "Invoice Number"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Invoice Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Invoice Payment"
+			}
+		]
+	}
+}

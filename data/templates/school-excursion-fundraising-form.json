@@ -1,0 +1,79 @@
+{
+	"id": "903660a3-5b0e-4082-9872-1fdea1387032",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "fundraising" ],
+	"keywords": [ "school", "donate", "donation", "fundraising", "school trip" ],
+	"slug": "school-excursion-fundraising-form",
+	"name": "School Excursion Fundraising Form",
+	"description": "Crowdsource donations to enusre that all students may participate in school trips.",
+	"url": "",
+	"data": {
+		"title": "School Excursion Fundraising Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Donor's Name"
+			},
+			{
+				"type": "email",
+				"label": "Contact Email Address"
+			},
+			{
+				"type": "dropdown",
+				"label": "Select Trip to Help Fund",
+				"options": "City Center Zoo, Science Museum, Peterson's Farm, Apply to General Trip Fund",
+				"required": "yes",
+				"metadata": "Tripe to Fund"
+			},
+			{
+				"type": "plan_select",
+				"label": "Donation Amount",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Donation Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Donate {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true,
+				"can_recur": false
+			},
+			{
+				"unit_amount": 1000,
+				"can_recur": false
+			},
+			{
+				"unit_amount": 1500,
+				"can_recur": false
+			},
+			{
+				"unit_amount": 2000,
+				"can_recur": false
+			},
+			{
+				"unit_amount": 2500,
+				"can_recur": false
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Other",
+				"can_recur": false
+			}
+		]
+	}
+}

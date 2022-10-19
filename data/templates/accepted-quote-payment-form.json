@@ -1,0 +1,53 @@
+{
+	"id": "fb95aee0-3d3a-4893-85a3-5ca3e57467cd",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "business-operations" ],
+	"keywords": [ "on-site", "business", "fee", "quote", "payment" ],
+	"slug": "accepted-quote-payment-form",
+	"name": "Accepted Quote Payment Form",
+	"description": "Accept payment for a quote that has been accepted.",
+	"url": "",
+	"data": {
+		"title": "Accepted Quote Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "text",
+				"label": "Quote Number",
+				"placeholder": "01-123456XX",
+				"metadata": "Quote Number",
+				"required": "yes"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Accepted Quote Amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "Accepted Quote Amount",
+				"can_recur": false
+			}
+		]
+	}
+}

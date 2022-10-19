@@ -1,0 +1,83 @@
+{
+	"id": "0175921c-eb6a-474b-8190-a719ff08979e",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-services" ],
+	"keywords": [ "on-site", "susbcription", "pool cleaning", "service" ],
+	"slug": "pool-cleaning-service-subscription-form",
+	"name": "Pool Cleaning Service Subscription Form",
+	"description": "Automatically bill clients for monthly pool cleaning or maintenance.",
+	"url": "",
+	"data": {
+		"title": "Pool Cleaning Service Subscription Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes"
+			},
+			{
+				"type": "plan_select",
+				"label": "Choose Service"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Invoice Amount"
+			},
+			{
+				"type": "text",
+				"label": "Invoice Number",
+				"required": "no",
+				"metadata": "Invoice"
+			},
+			{
+				"type": "text",
+				"label": "Notes for service provider:",
+				"multiline": "yes",
+				"required": "no",
+				"metadata": "Notes"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "Pool Services $50/mo",
+				"unit_amount": 5000,
+				"default": true,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				}
+			},
+			{
+				"label": "Pool & Spa Service $95/mo",
+				"unit_amount": 9500,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				}
+			},
+			{
+				"unit_amount": 1000,
+				"unit_amount_min": 1000,
+				"label": "One Time Invoice Payment"
+			}
+		]
+	}
+}
