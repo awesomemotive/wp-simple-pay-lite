@@ -301,6 +301,11 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.6.2 - October 19, 2022 =
+
+* New: Add additional payment form templates.
+* New: Update UI for global anti-spam settings in the form builder.
+
 = Stripe Payment Forms v4.6.0 - October 11, 2022 =
 
 * New: Add Thailand to list of supported Stripe countries.
@@ -324,15 +329,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 = Stripe Payment Forms v4.4.7.1 - July 12, 2022 =
 
 * Fix: Only enqueue button block scripts in the block editor.
-
-= Stripe Payment Forms v4.4.7 - July 6, 2022 =
-
-* New: Add support for launching off-site Stripe Checkout forms with the core block editor button block.
-* New: Stripe Checkout - add support for adjustable quantities.
-* New: Update styling for payment form previews.
-* New: Update form builder UI and organization.
-* New: Improve System Report by utilizing Site Health.
-* Fix: Ensure dashboard widget does not cause a JavaScript error in some instances.
-* Fix: Ensure UI elements that cannot be used are not shown.
-* Fix: Ensure more compatibility with MySQL indexes.
-* Fix: Update Stripe API PHP library to `8.5.0`.
