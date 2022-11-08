@@ -1,0 +1,44 @@
+{
+	"id": "62a2605b-e62b-4372-b142-3b23be117f3c",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
+	"slug": "one-time-custom-amount-form",
+	"name": "One-Time Custom Amount Form",
+	"description": "Allow visitors to enter a custom amount to pay or donate.",
+	"url": "",
+	"data": {
+		"title": "One-Time Custom Amount Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Amount",
+				"prefill_default": "yes"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 7299,
+				"unit_amount_min": 1000
+			}
+		]
+	}
+}

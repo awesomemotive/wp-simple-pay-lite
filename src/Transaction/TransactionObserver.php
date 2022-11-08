@@ -66,27 +66,51 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	public function get_subscribed_events() {
 		$observe = array(
 			// Initial one time payment.
-			'simpay_after_paymentintent_from_payment_form_request'    =>
-				array( 'add_on_payment_intent', 10, 4 ),
+			'simpay_after_paymentintent_from_payment_form_request' =>
+				array(
+					array( 'add_on_payment_intent', 10, 4 ),
+					// @todo This might not be the best place for this,
+					// but it makes enough sense for now.
+					array( 'maybe_decrement_stock', 10, 4 ),
+				),
+			// Initial one time payment (automatic tax).
+			'simpay_after_order_submit_from_payment_form_request' =>
+				array(
+					array( 'add_on_order', 10, 3 ),
+					// @todo This might not be the best place for this,
+					// but it makes enough sense for now.
+					array( 'maybe_decrement_stock_order', 10, 3 ),
+				),
 			// Initial recurring payment.
-			'simpay_after_subscription_from_payment_form_request'     =>
-				array( 'add_on_subscription', 10, 2 ),
+			'simpay_after_subscription_from_payment_form_request' =>
+				array(
+					array( 'add_on_subscription', 10, 2 ),
+					// @todo This might not be the best place for this,
+					// but it makes enough sense for now.
+					array( 'maybe_decrement_stock', 10, 4 ),
+				),
 			// Initial Checkout Session.
 			'simpay_after_checkout_session_from_payment_form_request' =>
 				array( 'add_on_checkout_session', 10, 2 ),
 			// Update one time payment.
-			'simpay_webhook_payment_intent_succeeded'                 =>
+			'simpay_webhook_payment_intent_succeeded'   =>
 				array( 'update_on_payment_intent', 10, 2 ),
 			// Update Checkout Session.
-			'simpay_webhook_checkout_session_completed'               =>
+			'simpay_webhook_checkout_session_completed' =>
 				array( 'update_on_checkout_session', 10, 4 ),
-			'simpay_webhook_invoice_payment_succeeded'                =>
+			'simpay_webhook_invoice_payment_succeeded'  =>
 				array(
 					// Initial recurring subsequent invoice.
 					array( 'add_on_invoice', 10, 3 ),
 					// Update recurring subsequent invoice.
 					array( 'update_on_invoice', 10, 3 ),
 				),
+
+			// Update on charge failed.
+			// @todo This might not be the best place for this, but it makes
+			// enough sense for now.
+			'simpay_webhook_charge_failed'              =>
+				array( 'maybe_increment_stock', 10, 2 ),
 		);
 
 		// Update Checkout Session in Lite when viewing confirmation.
@@ -172,7 +196,100 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'email'           => $customer->email,
 				'customer_id'     => $customer->id,
 				'subscription_id' => null,
-				'status'		  => $payment_intent->status,
+				'status'          => $payment_intent->status,
+				'application_fee' => $this->application_fee->has_application_fee(),
+			)
+		);
+	}
+
+	/**
+	 * Logs a transaction when an Order is submitted.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param array<mixed>                   $request REST API request.
+	 * @param \SimplePay\Vendor\Stripe\Order $order Order object.
+	 * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+	 * @return void
+	 */
+	public function add_on_order( $request, $order, $form ) {
+		/** @var array<string, string> $form_values */
+		$form_values = $request['form_values'];
+
+		/** @var string $form_data */
+		$form_data = $request['form_data'];
+		$form_data = json_decode( $form_data, true );
+		/** @var array<string, array<string, string>> $form_data */
+
+		$quantity = isset( $form_values['simpay_quantity'] )
+			? intval( $form_values['simpay_quantity'] )
+			: 1;
+
+		$price = simpay_payment_form_prices_get_price_by_id(
+			$form,
+			$form_data['price']['id']
+		);
+
+		if ( false === $price ) {
+			return;
+		}
+
+		// Custom amount. Verify minimum amount.
+		if ( false === simpay_payment_form_prices_is_defined_price( $price->id ) ) {
+			// Ensure custom amount meets minimum requirement.
+			/** @var int $unit_amount */
+			$unit_amount = $form_data['customAmount'];
+
+			if ( $unit_amount < $price->unit_amount_min ) {
+				$unit_amount = $price->unit_amount_min;
+			}
+		} else {
+			$unit_amount = $price->unit_amount;
+		}
+
+		/** @var int $unit_amount */
+
+		// Backwards compatibility amount filter.
+		if ( has_filter( 'simpay_form_' . $form->id . '_amount' ) ) {
+			/** @var int $unit_amount */
+			$unit_amount = simpay_get_filtered(
+				'amount',
+				simpay_convert_amount_to_dollars( $unit_amount ),
+				$form->id
+			);
+
+			$unit_amount = simpay_convert_amount_to_cents( $unit_amount );
+		}
+
+		// Calculate quantity.
+		$quantity = isset( $form_values['simpay_quantity'] )
+			? intval( $form_values['simpay_quantity'] )
+			: 1;
+
+		$subtotal = $unit_amount * $quantity;
+
+		/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
+		$payment_intent = $order->payment->payment_intent; // @phpstan-ignore-line
+
+		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
+		$customer = $order->customer;
+
+		$this->transactions->add(
+			array(
+				'form_id'         => $form->id,
+				'object'          => $payment_intent->object,
+				'object_id'       => $payment_intent->id,
+				'livemode'        => (bool) $payment_intent->livemode,
+				'amount_total'    => $payment_intent->amount,
+				'amount_subtotal' => $subtotal,
+				'amount_shipping' => $order->total_details->amount_shipping, // @phpstan-ignore-line
+				'amount_discount' => $order->total_details->amount_discount, // @phpstan-ignore-line
+				'amount_tax'      => $order->total_details->amount_tax, // @phpstan-ignore-line
+				'currency'        => $payment_intent->currency,
+				'email'           => $customer->email,
+				'customer_id'     => $customer->id,
+				'subscription_id' => null,
+				'status'          => $payment_intent->status,
 				'application_fee' => $this->application_fee->has_application_fee(),
 			)
 		);
@@ -208,7 +325,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'email'           => $customer->email,
 				'customer_id'     => $customer->id,
 				'subscription_id' => $subscription->id,
-				'status'		  => $subscription->status,
+				'status'          => $subscription->status,
 				'application_fee' => $this->application_fee->has_application_fee(),
 			)
 		);
@@ -322,7 +439,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'email'           => $checkout_session->customer_email,
 				'customer_id'     => $checkout_session->customer,
 				'subscription_id' => $checkout_session->subscription,
-				'status'		  => $checkout_session->status,
+				'status'          => $checkout_session->status,
 				'application_fee' => $this->application_fee->has_application_fee(),
 			)
 		);
@@ -392,7 +509,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			$object_id = $payment_intent->id;
 
 			// Recurring payment, paid today.
-		} else if (
+		} elseif (
 			'subscription' === $checkout_session->mode &&
 			null !== $subscription &&
 			null === $checkout_session->setup_intent &&
@@ -410,7 +527,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			// Free trials/non-payment invoices for non-Stripe Checkout payment
 			// forms do not have access to the SetupIntent.
 			// @todo maybe set the object_id to null for consistent behavior?
-		} else if (
+		} elseif (
 			'subscription' === $checkout_session->mode &&
 			null !== $checkout_session->setup_intent
 		) {
@@ -474,7 +591,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	 */
 	public function update_on_checkout_session_lite( $payment_confirmation_data ) {
 		// Session ID is not available, do nothing.
-		if ( ! isset( $_GET['session_id' ] ) ) {
+		if ( ! isset( $_GET['session_id'] ) ) {
 			return;
 		}
 
@@ -500,13 +617,14 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					'expand' => array(
 						'customer',
 						'payment_intent',
-					)
+					),
 				),
 				$form->get_api_request_args()
 			);
 
 			/** @var \SimplePay\Vendor\Stripe\Customer $customer */
-			$customer       = $session->customer;
+			$customer = $session->customer;
+
 			/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
 			$payment_intent = $session->payment_intent;
 
@@ -642,6 +760,147 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'application_fee' => $this->application_fee->has_application_fee(),
 			)
 		);
+	}
+
+	/**
+	 * Possibly decremeents available stock/inventory if the price option requires it.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param stdClass                       $object Stripe object.
+	 * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+	 * @param array<mixed>                   $form_data Form data generated by the client.
+	 * @param array<mixed>                   $form_values Form values.
+	 * @return void
+	 */
+	public function maybe_decrement_stock( $object, $form, $form_data, $form_values ) {
+		if ( false === $form->is_managing_inventory() ) {
+			return;
+		}
+
+		$behavior = $form->get_inventory_behavior();
+		$quantity = isset( $form_values['simpay_quantity'] )
+			? intval( $form_values['simpay_quantity'] )
+			: 1;
+
+		switch ( $behavior ) {
+			case 'combined':
+				$form->adjust_inventory( 'decrement', $quantity, null );
+
+				break;
+			case 'individual':
+				$price = simpay_payment_form_prices_get_price_by_id(
+					$form,
+					$form_data['price']['id'] // @phpstan-ignore-line
+				);
+
+				if ( false !== $price ) {
+					$form->adjust_inventory( 'decrement', $quantity, $price->instance_id );
+				}
+
+				break;
+		}
+	}
+
+	/**
+	 * Possibly decremeents available stock/inventory if the price option requires
+	 * it when using automatic taxes.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param array<string, string|array<string, string>> $request REST API request.
+	 * @param \SimplePay\Vendor\Stripe\Order              $order Stripe Order.
+	 * @param \SimplePay\Core\Abstracts\Form              $form Form instance.
+	 * @return void
+	 */
+	public function maybe_decrement_stock_order( $request, $order, $form ) {
+		if ( false === $form->is_managing_inventory() ) {
+			return;
+		}
+
+		/** @var array<string, string> $form_values */
+		$form_values = $request['form_values'];
+
+		/** @var string $form_data */
+		$form_data = $request['form_data'];
+		$form_data = json_decode( $form_data, true );
+		/** @var array<string, array<string, string>> $form_data */
+
+		$quantity = isset( $form_values['simpay_quantity'] )
+			? intval( $form_values['simpay_quantity'] )
+			: 1;
+
+		$behavior = $form->get_inventory_behavior();
+
+		switch ( $behavior ) {
+			case 'combined':
+				$form->adjust_inventory( 'decrement', $quantity, null );
+
+				break;
+			case 'individual':
+				$price = simpay_payment_form_prices_get_price_by_id(
+					$form,
+					$form_data['price']['id']
+				);
+
+				if ( false !== $price ) {
+					$form->adjust_inventory( 'decrement', $quantity, $price->instance_id );
+				}
+
+				break;
+		}
+	}
+
+	/**
+	 * Increments inventory when a payment fails to process.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Event  $event Webhook event.
+	 * @param \SimplePay\Vendor\Stripe\Charge $charge Charge object.
+	 * @return void
+	 */
+	public function maybe_increment_stock( $event, $charge ) {
+		// Subscription.
+		if ( $charge->invoice ) {
+			/** @var \SimplePay\Vendor\Stripe\Invoice $invoice Expanded by event receiver. */
+			$invoice = $charge->invoice;
+
+			if ( 'subscription_create' !== $invoice->billing_reason ) {
+				return;
+			}
+
+			$object = $invoice->subscription;
+
+			// One-time.
+		} else {
+			$object = $charge->payment_intent;
+		}
+
+		if ( ! isset( $object->metadata->simpay_form_id ) ) {
+			return;
+		}
+
+		$form = simpay_get_form( $object->metadata->simpay_form_id );
+
+		if ( false === $form ) {
+			return;
+		}
+
+		if ( ! isset( $object->metadata->simpay_price_instances ) ) {
+			return;
+		}
+
+		$prices = $object->metadata->simpay_price_instances;
+		$prices = explode( '|', $prices );
+
+		foreach ( $prices as $price_option ) {
+			$price_option_parts = explode( ':', $price_option );
+			$instance_id        = $price_option_parts[0];
+			$quantity           = intval( $price_option_parts[1] );
+
+			$form->adjust_inventory( 'increment', $quantity, $instance_id );
+		}
 	}
 
 }

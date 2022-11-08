@@ -1,14 +1,14 @@
 {
-	"id": "86d08d6b-8e84-4e59-9177-cf946bb9f910",
+	"id": "5201e546-8de6-42dc-9e5f-d3cc51813fa2",
 	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
 	"categories": [ "features-functionality" ],
-	"keywords": [ "apple", "google", "microsoft", "express", "on-site" ],
-	"slug": "payment-request-form",
-	"name": "Apple Pay / Google Pay Form",
-	"description": "Collect payments with Apple Pay and Google Pay.",
+	"keywords": [ "on-site", "coupon", "discount" ],
+	"slug": "coupon-code-payment-form",
+	"name": "Coupon Code Payment Form",
+	"description": "Collect credit card payments with a basic form, accept coupons.",
 	"url": "",
 	"data": {
-		"title": "Apple Pay / Google Pay Form",
+		"title": "Coupon Code Payment Form",
 		"description": "",
 		"type": "embedded",
 		"payment_methods": [ "card" ],
@@ -22,7 +22,8 @@
 				"label": ""
 			},
 			{
-				"type": "payment_request_button"
+				"type": "coupon",
+				"label": "Coupon Code"
 			},
 			{
 				"type": "card",

@@ -17,6 +17,19 @@ import UpgradeModal from './upgrade-modal.js';
 const { licenseLevel, addNewUrl, isLite } = simpayFormBuilderTemplateExplorer;
 const baseClassName = 'simpay-form-template-explorer-main__content';
 
+const noDemo = [
+	'payment-button',
+	'donate-button',
+	'payment-form',
+	'product-installment-plan-form',
+	'product-purchse-form',
+	'product-subscription-form',
+	'product-subscription-form-coupon',
+	'recurring-service-setup-fee-form',
+	'recurring-service-trial-period-form',
+	'recurring-services-form',
+];
+
 function TemplateListItem( { template } ) {
 	const [ isShowingUpgradeModal, setIsShowingUpgradeModal ] = useState(
 		false
@@ -88,9 +101,7 @@ function TemplateListItem( { template } ) {
 							: __( 'Use Template', 'simple-pay' ) }
 					</Button>
 
-					{ ! Object.keys( template.categories ).includes(
-						'features-functionality'
-					) && (
+					{ ! noDemo.includes( template.slug ) && (
 						<Button
 							isSecondary
 							variant="secondary"

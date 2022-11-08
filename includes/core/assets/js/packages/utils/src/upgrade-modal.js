@@ -24,15 +24,39 @@ export function maybeBlockCheckboxWithUpgradeModal( e ) {
 	}
 
 	e.preventDefault();
+	e.stopImmediatePropagation();
 
-	upgradeModal( {
-		title: upgradeTitle,
-		description: upgradeDescription,
-		url: upgradeUrl,
-		purchasedUrl: upgradePurchasedUrl,
-	} );
+	upgradeModal(
+		{
+			title: upgradeTitle,
+			description: upgradeDescription,
+			url: upgradeUrl,
+			purchasedUrl: upgradePurchasedUrl,
+		},
+		{
+			close() {
+				if ( 'radio' === target.type ) {
+					const prevValue = target.dataset.prevValue;
 
-	target.checked = false;
+					const prevValueInput = document.querySelector(
+						`input[name="${ e.target.name }"][value="${ prevValue }"]`
+					);
+
+					if ( prevValueInput ) {
+						prevValueInput.checked = true;
+
+						const evt = document.createEvent( 'HTMLEvents' );
+						evt.initEvent( 'change', true, true );
+						prevValueInput.dispatchEvent( evt );
+
+						prevValueInput.focus();
+					}
+				}
+
+				target.checked = false;
+			},
+		}
+	);
 
 	return false;
 }

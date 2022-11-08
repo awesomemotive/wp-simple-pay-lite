@@ -52,8 +52,26 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	 */
 	public function get_subscribed_events() {
 		return array(
-			'admin_init' => 'maybe_filter_debug_information',
+			'site_health_navigation_tabs' => 'maybe_remove_auto_update_string',
+			'admin_init'                  => 'maybe_filter_debug_information',
 		);
+	}
+
+	/**
+	 * Potentially adds a filter to the "Auto-Update Debug" string.
+	 *
+	 * Utilizing the filter `site_health_navigation_tabs` because it runs before
+	 * the page is output. Not available in WP < 5.8.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param array<string, string> $tabs Site Health tabs.
+	 * @return array<string, string>
+	 */
+	function maybe_remove_auto_update_string( $tabs ) {
+		add_filter( 'plugin_auto_update_debug_string', '__return_empty_string' );
+
+		return $tabs;
 	}
 
 	/**
@@ -282,13 +300,96 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	}
 
 	/**
+	 * Returns a list of plugin slugs that may conflict with WP Simple Pay.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return array<string>
+	 */
+	private function get_potential_plugin_conflict_blocklist() {
+		return array(
+			'autoptimize/autoptimize.php',
+			'cleantalk-spam-protect/cleantalk.php',
+			'defender-security/wp-defender.php',
+			'schema-app-structured-data-for-schemaorg/hunch-schema.php',
+			'sg-cachepress/sg-cachepress.php',
+			'wordfence/wordfence.php',
+			'wp-optimize/wp-optimize.php',
+			'wp-simple-firewall/icwp-wpsf.php',
+			'wp-rocket/wp-rocket.php',
+		);
+	}
+
+	/**
+	 * Returns a list of active plugins.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return array<string, array<string, string>>
+	 */
+	private function get_active_plugin_list() {
+		$plugins = get_plugins();
+		$plugins = array_filter(
+			$plugins,
+			function( $plugin_path ) {
+				return is_plugin_active( $plugin_path );
+			},
+			ARRAY_FILTER_USE_KEY
+		);
+
+		return $plugins;
+	}
+
+	/**
+	 * Returns a list of plugin names that may be conflicting with WP Simple Pay.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return string List of plugin names that may cause conflict. Blank if there are no conflicts.
+	 */
+	private function get_potential_plugin_conflicts() {
+		$active_plugins      = $this->get_active_plugin_list();
+		$potential_conflicts = $this->get_potential_plugin_conflict_blocklist();
+
+		$plugins = array_filter(
+			$active_plugins,
+			function( $plugin_path ) use ( $potential_conflicts ) {
+				return in_array(
+					$plugin_path,
+					$potential_conflicts,
+					true
+				);
+			},
+			ARRAY_FILTER_USE_KEY
+		);
+
+		if ( empty( $plugins ) ) {
+			return '';
+		}
+
+		$plugins = array_map(
+			function( $plugin_data ) {
+				return $plugin_data['Name'];
+			},
+			$plugins
+		);
+
+		$plugin_names = array_values( $plugins );
+		sort( $plugin_names );
+
+		$plugin_names = implode( ', ', $plugin_names );
+
+		return $plugin_names;
+	}
+
+	/**
 	 * Filters the debug information to include our plugin-specific site health
 	 * panel in the generated UI.
 	 *
 	 * @since 4.4.7
 	 *
-	 * @param array<string, array<string, string>|string> $debug_info Site health debug information.
-	 * @return array<string, array<string, array<string, array<string, string>>|string>|string>
+	 * @param array<string, array<string, array<string, array<string, string>|string>|string>> $debug_info Site health debug information.
+	 * @return array<string, array<string, array<string, array<string, string>|string>|string>>
 	 */
 	public function debug_information( $debug_info ) {
 		$plugin = array(
@@ -333,6 +434,15 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			),
 		);
 
+		$potential_conflicts = $this->get_potential_plugin_conflicts();
+
+		if ( ! empty( $potential_conflicts ) ) {
+			$plugin['fields']['potential_conflicts'] = array(
+				'label' => __( '⚠️ Potential Conflicts', 'stripe' ),
+				'value' => $potential_conflicts,
+			);
+		}
+
 		// Be respectful and keep ours at the bottom if showing all debug information.
 		if ( ! isset( $_GET['simpay'] ) ) {
 			return array_merge(
@@ -342,6 +452,29 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 				)
 			);
 		}
+
+		unset( $debug_info['wp-themes-inactive'] );
+		unset( $debug_info['wp-plugins-inactive'] );
+		unset( $debug_info['wp-media'] );
+		unset( $debug_info['wp-active-theme']['fields']['theme_features'] );
+
+		/** @var array<string, array<string, string>> $active_plugins */
+		$active_plugins = $debug_info['wp-plugins-active']['fields'];
+
+		// Remove " | " after the auto update string has been filtered out. Pointless...
+		$active_plugins_cleaned = array_map(
+			function( $plugin_data ) {
+				return array_merge(
+					$plugin_data,
+					array(
+						'value' => str_replace( ' | ', '', $plugin_data['value'] ),
+					)
+				);
+			},
+			$active_plugins
+		);
+
+		$debug_info['wp-plugins-active']['fields'] = $active_plugins_cleaned;
 
 		// Put ours at the top otherwise.
 		return array_merge(

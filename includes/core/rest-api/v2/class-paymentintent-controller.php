@@ -70,7 +70,6 @@ class PaymentIntent_Controller extends Controller {
 	 */
 	public function create_item_permissions_check( $request ) {
 		$checks = array(
-			'stripe_cookie',
 			'rate_limit',
 			'form_nonce',
 			'required_fields',
@@ -130,6 +129,14 @@ class PaymentIntent_Controller extends Controller {
 				);
 			}
 
+			// Block access if not in schedule.
+			if ( false === $form->has_available_schedule() ) {
+				throw new \Exception(
+					esc_html__( 'Invalid request. Please try again.', 'stripe' )
+				);
+			}
+
+			// Block acccess if form type is incorrect.
 			if ( 'stripe_checkout' === $form->get_display_type() ) {
 				throw new \Exception(
 					esc_html__( 'Invalid request. Please try again.', 'stripe' )

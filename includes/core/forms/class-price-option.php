@@ -34,6 +34,14 @@ class PriceOption {
 	public $form;
 
 	/**
+	 * Instance ID.
+	 *
+	 * @since 4.6.4
+	 * @var string
+	 */
+	public $instance_id;
+
+	/**
 	 * Parent Payment Form Product ID.
 	 *
 	 * @since 4.1.0
@@ -195,9 +203,11 @@ class PriceOption {
 	 *   }
 	 * }
 	 * @param \SimplePay\Core\Abstract\Form $form Payment Form.
+	 * @param string|null                   $instance_id Price option instance ID.
+	 *                                                   Passing null falls back to a random instance ID.
 	 * @throws \Exception If the PriceOption is invalid.
 	 */
-	public function __construct( $price_data, $form ) {
+	public function __construct( $price_data, $form, $instance_id = null ) {
 		if ( false === $form ) {
 			throw new Exception(
 				__(
@@ -209,6 +219,11 @@ class PriceOption {
 
 		// Attach Payment Form.
 		$this->form = $form;
+
+		// Attach instance ID.
+		$this->instance_id = null !== $instance_id
+			? sanitize_text_field( $instance_id )
+			: wp_generate_uuid4();
 
 		// Attach parent Product.
 		$product_key = true === $form->is_livemode()
@@ -426,6 +441,33 @@ class PriceOption {
 	 */
 	public function get_display_label() {
 		if ( null !== $this->label ) {
+			if ( false === $this->is_in_stock() ) {
+				$out_of_stock_price_option_label = sprintf(
+					/* translators: %s Price option label */
+					__(
+						'%s (Out of stock)',
+						'stripe'
+					),
+					$this->label
+				);
+
+				/**
+				 * Filters the out of stock price option label.
+				 *
+				 * @since 4.6.4
+				 *
+				 * @param string $out_of_stock_price_option_label The out of stock price option label.
+				 * @param \SimplePay\Core\PaymentForm\PriceOption $this The price option object.
+				 */
+				$out_of_stock_price_option_label = apply_filters(
+					'simpay_out_of_stock_price_option_label',
+					$out_of_stock_price_option_label,
+					$this
+				);
+
+				return $out_of_stock_price_option_label;
+			}
+
 			return $this->label;
 		}
 
@@ -536,6 +578,27 @@ class PriceOption {
 			);
 		}
 
+		// Append out of stock message if needed.
+		if ( false === $this->is_in_stock() ) {
+			$out_of_stock_price_option_label = sprintf(
+				/* translators: %s Price option label */
+				__(
+					'%s (Out of stock)',
+					'stripe'
+				),
+				$label
+			);
+
+			/** This filter is documented in includes/core/forms/class-price-option.php */
+			$out_of_stock_price_option_label = apply_filters(
+				'simpay_out_of_stock_price_option_label',
+				$out_of_stock_price_option_label,
+				$this
+			);
+
+			return $out_of_stock_price_option_label;
+		}
+
 		return $label;
 	}
 
@@ -613,7 +676,63 @@ class PriceOption {
 			);
 		}
 
+		// Append out of stock message if needed.
+		if ( false === $this->is_in_stock() ) {
+			$out_of_stock_price_option_label = sprintf(
+				/* translators: %s Price option label */
+				__(
+					'%s (Out of stock)',
+					'stripe'
+				),
+				$label
+			);
+
+			/** This filter is documented in includes/core/forms/class-price-option.php */
+			$out_of_stock_price_option_label = apply_filters(
+				'simpay_out_of_stock_price_option_label',
+				$out_of_stock_price_option_label,
+				$this
+			);
+
+			return $out_of_stock_price_option_label;
+		}
+
 		return $label;
+	}
+
+	/**
+	 * Determines if the price option is in stock for purchase.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param int $quantity The quantity of stock to check for.
+	 * @return bool True if in stock, false otherwise.
+	 */
+	public function is_in_stock( $quantity = 1 ) {
+		if ( false === $this->form->is_managing_inventory() ) {
+			return true;
+		}
+
+		$behavior = $this->form->get_inventory_behavior();
+		$in_stock = false;
+
+		switch ( $behavior ) {
+			case 'combined':
+				$combined = $this->form->get_combined_inventory_data();
+				$in_stock = $combined['available'] >= $quantity;
+
+				break;
+			case 'individual':
+				$individual = $this->form->get_individual_inventory_data();
+				$in_stock   = (
+					isset( $individual[ $this->instance_id ] ) &&
+					$individual[ $this->instance_id ]['available'] >= $quantity
+				);
+
+				break;
+		}
+
+		return $in_stock;
 	}
 
 	/**
@@ -627,6 +746,26 @@ class PriceOption {
 		$price_data = get_object_vars( $this );
 		unset( $price_data['__unstable_stripe_object'] );
 		unset( $price_data['form'] );
+
+		// Add inventory data.
+		if ( true === $this->form->is_managing_inventory() ) {
+			$behavior = $this->form->get_inventory_behavior();
+
+			switch ( $behavior ) {
+				case 'combined':
+					$combined  = $this->form->get_combined_inventory_data();
+					$inventory = $combined['available'];
+
+					break;
+				case 'individual':
+					$individual = $this->form->get_individual_inventory_data();
+					$inventory  = $individual[ $this->instance_id ]['available'];
+
+					break;
+			}
+
+			$price_data['inventory'] = $inventory;
+		}
 
 		return $price_data;
 	}

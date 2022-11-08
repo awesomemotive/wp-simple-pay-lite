@@ -1,0 +1,52 @@
+{
+	"id": "23afba6d-d85a-479b-96db-cb794b99684b",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
+	"slug": "subscription-setup-fee-form",
+	"name": "Subscription Setup Fee Form",
+	"description": "Charge an additional setup fee when a recurring subscription is purchased.",
+	"url": "",
+	"data": {
+		"title": "Subscription Setup Fee Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "total_amount",
+				"label": "Total due today"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"line_items": {
+					"subscription-setup-fee": {
+						"unit_amount": 4500
+					}
+				},
+				"default": true
+			}
+		]
+	}
+}

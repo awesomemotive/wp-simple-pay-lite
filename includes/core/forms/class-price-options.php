@@ -84,7 +84,8 @@ class PriceOptions {
 			try {
 				$price_options[ $instance_id ] = new PriceOption(
 					$price_data,
-					$this->form
+					$this->form,
+					$instance_id
 				);
 			} catch ( Exception $e ) {
 				continue;

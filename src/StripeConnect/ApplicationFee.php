@@ -12,6 +12,7 @@
 namespace SimplePay\Core\StripeConnect;
 
 use Exception;
+use SimplePay\Core\API;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
@@ -19,7 +20,6 @@ use SimplePay\Core\Payments\Stripe_Checkout\Session;
 use SimplePay\Core\Scheduler\SchedulerInterface;
 use SimplePay\Core\Settings;
 use SimplePay\Core\Transaction\TransactionRepository;
-use SimplePay\Pro\Payments\Subscription;
 
 /**
  * ApplicationFee class.
@@ -233,39 +233,6 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	}
 
 	/**
-	 * Removes an application fee from a Subscription if the license is now valid.
-	 *
-	 * @since 4.4.6
-	 *
-	 * @param \SimplePay\Vendor\Stripe\Event $event invoice.created Event.
-	 * @param \SimplePay\Vendor\Stripe\Invoice $invoice Finalized invoice.
-	 * @param \SimplePay\Vendor\Stripe\Subscription $subscription Invoice subscription.
-	 * @return void
-	 */
-	public function maybe_remove_subscription_application_fee( $event, $invoice, $subscription ) {
-		// An application fee should still be applied, do nothing.
-		if ( true === $this->has_application_fee() ) {
-			return;
-		}
-
-		// Subscription does not have an application fee, do nothing.
-		if ( null === $subscription->application_fee_percent ) {
-			return;
-		}
-
-		try {
-			Subscription\update(
-				$subscription->id,
-				array(
-					'application_fee_percent' => 0,
-				)
-			);
-		} catch ( Exception $e ) {
-			// Do nothing.
-		}
-	}
-
-	/**
 	 * Determines if an application fee is being added to payments.
 	 *
 	 * @since 4.4.1
@@ -426,7 +393,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			// Remove the applicaiton fee from each Subscription.
 			try {
 				// Update in Stripe.
-				Subscription\update(
+				API\Subscriptions\update(
 					$subscription_id,
 					array(
 						'application_fee_percent' => 0,

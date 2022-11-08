@@ -71,7 +71,6 @@ class Checkout_Session_Controller extends Controller {
 	 */
 	public function create_item_permissions_check( $request ) {
 		$checks = array(
-			'stripe_cookie',
 			'rate_limit',
 			'form_nonce',
 			'required_fields',

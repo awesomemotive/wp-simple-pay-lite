@@ -1,0 +1,54 @@
+{
+	"id": "dde0de95-33c5-4320-b312-807d66b85f0f",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
+	"slug": "subscription-payment-form",
+	"name": "Subscription Payment Form",
+	"description": "Activate recurring subscription payments for your customers.",
+	"url": "",
+	"data": {
+		"title": "Subscription Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "total_amount",
+				"label": ""
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"unit_amount": 10000,
+				"recurring": {
+					"interval": "year",
+					"interval_count": 1
+				}
+			}
+		]
+	}
+}

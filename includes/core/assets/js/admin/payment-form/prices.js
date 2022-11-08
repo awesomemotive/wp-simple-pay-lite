@@ -8,6 +8,7 @@ import domReady from '@wordpress/dom-ready';
 /**
  * Internal dependencies
  */
+import { doAction } from '@wpsimplepay/hooks';
 import {
 	maybeBlockButtonWithUpgradeModal,
 	upgradeModal,
@@ -94,15 +95,15 @@ function togglePriceOptionSingle() {
 function onChangeLabel( priceEl ) {
 	const labelDisplay = priceEl.querySelector( '.simpay-price-label-display' );
 	const labelInput = priceEl.querySelector( '.simpay-price-label' );
+	let label;
 
 	const {
 		strings: { recurringIntervalDisplay, customAmountLabel },
 	} = spGeneral;
 
 	if ( '' !== labelInput.value ) {
-		labelDisplay.innerHTML = labelInput.value;
+		label = labelInput.value;
 	} else {
-		let label;
 		const currencyInput = priceEl.querySelector( '.simpay-price-currency' );
 		const amountInput = priceEl.querySelector( '.simpay-price-amount' );
 		const amountTypeInput = priceEl.querySelector(
@@ -183,9 +184,11 @@ function onChangeLabel( priceEl ) {
 
 			label = recurringIntervalDisplayReplaced;
 		}
-
-		labelDisplay.innerHTML = label;
 	}
+
+	labelDisplay.innerHTML = label;
+
+	doAction( 'simpayFormBuilderPriceOptionLabelUpdated', label, priceEl );
 }
 
 /**
@@ -381,6 +384,8 @@ function onRemove( priceEl ) {
 
 	// Toggle label fields.
 	togglePriceOptionSingle();
+
+	doAction( 'simpayFormBuilderPriceRemoved', priceEl.id );
 }
 
 /**
@@ -412,6 +417,8 @@ function onAddPrice( buttonEl ) {
 
 			// Toggle label fields.
 			togglePriceOptionSingle();
+
+			doAction( 'simpayFormBuilderPriceAdded', response );
 		},
 		error: ( { message } ) => {
 			alert( message );
