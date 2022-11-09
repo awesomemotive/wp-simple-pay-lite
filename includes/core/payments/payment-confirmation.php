@@ -11,15 +11,125 @@
 namespace SimplePay\Core\Payments\Payment_Confirmation;
 
 use SimplePay\Core\API;
-use SimplePay\Core\Forms\Default_Form;
 use SimplePay\Core\Payments\Stripe_Checkout\Session;
-use SimplePay\Core\Payments\Stripe_API;
 use SimplePay\Core\Payments\PaymentIntent;
 use SimplePay\Pro\Emails;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+/**
+ * Runs action(s) related to viewing a payment confirmation.
+ *
+ * @since 4.6.4
+ *
+ * @param array $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer                  $customer
+ *                                                            Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form                     $form
+ *                                                            Payment form.
+ *   @type array<\SimplePay\Core\Vendor\Stripe\Subscription>  $subscriptions
+ *                                                            The Customer's latest Subscriptions (limit 1).
+ *   @type array<\SimplePay\Core\Vendor\Stripe\PaymentIntent> $paymentintents
+ *                                                            The Customer's latest PaymentIntents (limit 1).
+ * }
+ * @return void
+ */
+function do_confirmation_actions( $payment_confirmation_data ) {
+	/**
+	 * Internal hook to allow legacy hooks that rely on "complete" payments.
+	 *
+	 * @since 3.6.0
+	 *
+	 * @param array $payment_confirmation_data {
+	 *   Contextual information about this payment confirmation.
+	 *
+	 *   @type \SimplePay\Vendor\Stripe\Customer                  $customer
+	 *                                                            Stripe Customer
+	 *   @type \SimplePay\Core\Abstracts\Form                     $form
+	 *                                                            Payment form.
+	 *   @type array<\SimplePay\Core\Vendor\Stripe\Subscription>  $subscriptions
+	 *                                                            The Customer's latest Subscriptions (limit 1).
+	 *   @type array<\SimplePay\Core\Vendor\Stripe\PaymentIntent> $paymentintents
+	 *                                                            The Customer's latest PaymentIntents (limit 1).
+	 * }
+	 * @param \SimplePay\Core\Abstracts\Form                      $form Payment form.
+	 * @param array<string, mixed>                                $_GET $_GET data.
+	 */
+	do_action(
+		'_simpay_payment_confirmation',
+		$payment_confirmation_data,
+		$payment_confirmation_data['form'],
+		$_GET
+	);
+
+	if ( ! empty( $payment_confirmation_data[ 'paymentintents' ] ) ) {
+		$objects     = $payment_confirmation_data[ 'paymentintents' ];
+		$object_type = 'payment_intent';
+	} else {
+		$objects     = $payment_confirmation_data[ 'subscriptions' ];
+		$object_type = 'subscription';
+	}
+
+	if ( empty( $objects ) ) {
+		return;
+	}
+
+	// Retrieve the most current object associated with the Customer.
+	//
+	// @todo In the future, if multiple purchases can be associated with a single
+	// Customer, this will need to pull a more specific item to check.
+	$object = current( $objects );
+
+	// Flag/action used to ensure this only runs once.
+	$flag = 'simpay_payment_receipt_viewed';
+
+	// Do nothing if the object has already been tracked as viewed.
+	if ( isset( $object->metadata->$flag ) ) {
+		return;
+	}
+
+	// Update the purchase object, marking it as viewed.
+	$update = array(
+		'metadata' => array(
+			$flag => time(),
+		),
+	);
+
+	switch ( $object_type ) {
+		case 'payment_intent':
+			API\PaymentIntents\update( $object->id, $update );
+			break;
+
+		case 'subscription':
+			API\Subscriptions\update( $object->id, $update );
+			break;
+	}
+
+	/**
+	 * Performs an action the first time a payment receipt is viewed. This will
+	 * not be called when a payment receipt for a specific purchase is visited again.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param array $payment_confirmation_data {
+	 *   Contextual information about this payment confirmation.
+	 *
+	 *   @type \SimplePay\Vendor\Stripe\Customer                  $customer
+	 *                                                            Stripe Customer
+	 *   @type \SimplePay\Core\Abstracts\Form                     $form
+	 *                                                            Payment form.
+	 *   @type array<\SimplePay\Core\Vendor\Stripe\Subscription>  $subscriptions
+	 *                                                            Subscriptions associated with the Customer.
+	 *   @type array<\SimplePay\Core\Vendor\Stripe\PaymentIntent> $paymentintents
+	 *                                                            PaymentIntents associated with the Customer.
+	 * }
+	 */
+	do_action( $flag, $payment_confirmation_data );
 }
 
 /**
@@ -32,13 +142,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param bool|string $customer_id Customer ID to retrieve. Default false.
  * @param bool|string $session_id Session ID to retrieve. Default false.
  * @param bool|int    $form_id Form ID. Default false.
- * @return array $payment_confirmation_data {
+ * @return array {
  *   Contextual information about this payment confirmation.
  *
- *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
- *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
- *   @type \SimplePay\Vendor\Stripe\Subscription[]         $subscriptions Subscriptions associated with the Customer.
- *   @type \SimplePay\Vendor\Stripe\PaymentIntent[]        $paymentintents PaymentIntents associated with the Customer.
+ *   @type \SimplePay\Vendor\Stripe\Customer                  $customer
+ *                                                            Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form                     $form
+ *                                                            Payment form.
+ *   @type array<\SimplePay\Core\Vendor\Stripe\Subscription>  $subscriptions
+ *                                                            Subscriptions associated with the Customer.
+ *   @type array<\SimplePay\Core\Vendor\Stripe\PaymentIntent> $paymentintents
+ *                                                            PaymentIntents associated with the Customer.
  * }
  */
 function get_confirmation_data( $customer_id = false, $session_id = false, $form_id = false ) {

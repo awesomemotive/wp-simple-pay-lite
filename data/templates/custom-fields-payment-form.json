@@ -1,0 +1,72 @@
+{
+	"id": "e4a9378e-a7cf-463f-a6f0-f63aed94437c",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
+	"slug": "custom-fields-payment-form",
+	"name": "Custom Fields Payment Form",
+	"description": "Collect custom data/information when collecting a payment.",
+	"url": "",
+	"data": {
+		"title": "Custom Fields Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "text",
+				"label": "Custom Text Field",
+				"metadata": "Custom Text Field",
+				"required": "yes"
+			},
+			{
+				"type": "dropdown",
+				"label": "Custom Dropdown Field",
+				"metadata": "Custom Dropdown Field",
+				"options": "Option A, Option B, Option C",
+				"required": "yes"
+			},
+			{
+				"type": "radio",
+				"label": "Custom Radio Select Field",
+				"metadata": "Custom Radio Select Field",
+				"options": "Option A, Option B, Option C",
+				"required": "yes"
+			},
+			{
+				"type": "number",
+				"label": "Custom Number Field",
+				"metadata": "Custom Number Field",
+				"min": 1,
+				"max": 10,
+				"required": "yes"
+			},
+			{
+				"type": "checkbox",
+				"label": "Custom Checkbox Field",
+				"metadata": "Custom Checkbox Field",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

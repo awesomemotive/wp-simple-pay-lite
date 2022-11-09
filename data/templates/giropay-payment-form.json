@@ -1,17 +1,17 @@
 {
-	"id": "7c1efe0a-2c73-4456-875a-5c96cf69db71",
+	"id": "c2a3a4ec-d9ef-4108-b474-d5c6854e50a4",
 	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
 	"categories": [ "features-functionality" ],
-	"keywords": [ "ach", "debit", "on-site" ],
-	"slug": "ach-debit-form",
-	"name": "ACH Direct Debit Form",
-	"description": "Accept ACH debit payments directly from bank accounts (U.S. only).",
+	"keywords": [ "on-site", "giropay", "germany" ],
+	"slug": "giropay-payment-form",
+	"name": "Giropay Payment Form",
+	"description": "Allow customers to pay with Giropay, a popular payment method in Germany.",
 	"url": "",
 	"data": {
-		"title": "ACH Direct Debit Form",
+		"title": "Giropay Payment Form",
 		"description": "",
 		"type": "embedded",
-		"payment_methods": [ "ach-debit", "card" ],
+		"payment_methods": [ "giropay", "card" ],
 		"fields": [
 			{
 				"type": "customer_name",
@@ -37,8 +37,8 @@
 		],
 		"prices": [
 			{
-				"unit_amount": 10000,
-				"currency": "usd"
+				"unit_amount": 1000,
+				"currency": "eur"
 			}
 		]
 	}

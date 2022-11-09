@@ -1,0 +1,38 @@
+{
+	"id": "877d75be-f2d8-4fac-b124-6d59e40c5457",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
+	"slug": "overlay-payment-form",
+	"name": "Overlay Payment Form",
+	"description": "Display a payment button and launch an overlay/modal payment form.",
+	"url": "",
+	"data": {
+		"title": "Overlay Payment Form",
+		"description": "",
+		"type": "overlay",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

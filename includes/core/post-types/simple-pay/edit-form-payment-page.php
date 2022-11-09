@@ -132,6 +132,15 @@ function payment_page_enable( $post_id ) {
 						/><?php esc_html_e( 'Enable a dedicated payment page', 'stripe' ); ?>
 					</label>
 
+					<p class="description">
+						<?php
+						esc_html_e(
+							'Create a dedicated distraction-free payment page without adding a new page in WordPress.',
+							'stripe'
+						);
+						?>
+					</p>
+
 					<?php if ( empty( $structure ) ) : ?>
 						<div class="notice notice-warning inline" style="margin-top: 12px;"><p>
 						<?php

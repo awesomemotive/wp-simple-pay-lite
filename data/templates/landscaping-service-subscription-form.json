@@ -67,7 +67,7 @@
 				}
 			},
 			{
-				"label": "Front & Backyard Service $100/mp",
+				"label": "Front & Backyard Service $100/mo",
 				"unit_amount": 11000,
 				"recurring": {
 					"interval": "month",

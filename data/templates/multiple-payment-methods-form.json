@@ -1,0 +1,59 @@
+{
+	"id": "4fc0a259-3fe4-4849-9f19-1e90e384e65c",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [
+		"on-site",
+		"payment-methods",
+		"card",
+		"alipay",
+		"ach-debit",
+		"giropay"
+	],
+	"slug": "multiple-payment-methods-form",
+	"name": "Multiple Payment Methods Form",
+	"description": "Present multiple payment methods and allow the customer to choose which one to use.",
+	"url": "",
+	"data": {
+		"title": "Multiple Payment Methods Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card", "alipay", "ach-debit", "giropay" ],
+		"fields": [
+			{
+				"type": "payment_request_button"
+			},
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": "Payment Amount"
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"currency": "usd",
+				"default": true
+			},
+			{
+				"unit_amount": 1000,
+				"currency": "eur"
+			}
+		]
+	}
+}

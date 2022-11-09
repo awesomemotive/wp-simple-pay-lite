@@ -1,0 +1,44 @@
+{
+	"id": "5854a5f2-8dcb-4270-9dc5-09f8c2b77170",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site", "przelewy24", "poland" ],
+	"slug": "przelewy24-payment-form",
+	"name": "Przelewy24 Payment Form",
+	"description": "Allow customers to pay with Przelewy24, a popular payment method in Poland.",
+	"url": "",
+	"data": {
+		"title": "Przelewy24 Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "p24", "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"currency": "eur"
+			}
+		]
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"id": "6d08e14b-fb0f-492d-bb2e-fad14b905f6d",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
+	"slug": "apple-pay-google-pay-payment-form",
+	"name": "Apple Pay / Google Pay Payment Form",
+	"description": "Offer 1-click checkout options with Apple Pay and Google Pay.",
+	"url": "",
+	"data": {
+		"title": "Apple Pay / Google Pay Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "payment_request_button"
+			},
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

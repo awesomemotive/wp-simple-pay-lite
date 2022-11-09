@@ -1,30 +1,31 @@
 {
-	"id": "a0668a50-8b04-4231-8bf5-54264cf7030a",
+	"id": "e1336366-a8d6-4e6b-8ece-7ab476d96e28",
 	"license": [ "professional", "ultimate", "elite" ],
 	"categories": [ "features-functionality" ],
 	"keywords": [ "buy now", "pay later", "on-site" ],
-	"slug": "klarna-form",
-	"name": "Klarna (Buy Now, Pay Later) Form",
-	"description": "Offer buy now, pay later payments with Klarna.",
+	"slug": "afterpay-clearpay-payment-form",
+	"name": "Afterpay/Clearpay (Buy Now, Pay Later) Payment Form",
+	"description": "Offer buy now, pay later payments with Afterpay/Clearpay.",
 	"url": "",
 	"data": {
-		"title": "Klarna (Buy Now, Pay Later) Form",
+		"title": "Afterpay/Clearpay (Buy Now, Pay Later) Payment Form",
 		"description": "",
 		"type": "embedded",
-		"payment_methods": [ "klarna", "card" ],
+		"payment_methods": [ "afterpay-clearpay", "card" ],
 		"fields": [
 			{
 				"type": "email",
 				"label": "Email Address"
 			},
 			{
-				"type": "address",
-				"billing-container-label": "",
-				"required": "yes"
-			},
-			{
 				"type": "plan_select",
 				"label": ""
+			},
+			{
+				"type": "address",
+				"billing-container-label": "",
+				"collect-shipping": "yes",
+				"required": "yes"
 			},
 			{
 				"type": "card",

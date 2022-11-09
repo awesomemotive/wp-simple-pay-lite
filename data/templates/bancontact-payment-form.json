@@ -1,0 +1,44 @@
+{
+	"id": "258107b2-215c-4f31-9c94-4c2aa3fd4bd3",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site", "bancontact", "belgium" ],
+	"slug": "bancontact-payment-form",
+	"name": "Bancontact Payment Form",
+	"description": "Allow customers to pay with Bancontact, a popular payment method in Belgium.",
+	"url": "",
+	"data": {
+		"title": "Bancontact Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "bancontact", "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"currency": "eur"
+			}
+		]
+	}
+}

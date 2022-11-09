@@ -157,6 +157,7 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/api/paymentintents.php' );
 		require_once( SIMPLE_PAY_INC . 'core/api/setupintents.php' );
 		require_once( SIMPLE_PAY_INC . 'core/api/coupons.php' );
+		require_once( SIMPLE_PAY_INC . 'core/api/subscriptions.php' );
 
 		// REST API.
 		new REST_API();
@@ -209,6 +210,7 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-stripe-checkout.php' );
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-custom-fields.php' );
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-payment-page.php' );
+		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-purchase-restrictions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/actions.php' );
 
 		// Load core back-end only functions.

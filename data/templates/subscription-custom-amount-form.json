@@ -1,0 +1,64 @@
+{
+	"id": "ae95db8c-d69f-4e3f-9a5f-59795e7800fe",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site" ],
+	"slug": "subscription-custom-amount-form",
+	"name": "Subscription Custom Amount Form",
+	"description": "Activate recurring subscription payments for a given custom amount.",
+	"url": "",
+	"data": {
+		"title": "Subscription Custom Amount Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": "",
+				"display_type": "buttons"
+			},
+			{
+				"type": "custom_amount",
+				"label": "Custom Amount",
+				"prefill_default": "yes"
+			},
+			{
+				"type": "total_amount",
+				"label": ""
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "Monthly",
+				"unit_amount": 1000,
+				"unit_amount_min": 100,
+				"recurring": {
+					"interval": "month",
+					"interval_count": 1
+				},
+				"default": true
+			},
+			{
+				"label": "Yearly",
+				"unit_amount": 1000,
+				"unit_amount_min": 100,
+				"recurring": {
+					"interval": "year",
+					"interval_count": 1
+				}
+			}
+		]
+	}
+}

@@ -342,6 +342,25 @@ function get_form_settings( $post ) {
 			</div>
 
 			<div
+				id="purchase-restrictions-settings-panel"
+				class="simpay-panel-hidden <?php echo esc_attr( implode( ' ', $panel_classes ) ); ?>"
+			>
+				<?php
+				/**
+				 * Allows output in the "Purchase Restrictions" form settings tab panel.
+				 *
+				 * @since 4.6.4
+				 *
+				 * @param int $form_id Current Payment Form ID.
+				 */
+				do_action(
+					'simpay_form_settings_purchase_restrictions_panel',
+					$post->ID
+				);
+				?>
+			</div>
+
+			<div
 				id="subscription-options-settings-panel"
 				class="simpay-panel-hidden <?php echo esc_attr( implode( ' ', $panel_classes ) ); ?>"
 			>
@@ -416,6 +435,12 @@ function settings_tabs( $post ) {
 		'label'  => esc_html__( 'Form Fields', 'stripe' ),
 		'target' => 'custom-form-fields-settings-panel',
 		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>',
+	);
+
+	$tabs['purchase_restrictions'] = array(
+		'label'  => esc_html__( 'Purchase Restrictions', 'stripe' ),
+		'target' => 'purchase-restrictions-settings-panel',
+		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>',
 	);
 
 	if ( has_action( 'simpay_form_settings_meta_subscription_display_panel' ) ) {

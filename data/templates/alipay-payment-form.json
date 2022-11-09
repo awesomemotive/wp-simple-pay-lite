@@ -1,0 +1,44 @@
+{
+	"id": "26b5e795-cddc-485d-97ff-adf92c559fcc",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site", "alipay" ],
+	"slug": "alipay-payment-form",
+	"name": "Alipay Payment Form",
+	"description": "Allow customers to pay with Alipay, a digital wallet in China.",
+	"url": "",
+	"data": {
+		"title": "Alipay Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "alipay", "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000,
+				"currency": "usd"
+			}
+		]
+	}
+}

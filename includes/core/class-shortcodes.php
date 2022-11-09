@@ -10,14 +10,9 @@
 
 namespace SimplePay\Core;
 
-use SimplePay\Core\Abstracts\Form;
-use SimplePay\Core\Forms\Default_Form;
-use SimplePay\Core\Payments\Payment;
 use SimplePay\Core\Payments\Payment_Confirmation;
 use SimplePay\Core\Settings;
 use SimplePay\Core\Utils;
-
-use function SimplePay\Core\SimplePay;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -150,6 +145,7 @@ class Shortcodes {
 		}
 
 		try {
+			/** @var \SimplePay\Core\Abstracts\Form $form */
 			$form = simpay_get_form( $form_id );
 
 			if ( false !== $form ) {
@@ -180,10 +176,65 @@ class Shortcodes {
 
 				ob_start();
 
-				$form->html();
+				// Check schedule for output.
+				if ( false === $form->has_available_schedule() ) {
+					$out_of_schedule_message = sprintf(
+						__(
+							'Sorry, "%s" is not available for purchase.',
+							'stripe'
+						),
+						esc_html( $form->company_name )
+					);
 
-				if ( true === $atts['isbuttonblock'] ) {
-					$this->print_button_block_script( $form_id, $atts );
+					/**
+					 * Filters the out of schedule message.
+					 *
+					 * @since 4.6.4
+					 *
+					 * @param string                         $out_of_stock_message Out of stock message.
+					 * @param \SimplePay\Core\Abstracts\Form $form Payment form.
+					 */
+					$out_of_schedule_message = apply_filters(
+						'simpay_form_out_of_schedule_message',
+						$out_of_schedule_message,
+						$form
+					);
+
+					echo wp_kses_post( wpautop( $out_of_schedule_message ) );
+
+					// Check inventory for output.
+				} elseif ( false === $form->has_available_inventory() ) {
+					$out_of_stock_message = sprintf(
+						__(
+							'Sorry, "%s" is not available for purchase.',
+							'stripe'
+						),
+						esc_html( $form->company_name )
+					);
+
+					/**
+					 * Filters the out of stock message.
+					 *
+					 * @since 4.6.4
+					 *
+					 * @param string                         $out_of_stock_message Out of stock message.
+					 * @param \SimplePay\Core\Abstracts\Form $form Payment form.
+					 */
+					$out_of_stock_message = apply_filters(
+						'simpay_form_out_of_stock_message',
+						$out_of_stock_message,
+						$form
+					);
+
+					echo wp_kses_post( wpautop( $out_of_stock_message ) );
+
+					// Output.
+				} else {
+					$form->html();
+
+					if ( true === $atts['isbuttonblock'] ) {
+						$this->print_button_block_script( $form_id, $atts );
+					}
 				}
 
 				return ob_get_clean();
@@ -252,27 +303,12 @@ class Shortcodes {
 
 			$content = Payment_Confirmation\Template_Tags\parse_content( $content, $payment_confirmation_data );
 
-			/**
-			 * Internal hook to allow legacy hooks that rely on "complete" payments.
-			 *
-			 * @since 3.6.0
-			 *
-			 * @param array $payment_confirmation_data {
-			 *   Contextual information about this payment confirmation.
-			 *
-			 *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
-			 *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
-			 *   @type object                         $subscriptions Subscriptions associated with the Customer.
-			 *   @type object                         $paymentintents PaymentIntents associated with the Customer.
-			 * }
-			 * @param \SimplePay\Core\Abstracts\Form $form Payment form.
-			 * @param array $_GET Get request variables.
-			 */
-			do_action(
-				'_simpay_payment_confirmation',
-				$payment_confirmation_data,
-				$payment_confirmation_data['form'],
-				$_GET
+			// Perform actions when the [simpay_payment_receipt] shortcode is
+			// parsed and output successfully.
+			//
+			// Multiple actions are called. View the function for more details.
+			Payment_Confirmation\do_confirmation_actions(
+				$payment_confirmation_data
 			);
 
 			// Processing a SEPA Direct Debit Subscription can have a slight delay which

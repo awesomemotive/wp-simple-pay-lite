@@ -1,0 +1,51 @@
+{
+	"id": "0ed465fa-85a7-4b9f-b7f1-c38d647e5248",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "subscription", "opt-in", "checkbox" ],
+	"slug": "opt-in-subscription-form",
+	"name": "Opt-in Subscription Payment Form",
+	"description": "Accept a one-time payment with the option to make it a recurring subscription.",
+	"url": "",
+	"data": {
+		"title": "Opt-in Subscription Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "recurring_amount_toggle",
+				"label": "Make this a monthly payment"
+			},
+			{
+				"type": "total_amount"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 500,
+				"default": true,
+				"can_recur": true
+			}
+		]
+	}
+}

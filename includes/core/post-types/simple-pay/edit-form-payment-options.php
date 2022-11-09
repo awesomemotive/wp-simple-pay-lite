@@ -194,15 +194,20 @@ function __unstable_add_price_options( $post_id ) {
 
 	// @todo cleanup, remove duplication in Pro.
 	if ( empty( $prices ) ) {
-		$template = __unstable_simpay_get_payment_form_template_from_url();
+		$template    = __unstable_simpay_get_payment_form_template_from_url();
+		$instance_id = wp_generate_uuid4();
 
 		// Generate from a template.
 		if ( ! empty( $template ) ) {
 			foreach ( $template['data']['prices'] as $price ) {
-				$price                     = new PriceOption( $price, $form );
+				$price                     = new PriceOption(
+					$price,
+					$form,
+					$instance_id
+				);
 				$price->__unstable_unsaved = true;
 
-				$prices[ wp_generate_uuid4() ] = $price;
+				$prices[ $instance_id ] = $price;
 			}
 
 			// Single price option fallback.
@@ -212,12 +217,13 @@ function __unstable_add_price_options( $post_id ) {
 			);
 
 			$prices = array(
-				wp_generate_uuid4() => new PriceOption(
+				$instance_id => new PriceOption(
 					array(
 						'unit_amount' => simpay_get_currency_minimum( $currency ),
 						'currency'    => $currency,
 					),
-					$form
+					$form,
+					$instance_id
 				),
 			);
 		}

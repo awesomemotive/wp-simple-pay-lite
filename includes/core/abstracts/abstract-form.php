@@ -746,4 +746,252 @@ abstract class Form {
 		// Return as hookable data.
 		return apply_filters( 'simpay_stripe_script_variables', array_merge( $strings, $bools ) );
 	}
+
+	/**
+	 * Determines if any part of this payment form can be purchased.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return bool True if there is at least one purchasable price option.
+	 */
+	public function has_available_inventory() {
+		if ( false === $this->is_managing_inventory() ) {
+			return true;
+		}
+
+		$behavior  = $this->get_inventory_behavior();
+		$has_stock = false;
+
+		switch ( $behavior ) {
+			case 'combined':
+				$combined  = $this->get_combined_inventory_data();
+				$has_stock = $combined['available'] > 0;
+
+				break;
+			case 'individual':
+				$individual = $this->get_individual_inventory_data();
+				$in_stock   = array_filter(
+					$individual,
+					function( $price_option ) {
+						return $price_option['available'] > 0;
+					}
+				);
+
+				$has_stock = ! empty( $in_stock );
+
+				break;
+		}
+
+		return $has_stock;
+	}
+
+	/**
+	 * Determines if the payment form is within its current schedule.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return bool True if the payment form within its set schedule.
+	 */
+	public function has_available_schedule() {
+		// Start.
+		$schedule_start     = get_post_meta(
+			$this->id,
+			'_schedule_start',
+			true
+		);
+		$schedule_start_gmt = get_post_meta(
+			$this->id,
+			'_schedule_start_gmt',
+			true
+		);
+
+		// End.
+		$schedule_end     = get_post_meta(
+			$this->id,
+			'_schedule_end',
+			true
+		);
+		$schedule_end_gmt = get_post_meta(
+			$this->id,
+			'_schedule_end_gmt',
+			true
+		);
+
+		// Start and End.
+		if ( 'yes' === $schedule_start && 'yes' === $schedule_end ) {
+			return time() >= $schedule_start_gmt && time() <= $schedule_end_gmt;
+		}
+
+		// Start only.
+		if ( 'yes' === $schedule_start && 'no' === $schedule_end ) {
+			return time() >= $schedule_start_gmt;
+		}
+
+		// End only.
+		if ( 'yes' === $schedule_end && 'no' === $schedule_start ) {
+			return time() <= $schedule_end_gmt;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Determines if the payment form is managing inventory/stock.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return bool True if the payment form is managing inventory.
+	 */
+	public function is_managing_inventory() {
+		$inventory = get_post_meta( $this->id, '_inventory', true );
+
+		return 'yes' === $inventory;
+	}
+
+	/**
+	 * Returns the form's inventory management behavior.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return string combined|individual|'' Empty if there is no inventory management.
+	 */
+	public function get_inventory_behavior() {
+		if ( false === $this->is_managing_inventory() ) {
+			return '';
+		}
+
+		/** @var string $behavior */
+		$behavior = get_post_meta( $this->id, '_inventory_behavior', true );
+
+		if ( empty( $behavior ) ) {
+			return '';
+		}
+
+		return $behavior;
+	}
+
+	/**
+	 * Returns the combined inventory data.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return array<string, int>
+	 */
+	public function get_combined_inventory_data() {
+		/** @var array<string, int> $combined Combined inventory data. */
+		$combined = get_post_meta(
+			$this->id,
+			'_inventory_behavior_combined',
+			true
+		);
+
+		if (
+			empty( $combined ) ||
+			! isset( $combined['initial'], $combined['available'] )
+		) {
+			return array(
+				'initial'   => 0,
+				'available' => 0,
+			);
+		}
+
+		return array(
+			'initial'   => intval( $combined['initial'] ),
+			'available' => intval( $combined['available'] ),
+		);
+	}
+
+	/**
+	 * Returns the individual price option inventory data.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @return array<string, array<string, int>>
+	 */
+	public function get_individual_inventory_data() {
+		/** @var array<string, array<string, int>> $individual */
+		$individual = get_post_meta(
+			$this->id,
+			'_inventory_behavior_individual',
+			true
+		);
+
+		if ( empty( $individual ) ) {
+			return array();
+		}
+
+		foreach ( $individual as $instance_id => $inventory ) {
+			$individual[ $instance_id ] = array(
+				'initial'   => intval( $inventory['initial'] ),
+				'available' => intval( $inventory['available'] ),
+			);
+		}
+
+		return $individual;
+	}
+
+	/**
+	 * Decrements inventory on the payment form.
+	 *
+	 * @since 4.6.4
+	 *
+	 * @param 'increment'|'decrement' $increment_or_decrement Whether to increment or decrement.
+	 * @param int                     $quantity Quantity to increment or decrement.
+	 * @param null|string             $price_instance_id Price option instance ID. Null if using combined stock.
+	 */
+	public function adjust_inventory(
+		$increment_or_decrement,
+		$quantity,
+		$price_instance_id
+	) {
+		if ( ! in_array(
+			$increment_or_decrement,
+			array( 'increment', 'decrement' ),
+			true
+		) ) {
+			return;
+		}
+
+		$behavior = $this->get_inventory_behavior();
+		$quantity = intval( $quantity );
+
+		switch ( $behavior ) {
+			case 'combined':
+				$combined = $this->get_combined_inventory_data();
+
+				update_post_meta(
+					$this->id,
+					'_inventory_behavior_combined',
+					array(
+						'initial'   => $combined['initial'],
+						'available' => 'increment' === $increment_or_decrement
+							? $combined['available'] + $quantity
+							: $combined['available'] - $quantity,
+					)
+				);
+
+				break;
+
+			case 'individual':
+				$individual = $this->get_individual_inventory_data();
+
+				if ( isset( $individual[ $price_instance_id ] ) ) {
+					$individual[ $price_instance_id ] = array(
+						'initial'   => $individual[ $price_instance_id ]['initial'],
+						'available' => 'increment' === $increment_or_decrement
+							? $individual[ $price_instance_id ]['available'] + $quantity
+							: $individual[ $price_instance_id ]['available'] - $quantity,
+					);
+
+					update_post_meta(
+						$this->id,
+						'_inventory_behavior_individual',
+						$individual
+					);
+				}
+
+				break;
+		}
+	}
+
 }

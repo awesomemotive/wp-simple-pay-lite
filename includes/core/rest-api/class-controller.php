@@ -77,45 +77,6 @@ abstract class Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Ensures the Stripe cookie has been set by stripe.js.
-	 *
-	 * @since 4.6.0
-	 * @param \WP_REST_Request $request REST API request data.
-	 * @return \WP_Error|true Error if the rate limit has been exceeded.
-	 */
-	protected function check_stripe_cookie( $request ) {
-		$check_stripe_cookie = is_ssl();
-
-		/**
-		 * Determines if the Stripe __stripe_sid cookie is required to proceed.
-		 *
-		 * @since 4.6.0
-		 *
-		 * @param bool $check_stripe_cookie Whether to check for the __stripe_sid cookie.
-		 */
-		$check_stripe_cookie = apply_filters(
-			'simpay_rest_api_check_stripe_cookie',
-			$check_stripe_cookie
-		);
-
-		if (
-			true === $check_stripe_cookie &&
-			! isset( $_COOKIE['__stripe_sid'] )
-		) {
-			return new \WP_Error(
-				'rest_forbidden',
-				__(
-					'Invalid request. Please refresh the page and try again.',
-					'stripe'
-				),
-				array(
-					'status' => rest_authorization_required_code(),
-				)
-			);
-		}
-	}
-
-	/**
 	 * Determines if the REST API request is valid based on the current rate limit.
 	 *
 	 * @since 4.2.0
@@ -375,7 +336,7 @@ abstract class Controller extends WP_REST_Controller {
 		if ( false === $valid_nonce ) {
 			return new \WP_Error(
 				'rest_forbidden',
-				__( 'Invalid customer token. Please try again.', 'stripe' ),
+				__( 'Invalid customer token. Please refresh the page and try again.', 'stripe' ),
 				array(
 					'status' => rest_authorization_required_code(),
 				)

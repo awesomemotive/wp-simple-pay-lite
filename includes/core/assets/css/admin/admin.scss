@@ -448,6 +448,22 @@
 					z-index: 3;
 					box-shadow: inset 0 0 0 2px currentColor;
 				}
+
+				&[href="#purchase-restrictions-settings-panel"] {
+					margin-bottom: 20px;
+					position: relative;
+
+					&:after {
+						content: '';
+						position: absolute;
+						left: 14px;
+						right: 14px;
+						bottom: -10px;
+						width: calc(100% - 28px);
+						height: 1px;
+						background: #eaeaea;
+					}
+				}
 			}
 
 			&:not(.active) {
@@ -1893,6 +1909,11 @@ select.simpay-currency-symbol {
 	}
 }
 
+/**
+ * Form settings
+ */
+
+// reCAPTCHA.
 .simpay-recaptcha-payment-form-feedback {
 
 	.dashicons {
@@ -1903,4 +1924,96 @@ select.simpay-currency-symbol {
 	.dashicons-update-alt {
 		animation: rotation 2s infinite linear;
 	}
+}
+
+// Purchase Restrictions.
+.simpay-form-builder-inset-settings {
+	margin: 3px 0 0 24px;
+
+	@at-root fieldset#{&} > *:not(legend) {
+		margin: 5px 0 8px;
+	}
+
+	> *:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.simpay-form-builder-inventory-control {
+	@include input-control;
+
+	margin: 0;
+	padding: 0;
+	width: auto;
+	display: inline-flex;
+	align-items: center;
+
+	&:focus-within {
+		@include input-style__focus();
+	}
+
+	input[type="number"] {
+		border: 0;
+		box-shadow: none;
+		background: none;
+		border-radius: 0;
+		width: 75px;
+
+		&:focus {
+			border: 0;
+			box-shadow: none;
+			outline: 0;
+		}
+	}
+
+	+ label {
+		margin-left: 8px;
+	}
+
+	&__initial {
+		color: $gray-700;
+		font-size: $mobile-text-min-font-size;
+		line-height: normal;
+		padding-right: 8px;
+
+		@include break-small {
+			font-size: $default-font-size;
+			line-height: normal;
+		}
+
+		&:before {
+			content: "/";
+			display: inline-block;
+			vertical-align: top;
+			margin-top: -1px;
+		}
+	}
+}
+
+.simpay-form-builder-purchase-restrictions {
+
+	&__restriction-item {
+		display: flex;
+		align-items: center;
+		margin-top: 8px;
+		margin-bottom: 8px;
+	}
+
+	&__restriction-item label {
+		margin-left: 8px;
+	}
+
+	&__restriction-item-datetime {
+		display: flex;
+		align-items: center;
+
+		> * {
+			margin-right: 10px;
+		}
+
+		span {
+			color: $gray-700;
+		}
+	}
+
 }

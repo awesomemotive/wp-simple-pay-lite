@@ -1,0 +1,44 @@
+{
+	"id": "125cf8e1-84ab-42a9-82f4-077de46388f6",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "on-site", "bank", "account", "u.s" ],
+	"slug": "ach-direct-debit-payment-form",
+	"name": "ACH Direct Debit Payment Form",
+	"description": "Allow customers to connect their U.S bank account and make a payment.",
+	"url": "",
+	"data": {
+		"title": "ACH Direct Debit Payment Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "ach-debit", "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Full Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "card",
+				"label": "",
+				"icons": "yes"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}
