@@ -48,7 +48,7 @@ class PluginCouponMenuItem extends AbstractProductEducation implements Subscribe
 			'manage_options',
 			'simpay_coupons',
 			array( $this, 'upsell' ),
-			5
+			2
 		);
 	}
 
