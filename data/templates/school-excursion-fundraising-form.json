@@ -1,8 +1,16 @@
 {
 	"id": "903660a3-5b0e-4082-9872-1fdea1387032",
+	"created_at": "2022-11-01 00:00:00",
+	"updated_at": "2022-11-01 00:00:00",
 	"license": [ "plus", "professional", "ultimate", "elite" ],
 	"categories": [ "fundraising" ],
-	"keywords": [ "school", "donate", "donation", "fundraising", "school trip" ],
+	"keywords": [
+		"school",
+		"donate",
+		"donation",
+		"fundraising",
+		"school trip"
+	],
 	"slug": "school-excursion-fundraising-form",
 	"name": "School Excursion Fundraising Form",
 	"description": "Crowdsource donations to enusre that all students may participate in school trips.",

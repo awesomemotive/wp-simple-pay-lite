@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import { Button, NavigableMenu } from '@wordpress/components';
@@ -21,23 +26,26 @@ function TemplateCategoriesList( {
 			orientation="vertical"
 			className={ `${ baseClassName }-categories` }
 		>
-			{ Object.keys( templateCategories )
-				.sort()
-				.map( ( name ) => {
-					return (
-						<Button
-							key={ name }
-							label={ templateCategories[ name ] }
-							className={ `${ baseClassName }-categories_category` }
-							isPressed={ selectedCategory === name }
-							onClick={ () => {
-								onClickCategory( name );
-							} }
-						>
-							{ templateCategories[ name ] }
-						</Button>
-					);
-				} ) }
+			{ Object.keys( templateCategories ).map( ( name ) => {
+				const className = classnames(
+					`category-${ name }`,
+					`${ baseClassName }-categories_category`
+				);
+
+				return (
+					<Button
+						key={ name }
+						label={ templateCategories[ name ] }
+						className={ className }
+						isPressed={ selectedCategory === name }
+						onClick={ () => {
+							onClickCategory( name );
+						} }
+					>
+						{ templateCategories[ name ] }
+					</Button>
+				);
+			} ) }
 		</NavigableMenu>
 	);
 }

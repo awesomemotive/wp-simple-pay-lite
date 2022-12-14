@@ -33,6 +33,7 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			'admin-page-system-report',
 			'admin-page-about-us',
 			'admin-page-setup-wizard',
+			'admin-page-form-templates',
 			'admin-notice-update-available',
 			'admin-notice-five-star-rating',
 			'admin-notice-license-upgrade-top-of-page',
@@ -105,10 +106,20 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminPage\AboutUsPage::class
 		);
 
+		// Form templates.
+		$container->share(
+			'admin-page-form-templates',
+			AdminPage\FormTemplatesPage::class
+		)
+			->withArgument(
+				$container->get( 'form-builder-template-explorer' )
+			);
+
 		$pages = array(
 			$container->get( 'admin-page-setup-wizard' ),
 			$container->get( 'admin-page-system-report' ),
 			$container->get( 'admin-page-about-us' ),
+			$container->get( 'admin-page-form-templates' ),
 		);
 
 		// Add notification inbox page if notifications are being used.

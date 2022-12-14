@@ -1,8 +1,10 @@
 {
 	"id": "ed029780-bbea-4599-bdb3-d4b929831483",
+	"created_at": "2022-12-15 00:00:00",
+	"updated_at": "2022-12-15 00:00:00",
 	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
 	"categories": [ "registrations" ],
-	"keywords": [ "soccer","payment", "sports", "register" ],
+	"keywords": [ "soccer", "payment", "sports", "register" ],
 	"slug": "soccer-club-registration-form",
 	"name": "Soccer Club Registration Form",
 	"description": "Gather team information and collect a payment for a soccer club registration.",

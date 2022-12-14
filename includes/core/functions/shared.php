@@ -532,29 +532,27 @@ function simpay_shared_script_variables() {
 		'scriptDebug'   => defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
 	);
 
+	// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	$strings['strings'] = array(
-		'currency'                                     => simpay_get_setting( 'currency', 'USD' ),
-		'currencySymbol'                               => html_entity_decode(
+		'currency'          => simpay_get_setting( 'currency', 'USD' ),
+		'currencySymbol'    => html_entity_decode(
 			simpay_get_saved_currency_symbol()
 		),
-		'currencyPosition'                             => simpay_get_currency_position(),
-		'decimalSeparator'                             => simpay_get_decimal_separator(),
-		'thousandSeparator'                            => simpay_get_thousand_separator(),
-		'ajaxurl'                                      => admin_url( 'admin-ajax.php' ),
+		'currencyPosition'  => simpay_get_currency_position(),
+		'decimalSeparator'  => simpay_get_decimal_separator(),
+		'thousandSeparator' => simpay_get_thousand_separator(),
+		'ajaxurl'           => admin_url( 'admin-ajax.php' ),
 		/* translators: Minimum payment amount. */
-		'customAmountLabel'                            => esc_html__(
-			'starting at %s',
-			'stripe'
-		),
-		'recurringIntervals'                           => simpay_get_recurring_intervals(),
+		'customAmountLabel' => esc_html__( 'starting at %s', 'stripe' ),
+		'recurringIntervals' => simpay_get_recurring_intervals(),
 		/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
-		'recurringIntervalDisplay'                     => esc_html_x(
+		'recurringIntervalDisplay' => esc_html_x(
 			'%1$s every %2$s %3$s',
 			'recurring interval',
 			'stripe'
 		),
 		/* translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount. */
-		'recurringIntervalDisplayLimitedDiscount'      => esc_html_x(
+		'recurringIntervalDisplayLimitedDiscount' => esc_html_x(
 			'%1$s every %2$s %3$s for %4$s months then %5$s',
 			'recurring interval',
 			'stripe'
@@ -565,15 +563,28 @@ function simpay_shared_script_variables() {
 			'recurring interval with automatic tax',
 			'stripe'
 		),
-		'addressRequired'                              => esc_html__(
+		/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit */
+		'recurringIntervalDisplayInvoiceLimit' => esc_html_x(
+			'%1$d payments of %2$s every %3$s %4$s',
+			'recurring interval',
+			'stripe'
+		),
+		/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount */
+		'recurringIntervalDisplayInvoiceLimitWithCoupon' => esc_html_x(
+			'%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s',
+			'recurring interval',
+			'stripe'
+		),
+		'addressRequired' => esc_html__(
 			'Enter address to calculate',
 			'stripe'
 		),
-		'addressInvalid'                               => esc_html__(
+		'addressInvalid' => esc_html__(
 			'Please enter a valid address',
 			'stripe'
 		),
 	);
+	// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 
 	$i18n['i18n'] = array(
 		'mediaTitle'      => esc_html__( 'Insert Media', 'stripe' ),
@@ -1375,14 +1386,13 @@ function simpay_get_payment_form_setting(
 }
 
 /**
- * Returns the nicename of a payment form template category.
+ * Returns a list of category slugs and nicenames.
  *
- * @since 4.4.4
+ * @since 4.6.5
  *
- * @param string $category_slug Category slug.
- * @return string
+ * @return array<string, string>
  */
-function __unstable_simpay_get_form_template_category_name( $category_slug ) {
+function __unstable_simpay_get_form_template_categories() {
 	$categories = array(
 		'business-operations'    => __( 'Business Operations', 'stripe' ),
 		'donations'              => __( 'Donations', 'stripe' ),
@@ -1391,6 +1401,29 @@ function __unstable_simpay_get_form_template_category_name( $category_slug ) {
 		'registrations'          => __( 'Registrations', 'stripe' ),
 		'features-functionality' => __( 'Features / Functionality', 'stripe' ),
 	);
+
+	if ( __unstable_simpay_has_new_form_templates() ) {
+		$categories = array_merge(
+			array(
+				'new' => __( 'Recently Added', 'stripe' ),
+			),
+			$categories
+		);
+	}
+
+	return $categories;
+}
+
+/**
+ * Returns the nicename of a payment form template category.
+ *
+ * @since 4.4.4
+ *
+ * @param string $category_slug Category slug.
+ * @return string
+ */
+function __unstable_simpay_get_form_template_category_name( $category_slug ) {
+	$categories = __unstable_simpay_get_form_template_categories();
 
 	return isset( $categories[ $category_slug ] )
 		? $categories[ $category_slug ]
@@ -1405,16 +1438,19 @@ function __unstable_simpay_get_form_template_category_name( $category_slug ) {
  * @return array<mixed>
  */
 function __unstable_simpay_get_payment_form_templates() {
+	static $templates = array();
+
+	if ( ! empty( $templates ) ) {
+		return $templates;
+	}
+
 	$template_files = glob( SIMPLE_PAY_DIR . '/data/templates/*.json' );
 
 	if ( false === $template_files ) {
 		return array();
 	}
 
-	$templates = array();
-	$currency  = strtolower(
-		simpay_get_setting( 'currency', 'USD' )
-	);
+	$currency = strtolower( simpay_get_setting( 'currency', 'USD' ) );
 
 	foreach ( $template_files as $template_file ) {
 		$data = json_decode( file_get_contents( $template_file ), true );
@@ -1423,6 +1459,11 @@ function __unstable_simpay_get_payment_form_templates() {
 		if ( ! is_array( $data ) ) {
 			continue;
 		}
+
+		$is_new = (
+			isset( $data['created_at'] ) &&
+			strtotime( $data['created_at'] ) > strtotime( '-2 weeks' )
+		);
 
 		// Adjust licenses if needed.
 		// Templates that utilize "enhanced" subscription functionality should only continue to be available
@@ -1447,16 +1488,8 @@ function __unstable_simpay_get_payment_form_templates() {
 		}
 
 		// Pull category names.
-		if ( isset( $data['categories'] ) ) {
-			$categories         = $data['categories'];
-			$data['categories'] = array();
-
-			foreach ( $categories as $category_slug ) {
-				$data['categories'][ $category_slug ] =
-					__unstable_simpay_get_form_template_category_name(
-						$category_slug
-					);
-			}
+		if ( isset( $data['categories'] ) && $is_new ) {
+			$data['categories'][] = 'new';
 		}
 
 		// Use the store currency if one is not set.
@@ -1515,6 +1548,29 @@ function __unstable_simpay_get_payment_form_template( $id ) {
 	);
 
 	return empty( $template ) ? null : current( $template );
+}
+
+/**
+ * Determines if we have newly added templates available.
+ *
+ * @since 4.6.5
+ *
+ * @return bool True if a template was added within the last two weeks.
+ */
+function __unstable_simpay_has_new_form_templates() {
+	$templates = __unstable_simpay_get_payment_form_templates();
+
+	$new = array_filter(
+		$templates,
+		function( $template_data ) {
+			return (
+				isset( $template_data['created_at'] ) &&
+				strtotime( $template_data['created_at'] ) > strtotime( '-2 weeks' )
+			);
+		}
+	);
+
+	return ! empty( $new );
 }
 
 /**

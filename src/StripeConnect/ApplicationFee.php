@@ -488,6 +488,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	private function get_unavailable_country_codes() {
 		return array(
 			'br',
+			'in',
 		);
 	}
 

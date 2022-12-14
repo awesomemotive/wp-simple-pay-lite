@@ -37,7 +37,7 @@ add_filter( 'bulk_actions-edit-simple-pay', __NAMESPACE__ . '\\remove_edit_from_
  *
  * @since 4.1.0
  *
- * @param string $title post_title Post title
+ * @param string $title post_title Post title.
  * @param int    $post_id ID Post ID.
  * @return string
  */
@@ -310,8 +310,8 @@ function search_metadata( $where ) {
 
 	// Find the existing search WHERE and add an additional OR for meta_value.
 	$where = preg_replace(
-		"/\(\s*" . $wpdb->posts . ".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-		"(" . $wpdb->posts . ".post_title LIKE $1) OR (" . $wpdb->postmeta . ".meta_value LIKE $1)",
+		'/\(\s*' . $wpdb->posts . ".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+		'(' . $wpdb->posts . '.post_title LIKE $1) OR (' . $wpdb->postmeta . '.meta_value LIKE $1)',
 		$where
 	);
 
@@ -320,3 +320,37 @@ function search_metadata( $where ) {
 	return $where;
 }
 add_filter( 'posts_where', __NAMESPACE__ . '\\search_metadata' );
+
+/**
+ * Ensures proper sort order when sorting payment forms by "Title".
+ *
+ * Payment forms do not use the `post_title` column for their title, so we need
+ * to adjust the query to sort by the `_company_name` meta instead.
+ *
+ * @since 4.6.5
+ *
+ * @param \WP_Query $query The current \WP_Query object.
+ * @return void
+ */
+function sort_by_title( $query ) {
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	if (
+		! $query->get( 'post_type' ) ||
+		'simple-pay' !== $query->get( 'post_type' )
+	) {
+		return;
+	}
+
+	$orderby = $query->get( 'orderby' );
+
+	if ( 'title' !== $orderby ) {
+		return;
+	}
+
+	$query->set( 'meta_key', '_company_name' );
+	$query->set( 'orderby', 'meta_value' );
+}
+add_filter( 'pre_get_posts', __NAMESPACE__ . '\\sort_by_title' );

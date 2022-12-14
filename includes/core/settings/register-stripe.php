@@ -236,13 +236,13 @@ function register_account_settings( $settings ) {
 				'section'     => 'stripe',
 				'subsection'  => 'account',
 				'label'       => esc_html_x(
-					'Test Mode',
+					'Payment Mode',
 					'setting label',
 					'stripe'
 				),
 				'options'     => array(
-					'enabled'  => esc_html_x( 'Enabled', 'setting label', 'stripe' ),
-					'disabled' => esc_html_x( 'Disabled', 'setting label', 'stripe' ),
+					'enabled'  => esc_html_x( 'Test Mode', 'setting label', 'stripe' ),
+					'disabled' => esc_html_x( 'Live Mode', 'setting label', 'stripe' ),
 				),
 				'value'       => simpay_get_setting( 'test_mode', 'enabled' ),
 				'description' => wpautop(

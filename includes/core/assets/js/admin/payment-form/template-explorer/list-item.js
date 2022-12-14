@@ -107,6 +107,7 @@ function TemplateListItem( { template } ) {
 							variant="secondary"
 							href={ demoUrl }
 							style={ { marginLeft: '10px' } }
+							target="_blank"
 						>
 							{ __( 'View Demo', 'simple-pay' ) }
 						</Button>

@@ -52,7 +52,7 @@ class AdminPageSubscriber implements SubscriberInterface {
 	 */
 	public function get_subscribed_events() {
 		return array(
-			'admin_menu' => 'add_menu_pages',
+			'admin_menu' => array( 'add_menu_pages', 20 ),
 			'admin_head' => 'set_block_editor_body_class',
 		);
 	}

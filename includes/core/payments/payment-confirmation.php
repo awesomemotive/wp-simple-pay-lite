@@ -67,11 +67,11 @@ function do_confirmation_actions( $payment_confirmation_data ) {
 		$_GET
 	);
 
-	if ( ! empty( $payment_confirmation_data[ 'paymentintents' ] ) ) {
-		$objects     = $payment_confirmation_data[ 'paymentintents' ];
+	if ( ! empty( $payment_confirmation_data['paymentintents'] ) ) {
+		$objects     = $payment_confirmation_data['paymentintents'];
 		$object_type = 'payment_intent';
 	} else {
-		$objects     = $payment_confirmation_data[ 'subscriptions' ];
+		$objects     = $payment_confirmation_data['subscriptions'];
 		$object_type = 'subscription';
 	}
 
@@ -102,11 +102,19 @@ function do_confirmation_actions( $payment_confirmation_data ) {
 
 	switch ( $object_type ) {
 		case 'payment_intent':
-			API\PaymentIntents\update( $object->id, $update );
+			API\PaymentIntents\update(
+				$object->id,
+				$update,
+				$payment_confirmation_data['form']->get_api_request_args()
+			);
 			break;
 
 		case 'subscription':
-			API\Subscriptions\update( $object->id, $update );
+			API\Subscriptions\update(
+				$object->id,
+				$update,
+				$payment_confirmation_data['form']->get_api_request_args()
+			);
 			break;
 	}
 
@@ -276,8 +284,8 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
  * @return string
  */
 function get_one_time_amount_message_default() {
-	$license = simpay_get_license();
-	$is_lite = $license->is_lite();
+	$license   = simpay_get_license();
+	$is_lite   = $license->is_lite();
 	$has_email = false;
 
 	if ( false === $is_lite ) {

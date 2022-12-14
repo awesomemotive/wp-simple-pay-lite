@@ -22,7 +22,7 @@ class SystemReportPage extends AbstractAdminPage implements AdminSecondaryPageIn
 	 * {@inheritdoc}
 	 */
 	public function get_position() {
-		return 90;
+		return 7;
 	}
 
 	/**

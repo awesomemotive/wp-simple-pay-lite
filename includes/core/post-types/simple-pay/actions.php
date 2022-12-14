@@ -220,9 +220,10 @@ function save_product( $post_id, $post, $form ) {
 	$title = get_post_meta( $form->id, '_company_name', true );
 	$name  = ! empty( $title ) ? $title : get_bloginfo( 'name' );
 
-	// https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1598
+	// https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1598.
 	if ( empty( $name ) ) {
 		$name = sprintf(
+			/* translators: %d: Payment Form ID. */
 			__( 'WP Simple Pay - Form %d', 'stripe' ),
 			$form->id
 		);
@@ -244,7 +245,7 @@ function save_product( $post_id, $post, $form ) {
 	$tax_status = get_post_meta( $form->id, '_tax_status', true );
 
 	if ( 'automatic' === $tax_status ) {
-		$tax_code = get_post_meta( $form->id, '_tax_code', true );
+		$tax_code                 = get_post_meta( $form->id, '_tax_code', true );
 		$product_args['tax_code'] = $tax_code;
 	}
 
@@ -511,21 +512,44 @@ function save_prices( $post_id, $post, $form ) {
 
 				if ( 'automatic' === $tax_status ) {
 					try {
+						$tax_behavior = get_post_meta(
+							$form->id,
+							'_tax_behavior',
+							true
+						);
+
 						$existing_price = API\Prices\retrieve(
 							$price_args['id'],
 							$form->get_api_request_args()
 						);
 
-						if ( 'unspecified' === $existing_price->tax_behavior ) {
-							$tax_behavior = get_post_meta(
-								$form->id,
-								'_tax_behavior',
-								true
+						if (
+							'unspecified' === $existing_price->tax_behavior &&
+							! empty( $tax_behavior )
+						) {
+							API\Prices\update(
+								$price_args['id'],
+								array(
+									'tax_behavior' => $tax_behavior,
+								),
+								$form->get_api_request_args()
+							);
+						}
+
+						// Also update recurring, if needed.
+						if (
+							! empty( $recurring_args ) &&
+							! empty( $recurring_args['id'] ) &&
+							! empty( $tax_behavior )
+						) {
+							$recurring_price = API\Prices\retrieve(
+								$recurring_args['id'],
+								$form->get_api_request_args()
 							);
 
-							if ( ! empty( $tax_behavior ) ) {
+							if ( 'unspecified' === $recurring_price->tax_behavior ) {
 								API\Prices\update(
-									$price_args['id'],
+									$recurring_args['id'],
 									array(
 										'tax_behavior' => $tax_behavior,
 									),
@@ -580,7 +604,7 @@ function save_prices( $post_id, $post, $form ) {
 							array_merge(
 								$stripe_price_args,
 								array(
-									'recurring'  => array(
+									'recurring' => array(
 										'interval'       =>
 											$recurring_args['interval'],
 										'interval_count' =>
@@ -752,7 +776,7 @@ function duplicate() {
 	delete_post_meta( $duplicate, '_simpay_product_live' );
 	delete_post_meta( $duplicate, '_simpay_product_test' );
 
-	// Update form title to append - Duplicate
+	// Update form title to append - Duplicate.
 	$form_name = get_post_meta( $duplicate, '_company_name', true );
 	update_post_meta(
 		$duplicate,

@@ -307,9 +307,7 @@ class Rate_Limiting {
 	 * @return string
 	 */
 	public function get_rate_limit_id() {
-		$id = isset( $_COOKIE['__stripe_mid'] )
-			? sanitize_text_field( $_COOKIE['__stripe_mid'] )
-			: get_current_ip_address();
+		$id = get_current_ip_address();
 
 		/**
 		 * Filters the rate limiting tracking ID.
