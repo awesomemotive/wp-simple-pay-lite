@@ -50,7 +50,81 @@ let spAdmin = {};
 				);
 			}
 
-			// Radios settings.
+			// Stripe Connect toggle notice.
+			hooks.addAction(
+				'settings.toggleTestMode',
+				'wpsp/settings/stripe-connect',
+				toggleStripeConnectNotice
+			);
+
+			// Setting toggles.
+			this.handleFormBuilderSettingToggles();
+
+			hooks.addAction(
+				'customFieldAdded',
+				'wpsp/payment-form',
+				this.handleFormBuilderSettingToggles
+			);
+
+			// Init internal link to tab clicks.
+			spFormSettings.on(
+				'click.simpayTabLink',
+				'.simpay-tab-link',
+				function ( e ) {
+					e.preventDefault();
+					spAdmin.handleInternalLinkToTabClicks( $( this ) );
+				}
+			);
+
+			// Remove image preview click.
+			spFormSettings.on(
+				'click.simpayImagePreview',
+				'.simpay-remove-image-preview',
+				function ( e ) {
+					spAdmin.handleRemoveImagePreviewClick( e );
+				}
+			);
+
+			// Use chosen for select fields
+			this.setupChosen();
+
+			// Media Uploader
+			this.addMediaFields();
+
+			this.stripeConnect();
+
+			// Payment Mode.
+			//
+			// Disable modes that are not globally available.
+			const paymentModeSelector = $( '.simpay-payment-modes' );
+
+			if ( paymentModeSelector.length ) {
+				const paymentModes = paymentModeSelector.find( 'input' );
+
+				paymentModes.each( function () {
+					const mode = $( this );
+
+					if (
+						! paymentModeSelector.hasClass(
+							'simpay-payment-mode--' + mode.val()
+						)
+					) {
+						mode.attr( 'disabled', true );
+					}
+				} );
+			}
+
+			body.trigger( 'simpayAdminInit' );
+		},
+
+		/**
+		 * Handles the setup of form builder setting toggles.
+		 *
+		 * @since 4.6.5
+		 *
+		 * @return {void}
+		 */
+		handleFormBuilderSettingToggles() {
 			[
 				'_amount_type',
 				'_success_redirect_type',
@@ -133,63 +207,6 @@ let spAdmin = {};
 					$( inputEl ).trigger( 'change' );
 				}
 			} );
-
-			// Stripe Connect toggle notice.
-			hooks.addAction(
-				'settings.toggleTestMode',
-				'wpsp/settings/stripe-connect',
-				toggleStripeConnectNotice
-			);
-
-			// Init internal link to tab clicks.
-			spFormSettings.on(
-				'click.simpayTabLink',
-				'.simpay-tab-link',
-				function ( e ) {
-					e.preventDefault();
-					spAdmin.handleInternalLinkToTabClicks( $( this ) );
-				}
-			);
-
-			// Remove image preview click.
-			spFormSettings.on(
-				'click.simpayImagePreview',
-				'.simpay-remove-image-preview',
-				function ( e ) {
-					spAdmin.handleRemoveImagePreviewClick( e );
-				}
-			);
-
-			// Use chosen for select fields
-			this.setupChosen();
-
-			// Media Uploader
-			this.addMediaFields();
-
-			this.stripeConnect();
-
-			// Payment Mode.
-			//
-			// Disable modes that are not globally available.
-			const paymentModeSelector = $( '.simpay-payment-modes' );
-
-			if ( paymentModeSelector.length ) {
-				const paymentModes = paymentModeSelector.find( 'input' );
-
-				paymentModes.each( function () {
-					const mode = $( this );
-
-					if (
-						! paymentModeSelector.hasClass(
-							'simpay-payment-mode--' + mode.val()
-						)
-					) {
-						mode.attr( 'disabled', true );
-					}
-				} );
-			}
-
-			body.trigger( 'simpayAdminInit' );
 		},
 
 		handleRemoveImagePreviewClick( e ) {

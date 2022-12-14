@@ -11,6 +11,7 @@ import { sortBy } from 'lodash';
  */
 import {
 	createInterpolateElement,
+	Fragment,
 	useMemo,
 	useEffect,
 } from '@wordpress/element';
@@ -23,6 +24,7 @@ import { speak } from '@wordpress/a11y';
  */
 import TemplateListItem from './list-item.js';
 import SuggestCta from './suggest-cta.js';
+import UpgradeCta from './upgrade-cta.js';
 import { searchItems } from './search-utils.js';
 
 const { suggestUrl, licenseLevel } = simpayFormBuilderTemplateExplorer;
@@ -40,7 +42,7 @@ function TemplateExplorerContent( {
 		if ( ! filterValue ) {
 			if ( '' !== selectedCategory ) {
 				results = templates.filter( ( { categories } ) =>
-					Object.keys( categories ).includes( selectedCategory )
+					categories.includes( selectedCategory )
 				);
 			}
 		} else {
@@ -103,12 +105,31 @@ function TemplateExplorerContent( {
 
 			{ hasItems && (
 				<>
-					{ filteredTemplates.map( ( template ) => (
-						<TemplateListItem
-							key={ template.slug }
-							template={ template }
-						/>
-					) ) }
+					{ filteredTemplates.map( ( template, i ) => {
+						const item = (
+							<TemplateListItem
+								key={ template.slug }
+								template={ template }
+							/>
+						);
+
+						if (
+							'' === filterValue &&
+							[ 'lite', 'personal', 'plus' ].includes(
+								licenseLevel
+							) &&
+							i === 5
+						) {
+							return (
+								<Fragment key="upgrade-frag">
+									{ item }
+									<UpgradeCta />
+								</Fragment>
+							);
+						}
+
+						return item;
+					} ) }
 
 					<SuggestCta />
 				</>

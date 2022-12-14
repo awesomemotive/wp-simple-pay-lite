@@ -29,7 +29,7 @@ class PluginCouponMenuItem extends AbstractProductEducation implements Subscribe
 		}
 
 		return array(
-			'admin_menu' => array( 'menu_item', 0 ),
+			'admin_menu' => 'menu_item',
 		);
 	}
 
@@ -47,7 +47,8 @@ class PluginCouponMenuItem extends AbstractProductEducation implements Subscribe
 			__( 'Coupons', 'stripe' ),
 			'manage_options',
 			'simpay_coupons',
-			array( $this, 'upsell' )
+			array( $this, 'upsell' ),
+			2
 		);
 	}
 

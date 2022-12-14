@@ -10,7 +10,7 @@ import { find } from 'lodash';
  */
 import { createInterpolateElement } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
+import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 const {
 	suggestUrl,
@@ -26,12 +26,19 @@ const blankUrl = addQueryArgs( addNewUrl, {
 } );
 
 const baseClassName = 'simpay-form-template-explorer-header';
+const isAdding =
+	'simpay_form_templates' === getQueryArg( window.location.href, 'page' );
 
 function Header() {
 	return (
 		<div className={ baseClassName }>
 			<h2 className={ `${ baseClassName }__title` }>
-				{ __( 'Select a template', 'simple-pay' ) }
+				{ isAdding
+					? __(
+							'Get a Head Start With Our Pre-Made Form Templates',
+							'simple-pay'
+					  )
+					: __( 'Select a template', 'simple-pay' ) }
 			</h2>
 
 			<p className={ `${ baseClassName }__subtitle` }>

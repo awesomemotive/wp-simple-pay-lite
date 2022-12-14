@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.1
-Stable tag: 4.6.4
+Stable tag: 4.6.5
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -284,6 +284,16 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.6.5 - December 13, 2022 =
+
+* New: Add "Form Templates" submenu item to explore available payment form templates.
+* New: Add clarity to the current payment mode setting in WP Simple Pay > Settings > Stripe.
+* Fix: Remove 3rd party TinyMCE buttons in WP Simple Pay editors.
+* Fix: Update WP Simple Pay logo in the Setup Wizard.
+* Fix: Ensure sorting by Title in the payment form list works as expected.
+* Fix: Ensure payment form context is used for all API calls when viewing a payment confirmation.
+* Fix: Do not add unsupported application fees to Indian accounts.
+
 = Stripe Payment Forms v4.6.4 - November 9, 2022 =
 
 * New: Add additional payment form templates.
@@ -305,11 +315,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 * New: Allow licenses to be entered in Lite.
 * Fix: Do not add TinyMCE payment form button to Element TinyMCE instances.
 * Fix: Only show transactions for the global payment mode in the dashboard widget.
-
-= Stripe Payment Forms v4.5.0 - August 16, 2022 =
-
-* New: Use `{customer-name}` smart tag to display the customer's name in payment confirmations.
-* Fix: Hide output of payment forms that are not fully published.
-* Fix: Remove "Edit" from bulk options.
-* Fix: Update composer autoload to avoid namespace conflicts.
-* Fix: Update non-licensed additional fee to 3%.

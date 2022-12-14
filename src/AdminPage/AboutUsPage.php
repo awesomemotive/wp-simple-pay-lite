@@ -27,7 +27,7 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 	 * {@inheritdoc}
 	 */
 	public function get_position() {
-		return 99;
+		return 7;
 	}
 
 	/**

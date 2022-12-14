@@ -135,26 +135,27 @@ body.simpay-template-explorer-open {
 .simpay-form-template-explorer-header {
 
 	@include break-huge() {
+		margin-right: $grid-unit-30;
+		padding: 30px 30px 25px;
+		width: 100%;
+		background: #fff;
+		border-bottom: 1px solid #c3c4c7;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 		position: absolute;
 		left: 0;
 		right: 0;
-		padding: $grid-unit-30 0 $grid-unit-30 $grid-unit-30;
-		margin-right: $grid-unit-30;
-		height: 100px;
-		background: #fff;
-		z-index: 2;
+		z-index: 3;
 	}
 
 	&__title {
-		font-size: 22px;
-		font-weight: 400;
+		font-size: 26px;
 		margin: 0;
 	}
 
 	&__subtitle {
 		color: #555;
 		font-size: 15px;
-		margin: $grid-unit-10 0 0;
+		margin: $grid-unit-20 0 0;
 	}
 }
 
@@ -184,6 +185,10 @@ body.simpay-template-explorer-open {
 			.components-button.is-pressed {
 				background-color: var(--wp-admin-theme-color);
 			}
+		}
+
+		&-categories_category.category-new {
+			font-weight: bold;
 		}
 	}
 
@@ -329,13 +334,41 @@ body.simpay-template-explorer-open {
 				font-size: 14px;
 			}
 		}
+
+		&-upgrade {
+			color: #1d2327;
+			padding: $grid-unit-40;
+			grid-column: 1 / -1;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			background: #fafcfe;
+			border: 1px solid #dce9f6;
+			border-radius: 4px;
+			box-shadow: 0 1px 3px rgba(66, 139, 202, 0.08);
+
+			> div {
+				margin-right: 50px;
+			}
+
+			h4 {
+				font-size: 18px;
+				margin: 0;
+			}
+
+			p {
+				color: #555;
+				font-size: 14px;
+				margin: $grid-unit-10 0 0;
+			}
+		}
 	}
 
 	@include break-huge() {
-		margin-top: 100px;
+		margin-top: 130px;
 
 		&__sidebar {
-			top: 100px;
+			top: 130px;
 			bottom: 0;
 			left: $grid-unit-30;
 			overflow-x: hidden;

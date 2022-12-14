@@ -448,8 +448,12 @@ function simpay_payment_form_add_missing_custom_fields(
 			break;
 		default:
 			// Remove "Address" if using automatic taxes.
-			if ( 'automatic' === $tax_status && isset( $fields['address'] ) ) {
+			if ( 'automatic' === $tax_status ) {
+				unset( $fields['customer_name'] );
+				unset( $fields['email'] );
+				unset( $fields['telephone'] );
 				unset( $fields['address'] );
+				unset( $fields['tax_id'] );
 			}
 
 			// Ensure "Payment Button" exists.

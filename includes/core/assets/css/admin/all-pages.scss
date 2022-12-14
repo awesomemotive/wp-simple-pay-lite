@@ -259,3 +259,14 @@
 #adminmenu a[href*="page=simpay-setup-wizard"] {
 	display: none;
 }
+
+/**
+ * Style "New!" menu text.
+ */
+#adminmenu .simpay-menu-new {
+	color: #f18500;
+	vertical-align: super;
+	font-size: 9px;
+	font-weight: 600;
+	padding-left: 2px;
+}

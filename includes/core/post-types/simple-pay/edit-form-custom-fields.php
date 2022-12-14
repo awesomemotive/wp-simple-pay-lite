@@ -120,7 +120,7 @@ function get_custom_field_types() {
 			'repeatable' => true,
 		),
 		'payment_request_button'  => array(
-			'label'      => esc_html__( 'Apple Pay/Google Pay Button', 'stripe' ),
+			'label'      => esc_html__( '1-Click Payment Button (Apple Pay / Google Pay)', 'stripe' ),
 			'type'       => 'payment_request_button',
 			'category'   => 'payment',
 			'active'     => simpay_can_use_payment_request_button(),

@@ -5,7 +5,6 @@
  */
 import { render, useEffect, useState } from '@wordpress/element';
 import { Popover, SlotFillProvider } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -14,23 +13,18 @@ import TemplateExplorerHeader from './header.js';
 import TemplateExplorerSidebar from './sidebar.js';
 import TemplateExplorerContent from './content.js';
 
-const { templates } = simpayFormBuilderTemplateExplorer;
-const templateCategories = templates.reduce(
-	( categories, template ) => {
-		return {
-			...categories,
-			...template.categories,
-		};
-	},
-	{
-		'': __( 'All Templates', 'simple-pay' ),
-	}
-);
+const {
+	hasNew,
+	templates,
+	categories: templateCategories,
+} = simpayFormBuilderTemplateExplorer;
 const baseClassName = 'simpay-form-template-explorer';
 
 function TemplateExplorer() {
 	const [ filterValue, setFilterValueString ] = useState( '' );
-	const [ selectedCategory, setSelectedCategory ] = useState( '' );
+	const [ selectedCategory, setSelectedCategory ] = useState(
+		hasNew ? 'new' : ''
+	);
 
 	const setFilterValue = ( value ) => {
 		setFilterValueString( value );

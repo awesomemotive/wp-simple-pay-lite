@@ -77,7 +77,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 		// Require verification before processing endpoints if there are more than
 		// fraud events than the set threshold, within the set timeframe.
 		if (
-			'yes' === simpay_get_setting( 'fraud_email_verification', 'no' ) &&
+			'yes' === simpay_get_setting( 'fraud_email_verification', 'yes' ) &&
 			$this->get_fraud_event_count() >= $this->get_fraud_event_threshold() &&
 			$this->is_latest_fraud_event_in_timeframe()
 		) {
@@ -159,7 +159,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 					),
 					'value'       => simpay_get_setting(
 						'fraud_email_verification',
-						'no'
+						'yes'
 					),
 					'toggles'     => array(
 						'value'    => 'yes',
@@ -272,7 +272,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 
 		$enabled = simpay_get_setting(
 			'fraud_email_verification',
-			'no'
+			'yes'
 		);
 		?>
 
@@ -345,14 +345,6 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function log_fraud_event( $event, $charge ) {
-		// Do nothing if the failure is for another reason.
-		if (
-			! isset( $charge->fraud_details->stripe_report ) ||
-			'fraudulent' !== $charge->fraud_details->stripe_report
-		) {
-			return;
-		}
-
 		/** @var array<string, int> $fraud_events */
 		$fraud_events = get_option( 'simpay_fraud_events', array() );
 		$timeframe    = $this->get_fraud_event_timeframe();

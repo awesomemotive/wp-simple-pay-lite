@@ -146,6 +146,17 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
+		$this->render();
+	}
+
+	/**
+	 * Renders the template explorer.
+	 *
+	 * @since 4.6.5
+	 *
+	 * @return void
+	 */
+	public function render() {
 		$asset_file = SIMPLE_PAY_INC . '/core/assets/js/simpay-admin-form-template-explorer.min.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset_file ) ) {
@@ -199,6 +210,16 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 					),
 					'template-explorer',
 					true
+				),
+				'hasNew'              => (
+					isset( $_GET['page'] ) &&
+					__unstable_simpay_has_new_form_templates()
+				),
+				'categories'          => array_merge(
+					array(
+						'' => esc_html__( 'All Templates', 'stripe' ),
+					),
+					__unstable_simpay_get_form_template_categories()
 				),
 				'templates'           => array_values(
 					__unstable_simpay_get_payment_form_templates()

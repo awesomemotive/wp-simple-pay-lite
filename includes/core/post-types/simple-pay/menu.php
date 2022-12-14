@@ -40,7 +40,8 @@ function add_items() {
 		$settings_menu_name,
 		'manage_options',
 		'simpay_settings',
-		'SimplePay\\Core\\Settings\\page'
+		'SimplePay\\Core\\Settings\\page',
+		9
 	);
 
 	/**

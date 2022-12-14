@@ -1,8 +1,10 @@
 {
 	"id": "9fad2944-b52a-48aa-a1d4-d318892d2996",
+	"created_at": "2022-12-15 00:00:00",
+	"updated_at": "2022-12-15 00:00:00",
 	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
 	"categories": [ "products-services" ],
-	"keywords": [ "on-site", "cleaning","service", "subscription" ],
+	"keywords": [ "on-site", "cleaning", "service", "subscription" ],
 	"slug": "cleaning-service-subscription-form",
 	"name": "Cleaning Service Subscription Form",
 	"description": "Collect recurring payment for a cleaning service subscription.",
