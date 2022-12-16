@@ -284,6 +284,12 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.6.6 - December 19, 2022 =
+
+* New: Support hCaptcha as a Google reCAPTCHA alternative. Configure a CAPTCHA solution in WP Simple Pay > Settings > General > Anti-Spam to help prevent spam and fraudulent payments.
+* Dev: Add Lightspeed Cache to the list of possible plugin conflicts.
+* Dev: Update documentation URLs.
+
 = Stripe Payment Forms v4.6.5 - December 13, 2022 =
 
 * New: Add "Form Templates" submenu item to explore available payment form templates.
@@ -309,9 +315,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 * New: Add Thailand to list of supported Stripe countries.
 * Fix: Ensure a fallback redirect URL always exists for Stripe Checkout.
 * Fix: Avoid JavaScript error on certain WP Simple Pay admin pages.
-
-= Stripe Payment Forms v4.5.2 - September 27, 2022 =
-
-* New: Allow licenses to be entered in Lite.
-* Fix: Do not add TinyMCE payment form button to Element TinyMCE instances.
-* Fix: Only show transactions for the global payment mode in the dashboard widget.
