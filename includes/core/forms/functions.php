@@ -471,6 +471,7 @@ function simpay_payment_form_add_missing_custom_fields(
 			unset( $fields['card'] );
 			unset( $fields['checkout_button'] );
 			unset( $fields['payment_request_button'] );
+			unset( $fields['fee_recovery_toggle'] );
 	}
 
 	// Ensure "Price Selector" is always present.
@@ -512,6 +513,30 @@ function simpay_payment_form_add_missing_custom_fields(
 		$count++;
 	} elseif ( false === $can_recur ) {
 		unset( $fields['recurring_amount_toggle'] );
+	}
+
+	// Remove "Coupon" field if using Fee Recovery.
+	if ( isset( $fields['coupon'] ) ) {
+		// Fee recovery toggle exists, remove Coupon.
+		if ( isset( $fields['fee_recovery_toggle'] ) ) {
+			unset( $fields['coupon'] );
+		}
+
+		// Fee recovery exists in Payment Method configuration.
+		if ( isset( $payment_methods['stripe-elements'] ) ) {
+			foreach ( $payment_methods['stripe-elements'] as $payment_method ) {
+				if (
+					isset(
+						$payment_method['fee_recovery'],
+						$payment_method['fee_recovery']['enabled']
+					) &&
+					'yes' === $payment_method['fee_recovery']['enabled']
+				) {
+					unset( $fields['coupon'] );
+					break;
+				}
+			}
+		}
 	}
 
 	// General sorting template for auto-added fields.

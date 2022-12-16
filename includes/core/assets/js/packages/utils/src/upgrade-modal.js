@@ -69,9 +69,10 @@ export function maybeBlockCheckboxWithUpgradeModal( e ) {
  *
  * @param {Event} e Click event.
  * @param {HTMLElement} e.target Button being pressed.
+ * @return {boolean} True if the item is available, false otherwise.
  */
 export function maybeBlockButtonWithUpgradeModal( e ) {
-	const { target } = e;
+	const { currentTarget: target } = e;
 	const {
 		available,
 		upgradeTitle,
@@ -81,7 +82,7 @@ export function maybeBlockButtonWithUpgradeModal( e ) {
 	} = target.dataset;
 
 	if ( ! available || 'yes' === available ) {
-		return;
+		return false;
 	}
 
 	e.preventDefault();
@@ -92,6 +93,8 @@ export function maybeBlockButtonWithUpgradeModal( e ) {
 		url: upgradeUrl,
 		purchasedUrl: upgradePurchasedUrl,
 	} );
+
+	return true;
 }
 
 /**

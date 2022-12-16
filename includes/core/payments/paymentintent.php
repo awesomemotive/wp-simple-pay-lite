@@ -14,6 +14,7 @@ use SimplePay\Core\API;
 use SimplePay\Core\Payments\Stripe_API;
 use SimplePay\Core\Legacy;
 use SimplePay\Vendor\Stripe\Coupon;
+use SimplePay\Pro\Payment_Methods;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -203,18 +204,30 @@ function get_args_from_payment_form_request(
 		$price
 	);
 
+	$amount   = $payment_args['amount'];
+	$metadata = array(
+		'simpay_form_id'         => $form->id,
+		'simpay_price_instances' => sprintf(
+			'%s:%d',
+			$price->instance_id,
+			$quantity
+		),
+	);
+
+	// Add fee recovery information if needed.
+	if ( 0 !== $payment_args['fee_recovery'] ) {
+		// Update amount.
+		$amount = $payment_args['amount'] + $payment_args['fee_recovery'];
+
+		// Add metadata for easier Smart Tag usage.
+		$metadata['simpay_fee_recovery_unit_amount'] = $payment_args['fee_recovery'];
+	}
+
 	$paymentintent_args = array(
-		'amount'   => $payment_args['amount'],
+		'amount'   => $amount,
 		'currency' => $payment_args['currency'],
 		'metadata' => array_merge(
-			array(
-				'simpay_form_id'         => $form->id,
-				'simpay_price_instances' => sprintf(
-					'%s:%d',
-					$price->instance_id,
-					$quantity
-				),
-			),
+			$metadata,
 			Legacy\Hooks\simpay_payment_metadata(
 				$form,
 				$form_data,
@@ -426,8 +439,26 @@ function get_payment_args_from_form_request(
 		}
 	}
 
+	$unit_amount = round( $unit_amount );
+
+	// Fee recovery.
+	$fee_recovery = 0;
+
+	if (
+		$form->has_forced_fee_recovery() ||
+		isset( $form_values['fee_recovery_toggle'] )
+	) {
+		$payment_method = sanitize_text_field( $form_values['payment_method_type'] );
+		$fee_recovery   = Payment_Methods\get_form_payment_method_fee_recovery_amount(
+			$form,
+			$payment_method,
+			$unit_amount
+		);
+	}
+
 	return array(
-		'amount'   => round( $unit_amount ),
-		'currency' => $currency,
+		'amount'       => $unit_amount,
+		'currency'     => $currency,
+		'fee_recovery' => $fee_recovery,
 	);
 }

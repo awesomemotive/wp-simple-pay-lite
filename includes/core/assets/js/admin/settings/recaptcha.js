@@ -1,12 +1,64 @@
+/* global simpayGoogleRecaptcha, grecaptcha */
+
 /**
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready';
 
+const settingsToToggle = [
+	'.simpay-settings-hcaptcha_setup',
+	'.simpay-settings-hcaptcha_site_key',
+	'.simpay-settings-hcaptcha_secret_key',
+
+	'.simpay-settings-recaptcha_setup',
+	'.simpay-settings-recaptcha_site_key',
+	'.simpay-settings-recaptcha_secret_key',
+	'.simpay-settings-recaptcha_score_threshold',
+
+	'.simpay-settings-no_captcha_warning',
+];
+
 /**
- * DOM ready.
+ * Handles toggling the different CAPTCHA type settings.
+ *
+ * @since 4.6.6
+ *
+ * @param {Event} e Change event.
+ * @return {void}
  */
-domReady( () => {
+function onToggle( e ) {
+	const value = e.target.value;
+	let type;
+
+	switch ( value ) {
+		case 'none':
+			type = 'no_captcha';
+			break;
+		case 'recaptcha-v3':
+			type = 'recaptcha';
+			break;
+		default:
+			type = value;
+	}
+
+	// Hide everything if using none, and show notice.
+	settingsToToggle.forEach( ( setting ) => {
+		const settingEl = document.querySelector( setting );
+
+		settingEl.style.display = setting.includes( type )
+			? 'table-row'
+			: 'none';
+	} );
+}
+
+/**
+ * Displays reCAPTCHA configuration feedback.
+ *
+ * @since 4.6.6
+ *
+ * @return {void}
+ */
+function reCaptchaFeedback() {
 	const feedbackNoticeEl = document.querySelector(
 		'.simpay-recaptcha-feedback'
 	);
@@ -27,7 +79,12 @@ domReady( () => {
 	function onError() {
 		feedbackNoticeEl.style.display = 'block';
 		feedbackNoticeEl.classList.add( 'notice-error' );
-		feedbackNoticeEl.querySelector( 'p' ).innerText = i18n.invalid;
+		feedbackNoticeEl.innerHTML = '';
+
+		const p = document.createElement( 'p' );
+		p.innerText = i18n.invalid;
+
+		feedbackNoticeEl.appendChild( p );
 	}
 
 	grecaptcha.ready( () => {
@@ -56,4 +113,38 @@ domReady( () => {
 			onError();
 		}
 	} );
+}
+
+/**
+ * DOM ready.
+ */
+domReady( () => {
+	const toggleEls = document.querySelectorAll(
+		'input[name="simpay_settings[captcha_type]"]'
+	);
+
+	if ( ! toggleEls ) {
+		return;
+	}
+
+	// Hide all settings initially.
+	settingsToToggle.forEach( ( settingRow ) => {
+		document.querySelector( settingRow ).style.display = 'none';
+	} );
+
+	// Attach toggles to type buttons.
+	toggleEls.forEach( ( toggleEl ) =>
+		toggleEl.addEventListener( 'change', onToggle )
+	);
+
+	// Trigger a change event on an already selected type.
+	const selectedType = document.querySelector(
+		'input[name="simpay_settings[captcha_type]"]:checked'
+	);
+
+	if ( selectedType ) {
+		selectedType.dispatchEvent( new Event( 'change' ) );
+	}
+
+	reCaptchaFeedback();
 } );

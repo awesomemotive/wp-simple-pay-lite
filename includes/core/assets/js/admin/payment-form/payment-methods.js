@@ -2,7 +2,10 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready';
-import { maybeBlockCheckboxWithUpgradeModal } from '@wpsimplepay/utils';
+import {
+	maybeBlockButtonWithUpgradeModal,
+	maybeBlockCheckboxWithUpgradeModal,
+} from '@wpsimplepay/utils';
 
 /**
  * Toggles Payment Method visibility when filtering Payment Methods.
@@ -49,6 +52,19 @@ domReady( () => {
 			paymentMethod.addEventListener(
 				'change',
 				maybeBlockCheckboxWithUpgradeModal
+			)
+		);
+	}
+
+	const paymentMethodsFeeRecovery = document.querySelectorAll(
+		'.simpay-payment-method-fee-recovery-lite'
+	);
+
+	if ( paymentMethodsFeeRecovery ) {
+		paymentMethodsFeeRecovery.forEach( ( paymentMethod ) =>
+			paymentMethod.addEventListener(
+				'click',
+				maybeBlockButtonWithUpgradeModal
 			)
 		);
 	}

@@ -23,7 +23,7 @@ function setup( paymentForm ) {
 	// Bind cart to PaymentForm.
 	paymentForm.cart = __unstableUpdatePaymentFormCart(
 		paymentForm,
-		new Cart()
+		new Cart( { paymentForm } )
 	);
 
 	// Bind submit button.
