@@ -208,7 +208,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 							'stripe'
 						)
 					),
-					'priority'    => 60,
+					'priority'    => 61,
 					'schema'      => array(
 						'type' => 'number',
 					),
@@ -246,7 +246,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 							'stripe'
 						)
 					),
-					'priority'    => 60,
+					'priority'    => 62,
 					'schema'      => array(
 						'type' => 'number',
 					),

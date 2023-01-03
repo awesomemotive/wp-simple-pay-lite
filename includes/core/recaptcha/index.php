@@ -609,6 +609,13 @@ add_action(
  * @return void
  */
 function maybe_add_inbox_notification() {
+	// Notification Inbox is only available in WP 5.7+.
+	global $wp_version;
+
+	if ( version_compare( $wp_version, '5.7', '<=' ) ) {
+		return;
+	}
+
 	$existing_recaptcha = simpay_get_setting( 'recaptcha_site_key', '' );
 	$default            = ! empty( $existing_recaptcha )
 		? 'recaptcha-v3'
@@ -684,6 +691,13 @@ add_action( 'admin_init', __NAMESPACE__ . '\\maybe_add_inbox_notification' );
  * @return array<string, mixed>
  */
 function maybe_dismiss_inbox_notification( $settings ) {
+	// Notification Inbox is only available in WP 5.7+.
+	global $wp_version;
+
+	if ( version_compare( $wp_version, '5.7', '<=' ) ) {
+		return $settings;
+	}
+
 	if ( ! isset( $settings['captcha_type'] ) ) {
 		return $settings;
 	}

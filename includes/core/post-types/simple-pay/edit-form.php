@@ -919,7 +919,12 @@ function __unstable_add_recaptcha() {
 		)
 	);
 
-	$captcha     = simpay_get_setting( 'captcha_type', '' );
+	$existing_recaptcha = simpay_get_setting( 'recaptcha_site_key', '' );
+	$default            = ! empty( $existing_recaptcha )
+		? 'recaptcha-v3'
+		: '';
+
+	$captcha     = simpay_get_setting( 'captcha_type', $default );
 	$has_captcha = ! empty( $captcha ) && 'none' !== $captcha;
 	?>
 

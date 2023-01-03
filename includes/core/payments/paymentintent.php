@@ -446,8 +446,10 @@ function get_payment_args_from_form_request(
 
 	if (
 		function_exists( '\SimplePay\Pro\Payment_Methods\get_form_payment_method_fee_recovery_amount' ) &&
-		$form->has_forced_fee_recovery() ||
-		isset( $form_values['fee_recovery_toggle'] )
+		(
+			$form->has_forced_fee_recovery() ||
+			isset( $form_values['fee_recovery_toggle'] )
+		)
 	) {
 		$payment_method = sanitize_text_field( $form_values['payment_method_type'] );
 		$fee_recovery   = Payment_Methods\get_form_payment_method_fee_recovery_amount(
