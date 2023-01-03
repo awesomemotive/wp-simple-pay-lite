@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.1
-Stable tag: 4.6.6-beta-1
+Stable tag: 4.6.6
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -284,7 +284,7 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
-= Stripe Payment Forms v4.6.6 - December 19, 2022 =
+= Stripe Payment Forms v4.6.6 - January 3, 2023 =
 
 * New: Support hCaptcha as a Google reCAPTCHA alternative. Configure a CAPTCHA solution in WP Simple Pay > Settings > General > Anti-Spam to help prevent spam and fraudulent payments.
 * Dev: Add Lightspeed Cache to the list of possible plugin conflicts.
