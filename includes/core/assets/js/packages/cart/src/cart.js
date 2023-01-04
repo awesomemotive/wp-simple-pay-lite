@@ -3,6 +3,10 @@
  */
 import LineItem from './line-item.js';
 
+const CALCULATION_DEFAULTS = {
+	includeFeeRecovery: true,
+};
+
 /**
  * Cart
  */
@@ -20,6 +24,7 @@ export const Cart = class Cart {
 	constructor( args ) {
 		// Set defaults.
 		// @todo add support for classProperties.
+		this.paymentForm = null;
 		this.items = [];
 		this.currency = 'usd';
 		this.taxPercent = 0;
@@ -48,6 +53,7 @@ export const Cart = class Cart {
 	update( args ) {
 		// Parse and retrieve specific arguments.
 		const {
+			paymentForm,
 			currency,
 			taxPercent,
 			taxRates,
@@ -60,6 +66,9 @@ export const Cart = class Cart {
 			...this,
 			...args,
 		};
+
+		// Set payment form.
+		this.paymentForm = paymentForm;
 
 		// Set currency.
 		if ( 'string' !== typeof currency ) {
@@ -435,12 +444,21 @@ export const Cart = class Cart {
 	 *
 	 * @since 3.7.0
 	 *
+	 * @param {Object} options Options.
+	 * @param {booolean} options.includeFeeRecovery Whether to include fee recovery amount.
 	 * @return {number} Cart total.
 	 */
-	getTotal() {
-		return this.getLineItems().reduce( ( total, lineItem ) => {
+	getTotal( options = CALCULATION_DEFAULTS ) {
+		const totalAmount = this.getLineItems().reduce( ( total, lineItem ) => {
 			return ( total += lineItem.getTotal() );
 		}, 0 );
+
+		// Fee recovery.
+		const feeAmount = options.includeFeeRecovery
+			? this.getFeeRecoveryForAmount( totalAmount )
+			: 0;
+
+		return totalAmount + feeAmount;
 	}
 
 	/**
@@ -448,9 +466,11 @@ export const Cart = class Cart {
 	 *
 	 * @since 4.5.0
 	 *
+	 * @param {Object} options Options.
+	 * @param {booolean} options.includeFeeRecovery Whether to include fee recovery amount.
 	 * @return {number} Cart total due today.
 	 */
-	getTotalDueToday() {
+	getTotalDueToday( options = CALCULATION_DEFAULTS ) {
 		let initialTax = 0;
 
 		if (
@@ -461,7 +481,7 @@ export const Cart = class Cart {
 			initialTax = parseInt( this.automaticTax.amount_tax || initialTax );
 		}
 
-		return this.getLineItems().reduce( ( total, lineItem ) => {
+		const totalAmount = this.getLineItems().reduce( ( total, lineItem ) => {
 			// Return current total if the line item has a free trial.
 			if ( lineItem.hasFreeTrial() ) {
 				return total;
@@ -470,6 +490,14 @@ export const Cart = class Cart {
 			// Add line item total to existing total.
 			return ( total += lineItem.getTotal() );
 		}, initialTax );
+
+		// Fee recovery.
+		const feeAmount =
+			0 !== totalAmount && options.includeFeeRecovery
+				? this.getFeeRecoveryForAmount( totalAmount )
+				: 0;
+
+		return totalAmount + feeAmount;
 	}
 
 	/**
@@ -480,9 +508,11 @@ export const Cart = class Cart {
 	 *
 	 * @since 4.1.0
 	 *
+	 * @param {Object} options Options.
+	 * @param {booolean} options.includeFeeRecovery Whether to include fee recovery amount.
 	 * @return {number} Cart recurring total.
 	 */
-	getRecurringTotal() {
+	getRecurringTotal( options = CALCULATION_DEFAULTS ) {
 		const recurring = this.getLineItem( 'base' );
 		let recurringSubtotal =
 			recurring.getUnitPrice() * recurring.getQuantity();
@@ -513,7 +543,14 @@ export const Cart = class Cart {
 			0
 		);
 
-		return Math.round( recurringSubtotal + taxAmount );
+		const recurringTotal = Math.round( recurringSubtotal + taxAmount );
+
+		// Fee recovery.
+		const feeAmount = options.includeFeeRecovery
+			? this.getFeeRecoveryForAmount( recurringTotal )
+			: 0;
+
+		return recurringTotal + feeAmount;
 	}
 
 	/**
@@ -521,9 +558,11 @@ export const Cart = class Cart {
 	 *
 	 * @since 4.4.5
 	 *
+	 * @param {Object} options Options.
+	 * @param {booolean} options.includeFeeRecovery Whether to include fee recovery amount.
 	 * @return {number} Cart recurring total.
 	 */
-	getRecurringNoDiscountTotal() {
+	getRecurringNoDiscountTotal( options = CALCULATION_DEFAULTS ) {
 		const recurring = this.getLineItem( 'base' );
 		const recurringSubtotal =
 			recurring.getUnitPrice() * recurring.getQuantity();
@@ -562,7 +601,14 @@ export const Cart = class Cart {
 			taxAmount = this.automaticTax.upcomingInvoice?.amount_tax || 0;
 		}
 
-		return Math.round( recurringSubtotal + taxAmount );
+		const recurringTotal = Math.round( recurringSubtotal + taxAmount );
+
+		// Fee recovery.
+		const feeAmount = options.includeFeeRecovery
+			? this.getFeeRecoveryForAmount( recurringTotal )
+			: 0;
+
+		return recurringTotal + feeAmount;
 	}
 
 	/**
@@ -570,9 +616,11 @@ export const Cart = class Cart {
 	 *
 	 * @since 4.4.5
 	 *
+	 * @param {Object} options Options.
+	 * @param {booolean} options.includeFeeRecovery Whether to include fee recovery amount.
 	 * @return {number} Cart reucurring total due today.
 	 */
-	getNextInvoiceTotal() {
+	getNextInvoiceTotal( options = CALCULATION_DEFAULTS ) {
 		const recurring = this.getLineItem( 'base' );
 		const coupon = this.getCoupon();
 		const {
@@ -634,7 +682,14 @@ export const Cart = class Cart {
 			taxAmount = this.automaticTax.upcomingInvoice?.amount_tax || 0;
 		}
 
-		return Math.round( recurringSubtotal + taxAmount );
+		const nextInvoiceTotal = Math.round( recurringSubtotal + taxAmount );
+
+		// Fee recovery.
+		const feeAmount = options.includeFeeRecovery
+			? this.getFeeRecoveryForAmount( nextInvoiceTotal )
+			: 0;
+
+		return nextInvoiceTotal + feeAmount;
 	}
 
 	/**
@@ -695,6 +750,36 @@ export const Cart = class Cart {
 			this.getLineItems().filter( ( lineItem ) =>
 				lineItem.hasFreeTrial()
 			).length > 0
+		);
+	}
+
+	/**
+	 * Returns the amount needed to recover fees charged by the gateway.
+	 *
+	 * @since 4.6.5
+	 *
+	 * @param {number} amount Amount to recover fees for.
+	 * @return {number} Amount needed to recover fees.
+	 */
+	getFeeRecoveryForAmount( amount ) {
+		const { paymentMethod, isCoveringFees } = this.paymentForm.state;
+
+		if ( ! paymentMethod ) {
+			return 0;
+		}
+
+		const paymentMethodHasFeeRecovery = paymentMethod.config.fee_recovery;
+		const paymentFormHasFeeRecovery = isCoveringFees;
+
+		if ( ! ( paymentMethodHasFeeRecovery && paymentFormHasFeeRecovery ) ) {
+			return 0;
+		}
+
+		return (
+			( amount + parseInt( paymentMethodHasFeeRecovery.amount ) ) /
+				( 1 -
+					parseFloat( paymentMethodHasFeeRecovery.percent ) / 100 ) -
+			amount
 		);
 	}
 };

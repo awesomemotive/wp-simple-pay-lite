@@ -912,42 +912,20 @@ add_action(
  * @return void
  */
 function __unstable_add_recaptcha() {
-	$url = add_query_arg(
-		array(
-			'render' => reCAPTCHA\get_key( 'site' ),
-		),
-		'https://www.google.com/recaptcha/api.js'
-	);
-
-	wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
-
-	$recaptcha    = reCAPTCHA\has_keys();
 	$settings_url = Settings\get_url(
 		array(
 			'section'    => 'general',
 			'subsection' => 'recaptcha',
-			'setting'    => 'recaptcha_site_key',
 		)
 	);
 
-	wp_localize_script(
-		'simpay-google-recaptcha-v3',
-		'simpayGoogleRecaptcha',
-		array(
-			'siteKey'     => reCAPTCHA\get_key( 'site' ),
-			'i18n'        => array(
-				'valid'   => sprintf(
-					'<span class="dashicons dashicons-shield-alt"></span> %s',
-					esc_html__( 'Additional protection enabled!', 'stripe' )
-				),
-				'invalid' => sprintf(
-					'<span class="dashicons dashicons-shield"></span> %s',
-					esc_html__( 'Invalid configuration — missing additional protection!', 'stripe' )
-				),
-			),
-			'settingsUrl' => $settings_url,
-		)
-	);
+	$existing_recaptcha = simpay_get_setting( 'recaptcha_site_key', '' );
+	$default            = ! empty( $existing_recaptcha )
+		? 'recaptcha-v3'
+		: '';
+
+	$captcha     = simpay_get_setting( 'captcha_type', $default );
+	$has_captcha = ! empty( $captcha ) && 'none' !== $captcha;
 	?>
 
 	<tr class="simpay-panel-field">
@@ -963,13 +941,14 @@ function __unstable_add_recaptcha() {
 							type="checkbox"
 							id="_recaptcha"
 							class="simpay-field simpay-field-checkbox simpay-field simpay-field-checkboxes"
-							<?php checked( true, $recaptcha ); ?>
-							<?php if ( true === $recaptcha ) : ?>
+							<?php checked( true, $has_captcha ); ?>
+							<?php if ( $has_captcha ) : ?>
 								readonly
 							<?php endif; ?>
+							data-settings-url="<?php echo esc_attr( $settings_url ); ?>"
 						/>
 
-						<?php esc_html_e( 'Google reCAPTCHA v3', 'stripe' ); ?>
+						<?php esc_html_e( 'CAPTCHA', 'stripe' ); ?>
 					</label>
 				</div>
 				<p class="description">
@@ -978,7 +957,7 @@ function __unstable_add_recaptcha() {
 						sprintf(
 							/* translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 							__(
-								'%1$sConfigure reCAPTCHA settings%2$s to adjust anti-spam protection.',
+								'%1$sConfigure CAPTCHA settings%2$s to adjust anti-spam protection.',
 								'stripe'
 							),
 							'<a href="' . esc_url( $settings_url ) . '" target="_blank">',
@@ -998,9 +977,11 @@ function __unstable_add_recaptcha() {
 					?>
 
 					<span class="simpay-recaptcha-payment-form-feedback">
-						<?php if ( $recaptcha ) : ?>
-							<span class="dashicons dashicons-update-alt"></span>
-							<?php esc_html_e( 'Verifying credentials…', 'stripe' ); ?>
+						<?php if ( $has_captcha ) : ?>
+							<span style="color: #15803d;">
+								<span class="dashicons dashicons-shield-alt"></span>
+								<?php esc_html_e( 'Additional protection enabled!', 'stripe' ); ?>
+							</span>
 						<?php else : ?>
 							<span style="color: #b91c1c;">
 								<span class="dashicons dashicons-shield"></span>

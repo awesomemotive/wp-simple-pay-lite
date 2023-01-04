@@ -66,77 +66,18 @@ function onLeavePage( initialValues ) {
  * Provides feedback to reCAPTCHA configuration.
  */
 function reCaptchaFeedback() {
-	const feedbackNoticeEl = document.querySelector(
-		'.simpay-recaptcha-payment-form-feedback'
-	);
+	const checkboxEl = document.getElementById( '_recaptcha' );
 
-	if ( ! feedbackNoticeEl ) {
+	if ( ! checkboxEl ) {
 		return;
 	}
-
-	const { siteKey, i18n, settingsUrl } = simpayGoogleRecaptcha;
-	const checkboxEl = document.getElementById( '_recaptcha' );
 
 	// Launch settings when attempting to check.
 	checkboxEl.addEventListener( 'change', ( e ) => {
 		e.preventDefault();
 		e.target.checked = ! e.target.checked;
 
-		window.open( settingsUrl, '_blank' );
-	} );
-
-	// Do not provide feedback if not already enabled.
-	if ( ! checkboxEl.checked ) {
-		return;
-	}
-
-	// Show feedback.
-	function onError() {
-		feedbackNoticeEl.style.color = '#b91c1c';
-		feedbackNoticeEl.style.display = 'inline';
-		feedbackNoticeEl.innerHTML = i18n.invalid;
-		checkboxEl.checked = false;
-		checkboxEl.readOnly = false;
-	}
-
-	function onSuccess() {
-		feedbackNoticeEl.style.color = '#15803d';
-		feedbackNoticeEl.style.display = 'inline';
-		feedbackNoticeEl.innerHTML = i18n.valid;
-		checkboxEl.checked = true;
-		checkboxEl.readOnly = true;
-	}
-
-	if ( '' === siteKey ) {
-		return onError();
-	}
-
-	grecaptcha.ready( () => {
-		const badge = document.querySelector( '.grecaptcha-badge' );
-
-		if ( badge ) {
-			badge.style.display = 'none';
-		}
-
-		try {
-			grecaptcha
-				.execute( siteKey, {
-					action: `simple_pay_admin_test`,
-				} )
-				.then( ( token ) => {
-					wp.ajax.send( 'simpay_validate_recaptcha_source', {
-						data: {
-							token,
-							recaptcha_action: 'simple_pay_admin_test',
-						},
-						success: onSuccess,
-						error: onError,
-					} );
-				} )
-				.catch( onError );
-		} catch ( error ) {
-			onError();
-		}
+		window.open( e.target.dataset.settingsUrl, '_blank' );
 	} );
 }
 

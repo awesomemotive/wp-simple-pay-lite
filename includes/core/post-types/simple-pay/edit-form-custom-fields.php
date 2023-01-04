@@ -112,6 +112,13 @@ function get_custom_field_types() {
 			'active'     => simpay_subscriptions_enabled(),
 			'repeatable' => false,
 		),
+		'fee_recovery_toggle' => array(
+			'label'      => esc_html__( 'Fee Recovery Toggle', 'stripe' ),
+			'type'       => 'fee_recovery_toggle',
+			'category'   => 'payment',
+			'active'     => true,
+			'repeatable' => false,
+		),
 		'total_amount'            => array(
 			'label'      => esc_html__( 'Amount Breakdown', 'stripe' ),
 			'type'       => 'total_amount',

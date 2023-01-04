@@ -723,15 +723,18 @@
 			border-top-right-radius: 4px;
 		}
 
-		input[type="checkbox"] {
-			margin-top: 0;
-			margin-right: 8px;
+		&__enable {
+			display: flex;
+			align-items: center;
+
+			input[type="checkbox"] {
+				margin-top: 0;
+				margin-right: 8px;
+			}
 		}
 
 		&__help {
-			color: #666;
 			text-decoration: none;
-			margin-right: 5px;
 
 			.dashicons {
 				font-size: 18px;
@@ -757,6 +760,12 @@
 				width: 30px;
 				height: 30px;
 			}
+		}
+
+		&__configure {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 	}
 }
@@ -2016,4 +2025,62 @@ select.simpay-currency-symbol {
 		}
 	}
 
+}
+
+// Fee recovery.
+.simpay-form-builder-fee-recovery {
+
+	&__amounts {
+		display: flex;
+		align-items: center;
+		margin-top: 5px;
+	}
+
+	> * {
+		margin-right: 8px;
+	}
+}
+
+.simpay-form-builder-fee-percent-control {
+	@include input-control;
+
+	margin: 0;
+	padding: 0;
+	width: auto;
+	display: inline-flex;
+	align-items: center;
+
+	&:focus-within {
+		@include input-style__focus();
+	}
+
+	input[type="number"] {
+		border: 0;
+		box-shadow: none;
+		background: none;
+		border-radius: 0;
+		width: 75px;
+
+		&:focus {
+			border: 0;
+			box-shadow: none;
+			outline: 0;
+		}
+	}
+
+	+ label {
+		margin-left: 8px;
+	}
+
+	&__suffix {
+		color: $gray-700;
+		font-size: $mobile-text-min-font-size;
+		line-height: normal;
+		padding-right: 8px;
+
+		@include break-small {
+			font-size: $default-font-size;
+			line-height: normal;
+		}
+	}
 }

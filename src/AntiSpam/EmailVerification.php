@@ -103,9 +103,6 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 
 			// Remove the verification code after a payment action has been made.
 
-			// ...on Checkout Session.
-			$subscribers['simpay_after_checkout_session_from_payment_form_request'] =
-				array( 'remove_verification_code_rest', 10, 4 );
 			// ...on PaymentIntent.
 			$subscribers['simpay_after_paymentintent_from_payment_form_request'] =
 				array( 'remove_verification_code_rest', 10, 4 );
@@ -152,10 +149,14 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 						'setting label',
 						'stripe'
 					),
-					'input_label' => esc_html_x(
-						'Enable email verification for on-site payment forms if multiple charges fail due to fraud.',
-						'setting input label',
-						'stripe'
+					'input_label' => sprintf(
+						'%s <strong>%s</strong>',
+						esc_html_x(
+							'Enable email verification for on-site payment forms if multiple payment declines occur.',
+							'setting input label',
+							'stripe'
+						),
+						esc_html__( 'Highly recommended.', 'stripe' )
 					),
 					'value'       => simpay_get_setting(
 						'fraud_email_verification',
@@ -168,7 +169,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 							'fraud_email_verification_timeframe',
 						),
 					),
-					'priority'    => 5,
+					'priority'    => 60,
 					'schema'      => array(
 						'type' => 'string',
 						'enum' => array( 'yes', 'no' ),
@@ -207,7 +208,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 							'stripe'
 						)
 					),
-					'priority'    => 5.1,
+					'priority'    => 61,
 					'schema'      => array(
 						'type' => 'number',
 					),
@@ -245,7 +246,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 							'stripe'
 						)
 					),
-					'priority'    => 5.2,
+					'priority'    => 62,
 					'schema'      => array(
 						'type' => 'number',
 					),

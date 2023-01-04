@@ -64,6 +64,18 @@ class Payment_Button extends Custom_Field {
 			esc_html( $text )
 		);
 
+		$captcha_type = simpay_get_setting( 'captcha_type', '' );
+
+		if (
+			'stripe_checkout' === self::$form->get_display_type() &&
+			'hcaptcha' === $captcha_type
+		) {
+			$html .= '<div
+			class="simpay-form-control h-captcha"
+			data-sitekey="' . esc_attr( simpay_get_setting( 'hcaptcha_site_key' ) ) . '"
+			></div>';
+		}
+
 		$html .= '<div class="simpay-form-control">';
 		$html .= sprintf(
 			'<button id="%1$s" class="%2$s" %3$s><span>%4$s</span></button>',

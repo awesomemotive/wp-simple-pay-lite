@@ -15,7 +15,6 @@ use SimplePay\Core\API;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
-use SimplePay\Core\reCAPTCHA;
 use SimplePay\Core\Utils;
 use SimplePay\Pro\Webhooks\Database\Query as WebhookDatabase;
 
@@ -154,16 +153,27 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	}
 
 	/**
-	 * Returns "Yes" if reCAPTCHA has been implemented, otherwise "No"
+	 * Returns the CAPTCHA type.
 	 *
-	 * @since 4.4.7
+	 * @since 4.6.6
 	 *
 	 * @return string
 	 */
-	private function check_repatcha_keys() {
-		return reCAPTCHA\has_keys()
-			? __( 'Yes', 'stripe' )
-			: __( 'No', 'stripe' );
+	private function check_captcha() {
+		$existing_recaptcha = simpay_get_setting( 'recaptcha_site_key', '' );
+		$default            = ! empty( $existing_recaptcha )
+			? 'recaptcha-v3'
+			: '';
+		$type               = simpay_get_setting( 'captcha_type', $default );
+
+		switch ( $type ) {
+			case 'recaptcha-v3':
+				return 'reCAPTCHA v3';
+			case 'hcaptcha':
+				return 'hCaptcha';
+			default:
+				return 'None';
+		}
 	}
 
 	/**
@@ -255,7 +265,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		/** @var string $enabled */
 		$enabled = simpay_get_setting(
 			'fraud_email_verification',
-			'no'
+			'yes'
 		);
 
 		if ( 'no' === $enabled ) {
@@ -317,6 +327,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			'wp-optimize/wp-optimize.php',
 			'wp-simple-firewall/icwp-wpsf.php',
 			'wp-rocket/wp-rocket.php',
+			'litespeed-cache/litespeed-cache.php',
 		);
 	}
 
@@ -407,9 +418,9 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 					'label' => __( 'Global Payment Mode', 'stripe' ),
 					'value' => $this->get_test_or_live_mode(),
 				),
-				'recaptcha'                => array(
-					'label' => __( 'reCAPTCHA', 'stripe' ),
-					'value' => $this->check_repatcha_keys(),
+				'captcha'                  => array(
+					'label' => __( 'CAPTCHA', 'stripe' ),
+					'value' => $this->check_captcha(),
 				),
 				'rate_limit_file'          => array(
 					'label' => __( 'Rate Limit File', 'stripe' ),

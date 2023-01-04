@@ -89,7 +89,7 @@ function simpay_admin_footer_insert_form() {
 			'post_type' => 'simple-pay',
 		),
 		admin_url( 'post-new.php' )
-    );
+	);
 	?>
 		<script type="text/javascript">
 			function insertSimpayForm() {
@@ -102,11 +102,11 @@ function simpay_admin_footer_insert_form() {
 
 		<div id="simpay-insert-form" style="display: none;">
 			<div class="wrap">
-				<?php if ( empty ( $forms ) ) : ?>
-                You have not created any payment forms. Would you like to <a href="<?php echo esc_url( $add_new_url ); ?>">create one</a>?
-                    <p class="submit">
-                        <a id="simpay-cancel-insert-form" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'stripe' ); ?></a>
-                    </p>
+				<?php if ( empty( $forms ) ) : ?>
+				You have not created any payment forms. Would you like to <a href="<?php echo esc_url( $add_new_url ); ?>">create one</a>?
+					<p class="submit">
+						<a id="simpay-cancel-insert-form" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'stripe' ); ?></a>
+					</p>
 				<?php else : ?>
 				<p><?php esc_html_e( 'Select a payment form to add to your post or page.', 'stripe' ); ?></p>
 				<div>
@@ -130,17 +130,17 @@ add_action( 'admin_footer', 'simpay_admin_footer_insert_form' );
  * @return string
  */
 function simpay_get_forms_list() {
-    $forms = simpay_get_form_list_options();
+	$forms = simpay_get_form_list_options();
 
 	$options = '';
 
 	if ( ! empty( $forms ) ) {
 		foreach ( $forms as $form_id => $form_title ) {
-            $options .= sprintf(
-                '<option value="%1$s">%2$s</option>',
-                esc_attr( $form_id ),
-                esc_html( $form_title )
-            );
+			$options .= sprintf(
+				'<option value="%1$s">%2$s</option>',
+				esc_attr( $form_id ),
+				esc_html( $form_title )
+			);
 		}
 	}
 	return '<select id="simpay-form-list">' . $options . '</select>';
@@ -272,7 +272,7 @@ function simpay_is_admin_screen() {
 function simpay_docs_link( $text, $slug, $utm_medium, $plain = false ) {
 
 	// Articles on docs site currently require a base slug themselves.
-	$base_url = 'https://docs.wpsimplepay.com/articles/';
+	$base_url = 'https://wpsimplepay.com/doc/';
 
 	// Ensure ending slash is included for consistency.
 	$url = trailingslashit( $base_url . $slug );

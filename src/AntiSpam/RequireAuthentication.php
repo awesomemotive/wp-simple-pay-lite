@@ -93,7 +93,7 @@ class RequireAuthentication implements SubscriberInterface, LicenseAwareInterfac
 						'fraud_require_authentication',
 						'no'
 					),
-					'priority'    => 6,
+					'priority'    => 70,
 					'schema'      => array(
 						'type' => 'string',
 						'enum' => array( 'yes', 'no' ),

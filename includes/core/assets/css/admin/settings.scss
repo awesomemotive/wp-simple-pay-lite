@@ -56,3 +56,100 @@
 		}
 	}
 }
+
+.simpay-settings .simpay-settings-captcha .simpay-settings-captcha-toggles {
+	margin: 30px 0 0;
+	display: flex;
+
+	input[type="radio"] {
+		display: none;
+	}
+
+	&__toggle {
+		user-select: none;
+		width: 160px;
+		min-height: 160px;
+		margin: 0 30px 0 0 !important;
+		padding: 30px 15px 15px;
+		display: flex !important;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: relative;
+		background-color: #fff;
+		border-radius: 4px;
+		border: 1px solid #c3c4c7;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+
+		&:hover {
+			border: 1px solid #999;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+		}
+	}
+
+	input[type="radio"]:checked + .simpay-settings-captcha-toggles__toggle {
+		border-color: #0e856a;
+		box-shadow: 0 0 0 1px #0e856a;
+	}
+
+	#simpay-settings-captcha-type-none:checked + .simpay-settings-captcha-toggles__toggle {
+		border-color: #b91c1b;
+		box-shadow: 0 0 0 1px #b91c1b;
+	}
+
+	&__toggle-icon {
+		width: 80px;
+		height: 80px;
+		margin: 15px 0;
+	}
+
+	&__toggle-label {
+		line-height: 1.5;
+		text-align: center;
+		font-size: 16px;
+		font-weight: 500;
+
+		small {
+			color: #666666;
+			font-weight: normal;
+			font-size: 13px;
+			display: block;
+		}
+	}
+
+	&__toggle-recommended,
+	&__toggle-not-recommended {
+		text-align: center;
+		font-size: 12px;
+		text-transform: uppercase;
+		font-weight: bold;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		border-top-right-radius: 4px;
+		border-top-left-radius: 4px;
+		padding: 5px 0;
+	}
+
+	&__toggle-recommended {
+		color: #0f8569;
+		background: #f4f9f7;
+	}
+
+	&__toggle-not-recommended {
+		color: #b91c1b;
+		background: #fef2f2;
+	}
+}
+
+.simpay-settings-general-recaptcha-no_captcha_warning,
+.simpay-settings-hcaptcha_secret_key,
+.simpay-settings-recaptcha_score_threshold {
+
+	th,
+	td {
+		padding-bottom: 50px !important;
+	};
+}

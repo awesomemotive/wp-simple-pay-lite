@@ -748,6 +748,31 @@ abstract class Form {
 	}
 
 	/**
+	 * Determines if the payment form forces fee recovery to be paid.
+	 *
+	 * @since 4.6.6
+	 *
+	 * @return bool
+	 */
+	public function has_forced_fee_recovery() {
+		$fee_recovery_toggle = array_filter(
+			$this->custom_fields,
+			function( $field ) {
+				return 'fee_recovery_toggle' === $field['type'];
+			}
+		);
+
+		// No custom field toggle is present. It's forced.
+		if ( empty( $fee_recovery_toggle ) ) {
+			return true;
+		}
+
+		$fee_recovery_toggle = current( $fee_recovery_toggle );
+
+		return isset( $fee_recovery_toggle['on_by_default'] );
+	}
+
+	/**
 	 * Determines if any part of this payment form can be purchased.
 	 *
 	 * @since 4.6.4

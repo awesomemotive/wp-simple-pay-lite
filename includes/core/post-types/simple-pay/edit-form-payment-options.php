@@ -688,6 +688,43 @@ function __unstable_add_payment_methods() {
 						'form-payment-method-settings',
 						true
 					);
+
+					$fee_recovery_upgrade_title = sprintf(
+						/* translators: %s Payment Method name. */
+						esc_html__(
+							'Unlock Fee Recovery for "%s" Payments',
+							'stripe'
+						),
+						$payment_method['name']
+					);
+
+					$fee_recovery_upgrade_description = sprintf(
+						/* translators: %1$s Payment method name. */
+						__(
+							'We\'re sorry, recovering Stripe processing fees is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+							'stripe'
+						),
+						(
+							'<strong>' .
+							$payment_method['name'] .
+							'</strong>'
+						)
+					);
+
+					$fee_recovery_upgrade_url = simpay_pro_upgrade_url(
+						'form-payment-method-settings',
+						sprintf( '%s Payment Method - Fee Recovery', $payment_method['name'] )
+					);
+
+					$fee_recovery_upgrade_purchased_url = simpay_docs_link(
+						sprintf(
+							'%s Payment Method - Fee Recovery (already purchased)',
+							$payment_method['name']
+						),
+						'upgrading-wp-simple-pay-lite-to-pro',
+						'form-payment-method-settings',
+						true
+					);
 					?>
 					<div
 						class="simpay-panel-field-payment-method"
@@ -717,12 +754,26 @@ function __unstable_add_payment_methods() {
 								>
 								<?php echo esc_html( $payment_method['name'] ); ?>
 
+								<?php if ( 'card' === $payment_method_id ) : ?>
+								<button
+									class="button button-secondary button-small simpay-payment-method-fee-recovery-lite"
+									style="margin-left: auto;"
+									data-available="no"
+									data-upgrade-title="<?php echo esc_attr( $fee_recovery_upgrade_title ); ?>"
+									data-upgrade-description="<?php echo esc_attr( $fee_recovery_upgrade_description ); ?>"
+									data-upgrade-url="<?php echo esc_url( $fee_recovery_upgrade_url ); ?>"
+									data-upgrade-purchased-url="<?php echo esc_url( $fee_recovery_upgrade_purchased_url ); ?>"
+								>
+									<?php esc_html_e( 'Fee Recovery', 'stripe' ); ?>
+								</button>
+								<?php endif; ?>
+
 								<a
 									href="https://docs.wpsimplepay.com/categories/payment-methods/"
 									target="_blank"
 									rel="noopener noreferrer"
 									class="simpay-panel-field-payment-method__help"
-									style="margin-left: auto;"
+									style="margin-left: 5px;"
 								>
 									<span class="dashicons dashicons-editor-help"></span>
 									<span class="screen-reader-text">
