@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { Flex } from '@wordpress/components';
 import { decodeEntities } from '@wordpress/html-entities';
 
 /**
@@ -11,13 +10,15 @@ import { decodeEntities } from '@wordpress/html-entities';
 import FormRow from './form-row.js';
 
 function ReportList( { report } ) {
-	if ( ! report ) {
-		return null;
+	if ( report.isLoading ) {
+		return (
+			<div className="simpay-admin-dashboard-widget-report__data-list" />
+		);
 	}
 
 	const {
-		forms: { top, remaining },
-	} = report;
+		top_forms: { top, remaining },
+	} = report.data;
 
 	return (
 		<div className="simpay-admin-dashboard-widget-report__data-list">
@@ -26,18 +27,21 @@ function ReportList( { report } ) {
 			) ) }
 
 			{ remaining.count > 0 && (
-				<Flex justify="space-between">
-					<Flex justify="flex-start">
+				<div
+					style={ {
+						display: 'flex',
+						justifyContent: 'space-between',
+					} }
+				>
+					<div>
 						{ sprintf(
 							/* translators: %d The number of forms included in results that are not shown. */
 							__( '…and %d more', 'simple-pay' ),
 							remaining.count
 						) }
-					</Flex>
-					<Flex justify="flex-end">
-						{ decodeEntities( remaining.total_formatted ) }
-					</Flex>
-				</Flex>
+					</div>
+					<div>{ decodeEntities( remaining.total_formatted ) }</div>
+				</div>
 			) }
 		</div>
 	);

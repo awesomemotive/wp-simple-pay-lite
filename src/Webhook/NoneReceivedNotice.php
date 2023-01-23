@@ -160,7 +160,12 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 					array(
 						'type' => 'secondary',
 						'text' => __( 'Learn More', 'stripe' ),
-						'url'  => 'https://docs.wpsimplepay.com/article/webhooks',
+						'url'  => simpay_docs_link(
+							__( 'Learn More', 'stripe' ),
+							'webhooks',
+							'notification-inbox',
+							true
+						),
 					),
 				),
 				'conditions'     => array(),

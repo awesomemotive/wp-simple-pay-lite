@@ -34,7 +34,12 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider {
 	public function get_subscribers() {
 		return array(
 			'rest-api-unstable-notifications',
-			'rest-api-unstable-dashboard-widget-report',
+			'rest-api-internal-report-dashboard-widget-report',
+			'rest-api-internal-report-today',
+			'rest-api-internal-report-latest-payments',
+			'rest-api-internal-report-payment-info',
+			'rest-api-internal-report-gross-volume-period-over-period',
+			'rest-api-internal-report-successful-payments-period-over-period',
 		);
 	}
 
@@ -59,8 +64,38 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider {
 
 		// Dashboard widget report.
 		$container->share(
-			'rest-api-unstable-dashboard-widget-report',
-			__UnstableDashboardWidgetReport::class
+			'rest-api-internal-report-dashboard-widget-report',
+			Internal\Report\DashboardWidgetReport::class
+		);
+
+		// Today Period Over Period report.
+		$container->share(
+			'rest-api-internal-report-today',
+			Internal\Report\TodayReport::class
+		);
+
+		// Latest Payments report.
+		$container->share(
+			'rest-api-internal-report-latest-payments',
+			Internal\Report\LatestPaymentsReport::class
+		);
+
+		// Payment Info report.
+		$container->share(
+			'rest-api-internal-report-payment-info',
+			Internal\Report\PaymentInfoReport::class
+		);
+
+		// Gross Volume Period Over Period report.
+		$container->share(
+			'rest-api-internal-report-gross-volume-period-over-period',
+			Internal\Report\GrossVolumePeriodOverPeriodReport::class
+		);
+
+		// Succesful Payments Period Over Period report.
+		$container->share(
+			'rest-api-internal-report-successful-payments-period-over-period',
+			Internal\Report\SuccessfulPaymentsPeriodOverPeriodReport::class
 		);
 	}
 

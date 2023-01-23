@@ -76,7 +76,7 @@ class HelpServiceProvider extends AbstractPluginServiceProvider {
 			return SIMPAY_HELP_DOCS_API_URL;
 		}
 
-		return 'https://docs.wpsimplepay.com/wp-content/docs.json';
+		return 'https://wpsimplepay.com/wp-content/docs.json';
 	}
 
 }

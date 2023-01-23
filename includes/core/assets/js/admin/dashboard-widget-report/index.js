@@ -4,55 +4,71 @@
  * WordPress dependencies
  */
 import '@wordpress/core-data';
-import { render, useEffect, useReducer, useState } from '@wordpress/element';
-import { Popover } from '@wordpress/components';
+import { render, useEffect, useReducer } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { useDispatch, useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
  */
 import reducer from './reducer.js';
-import { PeriodOverPeriodChart, ReportFilter, ReportList } from './components';
+import { ReportFilter, ReportList } from './components';
+import {
+	getStartDateFromType,
+	getEndDateFromType,
+	PeriodOverPeriodChart,
+	useUserPreference,
+} from '@wpsimplepay/charts';
 
 const {
 	user_id: userId,
-	default_date_range: defaultDateRange,
+	default_range: {
+		type: defaultDateRangeType,
+		start: defaultDateRangeStart,
+		end: defaultDateRangeEnd,
+	},
 	default_currency: defaultCurrency,
 } = simpayAdminDashboardWidgetReport;
 
 function DashboardWidgetReport() {
-	const [ range, setRange ] = useState( defaultDateRange );
-	const [ currency, setCurrency ] = useState( defaultCurrency );
+	const [ range, setRange ] = useUserPreference(
+		userId,
+		'simpay_dashboard_widget_report_range',
+		{
+			start: getStartDateFromType(
+				defaultDateRangeType,
+				defaultDateRangeStart
+			),
+			end: getEndDateFromType(
+				defaultDateRangeType,
+				defaultDateRangeEnd
+			),
+			type: defaultDateRangeType,
+		}
+	);
+
+	const [ currency, setCurrency ] = useUserPreference(
+		userId,
+		'simpay_dashboard_widget_report_currency',
+		defaultCurrency
+	);
+
 	const [ report, dispatchReport ] = useReducer( reducer, {
 		data: false,
-		isLoading: false,
+		isLoading: true,
 	} );
-	const { editEntityRecord, saveEditedEntityRecord } = useDispatch( 'core' );
-
-	// Ensure the User record is resolved on load to prevent an undefined
-	// index when attempting to update the user meta later.
-	const user = useSelect(
-		( select ) => {
-			const { getEntityRecord } = select( 'core' );
-			return getEntityRecord( 'root', 'user', userId );
-		},
-		[ userId ]
-	);
 
 	/**
 	 * Fetch API data when the currency or range changes.
 	 */
 	useEffect( () => {
-		if ( ! user ) {
-			return;
-		}
-
-		const path = addQueryArgs( '/wpsp/v2/report/dashboard-widget', {
-			range,
-			currency,
-		} );
+		const path = addQueryArgs(
+			'/wpsp/__internal__/report/dashboard-widget',
+			{
+				range,
+				currency,
+			}
+		);
 
 		dispatchReport( {
 			type: 'START_RESOLUTION',
@@ -60,40 +76,27 @@ function DashboardWidgetReport() {
 
 		apiFetch( {
 			path,
-		} ).then( ( { data } ) => {
+		} ).then( ( reportData ) => {
 			dispatchReport( {
 				type: 'RECEIVE',
-				data,
+				data: reportData,
 			} );
 
 			dispatchReport( {
 				type: 'FINISH_RESOLUTION',
 			} );
-
-			// Save preferences if they have changed.
-			if (
-				range !== user.meta.simpay_dashboard_widget_report_date_range ||
-				currency !== user.meta.simpay_dashboard_widget_report_currency
-			) {
-				editEntityRecord( 'root', 'user', userId, {
-					meta: {
-						simpay_dashboard_widget_report_date_range: range,
-						simpay_dashboard_widget_report_currency: currency,
-					},
-				} );
-
-				saveEditedEntityRecord( 'root', 'user', userId );
-			}
 		} );
-	}, [ range, currency, user ] );
+	}, [ range, currency ] );
 
 	return (
 		<>
 			<div className="simpay-admin-dashboard-widget-report__chart">
 				<PeriodOverPeriodChart
-					report={ report.data }
-					range={ range }
-					user={ user }
+					report={ report }
+					style={ { width: '100%', height: '300px' } }
+					config={ {
+						yAxisIsCurrency: true,
+					} }
 				/>
 			</div>
 
@@ -103,12 +106,10 @@ function DashboardWidgetReport() {
 					range={ range }
 					setCurrency={ setCurrency }
 					setRange={ setRange }
-					report={ report.data }
+					report={ report }
 				/>
-				<ReportList report={ report.data } />
+				<ReportList report={ report } />
 			</div>
-
-			<Popover.Slot />
 		</>
 	);
 }

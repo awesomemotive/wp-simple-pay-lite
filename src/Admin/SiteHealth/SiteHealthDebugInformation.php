@@ -324,9 +324,11 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			'schema-app-structured-data-for-schemaorg/hunch-schema.php',
 			'sg-cachepress/sg-cachepress.php',
 			'wordfence/wordfence.php',
+			'w3-total-cache/w3-total-cache.php',
 			'wp-optimize/wp-optimize.php',
-			'wp-simple-firewall/icwp-wpsf.php',
 			'wp-rocket/wp-rocket.php',
+			'wp-simple-firewall/icwp-wpsf.php',
+			'wp-super-cache/wp-cache.php',
 			'litespeed-cache/litespeed-cache.php',
 		);
 	}

@@ -769,7 +769,7 @@ function __unstable_add_payment_methods() {
 								<?php endif; ?>
 
 								<a
-									href="https://docs.wpsimplepay.com/categories/payment-methods/"
+									href="https://wpsimplepay.com/docs/?s=payment+methods&docs=1"
 									target="_blank"
 									rel="noopener noreferrer"
 									class="simpay-panel-field-payment-method__help"

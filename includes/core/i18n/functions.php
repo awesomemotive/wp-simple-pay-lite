@@ -22,9 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param string|float|int $amount Amount to format.
  * @param string           $currency Currency code.
  * @param bool             $show_symbol Show currency symbol. Default true.
+ * @param bool             $convert_zero_decimal Perform zero-decimal conversion if needed. Default true.
  * @return string
  */
-function simpay_format_currency( $amount, $currency = '', $show_symbol = true ) {
+function simpay_format_currency(
+	$amount,
+	$currency = '',
+	$show_symbol = true,
+	$convert_zero_decimal = true
+) {
 	if ( empty( $currency ) ) {
 		$currency = strtolower( simpay_get_setting( 'currency', 'USD' ) );
 	}
@@ -33,9 +39,11 @@ function simpay_format_currency( $amount, $currency = '', $show_symbol = true ) 
 	$position        = simpay_get_currency_position();
 	$is_zero_decimal = simpay_is_zero_decimal( $currency );
 
-	$amount = $is_zero_decimal
-		? $amount
-		: simpay_convert_amount_to_dollars( $amount );
+	if ( $convert_zero_decimal ) {
+		$amount = $is_zero_decimal
+			? $amount
+			: simpay_convert_amount_to_dollars( $amount );
+	}
 
 	$amount = number_format(
 		floatval( $amount ),

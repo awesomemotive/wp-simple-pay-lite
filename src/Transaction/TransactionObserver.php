@@ -110,7 +110,10 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			// @todo This might not be the best place for this, but it makes
 			// enough sense for now.
 			'simpay_webhook_charge_failed'              =>
-				array( 'maybe_increment_stock', 10, 2 ),
+				array(
+					array( 'update_on_failed', 10, 2 ),
+					array( 'maybe_increment_stock', 10, 2 ),
+				),
 		);
 
 		// Update Checkout Session in Lite when viewing confirmation.
@@ -181,23 +184,24 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 		$this->transactions->add(
 			array(
-				'form_id'         => $form->id,
-				'object'          => $payment_intent->object,
-				'object_id'       => $payment_intent->id,
-				'livemode'        => (bool) $payment_intent->livemode,
-				'amount_total'    => $payment_intent->amount,
-				'amount_subtotal' => $subtotal,
-				'amount_shipping' => 0,
-				'amount_discount' => 0,
-				'amount_tax'      => isset( $payment_intent->metadata->simpay_tax_unit_amount )
+				'form_id'             => $form->id,
+				'object'              => $payment_intent->object,
+				'object_id'           => $payment_intent->id,
+				'livemode'            => (bool) $payment_intent->livemode,
+				'amount_total'        => $payment_intent->amount,
+				'amount_subtotal'     => $subtotal,
+				'amount_shipping'     => 0,
+				'amount_discount'     => 0,
+				'amount_tax'          => isset( $payment_intent->metadata->simpay_tax_unit_amount )
 					? (int) $payment_intent->metadata->simpay_tax_unit_amount
 					: 0,
-				'currency'        => $payment_intent->currency,
-				'email'           => $customer->email,
-				'customer_id'     => $customer->id,
-				'subscription_id' => null,
-				'status'          => $payment_intent->status,
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'currency'            => $payment_intent->currency,
+				'payment_method_type' => null,
+				'email'               => $customer->email,
+				'customer_id'         => $customer->id,
+				'subscription_id'     => null,
+				'status'              => $payment_intent->status,
+				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
 		);
 	}
@@ -276,21 +280,22 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 		$this->transactions->add(
 			array(
-				'form_id'         => $form->id,
-				'object'          => $payment_intent->object,
-				'object_id'       => $payment_intent->id,
-				'livemode'        => (bool) $payment_intent->livemode,
-				'amount_total'    => $payment_intent->amount,
-				'amount_subtotal' => $subtotal,
-				'amount_shipping' => $order->total_details->amount_shipping, // @phpstan-ignore-line
-				'amount_discount' => $order->total_details->amount_discount, // @phpstan-ignore-line
-				'amount_tax'      => $order->total_details->amount_tax, // @phpstan-ignore-line
-				'currency'        => $payment_intent->currency,
-				'email'           => $customer->email,
-				'customer_id'     => $customer->id,
-				'subscription_id' => null,
-				'status'          => $payment_intent->status,
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'form_id'             => $form->id,
+				'object'              => $payment_intent->object,
+				'object_id'           => $payment_intent->id,
+				'livemode'            => (bool) $payment_intent->livemode,
+				'amount_total'        => $payment_intent->amount,
+				'amount_subtotal'     => $subtotal,
+				'amount_shipping'     => $order->total_details->amount_shipping, // @phpstan-ignore-line
+				'amount_discount'     => $order->total_details->amount_discount, // @phpstan-ignore-line
+				'amount_tax'          => $order->total_details->amount_tax, // @phpstan-ignore-line
+				'currency'            => $payment_intent->currency,
+				'payment_method_type' => null,
+				'email'               => $customer->email,
+				'customer_id'         => $customer->id,
+				'subscription_id'     => null,
+				'status'              => $payment_intent->status,
+				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
 		);
 	}
@@ -312,21 +317,22 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 		$this->transactions->add(
 			array(
-				'form_id'         => $form->id,
-				'object'          => 'subscription',
-				'object_id'       => $subscription->id,
-				'livemode'        => (bool) $subscription->livemode,
-				'amount_total'    => 0,
-				'amount_subtotal' => 0,
-				'amount_shipping' => 0,
-				'amount_discount' => 0,
-				'amount_tax'      => 0,
-				'currency'        => $customer->currency,
-				'email'           => $customer->email,
-				'customer_id'     => $customer->id,
-				'subscription_id' => $subscription->id,
-				'status'          => $subscription->status,
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'form_id'             => $form->id,
+				'object'              => 'subscription',
+				'object_id'           => $subscription->id,
+				'livemode'            => (bool) $subscription->livemode,
+				'amount_total'        => 0,
+				'amount_subtotal'     => 0,
+				'amount_shipping'     => 0,
+				'amount_discount'     => 0,
+				'amount_tax'          => 0,
+				'currency'            => $customer->currency,
+				'payment_method_type' => null,
+				'email'               => $customer->email,
+				'customer_id'         => $customer->id,
+				'subscription_id'     => $subscription->id,
+				'status'              => $subscription->status,
+				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
 		);
 	}
@@ -388,25 +394,33 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			return;
 		}
 
+		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+		$payment_method = $subscription->default_payment_method;
+
 		$this->transactions->add(
 			array(
-				'form_id'         => (int) $metadata->simpay_form_id,
-				'object'          => 'payment_intent',
-				'object_id'       => $invoice->payment_intent,
-				'livemode'        => (bool) $invoice->livemode,
-				'amount_total'    => $invoice->total,
-				'amount_subtotal' => $invoice->subtotal,
-				'amount_discount' => $total_discount,
-				'amount_shipping' => 0,
-				'amount_tax'      => null === $invoice->tax ? 0 : $invoice->tax,
-				'currency'        => $invoice->currency,
-				'email'           => $invoice->customer_email,
-				'customer_id'     => $invoice->customer,
-				'subscription_id' => $invoice->subscription,
-				'status'          => 'paid' === $invoice->status
+				'form_id'             => (int) $metadata->simpay_form_id,
+				'object'              => 'payment_intent',
+				'object_id'           => $invoice->payment_intent,
+				'livemode'            => (bool) $invoice->livemode,
+				'amount_total'        => $invoice->total,
+				'amount_subtotal'     => $invoice->subtotal,
+				'amount_discount'     => $total_discount,
+				'amount_shipping'     => 0,
+				'amount_tax'          => null === $invoice->tax
+					? 0
+					: $invoice->tax,
+				'currency'            => $invoice->currency,
+				'payment_method_type' => isset( $payment_method->type )
+					? $payment_method->type
+					: null,
+				'email'               => $invoice->customer_email,
+				'customer_id'         => $invoice->customer,
+				'subscription_id'     => $invoice->subscription,
+				'status'              => 'paid' === $invoice->status
 					? 'succeeded'
 					: 'canceled',
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
 		);
 	}
@@ -426,21 +440,22 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	public function add_on_checkout_session( $checkout_session, $form ) {
 		$this->transactions->add(
 			array(
-				'form_id'         => $form->id,
-				'object'          => 'checkout_session',
-				'object_id'       => $checkout_session->id,
-				'livemode'        => (bool) $checkout_session->livemode,
-				'amount_total'    => 0,
-				'amount_subtotal' => 0,
-				'amount_shipping' => 0,
-				'amount_discount' => 0,
-				'amount_tax'      => 0,
-				'currency'        => $checkout_session->currency,
-				'email'           => $checkout_session->customer_email,
-				'customer_id'     => $checkout_session->customer,
-				'subscription_id' => $checkout_session->subscription,
-				'status'          => $checkout_session->status,
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'form_id'             => $form->id,
+				'object'              => 'checkout_session',
+				'object_id'           => $checkout_session->id,
+				'livemode'            => (bool) $checkout_session->livemode,
+				'amount_total'        => 0,
+				'amount_subtotal'     => 0,
+				'amount_shipping'     => 0,
+				'amount_discount'     => 0,
+				'amount_tax'          => 0,
+				'currency'            => $checkout_session->currency,
+				'payment_method_type' => null,
+				'email'               => $checkout_session->customer_email,
+				'customer_id'         => $checkout_session->customer,
+				'subscription_id'     => $checkout_session->subscription,
+				'status'              => $checkout_session->status,
+				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
 		);
 	}
@@ -464,11 +479,15 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			return;
 		}
 
+		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+		$payment_method = $payment_intent->payment_method;
+
 		$this->transactions->update(
 			$transaction->id,
 			array(
-				'status'          => $payment_intent->status,
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'payment_method_type' => $payment_method->type,
+				'status'              => $payment_intent->status,
+				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
 		);
 	}
@@ -508,12 +527,16 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			$object    = 'payment_intent';
 			$object_id = $payment_intent->id;
 
+			/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+			$payment_method      = $payment_intent->payment_method;
+			$payment_method_type = $payment_method->type;
+
 			// Recurring payment, paid today.
 		} elseif (
 			'subscription' === $checkout_session->mode &&
 			null !== $subscription &&
-			null === $checkout_session->setup_intent &&
-			null !== $subscription->latest_invoice
+			null !== $subscription->latest_invoice &&
+			null === $checkout_session->setup_intent
 		) {
 			/** @var \SimplePay\Vendor\Stripe\Invoice $latest_invoice */
 			$latest_invoice = $subscription->latest_invoice;
@@ -523,21 +546,31 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			$object    = 'payment_intent';
 			$object_id = $payment_intent->id;
 
+			/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+			$payment_method      = $subscription->default_payment_method;
+			$payment_method_type = $payment_method->type;
+
 			// Recurring payment, trial.
 			// Free trials/non-payment invoices for non-Stripe Checkout payment
 			// forms do not have access to the SetupIntent.
 			// @todo maybe set the object_id to null for consistent behavior?
 		} elseif (
 			'subscription' === $checkout_session->mode &&
+			null !== $subscription &&
 			null !== $checkout_session->setup_intent
 		) {
 			$object    = 'setup_intent';
 			$object_id = $checkout_session->setup_intent;
 
+			/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+			$payment_method      = $subscription->default_payment_method;
+			$payment_method_type = $payment_method->type;
+
 			// Something else.
 		} else {
-			$object_id = null;
-			$object    = null;
+			$object_id           = null;
+			$object              = null;
+			$payment_method_type = null;
 		}
 
 		/**
@@ -564,18 +597,19 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		$this->transactions->update(
 			$transaction->id,
 			array(
-				'object'          => $object,
-				'object_id'       => $object_id,
-				'amount_total'    => $checkout_session->amount_total,
-				'amount_subtotal' => $checkout_session->amount_subtotal,
-				'amount_shipping' => $totals->amount_shipping,
-				'amount_discount' => $totals->amount_discount,
-				'amount_tax'      => $totals->amount_tax,
-				'email'           => $customer->email,
-				'customer_id'     => $customer->id,
-				'subscription_id' => $checkout_session->subscription,
-				'status'          => 'succeeded',
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'object'              => $object,
+				'object_id'           => $object_id,
+				'amount_total'        => $checkout_session->amount_total,
+				'amount_subtotal'     => $checkout_session->amount_subtotal,
+				'amount_shipping'     => $totals->amount_shipping,
+				'amount_discount'     => $totals->amount_discount,
+				'amount_tax'          => $totals->amount_tax,
+				'payment_method_type' => $payment_method_type,
+				'email'               => $customer->email,
+				'customer_id'         => $customer->id,
+				'subscription_id'     => $checkout_session->subscription,
+				'status'              => 'succeeded',
+				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
 		);
 	}
@@ -655,16 +689,17 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			$this->transactions->update(
 				$transaction->id,
 				array(
-					'object'          => $object,
-					'object_id'       => $object_id,
-					'amount_total'    => $session->amount_total,
-					'amount_subtotal' => $session->amount_subtotal,
-					'amount_shipping' => $totals->amount_shipping,
-					'amount_discount' => $totals->amount_discount,
-					'amount_tax'      => $totals->amount_tax,
-					'email'           => $customer->email,
-					'customer_id'     => $customer->id,
-					'status'          => 'succeeded',
+					'object'              => $object,
+					'object_id'           => $object_id,
+					'amount_total'        => $session->amount_total,
+					'amount_subtotal'     => $session->amount_subtotal,
+					'amount_shipping'     => $totals->amount_shipping,
+					'amount_discount'     => $totals->amount_discount,
+					'amount_tax'          => $totals->amount_tax,
+					'payment_method_type' => 'card',
+					'email'               => $customer->email,
+					'customer_id'         => $customer->id,
+					'status'              => 'succeeded',
 				)
 			);
 		} catch ( Exception $e ) {
@@ -674,11 +709,9 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 	/**
 	 * Updates a transaction's totals when receiving the `invoice.payment_succeeded`
-	 * webhook event. This is used to avoid making manual calculations for the totals
-	 * when creating the original transaction.
+	 * webhook event, only for the first invoice created for a Subscription.
 	 *
-	 * When moving to the Orders API we will remove all manual calculation, so
-	 * it should not be repeated.
+	 * Subsequent invoices are handled in `self::add_on_invoice()`.
 	 *
 	 * @since 4.4.6
 	 *
@@ -738,26 +771,68 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			);
 		}
 
+		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+		$payment_method      = $subscription->default_payment_method;
+		$payment_method_type = $payment_method->type;
+
 		$this->transactions->update(
 			$transaction->id,
 			array(
-				'object'          => $object,
-				'object_id'       => $object_id,
-				'amount_total'    => $invoice->total,
-				'amount_subtotal' => $invoice->subtotal,
-				'amount_discount' => $total_discount,
-				'amount_tax'      => null === $invoice->tax ? 0 : $invoice->tax,
-				'email'           => $invoice->customer_email,
-				'customer_id'     => $invoice->customer,
-				'subscription_id' => $invoice->subscription,
-				'status'          => in_array(
+				'object'              => $object,
+				'object_id'           => $object_id,
+				'amount_total'        => $invoice->total,
+				'amount_subtotal'     => $invoice->subtotal,
+				'amount_discount'     => $total_discount,
+				'amount_tax'          => null === $invoice->tax
+					? 0
+					: $invoice->tax,
+				'payment_method_type' => $payment_method_type,
+				'email'               => $invoice->customer_email,
+				'customer_id'         => $invoice->customer,
+				'subscription_id'     => $invoice->subscription,
+				'status'              => in_array(
 					$subscription->status,
 					array( 'active', 'trialing' ),
 					true
 				)
 					? 'succeeded'
 					: 'canceled',
-				'application_fee' => $this->application_fee->has_application_fee(),
+				'application_fee'     => $this->application_fee->has_application_fee(),
+			)
+		);
+	}
+
+	/**
+	 * Updates a transaction's status on `charge.failed`.
+	 *
+	 * @since 4.6.7
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Event  $event Event object.
+	 * @param \SimplePay\Vendor\Stripe\Charge $charge Charge object.
+	 * @return void
+	 */
+	public function update_on_failed( $event, $charge ) {
+		/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
+		$payment_intent = $charge->payment_intent;
+		$transaction    = $this->transactions->get_by_object_id(
+			$payment_intent->id
+		);
+
+		if ( ! $transaction instanceof Transaction ) {
+			return;
+		}
+
+		/**
+		 * @var \stdClass $payment_method_details
+		 * @property string $type
+		 */
+		$payment_method_details = $charge->payment_method_details;
+
+		$this->transactions->update(
+			$transaction->id,
+			array(
+				'status'              => $charge->status,
+				'payment_method_type' => $payment_method_details->type,
 			)
 		);
 	}

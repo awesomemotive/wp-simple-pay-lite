@@ -6,6 +6,7 @@
 @import "~@wordpress/base-styles/z-index";
 
 @import './settings.scss';
+@import './charts.scss';
 
 .button.button-large.simpay-button-large {
 	font-size: 14px;
@@ -2034,6 +2035,19 @@ select.simpay-currency-symbol {
 		display: flex;
 		align-items: center;
 		margin-top: 5px;
+	}
+
+	::-webkit-input-placeholder {
+		color: #b7bec7;
+	}
+
+	::-moz-placeholder {
+		color: #b7bec7;
+		opacity: 1;
+	}
+
+	:-ms-input-placeholder {
+		color: #b7bec7;
 	}
 
 	> * {

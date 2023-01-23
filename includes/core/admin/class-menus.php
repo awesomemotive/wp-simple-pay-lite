@@ -112,7 +112,7 @@ class Menus {
 
 			// Documentation.
 			$documentation_url = simpay_ga_url(
-				'https://docs.wpsimplepay.com/',
+				'https://wpsimplepay.com/docs/',
 				'plugin-listing-link',
 				'Documentation'
 			);

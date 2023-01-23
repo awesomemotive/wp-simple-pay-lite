@@ -22,6 +22,7 @@ class Schema extends BerlinDBSchema {
 
 	/**
 	 * {@inheritdoc}
+	 *
 	 * @var array<int, array<string, bool|int|string|null>>
 	 */
 	public $columns = array(
@@ -35,7 +36,7 @@ class Schema extends BerlinDBSchema {
 			'extra'    => 'auto_increment',
 			'primary'  => true,
 			'sortable' => true,
-			'validate'   => 'intval',
+			'validate' => 'intval',
 		),
 
 		// form_id.
@@ -118,6 +119,15 @@ class Schema extends BerlinDBSchema {
 			'type'       => 'varchar',
 			'length'     => '3',
 			'allow_null' => false,
+			'validate'   => 'sanitize_text_field',
+		),
+
+		// payment_method_type.
+		array(
+			'name'       => 'payment_method_type',
+			'type'       => 'varchar',
+			'length'     => '50',
+			'allow_null' => true,
 			'validate'   => 'sanitize_text_field',
 		),
 

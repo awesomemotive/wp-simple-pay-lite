@@ -215,7 +215,7 @@ class Assets {
 							'pluginError'           => esc_html__(
 								'Could not install the plugin automatically. Please download and install it manually.',
 								'stripe'
-							 ),
+							),
 							'pluginInstallActivate' => esc_html__(
 								'Install and Activate',
 								'stripe'
@@ -224,7 +224,11 @@ class Assets {
 								'Activate',
 								'stripe'
 							),
-						)
+							'trashFormConfirm'      => esc_html__(
+								'Warning: Removing a payment form will prevent active subscriptions from sending upcoming invoice and invoice receipt emails. It is recommended to leave payment forms that have accepted Live Mode payments published.',
+								'stripe'
+							),
+						),
 					)
 				);
 			}

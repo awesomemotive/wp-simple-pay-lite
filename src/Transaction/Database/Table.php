@@ -9,6 +9,9 @@
  * @since 4.4.6
  */
 
+// phpcs:disable WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
+// phpcs:disable PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.MethodDoubleUnderscore
+
 namespace SimplePay\Core\Transaction\Database;
 
 use SimplePay\Vendor\BerlinDB\Database\Table as BerlinDBTable;
@@ -22,37 +25,49 @@ class Table extends BerlinDBTable {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @var string
 	 */
 	protected $prefix = 'wpsp';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @var string
 	 */
 	protected $name = 'transactions';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @var int
 	 */
-	protected $version = 202206170001;
+	protected $version = 202301090001;
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @var string
 	 */
 	protected $schema = __NAMESPACE__ . '\\Schema';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @var array<string, int>
 	 */
 	protected $upgrades = array( // @phpstan-ignore-line
 		'202206170001' => 202206170001,
+		'202301090001' => 202301090001,
 	);
 
 	/**
 	 * {@inheritdoc}
+	 *
 	 * @return void
 	 */
 	protected function set_schema() {
-		$this->schema = "
+		$this->schema = '
 			id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 			form_id bigint(20) UNSIGNED NOT NULL DEFAULT 0,
 			object varchar(100) NOT NULL,
@@ -64,6 +79,7 @@ class Table extends BerlinDBTable {
 			amount_discount bigint(20) NOT NULL,
 			amount_tax bigint(20) NOT NULL,
 			currency varchar(3) NOT NULL,
+			payment_method_type varchar(50) DEFAULT NULL,
 			email varchar(255) DEFAULT NULL,
 			customer_id varchar(255) DEFAULT NULL,
 			subscription_id varchar(255) DEFAULT NULL,
@@ -82,7 +98,7 @@ class Table extends BerlinDBTable {
 			KEY email (email),
 			KEY subscription_id (subscription_id),
 			KEY object_status (object(100),status(50))
-			";
+			';
 	}
 
 	/**
@@ -113,6 +129,23 @@ class Table extends BerlinDBTable {
 
 		$this->get_db()->query(
 			"ALTER TABLE {$this->table_name} ADD INDEX object_status (`object`(100), `status`(50))"
+		);
+
+		return $this->is_success( true );
+	}
+
+	/**
+	 * Upgrade to version 202206170001.
+	 *  - Add a new `payment_method_type` column.
+	 *
+	 * @since 4.6.7
+	 *
+	 * @return bool
+	 */
+	protected function __202301090001() {
+		// Add the `payment_method_type` column after `currency`.
+		$this->get_db()->query(
+			"ALTER TABLE {$this->table_name} ADD COLUMN `payment_method_type` varchar(50) DEFAULT NULL AFTER `currency`"
 		);
 
 		return $this->is_success( true );

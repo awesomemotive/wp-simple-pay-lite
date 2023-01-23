@@ -54,6 +54,7 @@ class AdminPageSubscriber implements SubscriberInterface {
 		return array(
 			'admin_menu' => array( 'add_menu_pages', 20 ),
 			'admin_head' => 'set_block_editor_body_class',
+			'admin_init' => 'maybe_redirect_pages',
 		);
 	}
 
@@ -123,6 +124,55 @@ class AdminPageSubscriber implements SubscriberInterface {
 
 			$current_screen->is_block_editor( $page->is_block_editor() );
 		}
+	}
+
+	/**
+	 * Redirect some admin pages to the correct URL base.
+	 *
+	 * When an Admin Page is created with a priority that puts it above the
+	 * "Payment Forms" post type list type page WordPress uses a different
+	 * URL structure. i.e
+	 *
+	 * admin.php?page=simpay-activity-reports
+	 *   instead of:
+	 * edit.php?post_type=simple-pay&page=simpay-activity-reports
+	 *
+	 * I'm not sure why.
+	 *
+	 * @since 4.6.7
+	 *
+	 * @return void
+	 */
+	public function maybe_redirect_pages() {
+		if ( ! isset( $_GET['page'] ) ) {
+			return;
+		}
+
+		if ( isset( $_GET['post_type'] ) ) {
+			return;
+		}
+
+		$page = sanitize_text_field( $_GET['page'] );
+
+		// Possible page slugs that need to be fixed.
+		$candidates = array(
+			'simpay-activity-reports',
+		);
+
+		if ( ! in_array( $page, $candidates, true ) ) {
+			return;
+		}
+
+		$redirect = add_query_arg(
+			array(
+				'post_type' => 'simple-pay',
+				'page'      => $page
+			),
+			admin_url( 'edit.php' )
+		);
+
+		wp_safe_redirect( $redirect );
+		exit;
 	}
 
 }
