@@ -125,7 +125,7 @@ class TodayReport extends Report\AbstractReport implements SubscriberInterface {
 
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT {$select_date} as date, {$select_amount_value} as gross_volume, COUNT(DISTINCT email) customers, SUM(CASE WHEN status = 'succeeded' THEN 1 ELSE 0 END) successful_payments, COUNT(id) all_payments FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND date_created BETWEEN %s AND %s GROUP BY date", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SELECT {$select_date} as date, {$select_amount_value} as gross_volume, COUNT(DISTINCT email) customers, SUM(CASE WHEN status = 'succeeded' THEN 1 ELSE 0 END) successful_payments, SUM(CASE WHEN object != 'checkout_session' THEN 1 ELSE 0 END) all_payments FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND date_created BETWEEN %s AND %s GROUP BY date", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				simpay_is_test_mode() ? 0 : 1,
 				$currency,
 				$range->start->format( 'Y-m-d 00:00:00' ),

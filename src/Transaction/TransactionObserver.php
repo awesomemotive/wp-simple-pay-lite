@@ -395,7 +395,8 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		}
 
 		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
-		$payment_method = $subscription->default_payment_method;
+		$payment_method      = $subscription->default_payment_method;
+		$payment_method_type = $payment_method ? $payment_method->type : null;
 
 		$this->transactions->add(
 			array(
@@ -411,9 +412,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					? 0
 					: $invoice->tax,
 				'currency'            => $invoice->currency,
-				'payment_method_type' => isset( $payment_method->type )
-					? $payment_method->type
-					: null,
+				'payment_method_type' => $payment_method_type,
 				'email'               => $invoice->customer_email,
 				'customer_id'         => $invoice->customer,
 				'subscription_id'     => $invoice->subscription,
@@ -481,6 +480,10 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
 		$payment_method = $payment_intent->payment_method;
+
+		if ( ! $payment_method ) {
+			return;
+		}
 
 		$this->transactions->update(
 			$transaction->id,
@@ -564,7 +567,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 			/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
 			$payment_method      = $subscription->default_payment_method;
-			$payment_method_type = $payment_method->type;
+			$payment_method_type = $payment_method ? $payment_method->type : null;
 
 			// Something else.
 		} else {
@@ -773,7 +776,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
 		$payment_method      = $subscription->default_payment_method;
-		$payment_method_type = $payment_method->type;
+		$payment_method_type = $payment_method ? $payment_method->type : null;
 
 		$this->transactions->update(
 			$transaction->id,

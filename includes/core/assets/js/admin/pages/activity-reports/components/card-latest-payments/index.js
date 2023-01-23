@@ -56,7 +56,7 @@ function CardLatestPayments() {
 			<CardBody>
 				{ report.isLoading && <Spinner /> }
 
-				{ ! report.isLoading && payments.length > 1 && (
+				{ ! report.isLoading && payments.length > 0 && (
 					<table className={ `${ baseClassName }-payments` }>
 						<tbody>
 							{ payments.map( ( payment ) => {
