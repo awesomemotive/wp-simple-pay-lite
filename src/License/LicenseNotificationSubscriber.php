@@ -91,7 +91,7 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 					array(
 						'type' => 'secondary',
 						'text' => __( 'Learn More', 'stripe' ),
-						'url'  => 'https://docs.wpsimplepay.com/articles/activate-wp-simple-pay-pro-license/',
+						'url'  => 'https://wpsimplepay.com/doc/activate-wp-simple-pay-pro-license/',
 					),
 				),
 				'conditions'     => array(),
@@ -167,7 +167,7 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 					array(
 						'type' => 'secondary',
 						'text' => __( 'Learn More', 'stripe' ),
-						'url'  => 'https://docs.wpsimplepay.com/articles/activate-wp-simple-pay-pro-license/',
+						'url'  => 'https://wpsimplepay.com/doc/activate-wp-simple-pay-pro-license/',
 					),
 				),
 				'conditions'     => array(),

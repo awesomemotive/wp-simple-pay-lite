@@ -1,0 +1,372 @@
+@import "~@wordpress/base-styles/colors";
+@import "~@wordpress/base-styles/variables";
+@import "~@wordpress/base-styles/mixins";
+@import "~@wordpress/base-styles/breakpoints";
+@import "~@wordpress/base-styles/animations";
+@import "~@wordpress/base-styles/z-index";
+
+@include wordpress-admin-schemes();
+
+/**
+ * Components
+ */
+
+// Stat.
+.simpay-activity-reports-stat {
+
+	&__label {
+		font-size: 13px;
+		color: $gray-700;
+		display: block;
+		margin-bottom: $grid-unit;
+	}
+
+	&__value {
+		font-size: 28px;
+		font-weight: bold;
+		color: $gray-900;
+		line-height: 22px;
+		display: flex;
+		align-items: flex-end;
+	}
+
+	&__delta {
+		margin-left: $grid-unit;
+	}
+}
+
+// Badge.
+.simpay-activity-reports-badge {
+	color: $gray-800;
+	font-size: 12px;
+	font-weight: 500;
+	font-style: normal;
+	line-height: 1;
+	padding: 3px 6px;
+	display: inline-flex;
+	align-items: center;
+	background: $gray-100;
+	border-radius: 100px;
+
+	&.is-succeeded,
+	&.is-positive {
+		color: #006908;
+		background-color: #d7f7c2;
+	}
+
+	&.is-failed,
+	&.is-negative {
+		color: #b3093c;
+		background-color: #ffe7f2;
+	}
+}
+
+// Data bar.
+.simpay-activity-reports-data-bar {
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: calc($grid-unit * 1.5);
+	}
+
+	&__label {
+		margin: 0;
+	}
+
+	&__legend {
+		display: flex;
+		align-items: center;
+
+		&-item {
+			margin-left: calc($grid-unit * 2);
+
+			&:before {
+				content: '';
+				width: 9px;
+				height: 9px;
+				background-color: currentColor;
+				margin-right: calc($grid-unit / 1.5);
+				display: inline-block;
+				border-radius: 50%;
+			}
+
+			span {
+				font-size: 12px;
+				font-weight: 500;
+				color: $gray-800;
+			}
+		}
+	}
+
+	&__bar {
+		display: flex;
+		align-items: center;
+		border-radius: 4px;
+		background: #ebebeb;
+
+		&,
+		&-item {
+			height: 26px;
+		}
+
+		&-item {
+			border-radius: 0;
+		}
+
+		&-item-none {
+			color: $gray-700;
+			font-size: 12px;
+			padding-left: $grid-unit;
+		}
+
+		&,
+		&-item:only-child {
+			border-radius: 4px;
+		}
+
+		&-item:first-child:not(:only-child) {
+			border-radius: 0;
+			border-top-left-radius: 4px;
+			border-bottom-left-radius: 4px;
+		}
+
+		&-item:last-child:not(:only-child) {
+			border-radius: 0;
+			border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px;
+		}
+
+		&-item:focus:not(:disabled),
+		&-item:hover {
+			transform: scale(1.1);
+			box-shadow: 0 0 0 2px #fff, rgba(0, 0, 0, 0.40) 0 0 5px;
+			z-index: 2;
+		}
+	}
+}
+
+/**
+ * Config (in Branding Bar)
+ */
+.simpay-activity-reports-config {
+	margin-left: 10px;
+
+	.components-popover__content {
+		padding: 12px;
+		min-width: 250px;
+	}
+}
+
+/**
+ * Activity & Reports
+ */
+.simpay-activity-reports {
+	max-width: 1280px;
+	margin: 10px auto 0;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-column-gap: 20px;
+	grid-row-gap: 20px;
+
+	&-card-title {
+		font-size: 18px;
+		margin: 0;
+		padding: 0;
+	}
+
+	&-card-title-link.components-button.is-link.is-small {
+		font-size: 13px;
+		height: auto;
+		line-height: normal;
+		text-decoration: none;
+	}
+
+	.components-card__divider,
+	.components-card-divider {
+		margin: 20px 0;
+	}
+
+	.components-card {
+		position: relative;
+	}
+}
+
+// Card: Today.
+.simpay-activity-reports-card-today {
+	grid-area: 1 / 1 / 2 / 3;
+
+	&-stats {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-auto-rows: auto;
+		row-gap: 20px;
+		column-gap: 10px;
+		padding-bottom: $grid-unit; /** visual padding to adjust for line heights */
+	}
+
+	&-misc-title {
+		font-size: 13px;
+		margin: 0 0 $grid-unit;
+	}
+
+	&-forms {
+	}
+
+	&-forms__form {
+		display: flex;
+		justify-content: space-between;
+		margin: $grid-unit 0;
+	}
+
+	&-tip {
+		margin-top: $grid-unit-20;
+		padding: $grid-unit-20;
+		border-radius: 4px;
+		background: #fafafa;
+
+		strong {
+			display: flex;
+			align-items: center;
+
+			svg {
+				width: 16px;
+				height: 16px;
+				margin-right: $grid-unit-05;
+				fill: currentColor;
+			}
+		}
+
+		p {
+			margin: $grid-unit 0 0;
+		}
+	}
+}
+
+// Card: Latest (Payments).
+.simpay-activity-reports-card-latest {
+	grid-area: 1 / 3 / 2 / 6;
+
+	&-payments {
+		font-size: 14px;
+		width: 100%;
+	}
+
+	&-payment td {
+		color: $gray-900;
+		padding: 6px 0;
+		vertical-align: middle;
+	}
+
+	&-payment__email a {
+		color: initial;
+		text-decoration: none;
+	}
+
+	&-payment__amount {
+		font-weight: 500;
+	}
+
+	&-payment__type {
+
+		> span,
+		svg {
+			width: 16px;
+			height: 16px;
+			border-radius: 2px;
+			display: inline-block;
+		}
+
+		span {
+			vertical-align: middle;
+		}
+	}
+
+	&-payment__date {
+		font-size: 13px;
+		text-align: right;
+	}
+}
+
+// Card: Reports
+.simpay-activity-reports-card-reports {
+	grid-area: 2 / 1 / 3 / 6;
+
+	&-header {
+		justify-content: flex-start;
+		align-items: center;
+		position: sticky;
+		top: 0;
+		background: #fff;
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		border-bottom-color: #c7c7c7;
+		z-index: 2;
+
+		.admin-bar & {
+			top: 32px;
+		}
+
+		@media screen and (max-width: 782px) {
+			.admin-bar & {
+				top: 46px;
+			}
+		}
+
+		> * {
+			margin-right: $grid-unit;
+		}
+
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+	}
+
+	&-date-range {
+		display: flex;
+		align-items: center;
+
+		>:first-child {
+			margin-right: $grid-unit;
+		}
+
+		.components-button.is-secondary {
+			font-size: 13px;
+			height: 30px;
+			line-height: 30px;
+		}
+	}
+
+	&-payment-breakdown {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-auto-rows: auto;
+		grid-column-gap: 40px;
+		grid-row-gap: 20px;
+	}
+
+	.components-card__body {
+		padding: $grid-unit-30;
+	}
+
+	&-report-title {
+		margin-bottom: $grid-unit-20;
+		display: flex;
+		align-items: center;
+
+		> * {
+			margin-right: $grid-unit;
+		}
+
+		h3 {
+			margin-top: 0;
+			margin-bottom: 0;
+			line-height: 1.25;
+
+			em {
+				font-style: normal;
+				font-weight: normal;
+			}
+		}
+	}
+}

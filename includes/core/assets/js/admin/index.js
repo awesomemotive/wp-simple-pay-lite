@@ -1,4 +1,4 @@
-/* global spGeneral, jQuery */
+/* global simpayAdmin, spGeneral, jQuery */
 
 /**
  * Internal dependencies.
@@ -19,6 +19,11 @@ import './utils.js';
 window.wpsp = window.wpsp || {
 	hooks,
 };
+
+const {
+	licenseLevel,
+	i18n: { trashFormConfirm },
+} = simpayAdmin;
 
 let spAdmin = {};
 
@@ -113,6 +118,8 @@ let spAdmin = {};
 					}
 				} );
 			}
+
+			this.bindTrashWarning();
 
 			body.trigger( 'simpayAdminInit' );
 		},
@@ -400,6 +407,46 @@ let spAdmin = {};
 				tabToShowLinkEl = body.find( '.' + tabToShowId + '-tab a' );
 
 			tabToShowLinkEl.click();
+		},
+
+		/**
+		 * Warns users that trashing an existing payment form can affect
+		 * subscription-related functionality.
+		 *
+		 * @since 4.6.7
+		 */
+		bindTrashWarning() {
+			if (
+				! [ 'plus', 'professional', 'elite', 'ultimate' ].includes(
+					licenseLevel
+				)
+			) {
+				return;
+			}
+
+			// Post row action.
+			$( '.post-type-simple-pay .submitdelete' ).click( function (
+				event
+			) {
+				// eslint-disable-next-line no-alert, no-undef
+				if ( ! confirm( trashFormConfirm ) ) {
+					event.preventDefault();
+				}
+			} );
+
+			// Bulk actions.
+			$( '.post-type-simple-pay #posts-filter' ).submit( function (
+				event
+			) {
+				const action = $( this ).find( 'select[name="action"]' ).val();
+
+				if ( 'trash' === action ) {
+					// eslint-disable-next-line no-alert, no-undef
+					if ( ! confirm( trashFormConfirm ) ) {
+						event.preventDefault();
+					}
+				}
+			} );
 		},
 	};
 

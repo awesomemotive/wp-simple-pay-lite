@@ -75,14 +75,14 @@ class HelpUi implements SubscriberInterface, LicenseAwareInterface {
 			$search_term = $this->context->get_search_term();
 
 			if ( '' === $search_term ) {
-				$url = 'https://docs.wpsimplepay.com/';
+				$url = 'https://wpsimplepay.com/docs/';
 			} else {
 				$url = add_query_arg(
 					array(
-						's'            => $this->context->get_search_term(),
-						'ht-kb-search' => true,
+						's'    => $this->context->get_search_term(),
+						'docs' => '1',
 					),
-					'https://docs.wpsimplepay.com/'
+					'https://wpsimplepay.com/docs/'
 				);
 			}
 

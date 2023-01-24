@@ -32,7 +32,7 @@
 	</p>
 
 	<p>
-		<a href="https://docs.wpsimplepay.com/articles/stripe-setup/?utm_source=WordPress&utm_campaign=pro-plugin&utm_medium=about-us" target="_blank" rel="noopener noreferrer">
+		<a href="https://wpsimplepay.com/doc/stripe-setup/?utm_source=WordPress&utm_campaign=pro-plugin&utm_medium=about-us" target="_blank" rel="noopener noreferrer">
 			<?php esc_html_e( 'Connecting your Stripe Account', 'stripe' ); ?>
 		</a>
 	</p>
@@ -42,7 +42,7 @@
 	</p>
 
 	<p>
-		<a href="https://docs.wpsimplepay.com/articles/first-payment-form/?utm_source=WordPress&utm_campaign=pro-plugin&utm_medium=about-us" target="_blank" rel="noopener noreferrer">
+		<a href="https://wpsimplepay.com/doc/first-payment-form/?utm_source=WordPress&utm_campaign=pro-plugin&utm_medium=about-us" target="_blank" rel="noopener noreferrer">
 			<?php esc_html_e( 'Creating Your First Payment Form', 'stripe' ); ?>
 		</a>
 	</p>
@@ -52,7 +52,7 @@
 	</p>
 
 	<p>
-		<a href="https://docs.wpsimplepay.com/articles/using-test-mode/?utm_source=WordPress&utm_campaign=pro-plugin&utm_medium=about-us" target="_blank" rel="noopener noreferrer">
+		<a href="https://wpsimplepay.com/doc/using-test-mode/?utm_source=WordPress&utm_campaign=pro-plugin&utm_medium=about-us" target="_blank" rel="noopener noreferrer">
 			<?php esc_html_e( 'Using Test Mode', 'stripe' ); ?>
 		</a>
 	</p>

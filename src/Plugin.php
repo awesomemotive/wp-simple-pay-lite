@@ -211,6 +211,7 @@ final class Plugin {
 			new RestApi\RestApiServiceProvider,
 			new StripeConnect\StripeConnectServiceProvider,
 			new Transaction\TransactionServiceProvider,
+			new User\UserServiceProvider,
 			new Webhook\WebhookServiceProvider,
 		);
 
@@ -229,6 +230,7 @@ final class Plugin {
 			$admin_service_providers = array(
 				new Admin\AdminServiceProvider,
 				new Admin\Addon\AddonServiceProvider,
+				new Admin\DashboardWidget\DashboardWidgetServiceProvider,
 				new Admin\Education\EducationServiceProvider,
 				new Admin\SiteHealth\SiteHealthServiceProvider,
 			);

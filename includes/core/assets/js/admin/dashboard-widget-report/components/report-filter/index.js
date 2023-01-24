@@ -1,15 +1,10 @@
 /* global simpayAdminDashboardWidgetReport */
 
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 import { useState } from '@wordpress/element';
-import { Button, SelectControl, Tooltip } from '@wordpress/components';
+import { Button, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { Icon, info } from '@wordpress/icons';
 
@@ -17,49 +12,29 @@ import { Icon, info } from '@wordpress/icons';
  * Internal dependencies
  */
 import MoreInfo from './more-info.js';
+import {
+	BadgeDelta,
+	getEndDateFromType,
+	getStartDateFromType,
+} from '@wpsimplepay/charts';
 
 const { currencies } = simpayAdminDashboardWidgetReport;
+const today = new Date();
 
 function ReportFilter( { report, currency, setCurrency, range, setRange } ) {
-	const { total, delta } = report || {};
+	const { delta } = report.data;
 	const [ isShowingMoreInfo, setIsShowingMoreInfo ] = useState( false );
-
-	const badgeClassName = classnames(
-		'simpay-admin-dashboard-widget-report__badge',
-		{
-			'is-positive': delta > 0,
-			'is-negative': delta < 0,
-		}
-	);
 
 	return (
 		<div className="simpay-admin-dashboard-widget-report__data-filter">
 			<div className="simpay-admin-dashboard-widget-report__data-filter-title">
-				<span>{ __( 'Payments by form', 'simple-pay' ) }</span>
+				<strong>{ __( 'Top Forms', 'simple-pay' ) }</strong>
 
 				{ isShowingMoreInfo && (
 					<MoreInfo setIsOpen={ setIsShowingMoreInfo } />
 				) }
 
-				{ total > 0 && delta > 0 && (
-					<Tooltip
-						text={ __(
-							'Change since previous period',
-							'simple-pay'
-						) }
-						position="top center"
-					>
-						<div className={ badgeClassName }>
-							<>
-								{ delta < 0 ? '&ndash;' : '' }
-								{ delta || '0' }%
-							</>
-						</div>
-					</Tooltip>
-				) }
-
 				<Button
-					isLink
 					variant="link"
 					onClick={ () => setIsShowingMoreInfo( true ) }
 				>
@@ -68,6 +43,10 @@ function ReportFilter( { report, currency, setCurrency, range, setRange } ) {
 			</div>
 
 			<div className="simpay-admin-dashboard-widget-report__data-filter-controls">
+				{ ! report.isLoading && 0 !== delta && (
+					<BadgeDelta delta={ delta } />
+				) }
+
 				<SelectControl
 					label={ __( 'Currency', 'simple-pay' ) }
 					hideLabelFromVision={ true }
@@ -81,11 +60,18 @@ function ReportFilter( { report, currency, setCurrency, range, setRange } ) {
 				<SelectControl
 					label={ __( 'Range', 'simple-pay' ) }
 					hideLabelFromVision={ true }
-					value={ range }
-					onChange={ setRange }
+					value={ range.type }
+					onChange={ ( type ) => {
+						return setRange( {
+							type,
+							start: getStartDateFromType( type, today ),
+							end: getEndDateFromType( type, range.end ),
+						} );
+					} }
 					options={ [
-						{ label: 'Last 7 days', value: 'last7' },
-						{ label: 'Last 30 days', value: 'last30' },
+						{ label: 'Today', value: 'today' },
+						{ label: 'Last 7 days', value: '7days' },
+						{ label: 'Last 4 weeks', value: '4weeks' },
 					] }
 				/>
 			</div>

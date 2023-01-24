@@ -165,7 +165,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 
 		// Support.
 		$support_url = simpay_ga_url(
-			'https://docs.wpsimplepay.com',
+			'https://wpsimplepay.com/docs/',
 			'admin-bar',
 			'Support'
 		);

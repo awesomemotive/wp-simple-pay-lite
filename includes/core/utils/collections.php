@@ -42,7 +42,7 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\\register_collections' );
  * @since 3.8.0
  *
  * @param string $collection_id Collection ID.
- * @return \SimplePay\Core\Util\Collection|false Collection if available, otherwise false.
+ * @return \SimplePay\Core\Utils\Collection|false Collection if available, otherwise false.
  */
 function get_collection( $collection_id ) {
 	$collections = Collections::instance();

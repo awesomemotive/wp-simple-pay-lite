@@ -106,21 +106,38 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminPage\AboutUsPage::class
 		);
 
-		// Form templates.
-		$container->share(
-			'admin-page-form-templates',
-			AdminPage\FormTemplatesPage::class
-		)
-			->withArgument(
-				$container->get( 'form-builder-template-explorer' )
-			);
-
 		$pages = array(
 			$container->get( 'admin-page-setup-wizard' ),
 			$container->get( 'admin-page-system-report' ),
 			$container->get( 'admin-page-about-us' ),
-			$container->get( 'admin-page-form-templates' ),
 		);
+
+		// Add Form templates if the Template Explorer is available.
+		try {
+			$container->share(
+				'admin-page-form-templates',
+				AdminPage\FormTemplatesPage::class
+			)
+				->withArgument(
+					$container->get( 'form-builder-template-explorer' )
+				);
+
+			$pages[] = $container->get( 'admin-page-form-templates' );
+		} catch ( Exception $e ) {
+			// Do not add.
+		}
+
+		// Add Activity & Reports if the minimum WordPress version is met.
+		global $wp_version;
+
+		if ( version_compare( $wp_version, '5.5', '>=' ) ) {
+			$container->share(
+				'admin-page-activity-reports',
+				AdminPage\ActivityReportsPage::class
+			);
+
+			$pages[] = $container->get( 'admin-page-activity-reports' );
+		}
 
 		// Add notification inbox page if notifications are being used.
 		try {

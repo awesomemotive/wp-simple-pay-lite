@@ -31,7 +31,7 @@ function HelpPanelFooter( { searchTerm } ) {
 					variant="secondary"
 					isSecondary
 					href={ getGaUrl(
-						'https://docs.wpsimplepay.com/',
+						'https://wpsimplepay.com/docs/',
 						'help',
 						'' === searchTerm ? 'View Documentation' : searchTerm,
 						'1' === isLite

@@ -123,7 +123,7 @@ domReady( () => {
 		'input[name="simpay_settings[captcha_type]"]'
 	);
 
-	if ( ! toggleEls ) {
+	if ( toggleEls.length === 0 ) {
 		return;
 	}
 

@@ -12,7 +12,6 @@
 namespace SimplePay\Core\Admin\Education;
 
 use SimplePay\Core\AbstractPluginServiceProvider;
-use SimplePay\Core\DashboardWidget\ProductEducationDashboardWidget;
 use SimplePay\Core\License\License;
 
 /**
@@ -74,15 +73,6 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 		$license = $container->get( 'license' );
 
 		if ( $license instanceof License ) {
-			// Dashboard widget.
-			$widget = new ProductEducationDashboardWidget( $license );
-
-			$container->share(
-				'admin-education-dashboard-widget',
-				DashboardWidget::class
-			)
-				->withArgument( $widget );
-
 			// "Email" settings teaser.
 			$container->share(
 				'admin-education-plugin-email-settings',
