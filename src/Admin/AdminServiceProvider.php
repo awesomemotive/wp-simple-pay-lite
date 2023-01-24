@@ -130,7 +130,7 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 		// Add Activity & Reports if the minimum WordPress version is met.
 		global $wp_version;
 
-		if ( version_compare( $wp_version, '5.4', '>=' ) ) {
+		if ( version_compare( $wp_version, '5.5', '>=' ) ) {
 			$container->share(
 				'admin-page-activity-reports',
 				AdminPage\ActivityReportsPage::class

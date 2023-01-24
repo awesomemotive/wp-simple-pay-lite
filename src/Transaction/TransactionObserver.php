@@ -479,16 +479,13 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		}
 
 		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
-		$payment_method = $payment_intent->payment_method;
-
-		if ( ! $payment_method ) {
-			return;
-		}
+		$payment_method      = $payment_intent->payment_method;
+		$payment_method_type = $payment_method ? $payment_method->type : null;
 
 		$this->transactions->update(
 			$transaction->id,
 			array(
-				'payment_method_type' => $payment_method->type,
+				'payment_method_type' => $payment_method_type,
 				'status'              => $payment_intent->status,
 				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
@@ -817,9 +814,17 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	public function update_on_failed( $event, $charge ) {
 		/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
 		$payment_intent = $charge->payment_intent;
-		$transaction    = $this->transactions->get_by_object_id(
-			$payment_intent->id
-		);
+
+		// Find from a Subscription.
+		if ( $charge->invoice && $charge->invoice->subscription ) {
+			$transaction_id = $charge->invoice->subscription->id;
+
+			// Find from a one time payment.
+		} else {
+			$transaction_id = $payment_intent->id;
+		}
+
+		$transaction = $this->transactions->get_by_object_id( $transaction_id );
 
 		if ( ! $transaction instanceof Transaction ) {
 			return;
@@ -834,6 +839,8 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		$this->transactions->update(
 			$transaction->id,
 			array(
+				'object'              => 'payment_intent',
+				'object_id'           => $payment_intent->id,
 				'status'              => $charge->status,
 				'payment_method_type' => $payment_method_details->type,
 			)

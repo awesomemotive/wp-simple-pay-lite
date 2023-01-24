@@ -32,7 +32,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 	 *
 	 * @since 4.4.6
 	 */
-	const REPORT_MIN_WP_VERSION = '5.4';
+	const REPORT_MIN_WP_VERSION = '5.5';
 
 	/**
 	 * {@inheritdoc}
