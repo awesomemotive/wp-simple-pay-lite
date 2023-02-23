@@ -284,6 +284,13 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.0 - February 28, 2023 =
+
+* Fix: Ensure text after dynamic {{amount}} tag is visible on payment buttons.
+* Dev: Reduce the amount of JavaScript files included on the page.
+* Dev: Update to Stripe API version 2022-11-15.
+* Dev: Update the Stripe API PHP library to 10.6.0.
+
 = Stripe Payment Forms v4.6.7 - January 24, 2023 =
 
 * New "Activity & Reports" - see an overview of latest activity and filterable reports.
@@ -313,8 +320,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 * New: Add additional payment form templates.
 * New: Payment Confirmation - add `simpay_payment_receipt_viewed` hook.
-
-= Stripe Payment Forms v4.6.2 - October 19, 2022 =
-
-* New: Add additional payment form templates.
-* New: Update UI for global anti-spam settings in the form builder.
