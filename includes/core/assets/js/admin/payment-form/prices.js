@@ -1,4 +1,4 @@
-/* global wp, _, jQuery, spGeneral */
+/* global simpayAdmin, jQuery */
 
 /**
  * WordPress dependencies
@@ -26,8 +26,8 @@ function togglePriceOptionSingle() {
 		return;
 	}
 
-	const priceListCount = priceListEl.querySelectorAll( '.simpay-price' )
-		.length;
+	const priceListCount =
+		priceListEl.querySelectorAll( '.simpay-price' ).length;
 
 	// Label.
 	document
@@ -98,8 +98,13 @@ function onChangeLabel( priceEl ) {
 	let label;
 
 	const {
-		strings: { recurringIntervalDisplay, customAmountLabel },
-	} = spGeneral;
+		currencyPosition,
+		i18n: {
+			recurringIntervals,
+			recurringIntervalDisplay,
+			customAmountLabel,
+		},
+	} = simpayAdmin;
 
 	if ( '' !== labelInput.value ) {
 		label = labelInput.value;
@@ -117,9 +122,6 @@ function onChangeLabel( priceEl ) {
 			'.simpay-price-enable-custom-amount'
 		);
 
-		const {
-			strings: { currencyPosition, recurringIntervals },
-		} = spGeneral;
 		const currencySymbol =
 			currencyInput.options[ currencyInput.selectedIndex ].dataset.symbol;
 
@@ -165,22 +167,22 @@ function onChangeLabel( priceEl ) {
 
 			let recurringIntervalDisplayReplaced = recurringIntervalDisplay;
 
-			recurringIntervalDisplayReplaced = recurringIntervalDisplayReplaced.replace(
-				'%1$s',
-				label
-			);
+			recurringIntervalDisplayReplaced =
+				recurringIntervalDisplayReplaced.replace( '%1$s', label );
 
-			recurringIntervalDisplayReplaced = recurringIntervalDisplayReplaced.replace(
-				'%2$s',
-				recurringIntervalCount.value
-			);
+			recurringIntervalDisplayReplaced =
+				recurringIntervalDisplayReplaced.replace(
+					'%2$s',
+					recurringIntervalCount.value
+				);
 
-			recurringIntervalDisplayReplaced = recurringIntervalDisplayReplaced.replace(
-				'%3$s',
-				recurringIntervalCount.value === '1'
-					? recurringIntervalDisplayNouns[ 0 ]
-					: recurringIntervalDisplayNouns[ 1 ]
-			);
+			recurringIntervalDisplayReplaced =
+				recurringIntervalDisplayReplaced.replace(
+					'%3$s',
+					recurringIntervalCount.value === '1'
+						? recurringIntervalDisplayNouns[ 0 ]
+						: recurringIntervalDisplayNouns[ 1 ]
+				);
 
 			label = recurringIntervalDisplayReplaced;
 		}
@@ -206,8 +208,7 @@ function onChangeCurrency( priceEl ) {
 		'.simpay-price-currency-symbol'
 	);
 
-	_.each(
-		currenySymbolEls,
+	currenySymbolEls.forEach(
 		( currencySymbolEl ) => ( currencySymbolEl.innerText = symbol )
 	);
 }
@@ -225,8 +226,8 @@ function onToggleAmountType( priceEl, toggle ) {
 		'.simpay-price-amount-type .button'
 	);
 
-	_.each( toggles, ( toggle ) =>
-		toggle.classList.remove( 'button-primary' )
+	toggles.forEach( ( toggleEl ) =>
+		toggleEl.classList.remove( 'button-primary' )
 	);
 
 	// Update current toggle and show relevant settings.
@@ -352,8 +353,7 @@ function onToggleLegacySettings( priceEl ) {
 		'.simpay-price-legacy-setting'
 	);
 
-	_.each(
-		legacySettingEls,
+	legacySettingEls.forEach(
 		( legacySettingEl ) =>
 			( legacySettingEl.style.display =
 				'block' === legacySettingEl.style.display ? 'none' : 'block' )
@@ -368,7 +368,7 @@ function onToggleLegacySettings( priceEl ) {
 function onToggleDefault( priceEl ) {
 	const allDefaults = document.querySelectorAll( '.simpay-price-default' );
 
-	_.each( allDefaults, ( defaultEl ) => ( defaultEl.checked = false ) );
+	allDefaults.forEach( ( defaultEl ) => ( defaultEl.checked = false ) );
 
 	priceEl.querySelector( '.simpay-price-default' ).checked = true;
 }
@@ -421,7 +421,7 @@ function onAddPrice( buttonEl ) {
 			doAction( 'simpayFormBuilderPriceAdded', response );
 		},
 		error: ( { message } ) => {
-			alert( message );
+			window.alert( message );
 
 			// Reenable button.
 			buttonEl.classList.remove( 'disabled' );
@@ -467,7 +467,7 @@ function onAddPlan( buttonEl ) {
 			togglePriceOptionSingle();
 		},
 		error: ( { message } ) => {
-			alert( message );
+			window.alert( message );
 
 			// Reenable button.
 			buttonEl.classList.remove( 'disabled' );
@@ -479,13 +479,13 @@ function onAddPlan( buttonEl ) {
  * Binds jQuery sortable to price options.
  */
 function bindSortablePriceOptions() {
-	$( '.simpay-prices' ).sortable( {
+	jQuery( '.simpay-prices' ).sortable( {
 		items: '.simpay-field-metabox',
 		containment: '#simpay-prices',
 		handle: '.simpay-hndle',
 		placeholder: 'sortable-placeholder',
 		cursor: 'move',
-		delay: $( document.body ).hasClass( 'mobile' ) ? 200 : 0,
+		delay: jQuery( document.body ).hasClass( 'mobile' ) ? 200 : 0,
 		distance: 2,
 		tolerance: 'pointer',
 		forcePlaceholderSize: true,
@@ -522,9 +522,10 @@ function bindSortablePriceOptions() {
 function bindPriceOptions() {
 	const pricesEls = document.querySelectorAll( '.simpay-price' );
 
-	_.each( pricesEls, ( priceEl ) => {
-		const amountType = priceEl.querySelector( '.simpay-price-amount-type' )
-			.value;
+	pricesEls.forEach( ( priceEl ) => {
+		const amountType = priceEl.querySelector(
+			'.simpay-price-amount-type'
+		).value;
 
 		// Label.
 		const labelInput = priceEl.querySelector( '.simpay-price-label' );
@@ -548,7 +549,7 @@ function bindPriceOptions() {
 		);
 
 		if ( amountTypeToggles.length > 0 ) {
-			_.each( amountTypeToggles, ( amountTypeToggle ) =>
+			amountTypeToggles.forEach( ( amountTypeToggle ) =>
 				amountTypeToggle.addEventListener( 'click', ( e ) => {
 					e.preventDefault();
 
@@ -704,7 +705,7 @@ function bindAdvancedOptions() {
 		e.preventDefault();
 
 		advancedEl.style.display =
-			'block' == advancedEl.style.display ? 'none' : 'block';
+			'block' === advancedEl.style.display ? 'none' : 'block';
 	} );
 }
 

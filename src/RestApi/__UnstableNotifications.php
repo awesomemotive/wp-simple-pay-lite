@@ -54,7 +54,7 @@ class __UnstableNotifications implements SubscriberInterface {
 	}
 
 	/**
-	 * Registers the REST API route for GET /wpsp/v2/notifications.
+	 * Registers the REST API route for GET /wpsp/__internal__/notifications.
 	 *
 	 * @since 4.4.5
 	 *
@@ -62,7 +62,7 @@ class __UnstableNotifications implements SubscriberInterface {
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/v2',
+			'wpsp/__internal__',
 			'notifications',
 			array(
 				array(
@@ -95,7 +95,7 @@ class __UnstableNotifications implements SubscriberInterface {
 		);
 
 		register_rest_route(
-			'wpsp/v2',
+			'wpsp/__internal__',
 			'notifications/(?P<id>\d+)',
 			array(
 				array(

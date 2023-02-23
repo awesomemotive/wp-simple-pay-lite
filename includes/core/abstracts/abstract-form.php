@@ -95,6 +95,14 @@ abstract class Form {
 	public $payment_success_page = '';
 
 	/**
+	 * Payment Confirmation: Cancel.
+	 *
+	 * @since 3.0.0
+	 * @var string
+	 */
+	public $payment_cancelled_page = '';
+
+	/**
 	 * Payment Confirmation: Failure.
 	 *
 	 * @since 3.0.0
@@ -109,6 +117,14 @@ abstract class Form {
 	 * @var string
 	 */
 	public $locale = '';
+
+	/**
+	 * Stripe Checkout submit type.
+	 *
+	 * @since 4.7.0
+	 * @var string
+	 */
+	public $checkout_submit_type = 'pay';
 
 	/**
 	 * Country code.
@@ -194,9 +210,17 @@ abstract class Form {
 	 * Stripe Checkout: Billing address
 	 *
 	 * @since 3.0.0
-	 * @var string
+	 * @var bool
 	 */
-	public $enable_billing_address = '';
+	public $enable_billing_address = false;
+
+	/**
+	 * Stripe Checkout: Shipping address
+	 *
+	 * @since 3.0.0
+	 * @var bool
+	 */
+	public $enable_shipping_address = false;
 
 	/**
 	 * Form ID.
@@ -746,6 +770,16 @@ abstract class Form {
 		// Return as hookable data.
 		return apply_filters( 'simpay_stripe_script_variables', array_merge( $strings, $bools ) );
 	}
+
+	/**
+	 * Determines if the payment form has fee recovery enabled for any of the payment methods.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param \SimplePay\Core\Abstracts\Form $form The payment form.
+	 * @return bool
+	 */
+	abstract public function has_fee_recovery();
 
 	/**
 	 * Determines if the payment form forces fee recovery to be paid.

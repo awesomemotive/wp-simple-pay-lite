@@ -166,12 +166,30 @@ class Assets {
 					'simpay-admin',
 					'simpayAdmin',
 					array(
-						'siteTitle'    => get_bloginfo( 'name' ),
-						'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
-						'nonce'        => wp_create_nonce( 'simpay-admin' ),
-						'licenseLevel' => simpay_get_license()->get_level(),
-						'i18n'         => array(
+						'siteTitle'         => get_bloginfo( 'name' ),
+						'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
+						'nonce'             => wp_create_nonce( 'simpay-admin' ),
+						'licenseLevel'      => simpay_get_license()->get_level(),
+						'currency'          => simpay_get_setting( 'currency', 'USD' ),
+						'currencySymbol'    => html_entity_decode(
+							simpay_get_saved_currency_symbol()
+						),
+						'currencyPosition'  => simpay_get_currency_position(),
+						'decimalSeparator'  => simpay_get_decimal_separator(),
+						'thousandSeparator' => simpay_get_thousand_separator(),
+						'decimalPlaces'     => simpay_get_decimal_places(),
+						'minAmount'         => simpay_global_minimum_amount(),
+						'isUpe'             => simpay_is_upe(),
+						'i18n'              => array(
 							'dateFormat'            => simpay_get_date_format(),
+							'mediaTitle'            => esc_html__(
+								'Insert Media',
+								'stripe'
+							),
+							'mediaButtonText'       => esc_html__(
+								'Use Image',
+								'stripe'
+							),
 							'leavePageConfirm'      => esc_html__(
 								'The changes you made will be lost if you navigate away from this page.',
 								'stripe'
@@ -226,6 +244,15 @@ class Assets {
 							),
 							'trashFormConfirm'      => esc_html__(
 								'Warning: Removing a payment form will prevent active subscriptions from sending upcoming invoice and invoice receipt emails. It is recommended to leave payment forms that have accepted Live Mode payments published.',
+								'stripe'
+							),
+							/* translators: Minimum payment amount. */
+							'customAmountLabel' => esc_html__( 'starting at %s', 'stripe' ),
+							'recurringIntervals' => simpay_get_recurring_intervals(),
+							/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
+							'recurringIntervalDisplay' => esc_html_x(
+								'%1$s every %2$s %3$s',
+								'recurring interval',
 								'stripe'
 							),
 						),

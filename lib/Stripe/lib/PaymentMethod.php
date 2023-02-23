@@ -30,6 +30,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\StripeObject $boleto
  * @property \SimplePay\Vendor\Stripe\StripeObject $card
  * @property \SimplePay\Vendor\Stripe\StripeObject $card_present
+ * @property \SimplePay\Vendor\Stripe\StripeObject $cashapp
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|string|\SimplePay\Vendor\Stripe\Customer $customer The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
  * @property \SimplePay\Vendor\Stripe\StripeObject $customer_balance
@@ -47,6 +48,8 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\StripeObject $oxxo
  * @property \SimplePay\Vendor\Stripe\StripeObject $p24
  * @property \SimplePay\Vendor\Stripe\StripeObject $paynow
+ * @property \SimplePay\Vendor\Stripe\StripeObject $paypal
+ * @property \SimplePay\Vendor\Stripe\StripeObject $pix
  * @property \SimplePay\Vendor\Stripe\StripeObject $promptpay
  * @property \SimplePay\Vendor\Stripe\StripeObject $radar_options Options to configure Radar. See <a href="https://stripe.com/docs/radar/radar-session">Radar Session</a> for more information.
  * @property \SimplePay\Vendor\Stripe\StripeObject $sepa_debit
@@ -54,6 +57,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property string $type The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
  * @property \SimplePay\Vendor\Stripe\StripeObject $us_bank_account
  * @property \SimplePay\Vendor\Stripe\StripeObject $wechat_pay
+ * @property \SimplePay\Vendor\Stripe\StripeObject $zip
  */
 class PaymentMethod extends ApiResource
 {

@@ -11,8 +11,6 @@
 namespace SimplePay\Core\Payments\Payment_Confirmation;
 
 use SimplePay\Core\API;
-use SimplePay\Core\Payments\Stripe_Checkout\Session;
-use SimplePay\Core\Payments\PaymentIntent;
 use SimplePay\Pro\Emails;
 
 // Exit if accessed directly.
@@ -210,7 +208,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 
 	// Using the available identifier, find the relevant customer.
 	if ( $session_id ) {
-		$session = Session\retrieve(
+		$session = API\CheckoutSessions\retrieve(
 			array(
 				'id'     => $session_id,
 				'expand' => array(
@@ -233,7 +231,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 	}
 
 	// Retrieve the PaymentIntent the Customer is linked to.
-	$paymentintents = PaymentIntent\all(
+	$paymentintents = API\PaymentIntents\all(
 		array(
 			'customer' => $customer->id,
 			'limit'    => 1,

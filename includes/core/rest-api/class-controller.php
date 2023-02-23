@@ -91,16 +91,11 @@ abstract class Controller extends WP_REST_Controller {
 	protected function check_rate_limit( $request ) {
 		$has_exceeded_rate_limit = false;
 
-		/**
-		 * Filters if the current IP address has exceeded the rate limit.
-		 *
-		 * @since 3.9.5
-		 *
-		 * @param bool $has_exceeded_rate_limit
-		 */
+		/** This filter is documented in src/RestApi/Internal/Payment/AbstractPaymentCreateRoute.php */
 		$has_exceeded_rate_limit = apply_filters(
 			'simpay_has_exceeded_rate_limit',
-			$has_exceeded_rate_limit
+			$has_exceeded_rate_limit,
+			$request
 		);
 
 		if ( true === $has_exceeded_rate_limit ) {

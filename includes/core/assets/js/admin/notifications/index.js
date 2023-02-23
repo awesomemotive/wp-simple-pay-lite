@@ -91,7 +91,7 @@ function Notifications() {
 		} );
 
 		apiFetch( {
-			path: '/wpsp/v2/notifications',
+			path: '/wpsp/__internal__/notifications',
 		} ).then( ( { data } ) => {
 			dispatchNotifications( {
 				type: 'SET',
@@ -149,7 +149,7 @@ function Notifications() {
 		} );
 
 		apiFetch( {
-			path: '/wpsp/v2/notifications/' + notificationId,
+			path: '/wpsp/__internal__/notifications/' + notificationId,
 			method: 'DELETE',
 		} );
 	}

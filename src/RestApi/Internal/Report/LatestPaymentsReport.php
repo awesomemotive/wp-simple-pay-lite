@@ -43,8 +43,8 @@ class LatestPaymentsReport extends Report\AbstractReport implements SubscriberIn
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/__internal__/report',
-			'latest-payments',
+			'wpsp/__internal__',
+			'report/latest-payments',
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,

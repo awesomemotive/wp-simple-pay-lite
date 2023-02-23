@@ -21,7 +21,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string|\SimplePay\Vendor\Stripe\Account $on_behalf_of The value of <a href="https://stripe.com/docs/api/setup_intents/object#setup_intent_object-on_behalf_of">on_behalf_of</a> on the SetupIntent at the time of this confirmation.
  * @property string|\SimplePay\Vendor\Stripe\PaymentMethod $payment_method ID of the payment method used with this SetupAttempt.
  * @property \SimplePay\Vendor\Stripe\StripeObject $payment_method_details
- * @property null|\SimplePay\Vendor\Stripe\ErrorObject $setup_error The error encountered during this attempt to confirm the SetupIntent, if any.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $setup_error The error encountered during this attempt to confirm the SetupIntent, if any.
  * @property string|\SimplePay\Vendor\Stripe\SetupIntent $setup_intent ID of the SetupIntent that this attempt belongs to.
  * @property string $status Status of this SetupAttempt, one of <code>requires_confirmation</code>, <code>requires_action</code>, <code>processing</code>, <code>succeeded</code>, <code>failed</code>, or <code>abandoned</code>.
  * @property string $usage The value of <a href="https://stripe.com/docs/api/setup_intents/object#setup_intent_object-usage">usage</a> on the SetupIntent at the time of this confirmation, one of <code>off_session</code> or <code>on_session</code>.

@@ -47,8 +47,8 @@ class SuccessfulPaymentsPeriodOverPeriodReport extends Report\AbstractReport imp
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/__internal__/report',
-			'successful-payments-period-over-period',
+			'wpsp/__internal__',
+			'report/successful-payments-period-over-period',
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,

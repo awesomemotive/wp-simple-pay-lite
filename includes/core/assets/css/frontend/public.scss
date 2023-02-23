@@ -28,6 +28,23 @@ $error-text-color: #eb1c26;
 // Loading state.
 .simpay-checkout-form {
 
+	&--requires_payment_method {
+
+		> *:not(.simpay-checkout-btn-container):not(.simpay-card-container):not(.simpay-payment-method-error):not(.simpay-generic-error):not(.simpay-amounts-container):not(.simpay-test-mode-badge-container) {
+			position: relative;
+			opacity: 0.65;
+
+			&::after {
+				content: "";
+				position: absolute;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				top: 0;
+			}
+		}
+	}
+
 	&--loading {
 
 		&::after {
@@ -45,18 +62,32 @@ $error-text-color: #eb1c26;
 	}
 }
 
-.simpay-form-control.h-captcha {
+.simpay-form-control {
 	margin-bottom: 15px;
+}
+
+.simpay-payment-btn em.simpay-total-amount-value {
+	font-style: normal;
 }
 
 // Error messages container.
 .simpay-errors {
-	margin-bottom: 15px;
 
 	.simpay-styled & {
 		font-family: $base-font;
 		color: $error-text-color;
-		line-height: 1.5;
+	}
+}
+
+.simpay-form-control:not(:last-of-type) + .simpay-errors:not(:empty) {
+	margin: -10px 0 15px;
+	font-size: 0.93rem;
+}
+
+.simpay-form-control.simpay-checkout-btn-container {
+
+	+ .simpay-errors:not(:empty) {
+		margin-top: 15px;
 	}
 }
 

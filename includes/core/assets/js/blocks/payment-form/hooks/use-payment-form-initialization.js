@@ -1,4 +1,4 @@
-/* global jQuery */
+/* global jQuery, simpayBlockPaymentForm */
 
 /**
  * WordPress dependencies
@@ -33,9 +33,8 @@ export function usePaymentFormInitialization( attributes ) {
 
 		// See if we have any Payment Form blocks.
 		clientIds.forEach( ( clientId ) => {
-			const block = storeSelect( 'core/block-editor' ).getBlock(
-				clientId
-			);
+			const block =
+				storeSelect( 'core/block-editor' ).getBlock( clientId );
 
 			if ( ! block ) {
 				return;
@@ -54,15 +53,21 @@ export function usePaymentFormInitialization( attributes ) {
 				return;
 			}
 
+			const isUpe = '1' === simpayBlockPaymentForm.isUpe;
+
 			// Wait for the server response/DOM to be updated before initializing the form.
 			return setTimeout( () => {
-				const paymentFormInstance = jQuery(
-					`#block-${ clientId } #simpay-block-payment-form-${ blockFormId }`
-				);
+				const selector = `#block-${ clientId } #simpay-block-payment-form-${ blockFormId }`;
+				const paymentFormInstance = isUpe
+					? document.querySelector( selector )
+					: jQuery( selector );
+				const paymentFormVars = isUpe
+					? JSON.parse( paymentFormInstance.dataset.formVars )
+					: paymentFormInstance.data( 'form-vars' );
 
 				window.wpsp.initPaymentForm(
 					paymentFormInstance,
-					paymentFormInstance.data( 'form-vars' )
+					paymentFormVars
 				);
 
 				setFormInitialized( true );

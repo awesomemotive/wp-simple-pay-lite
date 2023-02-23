@@ -17,7 +17,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|int $application_fee_amount The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's SimplePay\Vendor\Stripe account. Only applicable if there are no line items with recurring prices on the quote.
  * @property null|float $application_fee_percent A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's SimplePay\Vendor\Stripe account. Only applicable if there are line items with recurring prices on the quote.
  * @property \SimplePay\Vendor\Stripe\StripeObject $automatic_tax
- * @property string $collection_method Either <code>charge_automatically</code>, or <code>send_invoice</code>. When charging automatically, SimplePay\Vendor\Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, SimplePay\Vendor\Stripe will email your customer an invoice with payment instructions. Defaults to <code>charge_automatically</code>.
+ * @property string $collection_method Either <code>charge_automatically</code>, or <code>send_invoice</code>. When charging automatically, SimplePay\Vendor\Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, SimplePay\Vendor\Stripe will email your customer an invoice with payment instructions and mark the subscription as <code>active</code>. Defaults to <code>charge_automatically</code>.
  * @property \SimplePay\Vendor\Stripe\StripeObject $computed
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
@@ -32,15 +32,19 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|string|\SimplePay\Vendor\Stripe\Invoice $invoice The invoice that was created from this quote.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $invoice_settings All invoices will be billed using the specified settings.
  * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> $line_items A list of items the customer is being quoted for.
+ * @property null|string[] $lines A list of lines on the quote. These lines describe changes that will be used to create new subscription schedules or update existing subscription schedules when the quote is accepted.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|string $number A unique number that identifies this particular quote. This number is assigned once the quote is <a href="https://stripe.com/docs/quotes/overview#finalize">finalized</a>.
  * @property null|string|\SimplePay\Vendor\Stripe\Account $on_behalf_of The account on behalf of which to charge. See the <a href="https://support.stripe.com/questions/sending-invoices-on-behalf-of-connected-accounts">Connect documentation</a> for details.
  * @property string $status The status of the quote.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $status_details Details on when and why a quote has been marked as stale or canceled.
  * @property \SimplePay\Vendor\Stripe\StripeObject $status_transitions
  * @property null|string|\SimplePay\Vendor\Stripe\Subscription $subscription The subscription that was created or updated from this quote.
  * @property \SimplePay\Vendor\Stripe\StripeObject $subscription_data
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject[] $subscription_data_overrides
  * @property null|string|\SimplePay\Vendor\Stripe\SubscriptionSchedule $subscription_schedule The subscription schedule that was created or updated from this quote.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject[] $subscription_schedules The subscription schedules that were created or updated from this quote.
  * @property null|string|\SimplePay\Vendor\Stripe\TestHelpers\TestClock $test_clock ID of the test clock this quote belongs to.
  * @property \SimplePay\Vendor\Stripe\StripeObject $total_details
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $transfer_data The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the invoices.
@@ -58,9 +62,11 @@ class Quote extends ApiResource
     const COLLECTION_METHOD_SEND_INVOICE = 'send_invoice';
 
     const STATUS_ACCEPTED = 'accepted';
+    const STATUS_ACCEPTING = 'accepting';
     const STATUS_CANCELED = 'canceled';
     const STATUS_DRAFT = 'draft';
     const STATUS_OPEN = 'open';
+    const STATUS_STALE = 'stale';
 
     /**
      * @param callable $readBodyChunkCallable
@@ -120,6 +126,23 @@ class Quote extends ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
+     * @return \SimplePay\Vendor\Stripe\Quote the drafted quote
+     */
+    public function draftQuote($params = null, $opts = null)
+    {
+        $url = $this->instanceUrl() . '/mark_draft';
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
+        $this->refreshFrom($response, $opts);
+
+        return $this;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
      * @return \SimplePay\Vendor\Stripe\Quote the finalized quote
      */
     public function finalizeQuote($params = null, $opts = null)
@@ -167,5 +190,115 @@ class Quote extends ApiResource
         $obj->setLastResponse($response);
 
         return $obj;
+    }
+
+    /**
+     * @param string $id
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\QuoteLine> list of QuoteLines
+     */
+    public static function allLines($id, $params = null, $opts = null)
+    {
+        $url = static::resourceUrl($id) . '/lines';
+        list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Quote the marked quote
+     */
+    public function markStaleQuote($params = null, $opts = null)
+    {
+        $url = $this->instanceUrl() . '/mark_stale';
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
+        $this->refreshFrom($response, $opts);
+
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\InvoiceLineItem> list of InvoiceLineItems
+     */
+    public static function previewInvoiceLines($id, $params = null, $opts = null)
+    {
+        $url = static::resourceUrl($id) . '/preview_invoice_lines';
+        list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * @param string $id
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Invoice> list of Invoices
+     */
+    public static function previewInvoices($id, $params = null, $opts = null)
+    {
+        $url = static::resourceUrl($id) . '/preview_invoices';
+        list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * @param string $id
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\SubscriptionSchedule> list of SubscriptionSchedules
+     */
+    public static function previewSubscriptionSchedules($id, $params = null, $opts = null)
+    {
+        $url = static::resourceUrl($id) . '/preview_subscription_schedules';
+        list($response, $opts) = static::_staticRequest('get', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Quote the reestimated quote
+     */
+    public function reestimate($params = null, $opts = null)
+    {
+        $url = $this->instanceUrl() . '/reestimate';
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
+        $this->refreshFrom($response, $opts);
+
+        return $this;
     }
 }

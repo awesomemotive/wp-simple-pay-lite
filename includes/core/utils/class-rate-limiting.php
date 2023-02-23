@@ -24,6 +24,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Rate_Limiting {
 
 	/**
+	 * Payment request.
+	 *
+	 * @since 4.7.0
+	 * @var \WP_REST_Request
+	 */
+	private $request;
+
+	/**
 	 * Is the file writable.
 	 *
 	 * @var bool
@@ -68,7 +76,10 @@ class Rate_Limiting {
 		 *
 		 * @link https://github.com/WP-API/WP-API/issues/2400#issuecomment-202620551
 		 */
-		add_filter( 'simpay_has_exceeded_rate_limit', array( $this, 'has_hit_limit' ) );
+		add_filter(
+			'simpay_has_exceeded_rate_limit',
+			array( $this, 'has_hit_limit' ), 10, 2
+		);
 	}
 
 	/**
@@ -135,12 +146,18 @@ class Rate_Limiting {
 	 *
 	 * @since 3.9.5
 	 *
+	 * @param bool             $hit Whether the rate limit has been hit.
+	 * @param \WP_REST_Request $request The request object.
+	 *
 	 * @return bool
 	 */
-	public function has_hit_limit() {
+	public function has_hit_limit( $hit, $request ) {
 		if ( ! $this->rate_limiting_enabled() ) {
 			return false;
 		}
+
+		// Store the request.
+		$this->request = $request;
 
 		$count = $this->increment_rate_limit_count();
 
@@ -154,7 +171,8 @@ class Rate_Limiting {
 			return false;
 		}
 
-		$max_rate_count = 18;
+		// UPE makes single requests, so it should be lower.
+		$max_rate_count = simpay_is_upe() ? 5 : 18;
 
 		/**
 		 * Filters the number of times the endpoint can be hit within the specified time period (1 hour).
@@ -304,6 +322,7 @@ class Rate_Limiting {
 	 *
 	 * @since 3.9.5
 	 *
+	 * @param \WP_REST_Request|null $request The request object.
 	 * @return string
 	 */
 	public function get_rate_limit_id() {
@@ -316,7 +335,7 @@ class Rate_Limiting {
 		 *
 		 * @param string $id The rate limiting tracking ID.
 		 */
-		$id = apply_filters( 'simpay_rate_limiting_id', $id );
+		$id = apply_filters( 'simpay_rate_limiting_id', $id, $this->request );
 
 		return $id;
 	}

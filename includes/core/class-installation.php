@@ -30,7 +30,11 @@ class Installation {
 	 */
 	public static function activate() {
 
-		update_option( 'simpay_dismiss_ssl', false );
+		// Set defaults for new installs.
+		if ( ! get_option( 'simpay_installed' ) ) {
+			update_option( 'simpay_dismiss_ssl', false );
+			simpay_update_setting( 'is_upe', 'yes' );
+		}
 
 		// Record installation time.
 		add_option( 'simpay_installed', time() );

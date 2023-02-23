@@ -75,31 +75,34 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 			// Log when an incoming event should be expected.
 			'simpay_after_checkout_session_from_payment_form_request' =>
 				'log_expected_event',
-			'simpay_after_paymentintent_from_payment_form_request'    =>
+			'simpay_after_paymentintent_from_payment_form_request' =>
 				'log_expected_event',
-			'simpay_after_subscription_from_payment_form_request'     =>
+			'simpay_after_subscription_from_payment_form_request' =>
 				'log_expected_event',
-			'simpay_after_charge_from_payment_form_request'           =>
+			'simpay_after_charge_from_payment_form_request' =>
 				'log_expected_event',
 
 			// Show a notice in the setting.
-			'__unstable_simpay_before_webhook_setting'                =>
+			'__unstable_simpay_before_webhook_setting' =>
 				'maybe_show_setting_notice',
 
 			// Clear the "expected" flag when a user claims they have verified their settings.
-			'wpsp_transition_notification_dismissed' =>
+			'wpsp_transition_notification_dismissed'   =>
 				array( 'clear_expected_event_flag', 10, 3 ),
 
 			// Allow permanently dismissing the notice/notification.
-			'admin_init'                                              =>
+			'admin_init'                               =>
 				array(
-					array( 'dismiss_expected_event' )
+					array( 'dismiss_expected_event' ),
 				),
 		);
 
-		// Alert via Notification Inbox if available.
 		if ( $this->notifications instanceof NotificationRepository ) {
+			// Alert via Notification Inbox if available.
 			$subscribers['admin_init'][] = array( 'maybe_add_notification' );
+
+			// Clear the expectations when the Stripe account changes.
+			$subscribers['simpay_stripe_account_connected'] = 'reset_expectations';
 		}
 
 		return $subscribers;
@@ -129,24 +132,28 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 	 * @return void
 	 */
 	public function maybe_add_notification() {
+		// Dismiss the notification if an event was received.
 		if ( true === $this->received_expected_event() ) {
+			$this->notifications->dismiss( 'webhook-event-expected' );
+
 			return;
 		}
 
+		// Restore (or add) the notification if it was not received.
 		$this->notifications->restore(
 			array(
-				'type'           => 'error',
-				'source'         => 'internal',
-				'title'          => __(
+				'type'       => 'error',
+				'source'     => 'internal',
+				'title'      => __(
 					'An expected webhook event was not received.',
 					'stripe'
 				),
-				'slug'           => 'webhook-event-expected',
-				'content'        => __(
+				'slug'       => 'webhook-event-expected',
+				'content'    => __(
 					'An expected webhook event has not been received. Please ensure you have properly configured your webhook endpoint in Stripe to avoid interruption of functionality.',
 					'stripe'
 				),
-				'actions'        => array(
+				'actions'    => array(
 					array(
 						'type' => 'primary',
 						'text' => __( 'Webhook Settings', 'stripe' ),
@@ -155,7 +162,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 								'section'    => 'stripe',
 								'subsection' => 'webhooks',
 							)
-						)
+						),
 					),
 					array(
 						'type' => 'secondary',
@@ -168,9 +175,9 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 						),
 					),
 				),
-				'conditions'     => array(),
-				'start'          => date( 'Y-m-d H:i:s', time() ),
-				'end'            => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
+				'conditions' => array(),
+				'start'      => date( 'Y-m-d H:i:s', time() ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+				'end'        => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 			)
 		);
 	}
@@ -230,7 +237,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 	 *
 	 * @param mixed $old_value Old value.
 	 * @param mixed $new_value New value.
-	 * @param int $notification_id Notification ID.
+	 * @param int   $notification_id Notification ID.
 	 * @return void
 	 */
 	public function clear_expected_event_flag( $old_value, $new_value, $notification_id ) {
@@ -260,6 +267,22 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 		);
 
 		delete_option( $option_key );
+	}
+
+	/**
+	 * Clears webhook expectattions (and dismisses a notification).
+	 *
+	 * @since 4.7.0
+	 *
+	 * @return void
+	 */
+	public function reset_expectations() {
+		// Clear the flag(s).
+		delete_option( 'simpay_webhook_event_expected_live' );
+		delete_option( 'simpay_webhook_event_expected_test' );
+
+		// Dismiss the notice.
+		$this->notifications->dismiss( 'webhook-event-expected' );
 	}
 
 	/**
@@ -373,7 +396,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 				'number'     => 1,
 				'livemode'   => $livemode,
 				'date_query' => array(
-					'after' => date( 'Y-m-d H:i:s', $expected ),
+					'after' => date( 'Y-m-d H:i:s', $expected ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 				),
 			)
 		);

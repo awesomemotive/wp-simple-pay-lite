@@ -43,8 +43,8 @@ class PaymentInfoReport extends Report\AbstractReport implements SubscriberInter
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/__internal__/report',
-			'payment-info',
+			'wpsp/__internal__',
+			'report/payment-info',
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,

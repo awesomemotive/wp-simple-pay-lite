@@ -23,6 +23,7 @@ namespace SimplePay\Vendor\Stripe\Treasury;
  * @property \SimplePay\Vendor\Stripe\StripeObject $linked_flows
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property string $network The rails used to send the funds.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $network_details Details specific to the money movement rails.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $reversal_details Details describing when a ReceivedCredit may be reversed.
  * @property string $status Status of the ReceivedCredit. ReceivedCredits are created either <code>succeeded</code> (approved) or <code>failed</code> (declined). If a ReceivedCredit is declined, the failure reason can be found in the <code>failure_code</code> field.
  * @property null|string|\SimplePay\Vendor\Stripe\Treasury\Transaction $transaction The Transaction associated with this object.

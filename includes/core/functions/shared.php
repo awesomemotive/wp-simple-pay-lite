@@ -489,7 +489,7 @@ function simpay_get_currency_position() {
  *
  * @param int|string $post_id Payment Form ID.
  * @param string     $setting Payment Form meta key.
- * @param string     $default Payment Form meta default.
+ * @param mixed      $default Payment Form meta default.
  * @param bool       $single Return the Paymetn Form meta as a single value.
  *                           Default true.
  * @return mixed|string
@@ -1509,6 +1509,28 @@ function __unstable_simpay_get_payment_form_templates() {
 			}
 		}
 
+		// Adjust settings for UPE.
+		if ( simpay_is_upe() ) {
+			$data['data']['fields'] = array_map(
+				function( $field ) {
+					// Remove the card field label.
+					if ( 'card' === $field['type'] ) {
+						$field['label'] = '';
+					}
+
+					// Enable Link in the email field.
+					if ( 'email' === $field['type'] ) {
+						$field['link'] = array(
+							'enabled' => 'yes',
+						);
+					}
+
+					return $field;
+				},
+				$data['data']['fields']
+			);
+		}
+
 		$templates[] = $data;
 	}
 
@@ -1762,4 +1784,74 @@ function simpay_is_dev_url( $url = '' ) {
 	}
 
 	return $is_local_url;
+}
+
+/**
+ * Get the max length for metadata fields
+ *
+ * @since 3.0.0
+ *
+ * @return int
+ */
+function simpay_metadata_title_length() {
+	return 40;
+}
+
+/**
+ * Get the max length for the metadata description
+ *
+ * @since 3.0.0
+ *
+ * @return int
+ */
+function simpay_metadata_description_length() {
+	return 500;
+}
+
+/**
+ * Handle metadata truncation using calls to other DRY functions
+ *
+ * @since 3.0.0
+ *
+ * @param string $type Metadata type.
+ * @param string $value Metadata value.
+ * @return bool|string
+ */
+function simpay_truncate_metadata( $type, $value ) {
+
+	switch ( $type ) {
+		case 'title':
+			return substr( $value, 0, simpay_metadata_title_length() );
+		case 'description':
+			return substr( $value, 0, simpay_metadata_description_length() );
+		default:
+			return $value;
+	}
+}
+
+/**
+ * Determines if the Universal Payment Element should be used.
+ *
+ * Currently this is only for all of Lite, new Pro installs, or manually enabled.
+ *
+ * @since 4.7.0
+ *
+ * @return bool
+ */
+function simpay_is_upe() {
+	$is_lite = simpay_get_license()->is_lite();
+
+	$is_upe = 'yes' === simpay_get_setting(
+		'is_upe',
+		$is_lite ? 'yes' : 'no'
+	);
+
+	/**
+	 * Filters whether the Universal Payment Element should be used.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param bool $is_upe Whether the Universal Payment Element should be used.
+	 */
+	return apply_filters( 'simpay_is_upe', $is_upe );
 }

@@ -91,6 +91,23 @@ class Reader extends \SimplePay\Vendor\Stripe\ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
+     * @return \SimplePay\Vendor\Stripe\Terminal\Reader the refunded reader
+     */
+    public function refundPayment($params = null, $opts = null)
+    {
+        $url = $this->instanceUrl() . '/refund_payment';
+        list($response, $opts) = $this->_request('post', $url, $params, $opts);
+        $this->refreshFrom($response, $opts);
+
+        return $this;
+    }
+
+    /**
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
      * @return \SimplePay\Vendor\Stripe\Terminal\Reader the seted reader
      */
     public function setReaderDisplay($params = null, $opts = null)

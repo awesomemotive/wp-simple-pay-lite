@@ -172,6 +172,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			'simpay-block-payment-form',
 			'simpayBlockPaymentForm',
 			array(
+				'isUpe'    => simpay_is_upe(),
 				'isLite'   => $this->license->is_lite() ? 1 : 0,
 				'previews' => array(
 					'pro'  => SIMPLE_PAY_INC_URL . '/core/assets/images/blocks/payment-form-preview-pro.png', // @phpstan-ignore-line
@@ -193,7 +194,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	/**
 	 * Returns a list of variables used to manually initialize the payment form in the block editor.
 	 *
-	 * This list is messy, weird, and confusing. You are not crazy. It is a way to simulate the
+	 * The non-UPE is messy, weird, and confusing. You are not crazy. It is a way to simulate the
 	 * form of the `var simplePayForms = []` script data normally output on the frontend.
 	 *
 	 * @link https://github.com/awesomemotive/wp-simple-pay-pro/issues/860
@@ -204,31 +205,41 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	 * @return array<mixed>
 	 */
 	private function get_form_vars( $form ) {
-		$vars = array(
-			'id'     => $form->id,
-			'type'   => 'stripe_checkout' === $form->get_display_type()
-				? 'stripe-checkout'
-				: 'stripe-elements',
-			'form'   => $form->get_form_script_variables(), // @phpstan-ignore-line
-			'stripe' => array_merge(
-				array(
-					'amount'  => $form->total_amount, // @phpstan-ignore-line
-					'country' => $form->country,
+		$is_lite = $this->license->is_lite();
+
+		/** @var \SimplePay\Core\Forms\Default_Form $form */
+
+		if ( simpay_is_upe() ) {
+			$vars = $form->get_upe_script_variables();
+		} else {
+			$vars = array(
+				'id'     => $form->id,
+				'type'   => 'stripe_checkout' === $form->get_display_type()
+					? 'stripe-checkout'
+					: 'stripe-elements',
+				'form'   => $form->get_form_script_variables(),
+				'stripe' => array_merge(
+					array(
+						'amount'  => $form->total_amount,
+						'country' => $form->country,
+					),
+					$form->get_stripe_script_variables()
 				),
-				$form->get_stripe_script_variables()
-			),
-		);
-
-		if ( false === $this->license->is_lite() ) {
-			$temp = array();
-			$temp[ $form->id ] = $vars;
-
-			$pro = $form->pro_get_form_script_variables( $temp, $form->id ); // @phpstan-ignore-line
-
-			$vars = wp_parse_args(
-				$vars['form'],
-				$pro[ $form->id ]
 			);
+
+			if ( false === $is_lite ) {
+				$temp = array();
+				$temp[ $form->id ] = $vars;
+
+				/** @var \SimplePay\Pro\Forms\Pro_Form $form */
+
+				$pro = $form->pro_get_form_script_variables( $temp, $form->id );
+
+				$vars = wp_parse_args(
+					$vars['form'],
+					$pro[ $form->id ]
+				);
+			}
 		}
 
 		return $vars;

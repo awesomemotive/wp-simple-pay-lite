@@ -47,8 +47,8 @@ class GrossVolumePeriodOverPeriodReport extends Report\AbstractReport implements
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/__internal__/report',
-			'gross-volume-period-over-period',
+			'wpsp/__internal__',
+			'report/gross-volume-period-over-period',
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,

@@ -10,8 +10,8 @@
 
 namespace SimplePay\Core\Payments\PaymentIntent;
 
-use SimplePay\Core\API;
-use SimplePay\Core\Payments\Stripe_API;
+use SimplePay\Core\API\Customers;
+use SimplePay\Core\API\PaymentIntents;
 use SimplePay\Core\Legacy;
 use SimplePay\Vendor\Stripe\Coupon;
 use SimplePay\Pro\Payment_Methods;
@@ -39,20 +39,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return \SimplePay\Vendor\Stripe\PaymentIntent
  */
 function retrieve( $payment_intent, $api_request_args = array() ) {
-	if ( false === is_array( $payment_intent ) ) {
-		$payment_intent_args = array(
-			'id' => $payment_intent,
-		);
-	} else {
-		$payment_intent_args = $payment_intent;
-	}
-
-	return Stripe_API::request(
-		'PaymentIntent',
-		'retrieve',
-		$payment_intent_args,
-		$api_request_args
+	_deprecated_function(
+		__FUNCTION__,
+		'4.7.0',
+		'\SimplePay\Core\API\PaymentIntents\retrieve'
 	);
+
+	return PaymentIntents\retrieve( $payment_intent, $api_request_args );
 }
 
 /**
@@ -69,12 +62,13 @@ function retrieve( $payment_intent, $api_request_args = array() ) {
  * @return object
  */
 function all( $payment_intents = array(), $api_request_args = array() ) {
-	return Stripe_API::request(
-		'PaymentIntent',
-		'all',
-		$payment_intents,
-		$api_request_args
+	_deprecated_function(
+		__FUNCTION__,
+		'4.7.0',
+		'\SimplePay\Core\API\PaymentIntents\all'
 	);
+
+	return PaymentIntents\all( $payment_intents, $api_request_args );
 }
 
 /**
@@ -82,7 +76,7 @@ function all( $payment_intents = array(), $api_request_args = array() ) {
  *
  * @since 3.6.0
  *
- * @param array $paymentintent_args Arguments used to create a PaymentIntent.
+ * @param array $payment_intent_args Arguments used to create a PaymentIntent.
  * @param array $api_request_args {
  *   Additional request arguments to send to the Stripe API when making a request.
  *
@@ -90,72 +84,14 @@ function all( $payment_intents = array(), $api_request_args = array() ) {
  * }
  * @return \SimplePay\Vendor\Stripe\PaymentIntent
  */
-function create( $paymentintent_args, $api_request_args = array() ) {
-	$defaults           = array();
-	$paymentintent_args = wp_parse_args( $paymentintent_args, $defaults );
-
-	/**
-	 * Filter the arguments used to generate a PaymentIntent.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param array $payment_intent_args Arguemnts used to generate a PaymentIntent.
-	 */
-	$paymentintent_args = apply_filters( 'simpay_create_paymentintent_args', $paymentintent_args );
-
-	/**
-	 * Allows processing before a PaymentIntenet is created.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param array $paymentintent_args Arguments used to create a PaymentIntent.
-	 */
-	do_action( 'simpay_before_paymentintent_created', $paymentintent_args );
-
-	// Create PaymentIntent.
-	$paymentintent = Stripe_API::request(
-		'PaymentIntent',
-		'create',
-		$paymentintent_args,
-		$api_request_args
+function create( $payment_intent_args, $api_request_args = array() ) {
+	_deprecated_function(
+		__FUNCTION__,
+		'4.7.0',
+		'\SimplePay\Core\API\PaymentIntents\create'
 	);
 
-	/**
-	 * Allows further processing after a PaymentIntent has been created.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param \SimplePay\Vendor\Stripe\PaymentIntent $paymentintent PaymentIntent.
-	 */
-	do_action( 'simpay_after_paymentintent_created', $paymentintent );
-
-	return $paymentintent;
-}
-
-/**
- * Confirms a PaymentIntent.
- *
- * @since 3.6.0
- *
- * @param string $paymentintent_id PaymentIntent ID to confirm.
- * @param array  $api_request_args {
- *   Additional request arguments to send to the Stripe API when making a request.
- *
- *   @type string $api_key API Secret Key to use.
- * }
- * @return \SimplePay\Vendor\Stripe\PaymentIntent
- */
-function confirm( $paymentintent_id, $api_request_args = array() ) {
-	$paymentintent = Stripe_API::request(
-		'PaymentIntent',
-		'retrieve',
-		$paymentintent_id,
-		$api_request_args
-	);
-
-	$paymentintent->confirm();
-
-	return $paymentintent;
+	return PaymentIntents\create( $payment_intent_args, $api_request_args );
 }
 
 /**
@@ -354,7 +290,7 @@ function get_payment_args_from_form_request(
 		null !== $customer_id
 	) {
 		// Validate the coupon by ensuring it is attached to the Customer.
-		$customer = API\Customers\retrieve(
+		$customer = Customers\retrieve(
 			$customer_id,
 			$form->get_api_request_args()
 		);

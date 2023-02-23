@@ -10,6 +10,12 @@ namespace SimplePay\Vendor\Stripe;
  * API just like a <code>Card</code> object: once chargeable, they can be charged,
  * or can be attached to customers.
  *
+ * SimplePay\Vendor\Stripe doesn't recommend using the deprecated <a
+ * href="https://stripe.com/docs/api/sources">Sources API</a>. We recommend that
+ * you adopt the <a
+ * href="https://stripe.com/docs/api/payment_methods">PaymentMethods API</a>. This
+ * newer API provides access to our latest features and payment method types.
+ *
  * Related guides: <a href="https://stripe.com/docs/sources">Sources API</a> and <a
  * href="https://stripe.com/docs/sources/customers">Sources &amp; Customers</a>.
  *
@@ -39,6 +45,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\StripeObject $multibanco
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $owner Information about the owner of the payment instrument that may be used or required by particular source types.
  * @property \SimplePay\Vendor\Stripe\StripeObject $p24
+ * @property \SimplePay\Vendor\Stripe\StripeObject $paypal
  * @property \SimplePay\Vendor\Stripe\StripeObject $receiver
  * @property \SimplePay\Vendor\Stripe\StripeObject $redirect
  * @property \SimplePay\Vendor\Stripe\StripeObject $sepa_credit_transfer
