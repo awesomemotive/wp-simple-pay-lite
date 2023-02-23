@@ -343,7 +343,6 @@ class PaymentRequestUtils {
 		$unit_amount = self::get_unit_amount( $request );
 		$quantity    = self::get_quantity( $request );
 		$subtotal    = $unit_amount * $quantity;
-		$amount      = self::get_amount( $request );
 
 		$metadata = array(
 			'simpay_form_id'         => $form->id,
@@ -356,24 +355,27 @@ class PaymentRequestUtils {
 			),
 		);
 
-		/** @var array<string, string> $custom_fields Custom fields. */
-		$custom_fields = isset( $form_values['simpay_field'] )
-			? $form_values['simpay_field']
-			: array();
-
-		foreach ( $custom_fields as $key => $value ) {
-			// Skip empty.
-			if ( '' === trim( $value ) ) {
-				continue;
-			}
-
-			$metadata[ $key ] = $value;
-		}
-
 		$license = simpay_get_license();
 
 		// Add additional metadata for non-lite licenses.
 		if ( false === $license->is_lite() ) {
+			// Custom fields.
+			/** @var array<string, string> $custom_fields Custom fields. */
+			$custom_fields = isset( $form_values['simpay_field'] )
+				? $form_values['simpay_field']
+				: array();
+
+			foreach ( $custom_fields as $key => $value ) {
+				// Skip empty.
+				if ( '' === trim( $value ) ) {
+					continue;
+				}
+
+				$metadata[ $key ] = $value;
+			}
+
+			$amount = self::get_amount( $request );
+
 			// Fee recovery.
 			$fee_recovery = FeeRecoveryUtils::get_fee_recovery_unit_amount(
 				$request,
