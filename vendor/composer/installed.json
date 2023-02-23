@@ -2,20 +2,20 @@
     "packages": [
         {
             "name": "berlindb/core",
-            "version": "2.0.0",
-            "version_normalized": "2.0.0.0",
+            "version": "2.0.1",
+            "version_normalized": "2.0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/berlindb/core.git",
-                "reference": "52f07e192b484d201d668daef0ba290df5836ecb"
+                "reference": "7dcddaddcffb69c58800d2fb3f6f169791cab1f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/berlindb/core/zipball/52f07e192b484d201d668daef0ba290df5836ecb",
-                "reference": "52f07e192b484d201d668daef0ba290df5836ecb",
+                "url": "https://api.github.com/repos/berlindb/core/zipball/7dcddaddcffb69c58800d2fb3f6f169791cab1f7",
+                "reference": "7dcddaddcffb69c58800d2fb3f6f169791cab1f7",
                 "shasum": ""
             },
-            "time": "2021-07-12T14:55:04+00:00",
+            "time": "2022-03-10T21:12:11+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -24,11 +24,11 @@
                 }
             },
             "license": [
-                "GPL-2.0-only"
+                "MIT"
             ],
             "description": "A collection of PHP classes and functions that aims to provide an ORM-like experience and interface to WordPress database tables.",
             "support": {
-                "source": "https://github.com/berlindb/core/tree/2.0.0",
+                "source": "https://github.com/berlindb/core/tree/2.0.1",
                 "issues": "https://github.com/berlindb/core/issues"
             },
             "install-path": "../berlindb/core"
@@ -210,17 +210,17 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.97.0",
-            "version_normalized": "7.97.0.0",
+            "version": "v10.6.0-beta.1",
+            "version_normalized": "10.6.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "ae41c309ce113362706f8d5f19cf0cf2c730bc4a"
+                "reference": "40505396844a9c3b7c16c1c3f3b9c1ee84af3fa6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/ae41c309ce113362706f8d5f19cf0cf2c730bc4a",
-                "reference": "ae41c309ce113362706f8d5f19cf0cf2c730bc4a",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/40505396844a9c3b7c16c1c3f3b9c1ee84af3fa6",
+                "reference": "40505396844a9c3b7c16c1c3f3b9c1ee84af3fa6",
                 "shasum": ""
             },
             "require": {
@@ -230,13 +230,13 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "2.17.1",
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^5.7",
-                "squizlabs/php_codesniffer": "^3.3",
-                "symfony/process": "~3.4"
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "php-coveralls/php-coveralls": "^2.5",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^9.0",
+                "squizlabs/php_codesniffer": "^3.3"
             },
-            "time": "2021-09-16T21:28:33+00:00",
+            "time": "2023-02-02T23:53:13+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -268,9 +268,52 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v7.97.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v10.6.0-beta.1"
             },
             "install-path": "../stripe/stripe-php"
+        },
+        {
+            "name": "woocommerce/action-scheduler",
+            "version": "3.4.0",
+            "version_normalized": "3.4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woocommerce/action-scheduler.git",
+                "reference": "3218a33ff14b968f8cb05de9656c2efa1eeb1330"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/3218a33ff14b968f8cb05de9656c2efa1eeb1330",
+                "reference": "3218a33ff14b968f8cb05de9656c2efa1eeb1330",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5",
+                "woocommerce/woocommerce-sniffs": "0.1.0",
+                "wp-cli/wp-cli": "~2.5.0",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "time": "2021-10-28T17:09:12+00:00",
+            "type": "wordpress-plugin",
+            "extra": {
+                "scripts-description": {
+                    "test": "Run unit tests",
+                    "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+                    "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Action Scheduler for WordPress and WooCommerce",
+            "homepage": "https://actionscheduler.org/",
+            "support": {
+                "issues": "https://github.com/woocommerce/action-scheduler/issues",
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.4.0"
+            },
+            "install-path": "../woocommerce/action-scheduler"
         }
     ],
     "dev": false,

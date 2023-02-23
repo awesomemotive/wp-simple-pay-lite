@@ -277,6 +277,9 @@ function add_stripe_checkout( $post_id ) {
 						data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
 					/><?php esc_html_e( 'Collect Tax ID', 'stripe' ); ?>
 				</label>
+				<p class="description">
+					<?php esc_html_e( 'When enabled Stripe Checkout displays the tax ID inputs depending on your customer’s location.', 'stripe' ); ?> <a href="#help/stripe%20checkout"><?php esc_html_e( 'Learn more', 'stripe' ); ?></a>
+				</p>
 			</td>
 		</tr>
 

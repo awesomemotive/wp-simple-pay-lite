@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'wpsimplepay/wp-simple-pay-lite',
+        'name' => 'wpsimplepay/wp-simple-pay-pro-3',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '4e325c8444657bda886df0f537c75d828d3a125e',
+        'reference' => '505f5b2367dfb6567e67215f1951ed91122075d6',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'berlindb/core' => array(
-            'pretty_version' => '2.0.0',
-            'version' => '2.0.0.0',
-            'reference' => '52f07e192b484d201d668daef0ba290df5836ecb',
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'reference' => '7dcddaddcffb69c58800d2fb3f6f169791cab1f7',
             'type' => 'library',
             'install_path' => __DIR__ . '/../berlindb/core',
             'aliases' => array(),
@@ -65,18 +65,27 @@
             ),
         ),
         'stripe/stripe-php' => array(
-            'pretty_version' => 'v7.97.0',
-            'version' => '7.97.0.0',
-            'reference' => 'ae41c309ce113362706f8d5f19cf0cf2c730bc4a',
+            'pretty_version' => 'v10.6.0-beta.1',
+            'version' => '10.6.0.0-beta1',
+            'reference' => '40505396844a9c3b7c16c1c3f3b9c1ee84af3fa6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../stripe/stripe-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'wpsimplepay/wp-simple-pay-lite' => array(
+        'woocommerce/action-scheduler' => array(
+            'pretty_version' => '3.4.0',
+            'version' => '3.4.0.0',
+            'reference' => '3218a33ff14b968f8cb05de9656c2efa1eeb1330',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../woocommerce/action-scheduler',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'wpsimplepay/wp-simple-pay-pro-3' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '4e325c8444657bda886df0f537c75d828d3a125e',
+            'reference' => '505f5b2367dfb6567e67215f1951ed91122075d6',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
