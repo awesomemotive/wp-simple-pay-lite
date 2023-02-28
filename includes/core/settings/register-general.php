@@ -253,7 +253,10 @@ function register_advanced_settings( $settings ) {
 						'setting input label',
 						'stripe'
 					),
-				'value'       => simpay_get_setting( 'is_upe', 'no' ),
+				'value'       => simpay_get_setting(
+					'is_upe',
+					$license->is_lite() ? 'yes' : 'no'
+				),
 				'description' => true === $license->is_lite()
 					? ''
 					: wpautop(
