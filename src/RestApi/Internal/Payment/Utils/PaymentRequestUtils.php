@@ -536,20 +536,23 @@ class PaymentRequestUtils {
 		);
 
 		// Check the Card configuration and enable Link, if needed.
-		$custom_fields = get_custom_fields( $form->id );
-		$settings      = isset( $custom_fields['email'] )
-			? $custom_fields['email']
-			: array();
+		// Do not add if using Stripe Checkout.
+		if ( 'stripe_checkout' !== $form->get_display_type() ) {
+			$custom_fields = get_custom_fields( $form->id );
+			$settings      = isset( $custom_fields['email'] )
+				? $custom_fields['email']
+				: array();
 
-		$link_enabled = isset(
-			$settings['link'],
-			$settings['link']['enabled']
-		)
-			? 'yes' === $settings['link']['enabled']
-			: false;
+			$link_enabled = isset(
+				$settings['link'],
+				$settings['link']['enabled']
+			)
+				? 'yes' === $settings['link']['enabled']
+				: false;
 
-		if ( in_array( 'card', $payment_methods, true ) && $link_enabled ) {
-			$payment_methods[] = 'link';
+			if ( in_array( 'card', $payment_methods, true ) && $link_enabled ) {
+				$payment_methods[] = 'link';
+			}
 		}
 
 		return $payment_methods;
