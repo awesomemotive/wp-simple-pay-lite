@@ -43,8 +43,8 @@ class DashboardWidgetReport extends GrossVolumePeriodOverPeriodReport implements
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/__internal__/report',
-			'dashboard-widget',
+			'wpsp/__internal__',
+			'report/dashboard-widget',
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,

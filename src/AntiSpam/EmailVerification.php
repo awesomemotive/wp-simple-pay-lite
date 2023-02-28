@@ -118,7 +118,8 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 
 			// Use a cleaned version of the submitted email address as the rate
 			// limiter ID. spencer+123@gmail.com turns in to spencer@gmail.com.
-			$subscribers['simpay_rate_limiting_id'] = 'set_rate_limiting_id';
+			$subscribers['simpay_rate_limiting_id'] =
+				array( 'set_rate_limiting_id', 10, 2 );
 
 			// ... and extend the rate limiting window.
 			$subscribers['simpay_rate_limiting_timeout'] =
@@ -747,24 +748,34 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @param string $id The rate limiting ID.
+	 * @param string           $id The rate limiting ID.
+	 * @param \WP_REST_Request $request The REST API request.
 	 * @return string
 	 */
-	public function set_rate_limiting_id( $id ) {
-		if (
-			! isset(
-				$_POST['form_values'],
-				$_POST['form_values']['simpay_email_verification_code']
-			)
-		) {
-			return $id;
+	public function set_rate_limiting_id( $id, $request ) {
+		if ( ! empty( $request->get_param('form_values') ) ) {
+			/** @var array<string, string> $form_values */
+			$form_values = $request->get_param('form_values');
+
+			if ( ! isset( $form_values['simpay_email_verification_code'] ) ) {
+				return $id;
+			}
+
+			$email = $form_values['simpay_email'];
+		} else {
+			if (
+				! isset(
+					$_POST['form_values'],
+					$_POST['form_values']['simpay_email_verification_code']
+				)
+			) {
+				return $id;
+			}
+
+			$email = $_POST['form_values']['simpay_email'];
 		}
 
-		$email = sanitize_text_field(
-			$_POST['form_values']['simpay_email']
-		);
-
-		return $this->clean_email( $email );
+		return $this->clean_email( sanitize_text_field( $email ) );
 	}
 
 	/**

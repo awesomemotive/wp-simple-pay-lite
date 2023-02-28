@@ -53,40 +53,14 @@ function get_tags( $payment_confirmation_data ) {
 		'payment-type',
 	);
 
-	// Backwards compatibility.
-	if ( isset( $payment_confirmation_data['form'] ) ) {
-
-		// Setup a backwards compatible Payment object.
-		$payment = new Payments\Payment( $payment_confirmation_data['form'] );
-
-		if ( ! empty( $payment_confirmation_data['paymentintents']->data ) ) {
-			// Retrieve the first charge so the action can be called to maintain compatibility.
-			$charges = current( $payment_confirmation_data['paymentintents']->data )->charges;
-
-			if ( ! empty( $charges ) ) {
-				$charge = current( $charges->data );
-
-				$payment->customer = $payment_confirmation_data['customer'];
-				$payment->charge   = $charge;
-
-				if ( $payment->charge ) {
-					$payment->charge->source = $charge->billing_details;
-				}
-			}
-		}
-	} else {
-		$payment = new \stdClass();
-	}
-
 	/**
 	 * Filters available smart tags used in Payment Confirmation content.
 	 *
 	 * @since unknown
 	 *
 	 * @param array $tags Payment Confirmation smart tags.
-	 * @param Payment $payment Deprecated.
 	 */
-	$tags = apply_filters( 'simpay_payment_details_template_tags', $tags, $payment );
+	$tags = apply_filters( 'simpay_payment_details_template_tags', $tags );
 
 	return $tags;
 }
@@ -391,17 +365,9 @@ function charge_id( $value, $payment_confirmation_data ) {
 		return $value;
 	}
 
-	$charges = current( $payment_confirmation_data['paymentintents'] )->charges;
+	$payment_intent = current( $payment_confirmation_data['paymentintents'] );
 
-	// Do nothing if there are no charges available in the PaymentIntent.
-	if ( empty( $charges ) ) {
-		return $value;
-	}
-
-	// Assume and use the first charge in the list.
-	$first_charge = current( $charges->data );
-
-	return esc_html( $first_charge->id );
+	return esc_html( $payment_intent->id );
 }
 add_filter( 'simpay_payment_confirmation_template_tag_charge-id', __NAMESPACE__ . '\\charge_id', 10, 3 );
 
@@ -426,19 +392,11 @@ function charge_date( $value, $payment_confirmation_data ) {
 		return $value;
 	}
 
-	$charges = current( $payment_confirmation_data['paymentintents'] )->charges;
-
-	// Do nothing if there are no charges available in the PaymentIntent.
-	if ( empty( $charges ) ) {
-		return $value;
-	}
-
-	// Assume and use the first charge in the list.
-	$first_charge = current( $charges->data );
+	$payment_intent = current( $payment_confirmation_data['paymentintents'] );
 
 	// Localize to current timezone and formatting.
 	$value = get_date_from_gmt(
-		date( 'Y-m-d H:i:s', $first_charge->created ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+		date( 'Y-m-d H:i:s', $payment_intent->created ), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		'U'
 	);
 

@@ -20,8 +20,8 @@ namespace SimplePay\Vendor\Stripe\Checkout;
  * You can create a Checkout Session on your server and pass its ID to the client
  * to begin Checkout.
  *
- * Related guide: <a href="https://stripe.com/docs/payments/checkout/api">Checkout
- * Server Quickstart</a>.
+ * Related guide: <a href="https://stripe.com/docs/checkout/quickstart">Checkout
+ * Quickstart</a>.
  *
  * @property string $id Unique identifier for the object. Used to pass to <code>redirectToCheckout</code> in Stripe.js.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -31,16 +31,20 @@ namespace SimplePay\Vendor\Stripe\Checkout;
  * @property null|int $amount_total Total of all items after discounts and taxes are applied.
  * @property \SimplePay\Vendor\Stripe\StripeObject $automatic_tax
  * @property null|string $billing_address_collection Describes whether Checkout should collect the customer's billing address.
- * @property string $cancel_url The URL the customer will be directed to if they decide to cancel payment and return to your website.
+ * @property null|string $cancel_url If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website.
  * @property null|string $client_reference_id A unique string to reference the Checkout Session. This can be a customer ID, a cart ID, or similar, and can be used to reconcile the Session with your internal systems.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $consent Results of <code>consent_collection</code> for this session.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $consent_collection When set, provides configuration for the Checkout Session to gather active consent from customers.
+ * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
+ * @property \SimplePay\Vendor\Stripe\StripeObject $custom_text
  * @property null|string|\SimplePay\Vendor\Stripe\Customer $customer The ID of the customer for this Session. For Checkout Sessions in <code>payment</code> or <code>subscription</code> mode, Checkout will create a new customer object based on information provided during the payment flow unless an existing customer was provided when the Session was created.
  * @property null|string $customer_creation Configure whether a Checkout Session creates a Customer when the Checkout Session completes.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $customer_details The customer details including the customer's tax exempt status and the customer's tax IDs. Only the customer's email is present on Sessions in <code>setup</code> mode.
  * @property null|string $customer_email If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once the payment flow is complete, use the <code>customer</code> attribute.
  * @property int $expires_at The timestamp at which the Checkout Session will expire.
+ * @property null|string|\SimplePay\Vendor\Stripe\Invoice $invoice ID of the invoice created by the Checkout Session, if it exists.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $invoice_creation Details on the state of invoice creation for the Checkout Session.
  * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> $line_items The line items purchased by the customer.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property null|string $locale The IETF language tag of the locale Checkout is displayed in. If blank or <code>auto</code>, the browser's locale is used.
@@ -48,6 +52,7 @@ namespace SimplePay\Vendor\Stripe\Checkout;
  * @property string $mode The mode of the Checkout Session.
  * @property null|string|\SimplePay\Vendor\Stripe\PaymentIntent $payment_intent The ID of the PaymentIntent for Checkout Sessions in <code>payment</code> mode.
  * @property null|string|\SimplePay\Vendor\Stripe\PaymentLink $payment_link The ID of the Payment Link that created this Session.
+ * @property null|string $payment_method_collection Configure whether a Checkout Session should collect a payment method.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $payment_method_options Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
  * @property string[] $payment_method_types A list of the types of payment methods (e.g. card) this Checkout Session is allowed to accept.
  * @property string $payment_status The payment status of the Checkout Session, one of <code>paid</code>, <code>unpaid</code>, or <code>no_payment_required</code>. You can use this value to decide when to fulfill your customer's order.
@@ -64,7 +69,7 @@ namespace SimplePay\Vendor\Stripe\Checkout;
  * @property string $success_url The URL the customer will be directed to after the payment or subscription creation is successful.
  * @property \SimplePay\Vendor\Stripe\StripeObject $tax_id_collection
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $total_details Tax and discount details for the computed total amount.
- * @property null|string $url The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you’re using <a href="https://stripe.com/docs/payments/checkout/custom-domains">Custom Domains</a>, the URL will use your subdomain. Otherwise, it’ll use <code>checkout.stripe.com.</code>
+ * @property null|string $url The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you’re using <a href="https://stripe.com/docs/payments/checkout/custom-domains">Custom Domains</a>, the URL will use your subdomain. Otherwise, it’ll use <code>checkout.stripe.com.</code> This value is only present when the session is active.
  */
 class Session extends \SimplePay\Vendor\Stripe\ApiResource
 {
@@ -83,6 +88,9 @@ class Session extends \SimplePay\Vendor\Stripe\ApiResource
     const MODE_PAYMENT = 'payment';
     const MODE_SETUP = 'setup';
     const MODE_SUBSCRIPTION = 'subscription';
+
+    const PAYMENT_METHOD_COLLECTION_ALWAYS = 'always';
+    const PAYMENT_METHOD_COLLECTION_IF_REQUIRED = 'if_required';
 
     const PAYMENT_STATUS_NO_PAYMENT_REQUIRED = 'no_payment_required';
     const PAYMENT_STATUS_PAID = 'paid';

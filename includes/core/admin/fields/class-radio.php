@@ -58,9 +58,10 @@ class Radio extends Field {
 		if ( ! empty( $this->options ) && is_array( $this->options ) && count( $this->options ) > 0 ) {
 			?>
 
-			<fieldset id="<?php echo $this->id; ?>"
-					  class="<?php echo $this->class; ?>"
-				<?php echo $this->style ? 'style="' . $this->style . '"' : ''; ?>>
+				<fieldset
+					id="<?php echo $this->id; ?>"
+					<?php echo $this->style ? 'style="' . $this->style . '"' : ''; ?>
+				>
 				<?php
 
 				if ( ! empty( $this->title ) ) :
@@ -79,11 +80,12 @@ class Radio extends Field {
 					<?php foreach ( $this->options as $option => $name ) : ?>
 						<li>
 							<label for="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>">
-								<input name="<?php echo $this->name; ?>"
-									   id="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>"
-									   class="simpay-field simpay-field-radio"
-									   type="radio"
-									   value="<?php echo trim( strval( $option ) ); ?>"
+								<input
+									name="<?php echo $this->name; ?>"
+									id="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>"
+									class="simpay-field simpay-field-radio <?php echo $this->class; ?>"
+									type="radio"
+									value="<?php echo trim( strval( $option ) ); ?>"
 									<?php echo $this->attributes; ?>
 									<?php checked( $option, $this->value, true ); ?>
 								/>

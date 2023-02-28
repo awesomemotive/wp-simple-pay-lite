@@ -30,6 +30,7 @@ namespace SimplePay\Vendor\Stripe\Issuing;
  * @property string $merchant_currency The currency with which the merchant is taking payment.
  * @property \SimplePay\Vendor\Stripe\StripeObject $merchant_data
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $network_data Details about the transaction, such as processing dates, set by the card network.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $purchase_details Additional purchase information that is optionally provided by the merchant.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $treasury <a href="https://stripe.com/docs/api/treasury">Treasury</a> details related to this transaction if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
  * @property string $type The nature of the transaction.

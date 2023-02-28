@@ -10,8 +10,7 @@
 
 namespace SimplePay\Core\Payments\Stripe_Checkout\Session;
 
-use SimplePay\Core\Payments;
-use SimplePay\Core\Legacy;
+use SimplePay\Core\API\CheckoutSessions;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,20 +35,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return \SimplePay\Vendor\Stripe\Checkout\Session
  */
 function retrieve( $session, $api_request_args = array() ) {
-	if ( false === is_array( $session ) ) {
-		$session_args = array(
-			'id' => $session,
-		);
-	} else {
-		$session_args = $session;
-	}
-
-	return Payments\Stripe_API::request(
-		'Checkout\Session',
-		'retrieve',
-		$session_args,
-		$api_request_args
+	_deprecated_function(
+		__FUNCTION__,
+		'4.1.0',
+		'\SimplePay\Core\API\CheckoutSessions\retrieve'
 	);
+
+	return CheckoutSessions\retrieve( $session, $api_request_args );
 }
 
 /**
@@ -66,45 +58,11 @@ function retrieve( $session, $api_request_args = array() ) {
  * @return \SimplePay\Vendor\Stripe\Checkout\Session
  */
 function create( $session_args = array(), $api_request_args = array() ) {
-	$defaults = array(
-		'payment_method_types' => Payments\Stripe_Checkout\get_available_payment_method_types(),
+	_deprecated_function(
+		__FUNCTION__,
+		'4.7.0',
+		'\SimplePay\Core\API\CheckoutSessions\create'
 	);
 
-	$session_args = wp_parse_args( $session_args, $defaults );
-
-	/**
-	 * Filter the arguments used to create a Checkout Session.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param array $session_args Arguments used to construct the session.
-	 */
-	$session_args = apply_filters( 'simpay_create_stripe_checkout_session_args', $session_args );
-
-	/**
-	 * Allows processing before a Checkout\Session is created.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param array $session_args Arguments used to create a Checkout\Session.
-	 */
-	do_action( 'simpay_before_checkout_session_created', $session_args );
-
-	$session = Payments\Stripe_API::request(
-		'Checkout\Session',
-		'create',
-		$session_args,
-		$api_request_args
-	);
-
-	/**
-	 * Allows further processing after a Checkout\Session has been created.
-	 *
-	 * @since 3.6.0
-	 *
-	 * @param \SimplePay\Vendor\Stripe\Checkout\Session $session Checkout Session.
-	 */
-	do_action( 'simpay_after_checkout_session_created', $session );
-
-	return $session;
+	return CheckoutSessions\retrieve( $session_args, $api_request_args );
 }

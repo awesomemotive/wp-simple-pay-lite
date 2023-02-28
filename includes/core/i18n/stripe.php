@@ -84,6 +84,40 @@ function get_stripe_countries() {
 }
 
 /**
+ * Retrieves a list of countries that support Shipping Address collection.
+ *
+ * @since 3.8.0
+ *
+ * @return array List of country codes.
+ */
+function get_available_shipping_address_countries() {
+	// Built in countries.
+	$countries = get_countries();
+
+	// Remove unsupported countries.
+	unset( $countries['AS'] );
+	unset( $countries['CX'] );
+	unset( $countries['CC'] );
+	unset( $countries['CU'] );
+	unset( $countries['TP'] );
+	unset( $countries['HM'] );
+	unset( $countries['IR'] );
+	unset( $countries['MH'] );
+	unset( $countries['FM'] );
+	unset( $countries['AN'] );
+	unset( $countries['NF'] );
+	unset( $countries['KP'] );
+	unset( $countries['MP'] );
+	unset( $countries['PW'] );
+	unset( $countries['SD'] );
+	unset( $countries['SY'] );
+	unset( $countries['UM'] );
+	unset( $countries['VI'] );
+
+	return array_keys( $countries );
+}
+
+/**
  * Returns Stripe Checkout's supported locales.
  *
  * @since 3.9.0

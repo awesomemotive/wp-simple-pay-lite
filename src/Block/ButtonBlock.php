@@ -145,7 +145,7 @@ class ButtonBlock extends AbstractBlock {
 				$custom_fields = simpay_get_saved_meta(
 					$form_id,
 					'_custom_fields',
-					array() // @phpstan-ignore-line
+					array()
 				);
 
 				$_custom_fields = array();

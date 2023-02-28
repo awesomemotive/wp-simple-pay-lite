@@ -31,15 +31,5 @@ class Balance extends SingletonApiResource
 {
     const OBJECT_NAME = 'balance';
 
-    /**
-     * @param null|array|string $opts
-     *
-     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return \SimplePay\Vendor\Stripe\Balance
-     */
-    public static function retrieve($opts = null)
-    {
-        return self::_singletonRetrieve($opts);
-    }
+    use ApiOperations\SingletonRetrieve;
 }

@@ -265,6 +265,7 @@ function simpay_payment_form_add_missing_custom_fields(
 		case 'overlay':
 			// Ensure "Customer Name" exists if using Bancontact, giropay, or p24, or SEPA.
 			if (
+				! simpay_is_upe() &&
 				! isset( $fields['customer_name'] ) &&
 				(
 					(
@@ -335,17 +336,26 @@ function simpay_payment_form_add_missing_custom_fields(
 				! isset( $fields['address'] ) &&
 				true === $needs_required_address
 			) {
-				$args = array(
-					'uid'                     => $count,
-					'id'                      => 'simpay_' . $form_id . '_address',
-					'billing-container-label' => 'Billing Address',
-					'label-street'            => 'Street Address',
-					'label-city'              => 'City',
-					'label-state'             => 'State',
-					'label-zip'               => 'Postal Code',
-					'label-country'           => 'Country',
-					'required'                => 'yes',
-				);
+				if ( ! simpay_is_upe() ) {
+					$args = array(
+						'uid'                     => $count,
+						'id'                      => 'simpay_' . $form_id . '_address',
+						'billing-container-label' => 'Billing Address',
+						'label-street'            => 'Street Address',
+						'label-city'              => 'City',
+						'label-state'             => 'State',
+						'label-zip'               => 'Postal Code',
+						'label-country'           => 'Country',
+						'required'                => 'yes',
+					);
+				} else {
+					$args = array(
+						'uid'              => $count,
+						'id'               => 'simpay_' . $form_id . '_address',
+						'collect-shipping' => 'no',
+						'required'         => 'yes',
+					);
+				}
 
 				if (
 					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
@@ -413,7 +423,7 @@ function simpay_payment_form_add_missing_custom_fields(
 					'order' => 9998,
 					'uid'   => $count,
 					'id'    => 'simpay_' . $form_id . '_card',
-					'label' => 'Payment Method',
+					'label' => ! simpay_is_upe() ? 'Payment Method' : '',
 				);
 
 				$count++;
@@ -537,6 +547,11 @@ function simpay_payment_form_add_missing_custom_fields(
 				}
 			}
 		}
+	}
+
+	// Remove "1-Click Payment Methods" (Payment Request Button) if using UPE.
+	if ( simpay_is_upe() ) {
+		unset( $fields['payment_request_button'] );
 	}
 
 	// General sorting template for auto-added fields.

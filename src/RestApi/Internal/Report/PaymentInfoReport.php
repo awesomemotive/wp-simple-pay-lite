@@ -43,8 +43,8 @@ class PaymentInfoReport extends Report\AbstractReport implements SubscriberInter
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/__internal__/report',
-			'payment-info',
+			'wpsp/__internal__',
+			'report/payment-info',
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
@@ -247,13 +247,17 @@ class PaymentInfoReport extends Report\AbstractReport implements SubscriberInter
 			return __( 'Card', 'stripe' );
 		}
 
-		$payment_method = $payment_methods->get_item( $payment_method_type );
+		if ( 'link' === $payment_method_type ) {
+			return 'Link';
+		} else {
+			$payment_method = $payment_methods->get_item( $payment_method_type );
 
-		if ( ! $payment_method instanceof Payment_Method ) {
-			return '';
+			if ( ! $payment_method instanceof Payment_Method ) {
+				return '';
+			}
+
+			return $payment_method->nicename;
 		}
-
-		return $payment_method->nicename;
 	}
 
 	/**
@@ -282,6 +286,8 @@ class PaymentInfoReport extends Report\AbstractReport implements SubscriberInter
 				return '#cc0166';
 			case 'klarna':
 				return '#ffb3c7';
+			case 'link':
+				return '#33ddb3';
 			case 'p24':
 				return '#d40f2b';
 			case 'sepa_debit':

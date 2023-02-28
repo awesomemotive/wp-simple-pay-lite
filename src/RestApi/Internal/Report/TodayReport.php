@@ -47,8 +47,8 @@ class TodayReport extends Report\AbstractReport implements SubscriberInterface {
 	 */
 	public function register_route() {
 		register_rest_route(
-			'wpsp/__internal__/report',
-			'today',
+			'wpsp/__internal__',
+			'report/today',
 			array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,

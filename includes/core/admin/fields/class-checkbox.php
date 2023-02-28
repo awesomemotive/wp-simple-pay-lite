@@ -51,7 +51,7 @@ class Checkbox extends Field {
 			}
 
 			?>
-			<fieldset class="<?php echo $this->class; ?>" <?php echo ! empty( $this->style ) ? 'style="' . $this->style . '"' : ''; ?>>
+			<fieldset <?php echo ! empty( $this->style ) ? 'style="' . $this->style . '"' : ''; ?>>
 				<?php
 
 				if ( ! empty( $this->title ) ) {
@@ -65,7 +65,7 @@ class Checkbox extends Field {
 							<label for="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>">
 								<input name="<?php echo $this->name; ?>"
 									   id="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>"
-									   class="simpay-field simpay-field-checkbox"
+									   class="simpay-field simpay-field-checkbox <?php echo $this->class; ?>"
 									   type="checkbox"
 									   value="<?php echo trim( strval( $option ) ); ?>"
 									<?php checked( $this->value, 'yes', true ); ?>

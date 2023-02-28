@@ -161,7 +161,7 @@ class Stripe_API {
 
 		// Special handling for submitting an order, which cannot use the legacy static handling.
 		// https://github.com/stripe/stripe-php#clientservice-patterns-vs-legacy-patterns.
-		if ( 'Order' === $class ) {
+		if ( ! simpay_is_upe() && 'Order' === $class ) {
 			Stripe::setApiVersion( '2020-08-27;orders_beta=v4' );
 
 			$stripe = new \SimplePay\Vendor\Stripe\StripeClient(
@@ -195,13 +195,47 @@ class Stripe_API {
 						$opts
 					);
 			}
-		} else {
-			return call_user_func(
-				array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
-				$id_or_args,
-				$args,
-				$opts
-			);
 		}
+
+		// Special handling for tax calculations in beta.
+		// If the request starts with Tax, handle it.
+		// https://stripe.com/docs/api/tax/calculations?lang=php
+		if ( simpay_is_upe() && false !== strpos( $class, 'Tax' ) ) {
+			$betas   = 'tax_calc_beta=v1; tax_txns_beta=v1';
+			$version = SIMPLE_PAY_STRIPE_API_VERSION . ';' . $betas;
+
+			Stripe::setApiVersion( $version );
+
+			switch ( $function ) {
+				case 'allLineItems':
+					return call_user_func(
+						array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
+						$id_or_args,
+						array(),
+						$opts
+					);
+
+					break;
+				default:
+					return call_user_func(
+						array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
+						$id_or_args,
+						$args,
+						$opts
+					);
+			}
+		}
+
+		// If we are not using UPE, set the API version to the legacy version.
+		if ( ! simpay_is_upe() ) {
+			Stripe::setApiVersion( '2020-08-27' );
+		}
+
+		return call_user_func(
+			array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
+			$id_or_args,
+			$args,
+			$opts
+		);
 	}
 }

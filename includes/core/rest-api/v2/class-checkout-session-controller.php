@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\REST_API\v2;
 
+use SimplePay\Core\API;
 use SimplePay\Core\Payments;
 use SimplePay\Core\REST_API\Controller;
 use SimplePay\Core\Legacy;
@@ -158,7 +159,7 @@ class Checkout_Session_Controller extends Controller {
 				$customer_id
 			);
 
-			$session = Payments\Stripe_Checkout\Session\create(
+			$session = API\CheckoutSessions\create(
 				$session_args,
 				$form->get_api_request_args()
 			);

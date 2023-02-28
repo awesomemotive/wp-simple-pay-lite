@@ -12,6 +12,7 @@ namespace SimplePay\Core\Settings\General;
 
 use SimplePay\Core\Settings;
 use SimplePay\Core\i18n;
+use SimplePay\Core\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -204,7 +205,7 @@ function register_currency_settings( $settings ) {
 					)
 				),
 				'priority'    => 30,
-				'schema'     => array(
+				'schema'      => array(
 					'type' => 'string',
 					'enum' => array( 'yes', 'no' ),
 				),
@@ -222,6 +223,77 @@ function register_currency_settings( $settings ) {
  */
 function register_advanced_settings( $settings ) {
 	$license = simpay_get_license();
+
+	// UPE.
+	$settings->add(
+		new Settings\Setting_Checkbox(
+			array(
+				'id'          => 'is_upe',
+				'section'     => 'general',
+				'subsection'  => 'advanced',
+				'label'       => true === $license->is_lite()
+					? esc_html_x(
+						'Use the Latest API Version',
+						'setting label',
+						'stripe'
+					)
+					: esc_html_x(
+						'New Payment Experience',
+						'setting label',
+						'stripe'
+					),
+				'input_label' => true === $license->is_lite()
+					? esc_html_x(
+						'Use Stripe API version 2022-11-15',
+						'setting input label',
+						'stripe'
+					)
+					: esc_html_x(
+						'✨ Try the new payment experience (early access) ✨',
+						'setting input label',
+						'stripe'
+					),
+				'value'       => simpay_get_setting(
+					'is_upe',
+					$license->is_lite() ? 'yes' : 'no'
+				),
+				'description' => true === $license->is_lite()
+					? ''
+					: wpautop(
+						wp_kses(
+							sprintf(
+								/* translators: %1$s Opening <strong>, do not translate. %2$s Closing </strong>, do not translate. %3$s Opening <a> tag, do not translate. %4$s Closing </a> tag, do not translate. */
+								__(
+									'Get early acess to a new, smarter payment experience. %1$sNot recommended for merchants with a custom payment flow/custom code%2$s. Have questions about upgrading? %3$sContact us%4$s',
+									'stripe'
+								),
+								'<strong>',
+								'</strong>',
+								'<a href="' . esc_url( 'https://wpsimplepay.com/my-account/support/?a=I%20have%20questions%20about%20the%20new%20payment%20flow' ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+								Utils\get_external_link_markup() . '</a>'
+							),
+							array(
+								'strong' => array(),
+								'a'      => array(
+									'href'   => true,
+									'rel'    => true,
+									'target' => true,
+									'class'  => true,
+								),
+								'span'   => array(
+									'class' => true,
+								),
+							)
+						)
+					),
+				'priority'    => 0,
+				'schema'      => array(
+					'type' => 'string',
+					'enum' => array( 'yes', 'no' ),
+				),
+			)
+		)
+	);
 
 	if ( true === $license->is_lite() ) {
 		/**

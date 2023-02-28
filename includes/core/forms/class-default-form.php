@@ -68,26 +68,97 @@ class Default_Form extends Form {
 	}
 
 	/**
+	 * Returns information about the UPE payment form to send to the client script.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @return array<string, array<string, mixed>>
+	 */
+	public function get_upe_script_variables() {
+		$prices = simpay_get_payment_form_prices( $this );
+		$prices = array_map(
+			function( $price ) {
+				return $price->to_array();
+			},
+			$prices
+		);
+
+		$custom_fields = simpay_get_saved_meta( $this->id, '_custom_fields' );
+
+		$payment_text         = __( 'Pay with Card', 'stripe' );
+		$payment_trial_text   = __( 'Start Trial', 'stripe' );
+		$payment_loading_text = __( 'Please Wait...', 'stripe' );
+
+		// Payment Button (Embed + Stripe Checkout).
+		if ( isset( $custom_fields['payment_button'] ) && is_array( $custom_fields['payment_button'] ) ) {
+			// There can only be one Checkout Button, but it's saved in an array.
+			$payment_button = current( $custom_fields['payment_button'] );
+
+			// Base.
+			if ( ! empty( $payment_button['text'] ) ) {
+				$payment_text = $payment_button['text'];
+			}
+
+			// Trial.
+			if ( ! empty( $payment_button['trial_text'] ) ) {
+				$payment_trial_text = $payment_button['trial_text'];
+			}
+
+			// Processing.
+			if ( ! empty( $payment_button['processing_text'] ) ) {
+				$payment_loading_text = $payment_button['processing_text'];
+			}
+		}
+
+		return array(
+			'stripe'   => array(
+				'apiKey'     => $this->publishable_key,
+				'apiVersion' => SIMPLE_PAY_STRIPE_API_VERSION,
+				'locale'      => $this->locale,
+			),
+			'settings' => array(
+				'prices'     => $prices,
+				'returnUrl'  => $this->payment_success_page,
+				'failureUrl' => $this->payment_failure_page,
+			),
+			'i18n'     => array(
+				'paymentButtonText'        => esc_html( $payment_text ),
+				'paymentButtonTrialText'   => esc_html( $payment_trial_text ),
+				'paymentButtonLoadingText' => esc_html( $payment_loading_text ),
+				'stripeErrorMessages'      => i18n\get_localized_error_messages(),
+				'unknownError'             => __(
+					'Unable to complete request. Please try again.',
+					'stripe'
+				),
+			),
+		);
+	}
+
+	/**
 	 * Set the JS script variables specifically for this form
 	 *
 	 * @since 3.0.0
 	 */
 	public function set_script_variables() {
 
-		$temp[ $this->id ] = array(
-			'id'     => $this->id,
-			'type'   => 'stripe_checkout' === $this->get_display_type()
-				? 'stripe-checkout'
-				: 'stripe-elements',
-			'form'   => $this->get_form_script_variables(),
-			'stripe' => array_merge(
-				array(
-					'amount'  => $this->total_amount,
-					'country' => $this->country,
+		if ( simpay_is_upe() ) {
+			$temp[ $this->id ] = $this->get_upe_script_variables();
+		} else {
+			$temp[ $this->id ] = array(
+				'id'     => $this->id,
+				'type'   => 'stripe_checkout' === $this->get_display_type()
+					? 'stripe-checkout'
+					: 'stripe-elements',
+				'form'   => $this->get_form_script_variables(),
+				'stripe' => array_merge(
+					array(
+						'amount'  => $this->total_amount,
+						'country' => $this->country,
+					),
+					$this->get_stripe_script_variables()
 				),
-				$this->get_stripe_script_variables()
-			),
-		);
+			);
+		}
 
 		$temp = apply_filters( 'simpay_form_' . absint( $this->id ) . '_script_variables', $temp, $this->id );
 
@@ -97,9 +168,9 @@ class Default_Form extends Form {
 		 * @since 3.9.0
 		 *
 		 * @param \SimplePay\Core\Abstracts\Form[] $forms List of Payment Forms and associated script variables.
-		 * @param \SimplePay\Core\Abstracts\Form   $this  Current Payment Form.
+		 * @param int                              $id Current Payment Form ID.
 		 */
-		$temp = apply_filters( 'simpay_form_script_variables', $temp, $this );
+		$temp = apply_filters( 'simpay_form_script_variables', $temp, $this->id );
 
 		// Add this temp script variables to our assets so if multiple forms are on the page they will all be loaded at once and be specific to each form.
 		Assets::get_instance()->script_variables( $temp );
@@ -152,12 +223,12 @@ class Default_Form extends Form {
 					echo $this->print_custom_fields();
 				}
 
+				// Form validation error message container.
+				echo '<div class="simpay-generic-error simpay-errors" id="' . esc_attr( $id ) . '-error" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div>';
+
 				// TODO Append these hidden inputs to form in public.js?
 				echo '<input type="hidden" name="simpay_form_id" value="' . esc_attr( $this->id ) . '" />';
 				echo '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
-
-				// Form validation error message container.
-				echo '<div class="simpay-errors" id="' . esc_attr( $id ) . '-error" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div>';
 
 				if ( true === $this->test_mode ) {
 					echo simpay_get_test_mode_badge();
@@ -382,6 +453,13 @@ class Default_Form extends Form {
 	 * @return bool
 	 */
 	public function is_subscription() {
+		return false;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function has_fee_recovery() {
 		return false;
 	}
 }

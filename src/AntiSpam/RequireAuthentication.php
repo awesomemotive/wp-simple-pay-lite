@@ -51,6 +51,9 @@ class RequireAuthentication implements SubscriberInterface, LicenseAwareInterfac
 			foreach ( $actions as $action ) {
 				$subscribers[ $action ] = array( 'requre_authentication', 0 );
 			}
+
+			$subscribers['simpay_rate_limiting_id'] =
+				array( 'set_rate_limiting_id', 10, 2 );
 		}
 
 		return $subscribers;
@@ -135,5 +138,22 @@ class RequireAuthentication implements SubscriberInterface, LicenseAwareInterfac
 		throw new Exception(
 			__( 'Please log in to make a payment.', 'stripe' )
 		);
+	}
+
+	/**
+	 * Updates the rate limiting ID to use the user ID if the user is logged in.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param string           $id The rate limiting ID.
+	 * @param \WP_REST_Request $request The payment request.
+	 * @return int|string The user ID if the user is logged in, otherwise the rate limiting ID.
+	 */
+	public function set_rate_limiting_id( $id, $request ) {
+		if ( is_user_logged_in() ) {
+			$id = get_current_user_id();
+		}
+
+		return $id;
 	}
 }

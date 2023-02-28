@@ -152,6 +152,7 @@ let spAdmin = {};
 				'.simpay-radio-type',
 				'.simpay-price-enable-custom',
 				'.simpay-price-type input',
+				'.simpay-email-link-enabled',
 			].forEach( ( input ) => {
 				// Allow classes to be passed, but prefer an input name.
 				let inputEl = $( input );
@@ -208,6 +209,7 @@ let spAdmin = {};
 					} );
 
 				// Trigger initial state.
+				$( inputEl ).filter( ':checkbox' ).trigger( 'change' );
 				$( inputEl ).filter( ':checked' ).trigger( 'change' );
 
 				if ( $( inputEl ).is( 'select' ) ) {
@@ -241,15 +243,14 @@ let spAdmin = {};
 				e.preventDefault();
 
 				// Extend the wp.media object
-				const simpayMediaUploader = ( wp.media.frames.file_frame = wp.media(
-					{
-						title: spGeneral.i18n.mediaTitle,
+				const simpayMediaUploader = ( wp.media.frames.file_frame =
+					wp.media( {
+						title: simpayAdmin.i18n.mediaTitle,
 						button: {
-							text: spGeneral.i18n.mediaButtonText,
+							text: simpayAdmin.i18n.mediaButtonText,
 						},
 						multiple: false,
-					}
-				) );
+					} ) );
 
 				const $that = $( this );
 

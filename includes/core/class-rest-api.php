@@ -37,9 +37,11 @@ class REST_API {
 	 * @since 3.5.0
 	 */
 	public function register_routes() {
-		$controllers = array(
-			'\SimplePay\Core\REST_API\v2\Checkout_Session_Controller',
-		);
+		$controllers = array();
+
+		if ( ! simpay_is_upe() ) {
+			$controllers[] = '\SimplePay\Core\REST_API\v2\Checkout_Session_Controller';
+		}
 
 		/**
 		 * Filter the REST API controllers.

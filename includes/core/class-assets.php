@@ -90,8 +90,25 @@ class Assets {
 	 * @since 3.0.0
 	 */
 	public function setup() {
-		$wp_version      = get_bloginfo( 'version' );
-		$has_wp_polyfill = version_compare( $wp_version, '5.0', '>=' );
+		$public_js   = simpay_is_upe()
+			? SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-upe.min.js'
+			: SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public.min.js';
+		$public_deps = simpay_is_upe()
+			? array(
+				'jquery',
+				'wp-a11y',
+				'wp-api-fetch',
+			)
+			: array(
+				'jquery',
+				'underscore',
+				'wp-util',
+				'wp-api',
+				'wp-a11y',
+				'wp-polyfill',
+				'simpay-accounting',
+				'simpay-shared',
+			);
 
 		$this->scripts = array(
 			'sandhills-stripe-js-v3' => array(
@@ -100,39 +117,25 @@ class Assets {
 				'ver'    => null,
 				'footer' => true,
 			),
+
 			'simpay-accounting'      => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/accounting.min.js',
 				'deps'   => array(),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),
-			'simpay-shared'          => array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-shared.min.js',
-				'deps'   => array( 'jquery', 'simpay-accounting' ),
-				'ver'    => SIMPLE_PAY_VERSION,
-				'footer' => true,
-			),
 			'simpay-public'          => array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public.min.js',
-				'deps'   => array(
-					'jquery',
-					'underscore',
-					'wp-util',
-					'wp-api',
-					'wp-a11y',
-					'wp-polyfill',
-					'simpay-accounting',
-					'simpay-shared',
-				),
+				'src'    => $public_js,
+				'deps'   => $public_deps,
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),
 		);
 
-		if ( false === $has_wp_polyfill ) {
-			$this->scripts['simpay-polyfill'] = array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-polyfill.min.js',
-				'deps'   => array(),
+		if ( ! simpay_is_upe() ) {
+			$this->scripts['simpay-shared'] = array(
+				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-shared.min.js',
+				'deps'   => array( 'jquery', 'simpay-accounting' ),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			);

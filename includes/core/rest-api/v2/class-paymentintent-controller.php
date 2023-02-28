@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\REST_API\v2;
 
+use SimplePay\Core\API;
 use SimplePay\Core\REST_API\Controller;
 use SimplePay\Core\Payments;
 use SimplePay\Core\Legacy;
@@ -194,7 +195,7 @@ class PaymentIntent_Controller extends Controller {
 			);
 
 			// Generate a PaymentIntent.
-			$paymentintent = Payments\PaymentIntent\create(
+			$paymentintent = API\PaymentIntents\create(
 				$paymentintent_args,
 				$form->get_api_request_args()
 			);

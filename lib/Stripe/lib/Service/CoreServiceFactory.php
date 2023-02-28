@@ -9,12 +9,14 @@ namespace SimplePay\Vendor\Stripe\Service;
  *
  * @property AccountLinkService $accountLinks
  * @property AccountService $accounts
+ * @property AccountSessionService $accountSessions
  * @property ApplePayDomainService $applePayDomains
  * @property ApplicationFeeService $applicationFees
  * @property Apps\AppsServiceFactory $apps
  * @property BalanceService $balance
  * @property BalanceTransactionService $balanceTransactions
  * @property BillingPortal\BillingPortalServiceFactory $billingPortal
+ * @property Capital\CapitalServiceFactory $capital
  * @property ChargeService $charges
  * @property Checkout\CheckoutServiceFactory $checkout
  * @property CountrySpecService $countrySpecs
@@ -28,6 +30,7 @@ namespace SimplePay\Vendor\Stripe\Service;
  * @property FileLinkService $fileLinks
  * @property FileService $files
  * @property FinancialConnections\FinancialConnectionsServiceFactory $financialConnections
+ * @property GiftCards\GiftCardsServiceFactory $giftCards
  * @property Identity\IdentityServiceFactory $identity
  * @property InvoiceItemService $invoiceItems
  * @property InvoiceService $invoices
@@ -43,6 +46,7 @@ namespace SimplePay\Vendor\Stripe\Service;
  * @property PriceService $prices
  * @property ProductService $products
  * @property PromotionCodeService $promotionCodes
+ * @property QuotePhaseService $quotePhases
  * @property QuoteService $quotes
  * @property Radar\RadarServiceFactory $radar
  * @property RefundService $refunds
@@ -52,11 +56,11 @@ namespace SimplePay\Vendor\Stripe\Service;
  * @property SetupIntentService $setupIntents
  * @property ShippingRateService $shippingRates
  * @property Sigma\SigmaServiceFactory $sigma
- * @property SkuService $skus
  * @property SourceService $sources
  * @property SubscriptionItemService $subscriptionItems
  * @property SubscriptionService $subscriptions
  * @property SubscriptionScheduleService $subscriptionSchedules
+ * @property Tax\TaxServiceFactory $tax
  * @property TaxCodeService $taxCodes
  * @property TaxRateService $taxRates
  * @property Terminal\TerminalServiceFactory $terminal
@@ -75,12 +79,14 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
     private static $classMap = [
         'accountLinks' => AccountLinkService::class,
         'accounts' => AccountService::class,
+        'accountSessions' => AccountSessionService::class,
         'applePayDomains' => ApplePayDomainService::class,
         'applicationFees' => ApplicationFeeService::class,
         'apps' => Apps\AppsServiceFactory::class,
         'balance' => BalanceService::class,
         'balanceTransactions' => BalanceTransactionService::class,
         'billingPortal' => BillingPortal\BillingPortalServiceFactory::class,
+        'capital' => Capital\CapitalServiceFactory::class,
         'charges' => ChargeService::class,
         'checkout' => Checkout\CheckoutServiceFactory::class,
         'countrySpecs' => CountrySpecService::class,
@@ -94,6 +100,7 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
         'fileLinks' => FileLinkService::class,
         'files' => FileService::class,
         'financialConnections' => FinancialConnections\FinancialConnectionsServiceFactory::class,
+        'giftCards' => GiftCards\GiftCardsServiceFactory::class,
         'identity' => Identity\IdentityServiceFactory::class,
         'invoiceItems' => InvoiceItemService::class,
         'invoices' => InvoiceService::class,
@@ -109,6 +116,7 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
         'prices' => PriceService::class,
         'products' => ProductService::class,
         'promotionCodes' => PromotionCodeService::class,
+        'quotePhases' => QuotePhaseService::class,
         'quotes' => QuoteService::class,
         'radar' => Radar\RadarServiceFactory::class,
         'refunds' => RefundService::class,
@@ -118,11 +126,11 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
         'setupIntents' => SetupIntentService::class,
         'shippingRates' => ShippingRateService::class,
         'sigma' => Sigma\SigmaServiceFactory::class,
-        'skus' => SkuService::class,
         'sources' => SourceService::class,
         'subscriptionItems' => SubscriptionItemService::class,
         'subscriptions' => SubscriptionService::class,
         'subscriptionSchedules' => SubscriptionScheduleService::class,
+        'tax' => Tax\TaxServiceFactory::class,
         'taxCodes' => TaxCodeService::class,
         'taxRates' => TaxRateService::class,
         'terminal' => Terminal\TerminalServiceFactory::class,

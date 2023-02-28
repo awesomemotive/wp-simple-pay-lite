@@ -12,10 +12,10 @@
 namespace SimplePay\Core\Transaction;
 
 use Exception;
+use SimplePay\Core\API;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
-use SimplePay\Core\Payments\Stripe_Checkout\Session;
 use SimplePay\Core\StripeConnect\ApplicationFee;
 use stdClass;
 
@@ -137,47 +137,60 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	 * @return void
 	 */
 	public function add_on_payment_intent( $payment_intent, $form, $form_data, $form_values ) {
-		$price = simpay_payment_form_prices_get_price_by_id(
-			$form,
-			$form_data['price']['id'] // @phpstan-ignore-line
-		);
+		// Retrieve from metadata if it exists (UPE only).
+		if ( isset(
+			$payment_intent->metadata->simpay_unit_amount,
+			$payment_intent->metadata->simpay_quantity
+		) ) {
+			$quantity    = $payment_intent->metadata->simpay_quantity;
+			$unit_amount = $payment_intent->metadata->simpay_unit_amount;
 
-		if ( false === $price ) {
-			return;
-		}
+			$subtotal = $unit_amount * $quantity;
 
-		// Custom amount. Verify minimum amount.
-		if ( false === simpay_payment_form_prices_is_defined_price( $price->id ) ) {
-			// Ensure custom amount meets minimum requirement.
-			$unit_amount = $form_data['customAmount'];
-
-			if ( $unit_amount < $price->unit_amount_min ) {
-				$unit_amount = $price->unit_amount_min;
-			}
+			// Calculate based on the form data (non-UPE).
 		} else {
-			$unit_amount = $price->unit_amount;
-		}
-
-		/** @var int $unit_amount */
-
-		// Backwards compatibility amount filter.
-		if ( has_filter( 'simpay_form_' . $form->id . '_amount' ) ) {
-			/** @var int $unit_amount */
-			$unit_amount = simpay_get_filtered(
-				'amount',
-				simpay_convert_amount_to_dollars( $unit_amount ),
-				$form->id
+			$price = simpay_payment_form_prices_get_price_by_id(
+				$form,
+				$form_data['price']['id'] // @phpstan-ignore-line
 			);
 
-			$unit_amount = simpay_convert_amount_to_cents( $unit_amount );
+			if ( false === $price ) {
+				return;
+			}
+
+			// Custom amount. Verify minimum amount.
+			if ( false === simpay_payment_form_prices_is_defined_price( $price->id ) ) {
+				// Ensure custom amount meets minimum requirement.
+				$unit_amount = $form_data['customAmount'];
+
+				if ( $unit_amount < $price->unit_amount_min ) {
+					$unit_amount = $price->unit_amount_min;
+				}
+			} else {
+				$unit_amount = $price->unit_amount;
+			}
+
+			/** @var int $unit_amount */
+
+			// Backwards compatibility amount filter.
+			if ( has_filter( 'simpay_form_' . $form->id . '_amount' ) ) {
+				/** @var int $unit_amount */
+				$unit_amount = simpay_get_filtered(
+					'amount',
+					simpay_convert_amount_to_dollars( $unit_amount ),
+					$form->id
+				);
+
+				$unit_amount = simpay_convert_amount_to_cents( $unit_amount );
+			}
+
+			// Calculate quantity.
+			$quantity = isset( $form_values['simpay_quantity'] )
+				? intval( $form_values['simpay_quantity'] )
+				: 1;
+
+			$subtotal = $unit_amount * $quantity;
 		}
-
-		// Calculate quantity.
-		$quantity = isset( $form_values['simpay_quantity'] )
-			? intval( $form_values['simpay_quantity'] )
-			: 1;
-
-		$subtotal = $unit_amount * $quantity;
 
 		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
 		$customer = $payment_intent->customer;
@@ -645,7 +658,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		}
 
 		try {
-			$session = Session\retrieve(
+			$session = API\CheckoutSessions\retrieve(
 				array(
 					'id'     => $session_id,
 					'expand' => array(
@@ -815,9 +828,14 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
 		$payment_intent = $charge->payment_intent;
 
+		/** @var \SimplePay\Vendor\Stripe\Invoice $invoice */
+		$invoice = $charge->invoice;
+
 		// Find from a Subscription.
-		if ( $charge->invoice && $charge->invoice->subscription ) {
-			$transaction_id = $charge->invoice->subscription->id;
+		if ( $invoice && $invoice->subscription ) {
+			/** @var \SimplePay\Vendor\Stripe\Subscription $subscription */
+			$subscription   = $invoice->subscription;
+			$transaction_id = $subscription->id;
 
 			// Find from a one time payment.
 		} else {
@@ -864,23 +882,25 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		}
 
 		$behavior = $form->get_inventory_behavior();
-		$quantity = isset( $form_values['simpay_quantity'] )
-			? intval( $form_values['simpay_quantity'] )
-			: 1;
+		$prices   = $object->metadata->simpay_price_instances;
+		$prices   = explode( '|', $prices );
 
 		switch ( $behavior ) {
 			case 'combined':
+				$price_option       = current( $prices );
+				$price_option_parts = explode( ':', $price_option );
+				$quantity           = intval( $price_option_parts[1] );
 				$form->adjust_inventory( 'decrement', $quantity, null );
 
 				break;
 			case 'individual':
-				$price = simpay_payment_form_prices_get_price_by_id(
-					$form,
-					$form_data['price']['id'] // @phpstan-ignore-line
-				);
 
-				if ( false !== $price ) {
-					$form->adjust_inventory( 'decrement', $quantity, $price->instance_id );
+				foreach ( $prices as $price_option ) {
+					$price_option_parts = explode( ':', $price_option );
+					$instance_id        = $price_option_parts[0];
+					$quantity           = intval( $price_option_parts[1] );
+
+					$form->adjust_inventory( 'decrement', $quantity, $instance_id );
 				}
 
 				break;

@@ -16,7 +16,6 @@ use SimplePay\Core\API;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
-use SimplePay\Core\Payments\Stripe_Checkout\Session;
 use SimplePay\Core\Scheduler\SchedulerInterface;
 use SimplePay\Core\Settings;
 use SimplePay\Core\Transaction\TransactionRepository;
@@ -65,18 +64,10 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	 * {@inheritdoc}
 	 */
 	public function get_subscribed_events() {
-		return array(
+		$subscribers = array(
 			// Display a notice that an additional fee is being charged.
 			'__unstable_simpay_stripe_connect_account_message'        =>
 				'maybe_show_application_fee',
-
-			// Add application fee to one time and subscription payments.
-			'simpay_get_paymentintent_args_from_payment_form_request' =>
-				'maybe_add_one_time_application_fee',
-			'simpay_get_order_args_from_payment_form_request' =>
-				array( 'maybe_add_one_time_order_application_fee', 10, 2 ),
-			'simpay_get_subscription_args_from_payment_form_request'  =>
-				'maybe_add_subscription_application_fee',
 
 			// Queues transaction records recorded with an application fee for
 			// possible update to remove the application fee if the license is
@@ -88,6 +79,22 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			'simpay_remove_application_fees'                          =>
 				'remove_application_fees',
 		);
+
+		// Not using UPE, use the old method of adding application fees.
+		// Otherwise the application fees are added directly during the pament creation
+		// in the UPE flow.
+		if ( ! simpay_is_upe() ) {
+			$subscribers['simpay_get_paymentintent_args_from_payment_form_request'] =
+				'maybe_add_one_time_application_fee';
+
+			$subscribers['simpay_get_order_args_from_payment_form_request'] =
+				array( 'maybe_add_one_time_order_application_fee', 10, 2 );
+
+			$subscribers['simpay_get_subscription_args_from_payment_form_request'] =
+				'maybe_add_subscription_application_fee';
+		}
+
+		return $subscribers;
 	}
 
 	/**
@@ -166,6 +173,29 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	}
 
 	/**
+	 * Returns the application fee percentage.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @return int
+	 */
+	public function get_application_fee_percentage() {
+		return 3;
+	}
+
+	/**
+	 * Returns an application fee amount for a given amount.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param int $amount Amount to calculate the application fee for.
+	 * @return float
+	 */
+	public function get_application_fee_amount( $amount ) {
+		return round( $amount * ( $this->get_application_fee_percentage() / 100 ), 0 );
+	}
+
+	/**
 	 * Adds an application fee to Checkout Session and PaymentIntent arguments.
 	 *
 	 * @since 4.4.6
@@ -179,7 +209,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		$payment_intent_args['application_fee_amount'] = round(
-			$payment_intent_args['amount'] * 0.03,
+			$payment_intent_args['amount'] * ( $this->get_application_fee_percentage() / 100 ),
 			0
 		);
 
@@ -207,7 +237,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		$order_args['payment']['settings']['application_fee_amount'] = round(
-			$order->amount_total * 0.03,
+			$order->amount_total * ( $this->get_application_fee_percentage() / 100 ),
 			0
 		);
 
@@ -227,7 +257,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			return $subscription_args;
 		}
 
-		$subscription_args['application_fee_percent'] = 3;
+		$subscription_args['application_fee_percent'] = $this->get_application_fee_percentage();
 
 		return $subscription_args;
 	}
@@ -351,7 +381,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 				try {
 					/** @var string $object_id */
 					$object_id = $txn['object_id'];
-					$session   = Session\retrieve(
+					$session   = API\CheckoutSessions\retrieve(
 						$object_id,
 						$api_request_args
 					);

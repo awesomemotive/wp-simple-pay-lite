@@ -20,10 +20,10 @@
 		}
 	},
 	"require": {
-		"berlindb/core": "2.0",
+		"berlindb/core": "2.0.1",
 		"league/container": "2.5.0",
 		"psr/container": "1.0.0",
-		"stripe/stripe-php": "7.97.0"
+		"stripe/stripe-php": "10.6.0-beta.1"
 	},
 	"scripts": {
 		"mozart": "~/.composer/vendor/bin/mozart compose && composer dump-autoload"

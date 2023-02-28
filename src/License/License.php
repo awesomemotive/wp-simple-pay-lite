@@ -407,7 +407,9 @@ class License {
 	 * @return bool
 	 */
 	public function is_lite() {
-		$is_lite = ! class_exists( '\SimplePay\Pro\SimplePayPro', false );
+		$is_lite = ! file_exists(
+			trailingslashit( SIMPLE_PAY_INC ) . 'pro/class-simplepaypro.php' // @phpstan-ignore-line
+		);
 
 		/**
 		 * Filters whether the current environment is Lite or not.

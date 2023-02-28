@@ -18,39 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Adds dismissible (1 year) education about payment pages.
- *
- * @since 4.5.0
- *
- * @return void
- */
-function payment_page_education() {
-	// Dismissed temporary notice.
-	$dismissed_notice = (bool) Persistent_Dismissible::get(
-		array(
-			'id' => 'simpay-form-settings-payment-page-education',
-		)
-	);
-
-	if ( true === $dismissed_notice ) {
-		return;
-	}
-
-	$features_url = simpay_docs_link(
-		'Payment Pages',
-		'how-to-use-payment-pages',
-		'form-payment-page-settings',
-		true
-	);
-
-	include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-payment-page-settings.php'; // @phpstan-ignore-line
-}
-add_action(
-	'simpay_form_settings_payment_page_panel',
-	__NAMESPACE__ . '\\payment_page_education'
-);
-
-/**
  * Adds the "Payment Page Mode" setting.
  *
  * @since 4.5.0

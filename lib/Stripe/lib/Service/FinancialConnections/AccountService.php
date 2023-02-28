@@ -22,6 +22,23 @@ class AccountService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     }
 
     /**
+     * Lists the recorded inferred balances for a Financial Connections
+     * <code>Account</code>.
+     *
+     * @param string $parentId
+     * @param null|array $params
+     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\FinancialConnections\InferredBalance>
+     */
+    public function allInferredBalances($parentId, $params = null, $opts = null)
+    {
+        return $this->requestCollection('get', $this->buildPath('/v1/financial_connections/accounts/%s/inferred_balances', $parentId), $params, $opts);
+    }
+
+    /**
      * Lists all owners for a given <code>Account</code>.
      *
      * @param string $id

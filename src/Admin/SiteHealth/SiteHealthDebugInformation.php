@@ -153,6 +153,20 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	}
 
 	/**
+	 * Returns "Yes" or "No" depending on if UPE is being used
+	 *
+	 * @since 4.7.0
+	 *
+	 * @return string
+	 */
+	private function get_upe_yes_or_upe_no() {
+		return simpay_is_upe()
+			? __( 'Yes', 'stripe' )
+			: __( 'No', 'stripe' );
+	}
+
+
+	/**
 	 * Returns the CAPTCHA type.
 	 *
 	 * @since 4.6.6
@@ -443,6 +457,10 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 				'webhook_secret'           => array(
 					'label' => __( 'Webhook Secret', 'stripe' ),
 					'value' => $this->get_webhook_secret(),
+				),
+				'upe'                      => array(
+					'label' => __( 'Using UPE', 'stripe' ),
+					'value' => $this->get_upe_yes_or_upe_no(),
 				),
 			),
 		);

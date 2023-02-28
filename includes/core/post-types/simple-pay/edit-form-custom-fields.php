@@ -126,13 +126,6 @@ function get_custom_field_types() {
 			'active'     => true,
 			'repeatable' => true,
 		),
-		'payment_request_button'  => array(
-			'label'      => esc_html__( '1-Click Payment Button (Apple Pay / Google Pay)', 'stripe' ),
-			'type'       => 'payment_request_button',
-			'category'   => 'payment',
-			'active'     => simpay_can_use_payment_request_button(),
-			'repeatable' => false,
-		),
 		'card'                    => array(
 			'label'      => esc_html__( 'Payment Methods', 'stripe' ),
 			'type'       => 'card',
@@ -212,6 +205,16 @@ function get_custom_field_types() {
 			'repeatable' => true,
 		),
 	);
+
+	if ( ! simpay_is_upe() ) {
+		$fields['payment_request_button'] = array(
+			'label'      => esc_html__( '1-Click Payment Button (Apple Pay / Google Pay)', 'stripe' ),
+			'type'       => 'payment_request_button',
+			'category'   => 'payment',
+			'active'     => simpay_can_use_payment_request_button(),
+			'repeatable' => false,
+		);
+	}
 
 	/**
 	 * Filters available custom fields.

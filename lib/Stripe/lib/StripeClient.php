@@ -8,6 +8,7 @@ namespace SimplePay\Vendor\Stripe;
  * Client used to send requests to Stripe's API.
  *
  * @property \SimplePay\Vendor\Stripe\Service\AccountLinkService $accountLinks
+ * @property \SimplePay\Vendor\Stripe\Service\AccountSessionService $accountSessions
  * @property \SimplePay\Vendor\Stripe\Service\AccountService $accounts
  * @property \SimplePay\Vendor\Stripe\Service\ApplePayDomainService $applePayDomains
  * @property \SimplePay\Vendor\Stripe\Service\ApplicationFeeService $applicationFees
@@ -15,6 +16,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\BalanceService $balance
  * @property \SimplePay\Vendor\Stripe\Service\BalanceTransactionService $balanceTransactions
  * @property \SimplePay\Vendor\Stripe\Service\BillingPortal\BillingPortalServiceFactory $billingPortal
+ * @property \SimplePay\Vendor\Stripe\Service\Capital\CapitalServiceFactory $capital
  * @property \SimplePay\Vendor\Stripe\Service\ChargeService $charges
  * @property \SimplePay\Vendor\Stripe\Service\Checkout\CheckoutServiceFactory $checkout
  * @property \SimplePay\Vendor\Stripe\Service\CountrySpecService $countrySpecs
@@ -28,6 +30,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\FileLinkService $fileLinks
  * @property \SimplePay\Vendor\Stripe\Service\FileService $files
  * @property \SimplePay\Vendor\Stripe\Service\FinancialConnections\FinancialConnectionsServiceFactory $financialConnections
+ * @property \SimplePay\Vendor\Stripe\Service\GiftCards\GiftCardsServiceFactory $giftCards
  * @property \SimplePay\Vendor\Stripe\Service\Identity\IdentityServiceFactory $identity
  * @property \SimplePay\Vendor\Stripe\Service\InvoiceItemService $invoiceItems
  * @property \SimplePay\Vendor\Stripe\Service\InvoiceService $invoices
@@ -43,6 +46,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\PriceService $prices
  * @property \SimplePay\Vendor\Stripe\Service\ProductService $products
  * @property \SimplePay\Vendor\Stripe\Service\PromotionCodeService $promotionCodes
+ * @property \SimplePay\Vendor\Stripe\Service\QuotePhaseService $quotePhases
  * @property \SimplePay\Vendor\Stripe\Service\QuoteService $quotes
  * @property \SimplePay\Vendor\Stripe\Service\Radar\RadarServiceFactory $radar
  * @property \SimplePay\Vendor\Stripe\Service\RefundService $refunds
@@ -52,11 +56,11 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\SetupIntentService $setupIntents
  * @property \SimplePay\Vendor\Stripe\Service\ShippingRateService $shippingRates
  * @property \SimplePay\Vendor\Stripe\Service\Sigma\SigmaServiceFactory $sigma
- * @property \SimplePay\Vendor\Stripe\Service\SkuService $skus
  * @property \SimplePay\Vendor\Stripe\Service\SourceService $sources
  * @property \SimplePay\Vendor\Stripe\Service\SubscriptionItemService $subscriptionItems
  * @property \SimplePay\Vendor\Stripe\Service\SubscriptionScheduleService $subscriptionSchedules
  * @property \SimplePay\Vendor\Stripe\Service\SubscriptionService $subscriptions
+ * @property \SimplePay\Vendor\Stripe\Service\Tax\TaxServiceFactory $tax
  * @property \SimplePay\Vendor\Stripe\Service\TaxCodeService $taxCodes
  * @property \SimplePay\Vendor\Stripe\Service\TaxRateService $taxRates
  * @property \SimplePay\Vendor\Stripe\Service\Terminal\TerminalServiceFactory $terminal

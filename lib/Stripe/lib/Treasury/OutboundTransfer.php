@@ -23,13 +23,14 @@ namespace SimplePay\Vendor\Stripe\Treasury;
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
  * @property null|string $description An arbitrary string attached to the object. Often useful for displaying to users.
- * @property string $destination_payment_method The PaymentMethod used as the payment instrument for an OutboundTransfer.
+ * @property null|string $destination_payment_method The PaymentMethod used as the payment instrument for an OutboundTransfer.
  * @property \SimplePay\Vendor\Stripe\StripeObject $destination_payment_method_details
  * @property int $expected_arrival_date The date when funds are expected to arrive in the destination account.
  * @property string $financial_account The FinancialAccount that funds were pulled from.
  * @property null|string $hosted_regulatory_receipt_url A <a href="https://stripe.com/docs/treasury/moving-money/regulatory-receipts">hosted transaction receipt</a> URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $network_details Details about the network used for the OutboundTransfer.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $returned_details Details about a returned OutboundTransfer. Only set when the status is <code>returned</code>.
  * @property string $statement_descriptor Information about the OutboundTransfer to be sent to the recipient account.
  * @property string $status Current status of the OutboundTransfer: <code>processing</code>, <code>failed</code>, <code>canceled</code>, <code>posted</code>, <code>returned</code>. An OutboundTransfer is <code>processing</code> if it has been created and is pending. The status changes to <code>posted</code> once the OutboundTransfer has been &quot;confirmed&quot; and funds have left the account, or to <code>failed</code> or <code>canceled</code>. If an OutboundTransfer fails to arrive at its destination, its status will change to <code>returned</code>.

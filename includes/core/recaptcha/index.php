@@ -315,12 +315,16 @@ function validate_recaptcha_customer( $customer_args, $form, $form_data, $form_v
 		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
 	}
 }
-add_action(
-	'simpay_before_customer_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_recaptcha_customer',
-	10,
-	4
-);
+// Only validate reCAPTCHA here if UPE is not enabled. Otherwise it is handled
+// in the updated `wpsp/__internal__payment` endpoint.
+if ( ! simpay_is_upe() ) {
+	add_action(
+		'simpay_before_customer_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_recaptcha_customer',
+		10,
+		4
+	);
+}
 
 /**
  * Validates reCAPTCHA before PaymentIntent creation.
@@ -364,30 +368,34 @@ function validate_recaptcha_payment( $paymentintent_args, $form, $form_data, $fo
 		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
 	}
 }
-add_action(
-	'simpay_before_paymentintent_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_recaptcha_payment',
-	10,
-	4
-);
-add_action(
-	'simpay_before_subscription_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_recaptcha_payment',
-	10,
-	4
-);
-add_action(
-	'simpay_before_charge_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_recaptcha_payment',
-	10,
-	4
-);
-add_action(
-	'simpay_before_checkout_session_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_recaptcha_payment',
-	10,
-	4
-);
+// Only validate reCAPTCHA here if UPE is not enabled. Otherwise it is handled
+// in the updated `wpsp/__internal__payment` endpoint.
+if ( ! simpay_is_upe() ) {
+	add_action(
+		'simpay_before_paymentintent_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_recaptcha_payment',
+		10,
+		4
+	);
+	add_action(
+		'simpay_before_subscription_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_recaptcha_payment',
+		10,
+		4
+	);
+	add_action(
+		'simpay_before_charge_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_recaptcha_payment',
+		10,
+		4
+	);
+	add_action(
+		'simpay_before_checkout_session_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_recaptcha_payment',
+		10,
+		4
+	);
+}
 
 /**
  * Validates hCaptcha before payment action.
@@ -436,24 +444,28 @@ function validate_hcaptcha_payment( $paymentintent_args, $form, $form_data, $for
 		);
 	}
 }
-add_action(
-	'simpay_before_paymentintent_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_hcaptcha_payment',
-	10,
-	4
-);
-add_action(
-	'simpay_before_subscription_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_hcaptcha_payment',
-	10,
-	4
-);
-add_action(
-	'simpay_before_checkout_session_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_hcaptcha_payment',
-	10,
-	4
-);
+// Only validate hCaptcha here if UPE is not enabled. Otherwise it is handled
+// in the updated `wpsp/__internal__payment` endpoint.
+if ( ! simpay_is_upe() ) {
+	add_action(
+		'simpay_before_paymentintent_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_hcaptcha_payment',
+		10,
+		4
+	);
+	add_action(
+		'simpay_before_subscription_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_hcaptcha_payment',
+		10,
+		4
+	);
+	add_action(
+		'simpay_before_checkout_session_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_hcaptcha_payment',
+		10,
+		4
+	);
+}
 
 /**
  * Validates reCAPTCHA before Order preview.
@@ -499,12 +511,16 @@ function validate_recaptcha_order_preview( $request, $form ) {
 		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
 	}
 }
-add_action(
-	'simpay_before_order_preview_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_recaptcha_order_preview',
-	10,
-	2
-);
+// Only validate hCaptcha here if UPE is not enabled. Otherwise it is handled
+// in the updated `wpsp/__internal__payment` endpoint.
+if ( ! simpay_is_upe() ) {
+	add_action(
+		'simpay_before_order_preview_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_recaptcha_order_preview',
+		10,
+		2
+	);
+}
 
 /**
  * Validates reCAPTCHA before Order submission.
@@ -550,12 +566,16 @@ function validate_recaptcha_order_submit( $request, $form ) {
 		throw new \Exception( __( 'Invalid reCAPTCHA. Please try again.', 'stripe' ) );
 	}
 }
-add_action(
-	'simpay_before_order_submit_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_recaptcha_order_submit',
-	10,
-	2
-);
+// Only validate hCaptcha here if UPE is not enabled. Otherwise it is handled
+// in the updated `wpsp/__internal__payment` endpoint.
+if ( ! simpay_is_upe() ) {
+	add_action(
+		'simpay_before_order_submit_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_recaptcha_order_submit',
+		10,
+		2
+	);
+}
 
 /**
  * Validates hCaptcha before Order submission.
@@ -594,12 +614,16 @@ function validate_hcaptcha_order_submit( $request, $form ) {
 		);
 	}
 }
-add_action(
-	'simpay_before_order_submit_from_payment_form_request',
-	__NAMESPACE__ . '\\validate_hcaptcha_order_submit',
-	10,
-	2
-);
+// Only validate hCaptcha here if UPE is not enabled. Otherwise it is handled
+// in the updated `wpsp/__internal__payment` endpoint.
+if ( ! simpay_is_upe() ) {
+	add_action(
+		'simpay_before_order_submit_from_payment_form_request',
+		__NAMESPACE__ . '\\validate_hcaptcha_order_submit',
+		10,
+		2
+	);
+}
 
 /**
  * Adds an Inbox notification if no CAPTCHA type has been set.
