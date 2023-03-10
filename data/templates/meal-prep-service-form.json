@@ -1,0 +1,91 @@
+{
+	"id": "d6c26327-4f3f-47b9-90d7-a1109b201a90",
+	"created_at": "2023-03-08 00:00:00",
+	"updated_at": "2023-03-08 00:00:00",
+	"license": [ "personal", "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "products-service" ],
+	"keywords": [ "payment", "service", "meal prep", "food" ],
+	"slug": "meal-prep-service-form",
+	"name": "Meal Prep Service Form",
+	"description": "Allow clients to pay for the weekly meals received through your delivery service.",
+	"url": "",
+	"data": {
+		"title": "Meal Prep Service Form",
+		"description": "",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "customer_name",
+				"label": "Customer Name",
+				"required": "yes"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "telephone",
+				"label": "Phone Number",
+				"required": "yes",
+				"placeholder": "A follow up call will be made"
+			},
+			{
+				"type": "plan_select",
+				"label": "Select number of meals per day"
+			},
+			{
+				"type": "number",
+				"label": "Number of days per week",
+				"default": 1,
+				"required": "yes",
+				"quantity": "yes",
+				"metadata": "Number of Days"
+			},
+			{
+				"type": "text",
+				"label": "Please list food preferences, allergies, etc",
+				"multiline": "yes",
+				"required": "yes",
+				"metadata": "Food Prefs"
+			},
+			{
+				"type": "text",
+				"label": "Pick up times, and additional notes as needs",
+				"multiline": "yes",
+				"required": "yes",
+				"metadata": "Pick Up Time and Notes"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"label": "1 Meal Per Day",
+				"unit_amount": 1200,
+				"default": true
+			},
+			{
+				"label": "2 Meals Per Day",
+				"unit_amount": 2400
+			},
+			{
+				"label": "3 Meals Per Day",
+				"unit_amount": 3600
+			},
+			{
+				"label": "6 Meals Per Day (small family)",
+				"unit_amount": 7500
+			},
+			{
+				"label": "9 Meals Per Day (large family)",
+				"unit_amount": 12500
+			}
+		]
+	}
+}

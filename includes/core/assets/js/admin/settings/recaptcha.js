@@ -15,6 +15,10 @@ const settingsToToggle = [
 	'.simpay-settings-recaptcha_secret_key',
 	'.simpay-settings-recaptcha_score_threshold',
 
+	'.simpay-settings-cloudflare_turnstile_setup',
+	'.simpay-settings-cloudflare_turnstile_site_key',
+	'.simpay-settings-cloudflare_turnstile_secret_key',
+
 	'.simpay-settings-no_captcha_warning',
 ];
 
@@ -36,6 +40,9 @@ function onToggle( e ) {
 			break;
 		case 'recaptcha-v3':
 			type = 'recaptcha';
+			break;
+		case 'cloudflare-turnstile':
+			type = 'cloudflare_turnstile';
 			break;
 		default:
 			type = value;

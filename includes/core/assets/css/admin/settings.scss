@@ -142,10 +142,15 @@
 		color: #b91c1b;
 		background: #fef2f2;
 	}
+
+	label[for="simpay-settings-captcha-type-cloudflare-turnstile"] .simpay-settings-captcha-toggles__toggle-icon {
+		width: 120px;
+	}
 }
 
 .simpay-settings-general-recaptcha-no_captcha_warning,
 .simpay-settings-hcaptcha_secret_key,
+.simpay-settings-cloudflare_turnstile_secret_key,
 .simpay-settings-recaptcha_score_threshold {
 
 	th,

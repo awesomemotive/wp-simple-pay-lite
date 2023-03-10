@@ -204,7 +204,17 @@ class PaymentRequestUtils {
 		$price                   = self::get_price( $request );
 		$is_optionally_recurring = self::is_optionally_recurring( $request );
 
-		return ( $price->can_recur && $is_optionally_recurring ) || $price->recurring;
+		// Price option can recur, and is, so it is recurring.
+		if ( $price->can_recur && $is_optionally_recurring ) {
+			return true;
+
+			// Price can recur, but it is not opted in, so it's not.
+		} elseif ( $price->can_recur && ! $is_optionally_recurring ) {
+			return false;
+		}
+
+		// Price option is recurring, so it is recurring.
+		return is_array( $price->recurring );
 	}
 
 	/**
@@ -539,19 +549,27 @@ class PaymentRequestUtils {
 		// Do not add if using Stripe Checkout.
 		if ( 'stripe_checkout' !== $form->get_display_type() ) {
 			$custom_fields = get_custom_fields( $form->id );
-			$settings      = isset( $custom_fields['email'] )
-				? $custom_fields['email']
-				: array();
 
-			$link_enabled = isset(
-				$settings['link'],
-				$settings['link']['enabled']
-			)
-				? 'yes' === $settings['link']['enabled']
-				: false;
+			$emails = array_filter(
+				$custom_fields,
+				function( $field ) {
+					return 'email' === $field['type'];
+				}
+			);
 
-			if ( in_array( 'card', $payment_methods, true ) && $link_enabled ) {
-				$payment_methods[] = 'link';
+			if ( ! empty( $emails ) ) {
+				$email = current( $emails );
+
+				$link_enabled = isset(
+					$email['link'],
+					$email['link']['enabled']
+				)
+					? 'yes' === $email['link']['enabled']
+					: false;
+
+				if ( in_array( 'card', $payment_methods, true ) && $link_enabled ) {
+					$payment_methods[] = 'link';
+				}
 			}
 		}
 

@@ -46,6 +46,8 @@ trait TokenValidationUtils {
 				return self::validate_recaptcha_v3_token( $token );
 			case 'hcaptcha':
 				return self::validate_hcaptcha_token( $token );
+			case 'cloudflare-turnstile':
+				return self::validate_cloudflare_turnstile_token( $token, $request );
 			default:
 				return true;
 		}
@@ -151,6 +153,57 @@ trait TokenValidationUtils {
 		$response = json_decode( $response );
 
 		if ( null === $response ) {
+			return false;
+		}
+
+		return $response->success;
+	}
+
+	/**
+	 * Validates a Cloudflare Turnstile token.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param string           $token The CAPTCHA token.
+	 * @param \WP_REST_Request $payment_request The payment request.
+	 * @return bool
+	 */
+	private static function validate_cloudflare_turnstile_token( $token, $payment_request ) {
+		$request = wp_remote_post(
+			'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+			array(
+				'body' => array(
+					'secret'   => simpay_get_setting(
+						'cloudflare_turnstile_secret_key',
+						''
+					),
+					'response' => $token,
+					'remoteip' => Utils\get_current_ip_address(),
+				),
+			)
+		);
+
+		// Request fails.
+		if ( is_wp_error( $request ) ) {
+			return false;
+		}
+
+		$response = wp_remote_retrieve_body( $request );
+
+		if ( empty( $response ) ) {
+			return false;
+		}
+
+		$response = json_decode( $response );
+
+		if ( null === $response ) {
+			return false;
+		}
+
+		$form   = PaymentRequestUtils::get_form( $payment_request );
+		$action = sprintf( 'simpay-form-%d', $form->id );
+
+		if ( $response->action !== $action ) {
 			return false;
 		}
 

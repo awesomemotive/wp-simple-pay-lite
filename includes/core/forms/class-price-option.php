@@ -445,7 +445,7 @@ class PriceOption {
 				$out_of_stock_price_option_label = sprintf(
 					/* translators: %s Price option label */
 					__(
-						'%s (Out of stock)',
+						'%s (Sold Out)',
 						'stripe'
 					),
 					$this->label
@@ -583,7 +583,7 @@ class PriceOption {
 			$out_of_stock_price_option_label = sprintf(
 				/* translators: %s Price option label */
 				__(
-					'%s (Out of stock)',
+					'%s (Sold Out)',
 					'stripe'
 				),
 				$label
@@ -681,7 +681,7 @@ class PriceOption {
 			$out_of_stock_price_option_label = sprintf(
 				/* translators: %s Price option label */
 				__(
-					'%s (Out of stock)',
+					'%s (Sold Out)',
 					'stripe'
 				),
 				$label

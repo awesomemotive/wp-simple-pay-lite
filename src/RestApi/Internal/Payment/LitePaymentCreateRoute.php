@@ -181,20 +181,23 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 		}
 
 		// Line item.
+		$item = array(
+			'price'    => $price->id,
+			'quantity' => $quantity,
+		);
+
 		$enable_quantity = 'yes' === simpay_get_saved_meta(
 			$form->id,
 			'_enable_quantity',
 			'no'
 		);
 
-		$item = array(
-			'price'               => $price->id,
-			'quantity'            => $quantity,
-			'adjustable_quantity' => array(
-				'enabled' => $enable_quantity,
-				'minimum' => $enable_quantity ? 1 : null,
-			),
-		);
+		if ( $enable_quantity ) {
+			$item['adjustable_quantity'] = array(
+				'enabled' => true,
+				'minimum' => 1,
+			);
+		}
 
 		$session_args['line_items'] = array( $item );
 

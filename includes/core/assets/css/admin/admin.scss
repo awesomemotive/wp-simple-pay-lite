@@ -1538,7 +1538,8 @@ select.simpay-currency-symbol {
  * @see ./src/Admin/Education/UpgradeModal.php
  * @see ./views/admin-education-upgrade-modal.php
  */
-.simpay-upgrade-modal {
+.simpay-upgrade-modal,
+.simpay-upgrade-upe-modal {
 	padding: 0 !important;
 
 	* {
@@ -2095,6 +2096,64 @@ select.simpay-currency-symbol {
 		@include break-small {
 			font-size: $default-font-size;
 			line-height: normal;
+		}
+	}
+}
+
+body.post-type-simple-pay #wpbody-content {
+	padding-bottom: 200px;
+}
+
+#wpfooter {
+
+	.simpay-footer-promotion {
+		text-align: center;
+		font-weight: 400;
+		font-size: 13px;
+		line-height: 16px;
+		color: #787c82;
+		padding: 20px 0 30px 0;
+		margin-bottom: 20px;
+
+		p {
+			font-weight: 600;
+		}
+	}
+
+	.simpay-footer-promotion-links,
+	.simpay-footer-promotion-social {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.simpay-footer-promotion-links {
+		margin: 9px 0 0;
+
+		span {
+			color: #c3c4c7;
+			padding: 0 7px;
+		}
+	}
+
+	.simpay-footer-promotion-social {
+		margin: 10px 0 0 0;
+		gap: 10px;
+
+		li {
+			margin-bottom: 0;
+		}
+
+		li:hover {
+
+			path {
+				fill: #50575e;
+			}
+		}
+
+		a {
+			display: block;
+			height: 16px;
 		}
 	}
 }

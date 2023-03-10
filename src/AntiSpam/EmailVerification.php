@@ -18,6 +18,7 @@ use Exception;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
+use SimplePay\Core\RestApi\Internal\Payment\Utils\PaymentRequestUtils;
 use SimplePay\Core\Scheduler\SchedulerInterface;
 use SimplePay\Core\Settings;
 
@@ -82,8 +83,13 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 			$this->is_latest_fraud_event_in_timeframe()
 		) {
 			// Send the verification code.
-			$subscribers['simpay_before_customer_from_payment_form_request'] =
-				array( 'send_verification_code', 10, 4 );
+			if ( simpay_is_upe() ) {
+				$subscribers['simpay_before_payment_create'] =
+					array( 'send_verification_code_upe', 10, 4 );
+			} else {
+				$subscribers['simpay_before_customer_from_payment_form_request'] =
+					array( 'send_verification_code', 10, 4 );
+			}
 
 			// ...verify on PaymentIntent.
 			$subscribers['simpay_before_paymentintent_from_payment_form_request'] =
@@ -421,7 +427,6 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	 * @param \SimplePay\Core\Abstracts\Form $form Payment Form instance.
 	 * @param array<mixed>                   $form_data Payment Form state.
 	 * @param array<mixed>                   $form_values Payment form values.
-	 * @throws \Exception Input field to enter the verification code.
 	 * @return void
 	 */
 	public function send_verification_code(
@@ -446,17 +451,66 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 		// Find the entered email address, and create a cleaned version to use as
 		// the verification code base.
 		/** @var string $email */
-		$email       = $form_values['simpay_email'];
-		$email       = sanitize_text_field( $email );
-		$clean_email = $this->clean_email( $email );
+		$email = $form_values['simpay_email'];
+		$email = sanitize_text_field( $email );
+		$email = $this->clean_email( $email );
 
+		$this->send_verification_code_email( $email );
+	}
+
+	/**
+	 * Sends an email containing a verification code to the email address entered in
+	 * the payment form and throws an exception to output the relevant HTML.
+	 *
+	 * @since 4.7.2
+	 *
+	 * @param \WP_REST_Request $request The payemnt request.
+	 * @return void
+	 */
+	public function send_verification_code_upe( $request ) {
+		// Do not show the input if a verification code has been submitted.
+		// Verify the code instead.
+		$form_values = PaymentRequestUtils::get_form_values( $request );
+
+		if ( isset( $form_values['simpay_email_verification_code'] ) ) {
+			$this->verify_verification_code_rest(
+				array(),
+				array(),
+				array(),
+				$form_values
+			);
+
+			return;
+		}
+
+		// Find the entered email address, and create a cleaned version to use as
+		// the verification code base.
+		/** @var string $email */
+		$email = $form_values['simpay_email'];
+		$email = sanitize_text_field( $email );
+		$email = $this->clean_email( $email );
+
+		$this->send_verification_code_email( $email );
+	}
+
+	/**
+	 * Sends an email containing a verification code to the email address, and
+	 * throws an exception containing an additional field to input the value.
+	 *
+	 * @since 4.7.2
+	 *
+	 * @param string $email Email address to send the verification code to.
+	 * @return void
+	 * @throws \Exception Input field to enter the verification code.
+	 */
+	private function send_verification_code_email( $email ) {
 		// Create a verification code valid for a set lifespan.
 		add_filter(
 			'nonce_life',
 			array( $this, 'get_verification_code_lifespan' )
 		);
 
-		$nonce = wp_create_nonce( 'simpay_verify_email_' . $clean_email );
+		$nonce = wp_create_nonce( 'simpay_verify_email_' . $email );
 
 		remove_filter(
 			'nonce_life',
@@ -517,10 +571,10 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @param array<mixed>                   $args Object arguments.
-	 * @param \SimplePay\Core\Abstracts\Form $form Payment Form instance.
-	 * @param array<mixed>                   $form_data Payment Form state.
-	 * @param array<mixed>                   $form_values Payment form values.
+	 * @param array<mixed>                                $args Object arguments.
+	 * @param array<mixed>|\SimplePay\Core\Abstracts\Form $form Payment Form instance.
+	 * @param array<mixed>                                $form_data Payment Form state.
+	 * @param array<mixed>                                $form_values Payment form values.
 	 * @throws \Exception If the verification code is invalid.
 	 * @return void
 	 */
@@ -753,9 +807,9 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	 * @return string
 	 */
 	public function set_rate_limiting_id( $id, $request ) {
-		if ( ! empty( $request->get_param('form_values') ) ) {
+		if ( ! empty( $request->get_param( 'form_values' ) ) ) {
 			/** @var array<string, string> $form_values */
-			$form_values = $request->get_param('form_values');
+			$form_values = $request->get_param( 'form_values' );
 
 			if ( ! isset( $form_values['simpay_email_verification_code'] ) ) {
 				return $id;

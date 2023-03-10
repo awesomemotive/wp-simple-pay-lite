@@ -66,14 +66,22 @@ class Payment_Button extends Custom_Field {
 
 		$captcha_type = simpay_get_setting( 'captcha_type', '' );
 
-		if (
-			'stripe_checkout' === self::$form->get_display_type() &&
-			'hcaptcha' === $captcha_type
-		) {
-			$html .= '<div
-			class="simpay-form-control h-captcha"
-			data-sitekey="' . esc_attr( simpay_get_setting( 'hcaptcha_site_key' ) ) . '"
-			></div>';
+		if ( 'stripe_checkout' === self::$form->get_display_type() ) {
+			switch ( $captcha_type ) {
+				case 'hcaptcha':
+					$html .= sprintf(
+						'<div class="simpay-form-control h-captcha" data-sitekey="%s"></div>',
+						esc_attr( simpay_get_setting( 'hcaptcha_site_key', '' ) )
+					);
+					break;
+				case 'cloudflare-turnstile':
+					$html .= sprintf(
+						'<div class="simpay-form-control cf-turnstile" data-sitekey="%s" data-action="simpay-form-%d"></div>',
+						esc_attr( simpay_get_setting( 'cloudflare_turnstile_site_key', '' ) ),
+						self::$form->id
+					);
+					break;
+			}
 		}
 
 		$html .= '<div class="simpay-form-control">';
