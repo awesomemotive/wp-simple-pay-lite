@@ -181,6 +181,11 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 * New payment experience - support for Cloudflare's "Turnstile", a free CAPTCHA replacement. Visit "WP Simple Pay > Settings > General > Anti-Spam" to learn mor
 * New: Add additional payment form templates.
 
+= Stripe Payment Forms v4.7.2 - March 13, 2023 =
+
+* New payment experience - support for Cloudflare's "Turnstile", a free CAPTCHA replacement. Visit "WP Simple Pay > Settings > General > Anti-Spam" to learn mor
+* New: Add additional payment form templates.
+
 = Stripe Payment Forms v4.7.0 - February 28, 2023 =
 
 * Fix: Ensure text after dynamic {{amount}} tag is visible on payment buttons.
@@ -212,8 +217,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 * Fix: Ensure sorting by Title in the payment form list works as expected.
 * Fix: Ensure payment form context is used for all API calls when viewing a payment confirmation.
 * Fix: Do not add unsupported application fees to Indian accounts.
-
-= Stripe Payment Forms v4.6.4 - November 9, 2022 =
-
-* New: Add additional payment form templates.
-* New: Payment Confirmation - add `simpay_payment_receipt_viewed` hook.
