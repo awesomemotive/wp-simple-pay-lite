@@ -36,6 +36,7 @@ function HelpPanelFooter( { searchTerm } ) {
 						'' === searchTerm ? 'View Documentation' : searchTerm,
 						'1' === isLite
 					) }
+					target="_blank"
 				>
 					{ __( 'View All Documentation', 'simple-pay' ) }
 				</Button>
@@ -52,34 +53,25 @@ function HelpPanelFooter( { searchTerm } ) {
 					) }
 				</p>
 
-				{ '1' === isLite ? (
-					<Button
-						className="simpay-help-panel__footer-upgrade-button"
-						variant="secondary"
-						isSecondary
-						href={ getGaUrl(
-							'https://wpsimplepay.com/lite-vs-pro/',
-							'help',
-							'' === searchTerm ? 'Get Support' : searchTerm,
-							true
-						) }
-					>
-						{ __( 'Upgrade to Pro', 'simple-pay' ) }
-					</Button>
-				) : (
-					<Button
-						variant="secondary"
-						isSecondary
-						href={ getGaUrl(
-							'https://wpsimplepay.com/support',
-							'help',
-							'' === searchTerm ? 'Get Support' : searchTerm,
-							false
-						) }
-					>
-						{ __( 'Submit a Support Ticket', 'simple-pay' ) }
-					</Button>
-				) }
+				<Button
+					variant="secondary"
+					isSecondary
+					href={
+						'1' === isLite
+							? 'https://wordpress.org/support/plugin/stripe/'
+							: getGaUrl(
+									'https://wpsimplepay.com/support',
+									'help',
+									'' === searchTerm
+										? 'Get Support'
+										: searchTerm,
+									false
+							  )
+					}
+					target="_blank"
+				>
+					{ __( 'Submit a Support Ticket', 'simple-pay' ) }
+				</Button>
 			</div>
 		</div>
 	);

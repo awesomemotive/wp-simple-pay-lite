@@ -34,6 +34,15 @@ function getPaymentFormToken( paymentForm ) {
 		return Promise.resolve( hCaptchaTokenEl.value );
 	}
 
+	// Cloudflare Turnstile.
+	const cloudflareTurnstileTokenEl = paymentForm.querySelector(
+		'[name="cf-turnstile-response"]'
+	);
+
+	if ( cloudflareTurnstileTokenEl ) {
+		return Promise.resolve( cloudflareTurnstileTokenEl.value );
+	}
+
 	return Promise.resolve( null );
 }
 

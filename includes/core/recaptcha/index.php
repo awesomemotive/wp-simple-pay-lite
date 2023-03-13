@@ -70,32 +70,44 @@ function add_script( $form_id, $form ) {
 		: '';
 	$type               = simpay_get_setting( 'captcha_type', $default );
 
-	if ( 'hcaptcha' === $type ) {
-		wp_enqueue_script( 'simpay-hcaptcha', 'https://js.hcaptcha.com/1/api.js' );
-
-	} elseif ( 'recaptcha-v3' === $type ) {
-		$url = add_query_arg(
-			array(
-				'render' => get_key( 'site' ),
-			),
-			'https://www.google.com/recaptcha/api.js'
-		);
-
-		wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
-
-		wp_localize_script(
-			'simpay-public',
-			'simpayGoogleRecaptcha',
-			array(
-				'siteKey' => get_key( 'site' ),
-				'i18n'    => array(
-					'invalid' => esc_html__(
-						'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.',
-						'stripe'
-					),
+	switch ( $type ) {
+		case 'hcaptcha':
+			wp_enqueue_script(
+				'simpay-hcaptcha',
+				'https://js.hcaptcha.com/1/api.js'
+			);
+			break;
+		case 'recaptcha-v3':
+			$url = add_query_arg(
+				array(
+					'render' => get_key( 'site' ),
 				),
-			)
-		);
+				'https://www.google.com/recaptcha/api.js'
+			);
+
+			wp_enqueue_script( 'simpay-google-recaptcha-v3', esc_url( $url ), array(), 'v3', true );
+
+			wp_localize_script(
+				'simpay-public',
+				'simpayGoogleRecaptcha',
+				array(
+					'siteKey' => get_key( 'site' ),
+					'i18n'    => array(
+						'invalid' => esc_html__(
+							'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.',
+							'stripe'
+						),
+					),
+				)
+			);
+			break;
+		case 'cloudflare-turnstile':
+			wp_enqueue_script(
+				'simpay-cloudflare-turnstile',
+				'https://challenges.cloudflare.com/turnstile/v0/api.js'
+			);
+			break;
+
 	}
 }
 add_action( 'simpay_form_before_form_bottom', __NAMESPACE__ . '\\add_script', 10, 2 );

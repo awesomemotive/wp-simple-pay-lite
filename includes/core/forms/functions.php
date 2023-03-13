@@ -321,6 +321,7 @@ function simpay_payment_form_add_missing_custom_fields(
 
 			$needs_required_address = (
 				(
+					! simpay_is_upe() &&
 					isset( $payment_methods['stripe-elements']['klarna'] ) &&
 					isset( $payment_methods['stripe-elements']['klarna']['id'] )
 				) ||

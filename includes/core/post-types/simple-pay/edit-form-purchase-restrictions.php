@@ -98,14 +98,49 @@ function add_purchase_restrictions( $post_id ) {
 	);
 
 	// Inventory.
-	$inventory_enabled    = get_post_meta( $post_id, '_inventory', true );
-	$inventory_behavior   = get_post_meta( $post_id, '_inventory_behavior', true );
-	$inventory_combined   = get_post_meta( $post_id, '_inventory_behavior_combined', true );
-	$inventory_individual = get_post_meta( $post_id, '_inventory_behavior_individual', true );
+	$inventory_enabled = simpay_get_payment_form_setting(
+		$post_id,
+		'_inventory',
+		'no',
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
+	$inventory_behavior = simpay_get_payment_form_setting(
+		$post_id,
+		'_inventory_behavior',
+		'combined',
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
+	$inventory_combined = simpay_get_payment_form_setting(
+		$post_id,
+		'_inventory_combined',
+		'',
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
+	$inventory_individual = simpay_get_payment_form_setting(
+		$post_id,
+		'_inventory_individual',
+		array(),
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
 
 	// Schedule.
-	$schedule_start      = get_post_meta( $post_id, '_schedule_start', true );
-	$schedule_start_gmt  = get_post_meta( $post_id, '_schedule_start_gmt', true );
+	$schedule_start = simpay_get_payment_form_setting(
+		$post_id,
+		'_schedule_start',
+		'no',
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
+	$schedule_start_gmt = simpay_get_payment_form_setting(
+		$post_id,
+		'_schedule_start_gmt',
+		'',
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
 	$schedule_start_date = '';
 	$schedule_start_time = '';
 
@@ -121,8 +156,20 @@ function add_purchase_restrictions( $post_id ) {
 		);
 	}
 
-	$schedule_end      = get_post_meta( $post_id, '_schedule_end', true );
-	$schedule_end_gmt  = get_post_meta( $post_id, '_schedule_end_gmt', true );
+	$schedule_end = simpay_get_payment_form_setting(
+		$post_id,
+		'_schedule_end',
+		'no',
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
+	$schedule_end_gmt = simpay_get_payment_form_setting(
+		$post_id,
+		'_schedule_end_gmt',
+		'',
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
 	$schedule_end_date = '';
 	$schedule_end_time = '';
 

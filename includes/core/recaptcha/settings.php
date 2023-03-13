@@ -241,6 +241,74 @@ function register_settings( $settings ) {
 		)
 	);
 
+	// Cloudflare Turnstile Setup.
+	if ( simpay_is_upe() ) {
+		$settings->add(
+			new Setting(
+				array(
+					'id'         => 'cloudflare_turnstile_setup',
+					'section'    => 'general',
+					'subsection' => 'recaptcha',
+					'label'      => esc_html_x(
+						'Cloudflare Turnstile',
+						'captcha setup setting label',
+						'stripe'
+					),
+					'output'     => __NAMESPACE__ . '\\cloudflare_turnstile_setup_description',
+					'priority'   => 30,
+				)
+			)
+		);
+
+		// Cloudflare Turnstile Site Key.
+		$settings->add(
+			new Setting_Input(
+				array(
+					'id'         => 'cloudflare_turnstile_site_key',
+					'section'    => 'general',
+					'subsection' => 'recaptcha',
+					'label'      => esc_html_x(
+						'Site Key',
+						'captcha setting label',
+						'stripe'
+					),
+					'value'      => simpay_get_setting( 'cloudflare_turnstile_site_key', '' ),
+					'classes'    => array(
+						'regular-text',
+					),
+					'priority'   => 31,
+					'schema'     => array(
+						'type' => 'string',
+					),
+				)
+			)
+		);
+
+		// Cloudflare Turnstile Secret Key.
+		$settings->add(
+			new Setting_Input(
+				array(
+					'id'         => 'cloudflare_turnstile_secret_key',
+					'section'    => 'general',
+					'subsection' => 'recaptcha',
+					'label'      => esc_html_x(
+						'Secret Key',
+						'captcha setting label',
+						'stripe'
+					),
+					'value'      => simpay_get_setting( 'cloudflare_turnstile_secret_key', '' ),
+					'classes'    => array(
+						'regular-text',
+					),
+					'priority'   => 32,
+					'schema'     => array(
+						'type' => 'string',
+					),
+				)
+			)
+		);
+	}
+
 	// None warning.
 	$settings->add(
 		new Setting(
@@ -371,6 +439,37 @@ function choose_captcha_type() {
 				</small>
 			</span>
 		</label>
+
+		<?php if ( simpay_is_upe() ) : ?>
+		<input
+			type="radio"
+			value="cloudflare-turnstile"
+			name="simpay_settings[captcha_type]"
+			id="simpay-settings-captcha-type-cloudflare-turnstile"
+			<?php checked( $type, 'cloudflare-turnstile' ); ?>
+		/>
+		<label
+			for="simpay-settings-captcha-type-cloudflare-turnstile"
+			class="simpay-settings-captcha-toggles__toggle"
+		>
+			<span class="simpay-settings-captcha-toggles__toggle-recommended">
+				<?php esc_html_e( 'Recommended', 'stripe' ); ?>
+			</span>
+
+			<img
+				src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/captcha-cloudflare-turnstile.svg' ); ?>"
+				alt="<?php esc_attr_e( 'Cloudflare Turnstile', 'stripe' ); ?>"
+				class="simpay-settings-captcha-toggles__toggle-icon"
+			/>
+
+			<span class="simpay-settings-captcha-toggles__toggle-label">
+				<?php echo esc_html_e( 'Cloudflare Turnstile', 'stripe' ); ?>
+				<small>
+					<?php echo esc_html_e( 'Adaptive', 'stripe' ); ?>
+				</small>
+			</span>
+		</label>
+		<?php endif; ?>
 
 		<input
 			type="radio"
@@ -550,6 +649,76 @@ function recaptcha_setup_description() {
 		)
 	);
 
+	return ob_get_clean();
+}
+
+/**
+ * Outputs Cloudflare Turnstile setup content.
+ *
+ * @since 4.7.1
+ *
+ * @return string HTML markup.
+ */
+function cloudflare_turnstile_setup_description() {
+	ob_start();
+
+	$type     = simpay_get_setting( 'captcha_type', '' );
+	$site_key = simpay_get_setting( 'cloudflare_turnstile_site_key', '' );
+	?>
+
+	<?php if ( ! empty( $site_key ) && 'cloudflare-turnstile' === $type ) : ?>
+		<div class="notice inline">
+			<img
+				src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/captcha-cloudflare-turnstile-badge.png' ); ?>"
+				alt="<?php esc_attr_e( 'Cloudflare Turnstile badge', 'stripe' ); ?>"
+				style="width: 256px; margin: 10px 0 5px;"
+			/>
+
+			<p>
+				<?php
+				echo wp_kses(
+					sprintf(
+						/* translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. */
+						__(
+							'%1$sNote:%2$s Cloudflare Turnstile is not compatible with overlay payment forms. Please use a different CAPTCHA solution if you are displaying your forms in an overlay.',
+							'stripe'
+						),
+						'<strong>',
+						'</strong>'
+					),
+					array(
+						'strong' => array(),
+					)
+				);
+				?>
+			</p>
+		</div>
+	<?php endif; ?>
+
+	<p>
+	<?php
+	echo wp_kses_post(
+		sprintf(
+			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+			__( 'Cloudflare Turnstile delivers frustration-free, CAPTCHA-free web experiences to website visitors. To enable Cloudflare Turnstile %1$ssign up at Cloudflare (free)%2$s to retrieve the necessary credentials.', 'stripe' ),
+			'<a href="https://www.cloudflare.com/products/turnstile/" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+			Utils\get_external_link_markup() . '</a>'
+		)
+	);
+	?>
+	</p>
+
+	<br />
+
+	<p>
+		<a href="https://www.cloudflare.com/products/turnstile/" target="_blank" rel="noopener noreferrer"  class="button button-secondary">
+			<?php
+			esc_html_e( 'Sign Up for Cloudflare Turnstile (Free)', 'stripe' );
+			?>
+		</a>
+	</p>
+
+	<?php
 	return ob_get_clean();
 }
 

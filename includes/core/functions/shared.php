@@ -1266,7 +1266,7 @@ function simpay_can_use_payment_request_button() {
  * @return string
  */
 function simpay_get_date_format() {
-    return simpay_get_setting( 'date_format', 'mm/dd/yy' );
+	return simpay_get_setting( 'date_format', 'mm/dd/yy' );
 }
 
 /**
@@ -1311,6 +1311,17 @@ function simpay_get_payment_form_setting(
 						'id' => $method,
 					);
 				}
+
+				break;
+
+			// Allow string dates to be converted to dates.
+			case '_schedule_end_gmt':
+			case '_schedule_start_gmt':
+				$setting = isset( $template['data']['extra'][ $setting ] )
+					? $template['data']['extra'][ $setting ]
+					: $default;
+
+				$setting = strtotime( $setting );
 
 				break;
 
@@ -1451,6 +1462,7 @@ function __unstable_simpay_get_payment_form_templates() {
 	}
 
 	$currency = strtolower( simpay_get_setting( 'currency', 'USD' ) );
+	$has_new  = false;
 
 	foreach ( $template_files as $template_file ) {
 		$data = json_decode( file_get_contents( $template_file ), true );
@@ -1460,10 +1472,12 @@ function __unstable_simpay_get_payment_form_templates() {
 			continue;
 		}
 
-		$is_new = (
+		if (
 			isset( $data['created_at'] ) &&
-			strtotime( $data['created_at'] ) > strtotime( '-2 weeks' )
-		);
+			strtotime( $data['created_at'] ) > strtotime( '-4 weeks' )
+		) {
+			$has_new = true;
+		};
 
 		// Adjust licenses if needed.
 		// Templates that utilize "enhanced" subscription functionality should only continue to be available
@@ -1485,11 +1499,6 @@ function __unstable_simpay_get_payment_form_templates() {
 			}
 
 			$data['license'] = array_values( $data['license'] );
-		}
-
-		// Pull category names.
-		if ( isset( $data['categories'] ) && $is_new ) {
-			$data['categories'][] = 'new';
 		}
 
 		// Use the store currency if one is not set.
@@ -1532,6 +1541,26 @@ function __unstable_simpay_get_payment_form_templates() {
 		}
 
 		$templates[] = $data;
+	}
+
+	$is_form_templates_page = (
+		isset( $_GET['page'] ) &&
+		'simpay_form_templates' === sanitize_text_field( $_GET['page'] )
+	);
+
+	if ( $has_new && $is_form_templates_page ) {
+		foreach ( $templates as $key => $data ) {
+			if ( isset( $data['categories'] ) ) {
+				$templates[ $key ]['categories'][] = 'new';
+			}
+		}
+
+		usort(
+			$templates,
+			function( $a, $b ) {
+				return $a['created_at'] < $b['created_at'];
+			}
+		);
 	}
 
 	return $templates;
@@ -1587,7 +1616,7 @@ function __unstable_simpay_has_new_form_templates() {
 		function( $template_data ) {
 			return (
 				isset( $template_data['created_at'] ) &&
-				strtotime( $template_data['created_at'] ) > strtotime( '-2 weeks' )
+				strtotime( $template_data['created_at'] ) > strtotime( '-4 weeks' )
 			);
 		}
 	);

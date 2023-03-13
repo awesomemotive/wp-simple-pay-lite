@@ -46,7 +46,59 @@ class Menus {
 		// Links and meta content in plugins page.
 		add_filter( 'plugin_action_links_' . self::$plugin, array( __CLASS__, 'plugin_action_links' ), 10, 5 );
 
+		// Footer promotion.
+		add_action( 'in_admin_footer', array( $this, 'in_footer_text' ) );
+
+		// Footer review request.
 		add_filter( 'admin_footer_text', array( $this, 'add_footer_text' ) );
+	}
+
+	/**
+	 * Outputs additional content in the footer promoting WP Simple Pay.
+	 *
+	 * @since 4.7.2
+	 *
+	 * @return void
+	 */
+	public function in_footer_text() {
+		if ( ! simpay_is_admin_screen() ) {
+			return;
+		}
+
+		$license = simpay_get_license();
+
+		$links = array(
+			array(
+				'url'    => $license->is_lite()
+					? 'https://wordpress.org/support/plugin/stripe/'
+					: simpay_ga_url(
+						'https://wpsimplepay.com/my-account/support',
+						'footer',
+						'Support'
+					),
+				'text'   => __( 'Support', 'stripe' ),
+				'target' => '_blank',
+			),
+			array(
+				'url'    => simpay_ga_url(
+					'https://wpsimplepay.com/docs',
+					'footer',
+					'Docs'
+				),
+				'text'   => __( 'Docs', 'stripe' ),
+				'target' => '_blank',
+			),
+			array(
+				'url'  => admin_url(
+					'edit.php?post_type=simple-pay&page=simpay-about-us'
+				),
+				'text' => __( 'Free Plugins', 'stripe' ),
+			),
+		);
+
+		$title = __( 'Made with ♥ by the WP Simple Pay Team', 'stripe' );
+
+		include_once SIMPLE_PAY_DIR . 'views/admin-footer-promo.php'; // @phpstan-ignore-line
 	}
 
 	/**
@@ -64,7 +116,7 @@ class Menus {
 
 		return sprintf(
 			/* translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
-			__( 'Please rate %1$sWP Simple Pay%2$s %3$s★★★★★%4$s on %3$sWordPress.org%4$s to help us spread the word. Thank you from the WP Simple Pay team!', 'stripe' ),
+			__( 'Please rate %1$sWP Simple Pay%2$s %3$s★★★★★%4$s on %3$sWordPress.org%4$s to help us spread the word.', 'stripe' ),
 			'<strong>',
 			'</strong>',
 			'<a href="https://wordpress.org/support/plugin/stripe/reviews/?filter=5#new-post" rel="noopener noreferrer" target="_blank">',
@@ -98,9 +150,11 @@ class Menus {
 		}
 
 		// Settings.
-		$settings_url = Settings\get_url( array(
-			'section' => 'stripe',
-		) );
+		$settings_url = Settings\get_url(
+			array(
+				'section' => 'stripe',
+			)
+		);
 
 		$links[] = sprintf(
 			'<a href="%s">%s</a>',

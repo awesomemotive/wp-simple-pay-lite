@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Admin: Plugin coupon education
@@ -95,5 +94,38 @@
 			endif;
 			?>
 		</p>
+	</div>
+</div>
+
+<div class="simpay-upgrade-upe-modal" style="display: none;">
+	<div class="simpay-upgrade-modal__content">
+		<h3 class="simpay-upgrade-modal__title" style="margin-top: 0;">
+			<?php esc_html_e( '🛠️ Please Review Your Payment Forms', 'stripe' ); ?>
+		</h3>
+
+		<p class="simpay-upgrade-modal__description">
+			<?php
+			esc_html_e(
+				'While we have tried to ensure new payment experience is an easy transition, some user-facing changes as well changes to payment processing were required.',
+				'stripe'
+			);
+			?>
+		</p>
+		<p class="simpay-upgrade-modal__description" style="margin-top: 0;">
+			<?php
+			esc_html_e(
+				'We highly recommend reviewing your existing payment forms after enabling the new payment experience to ensure payments are processing as expected; especially if you have a custom use-case.',
+				'stripe'
+			);
+			?>
+		</p>
+
+		<a href="<?php echo esc_url( untrailingslashit( simpay_docs_link( '', 'how-to-enable-the-new-payment-experience#review-your-payment-forms', 'enable-upe', true ) ) ); ?>" target="_blank" rel="noopener noreferrer" class="simpay-upgrade-modal__upgrade-url button button-primary button-large">
+			<?php esc_html_e( 'Learn How to Test Live Mode Payment Forms →', 'stripe' ); ?>
+		</a>
+
+		<button class="button button-link dismiss-modal" style="font-size: 15px; text-decoration: none;">
+			<?php esc_html_e( 'I understand, I will review my payment forms', 'stripe' ); ?>
+		</button>
 	</div>
 </div>
