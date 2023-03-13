@@ -1543,7 +1543,12 @@ function __unstable_simpay_get_payment_form_templates() {
 		$templates[] = $data;
 	}
 
-	if ( $has_new ) {
+	$is_form_templates_page = (
+		isset( $_GET['page'] ) &&
+		'simpay_form_templates' === sanitize_text_field( $_GET['page'] )
+	);
+
+	if ( $has_new && $is_form_templates_page ) {
 		foreach ( $templates as $key => $data ) {
 			if ( isset( $data['categories'] ) ) {
 				$templates[ $key ]['categories'][] = 'new';
