@@ -10,6 +10,8 @@
 
 namespace SimplePay\Core;
 
+use SimplePay\Core\Emails\Email\PaymentNotificationEmail;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -33,7 +35,14 @@ class Installation {
 		// Set defaults for new installs.
 		if ( ! get_option( 'simpay_installed' ) ) {
 			update_option( 'simpay_dismiss_ssl', false );
+
 			simpay_update_setting( 'is_upe', 'yes' );
+			simpay_update_setting( 'email_template', 'default' );
+
+			simpay_update_setting(
+				'email_payment-notification_body',
+				PaymentNotificationEmail::get_473_default_body()
+			);
 		}
 
 		// Record installation time.

@@ -87,6 +87,9 @@ function DateRangePicker( { range, setRange } ) {
 	) {
 		startLabel = dateI18n( 'F Y', range.start );
 		endLabel = dateI18n( 'F Y', range.end );
+	} else if ( range.type === 'today' ) {
+		startLabel = dateI18n( dateSettings.formats.date, today );
+		endLabel = startLabel;
 	} else {
 		startLabel = dateI18n( dateSettings.formats.date, range.start );
 		endLabel = dateI18n( dateSettings.formats.date, range.end );

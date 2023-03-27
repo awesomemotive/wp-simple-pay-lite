@@ -457,6 +457,38 @@ class PaymentRequestUtils {
 			}
 		}
 
+		// Fill in unchecked checkboxes with "off" value.
+		/** @var array<string, array<array<int, string>>> $custom_fields */
+		$custom_fields = simpay_get_saved_meta(
+			$form->id,
+			'_custom_fields',
+			array()
+		);
+
+		// Checkboxes that aren't checked aren't included in the request.
+		// We need to add them in manually with a value of "off".
+		$checkboxes = isset( $custom_fields['checkbox'] )
+			? $custom_fields['checkbox']
+			: array();
+
+		foreach ( $checkboxes as $checkbox ) {
+			$id = isset( $checkbox['uid'] )
+				? $checkbox['uid']
+				: '';
+
+			$key = ! empty( $checkbox['metadata'] )
+				? $checkbox['metadata']
+				: sprintf(
+					'simpay-form-%s-field-%s',
+					$form->id,
+					$id
+				);
+
+			if ( ! isset( $metadata[ $key ] ) ) {
+				$metadata[ $key ] = 'off';
+			}
+		}
+
 		// Sanitize all keys and values.
 		$_metadata = array();
 

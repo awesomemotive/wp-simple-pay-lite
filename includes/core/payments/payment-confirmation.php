@@ -11,7 +11,7 @@
 namespace SimplePay\Core\Payments\Payment_Confirmation;
 
 use SimplePay\Core\API;
-use SimplePay\Pro\Emails;
+use SimplePay\Core\Emails;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -287,9 +287,9 @@ function get_one_time_amount_message_default() {
 	$has_email = false;
 
 	if ( false === $is_lite ) {
-		$email = Emails\get( 'payment-confirmation' );
+		$email = new Emails\Email\PaymentConfirmationEmail;
 
-		$has_email = false !== $email && $email->is_enabled();
+		$has_email = $email->is_enabled();
 	}
 
 	$message = '';

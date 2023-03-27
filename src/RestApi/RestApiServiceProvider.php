@@ -63,7 +63,7 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 	public function register() {
 		$container = $this->getContainer();
 		/** @var \SimplePay\Core\License\License */
-		$license   = $container->get( 'license' );
+		$license = $container->get( 'license' );
 
 		// UPE routes.
 		if ( simpay_is_upe() ) {

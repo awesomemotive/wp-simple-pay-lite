@@ -23,22 +23,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Removes TinyMCE Media Buttons.
- *
- * This is required because some TinyMCE buttons are not functional on our edit payment confirmation pages.
- *
- * @since 4.6.5
- *
- * @return void
- */
-function remove_extra_media_buttons() {
-	remove_all_actions( 'media_buttons' );
-	add_filter( 'wpforms_display_media_button', '__return_false' );
-	add_action( 'media_buttons', 'media_buttons' );
-}
-add_action( 'simpay_admin_page_settings_display_start', __NAMESPACE__ . '\\remove_extra_media_buttons' );
-
-/**
  * Registers the settings section.
  *
  * @param \SimplePay\Core\Settings\Section_Collection $sections Sections collection.

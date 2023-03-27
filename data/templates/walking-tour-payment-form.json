@@ -93,7 +93,7 @@
 		"extra": {
 			"_inventory": "yes",
 			"_inventory_behavior": "combined",
-			"_inventory_combined": {
+			"_inventory_behavior_combined": {
 				"initial": 20,
 				"available": 20
 			},

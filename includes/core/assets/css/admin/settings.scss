@@ -57,7 +57,7 @@
 	}
 }
 
-.simpay-settings .simpay-settings-captcha .simpay-settings-captcha-toggles {
+.simpay-settings .simpay-settings-visual-toggles {
 	margin: 30px 0 0;
 	display: flex;
 
@@ -67,15 +67,10 @@
 
 	&__toggle {
 		user-select: none;
-		width: 160px;
-		min-height: 160px;
+		min-width: 180px;
 		margin: 0 30px 0 0 !important;
-		padding: 30px 15px 15px;
-		display: flex !important;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
 		position: relative;
+		display: block;
 		background-color: #fff;
 		border-radius: 4px;
 		border: 1px solid #c3c4c7;
@@ -87,34 +82,11 @@
 		}
 	}
 
-	input[type="radio"]:checked + .simpay-settings-captcha-toggles__toggle {
-		border-color: #0e856a;
-		box-shadow: 0 0 0 1px #0e856a;
-	}
-
-	#simpay-settings-captcha-type-none:checked + .simpay-settings-captcha-toggles__toggle {
-		border-color: #b91c1b;
-		box-shadow: 0 0 0 1px #b91c1b;
-	}
-
-	&__toggle-icon {
-		width: 80px;
-		height: 80px;
-		margin: 15px 0;
-	}
-
-	&__toggle-label {
-		line-height: 1.5;
-		text-align: center;
-		font-size: 16px;
-		font-weight: 500;
-
-		small {
-			color: #666666;
-			font-weight: normal;
-			font-size: 13px;
-			display: block;
-		}
+	input[type="radio"]:checked + .simpay-settings-visual-toggles__toggle {
+		border-color: #007cba;
+		border-color: var(--wp-admin-theme-color);
+		box-shadow: 0 0 0 1px #007cba;
+		box-shadow: 0 0 0 1px var(--wp-admin-theme-color);
 	}
 
 	&__toggle-recommended,
@@ -123,14 +95,11 @@
 		font-size: 12px;
 		text-transform: uppercase;
 		font-weight: bold;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		width: 100%;
+		margin: 0;
+		padding: 5px 0;
+		display: block;
 		border-top-right-radius: 4px;
 		border-top-left-radius: 4px;
-		padding: 5px 0;
 	}
 
 	&__toggle-recommended {
@@ -143,7 +112,57 @@
 		background: #fef2f2;
 	}
 
-	label[for="simpay-settings-captcha-type-cloudflare-turnstile"] .simpay-settings-captcha-toggles__toggle-icon {
+	&__toggle-icon {
+		margin: 20px auto 15px;
+		padding: 0 15px;
+		display: block;
+	}
+
+	&__toggle-label {
+		line-height: 1.5;
+		text-align: center;
+		font-size: 16px;
+		font-weight: 500;
+		margin: 15px;
+		display: block;
+
+		small {
+			color: #666666;
+			font-weight: normal;
+			font-size: 13px;
+			line-height: 1;
+			display: block;
+			margin: 4px 0;
+		}
+	}
+}
+
+// CAPTCHA.
+.simpay-settings .simpay-settings-visual-toggles.simpay-settings-captcha-type {
+
+	.simpay-settings-visual-toggles__toggle {
+		min-height: 160px;
+
+		&-icon {
+			width: 80px;
+			height: 80px;
+		}
+	}
+
+	input[type="radio"] {
+
+		&.simpay-settings-captcha-type--is-recommended:checked + .simpay-settings-visual-toggles__toggle {
+			border-color: #0f8569;
+			box-shadow: 0 0 0 1px #0f8569;
+		}
+
+		&.simpay-settings-captcha-type--is-not-recommended:checked + .simpay-settings-visual-toggles__toggle {
+			border-color: #b91c1b;
+			box-shadow: 0 0 0 1px #b91c1b;
+		}
+	}
+
+	label[for="simpay-settings-captcha-type-cloudflare-turnstile"] .simpay-settings-visual-toggles__toggle-icon {
 		width: 120px;
 	}
 }
@@ -157,4 +176,24 @@
 	td {
 		padding-bottom: 50px !important;
 	};
+}
+
+// Email settings.
+.simpay-settings {
+
+	// Hide subsection tabs.
+	.simpay-settings-subsections__subsection {
+
+		&.simpay-settings-subsection-summary-report,
+		&.simpay-settings-subsection-payment-confirmation,
+		&.simpay-settings-subsection-payment-notification,
+		&.simpay-settings-subsection-upcoming-invoice,
+		&.simpay-settings-subsection-invoice-confirmation {
+			display: none;
+		}
+	}
+
+	.simpay-settings-subsection-emails-tools {
+		margin-left: auto;
+	}
 }

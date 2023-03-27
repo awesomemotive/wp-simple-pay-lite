@@ -11,7 +11,7 @@ function TopForm( form ) {
 	return (
 		<div className={ `${ baseClassName }-forms__form` } key={ title }>
 			<a href={ decodeEntities( href ) }>{ title }</a>
-			<strong>{ decodeEntities( grossVolume ) }</strong>
+			<strong>{ decodeEntities( grossVolume.rendered ) }</strong>
 		</div>
 	);
 }

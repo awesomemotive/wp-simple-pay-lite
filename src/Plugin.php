@@ -203,15 +203,16 @@ final class Plugin {
 			new AdminBar\AdminBarServiceProvider,
 			new AntiSpam\AntiSpamServiceProvider,
 			new CustomerSuccess\CustomerSuccessServiceProvider,
+			new Emails\EmailServiceProvider,
 			new FormPreview\FormPreviewServiceProvider,
 			new Integration\IntegrationServiceProvider,
 			new License\LicenseServiceProvider,
 			new Connect\ConnectServiceProvider,
 			new PaymentPage\PaymentPageServiceProvider,
+			new Report\ReportServiceProvider,
 			new RestApi\RestApiServiceProvider,
 			new StripeConnect\StripeConnectServiceProvider,
 			new Transaction\TransactionServiceProvider,
-			new User\UserServiceProvider,
 			new Webhook\WebhookServiceProvider,
 		);
 

@@ -30,7 +30,29 @@ class DashboardWidgetReport extends GrossVolumePeriodOverPeriodReport implements
 	 */
 	public function get_subscribed_events() {
 		return array(
+			'init'          => 'register_user_preferences',
 			'rest_api_init' => 'register_route',
+		);
+	}
+
+	/**
+	 * Registers user meta to allow saving the selected filter values.
+	 *
+	 * @since 4.7.3
+	 *
+	 * @return void
+	 */
+	public function register_user_preferences() {
+		register_meta(
+			'user',
+			'simpay_dashboard_widget_report_range',
+			SchemaUtils::get_date_range_user_preferences_args() // @phpstan-ignore-line
+		);
+
+		register_meta(
+			'user',
+			'simpay_dashboard_widget_report_currency',
+			SchemaUtils::get_currency_user_preferences_args() // @phpstan-ignore-line
 		);
 	}
 
@@ -51,12 +73,23 @@ class DashboardWidgetReport extends GrossVolumePeriodOverPeriodReport implements
 					'callback'            => array( $this, 'get_report' ),
 					'permission_callback' => array( $this, 'can_view_report' ),
 					'args'                => array(
-						'range'    => Report\SchemaUtils::get_date_range_schema(),
-						'currency' => Report\SchemaUtils::get_currency_schema(),
+						'range'    => SchemaUtils::get_date_range_schema(),
+						'currency' => SchemaUtils::get_currency_schema(),
 					),
 				),
 			)
 		);
+	}
+
+	/**
+	 * Determines if the current user can view the report.
+	 *
+	 * @since 4.7.3
+	 *
+	 * @return bool
+	 */
+	public function can_view_report() {
+		return current_user_can( 'manage_options' );
 	}
 
 	/**

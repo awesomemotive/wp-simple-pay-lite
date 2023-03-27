@@ -1,4 +1,4 @@
-/* global simpayAdminSettingToggles */
+/* global simpayAdminSettingToggles, _ */
 
 /**
  * WordPress dependencies
@@ -31,7 +31,7 @@ const SETTING_TOGGLES = simpayAdminSettingToggles || [];
  * @return {SettingInput}
  */
 function getSetting( settingObj ) {
-	const { id: settingId, value: settingValue, toggles } = settingObj;
+	const { id: settingId } = settingObj;
 
 	// Settting row <tr>.
 	const settingRowEl = document.querySelector(
@@ -43,17 +43,27 @@ function getSetting( settingObj ) {
 	}
 
 	// Setting input.
-	let setting = settingRowEl.querySelector( 'input' );
+	let setting = settingRowEl.querySelectorAll(
+		`input[name="simpay_settings[${ settingId }]"]`
+	);
 
-	if ( ! setting ) {
-		setting = settingRowEl.querySelector( 'select' );
+	if ( setting.length === 0 ) {
+		setting = settingRowEl.querySelectorAll(
+			`select[name="${ settingId }"]`
+		);
 	}
 
 	// Setting current value.
-	let currentValue = setting.value;
+	let currentValue = setting[ 0 ].value;
 
-	if ( 'checkbox' === setting.type ) {
-		currentValue = true === setting.checked ? 'yes' : 'no';
+	if ( [ 'radio', 'checkbox' ].includes( setting[ 0 ].type ) ) {
+		const checkedValue = [ ...setting ].filter( ( el ) => el.checked );
+
+		if ( checkedValue.length === 0 ) {
+			currentValue = 'no';
+		} else {
+			currentValue = checkedValue[ 0 ].value;
+		}
 	}
 
 	return {
@@ -68,8 +78,7 @@ function getSetting( settingObj ) {
  * @param {Setting} settingObj Setting object.
  */
 function toggleSettings( settingObj ) {
-	const { id, value: settingValue, toggles } = settingObj;
-	const { setting, currentValue } = getSetting( settingObj );
+	const { id, value: settingValue, toggles, compare } = settingObj;
 
 	// Don't adjust dependent settings if this one is already hidden.
 	const currentRow = document.querySelector( `.simpay-settings-${ id }` );
@@ -77,6 +86,8 @@ function toggleSettings( settingObj ) {
 	if ( 'none' === currentRow.style.display ) {
 		return;
 	}
+
+	const { currentValue } = getSetting( settingObj );
 
 	// Toggle setting row visibility.
 	const toToggleRowEls = toggles.map( ( setting ) => {
@@ -89,7 +100,13 @@ function toggleSettings( settingObj ) {
 		}
 
 		// Show row if the current value of the setting matches expectations.
-		el.style.display = currentValue === settingValue ? 'table-row' : 'none';
+		if ( 'IS NOT' === compare ) {
+			el.style.display =
+				currentValue === settingValue ? 'none' : 'table-row';
+		} else {
+			el.style.display =
+				currentValue === settingValue ? 'table-row' : 'none';
+		}
 	} );
 
 	// Run through again with the dependent settings to ensure the current value
@@ -116,8 +133,11 @@ domReady( () => {
 
 		// Bind to setting input changes.
 		const { setting } = getSetting( settingObj );
-		setting.addEventListener( 'change', () =>
-			toggleSettings( settingObj )
-		);
+
+		setting.forEach( ( settingInput ) => {
+			settingInput.addEventListener( 'change', () => {
+				toggleSettings( settingObj );
+			} );
+		} );
 	} );
 } );

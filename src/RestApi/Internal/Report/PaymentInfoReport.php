@@ -23,7 +23,9 @@ use WP_REST_Server;
  *
  * @since 4.6.7
  */
-class PaymentInfoReport extends Report\AbstractReport implements SubscriberInterface {
+class PaymentInfoReport implements SubscriberInterface {
+
+	use Report\ReportTrait;
 
 	/**
 	 * {@inheritdoc}
@@ -51,12 +53,23 @@ class PaymentInfoReport extends Report\AbstractReport implements SubscriberInter
 					'callback'            => array( $this, 'get_report' ),
 					'permission_callback' => array( $this, 'can_view_report' ),
 					'args'                => array(
-						'range'    => Report\SchemaUtils::get_date_range_schema(),
-						'currency' => Report\SchemaUtils::get_currency_schema(),
+						'range'    => SchemaUtils::get_date_range_schema(),
+						'currency' => SchemaUtils::get_currency_schema(),
 					),
 				),
 			)
 		);
+	}
+
+	/**
+	 * Determines if the current user can view the report.
+	 *
+	 * @since 4.7.3
+	 *
+	 * @return bool
+	 */
+	public function can_view_report() {
+		return current_user_can( 'manage_options' );
 	}
 
 	/**
@@ -189,6 +202,34 @@ class PaymentInfoReport extends Report\AbstractReport implements SubscriberInter
 	 * @return array<array<string, float|string>>
 	 */
 	private function format_payment_statuses( $payment_statuses ) {
+		// First, merge any statuses that are not succeeded or failed in to the incomplete status.
+		$keep = array();
+
+		foreach ( array( 'succeeded', 'failed', 'incomplete' ) as $status ) {
+			if ( isset( $payment_statuses[ $status ] ) ) {
+				$keep[ $status ] = $payment_statuses[ $status ];
+				unset( $payment_statuses[ $status ] );
+			}
+		}
+
+		// If there are any statuses left, merge them in to the incomplete status.
+		if ( ! empty( $payment_statuses ) ) {
+			$keep['incomplete'] = (object) array(
+				'status' => 'incomplete',
+				'count'  => array_reduce(
+					$payment_statuses,
+					function( $total, $payment_status ) {
+						return $total + (int) $payment_status->count;
+					},
+					isset( $keep['incomplete'] ) ? (int) $keep['incomplete']->count : 0
+				),
+			);
+		}
+
+		$payment_statuses = $keep;
+
+		// Then continue with formatting.
+
 		$total = array_reduce(
 			$payment_statuses,
 			function( $total, $payment_status ) {

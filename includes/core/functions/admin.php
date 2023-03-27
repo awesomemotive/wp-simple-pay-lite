@@ -237,7 +237,15 @@ function simpay_is_admin_screen() {
 		'simple-pay' === $screen->post_type ||
 		'edit.php?post_type=simple-pay' === $screen->parent_file
 	) {
-		return 'simpay';
+		return true;
+	}
+
+	// Check if we are on the "Site Health" page with the "WP Simple Pay" tab active.
+	if (
+		'site-health' === $screen->base &&
+		isset( $_GET['simpay'] )
+	) {
+		return true;
 	}
 
 	if ( isset( $_GET['page'] ) ) {

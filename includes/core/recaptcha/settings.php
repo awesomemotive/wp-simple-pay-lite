@@ -373,7 +373,7 @@ function choose_captcha_type() {
 	</p>
 
 	<fieldset
-		class="simpay-settings-captcha-toggles"
+		class="simpay-settings-visual-toggles simpay-settings-captcha-type"
 		<?php if ( empty( $type ) ) : ?>
 			style="margin-bottom: 30px;"
 		<?php endif; ?>
@@ -387,23 +387,24 @@ function choose_captcha_type() {
 			value="hcaptcha"
 			name="simpay_settings[captcha_type]"
 			id="simpay-settings-captcha-type-hcaptcha"
+			class="simpay-settings-captcha-type--is-recommended"
 			<?php checked( $type, 'hcaptcha' ); ?>
 		/>
 		<label
 			for="simpay-settings-captcha-type-hcaptcha"
-			class="simpay-settings-captcha-toggles__toggle"
+			class="simpay-settings-visual-toggles__toggle"
 		>
-			<span class="simpay-settings-captcha-toggles__toggle-recommended">
+			<span class="simpay-settings-visual-toggles__toggle-recommended">
 				<?php esc_html_e( 'Recommended', 'stripe' ); ?>
 			</span>
 
 			<img
 				src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/captcha-hcaptcha.svg' ); ?>"
 				alt="<?php esc_attr_e( 'hCaptcha', 'stripe' ); ?>"
-				class="simpay-settings-captcha-toggles__toggle-icon"
+				class="simpay-settings-visual-toggles__toggle-icon"
 			/>
 
-			<span class="simpay-settings-captcha-toggles__toggle-label">
+			<span class="simpay-settings-visual-toggles__toggle-label">
 				<?php echo esc_html_e( 'hCaptcha', 'stripe' ); ?>
 				<small>
 					<?php echo esc_html_e( 'Challenge', 'stripe' ); ?>
@@ -416,23 +417,24 @@ function choose_captcha_type() {
 			value="recaptcha-v3"
 			name="simpay_settings[captcha_type]"
 			id="simpay-settings-captcha-type-recaptcha"
+			class="simpay-settings-captcha-type--is-recommended"
 			<?php checked( $type, 'recaptcha-v3' ); ?>
 		/>
 		<label
 			for="simpay-settings-captcha-type-recaptcha"
-			class="simpay-settings-captcha-toggles__toggle"
+			class="simpay-settings-visual-toggles__toggle"
 		>
-			<span class="simpay-settings-captcha-toggles__toggle-recommended">
+			<span class="simpay-settings-visual-toggles__toggle-recommended">
 				<?php esc_html_e( 'Recommended', 'stripe' ); ?>
 			</span>
 
 			<img
 				src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/captcha-recaptcha.svg' ); ?>"
 				alt="<?php esc_attr_e( 'reCAPTCHA', 'stripe' ); ?>"
-				class="simpay-settings-captcha-toggles__toggle-icon"
+				class="simpay-settings-visual-toggles__toggle-icon"
 			/>
 
-			<span class="simpay-settings-captcha-toggles__toggle-label">
+			<span class="simpay-settings-visual-toggles__toggle-label">
 				<?php echo esc_html_e( 'Google reCAPTCHA', 'stripe' ); ?>
 				<small>
 					<?php echo esc_html_e( 'Invisible', 'stripe' ); ?>
@@ -446,23 +448,25 @@ function choose_captcha_type() {
 			value="cloudflare-turnstile"
 			name="simpay_settings[captcha_type]"
 			id="simpay-settings-captcha-type-cloudflare-turnstile"
+			class="simpay-settings-captcha-type--is-recommended"
 			<?php checked( $type, 'cloudflare-turnstile' ); ?>
 		/>
+
 		<label
 			for="simpay-settings-captcha-type-cloudflare-turnstile"
-			class="simpay-settings-captcha-toggles__toggle"
+			class="simpay-settings-visual-toggles__toggle"
 		>
-			<span class="simpay-settings-captcha-toggles__toggle-recommended">
+			<span class="simpay-settings-visual-toggles__toggle-recommended">
 				<?php esc_html_e( 'Recommended', 'stripe' ); ?>
 			</span>
 
 			<img
 				src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/captcha-cloudflare-turnstile.svg' ); ?>"
 				alt="<?php esc_attr_e( 'Cloudflare Turnstile', 'stripe' ); ?>"
-				class="simpay-settings-captcha-toggles__toggle-icon"
+				class="simpay-settings-visual-toggles__toggle-icon"
 			/>
 
-			<span class="simpay-settings-captcha-toggles__toggle-label">
+			<span class="simpay-settings-visual-toggles__toggle-label">
 				<?php echo esc_html_e( 'Cloudflare Turnstile', 'stripe' ); ?>
 				<small>
 					<?php echo esc_html_e( 'Adaptive', 'stripe' ); ?>
@@ -476,27 +480,28 @@ function choose_captcha_type() {
 			value="none"
 			name="simpay_settings[captcha_type]"
 			id="simpay-settings-captcha-type-none"
+			class="simpay-settings-captcha-type--is-not-recommended"
 			<?php checked( $type, 'none' ); ?>
 		/>
 		<label
 			for="simpay-settings-captcha-type-none"
-			class="simpay-settings-captcha-toggles__toggle"
+			class="simpay-settings-visual-toggles__toggle"
 		>
-			<span class="simpay-settings-captcha-toggles__toggle-not-recommended">
+			<span class="simpay-settings-visual-toggles__toggle-not-recommended">
 				<?php esc_html_e( 'Not Recommended', 'stripe' ); ?>
 			</span>
 
 			<img
 				src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/captcha-none.svg' ); ?>"
 				alt="<?php esc_attr_e( 'No CAPTCHA', 'stripe' ); ?>"
-				class="simpay-settings-captcha-toggles__toggle-icon"
+				class="simpay-settings-visual-toggles__toggle-icon"
 			/>
 
-			<span class="simpay-settings-captcha-toggles__toggle-label">
+			<span class="simpay-settings-visual-toggles__toggle-label">
 				<?php echo esc_html_e( 'None', 'stripe' ); ?>
 			</span>
 		</label>
-	</fielset>
+	</fieldset>
 
 	<?php
 	return ob_get_clean();

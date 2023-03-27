@@ -52,6 +52,10 @@ function onToggle( e ) {
 	settingsToToggle.forEach( ( setting ) => {
 		const settingEl = document.querySelector( setting );
 
+		if ( ! settingEl ) {
+			return;
+		}
+
 		settingEl.style.display = setting.includes( type )
 			? 'table-row'
 			: 'none';
@@ -136,7 +140,13 @@ domReady( () => {
 
 	// Hide all settings initially.
 	settingsToToggle.forEach( ( settingRow ) => {
-		document.querySelector( settingRow ).style.display = 'none';
+		const settingRowEl = document.querySelector( settingRow );
+
+		if ( ! settingRowEl ) {
+			return;
+		}
+
+		settingRowEl.style.display = 'none';
 	} );
 
 	// Attach toggles to type buttons.

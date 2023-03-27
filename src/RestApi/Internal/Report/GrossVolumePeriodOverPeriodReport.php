@@ -25,8 +25,9 @@ use WP_REST_Server;
  *
  * @since 4.6.7
  */
-class GrossVolumePeriodOverPeriodReport extends Report\AbstractReport implements SubscriberInterface {
+class GrossVolumePeriodOverPeriodReport implements SubscriberInterface {
 
+	use Report\ReportTrait;
 	use Report\Chart\PeriodOverPeriodChartTrait;
 
 	/**
@@ -55,12 +56,23 @@ class GrossVolumePeriodOverPeriodReport extends Report\AbstractReport implements
 					'callback'            => array( $this, 'get_report' ),
 					'permission_callback' => array( $this, 'can_view_report' ),
 					'args'                => array(
-						'range'    => Report\SchemaUtils::get_date_range_schema(),
-						'currency' => Report\SchemaUtils::get_currency_schema(),
+						'range'    => SchemaUtils::get_date_range_schema(),
+						'currency' => SchemaUtils::get_currency_schema(),
 					),
 				),
 			)
 		);
+	}
+
+	/**
+	 * Determines if the current user can view the report.
+	 *
+	 * @since 4.7.3
+	 *
+	 * @return bool
+	 */
+	public function can_view_report() {
+		return current_user_can( 'manage_options' );
 	}
 
 	/**

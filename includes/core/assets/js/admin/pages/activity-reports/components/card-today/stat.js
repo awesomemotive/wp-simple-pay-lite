@@ -16,7 +16,7 @@ function Stat( { label, value, delta } ) {
 			</strong>
 
 			<div className="simpay-activity-reports-stat__value">
-				<span>{ decodeEntities( value ) }</span>
+				<span>{ decodeEntities( value.rendered ) }</span>
 				<BadgeDelta
 					delta={ delta }
 					className="simpay-activity-reports-stat__delta"

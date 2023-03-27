@@ -216,7 +216,7 @@ trait PeriodOverPeriodChartTrait {
 		$date_format = $this->get_php_date_format( $interval );
 		$date        = $datapoint->format( $date_format );
 
-		$y = isset( $data[ $date ] ) ? (int) $data[ $date ]->value : 0;
+		$y = isset( $data[ $date ] ) ? (float) $data[ $date ]->value : 0;
 
 		return array(
 			// Simplified x/y values for plotting the chart.
