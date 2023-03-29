@@ -209,7 +209,7 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 			}
 		}
 
-		$logo_url = SIMPLE_PAY_URL . 'cdn/wp-simple-pay.png'; // @phpstan-ignore-line
+		$logo_url = SIMPLE_PAY_URL . 'includes/core/assets/images/wp-simple-pay.png'; // @phpstan-ignore-line
 		$image    = sprintf( '<img src="%1$s" alt="WP Simple Pay" />', $logo_url );
 
 		ob_start();
