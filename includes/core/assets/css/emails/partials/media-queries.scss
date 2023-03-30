@@ -1,0 +1,24 @@
+a {
+	text-decoration: none; // This one is needed for Outlook compatibility.
+}
+
+@media only screen and (max-width: 599px) {
+
+	table.body .container {
+		width: 95% !important;
+	}
+
+	.header {
+		padding: 15px 15px 12px 15px !important;
+	}
+
+	.header img {
+		width: 200px !important;
+		height: auto !important;
+	}
+
+	.content,
+	.aside {
+		padding: 30px 40px 20px 40px !important;
+	}
+}

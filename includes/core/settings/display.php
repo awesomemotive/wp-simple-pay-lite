@@ -275,6 +275,9 @@ function register_setting_toggles() {
 			'id'      => $setting->id,
 			'value'   => $setting->toggles['value'],
 			'toggles' => $setting->toggles['settings'],
+			'compare' => isset( $setting->toggles['compare'] )
+				? $setting->toggles['compare']
+				: 'IS',
 		);
 	}
 

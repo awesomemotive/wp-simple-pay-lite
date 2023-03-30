@@ -1,31 +1,31 @@
 <?php
 /**
- * Report: Schema utilities
+ * Rest API: Report schema utilities
  *
  * @package SimplePay
  * @subpackage Core
  * @copyright Copyright (c) 2023, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.6.7
+ * @since 4.7.3
  */
 
-namespace SimplePay\Core\Report;
+namespace SimplePay\Core\RestApi\Internal\Report;
 
-use DateTimeImmutable;
+use SimplePay\Core\Report\DateRange;
 use InvalidArgumentException;
 use WP_Error;
 
 /**
  * SchemaUtils class.
  *
- * @since 4.6.7
+ * @since 4.7.3
  */
 class SchemaUtils {
 
 	/**
 	 * Returns the schema for the date range parameter.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -71,7 +71,7 @@ class SchemaUtils {
 	/**
 	 * Validates that a date range parameter can be transformed into a DateRange object.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @param array<string, string> $value The date range parameter value.
 	 * @param \WP_REST_Request      $request The request object.
@@ -106,7 +106,7 @@ class SchemaUtils {
 	 * Sanitizes the standard date range parameter and converts start and end
 	 * dates to \DateTimeImmutable objects.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @param array<string, string> $value The date range parameter value.
 	 * @param \WP_REST_Request      $request The request object.
@@ -137,7 +137,7 @@ class SchemaUtils {
 	/**
 	 * Returns the schema for the currency parameter.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -158,7 +158,7 @@ class SchemaUtils {
 	/**
 	 * Returns the site's default currency.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @return string
 	 */
@@ -172,7 +172,7 @@ class SchemaUtils {
 	/**
 	 * Returns the schema for the currency parameter.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -197,7 +197,7 @@ class SchemaUtils {
 	/**
 	 * Returns the arguments to register the date range user meta.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @return array<mixed>
 	 */
@@ -219,7 +219,7 @@ class SchemaUtils {
 	/**
 	 * Returns the arguments to register the currency user meta.
 	 *
-	 * @since 4.6.7
+	 * @since 4.7.3
 	 *
 	 * @return array<mixed>
 	 */
@@ -235,4 +235,5 @@ class SchemaUtils {
 			),
 		);
 	}
+
 }

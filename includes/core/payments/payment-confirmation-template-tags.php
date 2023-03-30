@@ -46,11 +46,14 @@ function get_tags( $payment_confirmation_data ) {
 		'charge-date',
 		'company-name',
 		'customer-name',
+		'customer-email',
+		'customer-url',
 		'item-description',
 		'card-last4',
 		'name-on-card',
 		'total-amount',
 		'payment-type',
+		'payment-url',
 	);
 
 	/**
@@ -255,6 +258,110 @@ function customer_name( $value, $payment_confirmation_data ) {
 	return esc_html( $payment_confirmation_data['customer']->name );
 }
 add_filter( 'simpay_payment_confirmation_template_tag_customer-name', __NAMESPACE__ . '\\customer_name', 10, 3 );
+
+/**
+ * Replaces the {customer-email} template tag with the email of the Customer.
+ *
+ * @since 4.7.3
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer             $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form                $form Payment form.
+ *   @type array<\SimplePay\Vendor\Stripe\Subscription>  $subscriptions Subscriptions associated with the Customer.
+ *   @type array<\SimplePay\Vendor\Stripe\PaymentIntent> $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function customer_email( $value, $payment_confirmation_data ) {
+	if ( empty( $payment_confirmation_data['customer'] ) ) {
+		return $value;
+	}
+
+	return esc_html( $payment_confirmation_data['customer']->email );
+}
+add_filter(
+	'simpay_payment_confirmation_template_tag_customer-email',
+	__NAMESPACE__ . '\\customer_email',
+	10,
+	2
+);
+
+/**
+ * Replaces the {customer-url} template tag with the URL to the Customer.
+ *
+ * @since 4.7.3
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer             $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form                $form Payment form.
+ *   @type array<\SimplePay\Vendor\Stripe\Subscription>  $subscriptions Subscriptions associated with the Customer.
+ *   @type array<\SimplePay\Vendor\Stripe\PaymentIntent> $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function customer_url( $value, $payment_confirmation_data ) {
+	if ( empty( $payment_confirmation_data['customer'] ) ) {
+		return $value;
+	}
+
+	return esc_html(
+		sprintf(
+			'https://dashboard.stripe.com%s/customers?email=%s',
+			simpay_is_test_mode() ? '/test' : '',
+			$payment_confirmation_data['customer']->email
+		)
+	);
+}
+add_filter(
+	'simpay_payment_confirmation_template_tag_customer-url',
+	__NAMESPACE__ . '\\customer_url',
+	10,
+	2
+);
+
+/**
+ * Replaces the {payment-url} template tag with the URL to the Payment.
+ *
+ * @since 4.7.3
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer             $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form                $form Payment form.
+ *   @type array<\SimplePay\Vendor\Stripe\Subscription>  $subscriptions Subscriptions associated with the Customer.
+ *   @type array<\SimplePay\Vendor\Stripe\PaymentIntent> $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function payment_url( $value, $payment_confirmation_data ) {
+	if ( empty( $payment_confirmation_data['paymentintents'] ) ) {
+		return $value;
+	}
+
+	$payment = current( $payment_confirmation_data['paymentintents'] );
+
+	return esc_html(
+		sprintf(
+			'https://dashboard.stripe.com%s/payments/%s',
+			simpay_is_test_mode() ? '/test' : '',
+			$payment->id
+		)
+	);
+}
+add_filter(
+	'simpay_payment_confirmation_template_tag_payment-url',
+	__NAMESPACE__ . '\\payment_url',
+	10,
+	2
+);
 
 /**
  * Replaces the {card-brand} template tag with the name on the Customer's credit card.

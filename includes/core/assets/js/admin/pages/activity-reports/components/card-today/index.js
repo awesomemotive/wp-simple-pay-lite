@@ -47,7 +47,7 @@ function CardToday() {
 				) : (
 					<>
 						<div className={ `${ baseClassName }-stats` }>
-							{ stats.map( ( stat ) => {
+							{ Object.values( stats ).map( ( stat ) => {
 								return <Stat key={ stat.label } { ...stat } />;
 							} ) }
 						</div>

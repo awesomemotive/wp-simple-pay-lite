@@ -120,9 +120,13 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/settings/register-stripe.php' );
 		require_once( SIMPLE_PAY_INC . 'core/settings/register-general.php' );
 		require_once( SIMPLE_PAY_INC . 'core/settings/register-payment-confirmations.php' );
+		require_once( SIMPLE_PAY_INC . 'core/settings/register-emails.php' );
 		require_once( SIMPLE_PAY_INC . 'core/settings/functions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/settings/display.php' );
 		require_once( SIMPLE_PAY_INC . 'core/settings/compat.php' );
+
+		// Emails.
+		require_once( SIMPLE_PAY_INC . 'core/class-smtp.php' );
 
 		// Post types.
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/register.php' );

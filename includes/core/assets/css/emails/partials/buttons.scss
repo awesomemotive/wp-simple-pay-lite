@@ -1,0 +1,153 @@
+table.button {
+	width: auto;
+	// margin: 30px 0 30px 0;
+	// Margin: 30px 0 30px 0;
+
+	td {
+		mso-line-height-rule: exactly;
+		line-height: 1;
+		line-height: 100%;
+		padding: 0;
+	}
+
+	table td {
+		text-align: center;
+		color: #ffffff;
+		padding: 0;
+		background: $buttonPrimary;
+		mso-line-height-rule: exactly;
+		line-height: 1;
+		line-height: 100%;
+
+		a {
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 16px;
+			font-weight: bold;
+			color: #ffffff;
+			text-decoration: none;
+			text-align: center;
+			display: inline-block;
+			padding: 15px 25px;
+			border: 0 solid $buttonPrimaryHover;
+			mso-line-height-rule: exactly;
+			line-height: 1;
+			line-height: 100%;
+		}
+	}
+
+	&:hover table tr td a,
+	&:active table tr td a,
+	table tr td a:visited,
+	&.tiny:hover table tr td a,
+	&.tiny:active table tr td a,
+	&.tiny table tr td a:visited,
+	&.small:hover table tr td a,
+	&.small:active table tr td a,
+	&.small table tr td a:visited,
+	&.large:hover table tr td a,
+	&.large:active table tr td a,
+	&.large table tr td a:visited {
+		color: #ffffff;
+		text-decoration: none !important;
+	}
+
+	&.small table td,
+	&.small table a {
+	  padding: 5px 10px 5px 10px;
+	  font-size: 12px;
+	}
+
+	&.large table a {
+	  padding: 14px 20px 12px 20px;
+	  font-size: 20px;
+	}
+
+	&.centered {
+		width: 100% !important;
+
+		table {
+			margin: 0 auto;
+		}
+	}
+
+	&:hover table td,
+  	&:active table td {
+		background: $buttonPrimaryHover;
+		color: #fefefe;
+	}
+
+	&:hover table a,
+ 	&:active table a {
+		border: 0 solid $buttonPrimaryHover;
+	}
+
+	&.blue  {
+		table {
+			td {
+				color: #ffffff;
+				background: $buttonBlue;
+			}
+
+			a {
+				color: #ffffff;
+			}
+		}
+
+		&:hover,
+		&:active {
+			table {
+				td {
+					color: #ffffff;
+					background-color: $buttonBlueHover;
+				}
+			}
+		}
+	}
+
+	&.green {
+		table {
+			td {
+				color: #ffffff;
+				background: $buttonGreen;
+				border: 1px solid $buttonGreenHover;
+			}
+
+			a {
+				color: #ffffff;
+			}
+		}
+
+		&:hover,
+		&:active {
+			table {
+				td {
+					color: #ffffff;
+					background-color: $buttonGreenHover;
+				}
+			}
+		}
+	}
+
+	&.red {
+		table {
+			td {
+				color: #ffffff;
+				background: $buttonRed;
+			}
+
+			a {
+				color: #ffffff;
+			}
+		}
+
+		&:hover,
+		&:active {
+			table {
+				td {
+					color: #ffffff;
+					background-color: $buttonRedHover;
+				}
+			}
+		}
+	}
+}

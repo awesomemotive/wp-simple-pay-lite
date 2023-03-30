@@ -1288,35 +1288,32 @@ select.simpay-currency-symbol {
 	border-bottom-left-radius: 4px;
 }
 
-/**
- * Screen Options
- */
-.post-new-php,
-.post-php,
-.edit-php {
-
-	&.post-type-simple-pay {
-
-		#screen-meta-links {
-			display: none;
-		}
-	}
+.simpay-template-explorer-open .show-settings {
+	display: none !important;
 }
 
 /**
  * Page branding bar
  */
 .simpay-branding-bar {
-	margin-left: -20px;
-	padding: 14px 20px 14px 22px;
+	margin: 0 -20px;
+	padding: 14px 22px;
 	background: #fff;
 	border-bottom: 1px solid #c3c4c7;
-	box-shadow: 0 1px 1px rgb(0 0 0 / 4%);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	width: calc(100% + 20px);;
+	display: flex;
+	justify-content: space-between;
+	box-sizing: border-box;
+
+	// Hide branding bar on the "System Report" page.
+	.site-health & {
+		display: none;
+	}
 
 	&__title {
 		display: flex;
 		align-items: center;
-		float: left;
 		margin: 8px 0;
 	}
 
@@ -1332,8 +1329,6 @@ select.simpay-currency-symbol {
 	}
 
 	&__actions {
-		float: right;
-		margin-top: 4px;
 		display: flex;
 		align-items: center;
 
@@ -2100,6 +2095,7 @@ select.simpay-currency-symbol {
 	}
 }
 
+body.site-health #wpbody-content,
 body.post-type-simple-pay #wpbody-content {
 	padding-bottom: 200px;
 }

@@ -114,14 +114,14 @@ function add_purchase_restrictions( $post_id ) {
 
 	$inventory_combined = simpay_get_payment_form_setting(
 		$post_id,
-		'_inventory_combined',
+		'_inventory_behavior_combined',
 		'',
 		__unstable_simpay_get_payment_form_template_from_url()
 	);
 
 	$inventory_individual = simpay_get_payment_form_setting(
 		$post_id,
-		'_inventory_individual',
+		'_inventory_behavior_individual',
 		array(),
 		__unstable_simpay_get_payment_form_template_from_url()
 	);

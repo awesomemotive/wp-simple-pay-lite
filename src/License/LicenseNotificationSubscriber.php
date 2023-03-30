@@ -41,10 +41,10 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 		}
 
 		return array(
-			'admin_init'                            =>
+			'init'                                  =>
 				array(
-					array( 'add_missing_license_notification' ),
-					array( 'add_expired_license_notification' )
+					array( 'add_missing_license_notification', 0 ),
+					array( 'add_expired_license_notification', 0 ),
 				),
 			'pre_update_option_simpay_license_data' =>
 				'dismiss_license_notifications',
@@ -86,7 +86,7 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 								'section'    => 'general',
 								'subsection' => 'license',
 							)
-						)
+						),
 					),
 					array(
 						'type' => 'secondary',
@@ -95,8 +95,8 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 					),
 				),
 				'conditions'     => array(),
-				'start'          => date( 'Y-m-d H:i:s', time() ),
-				'end'            => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
+				'start'          => gmdate( 'Y-m-d H:i:s', time() ),
+				'end'            => gmdate( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
 				'is_dismissible' => false,
 			),
 			function() {
@@ -136,7 +136,7 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 					'We have extended WP Simple Pay Pro functionality until %s, at which point functionality will become limited. Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality.',
 					'stripe'
 				),
-				date(
+				gmdate(
 					$date_format,
 					strtotime( $expiration ) + ( DAY_IN_SECONDS * 14 )
 				)
@@ -171,8 +171,8 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 					),
 				),
 				'conditions'     => array(),
-				'start'          => date( 'Y-m-d H:i:s', time() ),
-				'end'            => date( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
+				'start'          => gmdate( 'Y-m-d H:i:s', time() ),
+				'end'            => gmdate( 'Y-m-d H:i:s', time() + YEAR_IN_SECONDS ),
 				'is_dismissible' => false,
 			),
 			function() {

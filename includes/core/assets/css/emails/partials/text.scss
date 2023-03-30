@@ -1,0 +1,252 @@
+body,
+table.body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+td,
+th,
+a {
+	color: $fontColor;
+	font-family: $fontFamily;
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+	Margin: 0;
+	text-align: left;
+	mso-line-height-rule: exactly;
+	line-height: 1.5;
+	line-height: 150%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #444444;
+	word-wrap: normal;
+	font-family: $fontFamily;
+	font-weight: bold;
+	margin: 0 0 $marginBottom 0;
+	Margin: 0 0 $marginBottom 0;
+	mso-line-height-rule: exactly;
+	line-height: 1.3;
+	line-height: 130%;
+
+	&.normal {
+		font-weight: normal;
+	}
+}
+
+h1 {
+	font-size: 26px;
+}
+
+h2 {
+	font-size: 23px;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+h4 {
+	font-size: 17px;
+}
+
+h5 {
+	font-size: 16px;
+}
+
+h6 {
+	font-size: 15px;
+}
+
+body,
+table.body,
+p,
+td,
+th {
+	font-size: $fontSize;
+	mso-line-height-rule: exactly;
+	line-height: 1.5;
+	line-height: 150%;
+}
+
+p {
+	margin: 0 0 $marginBottom 0;
+	Margin: 0 0 $marginBottom 0;
+
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+
+	-ms-word-break: break-all;
+	word-break: break-word;
+
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+	hyphens: auto;
+
+	&.large,
+	&.text-large {
+		font-size: 16px;
+	}
+
+	&.bold,
+	&.text-bold {
+		font-weight: 700;
+	}
+
+	a {
+		Margin: inherit;
+		margin: inherit;
+	}
+}
+
+small {
+	font-size: 80%;
+}
+
+center {
+	width: 100%;
+}
+
+a {
+	color: $linkColor;
+
+	&:visited {
+		color: $linkColor;
+	}
+
+	&:hover,
+	&:active {
+		color: $linkColorHover;
+	}
+}
+
+h1 a,
+h1 a:visited,
+h2 a,
+h2 a:visited,
+h3 a,
+h3 a:visited,
+h4 a,
+h4 a:visited,
+h5 a,
+h5 a:visited,
+h6 a,
+h6 a:visited {
+	color: $linkColor;
+}
+
+table.text-center,
+th.text-center,
+td.text-center,
+h1.text-center,
+h2.text-center,
+h3.text-center,
+h4.text-center,
+h5.text-center,
+h6.text-center,
+p.text-center,
+span.text-center {
+	text-align: center;
+}
+
+table.text-left,
+th.text-left,
+td.text-left,
+h1.text-left,
+h2.text-left,
+h3.text-left,
+h4.text-left,
+h5.text-left,
+h6.text-left,
+p.text-left,
+span.text-left {
+	text-align: left;
+}
+
+table.text-right,
+th.text-right,
+td.text-right,
+h1.text-right,
+h2.text-right,
+h3.text-right,
+h4.text-right,
+h5.text-right,
+h6.text-right,
+p.text-right,
+span.text-right {
+	text-align: right;
+}
+
+table.primary,
+th.primary,
+td.primary,
+h1.primary,
+h2.primary,
+h3.primary,
+h4.primary,
+h5.primary,
+h6.primary,
+p.primary,
+span.primary {
+	color: $primary;
+}
+
+table.orange,
+th.orange,
+td.orange,
+h1.orange,
+h2.orange,
+h3.orange,
+h4.orange,
+h5.orange,
+h6.orange,
+p.orange,
+span.orange {
+	color: $orange;
+}
+
+table.blue,
+th.blue,
+td.blue,
+h1.blue,
+h2.blue,
+h3.blue,
+h4.blue,
+h5.blue,
+h6.blue,
+p.blue,
+span.blue {
+	color: $blue;
+}
+
+span.text-center {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+ol,
+ul {
+	margin: 0 0 $marginBottom 20px;
+	Margin: 0 0 $marginBottom 20px;
+	padding: 0;
+
+	li {
+		padding-top: 5px;
+	}
+
+	ol,
+	ul {
+		margin-bottom: 0 !important;
+	}
+}

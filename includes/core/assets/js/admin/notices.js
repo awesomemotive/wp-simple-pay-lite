@@ -100,7 +100,7 @@ domReady( () => {
 	if ( topOfPageNotice.length > 0 ) {
 		const topOfPageNoticeEl = topOfPageNotice.detach();
 
-		jQuery( '#wpbody-content' ).prepend( topOfPageNoticeEl );
+		jQuery( '#wpcontent' ).prepend( topOfPageNoticeEl );
 
 		const { uid = 0 } = userSettings;
 		const noticeId = topOfPageNoticeEl.data( 'id' );

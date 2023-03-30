@@ -39,7 +39,6 @@
 		do_action( 'simpay_admin_branding_bar_actions' );
 		?>
 	</div>
-	<div class="clear"></div>
 </div>
 
 <script>

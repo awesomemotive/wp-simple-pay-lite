@@ -38,7 +38,6 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			'admin-education-payment-forms-stripe-connect',
 			'admin-education-payment-forms-first-form',
 			'admin-education-dashboard-widget',
-			'admin-education-plugin-email-settings',
 			'admin-education-plugin-customers-settings',
 			'admin-education-plugin-taxes-settings',
 			'admin-education-plugin-coupons',
@@ -73,13 +72,6 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 		$license = $container->get( 'license' );
 
 		if ( $license instanceof License ) {
-			// "Email" settings teaser.
-			$container->share(
-				'admin-education-plugin-email-settings',
-				PluginEmailSettings::class
-			)
-				->withArgument( $license );
-
 			// "Subscription Management" settings teaser.
 			$container->share(
 				'admin-education-plugin-customers-settings',
