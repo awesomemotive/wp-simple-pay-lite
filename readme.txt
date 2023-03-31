@@ -284,6 +284,10 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.3.1 - March 31, 2023 =
+
+* Fix: Check that `jddayofweek()` is available before use.
+
 = Stripe Payment Forms v4.7.3 - March 30, 2023 =
 
 * New: Add a "Summary Report" email to stay up to date with payment form performance.
@@ -299,13 +303,4 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 * Dev: Reduce the amount of JavaScript files included on the page.
 * Dev: Update to Stripe API version 2022-11-15.
 * Dev: Update the Stripe API PHP library to 10.6.0.
-
-= Stripe Payment Forms v4.6.7 - January 24, 2023 =
-
-* New "Activity & Reports" - see an overview of latest activity and filterable reports.
-* New: Warn users before trashing or deleting a payment form.
-* Fix: Ensure WordPress <= 5.5 compatibility.
-* Fix: Avoid JavaScript errors on pages where elements do not exist.
-* Dev: Update known plugin conflict list.
-* Dev: Update documentation URLs.
 
