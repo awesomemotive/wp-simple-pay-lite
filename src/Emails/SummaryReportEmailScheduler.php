@@ -114,27 +114,34 @@ class SummaryReportEmailScheduler implements SubscriberInterface {
 
 		$has_next = $this->scheduler->has_next( $hook );
 
+		if ( $has_next ) {
+			return;
+		}
+
 		// If there isn't a scheduled event for the current interval then the
 		// setting has changed. We need to cancel the existing event and schedule
 		// a new one.
-		if ( ! $has_next ) {
-			foreach ( $unused_intervals as $unused_interval ) {
-				$unused_hook = sprintf(
-					'simpay_send_email_%s_%s',
-					$this->email->get_id(),
-					$unused_interval
-				);
+		foreach ( $unused_intervals as $unused_interval ) {
+			$unused_hook = sprintf(
+				'simpay_send_email_%s_%s',
+				$this->email->get_id(),
+				$unused_interval
+			);
 
-				$this->scheduler->unschedule_all( $unused_hook );
-			}
+			$this->scheduler->unschedule_all( $unused_hook );
 		}
 
-		/** @var string $start_of_week_no */
-		$start_of_week_no = get_option( 'start_of_week', '0' );
-		$start_of_week_no = (int) $start_of_week_no;
+		if ( function_exists( 'jddayofweek' ) ) {
+			/** @var string $start_of_week_no */
+			$start_of_week_no = get_option( 'start_of_week', '0' );
+			$start_of_week_no = (int) $start_of_week_no;
+
+			$start_of_week = jddayofweek( $start_of_week_no - 1, 1 );
+		} else {
+			$start_of_week = 'monday';
+		}
 
 		/** @var string $start_of_week */
-		$start_of_week = jddayofweek( $start_of_week_no - 1, 1 );
 
 		switch ( $send_interval ) {
 			case 'monthly':
