@@ -80,7 +80,9 @@ class SchemaValidationUtils {
 		// Next, validate that the form exists.
 		// When using a parameter inside of a validation function, we do not know
 		// if it has been validated yet. So we need to validate it again.
-		$form_id = intval( $request->get_param( 'form_id' ) );
+		/** @var int $form_id */
+		$form_id = $request->get_param( 'form_id' );
+		$form_id = intval( $form_id );
 		$form    = simpay_get_form( $form_id );
 
 		if ( false === $form ) {
@@ -119,7 +121,9 @@ class SchemaValidationUtils {
 		// Next, validate that the form exists.
 		// When using a parameter inside of a validation function, we do not know
 		// if it has been validated yet. So we need to validate it again.
-		$form_id = intval( $request->get_param( 'form_id' ) );
+		/** @var int $form_id */
+		$form_id = $request->get_param( 'form_id' );
+		$form_id = intval( $form_id );
 		$form    = simpay_get_form( $form_id );
 
 		if ( false === $form ) {
@@ -137,7 +141,10 @@ class SchemaValidationUtils {
 		//
 		// We do not require the `custom_amount` parameter at the schema level...
 		// though we probably could...
-		$custom_amount = intval( $request->get_param( 'custom_amount' ) );
+
+		/** @var int $custom_amount */
+		$custom_amount = $request->get_param( 'custom_amount' );
+		$custom_amount = intval( $custom_amount );
 
 		if ( $price->unit_amount_min && ! $custom_amount ) {
 			return false;
@@ -168,7 +175,9 @@ class SchemaValidationUtils {
 		// Next, validate that the form exists.
 		// When using a parameter inside of a validation function, we do not know
 		// if it has been validated yet. So we need to validate it again.
-		$form_id = intval( $request->get_param( 'form_id' ) );
+		/** @var int $form_id */
+		$form_id = $request->get_param( 'form_id' );
+		$form_id = intval( $form_id );
 		$form    = simpay_get_form( $form_id );
 
 		if ( false === $form ) {
@@ -220,7 +229,9 @@ class SchemaValidationUtils {
 		// Next, validate that the form exists.
 		// When using a parameter inside of a validation function, we do not know
 		// if it has been validated yet. So we need to validate it again.
-		$form_id = intval( $request->get_param( 'form_id' ) );
+		/** @var int $form_id */
+		$form_id = $request->get_param( 'form_id' );
+		$form_id = intval( $form_id );
 		$form    = simpay_get_form( $form_id );
 
 		if ( false === $form ) {
@@ -286,7 +297,9 @@ class SchemaValidationUtils {
 		// Next, validate that the form exists.
 		// When using a parameter inside of a validation function, we do not know
 		// if it has been validated yet. So we need to validate it again.
-		$form_id = intval( $request->get_param( 'form_id' ) );
+		/** @var int $form_id */
+		$form_id = $request->get_param( 'form_id' );
+		$form_id = intval( $form_id );
 		$form    = simpay_get_form( $form_id );
 
 		if ( false === $form ) {
@@ -347,7 +360,9 @@ class SchemaValidationUtils {
 		// Next, validate that the form exists.
 		// When using a parameter inside of a validation function, we do not know
 		// if it has been validated yet. So we need to validate it again.
-		$form_id = intval( $request->get_param( 'form_id' ) );
+		/** @var int $form_id */
+		$form_id = $request->get_param( 'form_id' );
+		$form_id = intval( $form_id );
 		$form    = simpay_get_form( $form_id );
 
 		if ( false === $form ) {

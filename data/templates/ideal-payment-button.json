@@ -1,0 +1,41 @@
+{
+	"id": "ca229a0d-3d70-44b6-8d6d-d6439e2245a5",
+	"created_at": "2023-05-09 00:00:00",
+	"updated_at": "2023-05-09 00:00:00",
+	"license": [
+		"lite",
+		"personal",
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [ "features-functionality" ],
+	"keywords": [ "off-site", "ideal", "eur" ],
+	"slug": "ideal-payment-button",
+	"name": "iDEAL Payment Button",
+	"description": "Allow customers to pay with Stripe Checkout and iDEAL, a Netherlands-based payment method.",
+	"url": "",
+	"data": {
+		"title": "iDEAL Payment Button",
+		"description": "",
+		"type": "stripe_checkout",
+		"payment_methods": [ "ideal", "card" ],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": "Price Options"
+			},
+			{
+				"type": "payment_button",
+				"text": "Pay Now",
+				"processing_text": "Processing..."
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 1000
+			}
+		]
+	}
+}

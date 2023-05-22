@@ -104,17 +104,25 @@ function register_currency_settings( $settings ) {
 		);
 	}
 
+	$license = simpay_get_license();
+
 	$settings->add(
 		new Settings\Setting_Select(
 			array(
 				'id'         => 'currency',
 				'section'    => 'general',
 				'subsection' => 'currency',
-				'label'      => esc_html_x(
-					'Default Currency',
-					'setting label',
-					'stripe'
-				),
+				'label'      => $license->is_lite()
+					? esc_html_x(
+						'Currency',
+						'setting label',
+						'stripe'
+					)
+					: esc_html_x(
+						'Default Currency',
+						'setting label',
+						'stripe'
+					),
 				'options'    => $currency_list,
 				'value'      => simpay_get_setting( 'currency', 'USD' ),
 				'priority'   => 10,

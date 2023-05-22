@@ -127,15 +127,12 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 		$quantity = PaymentRequestUtils::get_quantity( $request );
 
 		$session_args = array(
-			'customer_creation'    => 'always',
-			'locale'               => $form->locale,
-			'metadata'             => array(
+			'customer_creation' => 'always',
+			'locale'            => $form->locale,
+			'metadata'          => array(
 				'simpay_form_id' => $form->id,
 			),
-			'payment_method_types' => array(
-				'card',
-			),
-			'mode'                 => 'payment',
+			'mode'              => 'payment',
 		);
 
 		// Collect Billing Address.
@@ -200,6 +197,22 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 		}
 
 		$session_args['line_items'] = array( $item );
+
+		// Payment method types.
+		/** @var array<string, array<string, array<string, string>>> $payment_methods */
+		$payment_methods = simpay_get_saved_meta(
+			$form->id,
+			'_payment_methods',
+			array()
+		);
+
+		if ( empty( $payment_methods ) || ! isset( $payment_methods['stripe-checkout'] ) ) {
+			$session_args['payment_method_types'] = array( 'card' );
+		} else {
+			$session_args['payment_method_types'] = array_keys(
+				$payment_methods['stripe-checkout']
+			);
+		}
 
 		// Build additional data used to create the underlying Payment Intent.
 		$payment_intent_data = PaymentRequestUtils::get_payment_intent_data(

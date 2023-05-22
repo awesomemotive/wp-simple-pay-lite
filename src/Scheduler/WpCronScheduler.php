@@ -137,17 +137,17 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 	/**
 	 * Returns a list of custom recurrence schedules.
 	 *
+	 * 'thirtydays' => array(
+	 *   'interval' => 86400 * 30,
+	 *   'display'  => __( 'Once every 30 days', 'simple-pay' ),
+	 * ),
+	 *
 	 * @since 4.4.5
 	 *
 	 * @return array<string, array<string, int|string>> A list of custom recurrence schedules.
 	 */
 	private function get_custom_schedules() {
-		return array(
-			// 'thirtydays' => array(
-			// 	'interval' => 86400 * 30,
-			// 	'display'  => __( 'Once every 30 days', 'simple-pay' ),
-			// ),
-		);
+		return array();
 	}
 
 	/**
@@ -175,6 +175,7 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 		);
 
 		foreach ( $schedules as $schedule_id => $schedule ) {
+			/** @var string $schedule_id */
 			if ( $schedule['interval'] === $interval ) {
 				return $schedule_id;
 			}

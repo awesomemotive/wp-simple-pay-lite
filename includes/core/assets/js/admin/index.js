@@ -165,6 +165,7 @@ let spAdmin = {};
 				'.simpay-price-enable-custom',
 				'.simpay-price-type input',
 				'.simpay-email-link-enabled',
+				'.simpay-phone-smart-enabled',
 			].forEach( ( input ) => {
 				// Allow classes to be passed, but prefer an input name.
 				let inputEl = $( input );

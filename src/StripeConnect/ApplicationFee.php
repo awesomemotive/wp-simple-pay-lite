@@ -66,17 +66,17 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	public function get_subscribed_events() {
 		$subscribers = array(
 			// Display a notice that an additional fee is being charged.
-			'__unstable_simpay_stripe_connect_account_message'        =>
+			'__unstable_simpay_stripe_connect_account_message' =>
 				'maybe_show_application_fee',
 
 			// Queues transaction records recorded with an application fee for
 			// possible update to remove the application fee if the license is
 			// now valid.
-			'pre_update_option_simpay_license_data'                   =>
+			'pre_update_option_simpay_license_data' =>
 				'queue_application_fee_removal',
 
 			// Removes application fees from Subscriptions.
-			'simpay_remove_application_fees'                          =>
+			'simpay_remove_application_fees'        =>
 				'remove_application_fees',
 		);
 
@@ -166,7 +166,6 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 					'</a>'
 				);
 			}
-
 		}
 
 		return $message;
@@ -285,7 +284,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 				return false;
 
 				// License is missing but installed within 24 hours.
-			} else if ( $is_missing && ( time() - $installed < ( HOUR_IN_SECONDS * 24 ) ) ) {
+			} elseif ( $is_missing && ( time() - $installed < ( HOUR_IN_SECONDS * 24 ) ) ) {
 				return false;
 
 				// License is expired but inside of the grace period, do not add a fee.
@@ -355,9 +354,9 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	 */
 	public function remove_application_fees( $transactions ) {
 		foreach ( $transactions as $k => $transaction ) {
-			$txn     = $transaction;
+			$txn = $transaction;
 			/** @var int $txn_id */
-			$txn_id  = $txn['id'];
+			$txn_id = $txn['id'];
 			/** @var int $form_id */
 			$form_id = $txn['form_id'];
 
@@ -377,7 +376,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 				$subscription_id = $txn['subscription_id'];
 
 				// Find the Subscription from the Checkout Session.
-			} else if ( 'checkout_session' === $txn['object'] ) {
+			} elseif ( 'checkout_session' === $txn['object'] ) {
 				try {
 					/** @var string $object_id */
 					$object_id = $txn['object_id'];
@@ -519,6 +518,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 		return array(
 			'br',
 			'in',
+			'mx',
 		);
 	}
 
