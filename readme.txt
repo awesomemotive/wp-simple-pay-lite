@@ -1,4 +1,4 @@
-=== Stripe Payment Forms by WP Simple Pay - Accept Credit Card Payments with Stripe ===
+=== Stripe Payment Forms by WP Simple Pay - Accept Payments with Stripe ===
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
@@ -7,57 +7,61 @@ Stable tag: 4.7.5-beta-1
 Requires PHP: 5.6
 License: GPLv2 or later
 
-🤩 Accept credit card payments on your WordPress with Stripe using WP Simple Pay, the best Stripe payments plugin! 🚀
+🤩 Accept Stripe payments on your WordPress using WP Simple Pay, the best Stripe payments plugin! 🚀
 
 == Description ==
 
 === The Best Stripe Payment Forms and Stripe Payments Plugin for WordPress ===
 
-**WP Simple Pay** is the best Stripe payment forms and Stripe payments plugin for WordPress that helps you quickly accept credit card payments on your WordPress site.
+**WP Simple Pay** is the best Stripe payment forms and Stripe payments plugin for WordPress that helps you quickly accept credit card, Apple Pay, iDEAL, and other payment types on your WordPress site.
 
 WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with WordPress. You don't need a complicated store setup or even need to use an ecommerce platform like WooCommerce. In just a few steps, you can be up and running in no time. Simply create a payment form and start accepting credit cards and other payment types with Stripe on your WordPress site.
 
 **Stripe Checkout** is a drop-in payment flow optimized for the highest conversion. It’s built for desktop, tablet, and mobile devices. It’s continuously tested and updated to offer a frictionless credit card payment experience. It’s also PCI DSS compliant and SCA-ready without any changes to your website.
 
-=== ✨ Stripe Credit Card Payment Processing Features ===
+=== ✨ Stripe Checkout Payment Processing Features ===
 
-- Accept credit card payments with embeddable payment form buttons
 - Integration with Stripe Checkout hosted payment forms
-- Custom branding on Stripe Checkout payment forms
-- Collect billing & shipping addresses in Stripe
-- Support for 30+ languages, 45+ countries, and 135+ currencies in Stripe
-- Apple Pay & Google Pay with Stripe Checkout
-- PCI compliant & SCA-ready credit card payment forms for secure payments
-- Smart fraud protection & spam prevention
+- Accept credit and debit cards (Visa, Mastercard, American Express, Discover and Diners, and more) from global customers
+- Accept Alipay payments in Stripe from customers in China
+- Accept FPX payments in Stripe from customers in Malaysia
+- Accept Giropay payments in Stripe from customers in Germany
+- Accept iDEAL payments in Stripe from customers in The Netherlands
+- Accept Przelewy24 (P24) in Stripe payments from customers in Poland
+- Custom branding on Stripe Checkout payment formsdd
+- Collect customer billing & shipping addresses in Stripe
+- Support for 30+ languages, 45+ countries, and 135+ currencies
+- PCI compliant & SCA-ready payment forms for secure payments
+- Smart fraud protection & spam prevention with Stripe Radar
 - [AffiliateWP](https://affiliatewp.com/) integration
 - Page builder integrations (Divi, Elementor)
 - Developer-friendly for building custom integrations
 - Pre-made payment form templates
 
-=== ✨ Stripe Credit Card Payment Form Features ===
+=== ✨ Advanced Stripe Payment Form Features ===
 
-If you need more functionality for your Stripe credit card forms, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to get these powerful features:
+If you need more functionality for your Stripe payment forms, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to get these powerful features:
 
 - On-site payment forms (no redirect)
 - Drag & drop payment form builder
 - Custom payment form fields to capture additional data
 - Mobile-optimized embedded & overlay payment forms
 - Apple Pay & Google Pay support with custom payment forms
+- Accept ACH direct debit (U.S bank accounts) in Stripe from customers in the U.S
+- Accept SEPA direct debit payments in Stripe from customers in Europe
+- Accept Bancontact payments in Stripe from customers in Belgium
+- Accept recurring payments with Stripe
+- Buy Now, Pay Later with Klarna & Afterpay/Clearpay
 - Custom payment receipt emails with Stripe
-- User-entered credit card amounts (great for donations)
+- Allow users to specificy the amount to pay (great for donations)
 - Coupon code management for Stripe
 - Tax rate management for Stripe
-- Accept ACH payments from U.S. bank accounts
-- Accept alternative payments (iDEAL, Alipay, giropay, SEPA, Bancontact, Przelewy24, FPX)
-- Accept recurring payments with Stripe
-- One-time & recurring subscriptions with Stripe
+- One-time & recurring subscription payments with Stripe
 - User-managed subscriptions with Stripe
-- Send renewal reminders with Stripe
-- Create installment plans with Stripe
+- Send subscription renewal reminders with Stripe
+- Create installment plans with Stripe to split payments
 - Charge initial setup fees with Stripe
 - Offer free trials with Stripe
-- Coupon duration settings
-- Buy Now, Pay Later with Klarna & Afterpay/Clearpay
 
 > **WP Simple Pay Pro - Stripe Payment Forms**
 > This plugin is the lite version of the WP Simple Pay Pro plugin that comes with many payment features including custom fields, user-entered amounts, coupon codes, tax rates, recurring payments (aka subscriptions), alternate payment methods, ACH, direct debit, Buy Now Pay Later and tons more. [Click here to purchase the best Stripe payment forms and Stripe payments plugin now!](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
@@ -68,11 +72,11 @@ By upgrading to WP Simple Pay Pro, you also get access to one-on-one help from o
 
 > Brian Casel, Founder of Audience Ops
 
-There is a small 3% credit card fee per-transaction plus Stripe fees while using WP Simple Pay Lite. [Upgrade to Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) for no added credit card form fees and priority support.
+There is a small 3% fee per-transaction plus Stripe fees while using WP Simple Pay Lite. [Upgrade to Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) for no added fees and priority support.
 
 WP Simple Pay is a verified member of the Stripe partner program. This program recognizes software that meets Stripe's strict quality requirements and provides users of WP Simple Pay and Stripe with the confidence they need to trust us both with their payment form integrations.
 
-Below are a few examples of ways you can set up Stripe payment and credit card forms with WP Simple Pay. [See our payment form templates](https://wpsimplepay.com/templates/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to try them out for yourself.
+Below are a few examples of ways you can set up Stripe payments with WP Simple Pay. [See our payment form templates](https://wpsimplepay.com/templates/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to try them out for yourself.
 
 === 💳 Payment Form Drag & Drop Builder ===
 
@@ -102,9 +106,9 @@ If you need only minimal payment form customizations and don't need an overlay p
 
 > Justin McGill, Founder of LeadFuze
 
-=== 💳 Allow Custom Credit Card Payment Amounts ===
+=== 💳 Allow Custom Payment Amounts ===
 
-Set a one-time credit card payment amount or let your site visitors pay what they want. Optionally specify minimum and default amounts.
+Set a one-time payment amount or let your site visitors pay what they want. Optionally specify minimum and default amounts. Great for donations!
 
 [View our one-time custom amount template](https://wpsimplepay.com/templates/one-time-custom-amount-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
@@ -132,7 +136,7 @@ Use with subscriptions or one-time payments, and optionally add a total amount l
 
 > Mike Taber, Founder of Bluetick
 
-=== 💳 Add Apple Pay and Google Pay Buttons to Stripe Payment forms ===
+=== 💳 Accept Apple Pay and Google Pay with Stripe ===
 
 Give your site visitors the option to pay using Apple Pay, Google Pay, and Microsoft Pay with a single button in your custom embedded or overlay payment forms.
 
@@ -146,24 +150,18 @@ Give your U.S. customers the option to pay directly from their bank accounts wit
 
 [View our ACH debit payment template](https://wpsimplepay.com/templates/ach-direct-debit-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
-=== 💳 Accept Buy Now, Pay Later Payments with Klarna and Afterpay/Clearpay ===
+=== 💳 Accept Klarna and Afterpay/Clearpay Payments with Stripe ===
 
 With a buy now, pay later payment method enabled, your customers get more payment flexibility, allowing them to purchase what they want now and pay over time. Your business receives the full payment upfront and is protected from fraud, while your customers pay nothing or only a portion of the total upfront without fees.
 
 [View our Klarna buy now, pay later template](https://wpsimplepay.com/templates/klarna-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 [View our Afterpay/Clearpay buy now, pay later template](https://wpsimplepay.com/templates/afterpay-clearpay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
-=== 💳 More Alternative Payment Methods with Stripe ===
+=== 💳 Accept SEPA Direct Debit Payments with Stripe ===
 
-Even more alternative payment methods for your credit card payment forms are supported by WP Simple Pay and Stripe. Check out these templates:
+Give your European customers the option to pay directly from their bank accounts with SEPA direct debit payments and take advantage of lower fees in Stripe. SEPA payments on Stripe cost 0.8% + 30¢ capped at $6.00 with no monthly fees or verification fees.
 
-- [iDEAL](https://wpsimplepay.com/templates/ideal-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [SEPA Direct Debit](https://wpsimplepay.com/templates/sepa-direct-debit-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [Alipay](https://wpsimplepay.com/templates/alipay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [Bancontact](https://wpsimplepay.com/templates/bancontact-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [giropay](https://wpsimplepay.com/templates/giropay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [Przelewy24](https://wpsimplepay.com/templates/przelewy24-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- FPX
+[View our SEPA Direct Debit template](https://wpsimplepay.com/template/sepa-direct-debit-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === 💳 Customized Payment Confirmation Details with Stripe ===
 
