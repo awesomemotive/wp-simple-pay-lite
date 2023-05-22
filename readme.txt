@@ -284,6 +284,11 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= 4.7.5 - May 25, 2023 =
+
+* New: Lite - support Alipay, FPX, Giropay, iDEAL, and Przelewy24.
+* Fix: Do not set additional fees when Stripe account country is based in Mexico.
+
 = Stripe Payment Forms v4.7.3.1 - March 31, 2023 =
 
 * Fix: Check that `jddayofweek()` is available before use.
@@ -296,11 +301,4 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 * New: New payment experience - support for Cloudflare's "Turnstile", a free CAPTCHA service. Visit "WP Simple Pay > Settings > General > Anti-Spam" to learn more.
 * New: Add additional payment form templates.
-
-= Stripe Payment Forms v4.7.0 - February 28, 2023 =
-
-* Fix: Ensure text after dynamic {{amount}} tag is visible on payment buttons.
-* Dev: Reduce the amount of JavaScript files included on the page.
-* Dev: Update to Stripe API version 2022-11-15.
-* Dev: Update the Stripe API PHP library to 10.6.0.
 
