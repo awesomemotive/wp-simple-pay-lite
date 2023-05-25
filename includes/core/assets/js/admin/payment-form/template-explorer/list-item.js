@@ -28,6 +28,10 @@ const noDemo = [
 	'recurring-service-setup-fee-form',
 	'recurring-service-trial-period-form',
 	'recurring-services-form',
+	'alipay-payment-button',
+	'giropay-payment-button',
+	'ideal-payment-button',
+	'przelewy24-payment-button',
 ];
 
 function TemplateListItem( { template } ) {
@@ -95,10 +99,7 @@ function TemplateListItem( { template } ) {
 								: null
 						}
 					>
-						{ 'lite' === licenseLevel &&
-						'payment-button' === template.slug
-							? __( 'Create Payment Button', 'simple-pay' )
-							: __( 'Use Template', 'simple-pay' ) }
+						{ __( 'Use Template', 'simple-pay' ) }
 					</Button>
 
 					{ ! noDemo.includes( template.slug ) && (

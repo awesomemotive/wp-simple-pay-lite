@@ -172,6 +172,56 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_custom_fields', $fields );
 
+	// Payment Methods.
+	// Gets superseded by the Pro save routine.
+	$default_payment_methods = array(
+		'card',
+	);
+
+	$allowed_payment_methods = array(
+		'card',
+		'alipay',
+		'ideal',
+		'fpx',
+		'giropay',
+		'p24',
+	);
+
+	$payment_methods = isset( $_POST['_simpay_payment_methods'] )
+		? array_map( 'sanitize_text_field', $_POST['_simpay_payment_methods'] )
+		: $default_payment_methods;
+
+	// Remove any payment methods that are not allowed.
+	$payment_methods = array_filter(
+		$payment_methods,
+		function( $payment_method ) use ( $allowed_payment_methods ) {
+			return in_array( $payment_method, $allowed_payment_methods, true );
+		}
+	);
+
+	// Format the payment methods for storage (to match the Pro format). Keyed
+	// by the payment method ID with an array of the payment method ID (and additional
+	// configuration settings in Pro).
+	if ( empty( $payment_methods ) ) {
+		$payment_methods = $default_payment_methods;
+	}
+
+	$_payment_methods = array();
+
+	foreach ( $payment_methods as $payment_method ) {
+		$_payment_methods[ $payment_method ] = array(
+			'id' => $payment_method,
+		);
+	}
+
+	update_post_meta(
+		$post_id,
+		'_payment_methods',
+		array(
+			'stripe-checkout' => $_payment_methods,
+		)
+	);
+
 	if ( false === $update ) {
 		/**
 		 * Allows further action to be taken when a Payment Form is created.
@@ -377,7 +427,13 @@ function save_prices( $post_id, $post, $form ) {
 			? sanitize_text_field( $price['unit_amount_current'] )
 			: false;
 
+		$currency_current = isset( $price['currency_current'] )
+			? sanitize_text_field( $price['currency_current'] )
+			: false;
+
 		if (
+			false !== $currency_current &&
+			$currency_current === $currency &&
 			false !== $unit_amount_current &&
 			$unit_amount_current === $unit_amount
 		) {

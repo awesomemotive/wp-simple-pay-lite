@@ -186,7 +186,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 			// Calculate quantity.
 			$quantity = isset( $form_values['simpay_quantity'] )
-				? intval( $form_values['simpay_quantity'] )
+				? intval( $form_values['simpay_quantity'] ) // @phpstan-ignore-line
 				: 1;
 
 			$subtotal = $unit_amount * $quantity;
@@ -894,7 +894,6 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 				break;
 			case 'individual':
-
 				foreach ( $prices as $price_option ) {
 					$price_option_parts = explode( ':', $price_option );
 					$instance_id        = $price_option_parts[0];

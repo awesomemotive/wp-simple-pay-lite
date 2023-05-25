@@ -68,13 +68,13 @@ class WebhookEndpointManager {
 		// Enabled events are not * and do not match the defined whitelist.
 		if (
 			! in_array( '*', $enabled_events, true ) &&
-			$enabled_events != $this->get_event_whitelist()
+			$enabled_events !== $this->get_event_whitelist()
 		) {
 			return false;
 		}
 
 		// URL mismatch.
-		if( $endpoint->url !== simpay_get_webhook_url() ) {
+		if ( simpay_get_webhook_url() !== $endpoint->url ) {
 			return false;
 		}
 
@@ -98,7 +98,8 @@ class WebhookEndpointManager {
 		return Stripe_API::request(
 			'WebhookEndpoint',
 			'retrieve',
-			$endpoint_id
+			$endpoint_id,
+			$this->get_api_request_args()
 		);
 	}
 
@@ -268,7 +269,7 @@ class WebhookEndpointManager {
 		);
 
 		foreach ( $endpoints->data as $endpoint ) {
-			if ( $endpoint->url === simpay_get_webhook_url() ) {
+			if ( simpay_get_webhook_url() === $endpoint->url ) {
 				// Ensure the remote endpoint has the expected events. Update if needed.
 				$remote_events = $endpoint->enabled_events;
 				$local_events  = $this->get_event_whitelist();

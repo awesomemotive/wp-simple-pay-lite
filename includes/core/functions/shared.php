@@ -1369,11 +1369,11 @@ function simpay_get_payment_form_setting(
 				$type = simpay_get_payment_form_setting(
 					$form_id,
 					'type',
-					'embedded',
+					'stripe_checkout',
 					$template
 				);
 
-				$context = 'stripe_checkout' === $type
+				$context = null === $type || 'stripe_checkout' === $type
 					? 'stripe-checkout'
 					: 'stripe-elements';
 
