@@ -282,9 +282,9 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
-= 4.7.5 - May 25, 2023 =
+= Stripe Payment Forms v4.7.5 - May 25, 2023 =
 
-* New: Lite - support Alipay, FPX, Giropay, iDEAL, and Przelewy24.
+* New: Add support for Alipay, FPX, Giropay, iDEAL, and Przelewy24 Stripe payments.
 * Fix: Do not set additional fees when Stripe account country is based in Mexico.
 
 = Stripe Payment Forms v4.7.3.1 - March 31, 2023 =
