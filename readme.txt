@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.2
-Stable tag: 4.7.5
+Stable tag: 4.7.7
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -30,6 +30,7 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Accept Przelewy24 (P24) in Stripe payments from customers in Poland
 - Custom branding on Stripe Checkout payment formsdd
 - Collect customer billing & shipping addresses in Stripe
+- Collect additional custom fields in Stripe Checkout
 - Support for 30+ languages, 45+ countries, and 135+ currencies
 - PCI compliant & SCA-ready payment forms for secure payments
 - Smart fraud protection & spam prevention with Stripe Radar
@@ -282,6 +283,10 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.7 - June 28, 2023 =
+
+* New: Add support for adding custom fields to Stripe Checkout.
+
 = Stripe Payment Forms v4.7.5 - May 25, 2023 =
 
 * New: Add support for Alipay, FPX, Giropay, iDEAL, and Przelewy24 Stripe payments.
@@ -294,9 +299,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 = Stripe Payment Forms v4.7.3 - March 30, 2023 =
 
 * New: Add a "Summary Report" email to stay up to date with payment form performance.
-
-= Stripe Payment Forms v4.7.2 - March 13, 2023 =
-
-* New: New payment experience - support for Cloudflare's "Turnstile", a free CAPTCHA service. Visit "WP Simple Pay > Settings > General > Anti-Spam" to learn more.
-* New: Add additional payment form templates.
-
