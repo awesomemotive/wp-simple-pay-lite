@@ -26,8 +26,8 @@ function togglePriceOptionSingle() {
 		return;
 	}
 
-	const priceListCount =
-		priceListEl.querySelectorAll( '.simpay-price' ).length;
+	const priceListCount = priceListEl.querySelectorAll( '.simpay-price' )
+		.length;
 
 	// Label.
 	document
@@ -65,25 +65,13 @@ function togglePriceOptionSingle() {
 		);
 
 	// Price Select custom field.
-	const priceSelectFieldEls = document.querySelectorAll(
-		'.simpay-panel-field-price-select'
+	const priceSelectFieldEl = document.querySelector(
+		'.simpay-custom-field-plan-select'
 	);
 
-	if ( priceSelectFieldEls.length > 0 ) {
-		priceSelectFieldEls.forEach(
-			( priceSelectFieldEl ) =>
-				( priceSelectFieldEl.style.display =
-					priceListCount > 1 ? 'table-row' : 'none' )
-		);
-
-		const priceSelectFieldNoticeEl = document.querySelector(
-			'.simpay-panel-field-price-select-notice'
-		);
-
-		if ( priceSelectFieldNoticeEl ) {
-			priceSelectFieldNoticeEl.style.display =
-				priceListCount === 1 ? 'table-row' : 'none';
-		}
+	if ( priceSelectFieldEl ) {
+		priceSelectFieldEl.style.display =
+			priceListCount > 1 ? 'block' : 'none';
 	}
 }
 
@@ -523,9 +511,8 @@ function bindPriceOptions() {
 	const pricesEls = document.querySelectorAll( '.simpay-price' );
 
 	pricesEls.forEach( ( priceEl ) => {
-		const amountType = priceEl.querySelector(
-			'.simpay-price-amount-type'
-		).value;
+		const amountType = priceEl.querySelector( '.simpay-price-amount-type' )
+			.value;
 
 		// Label.
 		const labelInput = priceEl.querySelector( '.simpay-price-label' );

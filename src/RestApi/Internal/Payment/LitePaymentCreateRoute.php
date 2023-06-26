@@ -229,7 +229,79 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 
 		$session_args['payment_intent_data'] = $payment_intent_data;
 
+		$session_args['custom_fields'] = $this->get_custom_fields( $request );
+
 		return $session_args;
+	}
+
+	/**
+	 * Returns a list of custom fields to be added to the Checkout Session.
+	 *
+	 * @since 4.7.7
+	 *
+	 * @param \WP_REST_Request $request The payment request.
+	 * @return array<array<string, mixed>>
+	 */
+	private function get_custom_fields( $request ) {
+		$form   = PaymentRequestUtils::get_form( $request );
+		$fields = $form->custom_fields;
+
+		$fields = array_filter(
+			$fields,
+			function( $field ) {
+				return 'payment_button' !== $field['type'];
+			}
+		);
+
+		if ( empty( $fields ) ) {
+			return array();
+		}
+
+		$custom_fields = array();
+
+		foreach ( $fields as $k => $field ) {
+			$type = $field['type'];
+
+			// Use the label as the key, if it exists, or create one from the type.
+			$label = ! empty( $field['label'] )
+				? $field['label']
+				: sprintf( '%s-%d', $type, $k );
+
+			// Create a key from the label.
+			$key = preg_replace( "/[^a-zA-Z0-9]/", '', $label );
+
+			$args = array(
+				'key'      => $key,
+				'label'    => array(
+					'type'   => 'custom',
+					'custom' => $label,
+				),
+				'type'     => 'number' === $type ? 'numeric' : $type,
+				'optional' => ! isset( $field['required'] ),
+			);
+
+			// Add dropdown options, if needed.
+			if ( 'dropdown' === $type ) {
+				$options = $field['options'];
+				$options = explode( simpay_list_separator(), $options );
+				$options = array_map( 'trim', $options );
+				$options = array_filter( $options );
+
+				$args['dropdown']['options'] = array_map(
+					function( $option ) {
+						return array(
+							'label' => $option,
+							'value' => preg_replace( "/[^a-zA-Z0-9]/", '', $option ),
+						);
+					},
+					$options
+				);
+			}
+
+			$custom_fields[] = $args;
+		}
+
+		return $custom_fields;
 	}
 
 }

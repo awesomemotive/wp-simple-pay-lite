@@ -605,7 +605,16 @@ class PaymentRequestUtils {
 			}
 		}
 
-		return $payment_methods;
+		// If using Affirm, ensure the unit_amount is at least $100.
+		if ( in_array( 'affirm', $payment_methods, true ) ) {
+			$unit_amount = self::get_unit_amount( $request );
+
+			if ( $unit_amount < 10000 ) {
+				$payment_methods = array_diff( $payment_methods, array( 'affirm' ) );
+			}
+		}
+
+		return array_values( $payment_methods );
 	}
 
 	/**

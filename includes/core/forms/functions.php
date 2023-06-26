@@ -573,12 +573,19 @@ function simpay_payment_form_add_missing_custom_fields(
 		$fields
 	);
 
-	// "Payment Button" should always be last.
+	// "Checkout Button" and "Payment Button" should always be last.
 	if ( isset( $fields['payment_button'] ) ) {
 		$payment_button = $fields['payment_button'];
 		unset( $fields['payment_button'] );
 
 		$fields['payment_button'] = $payment_button;
+	}
+
+	if ( isset( $fields['checkout_button'] ) ) {
+		$checkout_button = $fields['checkout_button'];
+		unset( $fields['checkout_button'] );
+
+		$fields['checkout_button'] = $checkout_button;
 	}
 
 	// Remove empty/invalid fields after sorting.

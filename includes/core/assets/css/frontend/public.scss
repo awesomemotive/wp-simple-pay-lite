@@ -30,7 +30,7 @@ $error-text-color: #eb1c26;
 
 	&--requires_payment_method {
 
-		> *:not(.simpay-checkout-btn-container):not(.simpay-card-container):not(.simpay-payment-method-error):not(.simpay-generic-error):not(.simpay-amounts-container):not(.simpay-test-mode-badge-container) {
+		> *:not(.simpay-form-control):not(.simpay-amounts-container):not(.simpay-card-container):not(.simpay-checkout-btn-container):not(.simpay-payment-btn-container):not(.simpay-link-authentication-container):not(.simpay-address-container-upe):not(.simpay-test-mode-badge-container):not(.simpay-errors) {
 			position: relative;
 			opacity: 0.65;
 

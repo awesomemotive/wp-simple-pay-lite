@@ -34,6 +34,7 @@ class FormBuilderServiceProvider extends AbstractPluginServiceProvider {
 		return array(
 			'form-builder-license-check',
 			'form-builder-template-explorer',
+			'form-builder-custom-field-subscriber',
 		);
 	}
 
@@ -53,6 +54,12 @@ class FormBuilderServiceProvider extends AbstractPluginServiceProvider {
 		$container->share(
 			'form-builder-template-explorer',
 			TemplateExplorer::class
+		);
+
+		// Custom field subscriber.
+		$container->share(
+			'form-builder-custom-field-subscriber',
+			CustomFieldSubscriber::class
 		);
 	}
 

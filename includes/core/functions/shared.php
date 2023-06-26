@@ -1266,7 +1266,7 @@ function simpay_can_use_payment_request_button() {
  * @return string
  */
 function simpay_get_date_format() {
-	return simpay_get_setting( 'date_format', 'mm/dd/yy' );
+	return simpay_get_setting( 'date_format', '' );
 }
 
 /**
@@ -1883,4 +1883,12 @@ function simpay_is_upe() {
 	 * @param bool $is_upe Whether the Universal Payment Element should be used.
 	 */
 	return apply_filters( 'simpay_is_upe', $is_upe );
+}
+
+/**
+ * Get the separator to use for fields that list multiple values
+ * Affected Custom Fields: Dropdown values/amounts/quantities, radio values/amounts/quantities
+ */
+function simpay_list_separator() {
+	return apply_filters( 'simpay_list_separator', ',' );
 }

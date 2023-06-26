@@ -10,6 +10,8 @@
 
 namespace SimplePay\Core\Abstracts;
 
+use SimplePay\Core\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -92,9 +94,24 @@ abstract class Custom_Field {
 	 *
 	 * @param string $key Key that stores the default value.
 	 * @param mixed  $fallback Fallback value. Defaults to empty string.
+	 * @param array<string, mixed> $settings Field settings. Overrides current self if set.
+	 * @param SimplePay\Core\Abstracts\Form|null $form Form. Overrides current self if set.
 	 * @return mixed
 	 */
-	public static function get_default_value( $key = 'default', $fallback = '' ) {
+	public static function get_default_value(
+		$key = 'default',
+		$fallback = '',
+		$settings = array(),
+		$form = null
+	) {
+		if ( ! empty( $settings ) ) {
+			self::$settings = $settings;
+		}
+
+		if ( ! is_null( $form ) ) {
+			self::$form = $form;
+		}
+
 		$id = isset( self::$settings['uid'] )
 			? self::$settings['uid']
 			: '';
@@ -102,6 +119,8 @@ abstract class Custom_Field {
 		$default = isset( self::$settings[ $key ] )
 			? self::$settings[ $key ]
 			: $fallback;
+
+		$default = self::get_dynamic_default_values( $default );
 
 		/**
 		 * Filters the default value used on a custom field.
@@ -202,5 +221,128 @@ abstract class Custom_Field {
 		$optional_indicator = apply_filters( 'simpay_form_field_optional_indicator', $optional_indicator );
 
 		return $optional_indicator;
+	}
+
+	/**
+	 * Replaces dynamic value placeholders with their actual values.
+	 *
+	 * @since 4.7.6
+	 *
+	 * @param string $default Default value.
+	 * @return string
+	 */
+	private static function get_dynamic_default_values( $default ) {
+		// Replace any Smart Tags in the default value with their dynamic values.
+		$tags = self::get_default_value_smart_tags();
+
+		foreach ( $tags as $tag ) {
+			// Standard {form-id}, {form-title}, etc. Smart Tags.
+			if ( strpos( $default, $tag ) !== false ) {
+				$default = str_replace(
+					$tag,
+					self::get_default_value_smart_tag_value( $tag ),
+					$default
+				);
+			}
+		}
+
+		// Replace all instances of {query var=""} Smart Tag with the query var value.
+		if ( strpos( $default, '{query var="' ) !== false ) {
+			$pattern = '/\{query var="([^"]+)"\}/';
+			$matches = [];
+
+			if ( preg_match_all( $pattern, $default, $matches ) ) {
+				foreach ( $matches[0] as $match ) {
+					$default = str_replace(
+						$match,
+						self::get_default_value_smart_tag_value( $match ),
+						$default
+					);
+				}
+			}
+		}
+
+		// Force an additional escape _just in case_ because we are accepting user input.
+		// It should still be late-escaped on output.
+		return esc_attr( $default );
+	}
+
+	/**
+	 * Returns an array of dynamic value tags that may found in the default value.
+	 *
+	 * @since 4.7.6
+	 *
+	 * @param string $default_value Default value.
+	 * @return array<string>
+	 */
+	private static function get_default_value_smart_tags() {
+		return array(
+			'{query var=""}',
+			'{form-id}',
+			'{form-title}',
+			'{form-description}',
+			'{page-id}',
+			'{page-title}',
+			'{page-url}',
+			'{user-id}',
+			'{user-email}',
+			'{user-first-name}',
+			'{user-last-name}',
+			'{user-ip}',
+		);
+	}
+
+	/**
+	 * Returns the value of a dynamic value tag.
+	 *
+	 * @since 4.7.6
+	 *
+	 * @param string $smart_tag Smart Tag.
+	 * @return string
+	 */
+	private static function get_default_value_smart_tag_value( $smart_tag ) {
+		$is_query = strpos( $smart_tag, 'query' ) !== false;
+
+		if ( $is_query ) {
+			$pattern = '/\{query var="([^"]+)"\}/';
+			$matches = [];
+
+			if ( preg_match($pattern, $smart_tag, $matches ) ) {
+				$query_var = esc_html( $matches[1] );
+
+				if ( isset( $_GET[ $query_var ] ) ) {
+					return esc_attr( $_GET[ $query_var ] );
+				}
+			}
+
+			return '';
+		} else {
+			switch ( $smart_tag ) {
+				case '{form-id}':
+					return esc_attr( self::$form->id );
+				case '{form-title}':
+					return esc_attr( self::$form->company_name );
+				case '{form-description}':
+					return esc_attr( self::$form->item_description );
+				case '{page-id}':
+					return esc_attr( get_the_ID() );
+				case '{page-title}':
+					return esc_attr( get_the_title() );
+				case '{page-url}':
+					return esc_attr( get_permalink() );
+				case '{user-id}':
+					return esc_attr( get_current_user_id() );
+				case '{user-email}':
+					return esc_attr( wp_get_current_user()->user_email );
+				case '{user-first-name}':
+					return esc_attr( wp_get_current_user()->first_name );
+				case '{user-last-name}':
+					return esc_attr( wp_get_current_user()->last_name );
+				case '{user-ip}':
+					return esc_attr( Utils\get_current_ip_address() );
+			}
+		}
+
+		return '';
 	}
 }

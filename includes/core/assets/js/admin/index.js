@@ -1,4 +1,4 @@
-/* global simpayAdmin, spGeneral, jQuery */
+/* global _ */
 
 /**
  * Internal dependencies.
@@ -97,7 +97,23 @@ let spAdmin = {};
 			// Media Uploader
 			this.addMediaFields();
 
+			// Stripe Connect.
 			this.stripeConnect();
+
+			// Make custom fields sortable
+			this.initSortableFields(
+				spFormSettings.find( '.simpay-custom-fields' )
+			);
+
+			// Add custom fields fields
+			spFormSettings
+				.find( '.add-field' )
+				.on( 'click.simpayAddField', this.addField );
+
+			// Remove custom fields
+			spFormSettings
+				.find( '.simpay-custom-fields' )
+				.on( 'click', '.simpay-remove-field-link', this.removeField );
 
 			// Payment Mode.
 			//
@@ -461,6 +477,146 @@ let spAdmin = {};
 						event.preventDefault();
 					}
 				}
+			} );
+		},
+
+		initSortableFields( el ) {
+			// Field ordering
+			el.sortable( {
+				items:
+					'.simpay-field-metabox:not(.simpay-custom-field-payment-button):not(.simpay-custom-field-checkout-button)',
+				containment: '#simpay-form-settings',
+				handle: '.simpay-hndle',
+				placeholder: 'sortable-placeholder',
+				cursor: 'move',
+				delay: $( document.body ).hasClass( 'mobile' ) ? 200 : 0,
+				distance: 2,
+				tolerance: 'pointer',
+				forcePlaceholderSize: true,
+				opacity: 0.65,
+				stop( e, ui ) {
+					spAdmin.orderFields();
+				},
+
+				// @link https://core.trac.wordpress.org/changeset/35809
+				helper( event, element ) {
+					/* `helper: 'clone'` is equivalent to `return element.clone();`
+					 * Cloning a checked radio and then inserting that clone next to the original
+					 * radio unchecks the original radio (since only one of the two can be checked).
+					 * We get around this by renaming the helper's inputs' name attributes so that,
+					 * when the helper is inserted into the DOM for the sortable, no radios are
+					 * duplicated, and no original radio gets unchecked.
+					 */
+					return element
+						.clone()
+						.find( ':input' )
+						.attr( 'name', function ( i, currentName ) {
+							return (
+								'sort_' +
+								parseInt(
+									Math.random() * 100000,
+									10
+								).toString() +
+								'_' +
+								currentName
+							);
+						} )
+						.end();
+				},
+			} );
+		},
+
+		addField( e ) {
+			const size = spFormSettings.find(
+				'.simpay-custom-fields .simpay-field-metabox'
+			).length;
+			const wrapper = $( '#simpay-custom-fields-wrap' );
+			const boxes = wrapper.find( '.simpay-metaboxes' );
+			const selectField = spFormSettings.find( '#custom-field-select' );
+			const fieldType = selectField.val();
+
+			const uids = [
+				...document.querySelectorAll( '.field-uid' ),
+			].map( ( field ) => parseInt( field.value ) );
+
+			const data = {
+				action: 'simpay_add_field',
+				post_id: $( '#post_ID' ).val(),
+				fieldType,
+				counter: parseInt( size ) + 1,
+				nextUid: parseInt( _.max( uids ) ) + 1,
+				addFieldNonce: spFormSettings
+					.find( '#simpay_custom_fields_nonce' )
+					.val(),
+			};
+
+			e.preventDefault();
+
+			spFormSettings.find( '.simpay-field-data' ).each( function () {
+				if ( $( this ).is( ':visible' ) ) {
+					$( this ).hide();
+					$( this ).addClass( 'closed' );
+				}
+			} );
+
+			$.ajax( {
+				url: ajaxurl,
+				method: 'POST',
+				data,
+				success( response ) {
+					const temp = $( '<div/>' ).append( response );
+
+					spAdmin.orderFields();
+
+					if (
+						[ 'payment_button', 'checkout_button' ].includes(
+							fieldType
+						)
+					) {
+						boxes.append( temp.html() );
+					} else {
+						boxes.prepend( temp.html() );
+					}
+
+					// Reset <select>.
+					selectField.prop( 'selectedIndex', 0 );
+
+					hooks.doAction( 'customFieldAdded', response );
+				},
+				error( response ) {
+					window.spShared.debugLog( response );
+				},
+			} );
+		},
+
+		removeField( e ) {
+			e.preventDefault();
+
+			const selectField = spFormSettings.find( '#custom-field-select' );
+
+			if (
+				window.confirm( 'Are you sure you want to remove this field?' )
+			) {
+				const metabox = $( this ).closest( '.simpay-field-metabox' );
+				const fieldType = metabox.data( 'type' );
+
+				metabox.remove();
+				hooks.doAction( 'customFieldRemoved' );
+			}
+		},
+
+		orderFields() {
+			$( '.simpay-custom-fields .simpay-field-metabox' ).each( function (
+				index,
+				el
+			) {
+				const fieldIndex = parseInt(
+					$( el ).index(
+						'.simpay-custom-fields .simpay-field-metabox'
+					)
+				);
+
+				$( '.field-order', el ).val( fieldIndex + 1 );
 			} );
 		},
 	};

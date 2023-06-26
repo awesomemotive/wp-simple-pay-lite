@@ -165,10 +165,28 @@ function save( $post_id, $post, $update ) {
 	update_post_meta( $post_id, '_enable_quantity', $enable_quantity );
 
 	// Custom fields.
-	// Handles "Button Text" and "Button Processing Text".
 	$fields = isset( $_POST['_simpay_custom_field'] )
 		? $_POST['_simpay_custom_field']
 		: array();
+
+	$order = 0;
+
+	// Re-index the array so if fields were removed we don't overwrite the index with a new field.
+	foreach ( $fields as $k => $v ) {
+		$fields[ $k ] = array_values( $v );
+
+		// Order the fields based on the order they are sent.
+		foreach ( $fields[ $k ] as $i => $field ) {
+			$fields[ $k ][ $i ] = array_merge(
+				$field,
+				array(
+					'order' => $order,
+				)
+			);
+
+			$order++;
+		}
+	}
 
 	update_post_meta( $post_id, '_custom_fields', $fields );
 

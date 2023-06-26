@@ -165,6 +165,20 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			: __( 'No', 'stripe' );
 	}
 
+	/**
+	 * Returns "Enabled" or "Disabled" depending on Opinonated styles setting
+	 *
+	 * @since 4.7.6.1
+	 *
+	 * @return string
+	 */
+	private function get_opinionated_styles_enabled() {
+		$default_plugin_styles = simpay_get_setting( 'default_plugin_styles', 'enabled' );
+
+		return 'enabled' === $default_plugin_styles
+			? __( 'Enabled', 'stripe' )
+			: __( 'Disabled', 'stripe' );
+	}
 
 	/**
 	 * Returns the CAPTCHA type.
@@ -461,6 +475,10 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 				'upe'                      => array(
 					'label' => __( 'Using UPE', 'stripe' ),
 					'value' => $this->get_upe_yes_or_upe_no(),
+				),
+				'opinionated_styles'       => array(
+					'label' => __( 'Opinionated Styles', 'stripe' ),
+					'value' => $this->get_opinionated_styles_enabled(),
 				),
 			),
 		);

@@ -1,3 +1,5 @@
+/* global jQuery */
+
 /**
  * WordPress dependencies
  */
@@ -14,13 +16,29 @@ import { maybeBlockButtonWithUpgradeModal } from '@wpsimplepay/utils';
  * @since 4.4.7
  */
 function customFields() {
-	const button = document.getElementById( 'simpay-add-field-lite' );
+	// Use jQuery so we can prevent the event from bubbling up.
+	const button = jQuery( '#simpay-form-settings' ).find( '#lite-add-field' );
 
 	if ( ! button ) {
 		return;
 	}
 
-	button.addEventListener( 'click', maybeBlockButtonWithUpgradeModal );
+	button.on( 'click.simpayAddField', function ( e ) {
+		const newE = e;
+
+		const customFieldCount = document.querySelectorAll(
+			'.simpay-custom-fields > div'
+		).length;
+
+		// Update the data-available attribute on the button based on the number of custom fields.
+		newE.target.dataset.available = customFieldCount >= 3 ? 'no' : 'yes';
+
+		const blocked = maybeBlockButtonWithUpgradeModal( newE );
+
+		if ( blocked ) {
+			e.stopImmediatePropagation();
+		}
+	} );
 }
 
 /**
