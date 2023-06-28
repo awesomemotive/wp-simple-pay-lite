@@ -345,3 +345,56 @@ function simpay_print_shortcode_tip( $post_id, $copy_button_text = '' ) {
 		);
 	}
 }
+
+/**
+ * Returns the description for Form Field Label.
+ *
+ * @since 3.8.0
+ *
+ * @return string
+ */
+function simpay_form_field_label_description() {
+	return esc_html__( 'A text label displayed above the field.', 'stripe' );
+}
+
+/**
+ * Returns the description for Placeholder.
+ *
+ * @since 3.8.0
+ *
+ * @return string
+ */
+function simpay_placeholder_description() {
+	return esc_html__(
+		'A short hint shown when the field is empty.',
+		'stripe'
+	);
+}
+
+/**
+ * Returns a string explaining the `required` HTML attribute.
+ *
+ * @since 3.8.0
+ *
+ * @return string
+ */
+function simpay_required_field_description() {
+	return esc_html__(
+		'Determines if the field must be filled out before submitting the payment form.',
+		'stripe'
+	);
+}
+
+/**
+ * Returns the description for Stripe Metadata Label
+ *
+ * @since 3.8.0
+ *
+ * @return string
+ */
+function simpay_metadata_label_description() {
+	return esc_html__(
+		'Used to identify this field within Stripe payment records. Not displayed on the payment form.',
+		'stripe'
+	);
+}
