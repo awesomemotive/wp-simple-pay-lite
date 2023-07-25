@@ -566,8 +566,6 @@ let spAdmin = {};
 				success( response ) {
 					const temp = $( '<div/>' ).append( response );
 
-					spAdmin.orderFields();
-
 					if (
 						[ 'payment_button', 'checkout_button' ].includes(
 							fieldType
@@ -580,6 +578,8 @@ let spAdmin = {};
 
 					// Reset <select>.
 					selectField.prop( 'selectedIndex', 0 );
+
+					spAdmin.orderFields();
 
 					hooks.doAction( 'customFieldAdded', response );
 				},

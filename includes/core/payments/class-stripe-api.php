@@ -197,15 +197,9 @@ class Stripe_API {
 			}
 		}
 
-		// Special handling for tax calculations in beta.
+		// Special handling for tax calculations.
 		// If the request starts with Tax, handle it.
-		// https://stripe.com/docs/api/tax/calculations?lang=php
 		if ( simpay_is_upe() && false !== strpos( $class, 'Tax' ) ) {
-			$betas   = 'tax_calc_beta=v1; tax_txns_beta=v1';
-			$version = SIMPLE_PAY_STRIPE_API_VERSION . ';' . $betas;
-
-			Stripe::setApiVersion( $version );
-
 			switch ( $function ) {
 				case 'allLineItems':
 					return call_user_func(
