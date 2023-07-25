@@ -257,7 +257,7 @@ function register_advanced_settings( $settings ) {
 						'stripe'
 					)
 					: esc_html_x(
-						'✨ Try the new payment experience (early access) ✨',
+						'✨ Use the new payment experience ✨',
 						'setting input label',
 						'stripe'
 					),
@@ -270,9 +270,9 @@ function register_advanced_settings( $settings ) {
 					: wpautop(
 						wp_kses(
 							sprintf(
-								/* translators: %1$s Opening <strong>, do not translate. %2$s Closing </strong>, do not translate. %3$s Opening <a> tag, do not translate. %4$s Closing </a> tag, do not translate. */
+								/* translators: %3$s Opening <a> tag, do not translate. %4$s Closing </a> tag, do not translate. */
 								__(
-									'Get early acess to a new, smarter payment experience. %1$sNot recommended for merchants with a custom payment flow/custom code%2$s. Have questions about upgrading? %3$sContact us%4$s',
+									'Enable the new, smarter payment experience. Have questions about opting in or managing customizations? %3$sContact us%4$s',
 									'stripe'
 								),
 								'<strong>',

@@ -151,7 +151,9 @@ class ConnectSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		update_option( 'simpay_license_key', $key );
 
 		// Set OTH.
-		$oth = hash( 'sha512', (string) wp_rand() );
+		$oth        = hash( 'sha512', (string) wp_rand() );
+		$hashed_oth = hash_hmac( 'sha512', $oth, wp_salt() );
+
 		update_option( 'simpay_connect_token', $oth );
 
 		$version  = SIMPLE_PAY_VERSION; // @phpstan-ignore-line
@@ -167,7 +169,7 @@ class ConnectSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$url = add_query_arg(
 			array(
 				'key'      => $key,
-				'oth'      => $oth,
+				'oth'      => $hashed_oth,
 				'endpoint' => $endpoint,
 				'version'  => $version,
 				'siteurl'  => $siteurl,
@@ -248,7 +250,7 @@ class ConnectSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			);
 		}
 
-		if ( ! hash_equals( $oth, $post_oth ) ) {
+		if ( hash_hmac( 'sha512', $oth, wp_salt() ) !== $post_oth ) {
 			wp_send_json_error(
 				array(
 					'message' => $error,
