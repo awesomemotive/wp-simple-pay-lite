@@ -283,6 +283,11 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.7.3 - July 25, 2023 =
+
+* Stripe Tax - update for general availability.
+* Lite Connect - improve connection process.
+
 = Stripe Payment Forms v4.7.7 - June 28, 2023 =
 
 * New: Add support for adding custom fields to Stripe Checkout.
@@ -295,7 +300,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 = Stripe Payment Forms v4.7.3.1 - March 31, 2023 =
 
 * Fix: Check that `jddayofweek()` is available before use.
-
-= Stripe Payment Forms v4.7.3 - March 30, 2023 =
-
-* New: Add a "Summary Report" email to stay up to date with payment form performance.
