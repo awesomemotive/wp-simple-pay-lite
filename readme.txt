@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.2
-Stable tag: 4.7.7.3
+Stable tag: 4.7.8
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -283,10 +283,15 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.8 - August 2, 2023 =
+
+* New: Add "Automations" tab to the form builder.
+* Fix: Ensure at least one payment method is active when updating a payment form.
+
 = Stripe Payment Forms v4.7.7.3 - July 25, 2023 =
 
-* Stripe Tax - update for general availability.
-* Lite Connect - improve connection process.
+* New: Stripe Tax - update for general availability.
+* Fix: Lite Connect - improve connection process.
 
 = Stripe Payment Forms v4.7.7 - June 28, 2023 =
 
@@ -296,7 +301,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 * New: Add support for Alipay, FPX, Giropay, iDEAL, and Przelewy24 Stripe payments.
 * Fix: Do not set additional fees when Stripe account country is based in Mexico.
-
-= Stripe Payment Forms v4.7.3.1 - March 31, 2023 =
-
-* Fix: Check that `jddayofweek()` is available before use.
