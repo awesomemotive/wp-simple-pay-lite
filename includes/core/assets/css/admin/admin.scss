@@ -352,6 +352,10 @@
 		position: relative;
 		flex: 0 0 25%;
 
+		@media screen and (min-width: 1400px) {
+			flex-basis: 22%;
+		}
+
 		@media screen and (max-width: 782px) {
 			flex-basis: 100%;
 			flex-grow: 1;
@@ -363,7 +367,7 @@
 			padding: 0;
 
 			&:first-child {
-				margin-top: -1px;
+				margin-top: 12px;
 			}
 
 			&:last-child {
@@ -430,7 +434,7 @@
 				align-items: center;
 				line-height: 20px;
 				margin: 0;
-				padding: 10px 10px 10px 14px;
+				padding: 8px 10px 8px 14px;
 				text-decoration: none;
 				transition: all 0.05s ease-in-out;
 
@@ -447,10 +451,11 @@
 					outline: 0;
 					position: relative;
 					z-index: 3;
-					box-shadow: inset 0 0 0 2px currentColor;
+					box-shadow: inset 0 0 0 1px currentColor, 0 0 0 1px currentColor;
 				}
 
-				&[href="#purchase-restrictions-settings-panel"] {
+				&[href="#purchase-restrictions-settings-panel"],
+				&[href="#payment-page-settings-panel"] {
 					margin-bottom: 20px;
 					position: relative;
 
@@ -464,6 +469,14 @@
 						height: 1px;
 						background: #eaeaea;
 					}
+				}
+
+				span > span {
+					color: #f18500;
+					font-size: 12px;
+					font-weight: 600;
+					margin: 0 0 0 5px;
+					display: inline-block;
 				}
 			}
 
@@ -489,6 +502,10 @@
 	.simpay-panels {
 		flex: 0 0 75%;
 		display: flex;
+
+		@media screen and (min-width: 1400px) {
+			flex-basis: 78%;
+		}
 
 		@media screen and (max-width: 782px) {
 			flex-basis: 100%;
@@ -2273,6 +2290,72 @@ select.simpay-currency-symbol {
 		@include break-small {
 			font-size: $default-font-size;
 			line-height: normal;
+		}
+	}
+}
+
+.simpay-form-builder-automations {
+
+	&__cta {
+		margin: 24px 0 6px;
+		text-align: center;
+	}
+}
+
+.simpay-form-builder-automator {
+	padding: 16px 4px 26px !important;
+
+	&,
+	* {
+		box-sizing: border-box;
+	}
+
+	input[type="search"] {
+		font-size: 15px;
+		padding: 2px 8px;
+	}
+
+	&__integrations {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-column-gap: 16px;
+		grid-row-gap: 16px;
+		margin: 18px -18px 0;
+		padding: 0 18px 10px;
+		width: calc(100% + 36px);
+		max-height: 400px;
+		overflow-y: scroll;
+	}
+
+	&__integrations-integration {
+		color: initial;
+		text-align: center;
+		text-decoration: none;
+		background: #fff;
+		border: 1px solid #eee;
+		border-radius: 4px;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+		transition: all ease-in 0.15s;
+
+		img {
+			display: block;
+			margin: 16px auto;
+			height: 50px;
+		}
+
+		span {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding: 8px 16px;
+			display: block;
+			border-top: 1px solid #eee;
+		}
+
+		&:hover {
+			cursor: pointer;
+			border-color: #ddd;
+			box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 		}
 	}
 }

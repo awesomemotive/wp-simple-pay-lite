@@ -6,3 +6,4 @@ import './custom-fields.js';
 import './stripe-checkout.js';
 import './payment-page.js';
 import './purchase-restrictions.js';
+import './automations.js';

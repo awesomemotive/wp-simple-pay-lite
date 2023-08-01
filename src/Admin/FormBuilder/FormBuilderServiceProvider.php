@@ -35,6 +35,7 @@ class FormBuilderServiceProvider extends AbstractPluginServiceProvider {
 			'form-builder-license-check',
 			'form-builder-template-explorer',
 			'form-builder-custom-field-subscriber',
+			'form-builder-automator-integrations-importer'
 		);
 	}
 
@@ -61,6 +62,14 @@ class FormBuilderServiceProvider extends AbstractPluginServiceProvider {
 			'form-builder-custom-field-subscriber',
 			CustomFieldSubscriber::class
 		);
+
+		// Uncanny Automator integrations importer for the "Automations" tab.
+		$container->share(
+			'form-builder-automator-integrations-importer',
+			AutomatorIntegrationsImporter::class
+		)
+			->withArgument( 'https://integrations.automatorplugin.com/list.json' )
+			->withArgument( $container->get( 'scheduler' ) );
 	}
 
 }

@@ -361,35 +361,21 @@ function get_form_settings( $post ) {
 			</div>
 
 			<div
-				id="subscription-options-settings-panel"
+				id="automations-settings-panel"
 				class="simpay-panel-hidden <?php echo esc_attr( implode( ' ', $panel_classes ) ); ?>"
 			>
 				<?php
-				$subscription_options_template = '';
-
 				/**
-				 * Filters the template file to use for the "Subscription Options" Payment Form
-				 * settings tab panel.
+				 * Allows output in the "Automations" form settings tab panel.
 				 *
-				 * @since 3.0.0
-				 *
-				 * @param string $stripe_checkout_template Path to the settings tab panel template.
-				 */
-				$subscription_options_template = apply_filters( 'simpay_subscription_options_template', $subscription_options_template );
-
-				if ( file_exists( $subscription_options_template ) ) {
-					include_once( $subscription_options_template );
-				}
-
-				/**
-				 * Allows further output after the "Subscription Options" Payment Form
-				 * settings tab panel.
-				 *
-				 * @since 3.0.0
+				 * @since 4.x.x
 				 *
 				 * @param int $form_id Current Payment Form ID.
 				 */
-				do_action( 'simpay_form_settings_meta_subscription_display_panel', $post->ID );
+				do_action(
+					'simpay_form_settings_automations_panel',
+					$post->ID
+				);
 				?>
 			</div>
 
@@ -418,48 +404,56 @@ function get_form_settings( $post ) {
  * @param WP_Post $post Payment Form \WP_Post object.
  */
 function settings_tabs( $post ) {
-	$tabs = array(
-		'form_display_options' => array(
-			'label'  => esc_html__( 'General', 'stripe' ),
-			'target' => 'form-display-options-settings-panel',
-			'icon'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12,16c2.206,0,4-1.794,4-4s-1.794-4-4-4s-4,1.794-4,4S9.794,16,12,16z M12,10c1.084,0,2,0.916,2,2s-0.916,2-2,2 s-2-0.916-2-2S10.916,10,12,10z"></path><path d="M2.845,16.136l1,1.73c0.531,0.917,1.809,1.261,2.73,0.73l0.529-0.306C7.686,18.747,8.325,19.122,9,19.402V20 c0,1.103,0.897,2,2,2h2c1.103,0,2-0.897,2-2v-0.598c0.675-0.28,1.314-0.655,1.896-1.111l0.529,0.306 c0.923,0.53,2.198,0.188,2.731-0.731l0.999-1.729c0.552-0.955,0.224-2.181-0.731-2.732l-0.505-0.292C19.973,12.742,20,12.371,20,12 s-0.027-0.743-0.081-1.111l0.505-0.292c0.955-0.552,1.283-1.777,0.731-2.732l-0.999-1.729c-0.531-0.92-1.808-1.265-2.731-0.732 l-0.529,0.306C16.314,5.253,15.675,4.878,15,4.598V4c0-1.103-0.897-2-2-2h-2C9.897,2,9,2.897,9,4v0.598 c-0.675,0.28-1.314,0.655-1.896,1.111L6.575,5.403c-0.924-0.531-2.2-0.187-2.731,0.732L2.845,7.864 c-0.552,0.955-0.224,2.181,0.731,2.732l0.505,0.292C4.027,11.257,4,11.629,4,12s0.027,0.742,0.081,1.111l-0.505,0.292 C2.621,13.955,2.293,15.181,2.845,16.136z M6.171,13.378C6.058,12.925,6,12.461,6,12c0-0.462,0.058-0.926,0.17-1.378 c0.108-0.433-0.083-0.885-0.47-1.108L4.577,8.864l0.998-1.729L6.72,7.797c0.384,0.221,0.867,0.165,1.188-0.142 c0.683-0.647,1.507-1.131,2.384-1.399C10.713,6.128,11,5.739,11,5.3V4h2v1.3c0,0.439,0.287,0.828,0.708,0.956 c0.877,0.269,1.701,0.752,2.384,1.399c0.321,0.307,0.806,0.362,1.188,0.142l1.144-0.661l1,1.729L18.3,9.514 c-0.387,0.224-0.578,0.676-0.47,1.108C17.942,11.074,18,11.538,18,12c0,0.461-0.058,0.925-0.171,1.378 c-0.107,0.433,0.084,0.885,0.471,1.108l1.123,0.649l-0.998,1.729l-1.145-0.661c-0.383-0.221-0.867-0.166-1.188,0.142 c-0.683,0.647-1.507,1.131-2.384,1.399C13.287,17.872,13,18.261,13,18.7l0.002,1.3H11v-1.3c0-0.439-0.287-0.828-0.708-0.956 c-0.877-0.269-1.701-0.752-2.384-1.399c-0.19-0.182-0.438-0.275-0.688-0.275c-0.172,0-0.344,0.044-0.5,0.134l-1.144,0.662l-1-1.729 L5.7,14.486C6.087,14.263,6.278,13.811,6.171,13.378z"></path></svg>',
-		),
-		'payment_options'      => array(
-			'label'  => esc_html__( 'Payment', 'stripe' ),
-			'target' => 'payment-options-settings-panel',
-			'icon'   => '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20,4H4C2.897,4,2,4.897,2,6v12c0,1.103,0.897,2,2,2h16c1.103,0,2-0.897,2-2V6C22,4.897,21.103,4,20,4z M4,6h16v2H4V6z M4,18v-6h16.001l0.001,6H4z"></path><path d="M6 14H12V16H6z"></path></svg>',
-		),
+	$tabs = array();
+
+	// Icons: https://heroicons.com/
+	// Mini.
+
+	$tabs['form_display_options'] = array(
+		'label'  => esc_html__( 'General', 'stripe' ),
+		'target' => 'form-display-options-settings-panel',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M7.84 1.804A1 1 0 0 1 8.82 1h2.36a1 1 0 0 1 .98.804l.331 1.652a6.993 6.993 0 0 1 1.929 1.115l1.598-.54a1 1 0 0 1 1.186.447l1.18 2.044a1 1 0 0 1-.205 1.251l-1.267 1.113a7.047 7.047 0 0 1 0 2.228l1.267 1.113a1 1 0 0 1 .206 1.25l-1.18 2.045a1 1 0 0 1-1.187.447l-1.598-.54a6.993 6.993 0 0 1-1.929 1.115l-.33 1.652a1 1 0 0 1-.98.804H8.82a1 1 0 0 1-.98-.804l-.331-1.652a6.993 6.993 0 0 1-1.929-1.115l-1.598.54a1 1 0 0 1-1.186-.447l-1.18-2.044a1 1 0 0 1 .205-1.251l1.267-1.114a7.05 7.05 0 0 1 0-2.227L1.821 7.773a1 1 0 0 1-.206-1.25l1.18-2.045a1 1 0 0 1 1.187-.447l1.598.54a6.993 6.993 0 0 1 1.93-1.115l.33-1.652zM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" clip-rule="evenodd"/></svg>',
+	);
+
+	$tabs['payment_options'] = array(
+		'label'  => esc_html__( 'Payment', 'stripe' ),
+		'target' => 'payment-options-settings-panel',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5V6h18v-.5A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v6A1.5 1.5 0 002.5 16h15a1.5 1.5 0 001.5-1.5v-6zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h3.5a.75.75 0 000-1.5h-3.5z" clip-rule="evenodd" /></svg>',
 	);
 
 	$tabs['form_display'] = array(
 		'label'  => esc_html__( 'Form Fields', 'stripe' ),
 		'target' => 'custom-form-fields-settings-panel',
-		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65z"/><path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z"/></svg>',
 	);
 
 	$tabs['purchase_restrictions'] = array(
 		'label'  => esc_html__( 'Purchase Restrictions', 'stripe' ),
 		'target' => 'purchase-restrictions-settings-panel',
-		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1zm3 8V5.5a3 3 0 1 0-6 0V9h6z" clip-rule="evenodd"/></svg>',
 	);
-
-	if ( has_action( 'simpay_form_settings_meta_subscription_display_panel' ) ) {
-		$tabs['subscription_options'] = array(
-			'label'  => esc_html__( 'Subscription Options', 'stripe' ),
-			'target' => 'subscription-options-settings-panel',
-		);
-	}
 
 	$tabs['stripe_checkout'] = array(
 		'label'  => esc_html__( 'Stripe Checkout', 'stripe' ),
 		'target' => 'stripe-checkout-settings-panel',
-		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>',
+		'icon'   => '<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor"><path d="M15.77 2H5.92c-.42 0-.815.215-1.045.57-.11304.17606-.18045.37749-.19616.58612-.01572.20862.02077.41788.10616.60888l2.55 5.73c.15.32.15.69 0 1.01L4 18h11.77c.485 0 .93-.29 1.13-.74l2.99-6.75c.15-.325.15-.695 0-1.02L16.9 2.74c-.0967-.21938-.2548-.40603-.4554-.53737-.2005-.13133-.4349-.20172-.6746-.20263Z" fill-opacity=".8"/><path d="M3.61501 18c-.16944-.0001-.33676-.0377-.49-.11h.02c-.27386-.1221-.49291-.3411-.615-.615l-2.419997-5.51c-.0843758-.1901-.120752-.3981-.10593079-.6056.01482119-.2075.08038589-.4082.19093079-.5844.109865-.1755.262421-.3203.443418-.4208.180998-.1006.384529-.1536.591579-.1542H10.98c.485 0 .92.285 1.115.73l2.4 5.425.34.765c.05.11.115.21.19.3.245.32.6.65.99.755-.055.015-.15.025-.275.025H3.61001h.005Z" fill-opacity=".5"/><path d="M10.985 10c.45 0 .86.25 1.07.65l.04.08 2.4 5.425.34.765c.2521.4607.6596.8169 1.15 1.005l.09.035c-.1.025-.2.04-.305.04H4l3.335-7.5c.075-.16.11-.33.11-.505h3.54V10Z"/></g></svg>',
 	);
 
 	$tabs['payment_page'] = array(
 		'label'  => esc_html__( 'Payment Page', 'stripe' ),
 		'target' => 'payment-page-settings-panel',
-		'icon'   => '<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242z" clip-rule="evenodd"/></svg>',
+	);
+
+	$tabs['automations'] = array(
+		'label'  => wp_kses(
+			__( 'Automations <span>New!</span>', 'stripe' ),
+			array(
+				'span' => array(),
+			)
+		),
+		'target' => 'automations-settings-panel',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z" clip-rule="evenodd"/></svg>',
 	);
 
 	/**
@@ -501,7 +495,7 @@ function settings_tabs( $post ) {
 		$html = (
 			'<a href="#' . esc_attr( $tab['target'] ) . '" class="simpay-tab-item">' .
 				$icon .
-				'<span>' . esc_html( $tab['label'] ) . '</span>' .
+				'<span>' .  $tab['label'] . '</span>' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'</a>'
 		);
 
@@ -544,12 +538,16 @@ function settings_tabs( $post ) {
 				'path'    => array(
 					'fill'            => true,
 					'fill-rule'       => true,
+					'fill-opacity'    => true,
 					'd'               => true,
 					'transform'       => true,
 					'stroke'          => true,
 					'stroke-width'    => true,
 					'stroke-linecap'  => true,
 					'stroke-linejoin' => true,
+				),
+				'g'       => array(
+					'fill' => true,
 				),
 				'polygon' => array(
 					'fill'      => true,

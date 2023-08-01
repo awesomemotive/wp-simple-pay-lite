@@ -1457,6 +1457,18 @@ function __unstable_simpay_get_payment_form_templates() {
 
 	$template_files = glob( SIMPLE_PAY_DIR . '/data/templates/*.json' );
 
+	/**
+	 * Filters the list of payment form templates.
+	 *
+	 * @since [--next--]
+	 *
+	 * @param array<string> $template_files List of template file paths.
+	 */
+	$template_files = apply_filters(
+		'__unstable__simpay_payment_form_templates',
+		$template_files
+	);
+
 	if ( false === $template_files ) {
 		return array();
 	}
