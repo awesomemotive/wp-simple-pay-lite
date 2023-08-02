@@ -265,14 +265,14 @@ function onToggleCanRecur( priceEl, checkbox ) {
  * Handles displaying the current price's custom amount settings.
  *
  * @param {HTMLElement} priceEl Price container element.
+ * @param {HTMLElement} checkbox Custom amount toggle element.
  */
-function onToggleCustomAmount( priceEl ) {
+function onToggleCustomAmount( priceEl, checkbox ) {
 	const customAmountSettings = priceEl.querySelector(
 		'.simpay-price-custom-amount'
 	);
 
-	customAmountSettings.style.display =
-		'none' === customAmountSettings.style.display ? 'block' : 'none';
+	customAmountSettings.style.display = checkbox.checked ? 'table' : 'none';
 }
 
 /**
@@ -610,8 +610,8 @@ function bindPriceOptions() {
 			'.simpay-price-enable-custom-amount'
 		);
 
-		customAmountToggle.addEventListener( 'click', () => {
-			onToggleCustomAmount( priceEl );
+		customAmountToggle.addEventListener( 'change', () => {
+			onToggleCustomAmount( priceEl, customAmountToggle );
 			onChangeLabel( priceEl );
 		} );
 
