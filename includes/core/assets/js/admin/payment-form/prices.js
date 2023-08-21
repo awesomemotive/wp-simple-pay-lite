@@ -155,22 +155,22 @@ function onChangeLabel( priceEl ) {
 
 			let recurringIntervalDisplayReplaced = recurringIntervalDisplay;
 
-			recurringIntervalDisplayReplaced =
-				recurringIntervalDisplayReplaced.replace( '%1$s', label );
+			recurringIntervalDisplayReplaced = recurringIntervalDisplayReplaced.replace(
+				'%1$s',
+				label
+			);
 
-			recurringIntervalDisplayReplaced =
-				recurringIntervalDisplayReplaced.replace(
-					'%2$s',
-					recurringIntervalCount.value
-				);
+			recurringIntervalDisplayReplaced = recurringIntervalDisplayReplaced.replace(
+				'%2$s',
+				recurringIntervalCount.value
+			);
 
-			recurringIntervalDisplayReplaced =
-				recurringIntervalDisplayReplaced.replace(
-					'%3$s',
-					recurringIntervalCount.value === '1'
-						? recurringIntervalDisplayNouns[ 0 ]
-						: recurringIntervalDisplayNouns[ 1 ]
-				);
+			recurringIntervalDisplayReplaced = recurringIntervalDisplayReplaced.replace(
+				'%3$s',
+				recurringIntervalCount.value === '1'
+					? recurringIntervalDisplayNouns[ 0 ]
+					: recurringIntervalDisplayNouns[ 1 ]
+			);
 
 			label = recurringIntervalDisplayReplaced;
 		}

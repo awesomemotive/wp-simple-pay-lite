@@ -38,7 +38,7 @@ class InstantPayouts implements SubscriberInterface, LicenseAwareInterface {
 			// Form settings.
 			'simpay_form_settings_meta_payment_options_panel' => array(
 				'output_form_settings_notice',
-				4,
+				2,
 			),
 		);
 	}

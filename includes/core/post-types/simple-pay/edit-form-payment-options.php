@@ -317,7 +317,7 @@ function __unstable_add_price_options( $post_id ) {
 	$upgrade_add_price_purchased_url = simpay_docs_link(
 		'Add Price (already purchased)',
 		'upgrading-wp-simple-pay-lite-to-pro',
-		'form-payment-method-settings',
+		'form-price-option-settings',
 		true
 	);
 
@@ -339,7 +339,7 @@ function __unstable_add_price_options( $post_id ) {
 	$upgrade_amount_type_purchased_url = simpay_docs_link(
 		'Subscriptions Price (already purchased)',
 		'upgrading-wp-simple-pay-lite-to-pro',
-		'form-payment-method-settings',
+		'form-price-option-settings',
 		true
 	);
 
@@ -361,7 +361,7 @@ function __unstable_add_price_options( $post_id ) {
 	$upgrade_custom_purchased_url = simpay_docs_link(
 		'Custom amount (already purchased)',
 		'upgrading-wp-simple-pay-lite-to-pro',
-		'form-payment-method-settings',
+		'form-price-option-settings',
 		true
 	);
 	?>
@@ -369,9 +369,7 @@ function __unstable_add_price_options( $post_id ) {
 	<table>
 		<tr class="simpay-panel-field">
 			<th>
-				<strong>
-					<?php esc_html_e( 'Price Options', 'stripe' ); ?>
-				</strong>
+				<?php esc_html_e( 'Price Options', 'stripe' ); ?>
 			</th>
 			<td style="border-bottom: 0; padding-bottom: 10px;">
 				<div style="margin-bottom: 15px;">
@@ -523,7 +521,7 @@ function __unstable_add_price_options( $post_id ) {
 											</label>
 										</div>
 
-										<div>
+										<div style="margin-bottom: 10px;">
 											<label for="simpay-custom-lite">
 												<input
 													type="checkbox"
@@ -1065,32 +1063,31 @@ function __unstable_add_payment_methods( $post_id ) {
 								</span>
 
 								<div style="margin-left: auto; display: flex; align-items: center;">
-									<?php if ( 'card' === $payment_method_id ) : ?>
-									<button
-										class="button button-secondary button-small simpay-payment-method-fee-recovery-lite"
-										style="margin-left: auto;"
-										data-available="no"
-										data-upgrade-title="<?php echo esc_attr( $fee_recovery_upgrade_title ); ?>"
-										data-upgrade-description="<?php echo esc_attr( $fee_recovery_upgrade_description ); ?>"
-										data-upgrade-url="<?php echo esc_url( $fee_recovery_upgrade_url ); ?>"
-										data-upgrade-purchased-url="<?php echo esc_url( $fee_recovery_upgrade_purchased_url ); ?>"
-									>
-										<?php esc_html_e( 'Fee Recovery', 'stripe' ); ?>
-									</button>
-									<?php endif; ?>
+								<?php if ( 'card' === $payment_method_id ) : ?>
+								<button
+									class="button button-secondary button-small simpay-payment-method-fee-recovery-lite"
+									data-available="no"
+									data-upgrade-title="<?php echo esc_attr( $fee_recovery_upgrade_title ); ?>"
+									data-upgrade-description="<?php echo esc_attr( $fee_recovery_upgrade_description ); ?>"
+									data-upgrade-url="<?php echo esc_url( $fee_recovery_upgrade_url ); ?>"
+									data-upgrade-purchased-url="<?php echo esc_url( $fee_recovery_upgrade_purchased_url ); ?>"
+								>
+									<?php esc_html_e( 'Fee Recovery', 'stripe' ); ?>
+								</button>
+								<?php endif; ?>
 
-									<a
-										href="<?php echo esc_url( $docs_url ); ?>"
-										target="_blank"
-										rel="noopener noreferrer"
-										class="simpay-panel-field-payment-method__help"
-										style="margin-left: 5px;"
-									>
-										<span class="dashicons dashicons-editor-help"></span>
-										<span class="screen-reader-text">
-											<?php esc_html_e( 'Learn about Payment Method', 'stripe' ); ?>
-										</span>
-									</a>
+								<a
+									href="https://wpsimplepay.com/docs/?s=<?php echo esc_attr( $payment_method['name'] ); ?>&docs=1"
+									target="_blank"
+									rel="noopener noreferrer"
+									class="simpay-panel-field-payment-method__help"
+									style="margin-left: 5px;"
+								>
+									<span class="dashicons dashicons-editor-help"></span>
+									<span class="screen-reader-text">
+										<?php esc_html_e( 'Learn about Payment Method', 'stripe' ); ?>
+									</span>
+								</a>
 								</div>
 							</div>
 						</label>
@@ -1168,7 +1165,7 @@ function __unstable_add_tax_upsell() {
 					<?php esc_html_e( 'Tax Collection', 'stripe' ); ?>
 				</label>
 			</th>
-			<td>
+			<td style="border-bottom: 0; padding-bottom: 0;">
 				<select id="_tax_status_lite">
 					<option
 						value="none"
@@ -1206,5 +1203,5 @@ function __unstable_add_tax_upsell() {
 add_action(
 	'simpay_form_settings_meta_payment_options_panel',
 	__NAMESPACE__ . '\\__unstable_add_tax_upsell',
-	10.5
+	9
 );

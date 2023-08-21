@@ -21,52 +21,12 @@ function upgradeToProLink() {
 }
 
 /**
- * Binds navigation buttons/links in the "Five Star Rating" admin notice.
- */
-function fiveStarRatingNotice() {
-	const steps = document.querySelectorAll(
-		'.simpay-admin-notice-five-star-rating'
-	);
-
-	steps.forEach( ( stepEl ) => {
-		const navigationEls = stepEl.querySelectorAll( '[data-navigate]' );
-
-		if ( ! navigationEls ) {
-			return;
-		}
-
-		navigationEls.forEach( ( navigationEl ) => {
-			navigationEl.addEventListener( 'click', ( { target } ) => {
-				const step = target.dataset.navigate;
-				const stepToShow = document.querySelector(
-					`.simpay-admin-notice-five-star-rating[data-step="${ step }"]`
-				);
-				const stepsToHide = document.querySelectorAll(
-					`.simpay-admin-notice-five-star-rating:not([data-step="${ step }"])`
-				);
-
-				if ( stepToShow ) {
-					stepToShow.style.display = 'block';
-				}
-
-				if ( stepsToHide.length > 0 ) {
-					stepsToHide.forEach( ( stepToHide ) => {
-						stepToHide.style.display = 'none';
-					} );
-				}
-			} );
-		} );
-	} );
-}
-
-/**
  * Handle AJAX dismissal of notices.
  *
  * Uses jQuery because the `.notice-dismiss` button is added to the DOM
  * via jQuery when the notice loads.
  */
 domReady( () => {
-	fiveStarRatingNotice();
 	upgradeToProLink();
 
 	jQuery( '.simpay-notice' ).each( function () {

@@ -82,10 +82,6 @@ class FormPreviewOutput implements SubscriberInterface {
 		wp_enqueue_script( 'wp-a11y' );
 		wp_enqueue_style( 'dashicons' );
 
-		wp_head();
-		?>
-
-		<?php
         include_once SIMPLE_PAY_DIR . '/views/admin-form-preview-output.php'; // @phpstan-ignore-line
 		exit;
 	}

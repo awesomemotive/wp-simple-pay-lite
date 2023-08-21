@@ -1053,4 +1053,37 @@ abstract class Form {
 		}
 	}
 
+	/**
+	 * Returns the form's success message.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @return string
+	 */
+	public function get_confirmation_message() {
+		return get_post_meta( $this->id, '_success_message', true );
+	}
+
+	/**
+	 * Returns the form's email confirmation message.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @return string
+	 */
+	public function get_email_confirmation_message() {
+		return get_post_meta( $this->id, '_email_confirmation_message', true );
+	}
+
+	/**
+	 * Returns the form's email notification message.
+	 *
+	 * @since 4.7.9
+	 *
+	 * @return string
+	 */
+	public function get_email_notification_message() {
+		return get_post_meta( $this->id, '_email_notification_message', true );
+	}
+
 }

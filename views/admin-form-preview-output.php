@@ -25,13 +25,7 @@
 		);
 		?>
 	</title>
-	<?php
-	wp_enqueue_script( 'clipboard' );
-	wp_enqueue_script( 'wp-a11y' );
-	wp_enqueue_style( 'dashicons' );
-
-	wp_head();
-	?>
+	<?php wp_head(); ?>
 </head>
 <body class="simpay-form-preview">
 

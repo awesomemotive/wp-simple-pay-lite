@@ -175,13 +175,15 @@ function get_form_settings( $post ) {
 		'simpay-panel',
 		'simpay-panel-hidden',
 	);
+
+	$license = simpay_get_license();
 	?>
 
 <style>
 .page-title-action { display: none; }
 </style>
 
-<div id="simpay-form-settings">
+<div id="simpay-form-settings" <?php if ( $license->is_lite() ) : ?>data-lite<?php endif; ?>>
 	<div class="simpay-panels-wrap">
 		<input type="hidden" name="simpay_form_id" value="<?php echo esc_attr( $post->ID ); ?>" />
 		<input type="hidden" name="simpay_form_settings_tab" value="#form-display-options-settings-panel" />
@@ -368,12 +370,50 @@ function get_form_settings( $post ) {
 				/**
 				 * Allows output in the "Automations" form settings tab panel.
 				 *
-				 * @since 4.x.x
+				 * @since 4.7.8
 				 *
 				 * @param int $form_id Current Payment Form ID.
 				 */
 				do_action(
 					'simpay_form_settings_automations_panel',
+					$post->ID
+				);
+				?>
+			</div>
+
+			<div
+				id="confirmation-settings-panel"
+				class="simpay-panel-hidden <?php echo esc_attr( implode( ' ', $panel_classes ) ); ?>"
+			>
+				<?php
+				/**
+				 * Allows output in the "Confirmation" form settings tab panel.
+				 *
+				 * @since 4.7.9
+				 *
+				 * @param int $form_id Current Payment Form ID.
+				 */
+				do_action(
+					'simpay_form_settings_confirmation_panel',
+					$post->ID
+				);
+				?>
+			</div>
+
+			<div
+				id="notifications-settings-panel"
+				class="simpay-panel-hidden <?php echo esc_attr( implode( ' ', $panel_classes ) ); ?>"
+			>
+				<?php
+				/**
+				 * Allows output in the "Notifications" form settings tab panel.
+				 *
+				 * @since 4.7.9
+				 *
+				 * @param int $form_id Current Payment Form ID.
+				 */
+				do_action(
+					'simpay_form_settings_notifications_panel',
 					$post->ID
 				);
 				?>
@@ -405,6 +445,25 @@ function get_form_settings( $post ) {
  */
 function settings_tabs( $post ) {
 	$tabs = array();
+	$license = simpay_get_license();
+
+	// "Email Notifications" upgrade modal for Lite.
+	// @todo This is messy and should be able to be set in the tabs array.
+	$upgrade_title = esc_html__( 'Unlock Email Notifications', 'stripe' );
+
+	$upgrade_description = __(
+		'We\'re sorry, the customizable email notifications are not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+		'stripe'
+	);
+
+	$upgrade_url = simpay_pro_upgrade_url( 'form-notifications-settings' );
+
+	$upgrade_purchased_url = simpay_docs_link(
+		'Email Notifications (already purchased)',
+		'upgrading-wp-simple-pay-lite-to-pro',
+		'form-payment-method-settings',
+		true
+	);
 
 	// Icons: https://heroicons.com/
 	// Mini.
@@ -445,9 +504,31 @@ function settings_tabs( $post ) {
 		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242z" clip-rule="evenodd"/></svg>',
 	);
 
+	$tabs['confirmation'] = array(
+		'label'  => wp_kses(
+			__( 'Confirmation Page <span>New!</span>', 'stripe' ),
+			array(
+				'span' => array(),
+			)
+		),
+		'target' => 'confirmation-settings-panel',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5z" clip-rule="evenodd"/></svg>',
+	);
+
+	$tabs['notifications'] = array(
+		'label'  => wp_kses(
+			__( 'Email Notifications', 'stripe' ),
+			array(
+				'span' => array(),
+			)
+		),
+		'target' => 'notifications-settings-panel',
+		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path d="M4.214 3.227a.75.75 0 0 0-1.156-.956 8.97 8.97 0 0 0-1.856 3.826.75.75 0 0 0 1.466.316 7.47 7.47 0 0 1 1.546-3.186zm12.728-.956a.75.75 0 0 0-1.157.956 7.47 7.47 0 0 1 1.547 3.186.75.75 0 0 0 1.466-.316 8.971 8.971 0 0 0-1.856-3.826z"/><path fill-rule="evenodd" d="M10 2a6 6 0 0 0-6 6c0 1.887-.454 3.665-1.257 5.234a.75.75 0 0 0 .515 1.076 32.94 32.94 0 0 0 3.256.508 3.5 3.5 0 0 0 6.972 0 32.933 32.933 0 0 0 3.256-.508.75.75 0 0 0 .515-1.076A11.448 11.448 0 0 1 16 8a6 6 0 0 0-6-6zm0 14.5a2 2 0 0 1-1.95-1.557 33.54 33.54 0 0 0 3.9 0A2 2 0 0 1 10 16.5z" clip-rule="evenodd"/></svg>',
+	);
+
 	$tabs['automations'] = array(
 		'label'  => wp_kses(
-			__( 'Automations <span>New!</span>', 'stripe' ),
+			__( 'Automations', 'stripe' ),
 			array(
 				'span' => array(),
 			)
@@ -565,6 +646,13 @@ function settings_tabs( $post ) {
 	data-tab="<?php echo esc_attr( $key ); ?>"
 	data-if="_form_type"
 	data-is="off-site"
+	<?php if ( 'notifications' === $key && $license->is_lite() ) : ?>
+		data-available="no"
+		data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
+		data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
+		data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
+		data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+	<?php endif; ?>
 >
 		<?php echo $html; // WPCS: XSS okay. ?>
 </li>
@@ -647,7 +735,7 @@ function add_display_options( $post_id ) {
 						<?php esc_html_e( 'Description', 'stripe' ); ?>
 					</label>
 				</th>
-				<td>
+				<td style="border-bottom: 0; padding-bottom: 0;">
 					<?php
 					$description = simpay_get_payment_form_setting(
 						$post_id,
@@ -787,119 +875,6 @@ function add_display_options( $post_id ) {
 	<?php
 }
 add_action( 'simpay_form_settings_display_options_panel', __NAMESPACE__ . '\\add_display_options' );
-
-/**
- * Outputs markup for the "Payment Success Page" setting.
- *
- * @since 4.1.0
- * @access private
- *
- * @param int $post_id Current post ID (Payment Form ID).
- */
-function _add_payment_success_page( $post_id ) {
-	?>
-	<tr class="simpay-panel-field">
-		<th>
-			<label for="_success_redirect_type">
-				<?php esc_html_e( 'Payment Success Page', 'stripe' ); ?>
-			</label>
-		</th>
-		<td>
-			<?php
-			$success_redirect_type = simpay_get_payment_form_setting(
-				$post_id,
-				'_success_redirect_type',
-				'default',
-				__unstable_simpay_get_payment_form_template_from_url()
-			);
-
-			simpay_print_field(
-				array(
-					'type'    => 'radio',
-					'name'    => '_success_redirect_type',
-					'id'      => '_success_redirect_type',
-					'class'   => array( 'simpay-multi-toggle' ),
-					'options' => array(
-						'default'  => __( 'Global Setting', 'stripe' ),
-						'page'     => __( 'Specific Page', 'stripe' ),
-						'redirect' => __( 'Redirect URL', 'stripe' ),
-					),
-					'inline'  => 'inline',
-					'default' => 'default',
-					'value'   => $success_redirect_type,
-				)
-			);
-			?>
-
-			<div class="simpay-show-if" data-if="_success_redirect_type" data-is="default">
-				<p class="description">
-					<?php _e( 'By default, the payment success page indicated in Simple Pay > Settings > General will be used. This option allows you to specify an alternate page or URL for this payment form only.', 'stripe' ); ?>
-				</p>
-			</div>
-
-			<div class="simpay-show-if" data-if="_success_redirect_type" data-is="page" style="margin-top: 8px;">
-				<?php
-				$success_redirect_page = simpay_get_payment_form_setting(
-					$post_id,
-					'_success_redirect_page',
-					'',
-					__unstable_simpay_get_payment_form_template_from_url()
-				);
-
-				simpay_print_field(
-					array(
-						'type'        => 'select',
-						'page_select' => 'page_select',
-						'name'        => '_success_redirect_page',
-						'id'          => '_success_redirect_page',
-						'value'       => $success_redirect_page,
-						'description' => __(
-							'Choose a page from your site to redirect to after a successful transaction.',
-							'stripe'
-						),
-					)
-				);
-				?>
-			</div>
-
-			<div class="simpay-show-if" data-if="_success_redirect_type" data-is="redirect" style="margin-top: 8px;">
-				<?php
-				$success_redirect_url = simpay_get_payment_form_setting(
-					$post_id,
-					'_success_redirect_url',
-					'',
-					__unstable_simpay_get_payment_form_template_from_url()
-				);
-
-				simpay_print_field(
-					array(
-						'type'        => 'standard',
-						'subtype'     => 'text',
-						'name'        => '_success_redirect_url',
-						'id'          => '_success_redirect_url',
-						'class'       => array(
-							'simpay-field-text',
-						),
-						'placeholder' => 'https://',
-						'value'       => $success_redirect_url,
-						'description' => __(
-							'Enter a custom redirect URL for successful transactions.',
-							'stripe'
-						),
-					)
-				);
-				?>
-			</div>
-		</td>
-	</tr>
-
-	<?php
-}
-add_action(
-	'simpay_admin_after_form_display_options_rows',
-	__NAMESPACE__ . '\\_add_payment_success_page',
-	20
-);
 
 /**
  * Outputs markup for the "reCAPTCHA Anti-Spam" setting.
