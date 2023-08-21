@@ -2,7 +2,7 @@
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: 4.7.8
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -85,7 +85,7 @@ Drag and drop to add a custom amount entry, a coupon code field, various custom 
 
 All data entered into these custom payment fields are stored as "metadata" with each Stripe payment record within your Stripe dashboard, so everything is viewable alongside all payment or subscription plan data.
 
-[View our custom fields template](https://wpsimplepay.com/templates/custom-fields-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our payment templates](https://wpsimplepay.com/templates/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === 💳 3 Payment Form Display Types ===
 
@@ -93,15 +93,15 @@ Select from the on-site embedded, on-site overlay, or Stripe Checkout payment fo
 
 Compare them by viewing some of our payment form templates:
 
-- [Embedded on-site payment form](https://wpsimplepay.com/templates/credit-card-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [Overlay on-site payment form](https://wpsimplepay.com/templates/overlay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [Stripe Checkout](https://wpsimplepay.com/templates/stripe-checkout-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+- [Embedded on-site payment form](https://wpsimplepay.com/template/multiple-payment-methods-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+- [Overlay on-site payment form](https://wpsimplepay.com/template/overlay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+- [Stripe Checkout](https://wpsimplepay.com/template/stripe-checkout-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === 💳 Use Stripe Checkout Payment Form Pages ===
 
 If you need only minimal payment form customizations and don't need an overlay payment form, you can utilize Stripe's fully-hosted checkout pages to accept credit card payments. You can set a few options when using Stripe Checkout, but when this option is selected, Stripe dictates what can and cannot be configured on the checkout page as it is served up by Stripe’s servers.
 
-[View our Stripe Checkout template](https://wpsimplepay.com/templates/stripe-checkout-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our Stripe Checkout template](https://wpsimplepay.com/template/stripe-checkout-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 > We paid developers for several hours to do what WP Simple Pay accomplished in minutes. A no-brainer investment for us.
 
@@ -111,7 +111,7 @@ If you need only minimal payment form customizations and don't need an overlay p
 
 Set a one-time payment amount or let your site visitors pay what they want. Optionally specify minimum and default amounts. Great for donations!
 
-[View our one-time custom amount template](https://wpsimplepay.com/templates/one-time-custom-amount-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our one-time custom amount template](https://wpsimplepay.com/template/one-time-custom-amount-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === 💳 Add and Customize Subscription Options in Stripe ===
 
@@ -119,9 +119,9 @@ Connect a payment button to an individual Stripe plan or let your site visitors 
 
 View a few of these subscription templates:
 
-- [Opt-in to recurring subscription payments](https://wpsimplepay.com/templates/opt-in-subscription-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+- [Opt-in to recurring subscription payments](https://wpsimplepay.com/template/opt-in-subscription-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [Allow customer or donor to enter a recurring custom amount](https://wpsimplepay.com/templates/subscription-custom-amount-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-- [Add an initial setup fee to the first payment](https://wpsimplepay.com/templates/subscription-setup-fee-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+- [Add an initial setup fee to the first payment](https://wpsimplepay.com/template/subscription-setup-fee-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 You can also set up installment plans to end subscriptions after a specific number of charges.
 
@@ -131,7 +131,7 @@ Percent or amount-off coupon codes added in your Stripe dashboard can be used in
 
 Use with subscriptions or one-time payments, and optionally add a total amount label that updates real-time.
 
-[View our coupon code template](https://wpsimplepay.com/templates/coupon-code-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our coupon code template](https://wpsimplepay.com/template/coupon-code-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 > I've set up payment processing on over a dozen sites and it usually takes forever just to get up and running. Using WP Simple Pay I was accepting Stripe payments in no time. It’s one of the best decisions I made while launching my new product.
 
@@ -143,20 +143,20 @@ Give your site visitors the option to pay using Apple Pay, Google Pay, and Micro
 
 Anyone with a browser and device combination that allows one of these options will see the new payment button.
 
-[View our Apple Pay & Google Pay template](https://wpsimplepay.com/templates/apple-pay-google-pay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our Apple Pay & Google Pay template](https://wpsimplepay.com/template/apple-pay-google-pay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === 💳 Accept ACH Debit Payments with Stripe ===
 
 Give your U.S. customers the option to pay directly from their bank accounts with ACH debit payments and take advantage of lower fees in Stripe. ACH payments on Stripe cost 0.80%, capped at $5, with no monthly fees or verification fees.
 
-[View our ACH debit payment template](https://wpsimplepay.com/templates/ach-direct-debit-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our ACH debit payment template](https://wpsimplepay.com/template/ach-direct-debit-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === 💳 Accept Klarna and Afterpay/Clearpay Payments with Stripe ===
 
 With a buy now, pay later payment method enabled, your customers get more payment flexibility, allowing them to purchase what they want now and pay over time. Your business receives the full payment upfront and is protected from fraud, while your customers pay nothing or only a portion of the total upfront without fees.
 
-[View our Klarna buy now, pay later template](https://wpsimplepay.com/templates/klarna-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-[View our Afterpay/Clearpay buy now, pay later template](https://wpsimplepay.com/templates/afterpay-clearpay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our Klarna buy now, pay later template](https://wpsimplepay.com/template/klarna-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+[View our Afterpay/Clearpay buy now, pay later template](https://wpsimplepay.com/template/afterpay-clearpay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === 💳 Accept SEPA Direct Debit Payments with Stripe ===
 
