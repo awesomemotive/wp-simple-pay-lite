@@ -283,6 +283,11 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.9 - August 22, 2023 =
+
+* New: Form Builder - add per-form confirmation and email messages.
+* Fix: Form Preview - avoid calling wp_head() more than once.
+
 = Stripe Payment Forms v4.7.8 - August 2, 2023 =
 
 * New: Add "Automations" tab to the form builder.
@@ -296,8 +301,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 = Stripe Payment Forms v4.7.7 - June 28, 2023 =
 
 * New: Add support for adding custom fields to Stripe Checkout.
-
-= Stripe Payment Forms v4.7.5 - May 25, 2023 =
-
-* New: Add support for Alipay, FPX, Giropay, iDEAL, and Przelewy24 Stripe payments.
-* Fix: Do not set additional fees when Stripe account country is based in Mexico.
