@@ -138,6 +138,8 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
+		$form_id = $object->metadata->simpay_form_id;
+
 		// Retrieve the payment confirmation data.
 		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
 		$customer = $object->customer;
@@ -146,7 +148,7 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data(
 			$customer->id,
 			false,
-			$object->metadata->simpay_form_id
+			$form_id
 		);
 
 		// @todo log why the email didn't send.
@@ -184,7 +186,25 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			}
 		}
 
-		$mailer->set_body( $email->get_body( $type ) );
+		$body = '';
+
+		// If there is a per-form custom mesasge, use it.
+		$form = simpay_get_form( $form_id );
+
+		if ( false !== $form ) {
+			$confirmation_message = $form->get_email_confirmation_message();
+
+			if ( ! empty( $confirmation_message ) ) {
+				$body = $confirmation_message;
+			}
+		}
+
+		// Otherwise use the default message.
+		if ( empty( $body ) ) {
+			$body = $email->get_body( $type );
+		}
+
+		$mailer->set_body( $body );
 
 		// Finally, send the email.
 		$mailer->send();
@@ -213,6 +233,8 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
+		$form_id = $object->metadata->simpay_form_id;
+
 		// Retrieve the payment confirmation data.
 		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
 		$customer = $object->customer;
@@ -221,7 +243,7 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data(
 			$customer->id,
 			false,
-			$object->metadata->simpay_form_id
+			$form_id
 		);
 
 		// @todo log why the email didn't send.
@@ -246,8 +268,25 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		// ...then set the subject.
 		$mailer->set_subject( $email->get_subject() );
 
-		// ... then parse and set the body content.
-		$mailer->set_body( $email->get_body() );
+		$body = '';
+
+		// If there is a per-form custom mesasge, use it.
+		$form = simpay_get_form( $form_id );
+
+		if ( false !== $form ) {
+			$notification_message = $form->get_email_notification_message();
+
+			if ( ! empty( $notification_message ) ) {
+				$body = $notification_message;
+			}
+		}
+
+		// Otherwise use the default message.
+		if ( empty( $body ) ) {
+			$body = $email->get_body();
+		}
+
+		$mailer->set_body( $body );
 
 		// Finally, send the email.
 		$mailer->send();

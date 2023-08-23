@@ -282,6 +282,28 @@ class Shortcodes {
 				$content = Payment_Confirmation\get_content();
 			}
 
+			// If we have a form, and there is custom content, use it.
+			// Use a late priority to override content pulled from Pro.
+			$form_id = isset( $_GET['form_id'] )
+				? absint( $_GET['form_id'] )
+				: 0;
+
+			$form = simpay_get_form( $form_id );
+
+			if ( false !== $form ) {
+				$form_message = $form->get_confirmation_message();
+
+				if ( ! empty( $form_message ) ) {
+					add_filter(
+						'simpay_payment_confirmation_content',
+						function() use ( $form_message ) {
+							return $form_message;
+						},
+						99
+					);
+				}
+			}
+
 			/**
 			 * Filters the content of the confirmation shortcode.
 			 *

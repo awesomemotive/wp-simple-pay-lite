@@ -352,10 +352,6 @@
 		position: relative;
 		flex: 0 0 25%;
 
-		@media screen and (min-width: 1400px) {
-			flex-basis: 22%;
-		}
-
 		@media screen and (max-width: 782px) {
 			flex-basis: 100%;
 			flex-grow: 1;
@@ -504,7 +500,7 @@
 		display: flex;
 
 		@media screen and (min-width: 1400px) {
-			flex-basis: 78%;
+			flex-basis: 75%;
 		}
 
 		@media screen and (max-width: 782px) {

@@ -35,7 +35,6 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			'admin-page-setup-wizard',
 			'admin-page-form-templates',
 			'admin-notice-update-available',
-			'admin-notice-five-star-rating',
 			'admin-notice-license-upgrade-top-of-page',
 			'admin-notice-license-missing',
 			'admin-notice-license-expired',
@@ -51,6 +50,7 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			'admin-branding',
 			'admin-page-subscriber',
 			'admin-notice-subscriber',
+			'admin-notification-five-star-rating',
 		);
 	}
 
@@ -76,6 +76,12 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminNoticeSubscriber::class
 		)
 			->withArgument( $this->get_notices() );
+
+		// Five Star Rating notification.
+		$container->share(
+			'admin-notification-five-star-rating',
+			PluginRatingNotification::class
+		);
 	}
 
 	/**
@@ -180,12 +186,6 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminNotice\UpdateAvailableNotice::class
 		);
 
-		// Five Star Rating.
-		$container->share(
-			'admin-notice-five-star-rating',
-			AdminNotice\FiveStarRatingNotice::class
-		);
-
 		// License Upgrade (top of page).
 		$container->share(
 			'admin-notice-license-upgrade-top-of-page',
@@ -213,7 +213,6 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 		/** @var array<\SimplePay\Core\AdminNotice\AdminNoticeInterface> */
 		$notices = array(
 			$container->get( 'admin-notice-update-available' ),
-			$container->get( 'admin-notice-five-star-rating' ),
 			$container->get( 'admin-notice-license-upgrade-top-of-page' ),
 			$container->get( 'admin-notice-license-missing' ),
 			$container->get( 'admin-notice-license-expired' ),

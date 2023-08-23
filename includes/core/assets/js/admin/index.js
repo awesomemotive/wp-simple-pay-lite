@@ -338,7 +338,9 @@ let spAdmin = {};
 		// Can make specific panel active on initial page load via url hash.
 
 		handleMetaboxTabClick() {
-			const tabLinks = $( 'ul.simpay-tabs a' );
+			const tabLinks = $(
+				'ul.simpay-tabs li:not([data-available="no"]) a'
+			);
 			const panels = $( 'div.simpay-panel' );
 			const allTabLinkParents = tabLinks.parents( 'li' );
 

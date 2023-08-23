@@ -82,6 +82,14 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_success_redirect_type', $success_redirect_type );
 
+	// Success message.
+	if ( isset( $_POST['_success_message' ] ) && ! empty( $_POST['_success_message'] ) ) {
+		$success_message = wp_kses_post( $_POST['_success_message'] );
+		update_post_meta( $post_id, '_success_message', $success_message );
+	} else {
+		delete_post_meta( $post_id, '_success_message' );
+	}
+
 	// Success redirect page.
 	$success_redirect_page = isset( $_POST['_success_redirect_page'] )
 		? esc_attr( $_POST['_success_redirect_page'] )

@@ -218,6 +218,7 @@ final class SimplePay {
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-payment-page.php' );
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-purchase-restrictions.php' );
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-automations.php' );
+		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-confirmation.php' );
 		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/actions.php' );
 
 		// Load core back-end only functions.

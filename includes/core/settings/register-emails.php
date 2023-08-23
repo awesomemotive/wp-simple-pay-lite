@@ -68,6 +68,7 @@ function remove_extra_media_buttons() {
 }
 add_action( 'simpay_admin_page_settings_emails_start', __NAMESPACE__ . '\\remove_extra_media_buttons' );
 add_action( 'simpay_admin_page_settings_display_start', __NAMESPACE__ . '\\remove_extra_media_buttons' );
+add_action( 'simpay_form_settings_confirmation_panel', __NAMESPACE__ . '\\remove_extra_media_buttons', 0 );
 
 /**
  * Registers settings section.

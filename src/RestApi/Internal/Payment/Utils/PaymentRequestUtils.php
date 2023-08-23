@@ -626,8 +626,10 @@ class PaymentRequestUtils {
 	 * @return array<string, array<string, string>>
 	 */
 	public static function get_payment_method_options( $request ) {
-		$is_recurring           = self::is_recurring( $request );
-		$payment_method_types   = self::get_payment_method_types( $request );
+		$form                 = self::get_form( $request );
+		$is_recurring         = self::is_recurring( $request );
+		$payment_method_types = self::get_payment_method_types( $request );
+
 		$payment_method_options = array(
 			'card'            => array(
 				'setup_future_usage' => 'off_session',
@@ -639,10 +641,30 @@ class PaymentRequestUtils {
 				'setup_future_usage' => 'off_session',
 			),
 			'us_bank_account' => array(
-				'verification_method' => 'instant',
-				'setup_future_usage'  => 'off_session',
+				'setup_future_usage' => 'off_session',
 			),
 		);
+
+		// If ach-debit is enabled, check if the verification_method.instant
+		// flag is set. If it is not, force instant verification.
+		/** @var array<\SimplePay\Pro\Payment_Methods\Payment_Method> */
+		$payment_methods = Payment_Methods\get_form_payment_methods( $form );
+
+		$ach_direct_debit = array_filter(
+			$payment_methods,
+			function( $payment_method ) {
+				return 'ach-debit' === $payment_method->id;
+			}
+		);
+
+		if ( ! empty( $ach_direct_debit ) ) {
+			$pm     = current( $ach_direct_debit );
+			$manual = isset( $pm->config['verification_method'] ) && 'manual' === $pm->config['verification_method'];
+
+			$payment_method_options['us_bank_account']['verification_method'] = $manual
+				? 'automatic'
+				: 'instant';
+		}
 
 		// Remove `setup_future_usage` if the form is recurring. This gets set
 		// at the Subscription's top level `off_session=true` parameter instead.
