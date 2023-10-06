@@ -82,10 +82,15 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 			)
 		);
 
-		$renew_url = simpay_ga_url(
-			'https://wpsimplepay.com/my-account/licenses/',
-			'payment-form-license-renewal'
+		$renew_url = add_query_arg(
+			array(
+				'edd_license_key' => $this->license->get_key(),
+				'discount'        => 'SAVE50',
+			),
+			sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) ) // @phpstan-ignore-line
 		);
+
+		$renew_url = simpay_ga_url( $renew_url, 'payment-form-license-renewal' );
 
 		$learn_more_url = simpay_ga_url(
 			'https://wpsimplepay.com/lite-vs-pro/',

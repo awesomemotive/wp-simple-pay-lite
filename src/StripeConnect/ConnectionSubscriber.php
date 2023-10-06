@@ -79,7 +79,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		$customer_site_url = remove_query_arg(
 			array(
 				'state',
-				'wpsp_gateway_connect_completion'
+				'wpsp_gateway_connect_completion',
 			),
 			$current_url
 		);
@@ -342,7 +342,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 							'stripe'
 						),
 						$connect
-					)
+					),
 				)
 			);
 		}
@@ -391,6 +391,10 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 				}
 
 				$message = (
+					sprintf(
+						'<code style="position: absolute; right: 10px; top: 10px;">%s</code>',
+						$account->id
+					) .
 					$display_name .
 					$email .
 					esc_html__( 'Administrator (Owner)', 'stripe' )

@@ -270,13 +270,11 @@ function register_advanced_settings( $settings ) {
 					: wpautop(
 						wp_kses(
 							sprintf(
-								/* translators: %3$s Opening <a> tag, do not translate. %4$s Closing </a> tag, do not translate. */
+								/* translators: %1$s Opening <a> tag, do not translate. %2$s Closing </a> tag, do not translate. */
 								__(
-									'Enable the new, smarter payment experience. Have questions about opting in or managing customizations? %3$sContact us%4$s',
+									'Enable the new, smarter payment experience. Have questions about opting in or managing customizations? %1$sContact us%2$s',
 									'stripe'
 								),
-								'<strong>',
-								'</strong>',
 								'<a href="' . esc_url( 'https://wpsimplepay.com/my-account/support/?a=I%20have%20questions%20about%20the%20new%20payment%20flow' ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
 								Utils\get_external_link_markup() . '</a>'
 							),

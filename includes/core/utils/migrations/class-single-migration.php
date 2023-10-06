@@ -24,6 +24,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Single_Migration extends Migration {
 
 	/**
+	 * @since 4.7.10
+	 * @var bool
+	 */
+	public $automatic;
+
+	/**
 	 * Constructs the migration.
 	 *
 	 * @since 4.1.0

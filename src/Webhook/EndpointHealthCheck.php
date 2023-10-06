@@ -83,7 +83,7 @@ class EndpointHealthCheck implements SubscriberInterface, LicenseAwareInterface 
 			// Check the ID.
 			/** @var string $endpoint_id */
 			$endpoint_id = simpay_get_setting(
-				"${prefix}_webhook_endpoint_id",
+				"{$prefix}_webhook_endpoint_id",
 				''
 			);
 
@@ -96,13 +96,13 @@ class EndpointHealthCheck implements SubscriberInterface, LicenseAwareInterface 
 			// Check the URLs.
 			/** @var string $endpoint_url */
 			$endpoint_url = simpay_get_setting(
-				"${prefix}_webhook_endpoint_url",
+				"{$prefix}_webhook_endpoint_url",
 				''
 			);
 
 			if (
 				empty( $endpoint_url ) ||
-				$endpoint_url !== simpay_get_webhook_url()
+				simpay_get_webhook_url() !== $endpoint_url
 			) {
 				$endpoint = $this->endpoint->get( $endpoint_id );
 				$this->endpoint->update( $endpoint );
@@ -113,7 +113,7 @@ class EndpointHealthCheck implements SubscriberInterface, LicenseAwareInterface 
 			// Check the events.
 			/** @var array<string> $endpoint_events */
 			$endpoint_events = simpay_get_setting(
-				"${prefix}_webhook_endpoint_events",
+				"{$prefix}_webhook_endpoint_events",
 				array()
 			);
 
@@ -150,7 +150,7 @@ class EndpointHealthCheck implements SubscriberInterface, LicenseAwareInterface 
 		$prefix = simpay_is_test_mode() ? 'test' : 'live';
 
 		simpay_update_setting(
-			"${prefix}_webhook_endpoint_url",
+			"{$prefix}_webhook_endpoint_url",
 			simpay_get_webhook_url()
 		);
 	}

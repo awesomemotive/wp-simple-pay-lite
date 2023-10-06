@@ -53,8 +53,7 @@ class REST_API {
 		$controllers = apply_filters( 'simpay_rest_api_controllers', $controllers );
 
 		foreach ( $controllers as $controller ) {
-			$this->$controller = new $controller();
-			$this->$controller->register_routes();
+			( new $controller() )->register_routes();
 		}
 	}
 

@@ -148,21 +148,34 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 					'</a>'
 				);
 			} elseif ( false === $this->license->is_valid() ) {
-				$renew_url = simpay_ga_url(
-					'https://wpsimplepay.com/my-account/licenses/',
+				$renew_url = add_query_arg(
+					array(
+						'edd_license_key' => $this->license->get_key(),
+						'discount'        => 'SAVE50',
+					),
+					sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) ) // @phpstan-ignore-line
+				);
+
+				$renew_url = simpay_ga_url( $renew_url, 'stripe-account-settings' );
+
+				$learn_more_url = simpay_docs_link(
+					'Learn More',
+					'what-happens-if-my-license-expires',
 					'stripe-account-settings',
-					'Renew license'
+					true
 				);
 
 				$message .= sprintf(
 					/* translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate. */
 					__(
-						'%1$sPay as you go pricing%2$s: 3%% fee per-transaction + Stripe fees. %3$sRenew your license%4$s to remove additional fees and unlock powerful features.',
+						'%1$sPay as you go pricing%2$s: 3%% fee per-transaction + Stripe fees. %3$sRenew your license (save 50%% off!)%4$s to remove additional fees and unlock powerful features. %5$sLearn more%6$s',
 						'stripe'
 					),
 					'<strong>',
 					'</strong>',
 					'<a href="' . esc_url( $renew_url ) . '" target="_blank" rel="noopener noreferrer">',
+					'</a>',
+					'<a href="' . esc_url( $learn_more_url ) . '" target="_blank" rel="noopener noreferrer">',
 					'</a>'
 				);
 			}

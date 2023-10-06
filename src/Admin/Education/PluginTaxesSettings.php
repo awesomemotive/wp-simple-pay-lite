@@ -40,7 +40,7 @@ class PluginTaxesSettings extends AbstractProductEducation implements Subscriber
 	 *
 	 * @since 4.4.0
 	 *
-	 * @param \SimplePay\Core\Settings\Subsection_Collection<\SimplePay\Core\Settings\Subsection> $subsections Subsections collection.
+	 * @param \SimplePay\Core\Settings\Subsection_Collection $subsections Subsections collection.
 	 * @return void
 	 */
 	function register_subsections( $subsections ) {

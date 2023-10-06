@@ -24,16 +24,13 @@ use SimplePay\Core\RestApi\Internal\Payment\Utils\TaxUtils;
 trait SubscriptionTrait {
 
 	/**
-	 * Application fee.
-	 *
-	 * This is initialized in the constructor that includes this trait, but
-	 * is added here for IDE support.
+	 * Application fee handling.
 	 *
 	 * @since 4.7.0
+	 *
 	 * @var \SimplePay\Core\StripeConnect\ApplicationFee
 	 */
 	protected $application_fee;
-
 
 	/**
 	 * Creates a Subscription for the given request.

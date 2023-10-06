@@ -22,6 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Form {
 
 	/**
+	 * @since 3.0.0
+	 * @var \WP_Post
+	 */
+	public $post;
+
+	/**
 	 * Test mode.
 	 *
 	 * @since 3.0.0
@@ -156,7 +162,7 @@ abstract class Form {
 	 * @since 3.0.0
 	 * @var string
 	 */
-	public $decimal_separator  = '';
+	public $decimal_separator = '';
 
 	/**
 	 * Thousand separator.
@@ -196,7 +202,7 @@ abstract class Form {
 	 * @since 3.0.0
 	 * @var string
 	 */
-	public $item_description       = '';
+	public $item_description = '';
 
 	/**
 	 * Stripe Checkout: Image URL (form logo).
@@ -776,7 +782,6 @@ abstract class Form {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @param \SimplePay\Core\Abstracts\Form $form The payment form.
 	 * @return bool
 	 */
 	abstract public function has_fee_recovery();

@@ -645,6 +645,10 @@ if ( ! simpay_is_upe() ) {
  * @return void
  */
 function maybe_add_inbox_notification() {
+	if ( ! simpay_is_livemode() ) {
+		return;
+	}
+
 	// Notification Inbox is only available in WP 5.7+.
 	global $wp_version;
 

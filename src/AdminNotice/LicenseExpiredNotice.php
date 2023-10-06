@@ -11,17 +11,12 @@
 
 namespace SimplePay\Core\AdminNotice;
 
-use SimplePay\Core\License\LicenseAwareInterface;
-use SimplePay\Core\License\LicenseAwareTrait;
-
 /**
  * LicenseExpiredNotice class.
  *
  * @since 4.4.6
  */
-class LicenseExpiredNotice extends AbstractAdminNotice implements LicenseAwareInterface {
-
-	use LicenseAwareTrait;
+class LicenseExpiredNotice extends AbstractAdminNotice {
 
 	/**
 	 * {@inheritdoc}
@@ -67,14 +62,21 @@ class LicenseExpiredNotice extends AbstractAdminNotice implements LicenseAwareIn
 	 * {@inheritdoc}
 	 */
 	public function get_notice_data() {
-		$renew_url = simpay_ga_url(
-			'https://wpsimplepay.com/my-account/billing',
-			'admin-notice-expired-license'
+		$renew_url = add_query_arg(
+			array(
+				'edd_license_key' => $this->license->get_key(),
+				'discount'        => 'SAVE50',
+			),
+			sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) ) // @phpstan-ignore-line
 		);
 
-		$learn_more_url = simpay_ga_url(
-			'https://wpsimplepay.com/lite-vs-pro/',
-			'admin-notice-expired-license'
+		$renew_url = simpay_ga_url( $renew_url, 'admin-notice-expired-license' );
+
+		$learn_more_url = simpay_docs_link(
+			'Learn More',
+			'what-happens-if-my-license-expires',
+			'admin-notice-expired-license',
+			true
 		);
 
 		/** @var string $expiration */
@@ -87,7 +89,7 @@ class LicenseExpiredNotice extends AbstractAdminNotice implements LicenseAwareIn
 			'renew_url'          => $renew_url,
 			'learn_more_url'     => $learn_more_url,
 			'is_in_grace_period' => $this->license->is_in_grace_period(),
-			'grace_period_ends'  => date(
+			'grace_period_ends'  => date( // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 				$format,
 				strtotime( $expiration ) + ( DAY_IN_SECONDS * 14 )
 			),

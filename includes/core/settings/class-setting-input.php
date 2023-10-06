@@ -70,6 +70,14 @@ class Setting_Input extends Setting {
 	public $step;
 
 	/**
+	 * Classes.
+	 *
+	 * @since 4.7.10
+	 * @var array<string>
+	 */
+	public $classes;
+
+	/**
 	 * Additional input attributes (readonly, disabled, etc)
 	 *
 	 * @since 4.0.0
@@ -90,6 +98,7 @@ class Setting_Input extends Setting {
 	 *   @type string $min Setting minimum.
 	 *   @type string $max Setting maximum.
 	 *   @type string $step Setting step.
+	 *   @type array<string> $classes
 	 * }
 	 */
 	public function __construct( $args ) {

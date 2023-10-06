@@ -62,6 +62,7 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 
 		return array(
 			'parse_request' => 'parse_pretty_request',
+			'init'          => 'maybe_redirect_back',
 		);
 	}
 
@@ -74,11 +75,6 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function parse_pretty_request( $wp ) {
-		// Do not take over the request if we are returning from a payment method redirect.
-		if ( isset( $_GET['payment_intent'] ) ) {
-			return;
-		}
-
 		if ( ! empty( $wp->query_vars['name'] ) ) {
 			$request = $wp->query_vars['name'];
 		}
@@ -101,15 +97,6 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 		if ( null === $payment_form_obj ) {
 			return;
 		}
-
-		// Set the "Success Page" redirect _before_ we call the form, but when
-		// we are pretty sure we are on a Payment Page.
-		$this->events->add_callback(
-			'simpay_payment_success_page',
-			array( $this, 'set_self_redirect' ),
-			10,
-			2
-		);
 
 		$this->form = simpay_get_form( $payment_form_obj->ID );
 
@@ -206,38 +193,58 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	}
 
 	/**
-	 * Update the payment confirmation URL if receipt should show on the same page.
+	 * Redirects back to the payment page if needed.
 	 *
-	 * @since 4.5.0
+	 * @since 4.7.10
 	 *
-	 * @param string $url Success page URL.
-	 * @param int    $form_id Payment form ID.
-	 * @return string
+	 * @return void
 	 */
-	public function set_self_redirect( $url, $form_id ) {
+	public function maybe_redirect_back() {
+		// Avoid redirect loops.
+		if ( isset( $_GET['redirected'] ) ) {
+			return;
+		}
+
+		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data();
+
+		if ( empty( $payment_confirmation_data ) ) {
+			return;
+		}
+
+		$form = $payment_confirmation_data['form'];
+
 		// Return standard success URL if Payment Page is not enabled.
-		if ( false === $this->is_payment_page_enabled( $form_id ) ) {
-			return $url;
+		if ( false === $this->is_payment_page_enabled( $form->id ) ) {
+			return;
 		}
 
 		$self_confirmation = get_post_meta(
-			$form_id,
+			$form->id,
 			'_payment_page_self_confirmation',
 			true
 		);
 
 		// Return standard success URL if self confirmation is not enabled.
 		if ( 'no' === $self_confirmation ) {
-			return $url;
+			return;
 		}
 
-		$redirect_url = get_permalink( $form_id );
+		$redirect_url = add_query_arg(
+			array_merge(
+				array(
+					'redirected' => true,
+				),
+				array_map( 'sanitize_text_field', $_GET )
+			),
+			get_permalink( $form->id )
+		);
 
 		if ( ! is_string( $redirect_url ) ) {
-			return $url;
+			return;
 		}
 
-		return $redirect_url;
+		wp_redirect( esc_url_raw( $redirect_url ) );
+		exit;
 	}
 
 	/**
