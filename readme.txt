@@ -283,9 +283,9 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
-= Stripe Payment Forms v4.7.10 - October 11, 2023 =
+= Stripe Payment Forms v4.7.10 - October 12, 2023 =
 
-* New: Help improve WP Simple Pay with opt-in anonymous telemetry reporting.
+* New: Help improve WP Simple Pay with *opt-in* anonymous telemetry reporting https://wpsimplepay.com/doc/what-information-does-wp-simple-pay-collect/
 * Fix: Anti-spam - only add notification in Live Mode.
 * Dev: System Report - show missing database tables.
 * Dev: Show connected Stripe account ID in connection status.
