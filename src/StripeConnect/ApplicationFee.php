@@ -495,6 +495,14 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			''
 		);
 
+		if (
+			! empty( $connect_account_type ) &&
+			'pro' === $connect_account_type &&
+			$this->license->is_lite()
+		) {
+			return true;
+		}
+
 		// Lite has not been reconnected yet, do not add a fee.
 		return (
 			! empty( $connect_account_type ) &&
