@@ -157,6 +157,7 @@
 	display: flex;
 	align-items: center;
 	margin-bottom: 8px;
+	position: relative;
 
 	.spinner {
 		float: none;
@@ -2413,4 +2414,13 @@ body.post-type-simple-pay #wpbody-content {
 			height: 16px;
 		}
 	}
+}
+
+.simpay-settings-is_upe td {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-left-width: 4px;
+	border-left-color: #2271b1;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	padding: 12px 18px;
 }

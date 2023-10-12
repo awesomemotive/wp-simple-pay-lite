@@ -34,11 +34,15 @@ class CustomerSuccessServiceProvider extends AbstractPluginServiceProvider {
 	 */
 	public function get_subscribers() {
 		return array(
+			// Achievements.
 			'customer-success-achievement-first-form',
 			'customer-success-achievement-first-form-embed',
 			'customer-success-achievement-first-test-payment',
 			'customer-success-achievement-go-live',
 			'customer-success-achievement-first-live-payment',
+
+			// Telemetry.
+			'customer-success-telemetry',
 		);
 	}
 
@@ -100,6 +104,13 @@ class CustomerSuccessServiceProvider extends AbstractPluginServiceProvider {
 			)
 				->withArgument( $achievements );
 		}
+
+		// Telemetry.
+		$container->share(
+			'customer-success-telemetry',
+			TelemetrySubscriber::class
+		)
+			->withArgument( $container->get( 'scheduler' ) );
 	}
 
 }

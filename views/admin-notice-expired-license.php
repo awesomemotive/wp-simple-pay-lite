@@ -52,7 +52,19 @@ $learn_more_url = $data['learn_more_url'];
 
 <p>
 	<a href="<?php echo esc_url( $renew_url ); ?>" class="button button-primary">
-		<?php esc_html_e( 'Renew License', 'stripe' ); ?>
+		<?php
+		echo wp_kses(
+			sprintf(
+				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+				__( 'Renew License for %1$s50%% Off!%2$s', 'stripe' ),
+				'<strong>',
+				'</strong>'
+			),
+			array(
+				'strong' => array(),
+			)
+		);
+		?>
 	</a>
 
 	<a href="<?php echo esc_url( $learn_more_url ); ?>" style="margin-left: 5px;">

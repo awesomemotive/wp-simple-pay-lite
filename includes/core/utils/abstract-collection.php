@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 3.8.0
  * @abstract
  */
-abstract class Collection extends \ArrayObject {
+abstract class Collection {
 
 	/**
 	 * Array of registry items.
@@ -108,61 +108,6 @@ abstract class Collection extends \ArrayObject {
 		} else {
 			$this->items = array();
 		}
-	}
-
-	/**
-	 * Determines whether an item exists.
-	 *
-	 * Defined only for compatibility with ArrayAccess, use has_item() directly.
-	 *
-	 * @since 3.8.0
-	 *
-	 * @param string $offset Item ID.
-	 * @return bool True if the item exists, false on failure.
-	 */
-	public function offsetExists( $offset ) {
-		return $this->has_item( $offset );
-	}
-
-	/**
-	 * Retrieves an item by its ID.
-	 *
-	 * Defined only for compatibility with ArrayAccess, use get_item() directly.
-	 *
-	 * @since 3.8.0
-	 *
-	 * @param mixed $offset Item ID.
-	 * @return mixed|false Item attributes if registered, otherwise false.
-	 */
-	public function offsetGet( $offset ) {
-		return $this->get_item( $offset );
-	}
-
-	/**
-	 * Adds/overwrites an item in the registry.
-	 *
-	 * Defined only for compatibility with ArrayAccess, use add_item() directly.
-	 *
-	 * @since 3.8.0
-	 *
-	 * @param string $offset Item ID.
-	 * @param mixed  $value  Item attributes.
-	 */
-	public function offsetSet( $offset, $value ) {
-		$this->add_item( $offset, $value );
-	}
-
-	/**
-	 * Removes an item from the registry.
-	 *
-	 * Defined only for compatibility with ArrayAccess, use remove_item() directly.
-	 *
-	 * @since 3.8.0
-	 *
-	 * @param string $offset Item ID.
-	 */
-	public function offsetUnset( $offset ) {
-		$this->remove_item( $offset );
 	}
 
 }

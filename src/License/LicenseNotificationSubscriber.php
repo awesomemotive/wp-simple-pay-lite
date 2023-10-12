@@ -132,6 +132,7 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 			$date_format = get_option( 'date_format', 'Y-m-d' );
 
 			$content = sprintf(
+				/* translators: License extension date. */
 				__(
 					'We have extended WP Simple Pay Pro functionality until %s, at which point functionality will become limited. Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality.',
 					'stripe'
@@ -148,6 +149,16 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 			);
 		}
 
+		$renew_url = add_query_arg(
+			array(
+				'edd_license_key' => $this->license->get_key(),
+				'discount'        => 'SAVE50',
+			),
+			sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) ) // @phpstan-ignore-line
+		);
+
+		$renew_url = simpay_ga_url( $renew_url, 'notification-inbox' );
+
 		$this->notifications->restore(
 			array(
 				'type'           => 'error',
@@ -161,13 +172,18 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 				'actions'        => array(
 					array(
 						'type' => 'primary',
-						'text' => __( 'Renew License', 'stripe' ),
-						'url'  => 'https://wpsimplepay.com/my-account/licenses/',
+						'text' => __( 'Renew License for 50% Off!', 'stripe' ),
+						'url'  => $renew_url,
 					),
 					array(
 						'type' => 'secondary',
 						'text' => __( 'Learn More', 'stripe' ),
-						'url'  => 'https://wpsimplepay.com/doc/activate-wp-simple-pay-pro-license/',
+						'url'  => simpay_docs_link(
+							'',
+							'what-happens-if-my-license-expires',
+							'admin-notice-expired-license',
+							true
+						),
 					),
 				),
 				'conditions'     => array(),

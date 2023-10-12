@@ -100,7 +100,7 @@ class SetupWizardLaunch implements SubscriberInterface {
 	 *
 	 * @since 4.4.2
 	 *
-	 * @param \SimplePay\Core\Settings\Setting_Collection<\SimplePay\Core\Settings\Setting> $settings Settings collection.
+	 * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
 	 * @return void
 	 */
 	public function add_settings_launch( $settings ) {

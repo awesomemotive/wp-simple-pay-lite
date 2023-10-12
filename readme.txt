@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.3
-Stable tag: 4.7.9
+Stable tag: 4.7.10
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -283,6 +283,15 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.10 - October 12, 2023 =
+
+* New: Help improve WP Simple Pay with *opt-in* anonymous telemetry reporting https://wpsimplepay.com/doc/what-information-does-wp-simple-pay-collect/
+* Fix: Anti-spam - only add notification in Live Mode.
+* Dev: System Report - show missing database tables.
+* Dev: Show connected Stripe account ID in connection status.
+* Dev: Action Scheduler - update from `3.4.0` to `3.6.2`.
+* Dev: PHP `8.x` compatibility fixes.
+
 = Stripe Payment Forms v4.7.9 - August 22, 2023 =
 
 * New: Form Builder - add per-form confirmation and email messages.
@@ -297,7 +306,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 * New: Stripe Tax - update for general availability.
 * Fix: Lite Connect - improve connection process.
-
-= Stripe Payment Forms v4.7.7 - June 28, 2023 =
-
-* New: Add support for adding custom fields to Stripe Checkout.

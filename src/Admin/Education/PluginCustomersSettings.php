@@ -46,7 +46,7 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 	 *
 	 * @since 4.4.0
 	 *
-	 * @param \SimplePay\Core\Settings\Section_Collection<\SimplePay\Core\Settings\Section> $sections Section collection.
+	 * @param \SimplePay\Core\Settings\Section_Collection $sections Section collection.
 	 * @return void
 	 */
 	function register_section( $sections ) {
@@ -70,7 +70,7 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 	 *
 	 * @since 4.4.0
 	 *
-	 * @param \SimplePay\Core\Settings\Subsection_Collection<\SimplePay\Core\Settings\Subsection> $subsections Subsections collection.
+	 * @param \SimplePay\Core\Settings\Subsection_Collection $subsections Subsections collection.
 	 * @return void
 	 */
 	function register_subsections( $subsections ) {

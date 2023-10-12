@@ -140,6 +140,19 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	}
 
 	/**
+	 * Returns the Stripe Account ID, or - if not using Connect.
+	 *
+	 * @since 4.7.10
+	 *
+	 * @return string
+	 */
+	private function get_stripe_account_id() {
+		$account_id = simpay_get_account_id();
+
+		return ! empty( $account_id ) ? $account_id : '-';
+	}
+
+	/**
 	 * Returns "Test Mode" or "Live Mode" depending on the mode set in WPSP Stripe settings
 	 *
 	 * @since 4.4.7
@@ -444,6 +457,10 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 					'label' => __( 'Stripe TLS', 'stripe' ),
 					'value' => $this->stripe_tls_check(),
 				),
+				'stripe_account_id'        => array(
+					'label' => __( 'Stripe Account ID', 'stripe' ),
+					'value' => $this->get_stripe_account_id(),
+				),
 				'mode'                     => array(
 					'label' => __( 'Global Payment Mode', 'stripe' ),
 					'value' => $this->get_test_or_live_mode(),
@@ -472,13 +489,17 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 					'label' => __( 'Webhook Secret', 'stripe' ),
 					'value' => $this->get_webhook_secret(),
 				),
-				'upe'                      => array(
-					'label' => __( 'Using UPE', 'stripe' ),
-					'value' => $this->get_upe_yes_or_upe_no(),
-				),
 				'opinionated_styles'       => array(
 					'label' => __( 'Opinionated Styles', 'stripe' ),
 					'value' => $this->get_opinionated_styles_enabled(),
+				),
+				'db_tables'                => array(
+					'label' => __( 'Database Tables', 'stripe' ),
+					'value' => $this->get_custom_database_tables(),
+				),
+				'upe'                      => array(
+					'label' => __( 'Using UPE', 'stripe' ),
+					'value' => $this->get_upe_yes_or_upe_no(),
 				),
 			),
 		);
@@ -532,6 +553,44 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			),
 			$debug_info
 		);
+	}
+
+	/**
+	 * Returns the custom database tables, and their versions.
+	 *
+	 * @since 4.7.10
+	 *
+	 * @return string
+	 */
+	private function get_custom_database_tables() {
+		global $wpdb;
+
+		$tables = array(
+			'wpsp_coupons',
+			'wpsp_notifications',
+			'wpsp_transactions',
+			'wpsp_webhooks',
+		);
+
+		$ret = '';
+
+		foreach ( $tables as $table ) {
+			$table_name = $wpdb->prefix . $table;
+
+			$found = $wpdb->get_var(
+				$wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
+			);
+
+			if ( empty( $found ) ) {
+				$ret .= '⚠️ ' . $table . ' table not found';
+			}
+		}
+
+		if ( '' === $ret ) {
+			$ret = 'All tables found';
+		}
+
+		return $ret;
 	}
 
 }

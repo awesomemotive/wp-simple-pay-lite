@@ -1904,3 +1904,43 @@ function simpay_is_upe() {
 function simpay_list_separator() {
 	return apply_filters( 'simpay_list_separator', ',' );
 }
+
+/**
+ * Link with HTML to docs site article & GA campaign values.
+ *
+ * @since 3.0.0
+ * @since 4.4.0 Rename $ga_content to $utm_medium to work with simpay_ga_url().
+ * @since 4.7.10 Available globally (not just admin).
+ *
+ * @param string $text Link text.
+ * @param string $slug Link slug.
+ * @param string $utm_medium utm_medium link parameter.
+ * @param bool   $plain If the link should have an icon. Default false.
+ * @return string
+ */
+function simpay_docs_link( $text, $slug, $utm_medium, $plain = false ) {
+
+	// Articles on docs site currently require a base slug themselves.
+	$base_url = 'https://wpsimplepay.com/doc/';
+
+	// Ensure ending slash is included for consistency.
+	$url = trailingslashit( $base_url . $slug );
+
+	// If $plain is true we want to return ONLY the link, otherwise return the full HTML.
+	// Add GA campaign params in both cases.
+	if ( $plain ) {
+
+		return simpay_ga_url( $url, $utm_medium, $text );
+
+	} else {
+
+		$html  = '';
+		$html .= '<div class="simpay-docs-link-wrap">';
+		$html .= '<a href="' . simpay_ga_url( $url, $utm_medium, $text ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $text );
+		$html .= '<span class="dashicons dashicons-editor-help"></span>';
+		$html .= '</a>';
+		$html .= '</div>';
+
+		return $html;
+	}
+}

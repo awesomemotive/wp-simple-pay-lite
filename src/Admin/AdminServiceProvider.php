@@ -51,6 +51,7 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			'admin-page-subscriber',
 			'admin-notice-subscriber',
 			'admin-notification-five-star-rating',
+			'admin-notification-upe-4710',
 		);
 	}
 
@@ -81,6 +82,12 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 		$container->share(
 			'admin-notification-five-star-rating',
 			PluginRatingNotification::class
+		);
+
+		// UPE (4.7.10) notification.
+		$container->share(
+			'admin-notification-upe-4710',
+			UpeNotification::class
 		);
 	}
 

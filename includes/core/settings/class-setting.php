@@ -97,8 +97,9 @@ class Setting {
 	 * Setting toggles.
 	 *
 	 * @since 4.0.0
-	 * @var array
+	 * @var array<string, array<string>>
 	 */
+	public $toggles = array();
 
 	/**
 	 * Constructs the settings section.
@@ -130,7 +131,7 @@ class Setting {
 			'section'    => '',
 			'subsection' => '',
 			'label'      => '',
-			'schema'	 => array(),
+			'schema'     => array(),
 			'priority'   => 10,
 			'output'     => null,
 			'toggles'    => array(),

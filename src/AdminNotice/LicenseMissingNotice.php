@@ -11,8 +11,6 @@
 
 namespace SimplePay\Core\AdminNotice;
 
-use SimplePay\Core\License\LicenseAwareInterface;
-use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\Settings;
 
 /**
@@ -20,9 +18,7 @@ use SimplePay\Core\Settings;
  *
  * @since 4.4.1
  */
-class LicenseMissingNotice extends AbstractAdminNotice implements LicenseAwareInterface {
-
-	use LicenseAwareTrait;
+class LicenseMissingNotice extends AbstractAdminNotice {
 
 	/**
 	 * {@inheritdoc}
