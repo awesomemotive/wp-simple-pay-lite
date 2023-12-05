@@ -2,8 +2,8 @@
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
-Stable tag: 4.7.10
 Tested up to: 6.4
+Stable tag: 4.7.11
 Requires PHP: 5.6
 License: GPLv2 or later
 
