@@ -7,17 +7,15 @@ namespace SimplePay\Vendor\Stripe;
 /**
  * This is an object representing a capability for a SimplePay\Vendor\Stripe account.
  *
- * Related guide: <a
- * href="https://stripe.com/docs/connect/account-capabilities">Account
- * capabilities</a>.
+ * Related guide: <a href="https://stripe.com/docs/connect/account-capabilities">Account capabilities</a>
  *
  * @property string $id The identifier for the capability.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property string|\SimplePay\Vendor\Stripe\Account $account The account for which the capability enables functionality.
- * @property \SimplePay\Vendor\Stripe\StripeObject $future_requirements
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $future_requirements
  * @property bool $requested Whether the capability has been requested.
  * @property null|int $requested_at Time at which the capability was requested. Measured in seconds since the Unix epoch.
- * @property \SimplePay\Vendor\Stripe\StripeObject $requirements
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $requirements
  * @property string $status The status of the capability. Can be <code>active</code>, <code>inactive</code>, <code>pending</code>, or <code>unrequested</code>.
  */
 class Capability extends ApiResource

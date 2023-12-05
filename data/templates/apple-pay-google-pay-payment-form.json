@@ -13,7 +13,14 @@
 		"title": "Apple Pay / Google Pay Payment Form",
 		"description": "",
 		"type": "embedded",
-		"payment_methods": [ "card" ],
+		"payment_methods": [
+			{
+				"id": "card",
+				"wallets": {
+					"enabled": "yes"
+				}
+			}
+		],
 		"fields": [
 			{
 				"type": "payment_request_button"

@@ -41,6 +41,7 @@ class IntegrationServiceProvider extends AbstractPluginServiceProvider {
 		$providers = array(
 			new Divi\DiviIntegration,
 			new Elementor\ElementorIntegration,
+			new WPCode\WPCodeIntegration,
 		);
 
 		return array_filter(

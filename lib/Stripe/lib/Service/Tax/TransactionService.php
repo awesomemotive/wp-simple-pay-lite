@@ -15,26 +15,11 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Tax\TransactionLineItem>
      */
     public function allLineItems($id, $params = null, $opts = null)
     {
         return $this->requestCollection('get', $this->buildPath('/v1/tax/transactions/%s/line_items', $id), $params, $opts);
-    }
-
-    /**
-     * Lists Tax Transaction objects.
-     *
-     * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
-     *
-     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Tax\Transaction>
-     */
-    public function allTransactions($params = null, $opts = null)
-    {
-        return $this->requestCollection('get', '/v1/tax/transactions', $params, $opts);
     }
 
     /**
@@ -47,9 +32,9 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      *
      * @return \SimplePay\Vendor\Stripe\Tax\Transaction
      */
-    public function create($params = null, $opts = null)
+    public function createFromCalculation($params = null, $opts = null)
     {
-        return $this->request('post', '/v1/tax/transactions', $params, $opts);
+        return $this->request('post', '/v1/tax/transactions/create_from_calculation', $params, $opts);
     }
 
     /**

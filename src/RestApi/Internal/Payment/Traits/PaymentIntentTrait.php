@@ -52,7 +52,7 @@ trait PaymentIntentTrait {
 		$customer_id = $customer->id;
 
 		// Start with base arguments that are common to all payment intents,
-		// regardless of what generates them (Subscription, Checkout Session, Order, etc).
+		// regardless of what generates them (Subscription, Checkout Session, etc).
 		$payment_intent_args = array_merge(
 			array(
 				'metadata' => PaymentRequestUtils::get_payment_metadata( $request ),

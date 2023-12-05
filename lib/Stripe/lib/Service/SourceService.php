@@ -47,7 +47,7 @@ class SourceService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Source
+     * @return \SimplePay\Vendor\Stripe\Account|\SimplePay\Vendor\Stripe\BankAccount|\SimplePay\Vendor\Stripe\Card|\SimplePay\Vendor\Stripe\Source
      */
     public function detach($parentId, $id, $params = null, $opts = null)
     {

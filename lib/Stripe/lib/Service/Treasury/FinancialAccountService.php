@@ -62,7 +62,7 @@ class FinancialAccountService extends \SimplePay\Vendor\Stripe\Service\AbstractS
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Treasury\FinancialAccount
+     * @return \SimplePay\Vendor\Stripe\Treasury\FinancialAccountFeatures
      */
     public function retrieveFeatures($id, $params = null, $opts = null)
     {
@@ -94,7 +94,7 @@ class FinancialAccountService extends \SimplePay\Vendor\Stripe\Service\AbstractS
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Treasury\FinancialAccount
+     * @return \SimplePay\Vendor\Stripe\Treasury\FinancialAccountFeatures
      */
     public function updateFeatures($id, $params = null, $opts = null)
     {

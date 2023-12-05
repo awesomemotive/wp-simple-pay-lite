@@ -1,12 +1,283 @@
 # Changelog
 
-## 10.6.0-beta.1 - 2023-02-02
-* [#1440](https://github.com/stripe/stripe-php/pull/1440) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for `all` method on resource `Transaction`
-  * Add support for `inferred_balances_refresh`, `subscriptions`, and `transaction_refresh` on `FinancialConnections.Account`
-  * Add support for `manual_entry`, `prefetch`, `status_details`, and `status` on `FinancialConnections.Session`
-  * Add support for new resource `FinancialConnections.Transaction`
+## 13.3.0 - 2023-11-09
+* [#1603](https://github.com/stripe/stripe-php/pull/1603) Update generated code
+  * Add support for new value `terminal_reader_hardware_fault` on enum `StripeError.code`
+
+## 13.2.1 - 2023-11-06
+* [#1602](https://github.com/stripe/stripe-php/pull/1602) Fix error when "id" is not a string.
+
+## 13.2.0 - 2023-11-02
+* [#1599](https://github.com/stripe/stripe-php/pull/1599) Update generated code
+  * Add support for new resource `Tax.Registration`
+  * Add support for `all`, `create`, and `update` methods on resource `Registration`
+  * Add support for new value `token_card_network_invalid` on enum `StripeError.code`
+  * Add support for new value `payment_unreconciled` on enum `BalanceTransaction.type`
+  * Add support for `revolut_pay` on `PaymentMethod`
+  * Add support for new value `revolut_pay` on enum `PaymentMethod.type`
+
+## 13.1.0 - 2023-10-26
+* [#1595](https://github.com/stripe/stripe-php/pull/1595) Update generated code
+  * Add support for new value `balance_invalid_parameter` on enum `StripeError.code`
+
+## 13.0.0 - 2023-10-16
+* This release changes the pinned API version to `2023-10-16`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2023-10-16) and carefully review the API changes before upgrading `stripe-php` package.
+* [#1593](https://github.com/stripe/stripe-php/pull/1593) Update generated code
+  - Added `additional_tos_acceptances` field on `Person`
+
+## 12.8.0 - 2023-10-16
+* [#1590](https://github.com/stripe/stripe-php/pull/1590) Update generated code
+  * Add support for new values `issuing_token.created` and `issuing_token.updated` on enum `Event.type`
+
+## 12.7.0 - 2023-10-11
+* [#1589](https://github.com/stripe/stripe-php/pull/1589) Update generated code
+  * Add support for `client_secret`, `redirect_on_completion`, `return_url`, and `ui_mode` on `Checkout.Session`
+  * Add support for `offline` on `Terminal.Configuration`
+
+## 12.6.0 - 2023-10-05
+* [#1586](https://github.com/stripe/stripe-php/pull/1586) Update generated code
+  * Add support for new resource `Issuing.Token`
+  * Add support for `all`, `retrieve`, and `update` methods on resource `Token`
+  * Add support for `token` on `Issuing.Authorization` and `Issuing.Transaction`
+* [#1569](https://github.com/stripe/stripe-php/pull/1569) Fix: Do not bother removing `friendsofphp/php-cs-fixer`
+
+## 12.5.0 - 2023-09-28
+* [#1582](https://github.com/stripe/stripe-php/pull/1582) Generate Discount, SourceTransaction and use sections in more places
+* [#1584](https://github.com/stripe/stripe-php/pull/1584) Update generated code
+  * Add support for `rendering` on `Invoice`
+
+## 12.4.0 - 2023-09-21
+* [#1579](https://github.com/stripe/stripe-php/pull/1579) Update generated code
+  * Add back constant for `invoiceitem.updated` webhook event.  This was mistakenly removed in v12.2.0.
+* [#1566](https://github.com/stripe/stripe-php/pull/1566) Fix: Remove `squizlabs/php_codesniffer`
+* [#1568](https://github.com/stripe/stripe-php/pull/1568) Enhancement: Reference `phpunit.xsd` as installed with `composer`
+* [#1565](https://github.com/stripe/stripe-php/pull/1565) Enhancement: Use PHP 8.2 as leading PHP version
+
+## 12.3.0 - 2023-09-14
+* [#1577](https://github.com/stripe/stripe-php/pull/1577) Update generated code
+  * Add support for new resource `PaymentMethodConfiguration`
+  * Add support for `all`, `create`, `retrieve`, and `update` methods on resource `PaymentMethodConfiguration`
+  * Add support for `payment_method_configuration_details` on `Checkout.Session`, `PaymentIntent`, and `SetupIntent`
+* [#1573](https://github.com/stripe/stripe-php/pull/1573) Update generated code
+  * Add support for `capture`, `create`, `expire`, `increment`, and `reverse` test helper methods on resource `Issuing.Authorization`
+  * Add support for `create_force_capture`, `create_unlinked_refund`, and `refund` test helper methods on resource `Issuing.Transaction`
+  * Add support for new value `stripe_tax_inactive` on enum `StripeError.code`
+
+## 12.2.0 - 2023-09-07
+* [#1571](https://github.com/stripe/stripe-php/pull/1571) Update generated code
+  * Add support for new resource `PaymentMethodDomain`
+  * Add support for `all`, `create`, `retrieve`, `update`, and `validate` methods on resource `PaymentMethodDomain`
+  * Add support for new values `treasury.credit_reversal.created`, `treasury.credit_reversal.posted`, `treasury.debit_reversal.completed`, `treasury.debit_reversal.created`, `treasury.debit_reversal.initial_credit_granted`, `treasury.financial_account.closed`, `treasury.financial_account.created`, `treasury.financial_account.features_status_updated`, `treasury.inbound_transfer.canceled`, `treasury.inbound_transfer.created`, `treasury.inbound_transfer.failed`, `treasury.inbound_transfer.succeeded`, `treasury.outbound_payment.canceled`, `treasury.outbound_payment.created`, `treasury.outbound_payment.expected_arrival_date_updated`, `treasury.outbound_payment.failed`, `treasury.outbound_payment.posted`, `treasury.outbound_payment.returned`, `treasury.outbound_transfer.canceled`, `treasury.outbound_transfer.created`, `treasury.outbound_transfer.expected_arrival_date_updated`, `treasury.outbound_transfer.failed`, `treasury.outbound_transfer.posted`, `treasury.outbound_transfer.returned`, `treasury.received_credit.created`, `treasury.received_credit.failed`, `treasury.received_credit.succeeded`, and `treasury.received_debit.created` on enum `Event.type`
+  * Remove support for value `invoiceitem.updated` from enum `Event.type`
+  * Add support for `features` on `Product`
+
+## 12.1.0 - 2023-08-31
+* [#1560](https://github.com/stripe/stripe-php/pull/1560) Update generated code
+  * Add support for new resource `AccountSession`
+  * Add support for `create` method on resource `AccountSession`
+  * Add support for new values `obligation_inbound`, `obligation_outbound`, `obligation_payout_failure`, `obligation_payout`, `obligation_reversal_inbound`, and `obligation_reversal_outbound` on enum `BalanceTransaction.type`
+  * Change type of `Event.type` from `string` to `enum`
+  * Add support for `application` on `PaymentLink`
+* [#1562](https://github.com/stripe/stripe-php/pull/1562) Nicer ApiErrorException::__toString()
+* [#1558](https://github.com/stripe/stripe-php/pull/1558) Update generated code
+  * Add support for `payment_method_details` on `Dispute`
+  * Add support for `prefetch` on `FinancialConnections.Session`
+
+## 12.0.0 - 2023-08-18
+**⚠️ ACTION REQUIRED: the breaking change in this release likely affects you ⚠️**
+
+### Version pinning
+
+In this release, Stripe API Version `2023-08-16` (the latest at time of release) will be sent by default on all requests. This is a significant change with wide ramifications. The API version affects the properties you see on responses, the parameters you are allowed to send on requests, and so on. The previous default was to use your [Stripe account's default API version](https://stripe.com/docs/development/dashboard/request-logs#view-your-default-api-version).
+
+To successfully upgrade to stripe-php v12, you must either
+
+1. **(Recommended) Upgrade your integration to be compatible with API Version `2023-08-16`.**
+
+   Please read the API Changelog carefully for each API Version from `2023-08-16` back to your [Stripe account's default API version](https://stripe.com/docs/development/dashboard/request-logs#view-your-default-api-version). Determine if you are using any of the APIs that have changed in a breaking way, and adjust your integration accordingly. Carefully test your changes with Stripe [Test Mode](https://stripe.com/docs/keys#test-live-modes) before deploying them to production.
+
+   You can read the [v12 migration guide](https://github.com/stripe/stripe-php/wiki/Migration-guide-for-v12) for more detailed instructions.
+2. **(Alternative option) Specify a version other than `2023-08-16` when initializing `stripe-php`.**
+
+     If you were previously initializing stripe-php without an explicit API Version, you can postpone modifying your integration by specifying a version equal to your [Stripe account's default API version](https://stripe.com/docs/development/dashboard/request-logs#view-your-default-api-version). For example:
+
+     ```diff
+       // if using StripeClient
+     - $stripe = new \Stripe\StripeClient('sk_test_xyz');
+     + $stripe = new \Stripe\StripeClient([
+     +   'api_key' => 'sk_test_xyz',
+         'stripe_version' => '2020-08-27',
+     + ]);
+
+       // if using the global client
+       Stripe.apiKey = "sk_test_xyz";
+     + Stripe::setApiVersion('2020-08-27');
+     ```
+
+     If you were already initializing stripe-php with an explicit API Version, upgrading to v12 will not affect your integration.
+
+     Read the [v12 migration guide](https://github.com/stripe/stripe-php/wiki/Migration-guide-for-v12) for more details.
+
+    Going forward, each major release of this library will be *pinned* by default to the latest Stripe API Version at the time of release.
+
+    That is, instead of upgrading stripe-php and separately upgrading your Stripe API Version through the Stripe Dashboard, whenever you upgrade major versions of stripe-php, you should also upgrade your integration to be compatible with the latest Stripe API version.
+
+### Other changes
+" ⚠️" symbol highlights breaking changes.
+* [#1553](https://github.com/stripe/stripe-php/pull/1553)⚠️ Remove deprecated enum value `Invoice.STATUS_DELETE`
+
+* [#1550](https://github.com/stripe/stripe-php/pull/1550) PHPDoc changes
+  * Remove support for `alternate_statement_descriptors`, `destination`, and `dispute` on `Charge`
+  * Remove support for value `charge_refunded` from enum `Dispute.status`
+  * Remove support for `rendering` on `Invoice`
+  * Remove support for `attributes`, `caption`, and `deactivate_on` on `Product`
+
+## 11.0.0 - 2023-08-16
+Please do not use stripe-php v11. It did not correctly apply the [pinning behavior](https://github.com/stripe/stripe-php/blob/master/CHANGELOG.md#version-pinning) and was removed from packagist
+
+## 10.21.0 - 2023-08-10
+* [#1546](https://github.com/stripe/stripe-php/pull/1546) Update generated code
+  * Add support for new value `payment_reversal` on enum `BalanceTransaction.type`
+  * Add support for new value `adjusted_for_overdraft` on enum `CustomerBalanceTransaction.type`
+
+## 10.20.0 - 2023-08-03
+* [#1539](https://github.com/stripe/stripe-php/pull/1539) Update generated code
+  * Add support for `subscription_details` on `Invoice`
+  * Add support for new values `sepa_debit_fingerprint` and `us_bank_account_fingerprint` on enum `Radar.ValueList.item_type`
+
+## 10.19.0 - 2023-07-27
+* [#1534](https://github.com/stripe/stripe-php/pull/1534) Update generated code
+  * Improve PHPDoc type for `ApplicationFee.refunds`
+  * Add support for `deleted` on `Apps.Secret`
+* [#1526](https://github.com/stripe/stripe-php/pull/1526) Add constants for payment intent cancellation reasons
+* [#1533](https://github.com/stripe/stripe-php/pull/1533) Update generated code
+  * Add support for new value `service_tax` on enum `TaxRate.tax_type`
+* [#1487](https://github.com/stripe/stripe-php/pull/1487) PHPDoc: use union of literals for $method parameter throughout
+
+## 10.18.0 - 2023-07-20
+* [#1533](https://github.com/stripe/stripe-php/pull/1533) Update generated code
+  * Add support for new value `service_tax` on enum `TaxRate.tax_type`
+* [#1526](https://github.com/stripe/stripe-php/pull/1526) Add constants for payment intent cancellation reasons
+* [#1487](https://github.com/stripe/stripe-php/pull/1487) PHPDoc: use union of literals for $method parameter throughout
+
+## 10.17.0 - 2023-07-13
+* [#1525](https://github.com/stripe/stripe-php/pull/1525) Update generated code
+  * Add support for new resource `Tax.Settings`
+  * Add support for `retrieve` and `update` methods on resource `Settings`
+  * Add support for new value `invalid_tax_location` on enum `StripeError.code`
+  * Add support for `product` on `Tax.TransactionLineItem`
+  * Add constant for `tax.settings.updated` webhook event
+* [#1520](https://github.com/stripe/stripe-php/pull/1520) Update generated code
+  * Release specs are identical.
+
+## 10.16.0 - 2023-06-29
+* [#1517](https://github.com/stripe/stripe-php/pull/1517) Update generated code
+  * Add support for new value `application_fees_not_allowed` on enum `StripeError.code`
+  * Add support for `effective_at` on `CreditNote` and `Invoice`
+  * Add support for `on_behalf_of` on `Mandate`
+* [#1514](https://github.com/stripe/stripe-php/pull/1514) Update generated code
+  * Release specs are identical.
+* [#1512](https://github.com/stripe/stripe-php/pull/1512) Update generated code
+  * Change type of `Checkout.Session.success_url` from `string` to `nullable(string)`
+
+## 10.15.0 - 2023-06-08
+* [#1506](https://github.com/stripe/stripe-php/pull/1506) Update generated code
+  * Add support for `preferred_locales` on `Issuing.Cardholder`
+
+## 10.14.0 - 2023-05-25
+* [#1503](https://github.com/stripe/stripe-php/pull/1503) Update generated code
+  * Add support for `zip` on `PaymentMethod`
+  * Add support for new value `zip` on enum `PaymentMethod.type`
+* [#1502](https://github.com/stripe/stripe-php/pull/1502) Generate error codes
+* [#1501](https://github.com/stripe/stripe-php/pull/1501) Update generated code
+
+* [#1499](https://github.com/stripe/stripe-php/pull/1499) Update generated code
+  * Add support for new values `amusement_tax` and `communications_tax` on enum `TaxRate.tax_type`
+
+## 10.13.0 - 2023-05-11
+* [#1490](https://github.com/stripe/stripe-php/pull/1490) Update generated code
+  * Add support for `paypal` on `PaymentMethod`
+  * Add support for `effective_percentage` on `TaxRate`
+* [#1488](https://github.com/stripe/stripe-php/pull/1488) Increment PHPStan to strictness level 2
+* [#1483](https://github.com/stripe/stripe-php/pull/1483) Update generated code
+
+* [#1480](https://github.com/stripe/stripe-php/pull/1480) Update generated code
+  * Change type of `Identity.VerificationSession.options` from `VerificationSessionOptions` to `nullable(VerificationSessionOptions)`
+  * Change type of `Identity.VerificationSession.type` from `enum('document'|'id_number')` to `nullable(enum('document'|'id_number'))`
+* [#1478](https://github.com/stripe/stripe-php/pull/1478) Update generated code
+  * Release specs are identical.
+* [#1475](https://github.com/stripe/stripe-php/pull/1475) Update generated code
+
+
+## 10.12.1 - 2023-04-04
+* [#1473](https://github.com/stripe/stripe-php/pull/1473) Update generated code
+  * Add back `deleted` from `Invoice.status`.
+
+## 10.12.0 - 2023-03-30
+* [#1470](https://github.com/stripe/stripe-php/pull/1470) Update generated code
+  * Remove support for `create` method on resource `Tax.Transaction`
+    * This is not a breaking change, as this method was deprecated before the Tax Transactions API was released in favor of the `createFromCalculation` method.
+  * Remove support for value `deleted` from enum `Invoice.status`
+    * This is not a breaking change, as the value was never returned or accepted as input.
+* [#1468](https://github.com/stripe/stripe-php/pull/1468) Trigger workflow for tags
+* [#1467](https://github.com/stripe/stripe-php/pull/1467) Update generated code (new)
+  * Release specs are identical.
+
+## 10.11.0 - 2023-03-23
+* [#1458](https://github.com/stripe/stripe-php/pull/1458) Update generated code
+  * Add support for new resources `Tax.CalculationLineItem`, `Tax.Calculation`, `Tax.TransactionLineItem`, and `Tax.Transaction`
+  * Add support for `create` and `list_line_items` methods on resource `Calculation`
+  * Add support for `create_from_calculation`, `create_reversal`, `create`, `list_line_items`, and `retrieve` methods on resource `Transaction`
+  * Add support for `currency_conversion` on `Checkout.Session`
+  * Add support for new value `automatic_async` on enum `PaymentIntent.capture_method`
+  * Add support for new value `link` on enum `PaymentLink.payment_method_types[]`
+  * Add support for `automatic_payment_methods` on `SetupIntent`
+
+## 10.10.0 - 2023-03-16
+* [#1457](https://github.com/stripe/stripe-php/pull/1457) API Updates
+  * Add support for `future_requirements` and `requirements` on `BankAccount`
+  * Add support for new value `automatic_async` on enum `PaymentIntent.capture_method`
+  * Add support for new value `cashapp` on enum `PaymentLink.payment_method_types[]`
+  * Add support for `cashapp` on `PaymentMethod`
+  * Add support for new value `cashapp` on enum `PaymentMethod.type`
+* [#1454](https://github.com/stripe/stripe-php/pull/1454) Update generated code (new)
+  * Add support for new value `cashapp` on enum `PaymentLink.payment_method_types[]`
+  * Add support for `cashapp` on `PaymentMethod`
+  * Add support for new value `cashapp` on enum `PaymentMethod.type`
+
+## 10.9.1 - 2023-03-14
+* [#1453](https://github.com/stripe/stripe-php/pull/1453) Restore StripeClient.getService
+
+## 10.9.0 - 2023-03-09
+* [#1450](https://github.com/stripe/stripe-php/pull/1450) API Updates
+  * Add support for `cancellation_details` on `Subscription`
+  * Fix return types on custom methods (extends https://github.com/stripe/stripe-php/pull/1446)
+
+* [#1446](https://github.com/stripe/stripe-php/pull/1446) stripe->customers->retrievePaymentMethod returns the wrong class (type hint)
+
+## 10.8.0 - 2023-03-02
+* [#1447](https://github.com/stripe/stripe-php/pull/1447) API Updates
+  * Add support for `reconciliation_status` on `Payout`
+  * Add support for new value `lease_tax` on enum `TaxRate.tax_type`
+
+## 10.7.0 - 2023-02-23
+* [#1444](https://github.com/stripe/stripe-php/pull/1444) API Updates
+  * Add support for new value `igst` on enum `TaxRate.tax_type`
+
+## 10.6.1 - 2023-02-21
+* [#1443](https://github.com/stripe/stripe-php/pull/1443) Remove init.php from the list of ignored files
+
+## 10.6.0 - 2023-02-16
+* [#1441](https://github.com/stripe/stripe-php/pull/1441) API Updates
+  * Add support for `refund_payment` method on resource `Terminal.Reader`
+  * Add support for `custom_fields` on `Checkout.Session` and `PaymentLink`
+* [#1236](https://github.com/stripe/stripe-php/pull/1236) subscription_proration_date not always presented in Invoice
+* [#1431](https://github.com/stripe/stripe-php/pull/1431) Fix: Do not use unbounded version constraint for `actions/checkout`
+* [#1436](https://github.com/stripe/stripe-php/pull/1436) Enhancement: Enable and configure `visibility_required` fixer
+* [#1432](https://github.com/stripe/stripe-php/pull/1432) Enhancement: Update `actions/cache`
+* [#1434](https://github.com/stripe/stripe-php/pull/1434) Fix: Remove parentheses
+* [#1433](https://github.com/stripe/stripe-php/pull/1433) Enhancement: Run tests on PHP 8.2
+* [#1438](https://github.com/stripe/stripe-php/pull/1438) Update .gitattributes
 
 ## 10.5.0 - 2023-02-02
 * [#1439](https://github.com/stripe/stripe-php/pull/1439) API Updates
@@ -17,16 +288,6 @@
   * Add support for `trial_settings` on `Subscription`
   * Add support for new value `paused` on enum `Subscription.status`
 
-## 10.5.0-beta.2 - 2023-01-26
-* [#1429](https://github.com/stripe/stripe-php/pull/1429) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for `list_transactions` method on resource `Tax.Transaction`
-
-## 10.5.0-beta.1 - 2023-01-19
-* [#1427](https://github.com/stripe/stripe-php/pull/1427) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for `Tax.Settings` resource.
-
 ## 10.4.0 - 2023-01-19
 * [#1381](https://github.com/stripe/stripe-php/pull/1381) Add getService methods to StripeClient and AbstractServiceFactory to allow mocking
 * [#1424](https://github.com/stripe/stripe-php/pull/1424) API Updates
@@ -36,45 +297,15 @@
 * [#1425](https://github.com/stripe/stripe-php/pull/1425) Fix Stripe::setAccountId parameter type
 * [#1418](https://github.com/stripe/stripe-php/pull/1418) Switch to mb_convert_encoding to fix utf8_encode deprecation warning
 
-## 10.4.0-beta.3 - 2023-01-12
-* [#1423](https://github.com/stripe/stripe-php/pull/1423) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for `Tax.Registration` resource.
-  * Change `draft_quote` method implementation from hitting `/v1/quotes/{quotes}/draft` to `/v1/quotes/{quotes}/mark_draft`
-
-## 10.4.0-beta.2 - 2023-01-05
-* [#1420](https://github.com/stripe/stripe-php/pull/1420) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for `mark_stale_quote` method on resource `Quote`
-
-## 10.4.0-beta.1 - 2022-12-22
-* [#1414](https://github.com/stripe/stripe-php/pull/1414) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Move `$stripe->taxCalculations` to `$stripe->tax->calculations` and `$stripe->taxTransactions` to `$stripe->tax->transactions`
-
 ## 10.3.0 - 2022-12-22
 * [#1413](https://github.com/stripe/stripe-php/pull/1413) API Updates
   Change `CheckoutSession.cancel_url` to be nullable.
-
-## 10.3.0-beta.1 - 2022-12-15
-* [#1412](https://github.com/stripe/stripe-php/pull/1412) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for new resources `QuoteLine`, `TaxCalculation`, and `TaxTransaction`
-  * Add support for `create` and `list_line_items` methods on resource `TaxCalculation`
-  * Add support for `create_reversal`, `create`, and `retrieve` methods on resource `TaxTransaction`
 
 ## 10.2.0 - 2022-12-15
 * [#1411](https://github.com/stripe/stripe-php/pull/1411) API Updates
   * Add support for new value `invoice_overpaid` on enum `CustomerBalanceTransaction.type`
 * [#1407](https://github.com/stripe/stripe-php/pull/1407) API Updates
 
-## 10.2.0-beta.1 - 2022-12-08
-* [#1408](https://github.com/stripe/stripe-php/pull/1408) API Updates for beta branch
-  * Updated stable APIs to the latest version
-* [#1406](https://github.com/stripe/stripe-php/pull/1406) API Updates for beta branch
-  * Updated stable APIs to the latest version
-* [#1398](https://github.com/stripe/stripe-php/pull/1398) API Updates for beta branch
-  * Updated stable APIs to the latest version
 
 ## 10.1.0 - 2022-12-06
 * [#1405](https://github.com/stripe/stripe-php/pull/1405) API Updates
@@ -96,23 +327,34 @@ Breaking changes that arose during code generation of the library that we postpo
 
 "⚠️" symbol highlights breaking changes.
 
+### Deprecated
+* [#1382](https://github.com/stripe/stripe-php/pull/1382) Mark `resource.save` as deprecated. Prefer the static update method that doesn't require retrieval of the resource to update it.
+```PHP
+// before
+$resource = Price::retrieve(self::TEST_RESOURCE_ID);
+$resource->metadata['key'] = 'value';
+$resource->save();
+
+// after
+$resource = Price::update('price_123', [
+    'metadata' => ['key' => 'value'],
+]);
+```
+
+### ⚠️ Removed
+- [#1377](https://github.com/stripe/stripe-php/pull/1377) Removed deprecated `Sku` resource and service
+- [#1375](https://github.com/stripe/stripe-php/pull/1375) Removed deprecated `Orders` resource and service
+- [#1375](https://github.com/stripe/stripe-php/pull/1375) Removed deprecated `Product` field from the `LineItem`
+- [#1388](https://github.com/stripe/stripe-php/pull/1388) Removed deprecated `AlipayAccount` resource
+- [#1396](https://github.com/stripe/stripe-php/pull/1396) Removed `charges` field on `PaymentIntent` and replace it with `latest_charge`.
+
+
 ## 9.9.0 - 2022-11-08
 * [#1394](https://github.com/stripe/stripe-php/pull/1394) API Updates
   * Add support for new values `eg_tin`, `ph_tin`, and `tr_tin` on enum `TaxId.type`
 * [#1389](https://github.com/stripe/stripe-php/pull/1389) API Updates
   * Add support for `on_behalf_of` on `Subscription`
 * [#1379](https://github.com/stripe/stripe-php/pull/1379) Do not run Coveralls in PR-s
-
-## 9.9.0-beta.2 - 2022-11-02
-* [#1390](https://github.com/stripe/stripe-php/pull/1390) API Updates for beta branch
-  * Updated beta APIs to the latest stable version
-
-## 9.9.0-beta.1 - 2022-10-21
-* [#1384](https://github.com/stripe/stripe-php/pull/1384) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for `network_data` on `Issuing.Transaction`
-  * Add support for `paypal` on `Source`
-  * Add support for new value `paypal` on enum `Source.type`
 
 ## 9.8.0 - 2022-10-20
 * [#1383](https://github.com/stripe/stripe-php/pull/1383) API Updates
@@ -126,15 +368,6 @@ Breaking changes that arose during code generation of the library that we postpo
 * [#1374](https://github.com/stripe/stripe-php/pull/1374) Add request_log_url on ErrorObject
 * [#1370](https://github.com/stripe/stripe-php/pull/1370) API Updates
   * Add support for `created` on `Checkout.Session`
-
-## 9.7.0-beta.2 - 2022-10-07
-* [#1373](https://github.com/stripe/stripe-php/pull/1373) API Updates for beta branch
-  * Updated stable APIs to the latest version
-
-## 9.7.0-beta.1 - 2022-09-26
-* [#1368](https://github.com/stripe/stripe-php/pull/1368) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add `FinancingOffer`, `FinancingSummary` and `FinancingTransaction` resources.
 
 ## 9.6.0 - 2022-09-15
 * [#1365](https://github.com/stripe/stripe-php/pull/1365) API Updates
@@ -158,21 +391,11 @@ Breaking changes that arose during code generation of the library that we postpo
     * Addresses https://github.com/stripe/stripe-php/issues/1353. The library today does not actually return a `ErrorObject` for these fields, so the type annotation was incorrect.
 * [#1356](https://github.com/stripe/stripe-php/pull/1356) Add beta readme.md section
 
-## 9.4.0-beta.1 - 2022-08-26
-* [#1358](https://github.com/stripe/stripe-php/pull/1358) API Updates for beta branch
-  * Updated stable APIs to the latest version
-  * Add support for the beta [Gift Card API](https://stripe.com/docs/gift-cards).
-
 ## 9.3.0 - 2022-08-23
 * [#1355](https://github.com/stripe/stripe-php/pull/1355) API Updates
   * Change type of `Treasury.OutboundTransfer.destination_payment_method` from `string` to `string | null`
   * Change the return type of `CustomerService.fundCashBalance` test helper from `CustomerBalanceTransaction` to `CustomerCashBalanceTransaction`.
     * This would generally be considered a breaking change, but we've worked with all existing users to migrate and are comfortable releasing this as a minor as it is solely a test helper method. This was essentially broken prior to this change.
-
-## 9.3.0-beta.1 - 2022-08-23
-* [#1354](https://github.com/stripe/stripe-php/pull/1354) API Updates for beta branch
-  - Updated stable APIs to the latest version
-  - `Stripe-Version` beta headers are not pinned by-default and need to be manually specified, please refer to [beta SDKs README section](https://github.com/stripe/stripe-php/blob/master/README.md#beta-sdks)
 
 ## 9.2.0 - 2022-08-19
 * [#1352](https://github.com/stripe/stripe-php/pull/1352) API Updates
@@ -182,22 +405,12 @@ Breaking changes that arose during code generation of the library that we postpo
 * [#1351](https://github.com/stripe/stripe-php/pull/1351) Add a support section to the readme
 * [#1304](https://github.com/stripe/stripe-php/pull/1304) Allow passing PSR-3 loggers to setLogger as they are compatible
 
-## 9.2.0-beta.1 - 2022-08-11
-* [#1349](https://github.com/stripe/stripe-php/pull/1349) API Updates for beta branch
-  - Updated stable APIs to the latest version
-  - Add `refundPayment` method to Terminal resource
-
 ## 9.1.0 - 2022-08-11
 * [#1348](https://github.com/stripe/stripe-php/pull/1348) API Updates
   * Add support for `payment_method_collection` on `Checkout.Session` and `PaymentLink`
 
 * [#1346](https://github.com/stripe/stripe-php/pull/1346) API Updates
   * Add support for `expires_at` on `Apps.Secret`
-
-## 9.1.0-beta.1 - 2022-08-03
-* [#1345](https://github.com/stripe/stripe-php/pull/1345) API Updates for beta branch
-  - Updated stable APIs to the latest version
-  - Added the `Order` resource support
 
 ## 9.0.0 - 2022-08-02
 
@@ -210,30 +423,43 @@ Breaking changes that arose during code generation of the library that we postpo
 * [#1273](https://github.com/stripe/stripe-php/pull/1273) Add some PHPDoc return types and fixes
 * [#1341](https://github.com/stripe/stripe-php/pull/1341) Next major release changes
 
+### Added
+* Add `alternate_statement_descriptors`, `authorization_code`, and `level3` properties to `Charge` resource.
+* Add `previewLines` method to `CreditNote` resource.
+* Add `transfer_data` property to `Subscription` resource.
+* Add `SOURCE_TYPE_FPX` constant to `Transfer` resource.
+* Add new error code constants to `ErrorObject`.
+* Add support for `shipping_cost` and `shipping_details` on `Checkout.Session`
+
+### ⚠️ Changed
+* Updated certificate bundle ([#1314](https://github.com/stripe/stripe-php/pull/1314))
+* Add `params` parameter to `close` method in `Dispute` resource.
+
+### ⚠️ Removed
+* Remove deprecated `AlipayAccount`, `BitcoinReceiver`, `BitcoinTransaction`, `Recipient`, `RecipientTransfer`, and `ThreeDSecure` resources.
+* Remove `CAPABILITY_CARD_PAYMENTS`, `CAPABILITY_LEGACY_PAYMENTS`, `CAPABILITY_PLATFORM_PAYMENTS`, `CAPABILITY_TRANSFERS`, `CAPABILITY_STATUS_ACTIVE`, `CAPABILITY_STATUS_INACTIVE`, and `CAPABILITY_STATUS_PENDING` constants from `Account` resource. Please use up-to-date values from https://stripe.com/docs/connect/account-capabilities.
+* Remove `AssociatedObjects` array property from `EphemeralKey` resource. The field was undocumented and unsupported.
+* Remove `details` method from `Card` resource. The endpoint was deprecated and no longer exists.
+* Remove `recipient` property from `Card` resource. The property was deprecated.
+* Remove ability to list `Card` resources for a particular `Recipient`.
+* Remove `sources` property from `Card` resource. The property was deprecated.
+* Remove `FAILURE_REASON` constant from `Refund` resource. The value was deprecated.
+* Remove `Recipient` resource. The resource was deprecated.
+* Remove `OrderItem` resource. The resource was deprecated.
+* Remove `all` method from `LineItem`.
+* Remove `cancel` method from `Transfer` and `TransferService`. This method is deprecated.
+* Remove `allTransactions` method from `SourceService` service. Please use `allSourceTransactions` method instead.
+* Remove `persons` method from `Account` resource. Please use `allPersons` method instead.
+* Remove `sourceTransactions` method from `Source` resource. Please use `allSourceTransactions` method instead.
+* Remove `usageRecordSummaries` method from `SubscriptionItem` resource. Please use `allUsageRecordSummaries` method instead.
+* Remove `SOURCE_TYPE_ALIPAY_ACCOUNT` and `SOURCE_TYPE_FINANCING` constants from `Transfer` resource. The values were deprecated and are no longer in use.
+* Remove deprecated error code constants from `ErrorObject`: `CODE_ACCOUNT_ALREADY_EXISTS`, `CODE_ORDER_CREATION_FAILED`, `CODE_ORDER_REQUIRED_SETTINGS`, `CODE_ORDER_STATUS_INVALID`, `CODE_ORDER_UPSTREAM_TIMEOUT`, and `CODE_UPSTREAM_ORDER_CREATION_FAILED`.
+* Remove deprecated event constants from `Webhook`: `ISSUER_FRAUD_RECORD_CREATED`, ` ORDER_PAYMENT_FAILED`, `ORDER_PAYMENT_SUCCEEDED`, `ORDER_UPDATED`, `ORDER_RETURN_CREATED`, `PAYMENT_METHOD_CARD_AUTOMATICALLY_UPDATED`, `PING`, `PROMOTION_CODE_DELETED`, and `TREASURY_RECEIVED_CREDIT_REVERSED`. The events are deprecated and no longer sent by Stripe.
+
 ## 8.12.0 - 2022-07-25
 * [#1332](https://github.com/stripe/stripe-php/pull/1332) API Updates
   * Add support for `default_currency` and `invoice_credit_balance` on `Customer`
 
-## 8.12.0-beta.1 - 2022-07-22
-* [#1331](https://github.com/stripe/stripe-php/pull/1331) API Updates for beta branch
-  - Updated stable APIs to the latest version
-* [#1328](https://github.com/stripe/stripe-php/pull/1328) API Updates for beta branch
-  - Updated stable APIs to the latest version
-  - Add `QuotePhase` resource
-* [#1325](https://github.com/stripe/stripe-php/pull/1325) API Updates for beta branch
-  - Updated stable APIs to the latest version
-  - Add `QuotePhaseConfiguration` service.
-  - Add `Price.migrate_to` property
-  - Add `SubscriptionSchedule.amend` method.
-  - Add `Discount.subscription_item` property.
-  - Add `Quote.subscription_data.billing_behavior`, `billing_cycle_anchor`, `end_behavior`, `from_schedule`, `from_subscription`, `prebilling`, `proration_behavior` properties.
-  - Add `phases` parameter to `Quote.create`
-  - Add `Subscription.discounts`, `prebilling` properties.
-* [#1320](https://github.com/stripe/stripe-php/pull/1320) API Updates for beta branch
-  - Include `server_side_confirmation_beta=v1` beta
-  - Add `secretKeyConfirmation` to `PaymentIntent`
-* [#1317](https://github.com/stripe/stripe-php/pull/1317) API Updates for beta branch
-  - Updated stable APIs to the latest version
 
 ## 8.11.0 - 2022-07-18
 * [#1324](https://github.com/stripe/stripe-php/pull/1324) API Updates
@@ -299,6 +525,7 @@ Breaking changes that arose during code generation of the library that we postpo
   * Add support for `id_number_secondary_provided` on `Person`
 * [#1295](https://github.com/stripe/stripe-php/pull/1295) API Updates
 
+
 ## 8.3.0 - 2022-05-23
 * [#1294](https://github.com/stripe/stripe-php/pull/1294) API Updates
   * Add support for new resource `Apps.Secret`
@@ -338,6 +565,7 @@ Breaking changes that arose during code generation of the library that we postpo
   * Add support for `default_price` on `Product`
   * Add support for `instructions_email` on `Refund`
 
+
 ## 7.127.0 - 2022-05-05
 * [#1281](https://github.com/stripe/stripe-php/pull/1281) API Updates
   * Add support for new resources `FinancialConnections.AccountOwner`, `FinancialConnections.AccountOwnership`, `FinancialConnections.Account`, and `FinancialConnections.Session`
@@ -367,6 +595,7 @@ Breaking changes that arose during code generation of the library that we postpo
   * Add support for `customer_balance` on `PaymentMethod`
   * Add support for new value `customer_balance` on enum `PaymentMethod.type`
   * Add support for `configuration_overrides` on `Terminal.Location`
+
 
 ## 7.123.0 - 2022-04-13
 * [#1263](https://github.com/stripe/stripe-php/pull/1263) API Updates
@@ -405,6 +634,7 @@ Breaking changes that arose during code generation of the library that we postpo
   * Add support for new values `bg_uic`, `hu_tin`, and `si_tin` on enum `TaxId.type`
   * Add  `test_helpers.test_clock.advancing`, `test_helpers.test_clock.created`, `test_helpers.test_clock.deleted`, `test_helpers.test_clock.internal_failure`, and `test_helpers.test_clock.ready` events.
 
+
 ## 7.117.0 - 2022-03-18
 * [#1254](https://github.com/stripe/stripe-php/pull/1254) API Updates
   * Add support for `status` on `Card`
@@ -414,6 +644,7 @@ Breaking changes that arose during code generation of the library that we postpo
 ## 7.116.0 - 2022-03-02
 * [#1248](https://github.com/stripe/stripe-php/pull/1248) API Updates
   * Add support for `proration_details` on `InvoiceLineItem`
+
 
 ## 7.115.0 - 2022-03-01
 * [#1245](https://github.com/stripe/stripe-php/pull/1245) [#1247](https://github.com/stripe/stripe-php/pull/1247) API Updates
@@ -438,6 +669,7 @@ Breaking changes that arose during code generation of the library that we postpo
 * [#1235](https://github.com/stripe/stripe-php/pull/1235) API Updates
   * Add support for `phone_number_collection` on `PaymentLink`
   * Add support for new value `is_vat` on enum `TaxId.type`
+
 
 ## 7.111.0 - 2022-01-20
 * [#1233](https://github.com/stripe/stripe-php/pull/1233) API Updates
@@ -583,6 +815,7 @@ Breaking changes that arose during code generation of the library that we postpo
 * [#1141](https://github.com/stripe/stripe-php/pull/1141) Update PHPDocs
   * Add support for `url` on `Checkout\Session`
 
+
 ## 7.83.0 - 2021-06-07
 * [#1140](https://github.com/stripe/stripe-php/pull/1140) API Updates
   * Added support for `tax_id_collection` on `Checkout\Session` and `Checkout\Session#create`
@@ -649,6 +882,7 @@ Breaking changes that arose during code generation of the library that we postpo
 * [#1085](https://github.com/stripe/stripe-php/pull/1085) Update PHPDocs
   * Add support for `nationality` on `Person`
   * Add member `gb_vat` of `TaxID` enum
+
 
 ## 7.69.0 - 2021-01-21
 * [#1079](https://github.com/stripe/stripe-php/pull/1079) Update PHPDocs
@@ -1971,4 +2205,3 @@ Pull requests included in this release:
 -   Add new Transfer resource
 -   Switch from using HTTP Basic auth to Bearer auth. (Note: Stripe will support Basic auth for the indefinite future, but recommends Bearer auth when possible going forward)
 -   Numerous test suite improvements
-

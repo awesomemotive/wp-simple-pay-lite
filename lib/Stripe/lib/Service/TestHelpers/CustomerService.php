@@ -15,7 +15,7 @@ class CustomerService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Customer
+     * @return \SimplePay\Vendor\Stripe\CustomerCashBalanceTransaction
      */
     public function fundCashBalance($id, $params = null, $opts = null)
     {

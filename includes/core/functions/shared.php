@@ -566,7 +566,7 @@ function simpay_shared_script_variables() {
 		/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit */
 		'recurringIntervalDisplayInvoiceLimit' => esc_html_x(
 			'%1$d payments of %2$s every %3$s %4$s',
-			'recurring interval',
+			'recurring interval with invoice limit',
 			'stripe'
 		),
 		/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount */
@@ -1307,9 +1307,13 @@ function simpay_get_payment_form_setting(
 				$setting = array();
 
 				foreach ( $methods as $method ) {
-					$setting[ $method ] = array(
-						'id' => $method,
-					);
+					if ( is_array( $method ) ) {
+						$setting[ $method['id'] ] = $method;
+					} else {
+						$setting[ $method ] = array(
+							'id' => $method,
+						);
+					}
 				}
 
 				break;

@@ -7,6 +7,12 @@
 
 @import "./charts.scss";
 
+@include wordpress-admin-schemes();
+
+body.admin-color-fresh {
+	@include admin-scheme(#2271b1);
+}
+
 .simpay-admin-dashboard-widget-report {
 
 	* {

@@ -103,9 +103,6 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 			// ...verify on Charge.
 			$subscribers['simpay_before_charge_from_payment_form_request'] =
 				array( 'verify_verification_code_rest', 10, 4 );
-			// ...verify on Order submit.
-			$subscribers['simpay_before_order_submit_from_payment_form_request'] =
-				array( 'verify_verification_code_order', 10, 4 );
 
 			// Remove the verification code after a payment action has been made.
 
@@ -118,9 +115,6 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 			// ...on SetupIntent.
 			$subscribers['simpay_after_setupintent_from_payment_form_request'] =
 				array( 'remove_verification_code_rest', 10, 4 );
-			// ...on Order submit.
-			$subscribers['simpay_after_order_submit_from_payment_form_request'] =
-				array( 'remove_verification_code_order_submit', 10, 4 );
 
 			// Use a cleaned version of the submitted email address as the rate
 			// limiter ID. spencer+123@gmail.com turns in to spencer@gmail.com.
@@ -613,51 +607,6 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	}
 
 	/**
-	 * Ensures a verification code is valid before proceeding with submitting an
-	 * order. This is a separate function because the action takes differnet args.
-	 *
-	 * @since 4.6.0
-	 *
-	 * @param array<mixed> $request REST API request.
-	 * @throws \Exception If the verification code is invalid.
-	 * @return void
-	 */
-	function verify_verification_code_order_submit( $request ) {
-		// Retrieve form values.
-		/** @var array<string, string> $form_values */
-		$form_values = $request['form_values'];
-
-		if ( ! isset( $form_values['simpay_email_verification_code'] ) ) {
-			throw new Exception(
-				__( 'Invalid request. Please try again.', 'stripe' ) .
-				$this->get_email_verification_input()
-			);
-		}
-
-		// ... pull the verification code.
-		$verification_code = $form_values['simpay_email_verification_code'];
-		$verification_code = sanitize_text_field( $verification_code );
-
-		// ... and base email.
-		$clean_email = $this->clean_email(
-			sanitize_text_field( $form_values['simpay_email'] )
-		);
-
-		$verified = $this->verify_verification_code(
-			$verification_code,
-			$clean_email
-		);
-
-		// If the code is invalid, throw an error.
-		if ( false === $verified ) {
-			throw new Exception(
-				__( 'Invalid verification code. Please try again.', 'stripe' ) .
-				$this->get_email_verification_input()
-			);
-		}
-	}
-
-	/**
 	 * Validates a verification code by checking the nonce against a list of
 	 * valid codes.
 	 *
@@ -728,35 +677,6 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 		/** @var string $verification_code */
 		$verification_code = $form_values['simpay_email_verification_code'];
 		$verification_code = sanitize_text_field( $verification_code );
-
-		$this->remove_verification_code( $verification_code );
-	}
-
-	/**
-	 * Removes a verification code from the list of valid codes after an order
-	 * has been submitted.
-	 *
-	 * @since 4.6.0
-	 *
-	 * @param array<mixed> $request REST API request.
-	 * @throws \Exception If the verification code is not available.
-	 * @return void
-	 */
-	public function remove_verification_code_order_submit( $request ) {
-		// Retrieve form values.
-		/** @var array<string, string> $form_values */
-		$form_values = $request['form_values'];
-
-		if ( ! isset( $form_values['simpay_email_verification_code'] ) ) {
-			throw new Exception(
-				__( 'Invalid request. Please try again.', 'stripe' ) .
-				$this->get_email_verification_input()
-			);
-		}
-
-		$verification_code = sanitize_text_field(
-			$form_values['simpay_email_verification_code']
-		);
 
 		$this->remove_verification_code( $verification_code );
 	}

@@ -5,8 +5,7 @@
 namespace SimplePay\Vendor\Stripe\FinancialConnections;
 
 /**
- * A Financial Connections Account represents an account that exists outside of
- * Stripe, to which you have been granted some degree of access.
+ * A Financial Connections Account represents an account that exists outside of Stripe, to which you have been granted some degree of access.
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -16,7 +15,6 @@ namespace SimplePay\Vendor\Stripe\FinancialConnections;
  * @property string $category The type of the account. Account category is further divided in <code>subcategory</code>.
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|string $display_name A human-readable name that has been assigned to this account, either by the account holder or by the institution.
- * @property null|\SimplePay\Vendor\Stripe\StripeObject $inferred_balances_refresh The state of the most recent attempt to refresh the account's inferred balance history.
  * @property string $institution_name The name of the institution that holds this account.
  * @property null|string $last4 The last 4 digits of the account number. If present, this will be 4 numeric characters.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
@@ -25,16 +23,13 @@ namespace SimplePay\Vendor\Stripe\FinancialConnections;
  * @property null|string[] $permissions The list of permissions granted by this account.
  * @property string $status The status of the link to the account.
  * @property string $subcategory <p>If <code>category</code> is <code>cash</code>, one of:</p><p>- <code>checking</code> - <code>savings</code> - <code>other</code></p><p>If <code>category</code> is <code>credit</code>, one of:</p><p>- <code>mortgage</code> - <code>line_of_credit</code> - <code>credit_card</code> - <code>other</code></p><p>If <code>category</code> is <code>investment</code> or <code>other</code>, this will be <code>other</code>.</p>
- * @property null|string[] $subscriptions The list of data refresh subscriptions requested on this account.
  * @property string[] $supported_payment_method_types The <a href="https://stripe.com/docs/api/payment_methods/object#payment_method_object-type">PaymentMethod type</a>(s) that can be created from this account.
- * @property null|\SimplePay\Vendor\Stripe\StripeObject $transaction_refresh The state of the most recent attempt to refresh the account transactions.
  */
 class Account extends \SimplePay\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'financial_connections.account';
 
     use \SimplePay\Vendor\Stripe\ApiOperations\All;
-    use \SimplePay\Vendor\Stripe\ApiOperations\NestedResource;
     use \SimplePay\Vendor\Stripe\ApiOperations\Retrieve;
 
     const CATEGORY_CASH = 'cash';
@@ -77,7 +72,7 @@ class Account extends \SimplePay\Vendor\Stripe\ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\FinancialConnections\AccountOwner> list of BankConnectionsResourceOwners
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\FinancialConnections\AccountOwner> list of account owners
      */
     public static function allOwners($id, $params = null, $opts = null)
     {
@@ -104,21 +99,5 @@ class Account extends \SimplePay\Vendor\Stripe\ApiResource
         $this->refreshFrom($response, $opts);
 
         return $this;
-    }
-
-    const PATH_INFERRED_BALANCES = '/inferred_balances';
-
-    /**
-     * @param string $id the ID of the account on which to retrieve the financial connections account inferred balances
-     * @param null|array $params
-     * @param null|array|string $opts
-     *
-     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\FinancialConnections\FinancialConnectionsAccountInferredBalance> the list of financial connections account inferred balances
-     */
-    public static function allInferredBalances($id, $params = null, $opts = null)
-    {
-        return self::_allNestedResources($id, static::PATH_INFERRED_BALANCES, $params, $opts);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-// File generated from our OpenAPI spec
-
 namespace SimplePay\Vendor\Stripe\Service;
 
 /**
  * Service factory class for API resources in the root namespace.
  *
+ * @property OAuthService $oauth
+ * // Doc: The beginning of the section generated from our OpenAPI spec
  * @property AccountLinkService $accountLinks
  * @property AccountService $accounts
  * @property AccountSessionService $accountSessions
@@ -16,7 +16,6 @@ namespace SimplePay\Vendor\Stripe\Service;
  * @property BalanceService $balance
  * @property BalanceTransactionService $balanceTransactions
  * @property BillingPortal\BillingPortalServiceFactory $billingPortal
- * @property Capital\CapitalServiceFactory $capital
  * @property ChargeService $charges
  * @property Checkout\CheckoutServiceFactory $checkout
  * @property CountrySpecService $countrySpecs
@@ -30,23 +29,21 @@ namespace SimplePay\Vendor\Stripe\Service;
  * @property FileLinkService $fileLinks
  * @property FileService $files
  * @property FinancialConnections\FinancialConnectionsServiceFactory $financialConnections
- * @property GiftCards\GiftCardsServiceFactory $giftCards
  * @property Identity\IdentityServiceFactory $identity
  * @property InvoiceItemService $invoiceItems
  * @property InvoiceService $invoices
  * @property Issuing\IssuingServiceFactory $issuing
  * @property MandateService $mandates
- * @property OAuthService $oauth
- * @property OrderService $orders
  * @property PaymentIntentService $paymentIntents
  * @property PaymentLinkService $paymentLinks
+ * @property PaymentMethodConfigurationService $paymentMethodConfigurations
+ * @property PaymentMethodDomainService $paymentMethodDomains
  * @property PaymentMethodService $paymentMethods
  * @property PayoutService $payouts
  * @property PlanService $plans
  * @property PriceService $prices
  * @property ProductService $products
  * @property PromotionCodeService $promotionCodes
- * @property QuotePhaseService $quotePhases
  * @property QuoteService $quotes
  * @property Radar\RadarServiceFactory $radar
  * @property RefundService $refunds
@@ -70,6 +67,7 @@ namespace SimplePay\Vendor\Stripe\Service;
  * @property TransferService $transfers
  * @property Treasury\TreasuryServiceFactory $treasury
  * @property WebhookEndpointService $webhookEndpoints
+ * // Doc: The end of the section generated from our OpenAPI spec
  */
 class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServiceFactory
 {
@@ -77,6 +75,8 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      * @var array<string, string>
      */
     private static $classMap = [
+        'oauth' => OAuthService::class,
+        // Class Map: The beginning of the section generated from our OpenAPI spec
         'accountLinks' => AccountLinkService::class,
         'accounts' => AccountService::class,
         'accountSessions' => AccountSessionService::class,
@@ -86,7 +86,6 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
         'balance' => BalanceService::class,
         'balanceTransactions' => BalanceTransactionService::class,
         'billingPortal' => BillingPortal\BillingPortalServiceFactory::class,
-        'capital' => Capital\CapitalServiceFactory::class,
         'charges' => ChargeService::class,
         'checkout' => Checkout\CheckoutServiceFactory::class,
         'countrySpecs' => CountrySpecService::class,
@@ -100,23 +99,21 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
         'fileLinks' => FileLinkService::class,
         'files' => FileService::class,
         'financialConnections' => FinancialConnections\FinancialConnectionsServiceFactory::class,
-        'giftCards' => GiftCards\GiftCardsServiceFactory::class,
         'identity' => Identity\IdentityServiceFactory::class,
         'invoiceItems' => InvoiceItemService::class,
         'invoices' => InvoiceService::class,
         'issuing' => Issuing\IssuingServiceFactory::class,
         'mandates' => MandateService::class,
-        'oauth' => OAuthService::class,
-        'orders' => OrderService::class,
         'paymentIntents' => PaymentIntentService::class,
         'paymentLinks' => PaymentLinkService::class,
+        'paymentMethodConfigurations' => PaymentMethodConfigurationService::class,
+        'paymentMethodDomains' => PaymentMethodDomainService::class,
         'paymentMethods' => PaymentMethodService::class,
         'payouts' => PayoutService::class,
         'plans' => PlanService::class,
         'prices' => PriceService::class,
         'products' => ProductService::class,
         'promotionCodes' => PromotionCodeService::class,
-        'quotePhases' => QuotePhaseService::class,
         'quotes' => QuoteService::class,
         'radar' => Radar\RadarServiceFactory::class,
         'refunds' => RefundService::class,
@@ -140,6 +137,7 @@ class CoreServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServic
         'transfers' => TransferService::class,
         'treasury' => Treasury\TreasuryServiceFactory::class,
         'webhookEndpoints' => WebhookEndpointService::class,
+        // Class Map: The end of the section generated from our OpenAPI spec
     ];
 
     protected function getServiceClass($name)

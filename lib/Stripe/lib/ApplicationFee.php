@@ -8,8 +8,8 @@ namespace SimplePay\Vendor\Stripe;
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property string|\SimplePay\Vendor\Stripe\Account $account ID of the SimplePay\Vendor\Stripe account this fee was taken from.
- * @property int $amount Amount earned, in %s.
- * @property int $amount_refunded Amount in %s refunded (can be less than the amount attribute on the fee if a partial refund was issued)
+ * @property int $amount Amount earned, in cents (or local equivalent).
+ * @property int $amount_refunded Amount in cents (or local equivalent) refunded (can be less than the amount attribute on the fee if a partial refund was issued)
  * @property string|\SimplePay\Vendor\Stripe\StripeObject $application ID of the Connect application that earned the fee.
  * @property null|string|\SimplePay\Vendor\Stripe\BalanceTransaction $balance_transaction Balance transaction that describes the impact of this collected application fee on your account balance (not including refunds).
  * @property string|\SimplePay\Vendor\Stripe\Charge $charge ID of the charge that the application fee was taken from.
@@ -18,7 +18,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property null|string|\SimplePay\Vendor\Stripe\Charge $originating_transaction ID of the corresponding charge on the platform account, if this fee was the result of a charge using the <code>destination</code> parameter.
  * @property bool $refunded Whether the fee has been fully refunded. If the fee is only partially refunded, this attribute will still be false.
- * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\StripeObject> $refunds A list of refunds that have been applied to the fee.
+ * @property \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\ApplicationFeeRefund> $refunds A list of refunds that have been applied to the fee.
  */
 class ApplicationFee extends ApiResource
 {
@@ -31,13 +31,13 @@ class ApplicationFee extends ApiResource
     const PATH_REFUNDS = '/refunds';
 
     /**
-     * @param string $id the ID of the application fee on which to retrieve the fee refunds
+     * @param string $id the ID of the application fee on which to retrieve the application fee refunds
      * @param null|array $params
      * @param null|array|string $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\ApplicationFeeRefund> the list of fee refunds
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\ApplicationFeeRefund> the list of application fee refunds
      */
     public static function allRefunds($id, $params = null, $opts = null)
     {
@@ -45,7 +45,7 @@ class ApplicationFee extends ApiResource
     }
 
     /**
-     * @param string $id the ID of the application fee on which to create the fee refund
+     * @param string $id the ID of the application fee on which to create the application fee refund
      * @param null|array $params
      * @param null|array|string $opts
      *
@@ -59,8 +59,8 @@ class ApplicationFee extends ApiResource
     }
 
     /**
-     * @param string $id the ID of the application fee to which the fee refund belongs
-     * @param string $refundId the ID of the fee refund to retrieve
+     * @param string $id the ID of the application fee to which the application fee refund belongs
+     * @param string $refundId the ID of the application fee refund to retrieve
      * @param null|array $params
      * @param null|array|string $opts
      *
@@ -74,8 +74,8 @@ class ApplicationFee extends ApiResource
     }
 
     /**
-     * @param string $id the ID of the application fee to which the fee refund belongs
-     * @param string $refundId the ID of the fee refund to update
+     * @param string $id the ID of the application fee to which the application fee refund belongs
+     * @param string $refundId the ID of the application fee refund to update
      * @param null|array $params
      * @param null|array|string $opts
      *
