@@ -68,7 +68,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	// Stripe.
 	//
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2022-11-15' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2023-10-16' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
