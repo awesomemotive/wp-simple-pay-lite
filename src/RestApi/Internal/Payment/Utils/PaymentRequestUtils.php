@@ -297,7 +297,7 @@ class PaymentRequestUtils {
 	 * Returns data for a PaymentIntent for the given request.
 	 *
 	 * This is generic data that applies to a base PaymentIntent, regardless
-	 * of what creates it (Checkout Session, Subscription, Order, etc).
+	 * of what creates it (Checkout Session, Subscription, etc).
 	 * Additional arguments used just for the PaymentIntent API are added
 	 * in `PaymentIntentTrait::create_payment_intent()`.
 	 *
@@ -476,7 +476,7 @@ class PaymentRequestUtils {
 				? $checkbox['uid']
 				: '';
 
-			$key = ! empty( $checkbox['metadata'] )
+			$key = isset( $checkbox['metadata'] ) && ! empty( $checkbox['metadata'] )
 				? $checkbox['metadata']
 				: sprintf(
 					'simpay-form-%s-field-%s',

@@ -2,8 +2,8 @@
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
-Tested up to: 6.3
-Stable tag: 4.7.10
+Tested up to: 6.4
+Stable tag: 4.7.11
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -50,7 +50,9 @@ If you need more functionality for your Stripe payment forms, you can [upgrade t
 - Apple Pay & Google Pay support with custom payment forms
 - Accept ACH direct debit (U.S bank accounts) in Stripe from customers in the U.S
 - Accept SEPA direct debit payments in Stripe from customers in Europe
+- Accept Bacs Direct Debit in Stripe from customers in the U.K
 - Accept Bancontact payments in Stripe from customers in Belgium
+- Accept GrabPay payments in Stripe from customers in Malaysia
 - Accept recurring payments with Stripe
 - Buy Now, Pay Later with Klarna & Afterpay/Clearpay
 - Custom payment receipt emails with Stripe
@@ -283,6 +285,14 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.7.11 - December 7, 2023 =
+
+* New: Access official WP Simple Pay code snippets directly in WPCode.
+* Fix: Avoid the "modern" color scheme from leaking on pages using `@wordpress/components`.
+* i18n: Merge string contexts.
+* Dev: Update Stripe PHP SDK from `10.6.0-beta.1` to `13.3.0`.
+* Dev: Update Stripe API version from `2022-11-15` to `2023-10-16`.
+
 = Stripe Payment Forms v4.7.10 - October 12, 2023 =
 
 * New: Help improve WP Simple Pay with *opt-in* anonymous telemetry reporting https://wpsimplepay.com/doc/what-information-does-wp-simple-pay-collect/
@@ -301,8 +311,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 * New: Add "Automations" tab to the form builder.
 * Fix: Ensure at least one payment method is active when updating a payment form.
-
-= Stripe Payment Forms v4.7.7.3 - July 25, 2023 =
-
-* New: Stripe Tax - update for general availability.
-* Fix: Lite Connect - improve connection process.

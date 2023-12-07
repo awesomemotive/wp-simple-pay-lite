@@ -98,7 +98,6 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 		);
 
 		// Assets.
-		// @todo Use ScriptLoader and StyleLOader
 		wp_enqueue_style(
 			'simpay-fontawesome',
 			'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
@@ -133,18 +132,8 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 		$all_plugins = get_plugins();
 		$images_url  = SIMPLE_PAY_INC_URL . '/core/assets/images/about/'; // @phpstan-ignore-line
 		$am_plugins  = array(
-			// AffiliateWP.
-			'affiliatewp/affiliate-wp.php'                 => array(
-				'icon'  => $images_url . 'plugin-affwp.png',
-				'name'  => esc_html__( 'AffiliateWP', 'stripe' ),
-				'desc'  => esc_html__( 'The #1 affiliate management plugin for WordPress. Easily create an affiliate program for your eCommerce store or membership site within minutes and start growing your sales with the power of referral marketing.', 'stripe' ),
-				'wporg' => '',
-				'url'   => 'https://www.affiliatewp.com/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
-				'act'   => 'go-to-url',
-			),
-
 			// OptinMonster.
-			'optinmonster/optin-monster-wp-api.php'        => array(
+			'optinmonster/optin-monster-wp-api.php'       => array(
 				'icon'  => $images_url . 'plugin-om.png',
 				'name'  => esc_html__( 'OptinMonster', 'stripe' ),
 				'desc'  => esc_html__( 'Instantly get more subscribers, leads, and sales with the #1 conversion optimization toolkit. Create high converting popups, announcement bars, spin a wheel, and more with smart targeting and personalization.', 'stripe' ),
@@ -170,10 +159,10 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 			),
 
 			// WP Mail SMTP.
-			'wp-mail-smtp/wp_mail_smtp.php'                => array(
+			'wp-mail-smtp/wp_mail_smtp.php'               => array(
 				'icon'  => $images_url . 'plugin-smtp.png',
 				'name'  => esc_html__( 'WP Mail SMTP', 'stripe' ),
-				'desc'  => esc_html__( "Improve your WordPress email deliverability and make sure that your website emails reach user's inbox with the #1 SMTP plugin for WordPress. Over 2 million websites use it to fix WordPress email issues.", 'stripe' ),
+				'desc'  => esc_html__( 'Improve your WordPress email deliverability and make sure that your website emails reach user\'s inbox with the #1 SMTP plugin for WordPress. Over 3 million websites use it to fix WordPress email issues.', 'stripe' ),
 				'wporg' => 'https://wordpress.org/plugins/wp-mail-smtp/',
 				'url'   => 'https://downloads.wordpress.org/plugin/wp-mail-smtp.zip',
 				'pro'   => array(
@@ -187,10 +176,10 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 			),
 
 			// All in One SEO Pack.
-			'all-in-one-seo-pack/all_in_one_seo_pack.php'  => array(
+			'all-in-one-seo-pack/all_in_one_seo_pack.php' => array(
 				'icon'  => $images_url . 'plugin-aioseo.png',
 				'name'  => esc_html__( 'AIOSEO', 'stripe' ),
-				'desc'  => esc_html__( "The original WordPress SEO plugin and toolkit that improves your website's search rankings. Comes with all the SEO features like Local SEO, WooCommerce SEO, sitemaps, SEO optimizer, schema, and more.", 'stripe' ),
+				'desc'  => esc_html__( 'The original WordPress SEO plugin and toolkit that improves your website’s search rankings. Comes with all the SEO features like Local SEO, WooCommerce SEO, sitemaps, SEO optimizer, schema, and more.', 'stripe' ),
 				'wporg' => 'https://wordpress.org/plugins/all-in-one-seo-pack/',
 				'url'   => 'https://downloads.wordpress.org/plugin/all-in-one-seo-pack.zip',
 				'pro'   => array(
@@ -204,7 +193,7 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 			),
 
 			// SeedProd.
-			'coming-soon/coming-soon.php'                  => array(
+			'coming-soon/coming-soon.php'                 => array(
 				'icon'  => $images_url . 'plugin-seedprod.png',
 				'name'  => esc_html__( 'SeedProd', 'stripe' ),
 				'desc'  => esc_html__( 'The fastest drag & drop landing page builder for WordPress. Create custom landing pages without writing code, connect them with your CRM, collect subscribers, and grow your audience. Trusted by 1 million sites.', 'stripe' ),
@@ -221,7 +210,7 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 			),
 
 			// RafflePress.
-			'rafflepress/rafflepress.php'                  => array(
+			'rafflepress/rafflepress.php'                 => array(
 				'icon'  => $images_url . 'plugin-rp.png',
 				'name'  => esc_html__( 'RafflePress', 'stripe' ),
 				'desc'  => esc_html__( 'Turn your website visitors into brand ambassadors! Easily grow your email list, website traffic, and social media followers with the most powerful giveaways & contests plugin for WordPress.', 'stripe' ),
@@ -238,7 +227,7 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 			),
 
 			// SearchWP.
-			'searchwp/searchwp.php'                        => array(
+			'searchwp/searchwp.php'                       => array(
 				'icon'  => $images_url . 'plugin-searchwp.png',
 				'name'  => esc_html__( 'SearchWP', 'stripe' ),
 				'desc'  => esc_html__( 'The most advanced WordPress search plugin. Customize your WordPress search algorithm, reorder search results, track search metrics, and everything you need to leverage search to grow your business.', 'stripe' ),
@@ -247,11 +236,21 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 				'act'   => 'go-to-url',
 			),
 
+			// AffiliateWP.
+			'affiliatewp/affiliate-wp.php'                => array(
+				'icon'  => $images_url . 'plugin-affwp.png',
+				'name'  => esc_html__( 'AffiliateWP', 'stripe' ),
+				'desc'  => esc_html__( 'The #1 affiliate management plugin for WordPress. Easily create an affiliate program for your eCommerce store or membership site within minutes and start growing your sales with the power of referral marketing.', 'stripe' ),
+				'wporg' => '',
+				'url'   => 'https://www.affiliatewp.com/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
+				'act'   => 'go-to-url',
+			),
+
 			// PushEngage.
-			'pushengage/main.php'                          => array(
+			'pushengage/main.php'                         => array(
 				'icon'  => $images_url . 'plugin-pushengage.png',
 				'name'  => esc_html__( 'PushEngage', 'stripe' ),
-				'desc'  => esc_html__( 'Connect with your visitors after they leave your website with the leading web push notification software. Over 10,000+ businesses worldwide use PushEngage to send 9 billion notifications each month.', 'stripe' ),
+				'desc'  => esc_html__( 'Connect with your visitors after they leave your website with the leading web push notification software. Over 10,000+ businesses worldwide use PushEngage to send 15 billion notifications each month.', 'stripe' ),
 				'wporg' => 'https://wordpress.org/plugins/pushengage/',
 				'url'   => 'https://downloads.wordpress.org/plugin/pushengage.zip',
 			),
@@ -274,7 +273,7 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 			),
 
 			// Smash Balloon (YouTube).
-			'feeds-for-youtube/youtube-feed.php'           => array(
+			'feeds-for-youtube/youtube-feed.php'          => array(
 				'icon'  => $images_url . 'plugin-sb-youtube.png',
 				'name'  => esc_html__( 'Smash Balloon YouTube Feeds', 'stripe' ),
 				'desc'  => esc_html__( 'Easily display YouTube videos on your WordPress site without writing any code. Comes with multiple layouts, ability to embed live streams, video filtering, ability to combine multiple channel videos, and more.', 'stripe' ),
@@ -290,8 +289,42 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 				),
 			),
 
+			// Smash Balloon (Instagram).
+			'instagram-feed/instagram-feed.php'           => array(
+				'icon'  => $images_url . 'plugin-sb-instagram.png',
+				'name'  => esc_html__( 'Smash Balloon Instagram Feeds', 'stripe' ),
+				'desc'  => esc_html__( 'Easily display Instagram content on your WordPress site without writing any code. Comes with multiple templates, ability to show content from multiple accounts, hashtags, and more. Trusted by 1 million websites.', 'stripe' ),
+				'wporg' => 'https://wordpress.org/plugins/instagram-feed/',
+				'url'   => 'https://downloads.wordpress.org/plugin/instagram-feed.zip',
+				'pro'   => array(
+					'plug' => 'instagram-feed/instagram-feed.php',
+					'icon' => $images_url . 'plugin-sb-ig.png',
+					'name' => esc_html__( 'Smash Balloon Facebook Feeds Pro', 'stripe' ),
+					'desc' => esc_html__( 'Easily display Facebook content on your WordPress site without writing any code. Comes with multiple templates, ability to embed albums, group content, reviews, live videos, comments, and reactions.', 'stripe' ),
+					'url'  => 'https://smashballoon.com/instagram-feed/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
+					'act'  => 'go-to-url',
+				),
+			),
+
+			// Smash Balloon (Twitter).
+			'custom-twitter-feed/custom-twitter-feed.php' => array(
+				'icon'  => $images_url . 'plugin-sb-twitter.png',
+				'name'  => esc_html__( 'Smash Balloon Twitter Feeds', 'stripe' ),
+				'desc'  => esc_html__( 'Easily display Twitter content in WordPress without writing any code. Comes with multiple layouts, ability to combine multiple Twitter feeds, Twitter card support, tweet moderation, and more.', 'stripe' ),
+				'wporg' => 'https://wordpress.org/plugins/custom-twitter-feeds/',
+				'url'   => 'https://downloads.wordpress.org/plugin/custom-twitter-feeds.zip',
+				'pro'   => array(
+					'plug' => 'custom-twitter-feed-pro/custom-twitter-feed.php',
+					'icon' => $images_url . 'plugin-sb-fb.png',
+					'name' => esc_html__( 'Smash Balloon Twitter Feeds Pro', 'stripe' ),
+					'desc' => esc_html__( 'Easily display Twitter content in WordPress without writing any code. Comes with multiple layouts, ability to combine multiple Twitter feeds, Twitter card support, tweet moderation, and more.', 'stripe' ),
+					'url'  => 'https://smashballoon.com/custom-twitter-feeds/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
+					'act'  => 'go-to-url',
+				),
+			),
+
 			// Trust Pulse.
-			'trustpulse-api/trustpulse.php'                => array(
+			'trustpulse-api/trustpulse.php'               => array(
 				'icon'  => $images_url . 'plugin-trustpulse.png',
 				'name'  => esc_html__( 'TrustPulse', 'stripe' ),
 				'desc'  => esc_html__( 'Boost your sales and conversions by up to 15% with real-time social proof notifications. TrustPulse helps you show live user activity and purchases to help convince other users to purchase.', 'stripe' ),
@@ -299,7 +332,7 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 				'url'   => 'https://downloads.wordpress.org/plugin/trustpulse-api.zip',
 			),
 
-			// Easy Digital Downloads
+			// Easy Digital Downloads.
 			'easy-digital-downloads/easy-digital-downloads.php' => array(
 				'icon'  => $images_url . 'plugin-edd.png',
 				'name'  => esc_html__( 'Easy Digital Downloads', 'stripe' ),
@@ -318,26 +351,43 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 				'pro'   => array(
 					'plug' => 'sugar-calendar/sugar-calendar.php',
 					'icon' => $images_url . 'plugin-sugarcalendar.png',
-					'name'  => esc_html__( 'Sugar Calendar Pro', 'stripe' ),
-					'desc'  => esc_html__( 'A simple & powerful event calendar plugin for WordPress that comes with all the event management features including payments, scheduling, timezones, ticketing, recurring events, and more.', 'stripe' ),
+					'name' => esc_html__( 'Sugar Calendar Pro', 'stripe' ),
+					'desc' => esc_html__( 'A simple & powerful event calendar plugin for WordPress that comes with all the event management features including payments, scheduling, timezones, ticketing, recurring events, and more.', 'stripe' ),
 					'url'  => 'https://sugarcalendar.com/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
 					'act'  => 'go-to-url',
 				),
 			),
 
-			// WPForms
-			'wpforms-lite/wpforms.php' => array(
-				'icon'  => $images_url . 'plugin-wpforms.png',
-				'name'  => esc_html__( 'WPForms', 'stripe' ),
-				'desc'  => esc_html__( 'The best drag & drop WordPress form builder. Easily create beautiful contact forms, surveys, payment forms, and more with our 100+ form templates. Trusted by over 4 million websites as the best forms plugin.', 'stripe' ),
-				'wporg' => 'https://wordpress.org/plugins/wpforms-lite/',
-				'url'   => 'https://downloads.wordpress.org/plugin/wpforms-lite.zip',
+			// WPCharitable.
+			'charitable/charitable.php'                   => array(
+				'icon'  => $images_url . 'plugin-charitable.png',
+				'name'  => esc_html__( 'WP Charitable', 'stripe' ),
+				'desc'  => esc_html__( 'Top-rated WordPress donation and fundraising plugin. Over 10,000+ non-profit organizations and website owners use Charitable to create fundraising campaigns and raise more money online.', 'stripe' ),
+				'wporg' => 'https://wordpress.org/plugins/charitable/',
+				'url'   => 'https://downloads.wordpress.org/plugin/charitable.zip',
 				'pro'   => array(
-					'plug' => 'wpforms/wpforms.php',
-					'icon' => $images_url . 'plugin-wpforms.png',
-					'name'  => esc_html__( 'WPForms Pro', 'stripe' ),
-					'desc'  => esc_html__( 'The best drag & drop WordPress form builder. Easily create beautiful contact forms, surveys, payment forms, and more with our 100+ form templates. Trusted by over 4 million websites as the best forms plugin.', 'stripe' ),
-					'url'  => 'https://wpforms.com/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
+					'plug' => 'charitable/charitable.php',
+					'icon' => $images_url . 'plugin-charitable.png',
+					'name' => esc_html__( 'WP Charitable Pro', 'stripe' ),
+					'desc' => esc_html__( 'Top-rated WordPress donation and fundraising plugin. Over 10,000+ non-profit organizations and website owners use Charitable to create fundraising campaigns and raise more money online.', 'stripe' ),
+					'url'  => 'https://wpcharitable.com/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
+					'act'  => 'go-to-url',
+				),
+			),
+
+			// WP Code.
+			'insert-headers-and-footers/ihaf.php'         => array(
+				'icon'  => $images_url . 'plugin-wpcode.png',
+				'name'  => esc_html__( 'WP Code', 'stripe' ),
+				'desc'  => esc_html__( 'Future proof your WordPress customizations with the most popular code snippet management plugin for WordPress. Trusted by over 2 million websites for easily adding code to WordPress right from the admin area.', 'stripe' ),
+				'wporg' => 'https://wordpress.org/plugins/insert-headers-and-footers/',
+				'url'   => 'https://downloads.wordpress.org/plugin/insert-headers-and-footers.zip',
+				'pro'   => array(
+					'plug' => 'wpcode-premium/wpcode.php',
+					'icon' => $images_url . 'plugin-wpcode.png',
+					'name' => esc_html__( 'WP Code Pro', 'stripe' ),
+					'desc' => esc_html__( 'Future proof your WordPress customizations with the most popular code snippet management plugin for WordPress. Trusted by over 2 million websites for easily adding code to WordPress right from the admin area.', 'stripe' ),
+					'url'  => 'https://wpcode.com/?utm_source=wpsimplepay-plugin&utm_medium=link&utm_campaign=about-wpsimplepay',
 					'act'  => 'go-to-url',
 				),
 			),

@@ -11,9 +11,8 @@ namespace SimplePay\Vendor\Stripe\ApiOperations;
 trait SingletonRetrieve
 {
     /**
-     * @param array|string $id the ID of the API resource to retrieve,
+     * @param null|array|string $opts the ID of the API resource to retrieve,
      *     or an options array containing an `id` key
-     * @param null|array|string $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

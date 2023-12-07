@@ -80,6 +80,12 @@ class AccountService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      * href="https://dashboard.stripe.com/account/applications/settings">register your
      * platform</a>.
      *
+     * If you’ve already collected information for your connected accounts, you <a
+     * href="/docs/connect/best-practices#onboarding">can prefill that information</a>
+     * when creating the account. Connect Onboarding won’t ask for the prefilled
+     * information during account onboarding. You can prefill any information on the
+     * account.
+     *
      * @param null|array $params
      * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
@@ -154,8 +160,8 @@ class AccountService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      * zero.
      *
      * If you want to delete your own account, use the <a
-     * href="https://dashboard.stripe.com/account">account information tab in your
-     * account settings</a> instead.
+     * href="https://dashboard.stripe.com/settings/account">account information tab in
+     * your account settings</a> instead.
      *
      * @param string $id
      * @param null|array $params
@@ -281,14 +287,18 @@ class AccountService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     /**
      * Updates a <a href="/docs/connect/accounts">connected account</a> by setting the
      * values of the parameters passed. Any parameters not provided are left unchanged.
-     * Most parameters can be changed only for Custom accounts. (These are marked
-     * <strong>Custom Only</strong> below.) Parameters marked <strong>Custom and
-     * Express</strong> are not supported for Standard accounts.
+     *
+     * For Custom accounts, you can update any information on the account. For other
+     * accounts, you can update all information until that account has started to go
+     * through Connect Onboarding. Once you create an <a
+     * href="/docs/api/account_links">Account Link</a> for a Standard or Express
+     * account, some parameters can no longer be changed. These are marked as
+     * <strong>Custom Only</strong> or <strong>Custom and Express</strong> below.
      *
      * To update your own account, use the <a
-     * href="https://dashboard.stripe.com/account">Dashboard</a>. Refer to our <a
-     * href="/docs/connect/updating-accounts">Connect</a> documentation to learn more
-     * about updating accounts.
+     * href="https://dashboard.stripe.com/settings/account">Dashboard</a>. Refer to our
+     * <a href="/docs/connect/updating-accounts">Connect</a> documentation to learn
+     * more about updating accounts.
      *
      * @param string $id
      * @param null|array $params
@@ -304,7 +314,8 @@ class AccountService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     }
 
     /**
-     * Updates an existing Account Capability.
+     * Updates an existing Account Capability. Request or remove a capability by
+     * updating its <code>requested</code> parameter.
      *
      * @param string $parentId
      * @param string $id
@@ -365,7 +376,7 @@ class AccountService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @param null|string $id
      * @param null|array $params
-     * @param null|array|StripeUtilRequestOptions $opts
+     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

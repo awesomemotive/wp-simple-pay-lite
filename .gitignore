@@ -1,17 +1,20 @@
+.env
+
 .DS_Store
 ehthumbs.db
 Thumbs.db
-
 *.cache
+
 composer.lock
 phpunit.xml
+
 node_modules
-/.sass-cache
-/logs
-/build
-/vendor/*/
+artifacts
+logs
+build
+vendor
+test-results
 !/vendor/autoload.php
 !/vendor/composer/
 
-# PhpStorm
-.idea
+/.sass-cache

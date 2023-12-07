@@ -5,8 +5,9 @@
 namespace SimplePay\Vendor\Stripe\Tax;
 
 /**
- * A Tax <code>Calculation</code> allows you to calculate the tax to collect from
- * your customer.
+ * A Tax Calculation allows you to calculate the tax to collect from your customer.
+ *
+ * Related guide: <a href="https://stripe.com/docs/tax/custom">Calculate tax in your custom payment flow</a>
  *
  * @property null|string $id Unique identifier for the calculation.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -14,10 +15,10 @@ namespace SimplePay\Vendor\Stripe\Tax;
  * @property string $currency Three-letter <a href="https://www.iso.org/iso-4217-currency-codes.html">ISO currency code</a>, in lowercase. Must be a <a href="https://stripe.com/docs/currencies">supported currency</a>.
  * @property null|string $customer The ID of an existing <a href="https://stripe.com/docs/api/customers/object">Customer</a> used for the resource.
  * @property \SimplePay\Vendor\Stripe\StripeObject $customer_details
- * @property null|int $expires_at Timestamp of date at which the tax calculation will expire. Empty if the calculation is an unsaved preview.
- * @property null|\SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> $line_items The list of items the customer is purchasing.
+ * @property null|int $expires_at Timestamp of date at which the tax calculation will expire.
+ * @property null|\SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Tax\CalculationLineItem> $line_items The list of items the customer is purchasing.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
- * @property null|string $reference A custom unique identifier, such as 'myOrder_123'.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $shipping_cost The shipping cost details for the calculation.
  * @property int $tax_amount_exclusive The amount of tax to be collected on top of the line item prices.
  * @property int $tax_amount_inclusive The amount of tax already included in the line item prices.
  * @property \SimplePay\Vendor\Stripe\StripeObject[] $tax_breakdown Breakdown of individual tax amounts that add up to the total.
@@ -36,7 +37,7 @@ class Calculation extends \SimplePay\Vendor\Stripe\ApiResource
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> list of TaxProductResourceTaxCalculationLineItems
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Tax\CalculationLineItem> list of calculation line items
      */
     public static function allLineItems($id, $params = null, $opts = null)
     {

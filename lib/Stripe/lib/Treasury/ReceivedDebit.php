@@ -5,9 +5,7 @@
 namespace SimplePay\Vendor\Stripe\Treasury;
 
 /**
- * ReceivedDebits represent funds pulled from a <a
- * href="https://stripe.com/docs/api#financial_accounts">FinancialAccount</a>.
- * These are not initiated from the FinancialAccount.
+ * ReceivedDebits represent funds pulled from a <a href="https://stripe.com/docs/api#financial_accounts">FinancialAccount</a>. These are not initiated from the FinancialAccount.
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -18,11 +16,10 @@ namespace SimplePay\Vendor\Stripe\Treasury;
  * @property null|string $failure_code Reason for the failure. A ReceivedDebit might fail because the FinancialAccount doesn't have sufficient funds, is closed, or is frozen.
  * @property null|string $financial_account The FinancialAccount that funds were pulled from.
  * @property null|string $hosted_regulatory_receipt_url A <a href="https://stripe.com/docs/treasury/moving-money/regulatory-receipts">hosted transaction receipt</a> URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
- * @property \SimplePay\Vendor\Stripe\StripeObject $initiating_payment_method_details
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $initiating_payment_method_details
  * @property \SimplePay\Vendor\Stripe\StripeObject $linked_flows
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property string $network The network used for the ReceivedDebit.
- * @property null|\SimplePay\Vendor\Stripe\StripeObject $network_details Details specific to the money movement rails.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $reversal_details Details describing when a ReceivedDebit might be reversed.
  * @property string $status Status of the ReceivedDebit. ReceivedDebits are created with a status of either <code>succeeded</code> (approved) or <code>failed</code> (declined). The failure reason can be found under the <code>failure_code</code>.
  * @property null|string|\SimplePay\Vendor\Stripe\Treasury\Transaction $transaction The Transaction associated with this object.

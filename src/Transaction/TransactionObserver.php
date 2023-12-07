@@ -73,14 +73,6 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					// but it makes enough sense for now.
 					array( 'maybe_decrement_stock', 10, 4 ),
 				),
-			// Initial one time payment (automatic tax).
-			'simpay_after_order_submit_from_payment_form_request' =>
-				array(
-					array( 'add_on_order', 10, 3 ),
-					// @todo This might not be the best place for this,
-					// but it makes enough sense for now.
-					array( 'maybe_decrement_stock_order', 10, 3 ),
-				),
 			// Initial recurring payment.
 			'simpay_after_subscription_from_payment_form_request' =>
 				array(
@@ -208,100 +200,6 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'amount_tax'          => isset( $payment_intent->metadata->simpay_tax_unit_amount )
 					? (int) $payment_intent->metadata->simpay_tax_unit_amount
 					: 0,
-				'currency'            => $payment_intent->currency,
-				'payment_method_type' => null,
-				'email'               => $customer->email,
-				'customer_id'         => $customer->id,
-				'subscription_id'     => null,
-				'status'              => $payment_intent->status,
-				'application_fee'     => $this->application_fee->has_application_fee(),
-			)
-		);
-	}
-
-	/**
-	 * Logs a transaction when an Order is submitted.
-	 *
-	 * @since 4.6.4
-	 *
-	 * @param array<mixed>                   $request REST API request.
-	 * @param \SimplePay\Vendor\Stripe\Order $order Order object.
-	 * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
-	 * @return void
-	 */
-	public function add_on_order( $request, $order, $form ) {
-		/** @var array<string, string> $form_values */
-		$form_values = $request['form_values'];
-
-		/** @var string $form_data */
-		$form_data = $request['form_data'];
-		$form_data = json_decode( $form_data, true );
-		/** @var array<string, array<string, string>> $form_data */
-
-		$quantity = isset( $form_values['simpay_quantity'] )
-			? intval( $form_values['simpay_quantity'] )
-			: 1;
-
-		$price = simpay_payment_form_prices_get_price_by_id(
-			$form,
-			$form_data['price']['id']
-		);
-
-		if ( false === $price ) {
-			return;
-		}
-
-		// Custom amount. Verify minimum amount.
-		if ( false === simpay_payment_form_prices_is_defined_price( $price->id ) ) {
-			// Ensure custom amount meets minimum requirement.
-			/** @var int $unit_amount */
-			$unit_amount = $form_data['customAmount'];
-
-			if ( $unit_amount < $price->unit_amount_min ) {
-				$unit_amount = $price->unit_amount_min;
-			}
-		} else {
-			$unit_amount = $price->unit_amount;
-		}
-
-		/** @var int $unit_amount */
-
-		// Backwards compatibility amount filter.
-		if ( has_filter( 'simpay_form_' . $form->id . '_amount' ) ) {
-			/** @var int $unit_amount */
-			$unit_amount = simpay_get_filtered(
-				'amount',
-				simpay_convert_amount_to_dollars( $unit_amount ),
-				$form->id
-			);
-
-			$unit_amount = simpay_convert_amount_to_cents( $unit_amount );
-		}
-
-		// Calculate quantity.
-		$quantity = isset( $form_values['simpay_quantity'] )
-			? intval( $form_values['simpay_quantity'] )
-			: 1;
-
-		$subtotal = $unit_amount * $quantity;
-
-		/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
-		$payment_intent = $order->payment->payment_intent; // @phpstan-ignore-line
-
-		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
-		$customer = $order->customer;
-
-		$this->transactions->add(
-			array(
-				'form_id'             => $form->id,
-				'object'              => $payment_intent->object,
-				'object_id'           => $payment_intent->id,
-				'livemode'            => (bool) $payment_intent->livemode,
-				'amount_total'        => $payment_intent->amount,
-				'amount_subtotal'     => $subtotal,
-				'amount_shipping'     => $order->total_details->amount_shipping, // @phpstan-ignore-line
-				'amount_discount'     => $order->total_details->amount_discount, // @phpstan-ignore-line
-				'amount_tax'          => $order->total_details->amount_tax, // @phpstan-ignore-line
 				'currency'            => $payment_intent->currency,
 				'payment_method_type' => null,
 				'email'               => $customer->email,
@@ -509,9 +407,6 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	 * Updates a transaction's totals when receiving the `checkout.session.completed`
 	 * webhook event. This is used to avoid making manual calculations for the totals
 	 * when creating the original transaction.
-	 *
-	 * When moving to the Orders API we will remove all manual calculation, so
-	 * it should not be repeated.
 	 *
 	 * @since 4.4.6
 	 *
@@ -900,55 +795,6 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					$quantity           = intval( $price_option_parts[1] );
 
 					$form->adjust_inventory( 'decrement', $quantity, $instance_id );
-				}
-
-				break;
-		}
-	}
-
-	/**
-	 * Possibly decremeents available stock/inventory if the price option requires
-	 * it when using automatic taxes.
-	 *
-	 * @since 4.6.4
-	 *
-	 * @param array<string, string|array<string, string>> $request REST API request.
-	 * @param \SimplePay\Vendor\Stripe\Order              $order Stripe Order.
-	 * @param \SimplePay\Core\Abstracts\Form              $form Form instance.
-	 * @return void
-	 */
-	public function maybe_decrement_stock_order( $request, $order, $form ) {
-		if ( false === $form->is_managing_inventory() ) {
-			return;
-		}
-
-		/** @var array<string, string> $form_values */
-		$form_values = $request['form_values'];
-
-		/** @var string $form_data */
-		$form_data = $request['form_data'];
-		$form_data = json_decode( $form_data, true );
-		/** @var array<string, array<string, string>> $form_data */
-
-		$quantity = isset( $form_values['simpay_quantity'] )
-			? intval( $form_values['simpay_quantity'] )
-			: 1;
-
-		$behavior = $form->get_inventory_behavior();
-
-		switch ( $behavior ) {
-			case 'combined':
-				$form->adjust_inventory( 'decrement', $quantity, null );
-
-				break;
-			case 'individual':
-				$price = simpay_payment_form_prices_get_price_by_id(
-					$form,
-					$form_data['price']['id']
-				);
-
-				if ( false !== $price ) {
-					$form->adjust_inventory( 'decrement', $quantity, $price->instance_id );
 				}
 
 				break;

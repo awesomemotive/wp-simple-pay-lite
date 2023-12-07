@@ -15,7 +15,7 @@ class CalculationService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
-     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem>
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Tax\CalculationLineItem>
      */
     public function allLineItems($id, $params = null, $opts = null)
     {

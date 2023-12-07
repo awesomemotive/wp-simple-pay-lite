@@ -6,10 +6,7 @@ namespace SimplePay\Vendor\Stripe;
 
 /**
  * Shipping rates describe the price of shipping presented to your customers and
- * can be applied to <a
- * href="https://stripe.com/docs/payments/checkout/shipping">Checkout Sessions</a>
- * and <a href="https://stripe.com/docs/orders/shipping">Orders</a> to collect
- * shipping costs.
+ * applied to a purchase. For more information, see <a href="https://stripe.com/docs/payments/during-payment/charge-shipping">Charge for shipping</a>.
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -17,7 +14,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property int $created Time at which the object was created. Measured in seconds since the Unix epoch.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $delivery_estimate The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
  * @property null|string $display_name The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
- * @property \SimplePay\Vendor\Stripe\StripeObject $fixed_amount
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $fixed_amount
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|string $tax_behavior Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of <code>inclusive</code>, <code>exclusive</code>, or <code>unspecified</code>.

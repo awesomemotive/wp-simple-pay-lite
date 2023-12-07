@@ -7,9 +7,9 @@ namespace SimplePay\Vendor\Stripe\Service;
 class TokenService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
-     * Creates a single-use token that represents a bank account’s details. This token
-     * can be used with any API method in place of a bank account dictionary. This
-     * token can be used only once, by attaching it to a <a href="#accounts">Custom
+     * Creates a single-use token that represents a bank account’s details. You can use
+     * this token with any API method in place of a bank account dictionary. You can
+     * only use this token once. To do so, attach it to a <a href="#accounts">Custom
      * account</a>.
      *
      * @param null|array $params

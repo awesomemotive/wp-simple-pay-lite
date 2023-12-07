@@ -159,44 +159,6 @@ class Stripe_API {
 			delete_transient( $cache_key );
 		}
 
-		// Special handling for submitting an order, which cannot use the legacy static handling.
-		// https://github.com/stripe/stripe-php#clientservice-patterns-vs-legacy-patterns.
-		if ( ! simpay_is_upe() && 'Order' === $class ) {
-			Stripe::setApiVersion( '2020-08-27;orders_beta=v4' );
-
-			$stripe = new \SimplePay\Vendor\Stripe\StripeClient(
-				array(
-					'stripe_version' => '2020-08-27;orders_beta=v4',
-				)
-			);
-
-			switch ( $function ) {
-				case 'reopen':
-					return $stripe->orders->reopen(
-						$id_or_args,
-						array(),
-						$args
-					);
-
-					break;
-				case 'submit':
-					return $stripe->orders->submit(
-						$id_or_args,
-						$args,
-						$opts
-					);
-
-					break;
-				default:
-					return call_user_func(
-						array( '\SimplePay\Vendor\Stripe\\' . $class, $function ),
-						$id_or_args,
-						$args,
-						$opts
-					);
-			}
-		}
-
 		// Special handling for tax calculations.
 		// If the request starts with Tax, handle it.
 		if ( simpay_is_upe() && false !== strpos( $class, 'Tax' ) ) {

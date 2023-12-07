@@ -9,7 +9,6 @@ namespace SimplePay\Vendor\Stripe\Service\FinancialConnections;
  *
  * @property AccountService $accounts
  * @property SessionService $sessions
- * @property TransactionService $transactions
  */
 class FinancialConnectionsServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServiceFactory
 {
@@ -19,7 +18,6 @@ class FinancialConnectionsServiceFactory extends \SimplePay\Vendor\Stripe\Servic
     private static $classMap = [
         'accounts' => AccountService::class,
         'sessions' => SessionService::class,
-        'transactions' => TransactionService::class,
     ];
 
     protected function getServiceClass($name)

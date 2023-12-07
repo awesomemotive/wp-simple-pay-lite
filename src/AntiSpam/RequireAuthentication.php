@@ -45,7 +45,6 @@ class RequireAuthentication implements SubscriberInterface, LicenseAwareInterfac
 				'simpay_before_setupintent_from_payment_form_request',
 				'simpay_before_subscription_from_payment_form_request',
 				'simpay_before_charge_from_payment_form_request',
-				'simpay_before_order_submit_from_payment_form_request',
 			);
 
 			foreach ( $actions as $action ) {

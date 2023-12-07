@@ -7,6 +7,10 @@
 
 @include wordpress-admin-schemes();
 
+body.admin-color-fresh {
+	@include admin-scheme(#2271b1);
+}
+
 $branding-bar-height: 79px;
 
 // Page reset.

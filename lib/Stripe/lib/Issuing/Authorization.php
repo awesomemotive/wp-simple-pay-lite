@@ -5,14 +5,11 @@
 namespace SimplePay\Vendor\Stripe\Issuing;
 
 /**
- * When an <a href="https://stripe.com/docs/issuing">issued card</a> is used to
- * make a purchase, an Issuing <code>Authorization</code> object is created. <a
- * href="https://stripe.com/docs/issuing/purchases/authorizations">Authorizations</a>
- * must be approved for the purchase to be completed successfully.
+ * When an <a href="https://stripe.com/docs/issuing">issued card</a> is used to make a purchase, an Issuing <code>Authorization</code>
+ * object is created. <a href="https://stripe.com/docs/issuing/purchases/authorizations">Authorizations</a> must be approved for the
+ * purchase to be completed successfully.
  *
- * Related guide: <a
- * href="https://stripe.com/docs/issuing/purchases/authorizations">Issued Card
- * Authorizations</a>.
+ * Related guide: <a href="https://stripe.com/docs/issuing/purchases/authorizations">Issued card authorizations</a>
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
@@ -34,6 +31,7 @@ namespace SimplePay\Vendor\Stripe\Issuing;
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $pending_request The pending authorization request. This field will only be non-null during an <code>issuing_authorization.request</code> webhook.
  * @property \SimplePay\Vendor\Stripe\StripeObject[] $request_history History of every time a <code>pending_request</code> authorization was approved/declined, either by you directly or by SimplePay\Vendor\Stripe (e.g. based on your spending_controls). If the merchant changes the authorization by performing an incremental authorization, you can look at this field to see the previous requests for the authorization. This field can be helpful in determining why a given authorization was approved/declined.
  * @property string $status The current status of the authorization in its lifecycle.
+ * @property null|string|\SimplePay\Vendor\Stripe\Issuing\Token $token <a href="https://stripe.com/docs/api/issuing/tokens/object">Token</a> object used for this authorization. If a network token was not used for this authorization, this field will be null.
  * @property \SimplePay\Vendor\Stripe\Issuing\Transaction[] $transactions List of <a href="https://stripe.com/docs/api/issuing/transactions">transactions</a> associated with this authorization.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $treasury <a href="https://stripe.com/docs/api/treasury">Treasury</a> details related to this authorization if it was created on a <a href="https://stripe.com/docs/api/treasury/financial_accounts">FinancialAccount</a>.
  * @property \SimplePay\Vendor\Stripe\StripeObject $verification_data
@@ -46,6 +44,16 @@ class Authorization extends \SimplePay\Vendor\Stripe\ApiResource
     use \SimplePay\Vendor\Stripe\ApiOperations\All;
     use \SimplePay\Vendor\Stripe\ApiOperations\Retrieve;
     use \SimplePay\Vendor\Stripe\ApiOperations\Update;
+
+    const AUTHORIZATION_METHOD_CHIP = 'chip';
+    const AUTHORIZATION_METHOD_CONTACTLESS = 'contactless';
+    const AUTHORIZATION_METHOD_KEYED_IN = 'keyed_in';
+    const AUTHORIZATION_METHOD_ONLINE = 'online';
+    const AUTHORIZATION_METHOD_SWIPE = 'swipe';
+
+    const STATUS_CLOSED = 'closed';
+    const STATUS_PENDING = 'pending';
+    const STATUS_REVERSED = 'reversed';
 
     /**
      * @param null|array $params

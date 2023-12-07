@@ -27,7 +27,7 @@ composer require stripe/stripe-php
 To use the bindings, use Composer's [autoload](https://getcomposer.org/doc/01-basic-usage.md#autoloading):
 
 ```php
-require_once('vendor/autoload.php');
+require_once 'vendor/autoload.php';
 ```
 
 ## Manual Installation
@@ -35,7 +35,7 @@ require_once('vendor/autoload.php');
 If you do not wish to use Composer, you can download the [latest release](https://github.com/stripe/stripe-php/releases). Then, to use the bindings, include the `init.php` file.
 
 ```php
-require_once('/path/to/stripe-php/init.php');
+require_once '/path/to/stripe-php/init.php';
 ```
 
 ## Dependencies
@@ -246,7 +246,7 @@ background terminal ([stripe-mock's README][stripe-mock] also contains
 instructions for installing via Homebrew and other methods):
 
 ```bash
-go get -u github.com/stripe/stripe-mock
+go install github.com/stripe/stripe-mock@latest
 stripe-mock
 ```
 

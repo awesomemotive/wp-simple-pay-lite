@@ -16,13 +16,6 @@
 
 <div class="simpay-card">
 
-	<figure>
-		<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL ); // @phpstan-ignore-line ?>/core/assets/images/about/team.png" alt="<?php esc_attr_e( 'The WP Simple Pay Team photo', 'simple-pay' ); ?>">
-		<figcaption>
-			<?php esc_html_e( 'The WP Simple Pay Team', 'stripe' ); ?><br>
-		</figcaption>
-	</figure>
-
 	<h3>
 		<?php esc_html_e( 'Hello and welcome to WP Simple Pay, the #1 Stripe payments plugin for WordPress. At WP Simple Pay, we build software that helps you create secure, conversion-optimized payment forms for your website in minutes.', 'stripe' ); ?>
 	</h3>
@@ -109,7 +102,7 @@
 							<?php echo wp_kses_post( $plugin_data['action_text'] ); ?>
 						</button>
 					<?php else : ?>
-						<a href="<?php echo esc_url( $details['wporg'] ); ?>" target="_blank" rel="noopener noreferrer" class="simpay-external-link">
+						<a href="<?php echo esc_url( $details['wporg'] ); ?>" target="_blank" rel="noopener noreferrer friend" class="simpay-external-link">
 							<?php esc_html_e( 'WordPress.org', 'stripe' ); ?>
 							<span aria-hidden="true" class="dashicons dashicons-external"></span>
 						</a>

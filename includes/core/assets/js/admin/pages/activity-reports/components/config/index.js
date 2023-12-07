@@ -56,7 +56,7 @@ function Config() {
 					/>
 				) }
 				renderContent={ () => (
-					<>
+					<div style={ { width: '200px', padding: '8px' } }>
 						<SelectControl
 							label={ __( 'Currency', 'simple-pay' ) }
 							value={ currency }
@@ -80,7 +80,7 @@ function Config() {
 						>
 							{ __( 'Update', 'simple-pay' ) }
 						</Button>
-					</>
+					</div>
 				) }
 			/>
 			<Popover.Slot />
