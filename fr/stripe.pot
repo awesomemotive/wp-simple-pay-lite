@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-01-25T15:48:15+00:00\n"
-"PO-Revision-Date: 2024-01-25 15:54\n"
+"PO-Revision-Date: 2024-01-25 16:50\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -59,7 +59,7 @@ msgstr "Insérer un média"
 #: includes/core/admin/class-assets.php:189
 #: includes/core/functions/shared.php:591
 msgid "Use Image"
-msgstr ""
+msgstr "Utilisez l’image"
 
 #: includes/core/admin/class-assets.php:193
 msgid "The changes you made will be lost if you navigate away from this page."
@@ -150,7 +150,7 @@ msgstr "Support"
 
 #: includes/core/admin/class-menus.php:88
 msgid "Docs"
-msgstr ""
+msgstr "Docs"
 
 #: includes/core/admin/class-menus.php:95
 msgid "Free Plugins"
@@ -180,7 +180,7 @@ msgstr "Réglages"
 
 #: includes/core/admin/class-menus.php:177
 msgid "Documentation"
-msgstr ""
+msgstr "Documentation"
 
 #: includes/core/admin/fields/class-checkbox.php:94
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:136
@@ -220,7 +220,7 @@ msgstr "Titre d’article/page intégré"
 
 #: includes/core/admin/fields/class-default-value.php:115
 msgid "Embedded Post/Page URL"
-msgstr ""
+msgstr "URL d’article/page intégré"
 
 #: includes/core/admin/fields/class-default-value.php:116
 msgid "User ID"
@@ -270,7 +270,7 @@ msgstr ""
 #: views/admin-payment-forms-license-expired.php:78
 #: views/admin-webhooks-none-received.php:66
 msgid "Learn More"
-msgstr ""
+msgstr "En savoir plus"
 
 #: includes/core/admin/functions/notices.php:129
 msgid "WP Simple Pay is increasing its PHP version requirement."
@@ -387,42 +387,42 @@ msgstr "Impossible d’activer l’extension. Veuillez l’activer depuis la <a 
 
 #: includes/core/class-smtp.php:361
 msgid "Installing..."
-msgstr ""
+msgstr "Installation…"
 
 #: includes/core/class-smtp.php:362
 msgid "Activating..."
-msgstr ""
+msgstr "Activation…"
 
 #: includes/core/class-smtp.php:363
 #: includes/core/class-smtp.php:621
 msgid "WP Mail SMTP Installed & Activated"
-msgstr ""
+msgstr "WP Mail SMTP Installé et activé"
 
 #: includes/core/class-smtp.php:364
 msgid "Install Now"
-msgstr ""
+msgstr "Installer maintenant"
 
 #: includes/core/class-smtp.php:365
 msgid "Activate Now"
-msgstr ""
+msgstr "Activer maintenant"
 
 #: includes/core/class-smtp.php:366
 msgid "Download Now"
-msgstr ""
+msgstr "Télécharger maintenant"
 
 #: includes/core/class-smtp.php:367
 msgid "Go to Plugins page"
-msgstr ""
+msgstr "Aller à la page des extensions"
 
 #: includes/core/class-smtp.php:372
 #: includes/core/class-smtp.php:665
 msgid "Go to SMTP settings"
-msgstr ""
+msgstr "Aller aux réglages SMTP"
 
 #: includes/core/class-smtp.php:373
 #: includes/core/class-smtp.php:656
 msgid "Open Setup Wizard"
-msgstr ""
+msgstr "Ouvrir l’assistant de configuration"
 
 #: includes/core/class-smtp.php:420
 msgid "WP Mail SMTP ♥ WP Simple Pay"
@@ -430,7 +430,7 @@ msgstr ""
 
 #: includes/core/class-smtp.php:421
 msgid "Making Email Deliverability Easy for WordPress"
-msgstr ""
+msgstr "Facilite la délivrabilité d’e-mail pour WordPress"
 
 #: includes/core/class-smtp.php:422
 msgid "WP Mail SMTP fixes deliverability problems with your WordPress emails so you can reliably send payment receipts, form notifications and more!"
@@ -438,15 +438,15 @@ msgstr ""
 
 #: includes/core/class-smtp.php:448
 msgid "WP Mail SMTP screenshot"
-msgstr ""
+msgstr "Capture d’écran WP Mail SMTP"
 
 #: includes/core/class-smtp.php:450
 msgid "Improves email deliverability in WordPress."
-msgstr ""
+msgstr "Améliore la délivrabilité des e-mails dans WordPress."
 
 #: includes/core/class-smtp.php:451
 msgid "Used by 2+ million websites."
-msgstr ""
+msgstr "Utilisé par plus de 2 millions de sites web."
 
 #: includes/core/class-smtp.php:452
 msgid "Free mailers: SMTP.com, Sendinblue, Google Workspace/ Gmail, Mailgun, Postmark, SendGrid."
@@ -458,57 +458,57 @@ msgstr ""
 
 #: includes/core/class-smtp.php:520
 msgid "Step 1"
-msgstr ""
+msgstr "Étape 1"
 
 #: includes/core/class-smtp.php:554
 msgid "Step 2"
-msgstr ""
+msgstr "Étape 2"
 
 #: includes/core/class-smtp.php:555
 msgid "Set Up WP Mail SMTP"
-msgstr ""
+msgstr "Configurer WP Mail SMTP"
 
 #: includes/core/class-smtp.php:556
 msgid "Select and configure your mailer."
-msgstr ""
+msgstr "Sélectionnez et configurez votre mailer."
 
 #: includes/core/class-smtp.php:574
 msgid "Install and Activate WP Mail SMTP"
-msgstr ""
+msgstr "Installer et activer WP Mail SMTP"
 
 #: includes/core/class-smtp.php:579
 msgid "Install WP Mail SMTP from the WordPress.org plugin repository."
-msgstr ""
+msgstr "Installer WP Mail SMTP depuis le dépôt des extensions WordPress.org."
 
 #: includes/core/class-smtp.php:601
 msgid "Install WP Mail SMTP"
-msgstr ""
+msgstr "Installer WP Mail SMTP"
 
 #: includes/core/class-smtp.php:607
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:310
 #: src/AdminPage/AboutUsPage.php:164
 msgid "WP Mail SMTP"
-msgstr ""
+msgstr "WP Mail SMTP"
 
 #: includes/core/class-smtp.php:609
 msgid "WP Mail SMTP on WordPress.org"
-msgstr ""
+msgstr "WP Mail SMTP sur WordPress.org"
 
 #: includes/core/class-smtp.php:622
 msgid "Activate WP Mail SMTP"
-msgstr ""
+msgstr "Activer WP Mail STMP"
 
 #: includes/core/class-smtp.php:660
 msgid "Start Setup"
-msgstr ""
+msgstr "Démarrer la configuration"
 
 #: includes/core/class-smtp.php:683
 msgid "You do not have permission."
-msgstr ""
+msgstr "Vous n’avez pas l’autorisation."
 
 #: includes/core/class-smtp.php:691
 msgid "Plugin unavailable."
-msgstr ""
+msgstr "Extension indisponible."
 
 #: includes/core/forms/class-default-form.php:88
 #: includes/core/forms/class-default-form.php:370
@@ -587,7 +587,7 @@ msgstr ""
 #: views/admin-form-preview-output.php:59
 #: views/admin-form-preview-output.php:67
 msgid "Copied!"
-msgstr ""
+msgstr "Copié !"
 
 #: includes/core/functions/admin.php:318
 msgid "A text label displayed above the field."
@@ -617,7 +617,7 @@ msgstr ""
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:164
 #: src/AdminBar/AdminBarSubscriber.php:112
 msgid "Test Mode"
-msgstr ""
+msgstr "Mode test"
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount.
 #: includes/core/functions/shared.php:555
@@ -654,42 +654,42 @@ msgstr ""
 #: includes/core/functions/shared.php:619
 msgctxt "recurring interval"
 msgid "day"
-msgstr ""
+msgstr "jour"
 
 #: includes/core/functions/shared.php:620
 msgctxt "recurring interval"
 msgid "days"
-msgstr ""
+msgstr "jours"
 
 #: includes/core/functions/shared.php:623
 msgctxt "recurring interval"
 msgid "week"
-msgstr ""
+msgstr "semaine"
 
 #: includes/core/functions/shared.php:624
 msgctxt "recurring interval"
 msgid "weeks"
-msgstr ""
+msgstr "semaines"
 
 #: includes/core/functions/shared.php:627
 msgctxt "recurring interval"
 msgid "month"
-msgstr ""
+msgstr "mois"
 
 #: includes/core/functions/shared.php:628
 msgctxt "recurring interval"
 msgid "months"
-msgstr ""
+msgstr "mois"
 
 #: includes/core/functions/shared.php:631
 msgctxt "recurring interval"
 msgid "year"
-msgstr ""
+msgstr "année"
 
 #: includes/core/functions/shared.php:632
 msgctxt "recurring interval"
 msgid "years"
-msgstr ""
+msgstr "années"
 
 #: includes/core/functions/shared.php:1412
 msgid "Business Operations"
@@ -721,94 +721,94 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:27
 msgid "Afghanistan"
-msgstr ""
+msgstr "Afghanistan"
 
 #: includes/core/i18n/countries.php:28
 msgid "Åland Islands"
-msgstr ""
+msgstr "Îles Åland"
 
 #: includes/core/i18n/countries.php:29
 msgid "Albania"
-msgstr ""
+msgstr "Albanie"
 
 #: includes/core/i18n/countries.php:30
 msgid "Algeria"
-msgstr ""
+msgstr "Algérie"
 
 #: includes/core/i18n/countries.php:31
 msgid "American Samoa"
-msgstr ""
+msgstr "Îles Samoa Américaines"
 
 #: includes/core/i18n/countries.php:32
 msgid "Andorra"
-msgstr ""
+msgstr "Andore"
 
 #: includes/core/i18n/countries.php:33
 msgid "Angola"
-msgstr ""
+msgstr "Angolie"
 
 #: includes/core/i18n/countries.php:34
 msgid "Anguilla"
-msgstr ""
+msgstr "Anguilla"
 
 #: includes/core/i18n/countries.php:35
 msgid "Antarctica"
-msgstr ""
+msgstr "Antartique"
 
 #: includes/core/i18n/countries.php:36
 msgid "Antigua and Barbuda"
-msgstr ""
+msgstr "Antigua-et-Barbuda"
 
 #: includes/core/i18n/countries.php:37
 msgid "Argentina"
-msgstr ""
+msgstr "Argentine"
 
 #: includes/core/i18n/countries.php:38
 msgid "Armenia"
-msgstr ""
+msgstr "Arménie"
 
 #: includes/core/i18n/countries.php:39
 msgid "Aruba"
-msgstr ""
+msgstr "Aruba"
 
 #: includes/core/i18n/countries.php:40
 #: includes/core/i18n/stripe.php:27
 msgid "Australia"
-msgstr ""
+msgstr "Australier"
 
 #: includes/core/i18n/countries.php:41
 #: includes/core/i18n/stripe.php:28
 msgid "Austria"
-msgstr ""
+msgstr "Australie"
 
 #: includes/core/i18n/countries.php:42
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaïdjan"
 
 #: includes/core/i18n/countries.php:43
 msgid "Bahamas"
-msgstr ""
+msgstr "Bahamas"
 
 #: includes/core/i18n/countries.php:44
 msgid "Bahrain"
-msgstr ""
+msgstr "Bahreïn"
 
 #: includes/core/i18n/countries.php:45
 msgid "Bangladesh"
-msgstr ""
+msgstr "Bengladesh"
 
 #: includes/core/i18n/countries.php:46
 msgid "Barbados"
-msgstr ""
+msgstr "Barbade (la)"
 
 #: includes/core/i18n/countries.php:47
 msgid "Belarus"
-msgstr ""
+msgstr "Biélorussie"
 
 #: includes/core/i18n/countries.php:48
 #: includes/core/i18n/stripe.php:29
 msgid "Belgium"
-msgstr ""
+msgstr "Belgique"
 
 #: includes/core/i18n/countries.php:49
 msgid "Belau"
@@ -816,48 +816,48 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:50
 msgid "Belize"
-msgstr ""
+msgstr "Belize"
 
 #: includes/core/i18n/countries.php:51
 msgid "Benin"
-msgstr ""
+msgstr "Bénin"
 
 #: includes/core/i18n/countries.php:52
 msgid "Bermuda"
-msgstr ""
+msgstr "Bermude"
 
 #: includes/core/i18n/countries.php:53
 msgid "Bhutan"
-msgstr ""
+msgstr "Bhoutan"
 
 #: includes/core/i18n/countries.php:54
 msgid "Bolivia"
-msgstr ""
+msgstr "Bolivie"
 
 #: includes/core/i18n/countries.php:55
 msgid "Bonaire, Saint Eustatius and Saba"
-msgstr ""
+msgstr "Bonaire, Saint Eustatius and Saba"
 
 #: includes/core/i18n/countries.php:56
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnie et Herzegovie"
 
 #: includes/core/i18n/countries.php:57
 msgid "Botswana"
-msgstr ""
+msgstr "Botswana"
 
 #: includes/core/i18n/countries.php:58
 msgid "Bouvet Island"
-msgstr ""
+msgstr "Île Bouvet"
 
 #: includes/core/i18n/countries.php:59
 #: includes/core/i18n/stripe.php:30
 msgid "Brazil"
-msgstr ""
+msgstr "Brésil"
 
 #: includes/core/i18n/countries.php:60
 msgid "British Indian Ocean Territory"
-msgstr ""
+msgstr "Territoires britanniques de l’océan Indien"
 
 #: includes/core/i18n/countries.php:61
 msgid "Brunei"
@@ -866,68 +866,68 @@ msgstr ""
 #: includes/core/i18n/countries.php:62
 #: includes/core/i18n/stripe.php:31
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgarie"
 
 #: includes/core/i18n/countries.php:63
 msgid "Burkina Faso"
-msgstr ""
+msgstr "Burkina Faso"
 
 #: includes/core/i18n/countries.php:64
 msgid "Burundi"
-msgstr ""
+msgstr "Burundi"
 
 #: includes/core/i18n/countries.php:65
 msgid "Cambodia"
-msgstr ""
+msgstr "Cambodge"
 
 #: includes/core/i18n/countries.php:66
 msgid "Cameroon"
-msgstr ""
+msgstr "Cameroun"
 
 #: includes/core/i18n/countries.php:67
 #: includes/core/i18n/stripe.php:32
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #: includes/core/i18n/countries.php:68
 msgid "Cape Verde"
-msgstr ""
+msgstr "Cap vert"
 
 #: includes/core/i18n/countries.php:69
 msgid "Cayman Islands"
-msgstr ""
+msgstr "Îles Caïmans"
 
 #: includes/core/i18n/countries.php:70
 msgid "Central African Republic"
-msgstr ""
+msgstr "République centrafricaine"
 
 #: includes/core/i18n/countries.php:71
 msgid "Chad"
-msgstr ""
+msgstr "Tchad"
 
 #: includes/core/i18n/countries.php:72
 msgid "Chile"
-msgstr ""
+msgstr "Chili"
 
 #: includes/core/i18n/countries.php:73
 msgid "China"
-msgstr ""
+msgstr "Chine"
 
 #: includes/core/i18n/countries.php:74
 msgid "Christmas Island"
-msgstr ""
+msgstr "Île Christmas"
 
 #: includes/core/i18n/countries.php:75
 msgid "Cocos (Keeling) Islands"
-msgstr ""
+msgstr "Îles Cocos"
 
 #: includes/core/i18n/countries.php:76
 msgid "Colombia"
-msgstr ""
+msgstr "Colombie"
 
 #: includes/core/i18n/countries.php:77
 msgid "Comoros"
-msgstr ""
+msgstr "Comores"
 
 #: includes/core/i18n/countries.php:78
 msgid "Congo (Brazzaville)"
@@ -939,20 +939,20 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:80
 msgid "Cook Islands"
-msgstr ""
+msgstr "Îles Cook"
 
 #: includes/core/i18n/countries.php:81
 msgid "Costa Rica"
-msgstr ""
+msgstr "Costa Rica"
 
 #: includes/core/i18n/countries.php:82
 #: includes/core/i18n/stripe.php:33
 msgid "Croatia"
-msgstr ""
+msgstr "Croatie"
 
 #: includes/core/i18n/countries.php:83
 msgid "Cuba"
-msgstr ""
+msgstr "Cuba"
 
 #: includes/core/i18n/countries.php:84
 msgid "Cura&ccedil;ao"
@@ -961,58 +961,58 @@ msgstr ""
 #: includes/core/i18n/countries.php:85
 #: includes/core/i18n/stripe.php:34
 msgid "Cyprus"
-msgstr ""
+msgstr "Chypre"
 
 #: includes/core/i18n/countries.php:86
 #: includes/core/i18n/stripe.php:35
 msgid "Czech Republic"
-msgstr ""
+msgstr "République Tchèque"
 
 #: includes/core/i18n/countries.php:87
 #: includes/core/i18n/stripe.php:36
 msgid "Denmark"
-msgstr ""
+msgstr "Danemarque"
 
 #: includes/core/i18n/countries.php:88
 msgid "Djibouti"
-msgstr ""
+msgstr "Djibouti"
 
 #: includes/core/i18n/countries.php:89
 msgid "Dominica"
-msgstr ""
+msgstr "Dominique"
 
 #: includes/core/i18n/countries.php:90
 msgid "Dominican Republic"
-msgstr ""
+msgstr "République Dominicaine"
 
 #: includes/core/i18n/countries.php:91
 msgid "Ecuador"
-msgstr ""
+msgstr "Équateur"
 
 #: includes/core/i18n/countries.php:92
 msgid "Egypt"
-msgstr ""
+msgstr "Égypte"
 
 #: includes/core/i18n/countries.php:93
 msgid "El Salvador"
-msgstr ""
+msgstr "Salvador (le)"
 
 #: includes/core/i18n/countries.php:94
 msgid "Equatorial Guinea"
-msgstr ""
+msgstr "Guinée Équatoriale"
 
 #: includes/core/i18n/countries.php:95
 msgid "Eritrea"
-msgstr ""
+msgstr "Érythrée (l’)"
 
 #: includes/core/i18n/countries.php:96
 #: includes/core/i18n/stripe.php:37
 msgid "Estonia"
-msgstr ""
+msgstr "Estonie"
 
 #: includes/core/i18n/countries.php:97
 msgid "Ethiopia"
-msgstr ""
+msgstr "Éthiopie"
 
 #: includes/core/i18n/countries.php:98
 msgid "Falkland Islands"
@@ -1020,136 +1020,136 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:99
 msgid "Faroe Islands"
-msgstr ""
+msgstr "Îles Féroé"
 
 #: includes/core/i18n/countries.php:100
 msgid "Fiji"
-msgstr ""
+msgstr "Fidji"
 
 #: includes/core/i18n/countries.php:101
 #: includes/core/i18n/stripe.php:38
 msgid "Finland"
-msgstr ""
+msgstr "Finlande"
 
 #: includes/core/i18n/countries.php:102
 #: includes/core/i18n/stripe.php:39
 msgid "France"
-msgstr ""
+msgstr "France"
 
 #: includes/core/i18n/countries.php:103
 msgid "French Guiana"
-msgstr ""
+msgstr "Guyane Française"
 
 #: includes/core/i18n/countries.php:104
 msgid "French Polynesia"
-msgstr ""
+msgstr "Polynésie Française"
 
 #: includes/core/i18n/countries.php:105
 msgid "French Southern Territories"
-msgstr ""
+msgstr "Terres Australes Françaises"
 
 #: includes/core/i18n/countries.php:106
 msgid "Gabon"
-msgstr ""
+msgstr "Gabon"
 
 #: includes/core/i18n/countries.php:107
 msgid "Gambia"
-msgstr ""
+msgstr "Gambie"
 
 #: includes/core/i18n/countries.php:108
 msgid "Georgia"
-msgstr ""
+msgstr "Géorgie"
 
 #: includes/core/i18n/countries.php:109
 #: includes/core/i18n/stripe.php:40
 msgid "Germany"
-msgstr ""
+msgstr "Allemagne"
 
 #: includes/core/i18n/countries.php:110
 msgid "Ghana"
-msgstr ""
+msgstr "Ghana"
 
 #: includes/core/i18n/countries.php:111
 #: includes/core/i18n/stripe.php:41
 msgid "Gibraltar"
-msgstr ""
+msgstr "Gibraltar"
 
 #: includes/core/i18n/countries.php:112
 #: includes/core/i18n/stripe.php:42
 msgid "Greece"
-msgstr ""
+msgstr "Grèce"
 
 #: includes/core/i18n/countries.php:113
 msgid "Greenland"
-msgstr ""
+msgstr "Groenland"
 
 #: includes/core/i18n/countries.php:114
 msgid "Grenada"
-msgstr ""
+msgstr "Grenade"
 
 #: includes/core/i18n/countries.php:115
 msgid "Guadeloupe"
-msgstr ""
+msgstr "Guadeloupe"
 
 #: includes/core/i18n/countries.php:116
 msgid "Guam"
-msgstr ""
+msgstr "Guam"
 
 #: includes/core/i18n/countries.php:117
 #: includes/core/i18n/states.php:655
 msgid "Guatemala"
-msgstr ""
+msgstr "Guatemala"
 
 #: includes/core/i18n/countries.php:118
 msgid "Guernsey"
-msgstr ""
+msgstr "Guernesey"
 
 #: includes/core/i18n/countries.php:119
 msgid "Guinea"
-msgstr ""
+msgstr "Guinée"
 
 #: includes/core/i18n/countries.php:120
 msgid "Guinea-Bissau"
-msgstr ""
+msgstr "Guinée Bissau"
 
 #: includes/core/i18n/countries.php:121
 msgid "Guyana"
-msgstr ""
+msgstr "Guyane"
 
 #: includes/core/i18n/countries.php:122
 msgid "Haiti"
-msgstr ""
+msgstr "Haïti"
 
 #: includes/core/i18n/countries.php:123
 msgid "Heard Island and McDonald Islands"
-msgstr ""
+msgstr "Îles Heard-et-MacDonald"
 
 #: includes/core/i18n/countries.php:124
 msgid "Honduras"
-msgstr ""
+msgstr "Honduras"
 
 #: includes/core/i18n/countries.php:125
 #: includes/core/i18n/stripe.php:43
 msgid "Hong Kong"
-msgstr ""
+msgstr "Hong Kong"
 
 #: includes/core/i18n/countries.php:126
 #: includes/core/i18n/stripe.php:44
 msgid "Hungary"
-msgstr ""
+msgstr "Hongrie"
 
 #: includes/core/i18n/countries.php:127
 msgid "Iceland"
-msgstr ""
+msgstr "Islande"
 
 #: includes/core/i18n/countries.php:128
 #: includes/core/i18n/stripe.php:45
 msgid "India"
-msgstr ""
+msgstr "Inde"
 
 #: includes/core/i18n/countries.php:129
 msgid "Indonesia"
-msgstr ""
+msgstr "Indonésie"
 
 #: includes/core/i18n/countries.php:130
 msgid "Iran"
@@ -1157,25 +1157,25 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:131
 msgid "Iraq"
-msgstr ""
+msgstr "Irak"
 
 #: includes/core/i18n/countries.php:132
 #: includes/core/i18n/stripe.php:46
 msgid "Ireland"
-msgstr ""
+msgstr "Irlande"
 
 #: includes/core/i18n/countries.php:133
 msgid "Isle of Man"
-msgstr ""
+msgstr "Île de Man"
 
 #: includes/core/i18n/countries.php:134
 msgid "Israel"
-msgstr ""
+msgstr "Israël"
 
 #: includes/core/i18n/countries.php:135
 #: includes/core/i18n/stripe.php:47
 msgid "Italy"
-msgstr ""
+msgstr "Italie"
 
 #: includes/core/i18n/countries.php:136
 msgid "Ivory Coast"
@@ -1183,40 +1183,40 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:137
 msgid "Jamaica"
-msgstr ""
+msgstr "Jamaïque"
 
 #: includes/core/i18n/countries.php:138
 #: includes/core/i18n/stripe.php:48
 msgid "Japan"
-msgstr ""
+msgstr "Japon"
 
 #: includes/core/i18n/countries.php:139
 msgid "Jersey"
-msgstr ""
+msgstr "Jersey"
 
 #: includes/core/i18n/countries.php:140
 msgid "Jordan"
-msgstr ""
+msgstr "Jordanie"
 
 #: includes/core/i18n/countries.php:141
 msgid "Kazakhstan"
-msgstr ""
+msgstr "Kazakhstan"
 
 #: includes/core/i18n/countries.php:142
 msgid "Kenya"
-msgstr ""
+msgstr "Kenia"
 
 #: includes/core/i18n/countries.php:143
 msgid "Kiribati"
-msgstr ""
+msgstr "Kiribati"
 
 #: includes/core/i18n/countries.php:144
 msgid "Kuwait"
-msgstr ""
+msgstr "Koweit"
 
 #: includes/core/i18n/countries.php:145
 msgid "Kyrgyzstan"
-msgstr ""
+msgstr "Kirghizistan"
 
 #: includes/core/i18n/countries.php:146
 msgid "Laos"
@@ -1225,42 +1225,42 @@ msgstr ""
 #: includes/core/i18n/countries.php:147
 #: includes/core/i18n/stripe.php:49
 msgid "Latvia"
-msgstr ""
+msgstr "Lettonie"
 
 #: includes/core/i18n/countries.php:148
 msgid "Lebanon"
-msgstr ""
+msgstr "Liban"
 
 #: includes/core/i18n/countries.php:149
 msgid "Lesotho"
-msgstr ""
+msgstr "Lesotho"
 
 #: includes/core/i18n/countries.php:150
 msgid "Liberia"
-msgstr ""
+msgstr "Libéria"
 
 #: includes/core/i18n/countries.php:151
 msgid "Libya"
-msgstr ""
+msgstr "Libye"
 
 #: includes/core/i18n/countries.php:152
 #: includes/core/i18n/stripe.php:50
 msgid "Liechtenstein"
-msgstr ""
+msgstr "Liechtenstein"
 
 #: includes/core/i18n/countries.php:153
 #: includes/core/i18n/stripe.php:51
 msgid "Lithuania"
-msgstr ""
+msgstr "Lituanie"
 
 #: includes/core/i18n/countries.php:154
 #: includes/core/i18n/stripe.php:52
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxembourg"
 
 #: includes/core/i18n/countries.php:155
 msgid "Macao"
-msgstr ""
+msgstr "Macao"
 
 #: includes/core/i18n/countries.php:156
 msgid "North Macedonia"
@@ -1268,158 +1268,158 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:157
 msgid "Madagascar"
-msgstr ""
+msgstr "Madagascar"
 
 #: includes/core/i18n/countries.php:158
 msgid "Malawi"
-msgstr ""
+msgstr "Malawi"
 
 #: includes/core/i18n/countries.php:159
 #: includes/core/i18n/stripe.php:53
 msgid "Malaysia"
-msgstr ""
+msgstr "Malaisie"
 
 #: includes/core/i18n/countries.php:160
 msgid "Maldives"
-msgstr ""
+msgstr "Maldives"
 
 #: includes/core/i18n/countries.php:161
 msgid "Mali"
-msgstr ""
+msgstr "Mali"
 
 #: includes/core/i18n/countries.php:162
 #: includes/core/i18n/stripe.php:54
 msgid "Malta"
-msgstr ""
+msgstr "Malte"
 
 #: includes/core/i18n/countries.php:163
 msgid "Marshall Islands"
-msgstr ""
+msgstr "Îles Marshall"
 
 #: includes/core/i18n/countries.php:164
 msgid "Martinique"
-msgstr ""
+msgstr "Martinique"
 
 #: includes/core/i18n/countries.php:165
 msgid "Mauritania"
-msgstr ""
+msgstr "Mauritanie"
 
 #: includes/core/i18n/countries.php:166
 msgid "Mauritius"
-msgstr ""
+msgstr "Île Maurice"
 
 #: includes/core/i18n/countries.php:167
 msgid "Mayotte"
-msgstr ""
+msgstr "Mayotte"
 
 #: includes/core/i18n/countries.php:168
 #: includes/core/i18n/stripe.php:55
 msgid "Mexico"
-msgstr ""
+msgstr "Mexique"
 
 #: includes/core/i18n/countries.php:169
 msgid "Micronesia"
-msgstr ""
+msgstr "Micronésie"
 
 #: includes/core/i18n/countries.php:170
 msgid "Moldova"
-msgstr ""
+msgstr "Moldavie"
 
 #: includes/core/i18n/countries.php:171
 msgid "Monaco"
-msgstr ""
+msgstr "Monaco"
 
 #: includes/core/i18n/countries.php:172
 msgid "Mongolia"
-msgstr ""
+msgstr "Mongolie"
 
 #: includes/core/i18n/countries.php:173
 msgid "Montenegro"
-msgstr ""
+msgstr "Monténégro"
 
 #: includes/core/i18n/countries.php:174
 msgid "Montserrat"
-msgstr ""
+msgstr "Montserrat"
 
 #: includes/core/i18n/countries.php:175
 msgid "Morocco"
-msgstr ""
+msgstr "Maroc"
 
 #: includes/core/i18n/countries.php:176
 msgid "Mozambique"
-msgstr ""
+msgstr "Mozambique"
 
 #: includes/core/i18n/countries.php:177
 msgid "Myanmar"
-msgstr ""
+msgstr "Myanmar"
 
 #: includes/core/i18n/countries.php:178
 msgid "Namibia"
-msgstr ""
+msgstr "Namibie"
 
 #: includes/core/i18n/countries.php:179
 msgid "Nauru"
-msgstr ""
+msgstr "Nauru"
 
 #: includes/core/i18n/countries.php:180
 msgid "Nepal"
-msgstr ""
+msgstr "Népal"
 
 #: includes/core/i18n/countries.php:181
 #: includes/core/i18n/stripe.php:56
 msgid "Netherlands"
-msgstr ""
+msgstr "Pays-bas"
 
 #: includes/core/i18n/countries.php:182
 msgid "New Caledonia"
-msgstr ""
+msgstr "Nouvelle-Calédonie"
 
 #: includes/core/i18n/countries.php:183
 #: includes/core/i18n/stripe.php:57
 msgid "New Zealand"
-msgstr ""
+msgstr "Nouvelle Zélande"
 
 #: includes/core/i18n/countries.php:184
 msgid "Nicaragua"
-msgstr ""
+msgstr "Nicaragua"
 
 #: includes/core/i18n/countries.php:185
 #: includes/core/i18n/states.php:1278
 msgid "Niger"
-msgstr ""
+msgstr "Niger"
 
 #: includes/core/i18n/countries.php:186
 msgid "Nigeria"
-msgstr ""
+msgstr "Nigéria"
 
 #: includes/core/i18n/countries.php:187
 msgid "Niue"
-msgstr ""
+msgstr "Niue"
 
 #: includes/core/i18n/countries.php:188
 msgid "Norfolk Island"
-msgstr ""
+msgstr "Île Norfolk"
 
 #: includes/core/i18n/countries.php:189
 msgid "Northern Mariana Islands"
-msgstr ""
+msgstr "Îles Mariannes du Nord"
 
 #: includes/core/i18n/countries.php:190
 msgid "North Korea"
-msgstr ""
+msgstr "Corée du Nord"
 
 #: includes/core/i18n/countries.php:191
 #: includes/core/i18n/stripe.php:58
 msgid "Norway"
-msgstr ""
+msgstr "Norvège"
 
 #: includes/core/i18n/countries.php:192
 msgid "Oman"
-msgstr ""
+msgstr "Oman"
 
 #: includes/core/i18n/countries.php:193
 msgid "Pakistan"
-msgstr ""
+msgstr "Pakistan"
 
 #: includes/core/i18n/countries.php:194
 msgid "Palestinian Territory"
@@ -1427,62 +1427,62 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:195
 msgid "Panama"
-msgstr ""
+msgstr "Panama"
 
 #: includes/core/i18n/countries.php:196
 msgid "Papua New Guinea"
-msgstr ""
+msgstr "Papouasie-Nouvelle-Guinée"
 
 #: includes/core/i18n/countries.php:197
 msgid "Paraguay"
-msgstr ""
+msgstr "Paraguay"
 
 #: includes/core/i18n/countries.php:198
 msgid "Peru"
-msgstr ""
+msgstr "Pérou"
 
 #: includes/core/i18n/countries.php:199
 msgid "Philippines"
-msgstr ""
+msgstr "Philippines"
 
 #: includes/core/i18n/countries.php:200
 msgid "Pitcairn"
-msgstr ""
+msgstr "Îles Pitcairn"
 
 #: includes/core/i18n/countries.php:201
 #: includes/core/i18n/stripe.php:59
 msgid "Poland"
-msgstr ""
+msgstr "Pologne"
 
 #: includes/core/i18n/countries.php:202
 #: includes/core/i18n/stripe.php:60
 msgid "Portugal"
-msgstr ""
+msgstr "Portugal"
 
 #: includes/core/i18n/countries.php:203
 msgid "Puerto Rico"
-msgstr ""
+msgstr "Porto Rico"
 
 #: includes/core/i18n/countries.php:204
 msgid "Qatar"
-msgstr ""
+msgstr "Qatar"
 
 #: includes/core/i18n/countries.php:205
 msgid "Reunion"
-msgstr ""
+msgstr "La Réunion"
 
 #: includes/core/i18n/countries.php:206
 #: includes/core/i18n/stripe.php:61
 msgid "Romania"
-msgstr ""
+msgstr "Roumanie"
 
 #: includes/core/i18n/countries.php:207
 msgid "Russia"
-msgstr ""
+msgstr "Russie"
 
 #: includes/core/i18n/countries.php:208
 msgid "Rwanda"
-msgstr ""
+msgstr "Rouwanda"
 
 #: includes/core/i18n/countries.php:209
 msgid "Saint Barth&eacute;lemy"
@@ -1494,15 +1494,15 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:211
 msgid "Saint Kitts and Nevis"
-msgstr ""
+msgstr "Saint-Christophe-et-Niévès"
 
 #: includes/core/i18n/countries.php:212
 msgid "Saint Lucia"
-msgstr ""
+msgstr "Sante Lucie"
 
 #: includes/core/i18n/countries.php:213
 msgid "Saint Martin (French part)"
-msgstr ""
+msgstr "Saint-Martin (partie française)"
 
 #: includes/core/i18n/countries.php:214
 msgid "Saint Martin (Dutch part)"
@@ -1510,15 +1510,15 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:215
 msgid "Saint Pierre and Miquelon"
-msgstr ""
+msgstr "Saint Pierre et Miquelon"
 
 #: includes/core/i18n/countries.php:216
 msgid "Saint Vincent and the Grenadines"
-msgstr ""
+msgstr "Saint Vincent et les Grenadines"
 
 #: includes/core/i18n/countries.php:217
 msgid "San Marino"
-msgstr ""
+msgstr "Saint-Marin"
 
 #: includes/core/i18n/countries.php:218
 msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
@@ -1526,50 +1526,50 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:219
 msgid "Saudi Arabia"
-msgstr ""
+msgstr "Arabie Saoudite"
 
 #: includes/core/i18n/countries.php:220
 msgid "Senegal"
-msgstr ""
+msgstr "Sénégal"
 
 #: includes/core/i18n/countries.php:221
 msgid "Serbia"
-msgstr ""
+msgstr "Serbie"
 
 #: includes/core/i18n/countries.php:222
 msgid "Seychelles"
-msgstr ""
+msgstr "Seychelles"
 
 #: includes/core/i18n/countries.php:223
 msgid "Sierra Leone"
-msgstr ""
+msgstr "Sierra Leone"
 
 #: includes/core/i18n/countries.php:224
 #: includes/core/i18n/stripe.php:62
 msgid "Singapore"
-msgstr ""
+msgstr "Singapour"
 
 #: includes/core/i18n/countries.php:225
 #: includes/core/i18n/stripe.php:63
 msgid "Slovakia"
-msgstr ""
+msgstr "Slovaquie"
 
 #: includes/core/i18n/countries.php:226
 #: includes/core/i18n/stripe.php:64
 msgid "Slovenia"
-msgstr ""
+msgstr "Slovénie"
 
 #: includes/core/i18n/countries.php:227
 msgid "Solomon Islands"
-msgstr ""
+msgstr "Îles Salomon"
 
 #: includes/core/i18n/countries.php:228
 msgid "Somalia"
-msgstr ""
+msgstr "Somalie"
 
 #: includes/core/i18n/countries.php:229
 msgid "South Africa"
-msgstr ""
+msgstr "Afrique du Sud"
 
 #: includes/core/i18n/countries.php:230
 msgid "South Georgia/Sandwich Islands"
@@ -1577,32 +1577,32 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:231
 msgid "South Korea"
-msgstr ""
+msgstr "Corée du sud"
 
 #: includes/core/i18n/countries.php:232
 msgid "South Sudan"
-msgstr ""
+msgstr "Soudan du Sud"
 
 #: includes/core/i18n/countries.php:233
 #: includes/core/i18n/stripe.php:65
 msgid "Spain"
-msgstr ""
+msgstr "Espagne"
 
 #: includes/core/i18n/countries.php:234
 msgid "Sri Lanka"
-msgstr ""
+msgstr "Sri Lanka"
 
 #: includes/core/i18n/countries.php:235
 msgid "Sudan"
-msgstr ""
+msgstr "Soudan"
 
 #: includes/core/i18n/countries.php:236
 msgid "Suriname"
-msgstr ""
+msgstr "Surinam"
 
 #: includes/core/i18n/countries.php:237
 msgid "Svalbard and Jan Mayen"
-msgstr ""
+msgstr "Svalbard et Jan Mayen"
 
 #: includes/core/i18n/countries.php:238
 msgid "Eswatini"
@@ -1611,16 +1611,16 @@ msgstr ""
 #: includes/core/i18n/countries.php:239
 #: includes/core/i18n/stripe.php:66
 msgid "Sweden"
-msgstr ""
+msgstr "Suède"
 
 #: includes/core/i18n/countries.php:240
 #: includes/core/i18n/stripe.php:67
 msgid "Switzerland"
-msgstr ""
+msgstr "Suisse"
 
 #: includes/core/i18n/countries.php:241
 msgid "Syria"
-msgstr ""
+msgstr "Syrie"
 
 #: includes/core/i18n/countries.php:242
 msgid "Taiwan"
@@ -1628,69 +1628,69 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:243
 msgid "Tajikistan"
-msgstr ""
+msgstr "Tadjikistan"
 
 #: includes/core/i18n/countries.php:244
 msgid "Tanzania"
-msgstr ""
+msgstr "Tanzanie"
 
 #: includes/core/i18n/countries.php:245
 #: includes/core/i18n/stripe.php:68
 msgid "Thailand"
-msgstr ""
+msgstr "Thaïlande"
 
 #: includes/core/i18n/countries.php:246
 msgid "Timor-Leste"
-msgstr ""
+msgstr "Timor oriental"
 
 #: includes/core/i18n/countries.php:247
 msgid "Togo"
-msgstr ""
+msgstr "Togo"
 
 #: includes/core/i18n/countries.php:248
 msgid "Tokelau"
-msgstr ""
+msgstr "Tokélaou"
 
 #: includes/core/i18n/countries.php:249
 msgid "Tonga"
-msgstr ""
+msgstr "Tonga"
 
 #: includes/core/i18n/countries.php:250
 msgid "Trinidad and Tobago"
-msgstr ""
+msgstr "Trinité et Tobago"
 
 #: includes/core/i18n/countries.php:251
 msgid "Tunisia"
-msgstr ""
+msgstr "Tunisie"
 
 #: includes/core/i18n/countries.php:252
 msgid "Turkey"
-msgstr ""
+msgstr "Turquie"
 
 #: includes/core/i18n/countries.php:253
 msgid "Turkmenistan"
-msgstr ""
+msgstr "Turkménistan"
 
 #: includes/core/i18n/countries.php:254
 msgid "Turks and Caicos Islands"
-msgstr ""
+msgstr "Îles Turques et Caïques"
 
 #: includes/core/i18n/countries.php:255
 msgid "Tuvalu"
-msgstr ""
+msgstr "Tuvalu"
 
 #: includes/core/i18n/countries.php:256
 msgid "Uganda"
-msgstr ""
+msgstr "Ouganda"
 
 #: includes/core/i18n/countries.php:257
 msgid "Ukraine"
-msgstr ""
+msgstr "Ukraine"
 
 #: includes/core/i18n/countries.php:258
 #: includes/core/i18n/stripe.php:69
 msgid "United Arab Emirates"
-msgstr ""
+msgstr "Émirats Arabes Unis"
 
 #: includes/core/i18n/countries.php:259
 msgid "United Kingdom (UK)"
@@ -1706,15 +1706,15 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:262
 msgid "Uruguay"
-msgstr ""
+msgstr "Uruguay"
 
 #: includes/core/i18n/countries.php:263
 msgid "Uzbekistan"
-msgstr ""
+msgstr "Ouzbékistan"
 
 #: includes/core/i18n/countries.php:264
 msgid "Vanuatu"
-msgstr ""
+msgstr "Vanuatu"
 
 #: includes/core/i18n/countries.php:265
 msgid "Vatican"
@@ -1722,15 +1722,15 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:266
 msgid "Venezuela"
-msgstr ""
+msgstr "Vénézuéla"
 
 #: includes/core/i18n/countries.php:267
 msgid "Vietnam"
-msgstr ""
+msgstr "Vietnam"
 
 #: includes/core/i18n/countries.php:268
 msgid "Virgin Islands (British)"
-msgstr ""
+msgstr "Îles Vierges (Britanniques)"
 
 #: includes/core/i18n/countries.php:269
 msgid "Virgin Islands (US)"
@@ -1738,27 +1738,27 @@ msgstr ""
 
 #: includes/core/i18n/countries.php:270
 msgid "Wallis and Futuna"
-msgstr ""
+msgstr "Wallis et Futuna"
 
 #: includes/core/i18n/countries.php:271
 msgid "Western Sahara"
-msgstr ""
+msgstr "Sahara occidental"
 
 #: includes/core/i18n/countries.php:272
 msgid "Samoa"
-msgstr ""
+msgstr "Samoa"
 
 #: includes/core/i18n/countries.php:273
 msgid "Yemen"
-msgstr ""
+msgstr "Yémen"
 
 #: includes/core/i18n/countries.php:274
 msgid "Zambia"
-msgstr ""
+msgstr "Zambie"
 
 #: includes/core/i18n/countries.php:275
 msgid "Zimbabwe"
-msgstr ""
+msgstr "Zimbabwe"
 
 #: includes/core/i18n/functions.php:83
 #: includes/core/i18n/stripe.php:244
@@ -2380,7 +2380,7 @@ msgstr ""
 #: includes/core/i18n/states.php:170
 #: includes/core/i18n/states.php:1993
 msgid "Montana"
-msgstr ""
+msgstr "Montana"
 
 #: includes/core/i18n/states.php:171
 msgid "Pazardzhik"
@@ -3077,7 +3077,7 @@ msgstr ""
 
 #: includes/core/i18n/states.php:363
 msgid "Meta"
-msgstr ""
+msgstr "Méta"
 
 #: includes/core/i18n/states.php:364
 msgid "Nariño"
@@ -5830,7 +5830,7 @@ msgstr ""
 #: includes/core/i18n/states.php:1122
 #: includes/core/i18n/states.php:1987
 msgid "Maryland"
-msgstr ""
+msgstr "Maryland"
 
 #: includes/core/i18n/states.php:1123
 msgid "Montserrado"
@@ -8266,7 +8266,7 @@ msgstr ""
 #: includes/core/i18n/states.php:1790
 msgctxt "district"
 msgid "Kosovo"
-msgstr ""
+msgstr "Kosovo"
 
 #: includes/core/i18n/states.php:1791
 msgctxt "district"
@@ -8940,35 +8940,35 @@ msgstr ""
 
 #: includes/core/i18n/states.php:1967
 msgid "Alabama"
-msgstr ""
+msgstr "Alabama"
 
 #: includes/core/i18n/states.php:1968
 msgid "Alaska"
-msgstr ""
+msgstr "Alaska"
 
 #: includes/core/i18n/states.php:1969
 msgid "Arizona"
-msgstr ""
+msgstr "Arizona"
 
 #: includes/core/i18n/states.php:1970
 msgid "Arkansas"
-msgstr ""
+msgstr "Arkansas"
 
 #: includes/core/i18n/states.php:1971
 msgid "California"
-msgstr ""
+msgstr "Californie"
 
 #: includes/core/i18n/states.php:1972
 msgid "Colorado"
-msgstr ""
+msgstr "Colorado"
 
 #: includes/core/i18n/states.php:1973
 msgid "Connecticut"
-msgstr ""
+msgstr "Connecticut"
 
 #: includes/core/i18n/states.php:1974
 msgid "Delaware"
-msgstr ""
+msgstr "Delaware"
 
 #: includes/core/i18n/states.php:1975
 msgid "District Of Columbia"
@@ -8977,164 +8977,164 @@ msgstr ""
 #: includes/core/i18n/states.php:1976
 #: includes/core/i18n/states.php:2029
 msgid "Florida"
-msgstr ""
+msgstr "Floride"
 
 #: includes/core/i18n/states.php:1977
 msgctxt "US state of Georgia"
 msgid "Georgia"
-msgstr ""
+msgstr "Géorgie"
 
 #: includes/core/i18n/states.php:1978
 msgid "Hawaii"
-msgstr ""
+msgstr "Hawaï"
 
 #: includes/core/i18n/states.php:1979
 msgid "Idaho"
-msgstr ""
+msgstr "Idaho"
 
 #: includes/core/i18n/states.php:1980
 msgid "Illinois"
-msgstr ""
+msgstr "Illinois"
 
 #: includes/core/i18n/states.php:1981
 msgid "Indiana"
-msgstr ""
+msgstr "Indiana"
 
 #: includes/core/i18n/states.php:1982
 msgid "Iowa"
-msgstr ""
+msgstr "Iowa"
 
 #: includes/core/i18n/states.php:1983
 msgid "Kansas"
-msgstr ""
+msgstr "Kansas"
 
 #: includes/core/i18n/states.php:1984
 msgid "Kentucky"
-msgstr ""
+msgstr "Kentucky"
 
 #: includes/core/i18n/states.php:1985
 msgid "Louisiana"
-msgstr ""
+msgstr "Louisiane"
 
 #: includes/core/i18n/states.php:1986
 msgid "Maine"
-msgstr ""
+msgstr "Maine"
 
 #: includes/core/i18n/states.php:1988
 msgid "Massachusetts"
-msgstr ""
+msgstr "Massachusetts"
 
 #: includes/core/i18n/states.php:1989
 msgid "Michigan"
-msgstr ""
+msgstr "Michigan"
 
 #: includes/core/i18n/states.php:1990
 msgid "Minnesota"
-msgstr ""
+msgstr "Minnesota"
 
 #: includes/core/i18n/states.php:1991
 msgid "Mississippi"
-msgstr ""
+msgstr "Mississippi"
 
 #: includes/core/i18n/states.php:1992
 msgid "Missouri"
-msgstr ""
+msgstr "Missouri"
 
 #: includes/core/i18n/states.php:1994
 msgid "Nebraska"
-msgstr ""
+msgstr "Nebraska"
 
 #: includes/core/i18n/states.php:1995
 msgid "Nevada"
-msgstr ""
+msgstr "Nevada"
 
 #: includes/core/i18n/states.php:1996
 msgid "New Hampshire"
-msgstr ""
+msgstr "New Hampshire"
 
 #: includes/core/i18n/states.php:1997
 msgid "New Jersey"
-msgstr ""
+msgstr "New Jersey"
 
 #: includes/core/i18n/states.php:1998
 msgid "New Mexico"
-msgstr ""
+msgstr "Nouveau-Mexique"
 
 #: includes/core/i18n/states.php:1999
 msgid "New York"
-msgstr ""
+msgstr "New York"
 
 #: includes/core/i18n/states.php:2000
 msgid "North Carolina"
-msgstr ""
+msgstr "Caroline du Nord"
 
 #: includes/core/i18n/states.php:2001
 msgid "North Dakota"
-msgstr ""
+msgstr "Dakota du Nord"
 
 #: includes/core/i18n/states.php:2002
 msgid "Ohio"
-msgstr ""
+msgstr "Ohio"
 
 #: includes/core/i18n/states.php:2003
 msgid "Oklahoma"
-msgstr ""
+msgstr "Oklahoma"
 
 #: includes/core/i18n/states.php:2004
 msgid "Oregon"
-msgstr ""
+msgstr "Oregon"
 
 #: includes/core/i18n/states.php:2005
 msgid "Pennsylvania"
-msgstr ""
+msgstr "Pennsylvanie"
 
 #: includes/core/i18n/states.php:2006
 msgid "Rhode Island"
-msgstr ""
+msgstr "Rhode Island"
 
 #: includes/core/i18n/states.php:2007
 msgid "South Carolina"
-msgstr ""
+msgstr "Caroline du Sud"
 
 #: includes/core/i18n/states.php:2008
 msgid "South Dakota"
-msgstr ""
+msgstr "Dakota du Sud"
 
 #: includes/core/i18n/states.php:2009
 msgid "Tennessee"
-msgstr ""
+msgstr "Tennessee"
 
 #: includes/core/i18n/states.php:2010
 msgid "Texas"
-msgstr ""
+msgstr "Texas"
 
 #: includes/core/i18n/states.php:2011
 msgid "Utah"
-msgstr ""
+msgstr "Utah"
 
 #: includes/core/i18n/states.php:2012
 msgid "Vermont"
-msgstr ""
+msgstr "Vermont"
 
 #: includes/core/i18n/states.php:2013
 msgid "Virginia"
-msgstr ""
+msgstr "Virginie"
 
 #: includes/core/i18n/states.php:2014
 msgid "Washington"
-msgstr ""
+msgstr "Washington"
 
 #: includes/core/i18n/states.php:2015
 msgid "West Virginia"
-msgstr ""
+msgstr "Virginie-Occidentale"
 
 #: includes/core/i18n/states.php:2016
 msgid "Wisconsin"
-msgstr ""
+msgstr "Wisconsin"
 
 #: includes/core/i18n/states.php:2017
 msgid "Wyoming"
-msgstr ""
+msgstr "Wyoming"
 
 #: includes/core/i18n/states.php:2018
 msgid "Armed Forces (AA)"
@@ -9362,11 +9362,11 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:70
 msgid "United Kingdom"
-msgstr ""
+msgstr "Royaume-Uni"
 
 #: includes/core/i18n/stripe.php:71
 msgid "United States"
-msgstr ""
+msgstr "États-Unis"
 
 #: includes/core/i18n/stripe.php:129
 #: includes/core/i18n/stripe.php:179
@@ -9560,7 +9560,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:180
 msgid "Arabic"
-msgstr ""
+msgstr "Arabe"
 
 #: includes/core/i18n/stripe.php:197
 msgid "Hebrew (he)"
@@ -9596,7 +9596,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:238
 msgid "Australian Dollar"
-msgstr ""
+msgstr "Dollar australien"
 
 #: includes/core/i18n/stripe.php:239
 msgid "Aruban Florin"
@@ -9636,7 +9636,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:249
 msgid "Brazilian Real"
-msgstr ""
+msgstr "Réal brésilien"
 
 #: includes/core/i18n/stripe.php:250
 msgid "Bahamian Dollar"
@@ -9656,7 +9656,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:254
 msgid "Canadian Dollar"
-msgstr ""
+msgstr "Dollar canadien"
 
 #: includes/core/i18n/stripe.php:255
 msgid "Congolese Franc"
@@ -9664,7 +9664,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:256
 msgid "Swiss Franc"
-msgstr ""
+msgstr "Franc suisse"
 
 #: includes/core/i18n/stripe.php:258
 msgid "Chinese Renminbi Yuan"
@@ -9684,11 +9684,11 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:262
 msgid "Czech Koruna"
-msgstr ""
+msgstr "Couronne tchèque"
 
 #: includes/core/i18n/stripe.php:264
 msgid "Danish Krone"
-msgstr ""
+msgstr "Couronne danoise"
 
 #: includes/core/i18n/stripe.php:265
 msgid "Dominican Peso"
@@ -9708,7 +9708,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:269
 msgid "Euro"
-msgstr ""
+msgstr "Euro"
 
 #: includes/core/i18n/stripe.php:270
 msgid "Fijian Dollar"
@@ -9744,7 +9744,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:279
 msgid "Hong Kong Dollar"
-msgstr ""
+msgstr "Dollar de Hong Kong"
 
 #: includes/core/i18n/stripe.php:280
 msgid "Honduran Lempira"
@@ -9760,7 +9760,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:283
 msgid "Hungarian Forint"
-msgstr ""
+msgstr "Florin hongrois"
 
 #: includes/core/i18n/stripe.php:284
 msgid "Indonesian Rupiah"
@@ -9768,7 +9768,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:285
 msgid "Israeli New Sheqel"
-msgstr ""
+msgstr "Nouveau Sheqel israëlien"
 
 #: includes/core/i18n/stripe.php:286
 msgid "Indian Rupee"
@@ -9864,11 +9864,11 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:313
 msgid "Mexican Peso"
-msgstr ""
+msgstr "Peso mexicain"
 
 #: includes/core/i18n/stripe.php:314
 msgid "Malaysian Ringgit"
-msgstr ""
+msgstr "Ringgit malaisien"
 
 #: includes/core/i18n/stripe.php:315
 msgid "Mozambican Metical"
@@ -9888,7 +9888,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:319
 msgid "Norwegian Krone"
-msgstr ""
+msgstr "Couronne norvégienne"
 
 #: includes/core/i18n/stripe.php:320
 msgid "Nepalese Rupee"
@@ -9896,7 +9896,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:321
 msgid "New Zealand Dollar"
-msgstr ""
+msgstr "Dollar néo-zélandais"
 
 #: includes/core/i18n/stripe.php:322
 msgid "Panamanian Balboa"
@@ -9912,7 +9912,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:325
 msgid "Philippine Peso"
-msgstr ""
+msgstr "Peso philippin"
 
 #: includes/core/i18n/stripe.php:326
 msgid "Pakistani Rupee"
@@ -9936,7 +9936,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:332
 msgid "Russian Ruble"
-msgstr ""
+msgstr "Rouble russe"
 
 #: includes/core/i18n/stripe.php:334
 msgid "Saudi Riyal"
@@ -9952,11 +9952,11 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:337
 msgid "Swedish Krona"
-msgstr ""
+msgstr "Couronne suédoise"
 
 #: includes/core/i18n/stripe.php:338
 msgid "Singapore Dollar"
-msgstr ""
+msgstr "Dollar singapourien"
 
 #: includes/core/i18n/stripe.php:339
 msgid "Saint Helenian Pound"
@@ -9984,7 +9984,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:345
 msgid "Thai Baht"
-msgstr ""
+msgstr "Baht thaïlandais"
 
 #: includes/core/i18n/stripe.php:346
 msgid "Tajikistani Somoni"
@@ -10048,7 +10048,7 @@ msgstr ""
 
 #: includes/core/i18n/stripe.php:365
 msgid "South African Rand"
-msgstr ""
+msgstr "Rand Sud africain"
 
 #: includes/core/i18n/stripe.php:366
 msgid "Zambian Kwacha"
@@ -10282,7 +10282,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:490
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:498
 msgid "Subscription"
-msgstr ""
+msgstr "Abonnement"
 
 #: includes/core/payments/payment-confirmation-template-tags.php:643
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:481
@@ -10391,7 +10391,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-confirmation.php:57
 msgid "External URL"
-msgstr ""
+msgstr "URL externe"
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
 #: includes/core/post-types/simple-pay/edit-form-confirmation.php:80
@@ -10418,42 +10418,42 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:26
 msgctxt "custom field group"
 msgid "Payment"
-msgstr ""
+msgstr "Paiement"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:27
 msgctxt "custom field group"
 msgid "Customer"
-msgstr ""
+msgstr "Client"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:28
 msgctxt "custom field group"
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:29
 msgctxt "custom field group"
 msgid "Custom"
-msgstr ""
+msgstr "Personnalisé"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:52
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:59
 msgid "Email Address"
-msgstr ""
+msgstr "Adresse e-mail"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:66
 msgid "Phone"
-msgstr ""
+msgstr "Téléphone"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:73
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:80
 msgid "Tax ID"
-msgstr ""
+msgstr "Numéro d’identification fiscale"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:88
 msgid "Price Selector"
@@ -10461,7 +10461,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:95
 msgid "Coupon"
-msgstr ""
+msgstr "Code promo"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:102
 msgid "Custom Amount Input"
@@ -10496,15 +10496,15 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:152
 msgid "Heading"
-msgstr ""
+msgstr "Titre"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:159
 msgid "Text"
-msgstr ""
+msgstr "texte"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:166
 msgid "Dropdown"
-msgstr ""
+msgstr "Liste déroulante"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:173
 msgid "Radio Select"
@@ -10512,11 +10512,11 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:180
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:187
 msgid "Number"
-msgstr ""
+msgstr "Nombre"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:194
 msgid "Checkbox"
@@ -10524,7 +10524,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:201
 msgid "Hidden"
-msgstr ""
+msgstr "Masqué"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:211
 msgid "1-Click Payment Button (Apple Pay / Google Pay)"
@@ -10541,7 +10541,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:463
 #: includes/core/post-types/simple-pay/edit-form.php:484
 msgid "Form Fields"
-msgstr ""
+msgstr "Champs de formulaire"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:469
 msgid "Choose a field&hellip;"
@@ -10554,27 +10554,27 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:636
 #: includes/core/settings/register-emails.php:408
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-dropdown-html.php:21
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-number-html.php:21
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-text-html.php:21
 msgid "Label"
-msgstr ""
+msgstr "Libellé"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-dropdown-html.php:51
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-dropdown-html.php:79
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-number-html.php:50
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-text-html.php:52
 msgid "Required"
-msgstr ""
+msgstr "Requis"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:21
 msgid "Button Text"
-msgstr ""
+msgstr "Texte du bouton"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:50
 msgid "Button Processing Text"
@@ -10582,7 +10582,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:79
 msgid "Button Style"
-msgstr ""
+msgstr "Style de bouton"
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:94
 msgid "Stripe blue"
@@ -10592,7 +10592,7 @@ msgstr ""
 #: includes/core/recaptcha/settings.php:161
 #: includes/core/settings/register-emails.php:327
 msgid "Default"
-msgstr ""
+msgstr "Par défaut"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:72
 #: includes/core/post-types/simple-pay/list-table.php:158
@@ -10659,7 +10659,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:407
 msgid "Amount"
-msgstr ""
+msgstr "Montant"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:475
 msgid "Amount Type"
@@ -10676,7 +10676,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:590
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:288
 msgid "Card"
-msgstr ""
+msgstr "Carte"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:596
 msgid "ACH Direct Debit"
@@ -10720,11 +10720,11 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:842
 msgid "Popular"
-msgstr ""
+msgstr "Populaire"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:845
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 #. translators: %s Payment Method name.
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:866
@@ -10790,7 +10790,7 @@ msgstr ""
 #: includes/core/settings/register-emails.php:352
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:256
 msgid "None"
-msgstr ""
+msgstr "Aucune"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1184
 msgid "Global tax rates"
@@ -10875,7 +10875,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:370
 msgid "Schedule"
-msgstr ""
+msgstr "Planifier"
 
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:388
 msgid "Show the payment form after a specific date and time"
@@ -10883,11 +10883,11 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:405
 msgid "Start Date"
-msgstr ""
+msgstr "Date de début"
 
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:422
 msgid "Start Time"
-msgstr ""
+msgstr "Heure de début"
 
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:457
 msgid "Hide the payment form after a specific date and time"
@@ -10895,11 +10895,11 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:474
 msgid "End Date"
-msgstr ""
+msgstr "Date de fin"
 
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:491
 msgid "End Time"
-msgstr ""
+msgstr "Heure de fin"
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
 #: includes/core/post-types/simple-pay/edit-form-purchase-restrictions.php:532
@@ -10908,11 +10908,11 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:46
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:75
 msgid "Choose Image"
-msgstr ""
+msgstr "Choisir une image"
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:78
 msgid "Displayed conditionally based on payment form settings."
@@ -10981,12 +10981,12 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:281
 msgid "Learn more"
-msgstr ""
+msgstr "En savoir plus"
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:288
 #: includes/core/settings/register-emails.php:443
 msgid "Other"
-msgstr ""
+msgstr "Autre"
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:305
 msgid "Allow quantity adjustment"
@@ -11008,7 +11008,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/list-table.php:114
 #: includes/core/recaptcha/settings.php:528
 msgid "Preview"
-msgstr ""
+msgstr "Prévisualier"
 
 #. translators: Accessibility text.
 #: includes/core/post-types/simple-pay/edit-form.php:44
@@ -11036,11 +11036,11 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:472
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: includes/core/post-types/simple-pay/edit-form.php:478
 msgid "Payment"
-msgstr ""
+msgstr "Paiement"
 
 #: includes/core/post-types/simple-pay/edit-form.php:490
 msgid "Purchase Restrictions"
@@ -11061,7 +11061,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:520
 msgid "Email Notifications"
-msgstr ""
+msgstr "Notifications par e-mail"
 
 #: includes/core/post-types/simple-pay/edit-form.php:531
 msgid "Automations"
@@ -11069,7 +11069,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:692
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: includes/core/post-types/simple-pay/edit-form.php:723
 msgid "A payment form title is required."
@@ -11077,11 +11077,11 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:735
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: includes/core/post-types/simple-pay/edit-form.php:768
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: includes/core/post-types/simple-pay/edit-form.php:781
 msgid "Unlock On-Site Payment Forms"
@@ -11111,7 +11111,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form.php:924
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:469
 msgid "CAPTCHA"
-msgstr ""
+msgstr "CAPTCHA"
 
 #. translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
 #: includes/core/post-types/simple-pay/edit-form.php:932
@@ -11134,16 +11134,16 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/list-table.php:136
 msgid "Duplicate"
-msgstr ""
+msgstr "Dupliquer"
 
 #: includes/core/post-types/simple-pay/list-table.php:178
 msgid "Shortcode"
-msgstr ""
+msgstr "Code court"
 
 #: includes/core/post-types/simple-pay/list-table.php:205
 #: views/admin-form-preview-output.php:62
 msgid "Copy Shortcode"
-msgstr ""
+msgstr "Copier le code court"
 
 #: includes/core/post-types/simple-pay/menu.php:39
 msgid "WP Simple Pay Settings"
@@ -11196,12 +11196,12 @@ msgstr ""
 #: includes/core/post-types/simple-pay/register.php:36
 msgctxt "post type general name"
 msgid "WP Simple Pay"
-msgstr ""
+msgstr "WP Simple Pay"
 
 #: includes/core/post-types/simple-pay/register.php:49
 #: includes/core/post-types/simple-pay/register.php:61
 msgid "Payment Forms"
-msgstr ""
+msgstr "Formulaires de paiement"
 
 #: includes/core/post-types/simple-pay/register.php:50
 msgctxt "post type singular name"
@@ -11211,7 +11211,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/register.php:51
 msgctxt "event"
 msgid "Add New"
-msgstr ""
+msgstr "Ajouter"
 
 #: includes/core/post-types/simple-pay/register.php:52
 msgid "Add New Payment Form"
@@ -11267,19 +11267,19 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/register.php:66
 msgid "Featured Image"
-msgstr ""
+msgstr "Image à la une"
 
 #: includes/core/post-types/simple-pay/register.php:67
 msgid "Set featured image"
-msgstr ""
+msgstr "Image mise en avant définie"
 
 #: includes/core/post-types/simple-pay/register.php:68
 msgid "Remove featured image"
-msgstr ""
+msgstr "Retirer l’image mise en avant"
 
 #: includes/core/post-types/simple-pay/register.php:69
 msgid "Use as featured image"
-msgstr ""
+msgstr "Utiliser comme image mise en avant"
 
 #: includes/core/post-types/simple-pay/register.php:70
 msgid "Filter payment form list"
@@ -11414,7 +11414,7 @@ msgstr ""
 #: includes/core/recaptcha/settings.php:67
 msgctxt "captcha setup setting label"
 msgid "CAPTCHA"
-msgstr ""
+msgstr "CAPTCHA"
 
 #: includes/core/recaptcha/settings.php:85
 msgctxt "recaptcha setup setting label"
@@ -11426,19 +11426,19 @@ msgstr ""
 #: includes/core/recaptcha/settings.php:270
 msgctxt "captcha setting label"
 msgid "Site Key"
-msgstr ""
+msgstr "Clé du site"
 
 #: includes/core/recaptcha/settings.php:127
 #: includes/core/recaptcha/settings.php:227
 #: includes/core/recaptcha/settings.php:294
 msgctxt "captcha setting label"
 msgid "Secret Key"
-msgstr ""
+msgstr "Clé secrète"
 
 #: includes/core/recaptcha/settings.php:151
 msgctxt "recaptcha setting label"
 msgid "Score Threshold"
-msgstr ""
+msgstr "Seuil de score"
 
 #: includes/core/recaptcha/settings.php:162
 msgid "Aggressive"
@@ -11451,12 +11451,12 @@ msgstr ""
 #: includes/core/recaptcha/settings.php:185
 msgctxt "captcha setup setting label"
 msgid "hCaptcha"
-msgstr ""
+msgstr "CAPTCHA"
 
 #: includes/core/recaptcha/settings.php:252
 msgctxt "captcha setup setting label"
 msgid "Cloudflare Turnstile"
-msgstr ""
+msgstr "Cloudflare Turnstile"
 
 #: includes/core/recaptcha/settings.php:348
 msgid "A CAPTCHA is an anti-spam technique which helps to protect your website from spam and abuse while letting real people pass through with ease. WP Simple Pay supports two popular services."
@@ -11475,12 +11475,12 @@ msgstr ""
 #: includes/core/recaptcha/settings.php:428
 #: includes/core/recaptcha/settings.php:460
 msgid "Recommended"
-msgstr ""
+msgstr "Recommandées"
 
 #: includes/core/recaptcha/settings.php:403
 #: includes/core/recaptcha/settings.php:408
 msgid "hCaptcha"
-msgstr ""
+msgstr "CAPTCHA"
 
 #: includes/core/recaptcha/settings.php:410
 msgid "Challenge"
@@ -11501,7 +11501,7 @@ msgstr ""
 #: includes/core/recaptcha/settings.php:465
 #: includes/core/recaptcha/settings.php:470
 msgid "Cloudflare Turnstile"
-msgstr ""
+msgstr "Cloudflare Turnstile"
 
 #: includes/core/recaptcha/settings.php:472
 msgid "Adaptive"
@@ -11658,11 +11658,11 @@ msgstr ""
 #: includes/core/settings/emails/register-summary-report.php:97
 msgctxt "setting label"
 msgid "Send To"
-msgstr ""
+msgstr "Envoyer à"
 
 #: includes/core/settings/emails/register-summary-report.php:122
 msgid "Frequency"
-msgstr ""
+msgstr "Fréquence "
 
 #: includes/core/settings/emails/register-summary-report.php:129
 msgid "Determines how often the summary report email will be sent."
@@ -11671,18 +11671,18 @@ msgstr ""
 #: includes/core/settings/register-emails.php:85
 msgctxt "settings subsection label"
 msgid "Emails"
-msgstr ""
+msgstr "E-mails"
 
 #: includes/core/settings/register-emails.php:111
 #: src/Admin/Education/PluginCustomersSettings.php:82
 msgctxt "settings subsection label"
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: includes/core/settings/register-emails.php:138
 msgctxt "setting label"
 msgid "From Name"
-msgstr ""
+msgstr "Nom de l’expéditeur"
 
 #: includes/core/settings/register-emails.php:148
 msgid "The name that emails come from. This is usually your site name."
@@ -11691,7 +11691,7 @@ msgstr ""
 #: includes/core/settings/register-emails.php:171
 msgctxt "setting label"
 msgid "From Address"
-msgstr ""
+msgstr "Adresse de l’expéditeur (De)"
 
 #: includes/core/settings/register-emails.php:181
 msgid "The email address to send emails from. This will act as the \"from\" and \"reply-to\" address."
@@ -11700,12 +11700,12 @@ msgstr ""
 #: includes/core/settings/register-emails.php:210
 msgctxt "setting label"
 msgid "Template"
-msgstr ""
+msgstr "Modèle"
 
 #: includes/core/settings/register-emails.php:240
 msgctxt "setting label"
 msgid "Header Image"
-msgstr ""
+msgstr "Image d’en-tête"
 
 #: includes/core/settings/register-emails.php:262
 msgctxt "setting label"
@@ -11718,7 +11718,7 @@ msgstr ""
 
 #: includes/core/settings/register-emails.php:322
 msgid "HTML Template"
-msgstr ""
+msgstr "Modèle HTML"
 
 #: includes/core/settings/register-emails.php:329
 msgid "Styled"
@@ -11742,7 +11742,7 @@ msgstr ""
 
 #: includes/core/settings/register-emails.php:434
 msgid "Payments"
-msgstr ""
+msgstr "Paiements"
 
 #: includes/core/settings/register-emails.php:460
 msgid "Select an email to configure&hellip;"
@@ -11765,22 +11765,22 @@ msgstr ""
 #: includes/core/settings/register-general.php:32
 msgctxt "settings section label"
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: includes/core/settings/register-general.php:54
 msgctxt "settings subsection label"
 msgid "Currency"
-msgstr ""
+msgstr "Monnaie"
 
 #: includes/core/settings/register-general.php:66
 msgctxt "settings subsection label"
 msgid "Advanced"
-msgstr ""
+msgstr "Avancé"
 
 #: includes/core/settings/register-general.php:116
 msgctxt "setting label"
 msgid "Currency"
-msgstr ""
+msgstr "Monnaie"
 
 #: includes/core/settings/register-general.php:121
 msgctxt "setting label"
@@ -11815,7 +11815,7 @@ msgstr ""
 #: includes/core/settings/register-general.php:203
 msgctxt "setting label"
 msgid "Separator"
-msgstr ""
+msgstr "Séparateur"
 
 #: includes/core/settings/register-general.php:204
 msgid "Use a comma when formatting decimal amounts and use a period to separate thousands."
@@ -11886,7 +11886,7 @@ msgstr ""
 #: includes/core/settings/register-payment-confirmations.php:62
 msgctxt "settings subsection label"
 msgid "Pages"
-msgstr ""
+msgstr "Pages"
 
 #: includes/core/settings/register-payment-confirmations.php:74
 msgctxt "settings subsection label"
@@ -11924,7 +11924,7 @@ msgstr ""
 #: includes/core/settings/register-payment-confirmations.php:221
 msgctxt "setting label"
 msgid "Confirmation Message"
-msgstr ""
+msgstr "Message de confirmation"
 
 #: includes/core/settings/register-payment-confirmations.php:240
 msgid "Enter what your customers will see after a successful payment."
@@ -11933,22 +11933,22 @@ msgstr ""
 #: includes/core/settings/register-stripe.php:35
 msgctxt "settings section label"
 msgid "Stripe"
-msgstr ""
+msgstr "Stripe"
 
 #: includes/core/settings/register-stripe.php:57
 msgctxt "settings subsection label"
 msgid "Account"
-msgstr ""
+msgstr "Compte"
 
 #: includes/core/settings/register-stripe.php:73
 msgctxt "settings subsection label"
 msgid "Locale"
-msgstr ""
+msgstr "Paramètre régional"
 
 #: includes/core/settings/register-stripe.php:109
 msgctxt "setting label"
 msgid "Connection Status"
-msgstr ""
+msgstr "État de la connexion"
 
 #: includes/core/settings/register-stripe.php:118
 #: src/StripeConnect/ConnectionSubscriber.php:226
@@ -11976,7 +11976,7 @@ msgstr ""
 
 #: includes/core/settings/register-stripe.php:146
 msgid "Are you sure?"
-msgstr ""
+msgstr "Confirmez-vous ?"
 
 #: includes/core/settings/register-stripe.php:147
 msgid "Connecting to a different Stripe account requires recreating your payment forms and tax rates. Are you sure you want to disconnect?"
@@ -12004,19 +12004,19 @@ msgstr ""
 
 #: includes/core/settings/register-stripe.php:183
 msgid "Test Publishable Key"
-msgstr ""
+msgstr "Clé de test publiable"
 
 #: includes/core/settings/register-stripe.php:184
 msgid "Test Secret Key"
-msgstr ""
+msgstr "Clé secrète de test"
 
 #: includes/core/settings/register-stripe.php:185
 msgid "Live Publishable Key"
-msgstr ""
+msgstr "Clé de production publiable"
 
 #: includes/core/settings/register-stripe.php:186
 msgid "Live Secret Key"
-msgstr ""
+msgstr "Clé secrète de production"
 
 #: includes/core/settings/register-stripe.php:214
 msgid "You just toggled payment modes. You may be required to reconnect to Stripe when your settings are saved."
@@ -12030,7 +12030,7 @@ msgstr ""
 #: includes/core/settings/register-stripe.php:244
 msgctxt "setting label"
 msgid "Test Mode"
-msgstr ""
+msgstr "Mode test"
 
 #: includes/core/settings/register-stripe.php:245
 msgctxt "setting label"
@@ -12045,7 +12045,7 @@ msgstr ""
 #: includes/core/settings/register-stripe.php:285
 msgctxt "setting label"
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: includes/core/settings/register-stripe.php:289
 msgid "The country associated with the connected Stripe account."
@@ -12062,12 +12062,12 @@ msgstr ""
 
 #: includes/core/stripe-connect/functions.php:130
 msgid "Connect with Stripe"
-msgstr ""
+msgstr "Se connecter à Stripe"
 
 #. translators: Text before Stripe logo for "Connect with Stripe" button.
 #: includes/core/stripe-connect/functions.php:134
 msgid "Connect with"
-msgstr ""
+msgstr "Se connecter avec"
 
 #. translators: %s Collection ID that could not be registered.
 #: includes/core/utils/class-collections.php:62
@@ -12104,81 +12104,81 @@ msgstr ""
 
 #: src/Admin/Addon/AddonInstaller.php:50
 msgid "Plugin activation is disabled for you on this site."
-msgstr ""
+msgstr "L’activation d’extension est désactivée pour vous sur ce site."
 
 #: src/Admin/Addon/AddonInstaller.php:72
 msgid "Plugin activated."
-msgstr ""
+msgstr "Extension activée."
 
 #: src/Admin/Addon/AddonInstaller.php:76
 msgid "Addon activated."
-msgstr ""
+msgstr "Module activé."
 
 #: src/Admin/Addon/AddonInstaller.php:84
 msgid "Could not activate the plugin. Please activate it on the Plugins page."
-msgstr ""
+msgstr "Impossible d’activer l‘extension. Veuillez l’activer depuis la page des extensions."
 
 #: src/Admin/Addon/AddonInstaller.php:92
 msgid "Could not activate the addon. Please activate it on the Plugins page."
-msgstr ""
+msgstr "Impossible d’activer le module. Veuillez l’activer depuis la page des extensions."
 
 #: src/Admin/Addon/AddonInstaller.php:113
 msgid "Plugin deactivation is disabled for you on this site."
-msgstr ""
+msgstr "La désactivation d’extension est désactivée pour vous sur ce site."
 
 #: src/Admin/Addon/AddonInstaller.php:133
 msgid "Plugin deactivated."
-msgstr ""
+msgstr "Extension désactivée."
 
 #: src/Admin/Addon/AddonInstaller.php:137
 msgid "Addon deactivated."
-msgstr ""
+msgstr "Module désactivé."
 
 #: src/Admin/Addon/AddonInstaller.php:143
 msgid "Could not deactivate the addon. Please deactivate from the Plugins page."
-msgstr ""
+msgstr "Impossible de désactiver le module. Veuillez le désinstaller depuis la page Extensions."
 
 #: src/Admin/Addon/AddonInstaller.php:161
 msgid "There was an error while performing your request."
-msgstr ""
+msgstr "Une erreur s’est produite lors de l’exécution de votre requête."
 
 #: src/Admin/Addon/AddonInstaller.php:176
 msgid "Could not install the plugin. Please download and install it manually."
-msgstr ""
+msgstr "Impossible d’installer l’extension. Veuillez la télécharger et l’installer manuellement."
 
 #: src/Admin/Addon/AddonInstaller.php:267
 msgid "Plugin installed."
-msgstr ""
+msgstr "Extension installée."
 
 #: src/Admin/Addon/AddonInstaller.php:268
 msgid "Addon installed."
-msgstr ""
+msgstr "Module installé."
 
 #: src/Admin/Addon/AddonInstaller.php:280
 #: src/Connect/ConnectSubscriber.php:278
 #: src/Connect/ConnectSubscriber.php:304
 #: src/Connect/ConnectSubscriber.php:405
 msgid "Plugin installed & activated."
-msgstr ""
+msgstr "Extension installée et activée."
 
 #: src/Admin/Addon/AddonInstaller.php:281
 msgid "Addon installed & activated."
-msgstr ""
+msgstr "Module installé et activé."
 
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:286
 #: src/AdminPage/AboutUsPage.php:147
 msgid "MonsterInsights"
-msgstr ""
+msgstr "MonsterInsights"
 
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:294
 #: src/AdminPage/AboutUsPage.php:181
 msgid "AIOSEO"
-msgstr ""
+msgstr "AIOSEO"
 
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:302
 #: src/AdminPage/AboutUsPage.php:198
 msgid "SeedProd"
-msgstr ""
+msgstr "SeedProd"
 
 #: src/Admin/Education/AbstractProductEducation.php:54
 #: src/AdminPage/AboutUsPage.php:114
@@ -12209,7 +12209,7 @@ msgstr ""
 #: src/Admin/Education/PluginCouponMenuItem.php:47
 #: views/admin-education-plugin-coupons.php:21
 msgid "Coupons"
-msgstr ""
+msgstr "Codes promo"
 
 #: src/Admin/Education/PluginCustomersSettings.php:56
 msgctxt "settings subsection label"
@@ -12233,7 +12233,7 @@ msgstr ""
 
 #: src/Admin/FormBuilder/TemplateExplorer.php:220
 msgid "All Templates"
-msgstr ""
+msgstr "Tous les modèles"
 
 #: src/Admin/PluginRatingNotification.php:75
 msgid "Are you enjoying WP Simple Pay?"
@@ -12256,12 +12256,12 @@ msgstr ""
 #: src/AdminPage/SetupWizardPage.php:52
 #: views/admin-page-setup-wizard.php:58
 msgid "Setup Wizard"
-msgstr ""
+msgstr "Assistant de configuration"
 
 #: src/Admin/SetupWizard/SetupWizardLaunch.php:117
 #: src/Admin/SetupWizard/SetupWizardLaunch.php:139
 msgid "Launch Setup Wizard"
-msgstr ""
+msgstr "Lancer l’assistant de configuration"
 
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:123
 msgid "Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered."
@@ -12272,19 +12272,19 @@ msgstr ""
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:233
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:292
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:192
 msgid "Enabled"
-msgstr ""
+msgstr "Activé"
 
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:193
 msgid "Disabled"
-msgstr ""
+msgstr "Désactivé"
 
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:453
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:457
 msgid "Stripe TLS"
@@ -12341,17 +12341,17 @@ msgstr ""
 
 #: src/Admin/UpeNotification.php:98
 msgid "Enable Now"
-msgstr ""
+msgstr "Activer maintenant"
 
 #: src/AdminBar/AdminBarSubscriber.php:130
 #: src/AdminPage/NotificationInboxPage.php:63
 #: src/AdminPage/NotificationInboxPage.php:76
 msgid "Notifications"
-msgstr ""
+msgstr "Notifications"
 
 #: src/AdminBar/AdminBarSubscriber.php:151
 msgid "All Forms"
-msgstr ""
+msgstr "Tous les formulaires"
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
 #: src/AdminNotice/LicenseUpgradeTopOfPageNotice.php:118
@@ -12373,37 +12373,37 @@ msgstr ""
 #: src/AdminPage/AboutUsPage.php:96
 #: views/admin-page-about-us.php:23
 msgid "About Us"
-msgstr ""
+msgstr "À propos de nous"
 
 #: src/AdminPage/AboutUsPage.php:97
 #: src/Help/HelpDocsContext.php:68
 msgid "Getting Started"
-msgstr ""
+msgstr "Premiers pas"
 
 #: src/AdminPage/AboutUsPage.php:138
 msgid "OptinMonster"
-msgstr ""
+msgstr "OptinMonster"
 
 #: src/AdminPage/AboutUsPage.php:139
 msgid "Instantly get more subscribers, leads, and sales with the #1 conversion optimization toolkit. Create high converting popups, announcement bars, spin a wheel, and more with smart targeting and personalization."
-msgstr ""
+msgstr "Obtenez instantanément plus d’abonné•es, de prospects et de ventes avec la boîte à outils n°1 d’optimisation de conversion. Créez des fenêtres surgissantes à conversion élevée, des barres d’annonce, faites tourner une roue et plus encore grâce à un ciblage et une personnalisation intelligents."
 
 #: src/AdminPage/AboutUsPage.php:148
 #: src/AdminPage/AboutUsPage.php:155
 msgid "The leading WordPress analytics plugin that shows you how people find and use your website, so you can make data driven decisions to grow your business. Properly set up Google Analytics without writing code."
-msgstr ""
+msgstr "L’extension WordPress Analytics qui vous montre comment les gens trouvent et utilisent votre site, de sorte que vous pouvez prendre des décisions axées sur les données pour développer votre entreprise. Configurez correctement Google Analytics sans écrire de code."
 
 #: src/AdminPage/AboutUsPage.php:154
 msgid "MonsterInsights Pro"
-msgstr ""
+msgstr "MonsterInsights Pro"
 
 #: src/AdminPage/AboutUsPage.php:165
 msgid "Improve your WordPress email deliverability and make sure that your website emails reach user's inbox with the #1 SMTP plugin for WordPress. Over 3 million websites use it to fix WordPress email issues."
-msgstr ""
+msgstr "Améliorez la délivrabilité de vos e-mails WordPress et assurez-vous que les e-mails de votre site atteignent la boîte de réception de les utilisateurs et utilisatrices avec l’extension SMTP n°1 pour WordPress. Plus de 2 millions de sites l’utilisent pour résoudre les problèmes d’e-mail WordPress."
 
 #: src/AdminPage/AboutUsPage.php:171
 msgid "WP Mail SMTP Pro"
-msgstr ""
+msgstr "WP Mail SMTP Pro"
 
 #: src/AdminPage/AboutUsPage.php:172
 msgid "Improve your WordPress email deliverability and make sure that your website emails reach user's inbox with the #1 SMTP plugin for WordPress. Over 2 million websites use it to fix WordPress email issues."
@@ -12411,148 +12411,148 @@ msgstr ""
 
 #: src/AdminPage/AboutUsPage.php:182
 msgid "The original WordPress SEO plugin and toolkit that improves your website’s search rankings. Comes with all the SEO features like Local SEO, WooCommerce SEO, sitemaps, SEO optimizer, schema, and more."
-msgstr ""
+msgstr "L’extension et la boîte à outils WordPress SEO originale qui améliorent le classement de votre site dans les moteurs de recherche. Livrées avec toutes les fonctionnalités de référencement comme SEO local, SEO WooCommerce, plans de site, optimisation SEO, schémas, et plus encore."
 
 #: src/AdminPage/AboutUsPage.php:188
 msgid "AIOSEO Pro"
-msgstr ""
+msgstr "AIOSEO Pro"
 
 #: src/AdminPage/AboutUsPage.php:189
 msgid "The original WordPress SEO plugin and toolkit that improves your website's search rankings. Comes with all the SEO features like Local SEO, WooCommerce SEO, sitemaps, SEO optimizer, schema, and more."
-msgstr ""
+msgstr "L’extension WordPress SEO originale et la boîte à outils qui améliore les classements de recherche de votre site. Livrée avec toutes les fonctionnalités SEO comme Local SEO, WooCommerce SEO, plans de site, optimiseur SEO, schéma, et plus encore."
 
 #: src/AdminPage/AboutUsPage.php:199
 #: src/AdminPage/AboutUsPage.php:206
 msgid "The fastest drag & drop landing page builder for WordPress. Create custom landing pages without writing code, connect them with your CRM, collect subscribers, and grow your audience. Trusted by 1 million sites."
-msgstr ""
+msgstr "Le constructeur de page d’atterrissage en glisser-déposer le plus rapide pour WordPress. Créez des pages d’atterrissage personnalisées sans écrire de code, connectez-les à votre CRM, collectez des abonnés et augmentez votre audience. Déjà utilisé sur 1 million de sites."
 
 #: src/AdminPage/AboutUsPage.php:205
 msgid "SeedProd Pro"
-msgstr ""
+msgstr "SeedProd Pro"
 
 #: src/AdminPage/AboutUsPage.php:215
 msgid "RafflePress"
-msgstr ""
+msgstr "RafflePress"
 
 #: src/AdminPage/AboutUsPage.php:216
 #: src/AdminPage/AboutUsPage.php:223
 msgid "Turn your website visitors into brand ambassadors! Easily grow your email list, website traffic, and social media followers with the most powerful giveaways & contests plugin for WordPress."
-msgstr ""
+msgstr "Convertissez les internautes qui consultent votre site en ambassadeurs et ambassadrices de votre marque ! Augmentez facilement votre liste d’e-mails, le trafic de votre site et votre nombre d’abonnés aux réseaux sociaux grâce aux puissantes extensions WordPress pour les cadeaux et les concours."
 
 #: src/AdminPage/AboutUsPage.php:222
 msgid "RafflePress Pro"
-msgstr ""
+msgstr "RafflePress Pro"
 
 #: src/AdminPage/AboutUsPage.php:232
 msgid "SearchWP"
-msgstr ""
+msgstr "RechercheWP"
 
 #: src/AdminPage/AboutUsPage.php:233
 msgid "The most advanced WordPress search plugin. Customize your WordPress search algorithm, reorder search results, track search metrics, and everything you need to leverage search to grow your business."
-msgstr ""
+msgstr "L’extension WordPress de recherche la plus avancée. Personnalisez votre algorithme de recherche WordPress, réorganisez les résultats de recherche, effectuez le suivi des mesures de recherche et bénéficiez des outils clés pour exploiter la recherche afin de développer votre entreprise."
 
 #: src/AdminPage/AboutUsPage.php:242
 msgid "AffiliateWP"
-msgstr ""
+msgstr "AffiliateWP"
 
 #: src/AdminPage/AboutUsPage.php:243
 msgid "The #1 affiliate management plugin for WordPress. Easily create an affiliate program for your eCommerce store or membership site within minutes and start growing your sales with the power of referral marketing."
-msgstr ""
+msgstr "L’extension de gestion d’affiliation n° 1 pour WordPress. Créez facilement un programme d’affiliation pour votre boutique eCommerce ou votre site d’adhésion en quelques minutes et commencez à augmenter vos ventes grâce à la puissance du marketing de référence."
 
 #: src/AdminPage/AboutUsPage.php:252
 msgid "PushEngage"
-msgstr ""
+msgstr "PushEngage"
 
 #: src/AdminPage/AboutUsPage.php:253
 msgid "Connect with your visitors after they leave your website with the leading web push notification software. Over 10,000+ businesses worldwide use PushEngage to send 15 billion notifications each month."
-msgstr ""
+msgstr "Utilisez le meilleur logiciel de notifications push pour contacter vos visiteurs lorsqu’ils ont quitté votre site web. Plus de 10 000 entreprises dans le monde utilisent PushEngage pour envoyer plus de 15 milliards de notifications tous les mois."
 
 #: src/AdminPage/AboutUsPage.php:261
 msgid "Smash Balloon Facebook Feeds"
-msgstr ""
+msgstr "Smash Balloon Facebook Feeds"
 
 #: src/AdminPage/AboutUsPage.php:262
 #: src/AdminPage/AboutUsPage.php:269
 #: src/AdminPage/AboutUsPage.php:303
 msgid "Easily display Facebook content on your WordPress site without writing any code. Comes with multiple templates, ability to embed albums, group content, reviews, live videos, comments, and reactions."
-msgstr ""
+msgstr "Affichez facilement du contenu Facebook sur votre site WordPress sans écrire de code. Livré avec plusieurs modèles, la possibilité d’intégrer des albums, contenu de groupe, commentaires, vidéos en direct, commentaires et réactions."
 
 #: src/AdminPage/AboutUsPage.php:268
 #: src/AdminPage/AboutUsPage.php:302
 msgid "Smash Balloon Facebook Feeds Pro"
-msgstr ""
+msgstr "Smash Balloon Facebook Feeds Pro"
 
 #: src/AdminPage/AboutUsPage.php:278
 msgid "Smash Balloon YouTube Feeds"
-msgstr ""
+msgstr "Smash Balloon YouTube Feeds"
 
 #: src/AdminPage/AboutUsPage.php:279
 #: src/AdminPage/AboutUsPage.php:286
 msgid "Easily display YouTube videos on your WordPress site without writing any code. Comes with multiple layouts, ability to embed live streams, video filtering, ability to combine multiple channel videos, and more."
-msgstr ""
+msgstr "Affichez facilement des vidéos YouTube sur votre site WordPress sans écrire de code. Livré avec plusieurs mises en page, la capacité d’intégrer des flux en direct, filtrage vidéo, la capacité de combiner plusieurs vidéos de canal, et plus encore."
 
 #: src/AdminPage/AboutUsPage.php:285
 msgid "Smash Balloon YouTube Feeds Pro"
-msgstr ""
+msgstr "Smash Balloon YouTube Feeds Pro"
 
 #: src/AdminPage/AboutUsPage.php:295
 msgid "Smash Balloon Instagram Feeds"
-msgstr ""
+msgstr "Smash Balloon Instagram Feeds"
 
 #: src/AdminPage/AboutUsPage.php:296
 msgid "Easily display Instagram content on your WordPress site without writing any code. Comes with multiple templates, ability to show content from multiple accounts, hashtags, and more. Trusted by 1 million websites."
-msgstr ""
+msgstr "Affichez facilement du contenu Instagram sur votre site WordPress sans écrire de code. Livré avec plusieurs modèles, la possibilité d’afficher du contenu à partir de plusieurs comptes, hashtags, et plus encore. Déjà utilisé sur 1 million de sites."
 
 #: src/AdminPage/AboutUsPage.php:312
 msgid "Smash Balloon Twitter Feeds"
-msgstr ""
+msgstr "Smash Balloon Twitter Feeds"
 
 #: src/AdminPage/AboutUsPage.php:313
 #: src/AdminPage/AboutUsPage.php:320
 msgid "Easily display Twitter content in WordPress without writing any code. Comes with multiple layouts, ability to combine multiple Twitter feeds, Twitter card support, tweet moderation, and more."
-msgstr ""
+msgstr "Affichez facilement du contenu Twitter dans WordPress sans écrire de code. Livré avec plusieurs mises en page, la possibilité de combiner plusieurs flux Twitter, prise en charge des cartes Twitter, modération de tweet, et plus encore."
 
 #: src/AdminPage/AboutUsPage.php:319
 msgid "Smash Balloon Twitter Feeds Pro"
-msgstr ""
+msgstr "Smash Balloon Twitter Feeds Pro"
 
 #: src/AdminPage/AboutUsPage.php:329
 msgid "TrustPulse"
-msgstr ""
+msgstr "TrustPulse"
 
 #: src/AdminPage/AboutUsPage.php:330
 msgid "Boost your sales and conversions by up to 15% with real-time social proof notifications. TrustPulse helps you show live user activity and purchases to help convince other users to purchase."
-msgstr ""
+msgstr "Augmentez vos ventes et conversions jusqu’à 15 % grâce à des notifications de preuve sociale en temps réel. TrustPulse vous aide à afficher en direct l’activité et les achats des utilisateurs et utilisatrices pour aider à convaincre d’autres personnes d’effectuer un achat."
 
 #: src/AdminPage/AboutUsPage.php:338
 msgid "Easy Digital Downloads"
-msgstr ""
+msgstr "Easy Digital Downloads"
 
 #: src/AdminPage/AboutUsPage.php:339
 msgid "The best WordPress eCommerce plugin for selling digital downloads. Start selling eBooks, software, music, digital art, and more within minutes. Accept payments, manage subscriptions, advanced access control, and more."
-msgstr ""
+msgstr "La meilleure extension WordPress eCommerce pour vendre des téléchargements numériques. Commencez à vendre des e-books, des logiciels, de la musique, de l’art numérique et plus encore en quelques minutes. Acceptez les paiements, gérez les abonnements, le contrôle d’accès avancé, et plus encore."
 
 #: src/AdminPage/AboutUsPage.php:347
 msgid "Sugar Calendar"
-msgstr ""
+msgstr "Sugar Calendar"
 
 #: src/AdminPage/AboutUsPage.php:348
 #: src/AdminPage/AboutUsPage.php:355
 msgid "A simple & powerful event calendar plugin for WordPress that comes with all the event management features including payments, scheduling, timezones, ticketing, recurring events, and more."
-msgstr ""
+msgstr "Une extension de calendrier d’évènements simple et puissante pour WordPress qui comprend toutes les fonctionnalités de gestion d’événements, y compris les paiements, la planification, les fuseaux horaires, la billetterie, les évènements récurrents, etc."
 
 #: src/AdminPage/AboutUsPage.php:354
 msgid "Sugar Calendar Pro"
-msgstr ""
+msgstr "Sugar Calendar Pro"
 
 #: src/AdminPage/AboutUsPage.php:364
 msgid "WP Charitable"
-msgstr ""
+msgstr "WP Charitable"
 
 #: src/AdminPage/AboutUsPage.php:365
 #: src/AdminPage/AboutUsPage.php:372
 msgid "Top-rated WordPress donation and fundraising plugin. Over 10,000+ non-profit organizations and website owners use Charitable to create fundraising campaigns and raise more money online."
-msgstr ""
+msgstr "L’extension WordPress la mieux classée pour les dons et les collectes de fonds. Plus de 10 000 organisations à but non lucratif et propriétaires de sites web utilisent Charitable pour créer des campagnes de collecte de fonds et augmenter leur collecte en ligne."
 
 #: src/AdminPage/AboutUsPage.php:371
 msgid "WP Charitable Pro"
@@ -12573,11 +12573,11 @@ msgstr ""
 
 #: src/AdminPage/AboutUsPage.php:471
 msgid "Not Installed"
-msgstr ""
+msgstr "Non installé"
 
 #: src/AdminPage/AboutUsPage.php:475
 msgid "Install Plugin"
-msgstr ""
+msgstr "Installer l’extension"
 
 #: src/AdminPage/ActivityReportsPage.php:44
 #: src/AdminPage/ActivityReportsPage.php:51
@@ -12589,7 +12589,7 @@ msgstr ""
 #: src/AdminPage/FormTemplatesPage.php:81
 #: src/AdminPage/FormTemplatesPage.php:113
 msgid "Form Templates"
-msgstr ""
+msgstr "Modèles de formulaires"
 
 #: src/AdminPage/FormTemplatesPage.php:71
 msgid "New!"
@@ -12638,7 +12638,7 @@ msgstr ""
 
 #: src/AntiSpam/EmailVerification.php:241
 msgid "hours"
-msgstr ""
+msgstr "heures"
 
 #: src/AntiSpam/EmailVerification.php:245
 msgid "Require email verification for on-site payment forms until there are no more failed payments due to fraud for this many hours."
@@ -12697,7 +12697,7 @@ msgstr ""
 #: src/Block/PaymentFormBlock.php:44
 msgctxt "block title"
 msgid "WP Simple Pay"
-msgstr ""
+msgstr "WP Simple Pay"
 
 #: src/Block/PaymentFormBlock.php:49
 msgctxt "block description"
@@ -12707,7 +12707,7 @@ msgstr ""
 #: src/Block/PaymentFormBlock.php:56
 msgctxt "block keyword"
 msgid "form"
-msgstr ""
+msgstr "formulaire"
 
 #: src/Block/PaymentFormBlock.php:57
 msgctxt "block keyword"
@@ -12735,7 +12735,7 @@ msgstr ""
 
 #: src/Connect/ConnectSubscriber.php:93
 msgid "Please enter your license key to connect."
-msgstr ""
+msgstr "Veuillez saisir votre clé de licence pour vous connecter."
 
 #: src/Connect/ConnectSubscriber.php:125
 msgid "You already have WP Simple Pay Pro installed! Activating it now."
@@ -12748,7 +12748,7 @@ msgstr ""
 
 #: src/Connect/ConnectSubscriber.php:366
 msgid "You are not licensed."
-msgstr ""
+msgstr "Vous n’avez pas de licence."
 
 #: src/Connect/ConnectSubscriber.php:427
 msgid "Please activate WP Simple Pay Pro from your WordPress plugins page."
@@ -12804,11 +12804,11 @@ msgstr ""
 
 #: src/Emails/Email/SummaryReportEmail.php:83
 msgid "Weekly"
-msgstr ""
+msgstr "Hebdomadaire"
 
 #: src/Emails/Email/SummaryReportEmail.php:84
 msgid "Monthly"
-msgstr ""
+msgstr "Mensuel"
 
 #. translators: %1$s Send interval, %2$s Site domain, do not translate.
 #: src/Emails/Email/SummaryReportEmail.php:137
@@ -12847,15 +12847,15 @@ msgstr ""
 
 #: src/Help/HelpDocsContext.php:71
 msgid "Integrations"
-msgstr ""
+msgstr "Intégrations"
 
 #: src/Help/HelpDocsContext.php:72
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Foire aux questions"
 
 #: src/Help/HelpDocsContext.php:73
 msgid "Functionality"
-msgstr ""
+msgstr "Fonctionnalité"
 
 #: src/Help/HelpDocsContext.php:75
 msgid "Walkthroughs"
@@ -12926,11 +12926,11 @@ msgstr ""
 #: src/License/LicenseSettingSubscriber.php:53
 msgctxt "settings subsection label"
 msgid "License"
-msgstr ""
+msgstr "Licence"
 
 #: src/License/LicenseSettingSubscriber.php:79
 msgid "License Key"
-msgstr ""
+msgstr "Clé de licence"
 
 #. translators: %1$s License level.
 #: src/License/LicenseSettingSubscriber.php:177
@@ -12965,7 +12965,7 @@ msgstr ""
 
 #: src/Report/ActivityOverviewReport.php:207
 msgid "(no title)"
-msgstr ""
+msgstr "(sans titre)"
 
 #: src/Repository/BerlinDbRepository.php:166
 msgid "Counting results via a query is not allowed. Use the ::count() method."
@@ -13139,7 +13139,7 @@ msgstr ""
 #. translators: %s Payment created date.
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:155
 msgid "%s ago"
-msgstr ""
+msgstr "il y a %s"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:188
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:356
@@ -13149,12 +13149,12 @@ msgstr ""
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:190
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:354
 msgid "Failed"
-msgstr ""
+msgstr "Échoué"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:192
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:358
 msgid "Incomplete"
-msgstr ""
+msgstr "Non terminé"
 
 #: src/RestApi/Internal/Report/SchemaUtils.php:36
 msgid "The date range to retrieve results from."
@@ -13300,16 +13300,16 @@ msgstr ""
 #: views/admin-dashboard-widget-lite-upgrade.php:38
 #: views/admin-education-upgrade-modal.php:27
 msgid "Upgrade Now"
-msgstr ""
+msgstr "Mettre à niveau"
 
 #. translators: Plugin name.
 #: views/admin-dashboard-widget-report.php:44
 msgid "Recommended Plugin: %s"
-msgstr ""
+msgstr "Extension recommandée : %s"
 
 #: views/admin-dashboard-widget-report.php:57
 msgid "Install"
-msgstr ""
+msgstr "Installer"
 
 #: views/admin-dashboard-widget-stripe-connect.php:24
 msgid "Connect with Stripe to use WP Simple Pay"
@@ -13332,7 +13332,7 @@ msgstr ""
 #: views/admin-education-payment-form-instant-payouts-settings.php:61
 #: views/admin-education-payment-form-notifications-settings.php:59
 msgid "Dismiss"
-msgstr ""
+msgstr "Ignorer"
 
 #: views/admin-education-payment-form-instant-payouts-settings.php:28
 msgid "Instant Payouts"
@@ -13382,7 +13382,7 @@ msgstr ""
 #: views/admin-education-plugin-taxes-settings.php:64
 #: views/admin-education-upgrade-modal.php:33
 msgid "Already purchased?"
-msgstr ""
+msgstr "Vous avez déjà fait l'achat ?"
 
 #: views/admin-education-plugin-customers-settings.php:25
 msgid "🙋‍♀️ Allow Customers to Manage Subscriptions"
@@ -13506,11 +13506,11 @@ msgstr ""
 
 #: views/admin-footer-promo.php:41
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: views/admin-footer-promo.php:51
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #. translators: Payment form ID.
 #: views/admin-form-preview-output.php:22
@@ -13527,11 +13527,11 @@ msgstr ""
 
 #: views/admin-form-preview-output.php:71
 msgid "Copy Block"
-msgstr ""
+msgstr "Copier le bloc"
 
 #: views/admin-form-preview-output.php:87
 msgid "Continue Editing"
-msgstr ""
+msgstr "Continuer la modification"
 
 #: views/admin-notice-expired-license.php:25
 msgid "Your WP Simple Pay Pro license has expired!"
@@ -13585,16 +13585,16 @@ msgstr ""
 
 #: views/admin-page-about-us-about-us.php:66
 msgid "Yup, we know a thing or two about building awesome products that customers love."
-msgstr ""
+msgstr "Eh oui, nous avons trouvé la recette pour créer des produits géniaux que nos clients adorent !"
 
 #. translators: Addon status label.
 #: views/admin-page-about-us-about-us.php:93
 msgid "Status: %s"
-msgstr ""
+msgstr "État : %s"
 
 #: views/admin-page-about-us-about-us.php:106
 msgid "WordPress.org"
-msgstr ""
+msgstr "Site de WordPress-FR"
 
 #: views/admin-page-about-us-getting-started.php:27
 #: views/admin-page-about-us-getting-started.php:46
@@ -13633,7 +13633,7 @@ msgstr ""
 #: views/admin-page-about-us-getting-started.php:102
 #: views/admin-page-about-us-getting-started.php:123
 msgid "Read Documentation"
-msgstr ""
+msgstr "Consulter la documentation"
 
 #: views/admin-page-about-us-getting-started.php:89
 msgid "Sell Recurring Services"
@@ -13653,7 +13653,7 @@ msgstr ""
 
 #: views/admin-page-about-us.php:36
 msgid "Lite vs. Pro"
-msgstr ""
+msgstr "Lite vs. Pro"
 
 #: views/admin-page-stripe-connect.php:32
 msgid "👋 You're Almost Ready!"
@@ -13729,7 +13729,7 @@ msgstr ""
 
 #: views/admin-setting-license.php:99
 msgid "Refresh Key"
-msgstr ""
+msgstr "Touche d’actualisation"
 
 #: views/admin-setting-license.php:107
 msgid "Your license key is globally defined via <code>SIMPLE_PAY_LICENSE_KEY</code> set in <code>wp-config.php</code>. It cannot be modified from this screen."
@@ -13750,7 +13750,7 @@ msgstr ""
 
 #: views/admin-setting-lite-license.php:63
 msgid "Connecting..."
-msgstr ""
+msgstr "Connexion en cours..."
 
 #: views/admin-setting-lite-license.php:64
 #: views/admin-setting-lite-license.php:66
@@ -13829,7 +13829,7 @@ msgstr ""
 
 #: views/email-internal-summary-report.php:21
 msgid "Hi there,"
-msgstr ""
+msgstr "Bonjour,"
 
 #. translators: %1$s Site domain. %2$s Start date. %3$s End date.
 #: views/email-internal-summary-report.php:29
@@ -13850,5 +13850,5 @@ msgstr ""
 
 #: views/payment-page-output.php:86
 msgid "powered by"
-msgstr ""
+msgstr "propulsé par"
 
