@@ -9,6 +9,9 @@
     "type": "git",
     "url": "https://github.com/wpsimplepay/wp-simple-pay-lite"
   },
+  "scripts": {
+    "i18n": "grunt checktextdomain && wp i18n make-pot --include='*.min.js,*.php' --exclude='build,*.js' . languages/stripe.pot --domain=stripe && wp i18n make-json languages --no-purge"
+  },
   "devDependencies": {
     "grunt": "^1.0.4",
     "grunt-banner": "0.x",
