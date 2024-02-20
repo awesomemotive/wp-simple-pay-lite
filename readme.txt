@@ -285,6 +285,11 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.8.0 - February 22, 2024 =
+
+* New: Improve payment confirmation page performance.
+* Fix: Ensure "Copy Smart Tag" functions as expected after saving a payment form.
+
 = Stripe Payment Forms v4.7.11 - December 7, 2023 =
 
 * New: Access official WP Simple Pay code snippets directly in WPCode.
