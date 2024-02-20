@@ -32,9 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *   @type string $api_key API Secret Key to use.
  * }
+ * @param array        $opts Per-request options, default empty.
  * @return \SimplePay\Vendor\Stripe\PaymentIntent
  */
-function retrieve( $payment_intent, $api_request_args = array() ) {
+function retrieve( $payment_intent, $api_request_args = array(), $opts = array() ) {
 	if ( false === is_array( $payment_intent ) ) {
 		$payment_intent_args = array(
 			'id' => $payment_intent,
@@ -47,7 +48,8 @@ function retrieve( $payment_intent, $api_request_args = array() ) {
 		'PaymentIntent',
 		'retrieve',
 		$payment_intent_args,
-		$api_request_args
+		$api_request_args,
+		$opts
 	);
 }
 
@@ -62,14 +64,16 @@ function retrieve( $payment_intent, $api_request_args = array() ) {
  *
  *   @type string $api_key API Secret Key to use.
  * }
+ * @param array $opts Per-request options, default empty.
  * @return object
  */
-function all( $payment_intents = array(), $api_request_args = array() ) {
+function all( $payment_intents = array(), $api_request_args = array(), $opts = array() ) {
 	return Stripe_API::request(
 		'PaymentIntent',
 		'all',
 		$payment_intents,
-		$api_request_args
+		$api_request_args,
+		$opts
 	);
 }
 

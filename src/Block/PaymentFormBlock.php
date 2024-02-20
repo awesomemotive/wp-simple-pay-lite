@@ -42,7 +42,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			'simpay/payment-form',
 			array(
 				'title'           => _x(
-					'WP Simple Pay',
+					'WP Simple Pay - Payment Form',
 					'block title',
 					'stripe'
 				),
@@ -79,7 +79,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 				'example'         => array(
 					'attributes' => array(
 						'preview' => true,
-					)
+					),
 				),
 				'supports'        => array(
 					'html'  => false,
@@ -147,10 +147,10 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	 */
 	private function register_assets( $asset_file ) {
 		// Register frontend payment form assets.
-		$assets = new CoreAssets;
+		$assets = new CoreAssets();
 
 		if ( false === $this->license->is_lite() ) {
-			new ProAssets;
+			new ProAssets();
 		}
 
 		$assets->register();
@@ -177,7 +177,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 				'previews' => array(
 					'pro'  => SIMPLE_PAY_INC_URL . '/core/assets/images/blocks/payment-form-preview-pro.png', // @phpstan-ignore-line
 					'lite' => SIMPLE_PAY_INC_URL . '/core/assets/images/blocks/payment-form-preview-lite.png', // @phpstan-ignore-line
-				)
+				),
 			)
 		);
 
@@ -228,7 +228,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			);
 
 			if ( false === $is_lite ) {
-				$temp = array();
+				$temp              = array();
 				$temp[ $form->id ] = $vars;
 
 				/** @var \SimplePay\Pro\Forms\Pro_Form $form */
@@ -254,7 +254,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	 * @return string
 	 */
 	private function generate_inline_styles( $attributes ) {
-		$styles  = '';
+		$styles = '';
 		/** @var int $form_id */
 		$form_id = isset( $attributes['formId'] ) ? $attributes['formId'] : 0;
 
@@ -299,7 +299,8 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 
 		// Alignment.
 		if ( isset( $attributes['align'] ) && 'center' === $attributes['align'] ) {
-			$styles .= sprintf( '
+			$styles .= sprintf(
+				'
 				[data-form-id="%1$d"] .simpay-checkout-form,
 				[data-form-id="%1$d"] .simpay-payment-btn,
 				[data-form-id="%1$s"] .simpay-modal-control-open,
@@ -320,5 +321,4 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 
 		return $styles;
 	}
-
 }

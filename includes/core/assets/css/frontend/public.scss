@@ -1,4 +1,12 @@
-$base-font: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+$base-font:
+	-apple-system,
+	BlinkMacSystemFont,
+	Segoe UI,
+	Helvetica,
+	Arial,
+	sans-serif,
+	Apple Color Emoji,
+	Segoe UI Emoji;
 $base-text-color: #333;
 $error-text-color: #eb1c26;
 
@@ -15,7 +23,6 @@ $error-text-color: #eb1c26;
 }
 
 .stripe-button-el {
-
 	.simpay-styled & {
 		text-decoration: none;
 
@@ -27,10 +34,12 @@ $error-text-color: #eb1c26;
 
 // Loading state.
 .simpay-checkout-form {
-
 	&--requires_payment_method {
-
-		> *:not(.simpay-form-control):not(.simpay-amounts-container):not(.simpay-card-container):not(.simpay-checkout-btn-container):not(.simpay-payment-btn-container):not(.simpay-link-authentication-container):not(.simpay-address-container-upe):not(.simpay-test-mode-badge-container):not(.simpay-errors) {
+		> *:not(.simpay-form-control):not(.simpay-amounts-container):not(.simpay-card-container):not(
+				.simpay-checkout-btn-container
+			):not(.simpay-payment-btn-container):not(.simpay-link-authentication-container):not(
+				.simpay-address-container-upe
+			):not(.simpay-test-mode-badge-container):not(.simpay-errors) {
 			position: relative;
 			opacity: 0.65;
 
@@ -46,7 +55,6 @@ $error-text-color: #eb1c26;
 	}
 
 	&--loading {
-
 		&::after {
 			content: "";
 			position: absolute;
@@ -72,7 +80,6 @@ $error-text-color: #eb1c26;
 
 // Error messages container.
 .simpay-errors {
-
 	.simpay-styled & {
 		font-family: $base-font;
 		color: $error-text-color;
@@ -85,7 +92,6 @@ $error-text-color: #eb1c26;
 }
 
 .simpay-form-control.simpay-checkout-btn-container {
-
 	+ .simpay-errors:not(:empty) {
 		margin-top: 15px;
 	}
@@ -93,7 +99,6 @@ $error-text-color: #eb1c26;
 
 // Test mode badge.
 .simpay-test-mode-badge-container {
-
 	.simpay-checkout-form--embedded &,
 	.simpay-modal__content & {
 		text-align: center;
@@ -307,5 +312,70 @@ html body.simpay-payment-page {
 			min-width: 0;
 		}
 	}
+}
 
+.simpay-subscription-management-form {
+	label {
+		display: block;
+		margin-bottom: 0.25em;
+	}
+
+	input:not([type="submit"]) {
+		font-size: 1em;
+		font-family: inherit;
+		padding: calc(0.667em + 2px);
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	button {
+		box-shadow: none;
+		cursor: pointer;
+		display: inline-block;
+		text-align: center;
+		overflow-wrap: break-word;
+	}
+
+	.form-message-container {
+		margin-top: 5px;
+		width: 100%;
+		display: none;
+	}
+
+	.form-error-container,
+	.form-success-container,
+	.form-warning-container {
+		padding: 1rem 1.5rem;
+		border-radius: 4px;
+		margin-bottom: 10px;
+
+		.form-message {
+			font-size: 14px;
+		}
+	}
+
+	.form-error-container {
+		background-color: #fef3f2;
+
+		.form-message {
+			color: #9a1b1b;
+		}
+	}
+
+	.form-success-container {
+		background-color: #f1fdf4;
+
+		.form-message {
+			color: #156634;
+		}
+	}
+
+	.form-warning-container {
+		background-color: #fefce8;
+
+		.form-message {
+			color: #864d0f;
+		}
+	}
 }

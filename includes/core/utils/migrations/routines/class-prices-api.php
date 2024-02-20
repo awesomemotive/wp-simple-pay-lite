@@ -119,9 +119,10 @@ class Prices_API extends Migrations\Single_Migration {
 			? $form->company_name
 			: get_bloginfo( 'name' );
 
-		// https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1598
+		// https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1598.
 		if ( empty( $name ) ) {
 			$name = sprintf(
+				/* translators: %d Payment Form ID. */
 				__( 'WP Simple Pay - Form %d', 'stripe' ),
 				$form->id
 			);
@@ -134,7 +135,7 @@ class Prices_API extends Migrations\Single_Migration {
 			? $form->item_description
 			: get_bloginfo( 'tagline' );
 
-		if ( ! empty( $description) ) {
+		if ( ! empty( $description ) ) {
 			$product_args['description'] = $description;
 		}
 
@@ -155,6 +156,7 @@ class Prices_API extends Migrations\Single_Migration {
 	 * @param \SimplePay\Core\Abstracts\Form   $form Payment Form.
 	 * @param \SimplePay\Vendor\Stripe\Product $product Stripe Product.
 	 * @return array[] Price data.
+	 * @throws \Exception If unable to create Stripe Product container.
 	 */
 	public function migrate_prices( $form, $product ) {
 		if ( false === $product ) {
@@ -278,7 +280,7 @@ class Prices_API extends Migrations\Single_Migration {
 		$price = array(
 			'id'        => $price->id,
 			'default'   => true,
-			'can_recur' => false !== $recurring_amount_toggle
+			'can_recur' => false !== $recurring_amount_toggle,
 		);
 
 		if ( ! empty( $can_recur_args ) ) {
@@ -290,7 +292,7 @@ class Prices_API extends Migrations\Single_Migration {
 					'recurring'   => array(
 						'interval'       => $can_recur_args['interval'],
 						'interval_count' => $can_recur_args['interval_count'],
-					)
+					),
 				),
 				$form->get_api_request_args()
 			);
@@ -739,7 +741,7 @@ class Prices_API extends Migrations\Single_Migration {
 			}
 
 			// Attach lien items if needed.
-			if ( ! empty( $line_items ) ){
+			if ( ! empty( $line_items ) ) {
 				$price['line_items'] = $line_items;
 			}
 
@@ -901,7 +903,7 @@ class Prices_API extends Migrations\Single_Migration {
 							'recurring'   => array(
 								'interval'       => $can_recur_args['interval'],
 								'interval_count' => $can_recur_args['interval_count'],
-							)
+							),
 						),
 						$form->get_api_request_args()
 					);
@@ -985,7 +987,7 @@ class Prices_API extends Migrations\Single_Migration {
 
 		// Convert to base decimal and set default.
 		return array_map(
-			function( $amount ) use( $default ) {
+			function ( $amount ) use ( $default ) {
 				return array(
 					'unit_amount' => simpay_convert_amount_to_cents(
 						$amount
@@ -1087,6 +1089,7 @@ class Prices_API extends Migrations\Single_Migration {
 			$form->id,
 			$form_display_type
 		);
+		$custom_fields = $custom_fields['fields'];
 
 		// Find out if Predefined Amounts were used, and of which field type.
 		foreach ( $custom_fields as $type => $fields ) {

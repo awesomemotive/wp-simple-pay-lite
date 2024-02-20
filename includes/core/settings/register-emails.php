@@ -38,7 +38,7 @@ function remove_extra_media_buttons() {
 	// but for now the only template is the default, so it's fine.
 	add_filter(
 		'mce_css',
-		function( $mce_css ) {
+		function ( $mce_css ) {
 			if ( ! empty( $mce_css ) ) {
 				$mce_css .= ',';
 			}
@@ -52,7 +52,7 @@ function remove_extra_media_buttons() {
 	// Enlarge the editor.
 	add_filter(
 		'tiny_mce_before_init',
-		function( $settings ) {
+		function ( $settings ) {
 			if (
 				! isset( $_GET['subsection'] ) ||
 				'general' === sanitize_text_field( $_GET['subsection'] )
@@ -264,7 +264,7 @@ function register_general_settings( $settings ) {
 					'setting label',
 					'stripe'
 				),
-				'output'     => function() {
+				'output'     => function () {
 					wp_editor(
 						simpay_get_setting( 'email_footer_content', '' ),
 						'email_footer_content',
@@ -437,6 +437,7 @@ function add_email_selector() {
 				Emails\Email\PaymentConfirmationEmail::class,
 				Emails\Email\UpcomingInvoiceEmail::class,
 				Emails\Email\InvoiceConfirmationEmail::class,
+				Emails\Email\ManageSubscriptionsEmail::class,
 			),
 		),
 		'general' => array(
@@ -463,7 +464,7 @@ function add_email_selector() {
 				<optgroup label="<?php echo esc_attr( $group['label'] ); ?>">
 					<?php
 					foreach ( $group['emails'] as $email ) :
-						$email = new $email;
+						$email = new $email();
 
 						$upgrade_title = sprintf(
 							/* translators: Email label. */

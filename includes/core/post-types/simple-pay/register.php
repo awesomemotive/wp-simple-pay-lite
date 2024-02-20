@@ -84,7 +84,7 @@ function register() {
 	 *
 	 * @param array $labels Post type labels.
 	 */
-	$labels = apply_filters( 'simpay_simple-pay_post_type_labels', $labels );
+	$labels = apply_filters( 'simpay_simple-pay_post_type_labels', $labels ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 	$args = array(
 		'labels'               => $labels,
@@ -130,7 +130,7 @@ function add_rest_fields() {
 			},
 			'schema'       => array(
 				'type' => 'string',
-			)
+			),
 		)
 	);
 
@@ -143,7 +143,7 @@ function add_rest_fields() {
 			},
 			'schema'       => array(
 				'type' => 'string',
-			)
+			),
 		)
 	);
 }
@@ -217,6 +217,26 @@ function updated_messages( $messages ) {
 	$open  = '<a href="' . get_preview_post_link( $post ) . '" target="_blank" rel="noopener noreferrer">';
 	$close = '</a>';
 
+	if ( isset( $_GET['changes'] ) ) {
+		$changes = array_map(
+			function( $change ) {
+				return ' &bull; ' . esc_html( $change );
+			},
+			$_GET['changes']
+		);
+		$message = '<br /><br />' . implode( '<br />', $changes );
+
+		$change_message = sprintf(
+			/* translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. %3$s list of field changes. */
+			__( 'Payment form updated. %1$sPreview payment form%2$s. %3$s', 'stripe' ),
+			$open,
+			$close,
+			$message
+		);
+	} else {
+		$change_message = '';
+	}
+
 	$messages['simple-pay'] = array(
 		1   => sprintf(
 			/* translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. */
@@ -249,6 +269,7 @@ function updated_messages( $messages ) {
 			$close
 		),
 		299 => __( 'New payment form created.', 'stripe' ),
+		399 => $change_message,
 	);
 
 	return $messages;
@@ -305,14 +326,14 @@ add_filter( 'bulk_post_updated_messages', __NAMESPACE__ . '\\bulk_updated_messag
  * @param string $post_type Current post type.
  * @return void
  */
-function remove_other_metaboxes( $post_type ){
+function remove_other_metaboxes( $post_type ) {
 	if ( 'simple-pay' !== $post_type ) {
 		return;
 	}
 
 	$keep = array(
 		'submitdiv',
-		'simpay-payment-form-settings'
+		'simpay-payment-form-settings',
 	);
 
 	global $wp_meta_boxes;

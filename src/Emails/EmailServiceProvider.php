@@ -31,6 +31,7 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 			'email-payment-notification',
 			'email-upcoming-invoice',
 			'email-summary-report',
+			'email-manage-subscriptions',
 		);
 	}
 
@@ -79,6 +80,11 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 			Email\SummaryReportEmail::class
 		);
 
+		$container->add(
+			'email-manage-subscriptions',
+			Email\ManageSubscriptionsEmail::class
+		);
+
 		// Summary report scheduler.
 		$container->add(
 			'email-summary-report-scheduler',
@@ -100,8 +106,8 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 					'payment-notification' => $container->get( 'email-payment-notification' ),
 					'upcoming-invoice'     => $container->get( 'email-upcoming-invoice' ),
 					'summary-report'       => $container->get( 'email-summary-report' ),
+					'manage-subscriptions' => $container->get( 'email-manage-subscriptions' ),
 				)
 			);
 	}
-
 }

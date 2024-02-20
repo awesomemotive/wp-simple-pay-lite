@@ -49,11 +49,23 @@ function togglePriceOptionSingle() {
 	// Label field.
 	document
 		.querySelectorAll( '.simpay-price-option-label' )
-		.forEach(
-			( labelEl ) =>
-				( labelEl.style.display =
-					priceListCount > 1 ? 'block' : 'none' )
-		);
+		.forEach( ( labelEl ) => {
+			// Check if more than one price options.
+			if ( priceListCount > 1 ) {
+				labelEl.style.display = 'block';
+			} else {
+				// If only one price option is available,
+				// we also need to check if the value is present.
+				// If not, hide the field; otherwise, show the field.
+				const lavelInputEl = labelEl.querySelector( 'input' );
+				// Check if lavelInputEl is not null and its value is not empty
+				if ( lavelInputEl && lavelInputEl.value.trim() !== '' ) {
+					labelEl.style.display = 'block';
+				} else {
+					labelEl.style.display = 'none';
+				}
+			}
+		} );
 
 	// Actions.
 	document

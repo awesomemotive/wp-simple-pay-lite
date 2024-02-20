@@ -83,7 +83,7 @@ function save( $post_id, $post, $update ) {
 	update_post_meta( $post_id, '_success_redirect_type', $success_redirect_type );
 
 	// Success message.
-	if ( isset( $_POST['_success_message' ] ) && ! empty( $_POST['_success_message'] ) ) {
+	if ( isset( $_POST['_success_message'] ) && ! empty( $_POST['_success_message'] ) ) {
 		$success_message = wp_kses_post( $_POST['_success_message'] );
 		update_post_meta( $post_id, '_success_message', $success_message );
 	} else {
@@ -176,7 +176,6 @@ function save( $post_id, $post, $update ) {
 	$fields = isset( $_POST['_simpay_custom_field'] )
 		? $_POST['_simpay_custom_field']
 		: array();
-
 	update_post_meta( $post_id, '_custom_fields', $fields );
 
 	// Payment Methods.
@@ -201,7 +200,7 @@ function save( $post_id, $post, $update ) {
 	// Remove any payment methods that are not allowed.
 	$payment_methods = array_filter(
 		$payment_methods,
-		function( $payment_method ) use ( $allowed_payment_methods ) {
+		function ( $payment_method ) use ( $allowed_payment_methods ) {
 			return in_array( $payment_method, $allowed_payment_methods, true );
 		}
 	);

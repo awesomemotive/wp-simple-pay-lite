@@ -3,7 +3,7 @@
         'name' => 'wpsimplepay/wp-simple-pay-pro-3',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'c5491420c6d46235d86b02b5288f783041fa41bd',
+        'reference' => '53a2e47223c131f7cddefc9090355338181e7c3c',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -103,7 +103,7 @@
         'wpsimplepay/wp-simple-pay-pro-3' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'c5491420c6d46235d86b02b5288f783041fa41bd',
+            'reference' => '53a2e47223c131f7cddefc9090355338181e7c3c',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
