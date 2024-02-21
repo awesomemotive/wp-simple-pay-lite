@@ -207,6 +207,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 	}
 
 	$is_cache = ! isset( $_GET['subscription_key'] );
+
 	// Using the available identifier, find the relevant customer.
 	if ( $session_id ) {
 		$session = API\CheckoutSessions\retrieve(
@@ -214,9 +215,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 				'id'     => $session_id,
 				'expand' => array(
 					'customer',
-					'subscriptions',
-					'subscriptions.data.latest_invoice',
-					'subscriptions.data.latest_invoice.payment_intent',
+					'customer.subscriptions',
 				),
 			),
 			$form->get_api_request_args(),
@@ -233,8 +232,6 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 				'id'     => $customer_id,
 				'expand' => array(
 					'subscriptions',
-					'subscriptions.data.latest_invoice',
-					'subscriptions.data.latest_invoice.payment_intent',
 				),
 			),
 			$form->get_api_request_args(),
