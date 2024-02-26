@@ -71,10 +71,6 @@ If you need more functionality for your Stripe payment forms, you can [upgrade t
 
 By upgrading to WP Simple Pay Pro, you also get access to one-on-one help from our knowledgeable support team and our extensive documentation site.
 
-> WP Simple Pay has been a game changer for my business. There is no simpler way to accept credit card payments with Stripe on your site. We offer subscriptions with setup fees and this plugin handled these needs beautifully. Their support is unrivaled too.
-
-> Brian Casel, Founder of Audience Ops
-
 There is a small 3% fee per-transaction plus Stripe fees while using WP Simple Pay Lite. [Upgrade to Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) for no added fees and priority support.
 
 WP Simple Pay is a verified member of the Stripe partner program. This program recognizes software that meets Stripe's strict quality requirements and provides users of WP Simple Pay and Stripe with the confidence they need to trust us both with their payment form integrations.
@@ -98,12 +94,6 @@ Compare them by viewing some of our payment form templates:
 - [Embedded on-site payment form](https://wpsimplepay.com/template/multiple-payment-methods-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [Overlay on-site payment form](https://wpsimplepay.com/template/overlay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 - [Stripe Checkout](https://wpsimplepay.com/template/stripe-checkout-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-
-=== 💳 Use Stripe Checkout Payment Form Pages ===
-
-If you need only minimal payment form customizations and don't need an overlay payment form, you can utilize Stripe's fully-hosted checkout pages to accept credit card payments. You can set a few options when using Stripe Checkout, but when this option is selected, Stripe dictates what can and cannot be configured on the checkout page as it is served up by Stripe’s servers.
-
-[View our Stripe Checkout template](https://wpsimplepay.com/template/stripe-checkout-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 > We paid developers for several hours to do what WP Simple Pay accomplished in minutes. A no-brainer investment for us.
 
@@ -134,10 +124,6 @@ Percent or amount-off coupon codes added in your Stripe dashboard can be used in
 Use with subscriptions or one-time payments, and optionally add a total amount label that updates real-time.
 
 [View our coupon code template](https://wpsimplepay.com/template/coupon-code-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
-
-> I've set up payment processing on over a dozen sites and it usually takes forever just to get up and running. Using WP Simple Pay I was accepting Stripe payments in no time. It’s one of the best decisions I made while launching my new product.
-
-> Mike Taber, Founder of Bluetick
 
 === 💳 Accept Apple Pay and Google Pay with Stripe ===
 
@@ -185,28 +171,6 @@ Stripe currently supports 30+ languages, 45+ countries, and 135+ currencies. WP 
 === 📧 Get Help ===
 
 WP Simple Pay is backed by top-notch technical support from our globally distributed full-time support team. We also have an [extensive documentation site available](https://docs.wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link). If you’re looking for faster support via email, we encourage you to [purchase a WP Simple Pay Pro license](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
-
-= What's Next =
-
-If you like our Stripe payment form plugin, then consider checking out our other projects:
-
-- [OptinMonster](https://optinmonster.com/) - Get More Email Subscribers with the most popular conversion optimization plugin for WordPress.
-- [WPForms](https://wpforms.com/) - #1 drag & drop online form builder for WordPress (trusted by 5 million sites).
-- [MonsterInsights](https://monsterinsights.com/) - See the Stats that Matter and Grow Your Business with Confidence. Best Google Analytics Plugin for WordPress.
-- [SeedProd](https://seedprod.com) - Create beautiful landing pages with our powerful drag & drop landing page builder.
-- [WP Mail SMTP](https://wpmailsmtp.com/) - Improve email deliverability for your contact form with the most popular SMTP plugin for WordPress.
-- [RafflePress](https://rafflepress.com/) - Best WordPress giveaway and contest plugin to grow traffic and social followers.
-- [Smash Balloon](https://smashballoon.com/) - #1 social feeds plugin for WordPress - display social media content in WordPress without code.
-- [AIOSEO](https://aioseo.com/) - The original WordPress SEO plugin to help you rank higher in search results (trusted by over 3 million sites).
-- [PushEngage](https://www.pushengage.com/) - Connect with visitors after they leave your website with the leading web push notification plugin.
-- [TrustPulse](https://trustpulse.com/) - Add real-time social proof notifications to boost your store conversions by up to 15%.
-- [SearchWP](https://searchwp.com/) - The most advanced custom WordPress search plugin to improve WordPress search quality.
-- [AffiliateWP](https://affiliatewp.com/) - The #1 affiliate management plugin for WordPress. Add a referral program to your online store
-- [Easy Digital Downloads](https://easydigitaldownloads.com/) - The best WordPress eCommerce plugin to sell digital products (eBooks, software, music, and more).
-- [Sugar Calendar](https://sugarcalendar.com) - A simple event calendar plugin for WordPress that’s both easy and powerful.
-
-Visit [WPBeginner](https://www.wpbeginner.com/) to learn from our [WordPress Tutorials](https://www.wpbeginner.com/category/wp-tutorials/) and find out about other [best WordPress plugins](https://www.wpbeginner.com/category/plugins/).
-
 
 == Installation ==
 
