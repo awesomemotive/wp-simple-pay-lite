@@ -3,7 +3,7 @@ Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
 Tested up to: 6.4
-Stable tag: 4.7.11
+Stable tag: 4.8.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -285,7 +285,7 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
-= Stripe Payment Forms v4.8.0 - February 22, 2024 =
+= Stripe Payment Forms v4.8.0 - February 26, 2024 =
 
 * New: Improve payment confirmation page performance.
 * Fix: Ensure "Copy Smart Tag" functions as expected after saving a payment form.
