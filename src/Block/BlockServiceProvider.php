@@ -62,6 +62,9 @@ class BlockServiceProvider extends AbstractPluginServiceProvider {
 		// Payment form.
 		$container->share( 'block-payment-form', PaymentFormBlock::class );
 
+		// Manage subscription.
+		$container->share( 'block-manage-subscription', ManageSubscriptionsBlock::class );
+
 		// Button.
 		$container->share( 'block-button', ButtonBlock::class )
 			->withArgument( $container->get( 'event-manager' ) );
@@ -70,9 +73,9 @@ class BlockServiceProvider extends AbstractPluginServiceProvider {
 		$blocks = array(
 			$container->get( 'block-payment-form' ),
 			$container->get( 'block-button' ),
+			$container->get( 'block-manage-subscription' ),
 		);
 
 		return $blocks;
 	}
-
 }

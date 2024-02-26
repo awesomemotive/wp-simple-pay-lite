@@ -153,10 +153,10 @@ trait PaymentIntentTrait {
 		if ( 'automatic' === $tax_status ) {
 			Stripe_API::request(
 				'Tax\Transaction',
-				'create',
+				'createFromCalculation',
 				array(
-					'from_calculation' => $tax_calc_id,
-					'reference'        => $payment_intent->id,
+					'calculation' => $tax_calc_id,
+					'reference'   => $payment_intent->id,
 				),
 				$form->get_api_request_args()
 			);

@@ -206,6 +206,8 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 		return $payment_confirmation_data;
 	}
 
+	$is_cache = ! isset( $_GET['subscription_key'] );
+
 	// Using the available identifier, find the relevant customer.
 	if ( $session_id ) {
 		$session = API\CheckoutSessions\retrieve(
@@ -213,21 +215,40 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 				'id'     => $session_id,
 				'expand' => array(
 					'customer',
+					'customer.subscriptions',
 				),
 			),
-			$form->get_api_request_args()
+			$form->get_api_request_args(),
+			array(
+				'cached' => $is_cache,
+			)
 		);
 
-		$customer = $session->customer;
+		$customer      = $session->customer;
+		$subscriptions = $session->subscriptions;
 	} else {
 		$customer = API\Customers\retrieve(
-			$customer_id,
-			$form->get_api_request_args()
+			array(
+				'id'     => $customer_id,
+				'expand' => array(
+					'subscriptions',
+				),
+			),
+			$form->get_api_request_args(),
+			array(
+				'cached' => $is_cache,
+			)
 		);
+
+		$subscriptions = $customer->subscriptions;
 	}
 
 	if ( $customer ) {
 		$payment_confirmation_data['customer'] = $customer;
+	}
+
+	if ( $subscriptions ) {
+		$payment_confirmation_data['subscriptions'] = $subscriptions->data;
 	}
 
 	// Retrieve the PaymentIntent the Customer is linked to.
@@ -235,31 +256,15 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 		array(
 			'customer' => $customer->id,
 			'limit'    => 1,
-			'expand'   => array(
-				'data.payment_method',
-			),
 		),
-		$form->get_api_request_args()
+		$form->get_api_request_args(),
+		array(
+			'cached' => $is_cache,
+		)
 	);
 
 	if ( $paymentintents ) {
 		$payment_confirmation_data['paymentintents'] = $paymentintents->data;
-	}
-
-	// Retrieves any SetupIntents linked to the customer.
-	$setupintents = API\SetupIntents\all(
-		array(
-			'customer' => $customer->id,
-			'limit'    => 1,
-			'expand'   => array(
-				'data.payment_method',
-			),
-		),
-		$form->get_api_request_args()
-	);
-
-	if ( $setupintents ) {
-		$payment_confirmation_data['setupintents'] = $setupintents->data;
 	}
 
 	/**
@@ -287,7 +292,7 @@ function get_one_time_amount_message_default() {
 	$has_email = false;
 
 	if ( false === $is_lite ) {
-		$email = new Emails\Email\PaymentConfirmationEmail;
+		$email = new Emails\Email\PaymentConfirmationEmail();
 
 		$has_email = $email->is_enabled();
 	}

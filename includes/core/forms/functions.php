@@ -56,7 +56,7 @@ function simpay_payment_form_prices_get_price_by_id( $form, $price_id ) {
 	$prices = simpay_get_payment_form_prices( $form );
 	$prices = array_filter(
 		$prices,
-		function( $price ) use ( $price_id ) {
+		function ( $price ) use ( $price_id ) {
 			return $price->id === $price_id;
 		}
 	);
@@ -147,7 +147,7 @@ function simpay_get_payment_form_default_price( $prices ) {
 	$price = current(
 		array_filter(
 			$prices,
-			function( $price ) {
+			function ( $price ) {
 				return null !== $price->default && true === $price->default;
 			}
 		)
@@ -172,7 +172,7 @@ function simpay_get_payment_form_default_price( $prices ) {
 function simpay_payment_form_prices_has_custom_price( $prices ) {
 	$prices = array_filter(
 		$prices,
-		function( $price ) {
+		function ( $price ) {
 			return false === $price->is_defined_amount();
 		}
 	);
@@ -201,7 +201,7 @@ function __unstable_simpay_get_payment_form_custom_price( $prices ) {
 
 	$prices = array_filter(
 		$prices,
-		function( $price ) {
+		function ( $price ) {
 			return false === $price->is_defined_amount();
 		}
 	);
@@ -224,7 +224,7 @@ function __unstable_simpay_get_payment_form_custom_price( $prices ) {
 function simpay_payment_form_prices_has_recurring_price( $prices ) {
 	$prices = array_filter(
 		$prices,
-		function( $price ) {
+		function ( $price ) {
 			return true === $price->can_recur;
 		}
 	);
@@ -240,7 +240,7 @@ function simpay_payment_form_prices_has_recurring_price( $prices ) {
  * @param array  $fields Payment Form custom fields.
  * @param int    $form_id Payment Form ID.
  * @param string $form_display_type Payment Form display type.
- * @return array
+ * @return array{fields: array<string, mixed>, changes: array<string>}
  */
 function simpay_payment_form_add_missing_custom_fields(
 	$fields,
@@ -254,15 +254,27 @@ function simpay_payment_form_add_missing_custom_fields(
 	}
 
 	$prices = simpay_get_payment_form_prices( $form );
-	$count  = count( $fields );
+
+	$count = count( $fields );
 
 	$payment_methods = get_post_meta( $form_id, '_payment_methods', true );
 	$tax_status      = get_post_meta( $form_id, '_tax_status', true );
 
+	$changes = array();
+
 	// Form display type-specific.
+
 	switch ( $form_display_type ) {
-		case 'embedded':
 		case 'overlay':
+			break;
+		case 'stripe_checkout':
+			if ( isset( $fields['coupon'] ) ) {
+				unset( $fields['coupon'] );
+				$changes[] = __( 'The coupon field has been removed since you selected Off-site Stripe Checkout. ', 'stripe' );
+			}
+
+			break;
+		case 'embedded':
 			// Ensure "Customer Name" exists if using Bancontact, giropay, or p24, or SEPA.
 			if (
 				! simpay_is_upe() &&
@@ -305,7 +317,12 @@ function simpay_payment_form_add_missing_custom_fields(
 					'required' => 'yes',
 				);
 
-				$count++;
+				$changes[] = __(
+					'Customer Name field is required for one or more payment methods, and has been added to the payment form.',
+					'stripe'
+				);
+
+				++$count;
 			}
 
 			// Ensure "Customer Email" exists.
@@ -316,7 +333,12 @@ function simpay_payment_form_add_missing_custom_fields(
 					'label' => 'Email Address',
 				);
 
-				$count++;
+				$changes[] = __(
+					'Customer Email field is required, and has been added to the payment form.',
+					'stripe'
+				);
+
+				++$count;
 			}
 
 			$needs_required_address = (
@@ -367,7 +389,11 @@ function simpay_payment_form_add_missing_custom_fields(
 
 				$fields['address'][] = $args;
 
-				$count++;
+				$changes[] = __(
+					'Address field is required, and has been added to the payment form.',
+					'stripe'
+				);
+				++$count;
 
 				// If the address field exists, ensure it is required.
 			} elseif (
@@ -400,7 +426,7 @@ function simpay_payment_form_add_missing_custom_fields(
 			) {
 				$fields['total_amount'][] = array();
 
-				$count++;
+				++$count;
 			}
 
 			// Set "Phone" to optional if using Payment Request Button.
@@ -427,7 +453,12 @@ function simpay_payment_form_add_missing_custom_fields(
 					'label' => ! simpay_is_upe() ? 'Payment Method' : '',
 				);
 
-				$count++;
+				$changes[] = __(
+					'Payment Methods is required, and has been added to the payment form.',
+					'stripe'
+				);
+
+				++$count;
 			}
 
 			// Ensure "Checkout" button exists.
@@ -438,7 +469,12 @@ function simpay_payment_form_add_missing_custom_fields(
 					'id'    => 'simpay_' . $form_id . '_checkout_button',
 				);
 
-				$count++;
+				$changes[] = __(
+					'Checkout Button field is required, and has been added to the payment form.',
+					'stripe'
+				);
+
+				++$count;
 			}
 
 			// Ensure "Payment Button" exists.
@@ -449,11 +485,19 @@ function simpay_payment_form_add_missing_custom_fields(
 						'id'  => 'simpay_' . $form_id . '_payment_button',
 					);
 
-					$count++;
+					$changes[] = __(
+						'Payment Button field is required, and has been added to the payment form.',
+						'stripe'
+					);
+					++$count;
 				}
 				// Remove "Payment Button".
-			} else {
-				unset( $fields['payment_button'] );
+			} elseif ( isset( $fields['payment_button'] ) ) {
+					unset( $fields['payment_button'] );
+					$changes[] = __(
+						'Payment Button has been removed from the payment form.',
+						'stripe'
+					);
 			}
 
 			break;
@@ -475,7 +519,12 @@ function simpay_payment_form_add_missing_custom_fields(
 					'id'    => 'simpay_' . $form_id . '_payment_button',
 				);
 
-				$count++;
+				$changes[] = __(
+					'Payment Button field is required, and has been added to the payment form.',
+					'stripe'
+				);
+
+				++$count;
 			}
 
 			// Remove unnecessary fields.
@@ -493,7 +542,8 @@ function simpay_payment_form_add_missing_custom_fields(
 			'label' => 'Choose an amount',
 		);
 
-		$count++;
+		$changes[] = __( 'Price Selector is required, and has been added to the payment form. ', 'stripe' );
+		++$count;
 	}
 
 	// Ensure "Custom Amount" field exists if using a custom amount, and no Subscription.
@@ -506,9 +556,17 @@ function simpay_payment_form_add_missing_custom_fields(
 			'label' => 'Custom Amount',
 		);
 
-		$count++;
+		$changes[] = __(
+			'The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form.',
+			'stripe'
+		);
+
+		++$count;
 	} elseif ( false === $has_custom_amount ) {
-		unset( $fields['custom_amount'] );
+		if ( isset( $fields['custom_amount'] ) ) {
+			unset( $fields['custom_amount'] );
+			$changes[] = __( 'Custom Amount Input has been removed from the payment form. A price option with that allows user-defined amounts is required. ', 'stripe' );
+		}
 	}
 
 	// Ensure "Recurring Amount Toggle" field exists if using an optional recurring price.
@@ -521,9 +579,20 @@ function simpay_payment_form_add_missing_custom_fields(
 			'label' => 'Make this a recurring amount',
 		);
 
-		$count++;
+		$changes[] = __(
+			'Recurring Amount Toggle is required, and has been added to the payment form.',
+			'stripe'
+		);
+
+		++$count;
 	} elseif ( false === $can_recur ) {
-		unset( $fields['recurring_amount_toggle'] );
+		if ( isset( $fields['recurring_amount_toggle'] ) ) {
+			unset( $fields['recurring_amount_toggle'] );
+			$changes[] = __(
+				'Recurring Amount Toggle has been removed from the payment form. An optionally recurring price option is required.',
+				'stripe'
+			);
+		}
 	}
 
 	// Remove "Coupon" field if using Fee Recovery.
@@ -531,6 +600,10 @@ function simpay_payment_form_add_missing_custom_fields(
 		// Fee recovery toggle exists, remove Coupon.
 		if ( isset( $fields['fee_recovery_toggle'] ) ) {
 			unset( $fields['coupon'] );
+			$changes[] = __(
+				'Coupon field has been removed from the payment form.',
+				'stripe'
+			);
 		}
 
 		// Fee recovery exists in Payment Method configuration.
@@ -544,6 +617,10 @@ function simpay_payment_form_add_missing_custom_fields(
 					'yes' === $payment_method['fee_recovery']['enabled']
 				) {
 					unset( $fields['coupon'] );
+					$changes[] = __(
+						'Coupon field has been removed from the payment form.',
+						'stripe'
+					);
 					break;
 				}
 			}
@@ -589,12 +666,16 @@ function simpay_payment_form_add_missing_custom_fields(
 	}
 
 	// Remove empty/invalid fields after sorting.
+
 	$fields = array_filter(
 		$fields,
-		function( $field ) {
+		function ( $field ) {
 			return true === is_array( $field );
 		}
 	);
 
-	return $fields;
+	return array(
+		'fields'  => $fields,
+		'changes' => $changes,
+	);
 }

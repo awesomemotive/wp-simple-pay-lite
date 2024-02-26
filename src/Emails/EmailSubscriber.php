@@ -263,7 +263,23 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		// ...then set the address(es).
-		$mailer->set_to( $email->get_to() );
+		$to = $email->get_to();
+
+		/**
+		 * Filters the email address the payment notification is sent to.
+		 *
+		 * @since 4.7.12
+		 *
+		 * @param string               $to The email address the payment notification is sent to.
+		 * @param array<string, mixed> $payment_confirmation_data The payment confirmation data.
+		 */
+		$to = apply_filters(
+			'simpay_email_payment_notification_to',
+			$to,
+			$payment_confirmation_data
+		);
+
+		$mailer->set_to( $to );
 
 		// ...then set the subject.
 		$mailer->set_subject( $email->get_subject() );

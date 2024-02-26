@@ -32,9 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  *   @type string $api_key API Secret Key to use.
  * }
+ * @param array        $opts Per-request options, default empty.
  * @return \SimplePay\Vendor\Stripe\Customer
  */
-function retrieve( $customer, $api_request_args = array() ) {
+function retrieve( $customer, $api_request_args = array(), $opts = array() ) {
 	if ( false === is_array( $customer ) ) {
 		$customer_args = array(
 			'id' => $customer,
@@ -47,7 +48,8 @@ function retrieve( $customer, $api_request_args = array() ) {
 		'Customer',
 		'retrieve',
 		$customer_args,
-		$api_request_args
+		$api_request_args,
+		$opts
 	);
 }
 

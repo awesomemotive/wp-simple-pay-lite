@@ -54,6 +54,9 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 			'rest-api-internal-report-payment-info',
 			'rest-api-internal-report-gross-volume-period-over-period',
 			'rest-api-internal-report-successful-payments-period-over-period',
+
+			// Subscriptions Managment.
+			'rest-api-subscription-managment-send-subscriptions',
 		);
 	}
 
@@ -152,6 +155,12 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 			'rest-api-internal-report-successful-payments-period-over-period',
 			Internal\Report\SuccessfulPaymentsPeriodOverPeriodReport::class
 		);
-	}
 
+		// Send customer his / her subscription managment details .
+		$container->share(
+			'rest-api-subscription-managment-send-subscriptions',
+			\SimplePay\Core\RestApi\Internal\SubscriptionsManagement\SendSubscriptions::class
+		)
+			->withArgument( $container->get( 'email-manage-subscriptions' ) );
+	}
 }

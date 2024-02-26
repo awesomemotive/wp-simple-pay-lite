@@ -126,13 +126,16 @@ class Stripe_API {
 		$cache_id = is_array( $id_or_args ) && isset( $id_or_args['id'] )
 			? $id_or_args['id']
 			: $id_or_args;
-		$cache_id = is_array( $cache_id ) ? serialize( $cache_id ) : $cache_id;
+
+		$cache_id = is_array( $cache_id )
+			? md5( serialize( $cache_id ) )
+			: md5( $cache_id );
 
 		$cache_key = sprintf( 'simpay_stripe_%s', $cache_id );
 
 		// Cache if retrieving, and set.
 		if (
-			'retrieve' === $function &&
+			in_array( $function, array( 'retrieve', 'all' ), true ) &&
 			isset( $opts['cached'] ) &&
 			true === $opts['cached']
 		) {
