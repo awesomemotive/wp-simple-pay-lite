@@ -216,6 +216,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 				'expand' => array(
 					'customer',
 					'customer.subscriptions',
+					'customer.subscriptions.data.latest_invoice',
 				),
 			),
 			$form->get_api_request_args(),
@@ -232,6 +233,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 				'id'     => $customer_id,
 				'expand' => array(
 					'subscriptions',
+					'subscriptions.data.latest_invoice',
 				),
 			),
 			$form->get_api_request_args(),
@@ -300,9 +302,18 @@ function get_one_time_amount_message_default() {
 	$message = '';
 
 	if ( true === $has_email ) {
-		$message = 'Thank you. Your payment of {total-amount} has been received. Please check your email for additional information.';
+		$message = sprintf(
+			/* translators: %s: Total amount */
+			esc_html__( 'Thank you. Your payment of %s has been received. Please check your email for additional information.', 'stripe' ),
+			'{total-amount}'
+		);
 	} else {
-		$message = 'Thank you. Your payment of {total-amount} has been received.';
+		$message = sprintf(
+			/* translators: %s: Total amount */
+			esc_html__( 'Thank you. Your payment of %s has been received.', 'stripe' ),
+			'{total-amount}'
+		);
+
 	}
 
 	return $message;

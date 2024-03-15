@@ -104,6 +104,8 @@ function register_currency_settings( $settings ) {
 		);
 	}
 
+	asort( $currency_list ); // Sort by currency label.
+
 	$license = simpay_get_license();
 
 	$settings->add(

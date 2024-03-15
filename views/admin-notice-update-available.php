@@ -19,7 +19,7 @@ $update_url = $data['update_url'];
 
 	<div class="simpay-admin-notice-update-plugin__copy">
 		<img
-			src="<?php echo esc_url( SIMPLE_PAY_INC_URL . '/core/assets/images/wp-simple-pay.svg' ); // @phpstan-ignore-line ?>"
+			src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/wp-simple-pay.svg' ); // @phpstan-ignore-line ?>"
 			alt="WP Simple Pay"
 		/>
 

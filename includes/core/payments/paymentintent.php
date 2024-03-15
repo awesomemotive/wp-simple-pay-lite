@@ -180,14 +180,8 @@ function get_args_from_payment_form_request(
 		// Fall back to Payment Form title if set.
 		// This is a change in behavior in 4.1, but matches the Stripe Checkout
 		// usage that falls back to the Product title (Payment Form title).
-	} else {
-		if ( ! empty( $form->company_name ) ) {
+	} elseif ( ! empty( $form->company_name ) ) {
 			$paymentintent_args['description'] = $form->company_name;
-		}
-	}
-
-	if ( ! empty( $form->statement_descriptor ) ) {
-		$paymentintent_args['statement_descriptor'] = $form->statement_descriptor;
 	}
 
 	// Legacy filter.
@@ -344,7 +338,7 @@ function get_payment_args_from_form_request(
 				// Remove inclusive tax amount.
 				$inclusive_tax_amount = array_reduce(
 					$tax_rates,
-					function( $amount, $tax_rate ) use ( $unit_amount ) {
+					function ( $amount, $tax_rate ) use ( $unit_amount ) {
 						if ( 'exclusive' === $tax_rate->calculation ) {
 							return $amount;
 						}
@@ -358,7 +352,7 @@ function get_payment_args_from_form_request(
 
 				$tax = array_reduce(
 					$tax_rates,
-					function( $tax, $tax_rate ) use ( $post_inclusive_unit_amount ) {
+					function ( $tax, $tax_rate ) use ( $post_inclusive_unit_amount ) {
 						if ( 'inclusive' === $tax_rate->calculation ) {
 							return $tax;
 						}

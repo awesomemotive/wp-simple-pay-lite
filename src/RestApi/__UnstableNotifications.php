@@ -81,7 +81,7 @@ class __UnstableNotifications implements SubscriberInterface {
 						),
 						'status' => array(
 							'description'       => __(
-								'Notification dismissisal status.',
+								'Notification dismissal status.',
 								'stripe'
 							),
 							'type'              => 'string',

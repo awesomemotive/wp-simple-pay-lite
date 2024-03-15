@@ -33,7 +33,7 @@ $learn_more_url = $data['learn_more_url'];
 	if ( true === $data['is_in_grace_period'] ) :
 		echo esc_html(
 			sprintf(
-				/* translators: End of license grace period. */
+				/* translators: License extension date. */
 				__(
 					'We have extended WP Simple Pay Pro functionality until %s, at which point functionality will become limited. Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality.',
 					'stripe'

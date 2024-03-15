@@ -191,7 +191,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 	 * @return void
 	 */
 	private function get_report_view() {
-		$asset = SIMPLE_PAY_INC . 'core/assets/js/simpay-admin-dashboard-widget-report.min.asset.php'; // @phpstan-ignore-line
+		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-dashboard-widget-report.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset ) ) {
 			return;
@@ -201,7 +201,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 
 		wp_enqueue_script(
 			'simpay-admin-dashboard-widget-report',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin-dashboard-widget-report.min.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-dashboard-widget-report.js', // @phpstan-ignore-line
 			array_merge(
 				array(
 					'simpay-accounting',

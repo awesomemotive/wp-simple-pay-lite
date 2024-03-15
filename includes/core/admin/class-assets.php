@@ -61,7 +61,7 @@ class Assets {
 		// Notices.
 		wp_enqueue_script(
 			'simpay-notices',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin-notices.min.js',
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-notices.js',
 			array( 'wp-util', 'jquery' ),
 			SIMPLE_PAY_VERSION,
 			true
@@ -86,14 +86,15 @@ class Assets {
 				'footer' => false,
 			),
 			'simpay-shared'     => array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-shared.min.js',
+				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-shared.js',
 				'deps'   => array( 'jquery', 'simpay-accounting' ),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => false,
 			),
 			'simpay-admin'      => array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin.min.js',
+				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin.js',
 				'deps'   => array(
+					'common',
 					'jquery',
 					'simpay-chosen',
 					'simpay-accounting',
@@ -181,80 +182,81 @@ class Assets {
 						'minAmount'         => simpay_global_minimum_amount(),
 						'isUpe'             => simpay_is_upe(),
 						'i18n'              => array(
-							'dateFormat'            => simpay_get_date_format(),
-							'mediaTitle'            => esc_html__(
+							'dateFormat'               => simpay_get_date_format(),
+							'mediaTitle'               => esc_html__(
 								'Insert Media',
 								'stripe'
 							),
-							'mediaButtonText'       => esc_html__(
+							'mediaButtonText'          => esc_html__(
 								'Use Image',
 								'stripe'
 							),
-							'leavePageConfirm'      => esc_html__(
+							'leavePageConfirm'         => esc_html__(
 								'The changes you made will be lost if you navigate away from this page.',
 								'stripe'
 							),
-							'disconnectConfirm'     => esc_html__(
+							'disconnectConfirm'        => esc_html__(
 								'Disconnect',
 								'stripe'
 							),
-							'disconnectCancel'      => esc_html__(
+							'disconnectCancel'         => esc_html__(
 								'Cancel',
 								'stripe'
 							),
-							'addonActivate'         => esc_html__(
+							'addonActivate'            => esc_html__(
 								'Activate',
 								'stripe'
 							),
-							'addonActivated'        => esc_html__(
+							'addonActivated'           => esc_html__(
 								'Activated',
 								'stripe'
 							),
-							'addonActive'           => esc_html__(
+							'addonActive'              => esc_html__(
 								'Active',
 								'stripe'
 							),
-							'addonDeactivate'       => esc_html__(
+							'addonDeactivate'          => esc_html__(
 								'Deactivate',
 								'stripe'
 							),
-							'addonInactive'         => esc_html__(
+							'addonInactive'            => esc_html__(
 								'Inactive',
 								'stripe'
 							),
-							'addonInstall'          => esc_html__(
+							'addonInstall'             => esc_html__(
 								'Install Addon',
 								'stripe'
 							),
-							'addonError'            => esc_html__(
+							'addonError'               => esc_html__(
 								'Could not install the addon. Please download it from wpforms.com and install it manually.',
 								'stripe'
 							),
-							'pluginError'           => esc_html__(
+							'pluginError'              => esc_html__(
 								'Could not install the plugin automatically. Please download and install it manually.',
 								'stripe'
 							),
-							'pluginInstallActivate' => esc_html__(
+							'pluginInstallActivate'    => esc_html__(
 								'Install and Activate',
 								'stripe'
 							),
-							'pluginActivate'        => esc_html__(
+							'pluginActivate'           => esc_html__(
 								'Activate',
 								'stripe'
 							),
-							'trashFormConfirm'      => esc_html__(
+							'trashFormConfirm'         => esc_html__(
 								'Warning: Removing a payment form will prevent active subscriptions from sending upcoming invoice and invoice receipt emails. It is recommended to leave payment forms that have accepted Live Mode payments published.',
 								'stripe'
 							),
-							/* translators: Minimum payment amount. */
-							'customAmountLabel' => esc_html__( 'starting at %s', 'stripe' ),
-							'recurringIntervals' => simpay_get_recurring_intervals(),
+							/* translators: %s: Minimum payment amount. */
+							'customAmountLabel'        => esc_html__( 'starting at %s', 'stripe' ),
+							'recurringIntervals'       => simpay_get_recurring_intervals(),
 							/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
 							'recurringIntervalDisplay' => esc_html_x(
 								'%1$s every %2$s %3$s',
 								'recurring interval',
 								'stripe'
 							),
+
 						),
 					)
 				);

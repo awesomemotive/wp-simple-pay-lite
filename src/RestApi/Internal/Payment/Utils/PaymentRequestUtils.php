@@ -248,9 +248,9 @@ class PaymentRequestUtils {
 	 * @return int
 	 */
 	public static function get_amount( $request ) {
-		$form         = PaymentRequestUtils::get_form( $request );
-		$unit_amount  = PaymentRequestUtils::get_unit_amount( $request );
-		$quantity     = PaymentRequestUtils::get_quantity( $request );
+		$form         = self::get_form( $request );
+		$unit_amount  = self::get_unit_amount( $request );
+		$quantity     = self::get_quantity( $request );
 		$tax_status   = get_post_meta( $form->id, '_tax_status', true );
 		$tax_behavior = get_post_meta( $form->id, '_tax_behavior', true );
 
@@ -321,15 +321,8 @@ class PaymentRequestUtils {
 			// Fall back to Payment Form title if set.
 			// This is a change in behavior in 4.1, but matches the Stripe Checkout
 			// usage that falls back to the Product title (Payment Form title).
-		} else {
-			if ( ! empty( $form->company_name ) ) {
+		} elseif ( ! empty( $form->company_name ) ) {
 				$payment_intent_data['description'] = $form->company_name;
-			}
-		}
-
-		// Set the Statement Descriptor. This is empty by default.
-		if ( ! empty( $form->statement_descriptor ) ) {
-			$payment_intent_data['statement_descriptor'] = $form->statement_descriptor;
 		}
 
 		return $payment_intent_data;
@@ -453,7 +446,8 @@ class PaymentRequestUtils {
 
 			if ( ! isset( $coupon_data['error'] ) ) {
 				/** @var array<string, \SimplePay\Vendor\Stripe\Coupon> $coupon_data  */
-				$metadata['simpay_coupon_code'] = $coupon_data['coupon']->id;
+				$metadata['simpay_coupon_code']          = $coupon_data['coupon']->id;
+				$metadata['simpay_discount_unit_amount'] = $coupon_data['discount'];
 			}
 		}
 
@@ -532,7 +526,7 @@ class PaymentRequestUtils {
 		// Remove Payment Methods that do not support the current currency.
 		$payment_methods = array_filter(
 			$payment_methods,
-			function( $payment_method ) use ( $currency ) {
+			function ( $payment_method ) use ( $currency ) {
 				return in_array( $currency, $payment_method->currencies, true );
 			}
 		);
@@ -550,7 +544,7 @@ class PaymentRequestUtils {
 				 * @param \SimplePay\Pro\Payment_Methods\Payment_Method $payment_method The Payment Method.
 				 * @return bool
 				 */
-				function( $payment_method ) {
+				function ( $payment_method ) {
 					// Check for Stripe Checkout-specific overrides first.
 					if (
 						is_array( $payment_method->stripe_checkout ) &&
@@ -566,7 +560,7 @@ class PaymentRequestUtils {
 		}
 
 		$payment_methods = array_map(
-			function( $payment_method_id ) {
+			function ( $payment_method_id ) {
 				switch ( $payment_method_id ) {
 					case 'ach-debit':
 						return 'us_bank_account';
@@ -584,7 +578,7 @@ class PaymentRequestUtils {
 
 			$emails = array_filter(
 				$custom_fields,
-				function( $field ) {
+				function ( $field ) {
 					return 'email' === $field['type'];
 				}
 			);
@@ -652,7 +646,7 @@ class PaymentRequestUtils {
 
 		$ach_direct_debit = array_filter(
 			$payment_methods,
-			function( $payment_method ) {
+			function ( $payment_method ) {
 				return 'ach-debit' === $payment_method->id;
 			}
 		);
@@ -682,7 +676,7 @@ class PaymentRequestUtils {
 		// Filter out payment methods that are not available for the given request.
 		return array_filter(
 			$payment_method_options,
-			function( $payment_method_type ) use ( $payment_method_types ) {
+			function ( $payment_method_type ) use ( $payment_method_types ) {
 				return in_array( $payment_method_type, $payment_method_types, true );
 			},
 			ARRAY_FILTER_USE_KEY
@@ -746,5 +740,4 @@ class PaymentRequestUtils {
 
 		return $cancel_url;
 	}
-
 }

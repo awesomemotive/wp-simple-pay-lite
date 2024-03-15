@@ -179,6 +179,7 @@ class Shortcodes {
 				// Check schedule for output.
 				if ( false === $form->has_available_schedule() ) {
 					$out_of_schedule_message = sprintf(
+						/* translators: Form title */
 						__(
 							'Sorry, "%s" is not available for purchase.',
 							'stripe'
@@ -205,6 +206,7 @@ class Shortcodes {
 					// Check inventory for output.
 				} elseif ( false === $form->has_available_inventory() ) {
 					$out_of_stock_message = sprintf(
+						/* translators: Form title */
 						__(
 							'Sorry, "%s" is not available for purchase.',
 							'stripe'

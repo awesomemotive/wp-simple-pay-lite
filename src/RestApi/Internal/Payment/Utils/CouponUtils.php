@@ -35,7 +35,7 @@ class CouponUtils {
 	 * @param string           $coupon_code The coupon code to get data for.
 	 * @param int              $amount The amount to apply the coupon to.
 	 * @param string           $currency The currency the coupon can apply to.
-	 * @return array<string, string|\SimplePay\Pro\Coupons\Coupon> The coupon data.
+	 * @return array<string, string|\SimplePay\Pro\Coupons\Coupon|string|float|int> The coupon data.
 	 */
 	public static function get_coupon_data( $request, $coupon_code, $amount, $currency ) {
 		$form = PaymentRequestUtils::get_form( $request );
@@ -148,15 +148,15 @@ class CouponUtils {
 		}
 
 		return array(
-			'coupon'  => $coupon,
-			'message' => sprintf(
+			'coupon'   => $coupon,
+			'discount' => $discount,
+			'message'  => sprintf(
 				/* translators: %1$s Coupon code. %2$s discount amount. */
 				__( '%1$s: %2$s off', 'stripe' ),
 				$coupon->id,
 				$discount_formatted
 			),
 		);
-
 	}
 
 	/**
@@ -210,5 +210,4 @@ class CouponUtils {
 
 		return (int) round( $unit_amount );
 	}
-
 }

@@ -130,7 +130,7 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 	private function get_am_plugins() {
 		/** @var array<string> $all_plugins */
 		$all_plugins = get_plugins();
-		$images_url  = SIMPLE_PAY_INC_URL . '/core/assets/images/about/'; // @phpstan-ignore-line
+		$images_url  = SIMPLE_PAY_INC_URL . 'core/assets/images/about/'; // @phpstan-ignore-line
 		$am_plugins  = array(
 			// OptinMonster.
 			'optinmonster/optin-monster-wp-api.php'       => array(

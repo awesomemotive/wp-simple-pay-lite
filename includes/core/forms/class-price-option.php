@@ -508,7 +508,7 @@ class PriceOption {
 			$count     = $this->recurring['interval_count'];
 
 			$label = sprintf(
-				/* translators: %1$s Price option amount. %2$s Recurring interval count. %3$s Recurring interval. */
+				/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
 				esc_html_x(
 					'%1$s every %2$s %3$s',
 					'recurring interval',
@@ -556,7 +556,7 @@ class PriceOption {
 
 		if ( null !== $this->unit_amount_min ) {
 			$label = sprintf(
-				/* translators: %s Minimum price. */
+				/* translators: %s: Minimum payment amount. */
 				__( 'starting at %s', 'stripe' ),
 				$label
 			);
@@ -645,7 +645,7 @@ class PriceOption {
 				);
 			} else {
 				$label = sprintf(
-					/* translators: %1$s Price option amount. %2$s Price option currency code. %3$s Recurring interval count. %4$s Recurring interval. */
+					/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
 					esc_html_x(
 						'%1$s every %2$s %3$s',
 						'recurring interval',

@@ -412,34 +412,70 @@ class ActivityOverviewReport {
 	private function get_tips() {
 		$tips = array(
 			array(
-				'title' => 'Set up automatic tax collection',
+				'title' => __(
+					'Set up automatic tax collection',
+					'stripe'
+				),
 				'href'  => 'https://wpsimplepay.com/how-to-collect-taxes-for-stripe-payments-in-wordpress/',
-				'text'  => 'Charge a fixed tax rate to everyone or collect different taxes dynamically based on customer location',
+				'text'  => __(
+					'Charge a fixed tax rate to everyone or collect different taxes dynamically based on customer location',
+					'stripe'
+				),
 			),
 			array(
-				'title' => 'Dynamically customize payment receipts',
+				'title' => __(
+					'Dynamically customize payment receipts',
+					'stripe'
+				),
 				'href'  => 'https://wpsimplepay.com/how-to-easily-customize-stripe-email-receipts-in-wordpress/ ',
-				'text'  => 'Customize every single detail based on the data collected from users.',
+				'text'  => __(
+					'Customize every single detail based on the data collected from users.',
+					'stripe'
+				),
 			),
 			array(
-				'title' => 'We support 10+ payment methods',
+				'title' => __(
+					'We support 10+ payment methods',
+					'stripe'
+				),
 				'href'  => 'https://wpsimplepay.com/how-to-allow-users-to-choose-a-payment-method-in-wordpress/',
-				'text'  => 'Offer multiple payment methods and allow users to pay with their favorite.',
+				'text'  => __(
+					'Offer multiple payment methods and allow users to pay with their favorite.',
+					'stripe'
+				),
 			),
 			array(
-				'title' => 'Smart inventory management',
+				'title' => __(
+					'Smart inventory management',
+					'stripe'
+				),
 				'href'  => 'https://wpsimplepay.com/how-to-create-an-order-form-with-wordpress-step-by-step/',
-				'text'  => 'Automatically hide your payment form after a set number of payments.',
+				'text'  => __(
+					'Automatically hide your payment form after a set number of payments.',
+					'stripe'
+				),
 			),
 			array(
-				'title' => 'Encourage payments with discount codes',
+				'title' => __(
+					'Encourage payments with discount codes',
+					'stripe'
+				),
 				'href'  => 'https://wpsimplepay.com/how-to-add-a-coupon-code-field-to-your-wordpress-payment-forms/',
-				'text'  => 'Offer a fixed amount or a percentage discount for a specified duration or forever.',
+				'text'  => __(
+					'Offer a fixed amount or a percentage discount for a specified duration or forever.',
+					'stripe'
+				)
 			),
 			array(
-				'title' => 'Remove Stripe processing fees',
+				'title' => __(
+					'Remove Stripe processing fees',
+					'stripe'
+				),
 				'href'  => 'https://wpsimplepay.com/how-to-remove-credit-card-processing-fees-in-wordpress/',
-				'text'  => 'Charge an additional fee to ensure you receive the full payment amount.',
+				'text'  => __(
+					'Charge an additional fee to ensure you receive the full payment amount.',
+					'stripe'
+				),
 			),
 		);
 

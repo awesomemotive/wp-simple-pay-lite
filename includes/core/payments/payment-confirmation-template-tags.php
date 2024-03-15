@@ -54,6 +54,7 @@ function get_tags( $payment_confirmation_data ) {
 		'total-amount',
 		'payment-type',
 		'payment-url',
+		'subtotal-amount',
 	);
 
 	/**
@@ -220,13 +221,11 @@ function get_object_property_deep( $keys, $ref ) {
 				$value = '';
 				break;
 			}
-		} else {
-			if ( isset( $value->$key ) ) {
+		} elseif ( isset( $value->$key ) ) {
 				$value = $value->$key;
-			} else {
-				$value = '';
-				break;
-			}
+		} else {
+			$value = '';
+			break;
 		}
 	}
 
@@ -651,6 +650,43 @@ add_filter(
 );
 
 /**
+ * Replaces {subtotal-amount} with the payment subtotal.
+ *
+ * @since 4.9.0
+ *
+ * @param string $value Default value (empty string).
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function subtotal_amount( $value, $payment_confirmation_data ) {
+	$subscription = current( $payment_confirmation_data['subscriptions'] );
+	if ( $subscription ) {
+		$payment  = $subscription->latest_invoice->subscription_details;
+		$currency = $subscription->currency;
+	} else {
+		$payment  = current( $payment_confirmation_data['paymentintents'] );
+		$currency = $payment->currency;
+	}
+	return simpay_format_currency(
+		$payment->metadata->simpay_unit_amount * $payment->metadata->simpay_quantity,
+		$currency
+	);
+}
+add_filter(
+	'simpay_payment_confirmation_template_tag_subtotal-amount',
+	__NAMESPACE__ . '\\subtotal_amount',
+	10,
+	2
+);
+
+/**
  * Returns a list of available smart tags and their descriptions.
  *
  * @todo Temporary until this can be more easily generated through a tag registry.
@@ -685,6 +721,10 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 			'The unique charge ID returned from Stripe.',
 			'stripe'
 		),
+		'subtotal-amount'  => esc_html__(
+			'The cumulative cost of selected items.',
+			'stripe'
+		),
 	);
 
 	if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
@@ -705,6 +745,16 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 
 		$tags['tax-amount'] = esc_html__(
 			'The calculated tax amount based on the total and the tax percent setting.',
+			'stripe'
+		);
+
+		$tags['fee-recovery-amount'] = esc_html__(
+			'The calculated fee recovery amount based on the total and the fee recovery percent setting.',
+			'stripe'
+		);
+
+		$tags['coupon-amount'] = esc_html__(
+			'The amount of the coupon applied to the payment.',
 			'stripe'
 		);
 	}

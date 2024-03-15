@@ -1,0 +1,9 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "simpay/payment-form",
+    "title": "WP Simple Pay - Payment Form",
+    "category": "widgets",
+    "description": "Display a WP Simple Pay payment form.",
+    "textdomain": "simple-pay"
+}

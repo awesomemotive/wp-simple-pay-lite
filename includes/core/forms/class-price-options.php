@@ -616,7 +616,7 @@ class PriceOptions {
 		// https://github.com/wpsimplepay/wp-simple-pay-pro/issues/1598
 		if ( empty( $name ) ) {
 			$name = sprintf(
-				/* translators: %d payment form ID. */
+				/* translators: %d: Payment Form ID. */
 				__( 'WP Simple Pay - Form %d', 'stripe' ),
 				$form->id
 			);
