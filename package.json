@@ -10,7 +10,8 @@
     "url": "https://github.com/wpsimplepay/wp-simple-pay-lite"
   },
   "scripts": {
-    "i18n": "grunt checktextdomain && wp i18n make-pot --include='*.min.js,*.php' --exclude='build,*.js' . languages/stripe.pot --domain=stripe && wp i18n make-json languages --no-purge"
+    "build": "grunt build",
+    "i18n": "grunt sed && grunt checktextdomain && wp i18n make-pot . languages/stripe.pot --domain=stripe --exclude='*/js/src/*' && wp i18n make-json languages --no-purge"
   },
   "devDependencies": {
     "grunt": "^1.0.4",
@@ -19,6 +20,7 @@
     "grunt-contrib-clean": "2.x",
     "grunt-contrib-compress": "^1.5.0",
     "grunt-contrib-copy": "1.x",
+    "grunt-sed": "^0.1.1",
     "grunt-wp-i18n": "^1.0.3",
     "load-grunt-tasks": "4.x"
   }
