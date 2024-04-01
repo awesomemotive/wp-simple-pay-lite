@@ -162,15 +162,7 @@ function get_args_from_payment_form_request(
 	$paymentintent_args = array(
 		'amount'   => $amount,
 		'currency' => $payment_args['currency'],
-		'metadata' => array_merge(
-			$metadata,
-			Legacy\Hooks\simpay_payment_metadata(
-				$form,
-				$form_data,
-				$form_values,
-				$customer_id
-			)
-		),
+		'metadata' => $metadata,
 	);
 
 	// Use price option label if one is set.
@@ -183,13 +175,6 @@ function get_args_from_payment_form_request(
 	} elseif ( ! empty( $form->company_name ) ) {
 			$paymentintent_args['description'] = $form->company_name;
 	}
-
-	// Legacy filter.
-	$paymentintent_args = Legacy\Hooks\simpay_stripe_charge_args(
-		$paymentintent_args,
-		$form,
-		$form_values
-	);
 
 	/**
 	 * Filters arguments used to create a PaymentIntent from a payment form request.

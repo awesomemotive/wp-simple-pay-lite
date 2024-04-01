@@ -546,16 +546,23 @@ add_filter( 'simpay_payment_confirmation_template_tag_charge-date', __NAMESPACE_
  * @return string
  */
 function charge_amount( $value, $payment_confirmation_data ) {
-	if ( empty( $payment_confirmation_data['paymentintents'] ) ) {
-		return $value;
-	}
-
+	$value         = '';
 	$paymentintent = current( $payment_confirmation_data['paymentintents'] );
+	if ( empty( $paymentintent ) ) {
+		// Get the amount from the Subscription.
+		$subscription = current( $payment_confirmation_data['subscriptions'] );
+		$value        = simpay_format_currency(
+			$subscription->latest_invoice->amount_paid,
+			$subscription->currency
+		);
 
-	$value = simpay_format_currency(
-		$paymentintent->amount,
-		$paymentintent->currency
-	);
+	} else {
+		// Get the amount from the PaymentIntent.
+		$value = simpay_format_currency(
+			$paymentintent->amount,
+			$paymentintent->currency
+		);
+	}
 
 	return esc_html( $value );
 }
@@ -666,7 +673,12 @@ add_filter(
  * @return string
  */
 function subtotal_amount( $value, $payment_confirmation_data ) {
+	if ( ! simpay_is_upe() ) {
+		return $value;
+	}
+
 	$subscription = current( $payment_confirmation_data['subscriptions'] );
+
 	if ( $subscription ) {
 		$payment  = $subscription->latest_invoice->subscription_details;
 		$currency = $subscription->currency;
@@ -674,6 +686,7 @@ function subtotal_amount( $value, $payment_confirmation_data ) {
 		$payment  = current( $payment_confirmation_data['paymentintents'] );
 		$currency = $payment->currency;
 	}
+
 	return simpay_format_currency(
 		$payment->metadata->simpay_unit_amount * $payment->metadata->simpay_quantity,
 		$currency
@@ -721,11 +734,14 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 			'The unique charge ID returned from Stripe.',
 			'stripe'
 		),
-		'subtotal-amount'  => esc_html__(
+	);
+
+	if ( simpay_is_upe() ) {
+		$tags['subtotal-amount'] = esc_html__(
 			'The cumulative cost of selected items.',
 			'stripe'
-		),
-	);
+		);
+	}
 
 	if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
 		$tags['payment-type'] = esc_html__(
@@ -753,10 +769,12 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 			'stripe'
 		);
 
-		$tags['coupon-amount'] = esc_html__(
-			'The amount of the coupon applied to the payment.',
-			'stripe'
-		);
+		if ( simpay_is_upe() ) {
+			$tags['coupon-amount'] = esc_html__(
+				'The amount of the coupon applied to the payment.',
+				'stripe'
+			);
+		}
 	}
 
 	return $tags;

@@ -329,8 +329,8 @@ class SchemaValidationUtils {
 		}
 
 		if (
-			$request->get_param( 'price_id' ) &&
-			false === $coupon->applies_to_form( $form->id )
+		$request->get_param( 'price_id' ) &&
+		false === $coupon->applies_to_form( $form->id )
 		) {
 			return false;
 		}
@@ -347,14 +347,13 @@ class SchemaValidationUtils {
 	 * @param array<string, string|array<string, string>> $value The `form_values` parameter value.
 	 * @param \WP_REST_Request                            $request The payment request.
 	 * @param string                                      $param The parameter name.
-	 * @return bool
+	 * @return bool|\WP_Error True if the form values are valid, \WP_Error otherwise.
 	 */
 	public static function validate_form_values_arg( $value, $request, $param ) {
 		// First, validate the argument based on its registered schema.
 		$validate = rest_validate_request_arg( $value, $request, $param );
-
 		if ( is_wp_error( $validate ) ) {
-			return false;
+			return $validate; // Return the original \WP_Error.
 		}
 
 		// Next, validate that the form exists.
@@ -364,110 +363,92 @@ class SchemaValidationUtils {
 		$form_id = $request->get_param( 'form_id' );
 		$form_id = intval( $form_id );
 		$form    = simpay_get_form( $form_id );
-
 		if ( false === $form ) {
-			return false;
+			return new \WP_Error( 'invalid_form_id', __( 'The provided form ID is invalid.', 'stripe' ) );
 		}
 
 		// Next, check for required fields.
-
 		/** @var array<string, array<string, mixed>> $custom_fields */
 		$custom_fields = simpay_get_saved_meta( $form->id, '_custom_fields' );
-
 		/** @var array<string, string> $form_values */
-		$form_values = $value;
-
-		$always_required = array(
-			'email',
-			'address',
-		);
+		$form_values     = $value;
+		$always_required = array( 'email', 'address' );
 
 		foreach ( $custom_fields as $custom_field_type => $custom_field_types ) {
 			foreach ( $custom_field_types as $field ) {
 				/** @var array<string, string> $field */
-				if (
-					! in_array( $custom_field_type, $always_required, true ) &&
-					! isset( $field['required'] )
-				) {
+				if ( ! in_array( $custom_field_type, $always_required, true ) && ! isset( $field['required'] ) ) {
 					continue;
 				}
 
 				// Check custom fields.
 				if ( isset( $field['metadata'] ) ) {
 					if ( empty( $field['metadata'] ) ) {
-						$id = isset( $field['uid'] )
-							? $field['uid']
-							: '';
-
+						$id       = isset( $field['uid'] ) ? $field['uid'] : '';
 						$meta_key = 'simpay-form-' . $form->id . '-field-' . $id;
 					} else {
 						$meta_key = $field['metadata'];
 					}
 
 					if ( ! isset( $form_values['simpay_field'][ $meta_key ] ) ) {
-						return false;
+						/* translators: %s is replaced with the required field. */
+						return new \WP_Error( 'missing_required_field', sprintf( __( 'The required field "%s" is missing.', 'stripe' ), $meta_key ) );
 					}
 
 					$value = trim( $form_values['simpay_field'][ $meta_key ] );
-
 					if ( empty( $value ) ) {
-						return false;
+						/* translators: %s is replaced with the required field. */
+						return new \WP_Error( 'empty_required_field', sprintf( __( 'The required field "%s" cannot be empty.', 'stripe' ), $meta_key ) );
 					}
 				}
 
 				// Check Customer fields.
 				switch ( $custom_field_type ) {
 					case 'tax_id':
-						if (
-							! isset( $form_values['simpay_tax_id'] ) ||
-							! isset( $form_values['simpay_tax_id_type'] )
-						) {
-							return false;
+						if ( ! isset( $form_values['simpay_tax_id'] ) || ! isset( $form_values['simpay_tax_id_type'] ) ) {
+							return new \WP_Error( 'missing_tax_id', __( 'Tax ID and Tax ID Type are required fields.', 'stripe' ) );
 						}
 
 						/** @var string $tax_id */
 						$tax_id = $form_values['simpay_tax_id'];
-
 						/** @var string $tax_type */
 						$tax_type = $form_values['simpay_tax_id_type'];
-
 						$tax_id   = trim( $tax_id );
 						$tax_type = trim( $tax_type );
 
 						if ( empty( $tax_id ) || empty( $tax_type ) ) {
-							return false;
+							return new \WP_Error( 'empty_tax_id', __( 'Tax ID and Tax ID Type cannot be empty.', 'stripe' ) );
 						}
-
 						break;
-					case 'address':
-						$address_type = (
-							isset( $field['collect-shipping'] ) &&
-							'yes' === $field['collect-shipping']
-						)
-							? 'shipping'
-							: 'billing';
 
+					case 'address':
+						$address_type = ( isset( $field['collect-shipping'] ) && 'yes' === $field['collect-shipping'] ) ? 'shipping' : 'billing';
 						/** @var array<string, string|array<string, string>> $address */
 						$address = $request->get_param( $address_type . '_address' );
 
 						if ( ! isset( $address['name'] ) ) {
-							return false;
+							/* translators: %s is replaced with the address type (billing or shipping).*/
+							return new \WP_Error( 'missing_address_name', sprintf( __( 'The %s address name is required.', 'stripe' ), $address_type ) );
 						}
 
 						if ( ! isset( $address['address']['country'] ) ) {
-							return false;
+							/* translators: %s is replaced with the address type (billing or shipping).*/
+							return new \WP_Error( 'missing_address_country', sprintf( __( 'The %s address country is required.', 'stripe' ), $address_type ) );
 						}
 
 						if ( ! isset( $address['address']['postal_code'] ) ) {
-							return false;
+							/* translators: %s is replaced with the address type (billing or shipping). */
+							return new \WP_Error( 'missing_address_postal_code', sprintf( __( 'The %s address postal code is required.', 'stripe' ), $address_type ) );
 						}
-
 						break;
+
 					case 'email':
 					case 'customer_name':
 					case 'telephone':
+						$field_name = $field['label'];
 						if ( ! isset( $form_values[ 'simpay_' . $custom_field_type ] ) ) {
-							return false;
+							/* translators: %s is replaced with the field type (email, customer_name, or telephone).*/
+							return new \WP_Error( 'missing_' . $custom_field_type, sprintf( __( 'The %s field is required.', 'stripe' ), $field_name ) );
 						}
 
 						/** @var string $value */
@@ -475,16 +456,17 @@ class SchemaValidationUtils {
 						$value = trim( $value );
 
 						if ( empty( $value ) ) {
-							return false;
+							/* translators: %s is replaced with the field type (email, customer_name, or telephone). */
+							return new \WP_Error( 'empty_' . $custom_field_type, sprintf( __( 'The %s field can not be empty.', 'stripe' ), $field_name ) );
 						}
-
 						break;
 				}
 			}
 		}
 
-		// Finally, these values can be used.
+		/**
+		 * Finally, these values can be used.
+		 */
 		return true;
 	}
-
 }

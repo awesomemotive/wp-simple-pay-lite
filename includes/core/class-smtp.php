@@ -309,7 +309,7 @@ class SMTP {
 
 		wp_enqueue_script(
 			'simpay-smtp',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin-page-smtp.min.js',
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-smtp.js',
 			array( 'jquery' ),
 			SIMPLE_PAY_VERSION,
 			true

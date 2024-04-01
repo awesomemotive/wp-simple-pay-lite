@@ -135,9 +135,9 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 	public function get_template() {
 		switch ( $this->get_template_name() ) {
 			case 'default':
-				return new DefaultTemplate;
+				return new DefaultTemplate();
 			default:
-				return new PlainTemplate;
+				return new PlainTemplate();
 		}
 	}
 
@@ -196,7 +196,7 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 
 				$links = array_filter(
 					$notification->actions,
-					function( $action ) {
+					function ( $action ) {
 						return 'primary' === $action['type'];
 					}
 				);
@@ -210,7 +210,7 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 		}
 
 		$logo_url = SIMPLE_PAY_URL . 'includes/core/assets/images/wp-simple-pay.png'; // @phpstan-ignore-line
-		$image    = sprintf( '<img src="%1$s" alt="WP Simple Pay" />', $logo_url );
+		$image    = sprintf( '<img width="400" height="52" src="%1$s" alt="WP Simple Pay" />', $logo_url );
 
 		ob_start();
 
@@ -319,5 +319,4 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 
 		return $html;
 	}
-
 }

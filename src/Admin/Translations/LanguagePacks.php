@@ -30,7 +30,7 @@ class LanguagePacks implements SubscriberInterface, LicenseAwareInterface {
 	/**
 	 * @since 4.9.0
 	 */
-	const API_URL = 'https://wpsp-translations.nyc3.cdn.digitaloceanspaces.com/simple-pay/packages.json';
+	const API_URL = 'https://translations.wpsimplepay.com/simple-pay/packages.json';
 
 	/**
 	 * @since 4.9.0
@@ -254,7 +254,12 @@ class LanguagePacks implements SubscriberInterface, LicenseAwareInterface {
 	 * @return array<string, array<string, mixed>>
 	 */
 	private function get_available_translations() {
-		$manifest                      = $this->get_manifest_data();
+		$manifest = $this->get_manifest_data();
+
+		if ( false === $manifest ) {
+			return array();
+		}
+
 		$available_remote_translations = $manifest['translations'];
 
 		if ( empty( $available_remote_translations ) ) {
@@ -274,7 +279,7 @@ class LanguagePacks implements SubscriberInterface, LicenseAwareInterface {
 			/** @var array{"PO-Revision-Date"?: string} */
 			$local_translation_data = isset(
 				$installed_translations[ self::TEXT_DOMAIN ],
-				$installed_translations[ self::TEXT_DOMAIN ][ $language ]
+				$installed_translations[ self::TEXT_DOMAIN ][ $language ] // @phpstan-ignore-line
 			)
 				? $installed_translations[ self::TEXT_DOMAIN ][ $language ]
 				: array();

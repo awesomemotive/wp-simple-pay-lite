@@ -91,8 +91,9 @@ class Assets {
 	 */
 	public function setup() {
 		$public_js   = simpay_is_upe()
-			? SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-upe.min.js'
-			: SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public.min.js';
+			? SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-upe.js'
+			: SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public.js';
+
 		$public_deps = simpay_is_upe()
 			? array(
 				'jquery',
@@ -134,7 +135,7 @@ class Assets {
 
 		if ( ! simpay_is_upe() ) {
 			$this->scripts['simpay-shared'] = array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-public-shared.min.js',
+				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-shared.js',
 				'deps'   => array( 'jquery', 'simpay-accounting' ),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,

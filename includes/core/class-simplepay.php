@@ -103,87 +103,82 @@ final class SimplePay {
 	 */
 	public function load() {
 		// Vendors.
-		require_once( SIMPLE_PAY_INC . 'core/utils/class-persistent-dismissible.php' );
+		require_once SIMPLE_PAY_INC . 'core/utils/class-persistent-dismissible.php';
 
 		// i18n.
-		require_once( SIMPLE_PAY_INC . 'core/i18n/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/i18n/countries.php' );
-		require_once( SIMPLE_PAY_INC . 'core/i18n/stripe.php' );
+		require_once SIMPLE_PAY_INC . 'core/i18n/functions.php';
+		require_once SIMPLE_PAY_INC . 'core/i18n/countries.php';
+		require_once SIMPLE_PAY_INC . 'core/i18n/stripe.php';
 
 		// Migrations.
-		require_once( SIMPLE_PAY_INC . 'core/utils/migrations/admin.php' );
-		require_once( SIMPLE_PAY_INC . 'core/utils/migrations/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/utils/migrations/register.php' );
+		require_once SIMPLE_PAY_INC . 'core/utils/migrations/admin.php';
+		require_once SIMPLE_PAY_INC . 'core/utils/migrations/functions.php';
+		require_once SIMPLE_PAY_INC . 'core/utils/migrations/register.php';
 
 		// Settings.
-		require_once( SIMPLE_PAY_INC . 'core/settings/register.php' );
-		require_once( SIMPLE_PAY_INC . 'core/settings/register-stripe.php' );
-		require_once( SIMPLE_PAY_INC . 'core/settings/register-general.php' );
-		require_once( SIMPLE_PAY_INC . 'core/settings/register-payment-confirmations.php' );
-		require_once( SIMPLE_PAY_INC . 'core/settings/register-emails.php' );
-		require_once( SIMPLE_PAY_INC . 'core/settings/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/settings/display.php' );
-		require_once( SIMPLE_PAY_INC . 'core/settings/compat.php' );
+		require_once SIMPLE_PAY_INC . 'core/settings/register.php';
+		require_once SIMPLE_PAY_INC . 'core/settings/register-stripe.php';
+		require_once SIMPLE_PAY_INC . 'core/settings/register-general.php';
+		require_once SIMPLE_PAY_INC . 'core/settings/register-payment-confirmations.php';
+		require_once SIMPLE_PAY_INC . 'core/settings/register-emails.php';
+		require_once SIMPLE_PAY_INC . 'core/settings/functions.php';
+		require_once SIMPLE_PAY_INC . 'core/settings/display.php';
+		require_once SIMPLE_PAY_INC . 'core/settings/compat.php';
 
 		// Emails.
-		require_once( SIMPLE_PAY_INC . 'core/class-smtp.php' );
+		require_once SIMPLE_PAY_INC . 'core/class-smtp.php';
 
 		// Post types.
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/register.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/meta.php' );
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/register.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/meta.php';
 
 		// Load core shared back-end & front-end functions.
-		require_once( SIMPLE_PAY_INC . 'core/utils/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/utils/exceptions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/utils/collections.php' );
-		require_once( SIMPLE_PAY_INC . 'core/functions/template.php' );
-		require_once( SIMPLE_PAY_INC . 'core/functions/shared.php' );
-		require_once( SIMPLE_PAY_INC . 'core/functions/countries.php' );
+		require_once SIMPLE_PAY_INC . 'core/utils/functions.php';
+		require_once SIMPLE_PAY_INC . 'core/utils/exceptions.php';
+		require_once SIMPLE_PAY_INC . 'core/utils/collections.php';
+		require_once SIMPLE_PAY_INC . 'core/functions/template.php';
+		require_once SIMPLE_PAY_INC . 'core/functions/shared.php';
+		require_once SIMPLE_PAY_INC . 'core/functions/countries.php';
 
 		// Payment form.
-		require_once( SIMPLE_PAY_INC . 'core/forms/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/forms/class-price-option.php' );
-		require_once( SIMPLE_PAY_INC . 'core/forms/class-price-options.php' );
+		require_once SIMPLE_PAY_INC . 'core/forms/functions.php';
+		require_once SIMPLE_PAY_INC . 'core/forms/class-price-option.php';
+		require_once SIMPLE_PAY_INC . 'core/forms/class-price-options.php';
 
 		// Payments/Purchase Flow.
-		require_once( SIMPLE_PAY_INC . 'core/payments/customer.php' );
-		require_once( SIMPLE_PAY_INC . 'core/payments/paymentintent.php' );
-		require_once( SIMPLE_PAY_INC . 'core/payments/payment-confirmation.php' );
-		require_once( SIMPLE_PAY_INC . 'core/payments/payment-confirmation-template-tags.php' );
+		require_once SIMPLE_PAY_INC . 'core/payments/customer.php';
+		require_once SIMPLE_PAY_INC . 'core/payments/paymentintent.php';
+		require_once SIMPLE_PAY_INC . 'core/payments/payment-confirmation.php';
+		require_once SIMPLE_PAY_INC . 'core/payments/payment-confirmation-template-tags.php';
 
 		// API.
-		require_once( SIMPLE_PAY_INC . 'core/api/charges.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/coupons.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/customers.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/paymentintents.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/paymentmethods.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/prices.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/plans.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/products.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/sessions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/setupintents.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/subscriptions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/api/tax-rates.php' );
+		require_once SIMPLE_PAY_INC . 'core/api/charges.php';
+		require_once SIMPLE_PAY_INC . 'core/api/coupons.php';
+		require_once SIMPLE_PAY_INC . 'core/api/customers.php';
+		require_once SIMPLE_PAY_INC . 'core/api/paymentintents.php';
+		require_once SIMPLE_PAY_INC . 'core/api/paymentmethods.php';
+		require_once SIMPLE_PAY_INC . 'core/api/prices.php';
+		require_once SIMPLE_PAY_INC . 'core/api/plans.php';
+		require_once SIMPLE_PAY_INC . 'core/api/products.php';
+		require_once SIMPLE_PAY_INC . 'core/api/sessions.php';
+		require_once SIMPLE_PAY_INC . 'core/api/setupintents.php';
+		require_once SIMPLE_PAY_INC . 'core/api/subscriptions.php';
+		require_once SIMPLE_PAY_INC . 'core/api/tax-rates.php';
 
 		// REST API.
 		new REST_API();
-		require_once( SIMPLE_PAY_INC . 'core/rest-api/functions.php' );
+		require_once SIMPLE_PAY_INC . 'core/rest-api/functions.php';
 
 		// Stripe Checkout functionality.
-		require_once( SIMPLE_PAY_INC . 'core/payments/stripe-checkout/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/payments/stripe-checkout/session.php' );
+		require_once SIMPLE_PAY_INC . 'core/payments/stripe-checkout/functions.php';
+		require_once SIMPLE_PAY_INC . 'core/payments/stripe-checkout/session.php';
 
 		// Stripe Connect functionality.
-		require_once( SIMPLE_PAY_INC . 'core/stripe-connect/functions.php' );
+		require_once SIMPLE_PAY_INC . 'core/stripe-connect/functions.php';
 
 		// reCAPTCHA.
-		require_once( SIMPLE_PAY_INC . 'core/recaptcha/index.php' );
-		require_once( SIMPLE_PAY_INC . 'core/recaptcha/settings.php' );
-
-		// Legacy.
-		require_once( SIMPLE_PAY_INC . 'core/legacy/functions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/legacy/hooks.php' );
-		require_once( SIMPLE_PAY_INC . 'core/legacy/class-payment-form.php' );
+		require_once SIMPLE_PAY_INC . 'core/recaptcha/index.php';
+		require_once SIMPLE_PAY_INC . 'core/recaptcha/settings.php';
 
 		// Rate Limiting.
 		$rate_limiting = new Utils\Rate_Limiting();
@@ -208,23 +203,23 @@ final class SimplePay {
 	 */
 	public function load_admin() {
 		// Post types.
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/compat.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/menu.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/list-table.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-payment-options.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-stripe-checkout.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-custom-fields.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-payment-page.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-purchase-restrictions.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-automations.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-confirmation.php' );
-		require_once( SIMPLE_PAY_INC . 'core/post-types/simple-pay/actions.php' );
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/compat.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/menu.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/list-table.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-payment-options.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-stripe-checkout.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-custom-fields.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-payment-page.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-purchase-restrictions.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-automations.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-confirmation.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/actions.php';
 
 		// Load core back-end only functions.
-		require_once( SIMPLE_PAY_INC . 'core/functions/admin.php' );
-		require_once( SIMPLE_PAY_INC . 'core/admin/functions/notices.php' );
-		require_once( SIMPLE_PAY_INC . 'core/admin/functions/plugin-upgrade-notice.php' );
+		require_once SIMPLE_PAY_INC . 'core/functions/admin.php';
+		require_once SIMPLE_PAY_INC . 'core/admin/functions/notices.php';
+		require_once SIMPLE_PAY_INC . 'core/admin/functions/plugin-upgrade-notice.php';
 
 		new Admin\Assets();
 		new Admin\Menus();

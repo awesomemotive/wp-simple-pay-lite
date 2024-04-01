@@ -5,5 +5,5 @@
     "title": "WP Simple Pay - Payment Form",
     "category": "widgets",
     "description": "Display a WP Simple Pay payment form.",
-    "textdomain": "stripe"
+    "textdomain": "simple-pay"
 }

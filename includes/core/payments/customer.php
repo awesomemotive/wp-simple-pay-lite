@@ -235,7 +235,7 @@ function get_args_from_payment_form_request( $form, $form_data, $form_values ) {
 	// Do this before Shipping, because we need a value for Shipping Name.
 	$customer_args = array_filter(
 		$customer_args,
-		function( $var ) {
+		function ( $var ) {
 			return ! is_null( $var );
 		}
 	);
@@ -249,9 +249,6 @@ function get_args_from_payment_form_request( $form, $form_data, $form_values ) {
 		$customer_args['shipping']['name']    = isset( $customer_args['name'] ) ? $customer_args['name'] : '';
 		$customer_args['shipping']['phone']   = isset( $customer_args['phone'] ) ? $customer_args['phone'] : '';
 	}
-
-	// Handle legacy filter.
-	$customer_args = Legacy\Hooks\simpay_stripe_customer_args( $customer_args, $form, $form_values );
 
 	/**
 	 * Filters arguments used to create a Customer from a payment form request.
