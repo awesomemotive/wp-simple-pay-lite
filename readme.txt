@@ -1,9 +1,9 @@
-=== Stripe Payment Forms by WP Simple Pay - Accept Payments with Stripe ===
+=== Stripe Payment Forms by WP Simple Pay - Accept Credit Card Payments + Subscriptions with Stripe ===
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.2
-Tested up to: 6.4
-Stable tag: 4.8.0
+Tested up to: 6.5
+Stable tag: 4.9.0
 Requires PHP: 5.6
 License: GPLv2 or later
 
@@ -248,6 +248,20 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 10. Global payment form settings: Payment confirmation details
 
 == Changelog ==
+
+= Stripe Payment Forms v4.9.0 - April 2, 2024 =
+
+* New: WP Simple Pay is now translated in 10 additional languages.
+* New: Do not send a dynamic statement descriptor to Stripe. https://support.stripe.com/questions/statement-descriptor-information
+* Fix: Setup Wizard - Ensure "Help Panel" popover is hidden until completion.
+* Fix: Blocks - Add block.json for better compatibility.
+* Fix: Ensure CAPTCHA Documentation opens in new tab.
+* Fix: Admin - Ensure `common.js` WordPress Script is Enqueued.
+* Fix: Payment Form - Improve "Invalid Parameters" REST API messaging.
+* Fix: Form Builder - Remove "New!" From "Confirmation Page" tab.
+* i18n: Various changes for improved translations.
+* Dev: Remove legacy action: `simpay_subscription_created` → `simpay_webhook_subscription_created`.
+* Dev: Remove legacy action: `simpay_charge_created` → `simpay_webhook_payment_intent_succeeded`.
 
 = Stripe Payment Forms v4.8.0 - February 26, 2024 =
 
