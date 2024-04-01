@@ -31,7 +31,7 @@ module.exports = function (grunt) {
     // Validates text domain.
     sed: {
       textDomain: {
-        pattern: '"stripe"',
+        pattern: '"simple-pay"',
         replacement: '"stripe"',
         recursive: true,
         path: "includes/core/assets/js/dist",
