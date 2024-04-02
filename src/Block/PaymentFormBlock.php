@@ -30,7 +30,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	 * {@inheritdoc}
 	 */
 	public function register() {
-		$asset_file = SIMPLE_PAY_INC . '/core/assets/js/simpay-block-payment-form.min.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-block-payment-form.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -160,7 +160,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 		// Register block editor payment form assets.
 		wp_register_script(
 			'simpay-block-payment-form',
-			SIMPLE_PAY_INC_URL . '/core/assets/js/simpay-block-payment-form.min.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-block-payment-form.js', // @phpstan-ignore-line
 			array_merge(
 				$script_data['dependencies'],
 				array_keys( $assets->scripts )
@@ -175,15 +175,15 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 				'isUpe'    => simpay_is_upe(),
 				'isLite'   => $this->license->is_lite() ? 1 : 0,
 				'previews' => array(
-					'pro'  => SIMPLE_PAY_INC_URL . '/core/assets/images/blocks/payment-form-preview-pro.png', // @phpstan-ignore-line
-					'lite' => SIMPLE_PAY_INC_URL . '/core/assets/images/blocks/payment-form-preview-lite.png', // @phpstan-ignore-line
+					'pro'  => SIMPLE_PAY_INC_URL . 'core/assets/images/blocks/payment-form-preview-pro.png', // @phpstan-ignore-line
+					'lite' => SIMPLE_PAY_INC_URL . 'core/assets/images/blocks/payment-form-preview-lite.png', // @phpstan-ignore-line
 				),
 			)
 		);
 
 		wp_register_style(
 			'simpay-block-payment-form',
-			SIMPLE_PAY_INC_URL . '/core/assets/css/simpay-block-payment-form.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-block-payment-form.min.css', // @phpstan-ignore-line
 			array_keys( $assets->styles ),
 			$script_data['version']
 		);

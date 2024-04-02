@@ -144,9 +144,6 @@ class PaymentIntent_Controller extends Controller {
 				);
 			}
 
-			// Handle legacy form processing.
-			Legacy\Hooks\simpay_process_form( $form, $form_data, $form_values, $customer_id );
-
 			// Generate arguments based on form data.
 			$paymentintent_args = array_merge(
 				Payments\PaymentIntent\get_args_from_payment_form_request(
@@ -230,5 +227,4 @@ class PaymentIntent_Controller extends Controller {
 			);
 		}
 	}
-
 }

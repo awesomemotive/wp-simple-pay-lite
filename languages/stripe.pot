@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.7.11\n"
+"Project-Id-Version: WP Simple Pay Lite 4.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-25T15:48:15+00:00\n"
+"POT-Creation-Date: 2024-04-01T19:04:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: stripe\n"
@@ -32,6 +32,7 @@ msgstr ""
 #: src/AdminBar/AdminBarSubscriber.php:108
 #: src/Integration/Divi/ExtensionSubscriber.php:333
 #: src/Integration/Elementor/PaymentFormControl.php:35
+#: includes/core/assets/js/dist/simpay-block-button.js:1
 msgid "WP Simple Pay"
 msgstr ""
 
@@ -44,90 +45,87 @@ msgstr ""
 msgid "Pay %s"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:185
+#: includes/core/admin/class-assets.php:186
 #: includes/core/functions/shared.php:590
 msgid "Insert Media"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:189
+#: includes/core/admin/class-assets.php:190
 #: includes/core/functions/shared.php:591
 msgid "Use Image"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:193
+#: includes/core/admin/class-assets.php:194
 msgid "The changes you made will be lost if you navigate away from this page."
 msgstr ""
 
-#: includes/core/admin/class-assets.php:197
+#: includes/core/admin/class-assets.php:198
 msgid "Disconnect"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:201
+#: includes/core/admin/class-assets.php:202
 #: includes/core/functions/admin.php:108
 #: includes/core/functions/admin.php:117
 msgid "Cancel"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:205
-#: includes/core/admin/class-assets.php:241
+#: includes/core/admin/class-assets.php:206
+#: includes/core/admin/class-assets.php:242
 #: src/AdminPage/AboutUsPage.php:459
 #: views/admin-setting-license.php:79
 msgid "Activate"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:209
+#: includes/core/admin/class-assets.php:210
 #: src/AdminPage/AboutUsPage.php:450
 msgid "Activated"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:213
+#: includes/core/admin/class-assets.php:214
 #: src/AdminPage/AboutUsPage.php:446
 msgid "Active"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:217
+#: includes/core/admin/class-assets.php:218
 #: views/admin-setting-license.php:87
 msgid "Deactivate"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:221
+#: includes/core/admin/class-assets.php:222
 #: src/AdminPage/AboutUsPage.php:455
 msgid "Inactive"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:225
+#: includes/core/admin/class-assets.php:226
 msgid "Install Addon"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:229
+#: includes/core/admin/class-assets.php:230
 #: src/Admin/Addon/AddonInstaller.php:180
 msgid "Could not install the addon. Please download it from wpforms.com and install it manually."
 msgstr ""
 
-#: includes/core/admin/class-assets.php:233
+#: includes/core/admin/class-assets.php:234
 msgid "Could not install the plugin automatically. Please download and install it manually."
 msgstr ""
 
-#: includes/core/admin/class-assets.php:237
+#: includes/core/admin/class-assets.php:238
 msgid "Install and Activate"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:245
+#: includes/core/admin/class-assets.php:246
 msgid "Warning: Removing a payment form will prevent active subscriptions from sending upcoming invoice and invoice receipt emails. It is recommended to leave payment forms that have accepted Live Mode payments published."
 msgstr ""
 
-#. translators: Minimum payment amount.
-#. translators: %s Minimum price.
-#: includes/core/admin/class-assets.php:250
+#. translators: %s: Minimum payment amount.
+#: includes/core/admin/class-assets.php:251
 #: includes/core/forms/class-price-option.php:560
 #: includes/core/functions/shared.php:546
 msgid "starting at %s"
 msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval.
-#. translators: %1$s Price option amount. %2$s Recurring interval count. %3$s Recurring interval.
-#. translators: %1$s Price option amount. %2$s Price option currency code. %3$s Recurring interval count. %4$s Recurring interval.
-#: includes/core/admin/class-assets.php:253
+#: includes/core/admin/class-assets.php:254
 #: includes/core/forms/class-price-option.php:512
 #: includes/core/forms/class-price-option.php:649
 #: includes/core/functions/shared.php:549
@@ -161,6 +159,7 @@ msgstr ""
 #: includes/core/admin/class-menus.php:148
 #: includes/core/post-types/simple-pay/menu.php:67
 #: views/admin-education-upgrade-modal.php:25
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -168,6 +167,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/menu.php:25
 #: includes/core/settings/display.php:166
 #: src/AdminBar/AdminBarSubscriber.php:161
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:6
 msgid "Settings"
 msgstr ""
 
@@ -339,12 +339,13 @@ msgstr ""
 msgid "Attention: The payment form does not have prices configured. %1$sAdd price options%2$s to collect payments."
 msgstr ""
 
-#: includes/core/class-shortcodes.php:182
-#: includes/core/class-shortcodes.php:208
+#. translators: Form title
+#: includes/core/class-shortcodes.php:183
+#: includes/core/class-shortcodes.php:210
 msgid "Sorry, \"%s\" is not available for purchase."
 msgstr ""
 
-#: includes/core/class-shortcodes.php:340
+#: includes/core/class-shortcodes.php:342
 msgid "Your payment is still processing. This page will reload in 5 seconds&hellip;"
 msgstr ""
 
@@ -442,7 +443,7 @@ msgid "Used by 2+ million websites."
 msgstr ""
 
 #: includes/core/class-smtp.php:452
-msgid "Free mailers: SMTP.com, Sendinblue, Google Workspace/ Gmail, Mailgun, Postmark, SendGrid."
+msgid "Free mailers: SMTP.com, Brevo, Google Workspace/ Gmail, Mailgun, Postmark, SendGrid."
 msgstr ""
 
 #: includes/core/class-smtp.php:453
@@ -554,12 +555,70 @@ msgctxt "recurring interval"
 msgid "%1$s/%2$s"
 msgstr ""
 
-#. translators: %d payment form ID.
 #. translators: %d: Payment Form ID.
 #: includes/core/forms/class-price-options.php:620
-#: includes/core/post-types/simple-pay/actions.php:284
-#: includes/core/utils/migrations/routines/class-prices-api.php:125
+#: includes/core/post-types/simple-pay/actions.php:283
+#: includes/core/utils/migrations/routines/class-prices-api.php:126
 msgid "WP Simple Pay - Form %d"
+msgstr ""
+
+#: includes/core/forms/functions.php:275
+#: includes/core/forms/functions.php:500
+#: includes/core/forms/functions.php:534
+msgid "Payment Button field is required, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:285
+msgid "The coupon field has been removed since you selected Off-site Stripe Checkout. "
+msgstr ""
+
+#: includes/core/forms/functions.php:332
+msgid "Customer Name field is required for one or more payment methods, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:348
+msgid "Customer Email field is required, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:404
+msgid "Address field is required, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:468
+msgid "Payment Methods is required, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:484
+msgid "Checkout Button field is required, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:509
+msgid "Payment Button has been removed from the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:557
+msgid "Price Selector is required, and has been added to the payment form. "
+msgstr ""
+
+#: includes/core/forms/functions.php:571
+msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:580
+msgid "Custom Amount Input has been removed from the payment form. A price option with that allows user-defined amounts is required. "
+msgstr ""
+
+#: includes/core/forms/functions.php:594
+msgid "Recurring Amount Toggle is required, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:603
+msgid "Recurring Amount Toggle has been removed from the payment form. An optionally recurring price option is required."
+msgstr ""
+
+#: includes/core/forms/functions.php:615
+#: includes/core/forms/functions.php:632
+msgid "Coupon field has been removed from the payment form."
 msgstr ""
 
 #: includes/core/functions/admin.php:56
@@ -804,614 +863,614 @@ msgid "Belgium"
 msgstr ""
 
 #: includes/core/i18n/countries.php:49
-msgid "Belau"
-msgstr ""
-
-#: includes/core/i18n/countries.php:50
 msgid "Belize"
 msgstr ""
 
-#: includes/core/i18n/countries.php:51
+#: includes/core/i18n/countries.php:50
 msgid "Benin"
 msgstr ""
 
-#: includes/core/i18n/countries.php:52
+#: includes/core/i18n/countries.php:51
 msgid "Bermuda"
 msgstr ""
 
-#: includes/core/i18n/countries.php:53
+#: includes/core/i18n/countries.php:52
 msgid "Bhutan"
 msgstr ""
 
-#: includes/core/i18n/countries.php:54
+#: includes/core/i18n/countries.php:53
 msgid "Bolivia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:55
+#: includes/core/i18n/countries.php:54
 msgid "Bonaire, Saint Eustatius and Saba"
 msgstr ""
 
-#: includes/core/i18n/countries.php:56
+#: includes/core/i18n/countries.php:55
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: includes/core/i18n/countries.php:57
+#: includes/core/i18n/countries.php:56
 msgid "Botswana"
 msgstr ""
 
-#: includes/core/i18n/countries.php:58
+#: includes/core/i18n/countries.php:57
 msgid "Bouvet Island"
 msgstr ""
 
-#: includes/core/i18n/countries.php:59
+#: includes/core/i18n/countries.php:58
 #: includes/core/i18n/stripe.php:30
 msgid "Brazil"
 msgstr ""
 
-#: includes/core/i18n/countries.php:60
+#: includes/core/i18n/countries.php:59
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: includes/core/i18n/countries.php:61
+#: includes/core/i18n/countries.php:60
 msgid "Brunei"
 msgstr ""
 
-#: includes/core/i18n/countries.php:62
+#: includes/core/i18n/countries.php:61
 #: includes/core/i18n/stripe.php:31
 msgid "Bulgaria"
 msgstr ""
 
-#: includes/core/i18n/countries.php:63
+#: includes/core/i18n/countries.php:62
 msgid "Burkina Faso"
 msgstr ""
 
-#: includes/core/i18n/countries.php:64
+#: includes/core/i18n/countries.php:63
 msgid "Burundi"
 msgstr ""
 
-#: includes/core/i18n/countries.php:65
+#: includes/core/i18n/countries.php:64
 msgid "Cambodia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:66
+#: includes/core/i18n/countries.php:65
 msgid "Cameroon"
 msgstr ""
 
-#: includes/core/i18n/countries.php:67
+#: includes/core/i18n/countries.php:66
 #: includes/core/i18n/stripe.php:32
 msgid "Canada"
 msgstr ""
 
-#: includes/core/i18n/countries.php:68
+#: includes/core/i18n/countries.php:67
 msgid "Cape Verde"
 msgstr ""
 
-#: includes/core/i18n/countries.php:69
+#: includes/core/i18n/countries.php:68
 msgid "Cayman Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:70
+#: includes/core/i18n/countries.php:69
 msgid "Central African Republic"
 msgstr ""
 
-#: includes/core/i18n/countries.php:71
+#: includes/core/i18n/countries.php:70
 msgid "Chad"
 msgstr ""
 
-#: includes/core/i18n/countries.php:72
+#: includes/core/i18n/countries.php:71
 msgid "Chile"
 msgstr ""
 
-#: includes/core/i18n/countries.php:73
+#: includes/core/i18n/countries.php:72
 msgid "China"
 msgstr ""
 
-#: includes/core/i18n/countries.php:74
+#: includes/core/i18n/countries.php:73
 msgid "Christmas Island"
 msgstr ""
 
-#: includes/core/i18n/countries.php:75
+#: includes/core/i18n/countries.php:74
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:76
+#: includes/core/i18n/countries.php:75
 msgid "Colombia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:77
+#: includes/core/i18n/countries.php:76
 msgid "Comoros"
 msgstr ""
 
-#: includes/core/i18n/countries.php:78
+#: includes/core/i18n/countries.php:77
 msgid "Congo (Brazzaville)"
 msgstr ""
 
-#: includes/core/i18n/countries.php:79
+#: includes/core/i18n/countries.php:78
 msgid "Congo (Kinshasa)"
 msgstr ""
 
-#: includes/core/i18n/countries.php:80
+#: includes/core/i18n/countries.php:79
 msgid "Cook Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:81
+#: includes/core/i18n/countries.php:80
 msgid "Costa Rica"
 msgstr ""
 
-#: includes/core/i18n/countries.php:82
+#: includes/core/i18n/countries.php:81
 #: includes/core/i18n/stripe.php:33
 msgid "Croatia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:83
+#: includes/core/i18n/countries.php:82
 msgid "Cuba"
 msgstr ""
 
-#: includes/core/i18n/countries.php:84
+#: includes/core/i18n/countries.php:83
 msgid "Cura&ccedil;ao"
 msgstr ""
 
-#: includes/core/i18n/countries.php:85
+#: includes/core/i18n/countries.php:84
 #: includes/core/i18n/stripe.php:34
 msgid "Cyprus"
 msgstr ""
 
-#: includes/core/i18n/countries.php:86
+#: includes/core/i18n/countries.php:85
 #: includes/core/i18n/stripe.php:35
 msgid "Czech Republic"
 msgstr ""
 
-#: includes/core/i18n/countries.php:87
+#: includes/core/i18n/countries.php:86
 #: includes/core/i18n/stripe.php:36
 msgid "Denmark"
 msgstr ""
 
-#: includes/core/i18n/countries.php:88
+#: includes/core/i18n/countries.php:87
 msgid "Djibouti"
 msgstr ""
 
-#: includes/core/i18n/countries.php:89
+#: includes/core/i18n/countries.php:88
 msgid "Dominica"
 msgstr ""
 
-#: includes/core/i18n/countries.php:90
+#: includes/core/i18n/countries.php:89
 msgid "Dominican Republic"
 msgstr ""
 
-#: includes/core/i18n/countries.php:91
+#: includes/core/i18n/countries.php:90
 msgid "Ecuador"
 msgstr ""
 
-#: includes/core/i18n/countries.php:92
+#: includes/core/i18n/countries.php:91
 msgid "Egypt"
 msgstr ""
 
-#: includes/core/i18n/countries.php:93
+#: includes/core/i18n/countries.php:92
 msgid "El Salvador"
 msgstr ""
 
-#: includes/core/i18n/countries.php:94
+#: includes/core/i18n/countries.php:93
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: includes/core/i18n/countries.php:95
+#: includes/core/i18n/countries.php:94
 msgid "Eritrea"
 msgstr ""
 
-#: includes/core/i18n/countries.php:96
+#: includes/core/i18n/countries.php:95
 #: includes/core/i18n/stripe.php:37
 msgid "Estonia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:97
+#: includes/core/i18n/countries.php:96
 msgid "Ethiopia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:98
+#: includes/core/i18n/countries.php:97
 msgid "Falkland Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:99
+#: includes/core/i18n/countries.php:98
 msgid "Faroe Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:100
+#: includes/core/i18n/countries.php:99
 msgid "Fiji"
 msgstr ""
 
-#: includes/core/i18n/countries.php:101
+#: includes/core/i18n/countries.php:100
 #: includes/core/i18n/stripe.php:38
 msgid "Finland"
 msgstr ""
 
-#: includes/core/i18n/countries.php:102
+#: includes/core/i18n/countries.php:101
 #: includes/core/i18n/stripe.php:39
 msgid "France"
 msgstr ""
 
-#: includes/core/i18n/countries.php:103
+#: includes/core/i18n/countries.php:102
 msgid "French Guiana"
 msgstr ""
 
-#: includes/core/i18n/countries.php:104
+#: includes/core/i18n/countries.php:103
 msgid "French Polynesia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:105
+#: includes/core/i18n/countries.php:104
 msgid "French Southern Territories"
 msgstr ""
 
-#: includes/core/i18n/countries.php:106
+#: includes/core/i18n/countries.php:105
 msgid "Gabon"
 msgstr ""
 
-#: includes/core/i18n/countries.php:107
+#: includes/core/i18n/countries.php:106
 msgid "Gambia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:108
+#: includes/core/i18n/countries.php:107
 msgid "Georgia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:109
+#: includes/core/i18n/countries.php:108
 #: includes/core/i18n/stripe.php:40
 msgid "Germany"
 msgstr ""
 
-#: includes/core/i18n/countries.php:110
+#: includes/core/i18n/countries.php:109
 msgid "Ghana"
 msgstr ""
 
-#: includes/core/i18n/countries.php:111
+#: includes/core/i18n/countries.php:110
 #: includes/core/i18n/stripe.php:41
 msgid "Gibraltar"
 msgstr ""
 
-#: includes/core/i18n/countries.php:112
+#: includes/core/i18n/countries.php:111
 #: includes/core/i18n/stripe.php:42
 msgid "Greece"
 msgstr ""
 
-#: includes/core/i18n/countries.php:113
+#: includes/core/i18n/countries.php:112
 msgid "Greenland"
 msgstr ""
 
-#: includes/core/i18n/countries.php:114
+#: includes/core/i18n/countries.php:113
 msgid "Grenada"
 msgstr ""
 
-#: includes/core/i18n/countries.php:115
+#: includes/core/i18n/countries.php:114
 msgid "Guadeloupe"
 msgstr ""
 
-#: includes/core/i18n/countries.php:116
+#: includes/core/i18n/countries.php:115
 msgid "Guam"
 msgstr ""
 
-#: includes/core/i18n/countries.php:117
+#: includes/core/i18n/countries.php:116
 #: includes/core/i18n/states.php:655
 msgid "Guatemala"
 msgstr ""
 
-#: includes/core/i18n/countries.php:118
+#: includes/core/i18n/countries.php:117
 msgid "Guernsey"
 msgstr ""
 
-#: includes/core/i18n/countries.php:119
+#: includes/core/i18n/countries.php:118
 msgid "Guinea"
 msgstr ""
 
-#: includes/core/i18n/countries.php:120
+#: includes/core/i18n/countries.php:119
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: includes/core/i18n/countries.php:121
+#: includes/core/i18n/countries.php:120
 msgid "Guyana"
 msgstr ""
 
-#: includes/core/i18n/countries.php:122
+#: includes/core/i18n/countries.php:121
 msgid "Haiti"
 msgstr ""
 
-#: includes/core/i18n/countries.php:123
+#: includes/core/i18n/countries.php:122
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:124
+#: includes/core/i18n/countries.php:123
 msgid "Honduras"
 msgstr ""
 
-#: includes/core/i18n/countries.php:125
+#: includes/core/i18n/countries.php:124
 #: includes/core/i18n/stripe.php:43
 msgid "Hong Kong"
 msgstr ""
 
-#: includes/core/i18n/countries.php:126
+#: includes/core/i18n/countries.php:125
 #: includes/core/i18n/stripe.php:44
 msgid "Hungary"
 msgstr ""
 
-#: includes/core/i18n/countries.php:127
+#: includes/core/i18n/countries.php:126
 msgid "Iceland"
 msgstr ""
 
-#: includes/core/i18n/countries.php:128
+#: includes/core/i18n/countries.php:127
 #: includes/core/i18n/stripe.php:45
 msgid "India"
 msgstr ""
 
-#: includes/core/i18n/countries.php:129
+#: includes/core/i18n/countries.php:128
 msgid "Indonesia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:130
+#: includes/core/i18n/countries.php:129
 msgid "Iran"
 msgstr ""
 
-#: includes/core/i18n/countries.php:131
+#: includes/core/i18n/countries.php:130
 msgid "Iraq"
 msgstr ""
 
-#: includes/core/i18n/countries.php:132
+#: includes/core/i18n/countries.php:131
 #: includes/core/i18n/stripe.php:46
 msgid "Ireland"
 msgstr ""
 
-#: includes/core/i18n/countries.php:133
+#: includes/core/i18n/countries.php:132
 msgid "Isle of Man"
 msgstr ""
 
-#: includes/core/i18n/countries.php:134
+#: includes/core/i18n/countries.php:133
 msgid "Israel"
 msgstr ""
 
-#: includes/core/i18n/countries.php:135
+#: includes/core/i18n/countries.php:134
 #: includes/core/i18n/stripe.php:47
 msgid "Italy"
 msgstr ""
 
-#: includes/core/i18n/countries.php:136
+#: includes/core/i18n/countries.php:135
 msgid "Ivory Coast"
 msgstr ""
 
-#: includes/core/i18n/countries.php:137
+#: includes/core/i18n/countries.php:136
 msgid "Jamaica"
 msgstr ""
 
-#: includes/core/i18n/countries.php:138
+#: includes/core/i18n/countries.php:137
 #: includes/core/i18n/stripe.php:48
 msgid "Japan"
 msgstr ""
 
-#: includes/core/i18n/countries.php:139
+#: includes/core/i18n/countries.php:138
 msgid "Jersey"
 msgstr ""
 
-#: includes/core/i18n/countries.php:140
+#: includes/core/i18n/countries.php:139
 msgid "Jordan"
 msgstr ""
 
-#: includes/core/i18n/countries.php:141
+#: includes/core/i18n/countries.php:140
 msgid "Kazakhstan"
 msgstr ""
 
-#: includes/core/i18n/countries.php:142
+#: includes/core/i18n/countries.php:141
 msgid "Kenya"
 msgstr ""
 
-#: includes/core/i18n/countries.php:143
+#: includes/core/i18n/countries.php:142
 msgid "Kiribati"
 msgstr ""
 
-#: includes/core/i18n/countries.php:144
+#: includes/core/i18n/countries.php:143
 msgid "Kuwait"
 msgstr ""
 
-#: includes/core/i18n/countries.php:145
+#: includes/core/i18n/countries.php:144
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: includes/core/i18n/countries.php:146
+#: includes/core/i18n/countries.php:145
 msgid "Laos"
 msgstr ""
 
-#: includes/core/i18n/countries.php:147
+#: includes/core/i18n/countries.php:146
 #: includes/core/i18n/stripe.php:49
 msgid "Latvia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:148
+#: includes/core/i18n/countries.php:147
 msgid "Lebanon"
 msgstr ""
 
-#: includes/core/i18n/countries.php:149
+#: includes/core/i18n/countries.php:148
 msgid "Lesotho"
 msgstr ""
 
-#: includes/core/i18n/countries.php:150
+#: includes/core/i18n/countries.php:149
 msgid "Liberia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:151
+#: includes/core/i18n/countries.php:150
 msgid "Libya"
 msgstr ""
 
-#: includes/core/i18n/countries.php:152
+#: includes/core/i18n/countries.php:151
 #: includes/core/i18n/stripe.php:50
 msgid "Liechtenstein"
 msgstr ""
 
-#: includes/core/i18n/countries.php:153
+#: includes/core/i18n/countries.php:152
 #: includes/core/i18n/stripe.php:51
 msgid "Lithuania"
 msgstr ""
 
-#: includes/core/i18n/countries.php:154
+#: includes/core/i18n/countries.php:153
 #: includes/core/i18n/stripe.php:52
 msgid "Luxembourg"
 msgstr ""
 
-#: includes/core/i18n/countries.php:155
+#: includes/core/i18n/countries.php:154
 msgid "Macao"
 msgstr ""
 
-#: includes/core/i18n/countries.php:156
+#: includes/core/i18n/countries.php:155
 msgid "North Macedonia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:157
+#: includes/core/i18n/countries.php:156
 msgid "Madagascar"
 msgstr ""
 
-#: includes/core/i18n/countries.php:158
+#: includes/core/i18n/countries.php:157
 msgid "Malawi"
 msgstr ""
 
-#: includes/core/i18n/countries.php:159
+#: includes/core/i18n/countries.php:158
 #: includes/core/i18n/stripe.php:53
 msgid "Malaysia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:160
+#: includes/core/i18n/countries.php:159
 msgid "Maldives"
 msgstr ""
 
-#: includes/core/i18n/countries.php:161
+#: includes/core/i18n/countries.php:160
 msgid "Mali"
 msgstr ""
 
-#: includes/core/i18n/countries.php:162
+#: includes/core/i18n/countries.php:161
 #: includes/core/i18n/stripe.php:54
 msgid "Malta"
 msgstr ""
 
-#: includes/core/i18n/countries.php:163
+#: includes/core/i18n/countries.php:162
 msgid "Marshall Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:164
+#: includes/core/i18n/countries.php:163
 msgid "Martinique"
 msgstr ""
 
-#: includes/core/i18n/countries.php:165
+#: includes/core/i18n/countries.php:164
 msgid "Mauritania"
 msgstr ""
 
-#: includes/core/i18n/countries.php:166
+#: includes/core/i18n/countries.php:165
 msgid "Mauritius"
 msgstr ""
 
-#: includes/core/i18n/countries.php:167
+#: includes/core/i18n/countries.php:166
 msgid "Mayotte"
 msgstr ""
 
-#: includes/core/i18n/countries.php:168
+#: includes/core/i18n/countries.php:167
 #: includes/core/i18n/stripe.php:55
 msgid "Mexico"
 msgstr ""
 
-#: includes/core/i18n/countries.php:169
+#: includes/core/i18n/countries.php:168
 msgid "Micronesia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:170
+#: includes/core/i18n/countries.php:169
 msgid "Moldova"
 msgstr ""
 
-#: includes/core/i18n/countries.php:171
+#: includes/core/i18n/countries.php:170
 msgid "Monaco"
 msgstr ""
 
-#: includes/core/i18n/countries.php:172
+#: includes/core/i18n/countries.php:171
 msgid "Mongolia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:173
+#: includes/core/i18n/countries.php:172
 msgid "Montenegro"
 msgstr ""
 
-#: includes/core/i18n/countries.php:174
+#: includes/core/i18n/countries.php:173
 msgid "Montserrat"
 msgstr ""
 
-#: includes/core/i18n/countries.php:175
+#: includes/core/i18n/countries.php:174
 msgid "Morocco"
 msgstr ""
 
-#: includes/core/i18n/countries.php:176
+#: includes/core/i18n/countries.php:175
 msgid "Mozambique"
 msgstr ""
 
-#: includes/core/i18n/countries.php:177
+#: includes/core/i18n/countries.php:176
 msgid "Myanmar"
 msgstr ""
 
-#: includes/core/i18n/countries.php:178
+#: includes/core/i18n/countries.php:177
 msgid "Namibia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:179
+#: includes/core/i18n/countries.php:178
 msgid "Nauru"
 msgstr ""
 
-#: includes/core/i18n/countries.php:180
+#: includes/core/i18n/countries.php:179
 msgid "Nepal"
 msgstr ""
 
-#: includes/core/i18n/countries.php:181
+#: includes/core/i18n/countries.php:180
 #: includes/core/i18n/stripe.php:56
 msgid "Netherlands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:182
+#: includes/core/i18n/countries.php:181
 msgid "New Caledonia"
 msgstr ""
 
-#: includes/core/i18n/countries.php:183
+#: includes/core/i18n/countries.php:182
 #: includes/core/i18n/stripe.php:57
 msgid "New Zealand"
 msgstr ""
 
-#: includes/core/i18n/countries.php:184
+#: includes/core/i18n/countries.php:183
 msgid "Nicaragua"
 msgstr ""
 
-#: includes/core/i18n/countries.php:185
+#: includes/core/i18n/countries.php:184
 #: includes/core/i18n/states.php:1278
 msgid "Niger"
 msgstr ""
 
-#: includes/core/i18n/countries.php:186
+#: includes/core/i18n/countries.php:185
 msgid "Nigeria"
 msgstr ""
 
-#: includes/core/i18n/countries.php:187
+#: includes/core/i18n/countries.php:186
 msgid "Niue"
 msgstr ""
 
-#: includes/core/i18n/countries.php:188
+#: includes/core/i18n/countries.php:187
 msgid "Norfolk Island"
 msgstr ""
 
-#: includes/core/i18n/countries.php:189
+#: includes/core/i18n/countries.php:188
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: includes/core/i18n/countries.php:190
+#: includes/core/i18n/countries.php:189
 msgid "North Korea"
 msgstr ""
 
-#: includes/core/i18n/countries.php:191
+#: includes/core/i18n/countries.php:190
 #: includes/core/i18n/stripe.php:58
 msgid "Norway"
 msgstr ""
 
-#: includes/core/i18n/countries.php:192
+#: includes/core/i18n/countries.php:191
 msgid "Oman"
 msgstr ""
 
-#: includes/core/i18n/countries.php:193
+#: includes/core/i18n/countries.php:192
 msgid "Pakistan"
+msgstr ""
+
+#: includes/core/i18n/countries.php:193
+msgid "Palau"
 msgstr ""
 
 #: includes/core/i18n/countries.php:194
@@ -10243,18 +10302,6 @@ msgstr ""
 msgid "Invalid email address, please correct and try again."
 msgstr ""
 
-#: includes/core/legacy/functions.php:29
-msgid "Access form properties directly"
-msgstr ""
-
-#: includes/core/legacy/functions.php:46
-msgid "Use simpay_get_setting() directly."
-msgstr ""
-
-#: includes/core/legacy/functions.php:63
-msgid "Access amount through form properties."
-msgstr ""
-
 #. translators: %s Stripe API function.
 #: includes/core/payments/class-stripe-api.php:65
 msgid "Calling %s directly is discouraged. Please use API wrappers or pass the Stripe API key via the ::request() static method."
@@ -10274,68 +10321,90 @@ msgstr ""
 msgid "Please select a valid Tax ID type."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:641
+#: includes/core/payments/payment-confirmation-template-tags.php:647
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:490
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:498
 msgid "Subscription"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:643
+#: includes/core/payments/payment-confirmation-template-tags.php:649
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:481
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:485
 msgid "One time"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:664
+#: includes/core/payments/payment-confirmation-template-tags.php:713
 msgid "The form's title."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:668
+#: includes/core/payments/payment-confirmation-template-tags.php:717
 msgid "The form's description."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:672
+#: includes/core/payments/payment-confirmation-template-tags.php:721
 msgid "The total price of the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:676
+#: includes/core/payments/payment-confirmation-template-tags.php:725
 msgid "The value of the Name form field."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:680
+#: includes/core/payments/payment-confirmation-template-tags.php:729
 msgid "The charge date returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:684
+#: includes/core/payments/payment-confirmation-template-tags.php:733
 msgid "The unique charge ID returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:691
+#: includes/core/payments/payment-confirmation-template-tags.php:740
+msgid "The cumulative cost of selected items."
+msgstr ""
+
+#: includes/core/payments/payment-confirmation-template-tags.php:747
 msgid "The type of payment (one-time or recurring)."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:696
+#: includes/core/payments/payment-confirmation-template-tags.php:752
 msgid "The brand of the card used. Visa, Amex, etc."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:701
+#: includes/core/payments/payment-confirmation-template-tags.php:757
 msgid "The last four digits of the card used."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:706
+#: includes/core/payments/payment-confirmation-template-tags.php:762
 msgid "The calculated tax amount based on the total and the tax percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:733
+#: includes/core/payments/payment-confirmation-template-tags.php:767
+msgid "The calculated fee recovery amount based on the total and the fee recovery percent setting."
+msgstr ""
+
+#: includes/core/payments/payment-confirmation-template-tags.php:773
+msgid "The amount of the coupon applied to the payment."
+msgstr ""
+
+#: includes/core/payments/payment-confirmation-template-tags.php:801
 msgid "Available smart tags:"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation.php:354
+#. translators: %s: Total amount
+#: includes/core/payments/payment-confirmation.php:307
+msgid "Thank you. Your payment of %s has been received. Please check your email for additional information."
+msgstr ""
+
+#. translators: %s: Total amount
+#: includes/core/payments/payment-confirmation.php:313
+msgid "Thank you. Your payment of %s has been received."
+msgstr ""
+
+#: includes/core/payments/payment-confirmation.php:370
 msgid "Unable to locate payment record."
 msgstr ""
 
 #: includes/core/payments/paymentintent.php:121
-#: includes/core/rest-api/v2/class-checkout-session-controller.php:232
+#: includes/core/rest-api/v2/class-checkout-session-controller.php:229
 msgid "Unable to locate payment form price."
 msgstr ""
 
@@ -10344,7 +10413,7 @@ msgid "Sorry, this item is no longer in stock."
 msgstr ""
 
 #. translators: %s Payment form name.
-#: includes/core/post-types/simple-pay/actions.php:848
+#: includes/core/post-types/simple-pay/actions.php:847
 msgid "%s - Duplicate"
 msgstr ""
 
@@ -10478,6 +10547,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:130
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:835
 #: src/Help/HelpDocsContext.php:74
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "Payment Methods"
 msgstr ""
 
@@ -10560,6 +10630,10 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-dropdown-html.php:51
 msgid "Options"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-dropdown-html.php:69
+msgid "Options to choose from separated by a comma."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-dropdown-html.php:79
@@ -10980,7 +11054,7 @@ msgid "Learn more"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:288
-#: includes/core/settings/register-emails.php:443
+#: includes/core/settings/register-emails.php:444
 msgid "Other"
 msgstr ""
 
@@ -11019,6 +11093,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form.php:141
 #: src/Integration/Elementor/PaymentFormControl.php:43
 #: views/email-internal-summary-report.php:106
+#: includes/core/assets/js/dist/simpay-block-button.js:1
 msgid "Payment Form"
 msgstr ""
 
@@ -11052,74 +11127,74 @@ msgid "Payment Page"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:509
-msgid "Confirmation Page <span>New!</span>"
+msgid "Confirmation Page"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:520
+#: includes/core/post-types/simple-pay/edit-form.php:518
 msgid "Email Notifications"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:531
+#: includes/core/post-types/simple-pay/edit-form.php:529
 msgid "Automations"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:692
+#: includes/core/post-types/simple-pay/edit-form.php:690
 msgid "Title"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:723
+#: includes/core/post-types/simple-pay/edit-form.php:721
 msgid "A payment form title is required."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:735
+#: includes/core/post-types/simple-pay/edit-form.php:733
 msgid "Description"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:768
+#: includes/core/post-types/simple-pay/edit-form.php:766
 msgid "Type"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:781
+#: includes/core/post-types/simple-pay/edit-form.php:779
 msgid "Unlock On-Site Payment Forms"
 msgstr ""
 
 #. translators: %s Payment form type.
-#: includes/core/post-types/simple-pay/edit-form.php:787
+#: includes/core/post-types/simple-pay/edit-form.php:785
 msgid "We're sorry, on-site payment forms are not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:822
+#: includes/core/post-types/simple-pay/edit-form.php:820
 msgid "On-site payment form"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:833
+#: includes/core/post-types/simple-pay/edit-form.php:831
 msgid "Off-site Stripe Checkout form"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:853
+#: includes/core/post-types/simple-pay/edit-form.php:851
 msgid "Open in an overlay modal"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:906
+#: includes/core/post-types/simple-pay/edit-form.php:904
 msgid "Spam & Fraud Protection"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:924
+#: includes/core/post-types/simple-pay/edit-form.php:922
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:469
 msgid "CAPTCHA"
 msgstr ""
 
 #. translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form.php:932
+#: includes/core/post-types/simple-pay/edit-form.php:930
 msgid "%1$sConfigure CAPTCHA settings%2$s to adjust anti-spam protection."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:956
+#: includes/core/post-types/simple-pay/edit-form.php:954
 #: src/AntiSpam/EmailVerification.php:326
 msgid "Additional protection enabled!"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:961
+#: includes/core/post-types/simple-pay/edit-form.php:959
 #: src/AntiSpam/EmailVerification.php:331
 msgid "Disabled — missing additional protection!"
 msgstr ""
@@ -11234,6 +11309,7 @@ msgid "Search Payment Forms"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/register.php:58
+#: includes/core/assets/js/dist/simpay-block-payment-form.js:1
 msgid "No payment forms found."
 msgstr ""
 
@@ -11309,61 +11385,66 @@ msgstr ""
 msgid "Payment Form updated."
 msgstr ""
 
+#. translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate. %3$s list of field changes.
+#: includes/core/post-types/simple-pay/register.php:231
+msgid "Payment form updated. %1$sPreview payment form%2$s. %3$s"
+msgstr ""
+
 #. translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate.
-#: includes/core/post-types/simple-pay/register.php:223
-#: includes/core/post-types/simple-pay/register.php:229
+#: includes/core/post-types/simple-pay/register.php:243
+#: includes/core/post-types/simple-pay/register.php:249
 msgid "Payment form updated. %1$sPreview payment form%2$s."
 msgstr ""
 
 #. translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate.
-#: includes/core/post-types/simple-pay/register.php:235
+#: includes/core/post-types/simple-pay/register.php:255
 msgid "Payment form published. %1$sPreview payment form%2$s."
 msgstr ""
 
 #. translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate.
-#: includes/core/post-types/simple-pay/register.php:241
+#: includes/core/post-types/simple-pay/register.php:261
 msgid "Payment form saved. %1$sPreview payment form%2$s."
 msgstr ""
 
 #. translators: %1$s Opening anchor, do not translate. %2$s Closing anchor, do not translate.
-#: includes/core/post-types/simple-pay/register.php:247
+#: includes/core/post-types/simple-pay/register.php:267
 msgid "Payment form submitted. %1$sPreview payment form%2$s."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/register.php:251
+#: includes/core/post-types/simple-pay/register.php:271
 msgid "New payment form created."
 msgstr ""
 
 #. translators: %1$s count.
-#: includes/core/post-types/simple-pay/register.php:271
+#: includes/core/post-types/simple-pay/register.php:292
 msgid "%1$s payment form updated."
 msgid_plural "%1$s payment forms updated."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$s count.
-#: includes/core/post-types/simple-pay/register.php:276
+#: includes/core/post-types/simple-pay/register.php:297
 msgid "%1$s payment form not updated, somebody is editing it."
 msgid_plural "%1$s payment forms not updated, somebody is editing them."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$s count.
-#: includes/core/post-types/simple-pay/register.php:281
+#: includes/core/post-types/simple-pay/register.php:302
 msgid "%1$s payment form permanently deleted."
 msgid_plural "%1$s payment forms permanently deleted."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$s count.
-#: includes/core/post-types/simple-pay/register.php:286
+#: includes/core/post-types/simple-pay/register.php:307
 msgid "%1$s payment forms moved to the Trash."
 msgid_plural "%1$s payment forms moved to the Trash."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %1$s count.
-#: includes/core/post-types/simple-pay/register.php:291
+#: includes/core/post-types/simple-pay/register.php:312
 msgid "%1$s payment form restored from the Trash."
 msgid_plural "%1$s payment forms restored from the Trash."
 msgstr[0] ""
@@ -11371,6 +11452,7 @@ msgstr[1] ""
 
 #: includes/core/recaptcha/index.php:96
 #: includes/core/recaptcha/settings.php:649
+#: src/AntiSpam/Captcha/ScriptUtils.php:65
 msgid "Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys."
 msgstr ""
 
@@ -11576,7 +11658,7 @@ msgstr ""
 #: src/AntiSpam/EmailVerification.php:578
 #: src/AntiSpam/EmailVerification.php:672
 #: src/RestApi/Internal/Payment/Traits/PaymentIntentTrait.php:142
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:129
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:119
 msgid "Invalid request. Please try again."
 msgstr ""
 
@@ -11737,24 +11819,25 @@ msgid "Upload or choose a header image to be displayed at the top of templated e
 msgstr ""
 
 #: includes/core/settings/register-emails.php:434
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "Payments"
 msgstr ""
 
-#: includes/core/settings/register-emails.php:460
+#: includes/core/settings/register-emails.php:461
 msgid "Select an email to configure&hellip;"
 msgstr ""
 
 #. translators: Email label.
-#: includes/core/settings/register-emails.php:470
+#: includes/core/settings/register-emails.php:471
 msgid "Unlock \"%s\" Email"
 msgstr ""
 
 #. translators: %1$s Email label. %2$s License level required.
-#: includes/core/settings/register-emails.php:479
+#: includes/core/settings/register-emails.php:480
 msgid "We're sorry, sending and customizing the \"%1$s\" email is not available on your plan. Please upgrade to the <strong>%2$s</strong> plan or higher to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/settings/register-emails.php:533
+#: includes/core/settings/register-emails.php:534
 msgid "Configure"
 msgstr ""
 
@@ -11773,104 +11856,104 @@ msgctxt "settings subsection label"
 msgid "Advanced"
 msgstr ""
 
-#: includes/core/settings/register-general.php:116
+#: includes/core/settings/register-general.php:118
 msgctxt "setting label"
 msgid "Currency"
 msgstr ""
 
-#: includes/core/settings/register-general.php:121
+#: includes/core/settings/register-general.php:123
 msgctxt "setting label"
 msgid "Default Currency"
 msgstr ""
 
-#: includes/core/settings/register-general.php:152
+#: includes/core/settings/register-general.php:154
 msgctxt "setting label"
 msgid "Currency Position"
 msgstr ""
 
 #. translators: %1$s Currency symbol. %2$s Sample amount.
-#: includes/core/settings/register-general.php:157
+#: includes/core/settings/register-general.php:159
 msgid "Left (%1$s%2$s)"
 msgstr ""
 
 #. translators: %1$s Currency symbol. %2$s Sample amount.
-#: includes/core/settings/register-general.php:165
+#: includes/core/settings/register-general.php:167
 msgid "Right (%1$s%2$s)"
 msgstr ""
 
 #. translators: %1$s Currency symbol. %2$s Sample amount.
-#: includes/core/settings/register-general.php:173
+#: includes/core/settings/register-general.php:175
 msgid "Left with Space (%1$s %2$s)"
 msgstr ""
 
 #. translators: %1$s Currency symbol. %2$s Sample amount.
-#: includes/core/settings/register-general.php:181
+#: includes/core/settings/register-general.php:183
 msgid "Right with Space (%1$s %2$s)"
 msgstr ""
 
-#: includes/core/settings/register-general.php:203
+#: includes/core/settings/register-general.php:205
 msgctxt "setting label"
 msgid "Separator"
 msgstr ""
 
-#: includes/core/settings/register-general.php:204
+#: includes/core/settings/register-general.php:206
 msgid "Use a comma when formatting decimal amounts and use a period to separate thousands."
 msgstr ""
 
-#: includes/core/settings/register-general.php:210
+#: includes/core/settings/register-general.php:212
 msgid "If enabled, amounts will be formatted as \"1.234,56\" instead of \"1,234.56\"."
 msgstr ""
 
-#: includes/core/settings/register-general.php:243
+#: includes/core/settings/register-general.php:245
 msgctxt "setting label"
 msgid "Use the Latest API Version"
 msgstr ""
 
-#: includes/core/settings/register-general.php:248
+#: includes/core/settings/register-general.php:250
 msgctxt "setting label"
 msgid "New Payment Experience"
 msgstr ""
 
-#: includes/core/settings/register-general.php:254
+#: includes/core/settings/register-general.php:256
 msgctxt "setting input label"
 msgid "Use Stripe API version 2022-11-15"
 msgstr ""
 
-#: includes/core/settings/register-general.php:259
+#: includes/core/settings/register-general.php:261
 msgctxt "setting input label"
 msgid "✨ Use the new payment experience ✨"
 msgstr ""
 
 #. translators: %1$s Opening <a> tag, do not translate. %2$s Closing </a> tag, do not translate.
-#: includes/core/settings/register-general.php:274
+#: includes/core/settings/register-general.php:276
 msgid "Enable the new, smarter payment experience. Have questions about opting in or managing customizations? %1$sContact us%2$s"
 msgstr ""
 
-#: includes/core/settings/register-general.php:320
+#: includes/core/settings/register-general.php:322
 msgctxt "setting label"
 msgid "Usage Analytics"
 msgstr ""
 
-#: includes/core/settings/register-general.php:325
+#: includes/core/settings/register-general.php:327
 msgid "Allow usage analytics"
 msgstr ""
 
-#: includes/core/settings/register-general.php:331
+#: includes/core/settings/register-general.php:333
 msgid "Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked."
 msgstr ""
 
-#: includes/core/settings/register-general.php:354
+#: includes/core/settings/register-general.php:356
 msgctxt "setting label"
 msgid "Save Plugin Settings"
 msgstr ""
 
-#: includes/core/settings/register-general.php:359
+#: includes/core/settings/register-general.php:361
 msgctxt "setting input label"
 msgid "Save plugin settings"
 msgstr ""
 
 #. translators: %s Plugin name.
-#: includes/core/settings/register-general.php:369
+#: includes/core/settings/register-general.php:371
 msgid "If UN-checked, all %s plugin data will be removed when the plugin is deleted. However, your data saved with Stripe will not be deleted."
 msgstr ""
 
@@ -12038,21 +12121,21 @@ msgstr ""
 msgid "While in Test Mode no live payments are processed. Make sure Test mode is enabled in your %1$sStripe dashboard%2$s to view your test transactions."
 msgstr ""
 
-#: includes/core/settings/register-stripe.php:285
+#: includes/core/settings/register-stripe.php:286
 msgctxt "setting label"
 msgid "Country"
 msgstr ""
 
-#: includes/core/settings/register-stripe.php:289
+#: includes/core/settings/register-stripe.php:290
 msgid "The country associated with the connected Stripe account."
 msgstr ""
 
-#: includes/core/settings/register-stripe.php:318
+#: includes/core/settings/register-stripe.php:326
 msgctxt "setting label"
 msgid "Stripe Checkout"
 msgstr ""
 
-#: includes/core/settings/register-stripe.php:322
+#: includes/core/settings/register-stripe.php:330
 msgid "Specify \"Auto-detect\" to display Stripe Checkout in the user's preferred language, if available."
 msgstr ""
 
@@ -12062,6 +12145,7 @@ msgstr ""
 
 #. translators: Text before Stripe logo for "Connect with Stripe" button.
 #: includes/core/stripe-connect/functions.php:134
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Connect with"
 msgstr ""
 
@@ -12094,7 +12178,7 @@ msgid "Retrieve a migration object and use the `run()` method directly."
 msgstr ""
 
 #. translators: %s Payment Form ID.
-#: includes/core/utils/migrations/routines/class-prices-api.php:163
+#: includes/core/utils/migrations/routines/class-prices-api.php:165
 msgid "Unable to create Stripe Product container for %s."
 msgstr ""
 
@@ -12179,10 +12263,12 @@ msgstr ""
 #: src/Admin/Education/AbstractProductEducation.php:54
 #: src/AdminPage/AboutUsPage.php:114
 #: views/admin-setting-lite-license.php:151
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Upgrade to WP Simple Pay Pro"
 msgstr ""
 
 #: src/Admin/Education/AbstractProductEducation.php:56
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "See Upgrade Options"
 msgstr ""
 
@@ -12692,9 +12778,39 @@ msgstr ""
 msgid "Please log in to make a payment."
 msgstr ""
 
+#: src/Block/ManageSubscriptionsBlock.php:60
+msgid "Please wait..."
+msgstr ""
+
+#: src/Block/ManageSubscriptionsBlock.php:61
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: src/Block/ManageSubscriptionsBlock.php:62
+msgid "Request failed."
+msgstr ""
+
+#: src/Block/ManageSubscriptionsBlock.php:63
+#: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:82
+#: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:146
+msgid "Invalid CAPTCHA. Please try again."
+msgstr ""
+
+#: src/Block/ManageSubscriptionsBlock.php:89
+msgid "Purchase Email Address"
+msgstr ""
+
+#: src/Block/ManageSubscriptionsBlock.php:91
+msgid "Enter your email"
+msgstr ""
+
+#: src/Block/ManageSubscriptionsBlock.php:93
+msgid "Manage Subscription"
+msgstr ""
+
 #: src/Block/PaymentFormBlock.php:44
 msgctxt "block title"
-msgid "WP Simple Pay"
+msgid "WP Simple Pay - Payment Form"
 msgstr ""
 
 #: src/Block/PaymentFormBlock.php:49
@@ -12770,6 +12886,19 @@ msgstr ""
 msgid "Payment Received for %s"
 msgstr ""
 
+#: src/Emails/Email/ManageSubscriptionsEmail.php:54
+msgid "Manage Subscriptions"
+msgstr ""
+
+#: src/Emails/Email/ManageSubscriptionsEmail.php:61
+msgid "Allow customers to retrieve a password-free secure URL to update their subscription."
+msgstr ""
+
+#. translators: %s Site name
+#: src/Emails/Email/ManageSubscriptionsEmail.php:81
+msgid "Manage your subscription(s) for %s"
+msgstr ""
+
 #: src/Emails/Email/PaymentConfirmationEmail.php:51
 msgid "Send a payment receipt email to the customer upon successful payment"
 msgstr ""
@@ -12780,6 +12909,7 @@ msgid "Payment Receipt for %s"
 msgstr ""
 
 #: src/Emails/Email/PaymentNotificationEmail.php:44
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Payment Notification"
 msgstr ""
 
@@ -12790,6 +12920,25 @@ msgstr ""
 #. translators: %s Site name
 #: src/Emails/Email/PaymentNotificationEmail.php:87
 msgid "New Payment on %s"
+msgstr ""
+
+#: src/Emails/Email/PaymentNotificationEmail.php:118
+msgid "🎉 Congrats! You just received {total-amount}"
+msgstr ""
+
+#. translators: %1$s: Customer email, %2$s: Form title, %3$s: Charge date
+#: src/Emails/Email/PaymentNotificationEmail.php:121
+msgid "A payment from <strong>%1$s</strong> for <strong>%2$s</strong> has been received on <strong>%3$s</strong>."
+msgstr ""
+
+#. translators: %s: Total amount
+#: src/Emails/Email/PaymentNotificationEmail.php:131
+msgid "View %s payment in Stripe →"
+msgstr ""
+
+#. translators: %s: Customer email
+#: src/Emails/Email/PaymentNotificationEmail.php:140
+msgid "View %s in Stripe →"
 msgstr ""
 
 #: src/Emails/Email/SummaryReportEmail.php:47
@@ -12814,6 +12963,7 @@ msgid "Your %1$s WP Simple Pay Summary for %2$s"
 msgstr ""
 
 #: src/Emails/Email/UpcomingInvoiceEmail.php:44
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Upcoming Invoice"
 msgstr ""
 
@@ -12902,7 +13052,6 @@ msgid "Complete Activation"
 msgstr ""
 
 #. translators: License extension date.
-#. translators: End of license grace period.
 #: src/License/LicenseNotificationSubscriber.php:136
 #: views/admin-notice-expired-license.php:37
 msgid "We have extended WP Simple Pay Pro functionality until %s, at which point functionality will become limited. Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality."
@@ -12927,6 +13076,7 @@ msgid "License"
 msgstr ""
 
 #: src/License/LicenseSettingSubscriber.php:79
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "License Key"
 msgstr ""
 
@@ -12946,10 +13096,13 @@ msgstr ""
 
 #: src/Report/ActivityOverviewReport.php:111
 #: views/email-internal-summary-report.php:107
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "Gross Volume"
 msgstr ""
 
 #: src/Report/ActivityOverviewReport.php:131
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:4
 msgid "Successful Payments"
 msgstr ""
 
@@ -12965,12 +13118,56 @@ msgstr ""
 msgid "(no title)"
 msgstr ""
 
-#: src/Repository/BerlinDbRepository.php:166
-msgid "Counting results via a query is not allowed. Use the ::count() method."
+#: src/Report/ActivityOverviewReport.php:415
+msgid "Set up automatic tax collection"
 msgstr ""
 
-#: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:82
-msgid "Invalid CAPTCHA. Please try again."
+#: src/Report/ActivityOverviewReport.php:420
+msgid "Charge a fixed tax rate to everyone or collect different taxes dynamically based on customer location"
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:426
+msgid "Dynamically customize payment receipts"
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:431
+msgid "Customize every single detail based on the data collected from users."
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:437
+msgid "We support 10+ payment methods"
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:442
+msgid "Offer multiple payment methods and allow users to pay with their favorite."
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:448
+msgid "Smart inventory management"
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:453
+msgid "Automatically hide your payment form after a set number of payments."
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:459
+msgid "Encourage payments with discount codes"
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:464
+msgid "Offer a fixed amount or a percentage discount for a specified duration or forever."
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:470
+msgid "Remove Stripe processing fees"
+msgstr ""
+
+#: src/Report/ActivityOverviewReport.php:475
+msgid "Charge an additional fee to ensure you receive the full payment amount."
+msgstr ""
+
+#: src/Repository/BerlinDbRepository.php:166
+msgid "Counting results via a query is not allowed. Use the ::count() method."
 msgstr ""
 
 #: src/RestApi/Internal/Payment/Traits/SubscriptionTrait.php:407
@@ -12987,20 +13184,17 @@ msgstr ""
 msgid "Sorry, this coupon not valid."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:98
-msgid "Sorry, this coupon amount (100%) is not valid."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:115
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:105
 msgid "Sorry, this coupon not valid for the selected currency."
 msgstr ""
 
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:133
 #: src/RestApi/Internal/Payment/Utils/CouponUtils.php:143
 msgid "Sorry, this coupon puts the total below the required minimum amount."
 msgstr ""
 
 #. translators: %1$s Coupon code. %2$s discount amount.
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:154
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:155
 msgid "%1$s: %2$s off"
 msgstr ""
 
@@ -13081,7 +13275,7 @@ msgid "The payment's subscription ID."
 msgstr ""
 
 #: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:479
-msgid "The payment's setup intent ID."
+msgid "The payment's SetupIntent ID."
 msgstr ""
 
 #: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:503
@@ -13124,6 +13318,53 @@ msgstr ""
 msgid "Country/Region code in ISO 3166-1 alpha-2 format."
 msgstr ""
 
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:367
+msgid "The provided form ID is invalid."
+msgstr ""
+
+#. translators: %s is replaced with the required field.
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:395
+msgid "The required field \"%s\" is missing."
+msgstr ""
+
+#. translators: %s is replaced with the required field.
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:401
+msgid "The required field \"%s\" cannot be empty."
+msgstr ""
+
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:409
+msgid "Tax ID and Tax ID Type are required fields."
+msgstr ""
+
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:420
+msgid "Tax ID and Tax ID Type cannot be empty."
+msgstr ""
+
+#. translators: %s is replaced with the address type (billing or shipping).
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:431
+msgid "The %s address name is required."
+msgstr ""
+
+#. translators: %s is replaced with the address type (billing or shipping).
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:436
+msgid "The %s address country is required."
+msgstr ""
+
+#. translators: %s is replaced with the address type (billing or shipping).
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:441
+msgid "The %s address postal code is required."
+msgstr ""
+
+#. translators: %s is replaced with the field type (email, customer_name, or telephone).
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
+msgid "The %s field is required."
+msgstr ""
+
+#. translators: %s is replaced with the field type (email, customer_name, or telephone).
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:460
+msgid "The %s field can not be empty."
+msgstr ""
+
 #: src/RestApi/Internal/Report/GrossVolumePeriodOverPeriodReport.php:152
 #: src/RestApi/Internal/Report/SuccessfulPaymentsPeriodOverPeriodReport.php:142
 msgid "Current period"
@@ -13162,12 +13403,27 @@ msgstr ""
 msgid "The currency to use for the report."
 msgstr ""
 
+#: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:157
+msgid "Something went wrong"
+msgstr ""
+
+#: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:310
+#: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:320
+#: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:332
+msgid "No purchases were found for the supplied email address."
+msgstr ""
+
+#. Translators: %s is a placeholder for the customer's email.
+#: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:347
+msgid "Secure password-free links to manage your past purchases for %s have been sent to your inbox. "
+msgstr ""
+
 #: src/RestApi/__UnstableNotifications.php:74
 msgid "The number of notifications to return."
 msgstr ""
 
 #: src/RestApi/__UnstableNotifications.php:83
-msgid "Notification dismissisal status."
+msgid "Notification dismissal status."
 msgstr ""
 
 #: src/RestApi/__UnstableNotifications.php:107
@@ -13297,6 +13553,7 @@ msgstr ""
 
 #: views/admin-dashboard-widget-lite-upgrade.php:38
 #: views/admin-education-upgrade-modal.php:27
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "Upgrade Now"
 msgstr ""
 
@@ -13329,6 +13586,7 @@ msgstr ""
 #: views/admin-education-payment-form-confirmation-settings.php:59
 #: views/admin-education-payment-form-instant-payouts-settings.php:61
 #: views/admin-education-payment-form-notifications-settings.php:59
+#: includes/core/assets/js/dist/simpay-admin-notifications.js:2
 msgid "Dismiss"
 msgstr ""
 
@@ -13379,6 +13637,7 @@ msgstr ""
 #: views/admin-education-plugin-email-settings.php:64
 #: views/admin-education-plugin-taxes-settings.php:64
 #: views/admin-education-upgrade-modal.php:33
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "Already purchased?"
 msgstr ""
 
@@ -13502,11 +13761,7 @@ msgstr ""
 msgid "Learn How to Test Live Mode Payment Forms →"
 msgstr ""
 
-#: views/admin-footer-promo.php:41
-msgid "Facebook"
-msgstr ""
-
-#: views/admin-footer-promo.php:51
+#: views/admin-footer-promo.php:38
 msgid "Twitter"
 msgstr ""
 
@@ -13620,10 +13875,12 @@ msgid "Using Test Mode"
 msgstr ""
 
 #: views/admin-page-about-us-getting-started.php:68
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Accept Donations"
 msgstr ""
 
 #: views/admin-page-about-us-getting-started.php:73
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Easily fundraise or accept donations online via 135+ supported currencies. Offer one-time or recurring donations of fixed or user-defined amounts."
 msgstr ""
 
@@ -13642,10 +13899,12 @@ msgid "Collect payments indefinitely, bill users through installment plans, coll
 msgstr ""
 
 #: views/admin-page-about-us-getting-started.php:110
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Reconcile Invoices"
 msgstr ""
 
 #: views/admin-page-about-us-getting-started.php:115
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Collect additional custom data on your payment forms such as an Invoice ID to reconcile invoices against your own invoicing system."
 msgstr ""
 
@@ -13839,6 +14098,8 @@ msgid "vs. previous period"
 msgstr ""
 
 #: views/email-internal-summary-report.php:100
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:1
 msgid "Top Forms"
 msgstr ""
 
@@ -13848,4 +14109,602 @@ msgstr ""
 
 #: views/payment-page-output.php:86
 msgid "powered by"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+msgid "Estimated gross amounts for transactions in the selected currency and time period. Amounts do not represent verified financial data."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+msgid "Transaction data requires <url>webhooks to be properly configured</url> to populate correctly."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+msgid "Close"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+msgid "View advanced reports in Stripe →"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:6
+msgid "Currency"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
+msgid "Range"
+msgstr ""
+
+#. translators: %d Form ID.
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:2
+msgid "Payment form %d (deleted)"
+msgstr ""
+
+#. translators: %d The number of forms included in results that are not shown.
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:3
+msgid "…and %d more"
+msgstr ""
+
+#. translators: %s Currency code.
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:4
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:5
+msgid "No %s transactions found."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:4
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:5
+msgid "Please select a different currency, date range, or check back later."
+msgstr ""
+
+#. translators: %s: delta percentage
+#: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:5
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:4
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:6
+msgid "<delta>%1$s%%</delta> vs. previous period"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+msgid "Get a Head Start With Our Pre-Made Form Templates"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+msgid "Select a template"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+msgid "To speed up the process you can select from one of our pre-made templates or start with a <blank>basic form</blank>. Have a suggestion for a new template? <suggest>We'd love to hear it</suggest>!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Reset search"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+msgid "Search for templates"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+#: includes/core/assets/js/dist/simpay-admin-help.js:2
+msgid "Search"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+msgid "Upgrade Required"
+msgstr ""
+
+#. translators: %s Template name
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:2
+msgid "Unlock the \"%s\" Template"
+msgstr ""
+
+#. translators: %$ss Template name. %2$s Minimum license level.
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "We're sorry, the \"%1$s\" template is not available on your plan. Please upgrade to the <strong>%2$s</strong> plan or higher to unlock this and other awesome features."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "<strong>Bonus:</strong> WP Simple Pay Lite users get <highlight>50% off</highlight> regular price, automatically applied at checkout. <upgrade>Upgrade to Pro →</upgrade>"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "<strong>Bonus:</strong> WP Simple Pay Pro users get <highlight>50% off</highlight> upgrade pricing, automatically applied at checkout. <upgrade>See Upgrade Options →</upgrade>"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "Use Template"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "View Demo"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "We need your help!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "We're constantly building more pre-made payment form templates to get you up and running even faster. If you have ideas for future templates, please let us know!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "Suggest a Template"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "Get Access to All of Our Pre-Made Payment Form Templates"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
+msgid "Never start from scratch again! Upgrade to gain access to every payment form template we make and unlock powerful new features."
+msgstr ""
+
+#. translators: %d: number of results.
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:4
+#: includes/core/assets/js/dist/simpay-admin-help.js:2
+msgid "%d result found."
+msgid_plural "%d results found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:4
+msgid "No results found. Have a suggestion for a new template? <suggest>We'd love to hear it</suggest>!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Need help with something?"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Answers are at your fingertips with the WP Simple Pay help panel. Quickly view suggested articles, search for a specific feature, or submit a support ticket."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Got it!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "We're Here to Help"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Close help"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "View Documentation"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Browse documentation, references, and tutorials for WP Simple Pay."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "View All Documentation"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Get Support"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Submit a ticket and our world class support team will be in touch soon."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Submit a Support Ticket"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "View all"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-help.js:2
+msgid "Search the documentation"
+msgstr ""
+
+#. translators: %d Unread notification count.
+#: includes/core/assets/js/dist/simpay-admin-notifications.js:2
+msgid "%d unread notifications"
+msgstr ""
+
+#. translators: %d Unread notification count.
+#: includes/core/assets/js/dist/simpay-admin-notifications.js:3
+msgid "%d Unread Notification"
+msgid_plural "%d Unread Notifications"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/core/assets/js/dist/simpay-admin-notifications.js:3
+msgid "Close notifications"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-notifications.js:3
+msgid "You have no new notifications."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:1
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Today"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:1
+msgid "Learn More →"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Please select a different currency or check back later."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "View customer records"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "View payment record"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Latest Payments"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "View More →"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Last 7 days"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Last 4 weeks"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Last 3 months"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Last 12 months"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Month to date"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Year to date"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Report range"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "Custom"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
+msgid "n/a"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:6
+msgid "Reports"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:6
+msgid "Activity with the selected currency and global payment mode will be shown."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:6
+msgid "Update"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Are you sure you want to exit the wizard?"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Manual setup is only recommended for experienced users."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Exit Setup Wizard"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Continue Setup"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Go back to the Dashboard"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Close and exit the Setup Wizard"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Settings saved"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Unlimited Custom Form Fields"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "On-Site Payment Forms"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "User-Entered Amounts"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Apple Pay & Google Pay"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Accept Recurring Payments"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Drag & Drop Payment Form Builder"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Custom Payment Receipt Emails"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Coupon Codes"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "ACH Debit Payments"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Plus much more…"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Secure payments"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Transparent pricing"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "135+ currencies"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "35+ countries, 40+ languages"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Optimized for conversions"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Connected to Stripe"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Unable to connect to Stripe. Please try again."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Millions of companies of all sizes—from startups to Fortune 500s—use Stripe's software and APIs to accept payments, send payouts, and manage their businesses online."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Create or connect an existing account to instantly start accepting payments."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "← Previous Step"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Connecting…"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Welcome to the WP Simple Pay Setup Wizard!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "We'll guide you through getting WP Simple Pay set up on your site and ready to start accepting payments."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Let's Get Started →"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Activate Your License"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "To get started, please enter your license key. Retrieve your license key from your <strong><a>WP Simple Pay account</a></strong> or purchase receipt email."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "An active license ensures automatic updates and the latest features."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "License activated"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Activate and Continue →"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Connect to Stripe"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Configure Emails"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Payment Receipt"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Send a payment receipt email to the customer upon successful payment."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Receive an email notification when a new payment is made."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Send to:"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Invoice Receipt"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Send a payment receipt email to the customer upon successful invoice."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Remind customers of upcoming invoices and allow payment method changes."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Skip Step"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Save and Continue →"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "🎉 Setup Complete"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Congratulations, you’re ready to start accepting payments!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "WP Simple Pay is just that: simple. Create your first payment form below to start collecting payments, or fine-tune your setup through some of these suggestions:"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Collect tax or GST"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Add anti-spam protection"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Change the default currency"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Customize receipts"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "View Walkthrough"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Return to Dashboard"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Create a Payment Form →"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Help Improve WP Simple Pay + Smart Recommendations"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Get helpful suggestions from WP Simple Pay on how to optimize your payment forms and grow your business or increase donations."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Your Email Address:"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Your email is needed so you receive recommendations."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Help make WP Simple Pay better for everyone"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "By allowing us to track usage data we can better help you because we know which WordPress configurations, themes, and plugins we should test."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Yes, count me in"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Congratulations, you’re ready to start easily and securely accepting payments with WP Simple Pay!"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Special Upgrade Offer - Save 50%"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
+msgid "Upgrade to WP Simple Pay Pro Today and Save"
+msgstr ""
+
+#. translators: %1$d current step count. %2$d total step count
+#: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:2
+msgid "Step %1$d of %2$d"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-button.js:1
+msgid "Select a form…"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-button.js:1
+msgid "Select an overlay or Stripe Checkout payment form to launch."
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-payment-form.js:1
+msgid "Select a form"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-payment-form.js:1
+msgid "Select a payment form"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-payment-form.js:1
+msgid "Form Settings"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-payment-form.js:1
+msgid "Show Title"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-payment-form.js:1
+msgid "Show Description"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-block-payment-form.js:1
+msgid "WP Simple Pay - Payment Form"
 msgstr ""

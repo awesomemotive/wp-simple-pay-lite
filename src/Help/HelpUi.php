@@ -60,11 +60,18 @@ class HelpUi implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function output() {
+		if ( is_admin() ) {
+			global $pagenow;
+
+			if ( 'edit.php' === $pagenow && isset( $_GET['page'] ) && 'simpay-setup-wizard' === $_GET['page'] ) {
+				return;
+			}
+		}
 		$docs = $this->context->get_all_docs();
 
 		wp_enqueue_style(
 			'simpay-admin-help',
-			SIMPLE_PAY_INC_URL . '/core/assets/css/simpay-admin-help.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-help.min.css', // @phpstan-ignore-line
 			array(
 				'wp-components',
 			),
@@ -92,7 +99,7 @@ class HelpUi implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
-		$asset_file = SIMPLE_PAY_INC . '/core/assets/js/simpay-admin-help.min.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-help.asset.php'; // @phpstan-ignore-line
 
 		// Show an icon and link to external docs.
 		if ( ! file_exists( $asset_file ) ) {
@@ -103,7 +110,7 @@ class HelpUi implements SubscriberInterface, LicenseAwareInterface {
 
 		wp_enqueue_script(
 			'simpay-admin-help',
-			SIMPLE_PAY_INC_URL . '/core/assets/js/simpay-admin-help.min.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-help.js', // @phpstan-ignore-line
 			$asset_data['dependencies'],
 			$asset_data['version'],
 			true
@@ -123,11 +130,16 @@ class HelpUi implements SubscriberInterface, LicenseAwareInterface {
 			)
 		);
 
+		wp_set_script_translations(
+			'simpay-admin-help',
+			'simple-pay',
+			SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
+		);
+
 		if ( ! $seen_help ) {
 			update_option( 'simpay_has_seen_help_icon', true );
 		}
 
 		echo '<div id="simpay-branding-bar-help"></div>';
 	}
-
 }

@@ -128,9 +128,6 @@ class Customer_Controller extends Controller {
 				);
 			}
 
-			// Handle legacy hook.
-			Legacy\Hooks\simpay_pre_process_form( $form, $form_data, $form_values );
-
 			$customer_args = Payments\Customer\get_args_from_payment_form_request(
 				$form,
 				$form_data,

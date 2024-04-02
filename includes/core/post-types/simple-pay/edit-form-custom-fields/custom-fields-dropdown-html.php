@@ -66,7 +66,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'attributes'  => array(
 					'data-field-key' => $counter,
 				),
-				'description' => esc_html( 'Options to choose from separated by a comma.', 'simple-pay' ),
+				'description' => esc_html__( 'Options to choose from separated by a comma.', 'stripe' ),
 			)
 		);
 		?>

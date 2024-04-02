@@ -76,14 +76,14 @@ class ActivityReportsPage extends AbstractAdminPage implements AdminSecondaryPag
 	 * {@inheritdoc}
 	 */
 	public function render() {
-		$asset = SIMPLE_PAY_INC . 'core/assets/js/simpay-admin-page-activity-reports.min.asset.php'; // @phpstan-ignore-line
+		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-page-activity-reports.asset.php'; // @phpstan-ignore-line
 
 		if ( file_exists( $asset ) ) {
 			$asset_data = include_once $asset;
 
 			wp_enqueue_script(
 				'simpay-admin-page-activity-reports',
-				SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin-page-activity-reports.min.js', // @phpstan-ignore-line
+				SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-activity-reports.js', // @phpstan-ignore-line
 				$asset_data['dependencies'],
 				$asset_data['version'],
 				true

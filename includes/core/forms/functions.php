@@ -266,6 +266,18 @@ function simpay_payment_form_add_missing_custom_fields(
 
 	switch ( $form_display_type ) {
 		case 'overlay':
+			if ( ! isset( $fields['payment_button'] ) ) {
+				$fields['payment_button'][] = array(
+					'uid' => $count,
+					'id'  => 'simpay_' . $form_id . '_payment_button',
+				);
+
+				$changes[] = __(
+					'Payment Button field is required, and has been added to the payment form.',
+					'stripe'
+				);
+				++$count;
+			}
 			break;
 		case 'stripe_checkout':
 			if ( isset( $fields['coupon'] ) ) {

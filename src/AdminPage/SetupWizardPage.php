@@ -77,14 +77,14 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 	 * {@inheritdoc}
 	 */
 	public function render() {
-		$asset = SIMPLE_PAY_INC . 'core/assets/js/simpay-admin-page-setup-wizard.min.asset.php'; // @phpstan-ignore-line
+		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-page-setup-wizard.asset.php'; // @phpstan-ignore-line
 
 		if ( file_exists( $asset ) ) {
 			$asset_data = include_once $asset;
 
 			wp_enqueue_script(
 				'simpay-setup-wizard',
-				SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin-page-setup-wizard.min.js', // @phpstan-ignore-line
+				SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-setup-wizard.js', // @phpstan-ignore-line
 				$asset_data['dependencies'],
 				$asset_data['version'],
 				true

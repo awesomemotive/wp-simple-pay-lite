@@ -229,10 +229,6 @@ class SendSubscriptions implements SubscriberInterface {
 			}
 		}
 
-		if ( count( $subscriptions ) === 1 ) {
-			return array();
-		}
-
 		return $subscriptions;
 	}
 

@@ -35,7 +35,7 @@ class CouponUtils {
 	 * @param string           $coupon_code The coupon code to get data for.
 	 * @param int              $amount The amount to apply the coupon to.
 	 * @param string           $currency The currency the coupon can apply to.
-	 * @return array<string, string|\SimplePay\Pro\Coupons\Coupon> The coupon data.
+	 * @return array<string, string|\SimplePay\Pro\Coupons\Coupon|string|float|int> The coupon data.
 	 */
 	public static function get_coupon_data( $request, $coupon_code, $amount, $currency ) {
 		$form = PaymentRequestUtils::get_form( $request );
@@ -92,16 +92,6 @@ class CouponUtils {
 		// Determines the discounted amount if percentage-based.
 		if ( ! empty( $coupon->percent_off ) ) {
 
-			// We do not support 100% off coupons.
-			if ( (float) 100 === $coupon->percent_off ) {
-				return array(
-					'error' => esc_html__(
-						'Sorry, this coupon amount (100%) is not valid.',
-						'stripe'
-					),
-				);
-			}
-
 			$discount_percent   = ( 100 - $coupon->percent_off ) / 100;
 			$discount           = (
 				$amount - round( $amount * $discount_percent )
@@ -133,12 +123,22 @@ class CouponUtils {
 			);
 		}
 
-		$min = simpay_convert_amount_to_cents(
+		$min          = simpay_convert_amount_to_cents(
 			simpay_global_minimum_amount()
 		);
+		$is_recurring = PaymentRequestUtils::is_recurring( $request );
+		// Check if the coupon is not 100% and puts the total below the minimum amount for recurring price.
+		if ( $is_recurring && $amount > $discount && (float) 100 !== $coupon->percent_off && ( $amount - $discount ) < $min ) {
+			return array(
+				'error' => esc_html__(
+					'Sorry, this coupon puts the total below the required minimum amount.',
+					'stripe'
+				),
+			);
+		}
 
-		// Check if the coupon puts the total below the minimum amount.
-		if ( ( $amount - $discount ) < $min ) {
+		// Check if the coupon is not 100% and puts the total below the minimum amount for non-recurring price.
+		if ( ! $is_recurring && ( $amount - $discount ) < $min ) {
 			return array(
 				'error' => esc_html__(
 					'Sorry, this coupon puts the total below the required minimum amount.',
@@ -148,15 +148,15 @@ class CouponUtils {
 		}
 
 		return array(
-			'coupon'  => $coupon,
-			'message' => sprintf(
+			'coupon'   => $coupon,
+			'discount' => $discount,
+			'message'  => sprintf(
 				/* translators: %1$s Coupon code. %2$s discount amount. */
 				__( '%1$s: %2$s off', 'stripe' ),
 				$coupon->id,
 				$discount_formatted
 			),
 		);
-
 	}
 
 	/**
@@ -210,5 +210,4 @@ class CouponUtils {
 
 		return (int) round( $unit_amount );
 	}
-
 }

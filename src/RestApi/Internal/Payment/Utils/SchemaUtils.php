@@ -477,7 +477,7 @@ class SchemaUtils {
 				'type'              => 'string',
 				'required'          => true,
 				'description'       => __(
-					'The payment\'s setup intent ID.',
+					'The payment\'s SetupIntent ID.',
 					'stripe'
 				),
 				'validate_callback' => 'rest_validate_request_arg',

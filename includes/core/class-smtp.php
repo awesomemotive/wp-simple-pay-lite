@@ -309,7 +309,7 @@ class SMTP {
 
 		wp_enqueue_script(
 			'simpay-smtp',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/simpay-admin-page-smtp.min.js',
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-smtp.js',
 			array( 'jquery' ),
 			SIMPLE_PAY_VERSION,
 			true
@@ -449,7 +449,7 @@ class SMTP {
 			esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/smtp/screenshot-full.png' ),
 			esc_html__( 'Improves email deliverability in WordPress.', 'stripe' ),
 			esc_html__( 'Used by 2+ million websites.', 'stripe' ),
-			esc_html__( 'Free mailers: SMTP.com, Sendinblue, Google Workspace/ Gmail, Mailgun, Postmark, SendGrid.', 'stripe' ),
+			esc_html__( 'Free mailers: SMTP.com, Brevo, Google Workspace/ Gmail, Mailgun, Postmark, SendGrid.', 'stripe' ),
 			esc_html__( 'Pro mailers: Amazon SES, Microsoft 365/ Outlook.com, Zoho Mail.', 'stripe' )
 		);
 	}

@@ -60,7 +60,7 @@ class NotificationInboxUi implements SubscriberInterface, LicenseAwareInterface,
 			return;
 		}
 
-		$asset_file = SIMPLE_PAY_INC . '/core/assets/js/simpay-admin-notifications.min.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-notifications.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -70,7 +70,7 @@ class NotificationInboxUi implements SubscriberInterface, LicenseAwareInterface,
 
 		wp_enqueue_script(
 			'simpay-admin-notifications',
-			SIMPLE_PAY_INC_URL . '/core/assets/js/simpay-admin-notifications.min.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-notifications.js', // @phpstan-ignore-line
 			$asset_data['dependencies'],
 			$asset_data['version'],
 			true
@@ -84,9 +84,15 @@ class NotificationInboxUi implements SubscriberInterface, LicenseAwareInterface,
 			)
 		);
 
+		wp_set_script_translations(
+			'simpay-admin-notifications',
+			'simple-pay',
+			SIMPLE_PAY_INC . 'core/languages' // @phpstan-ignore-line
+		);
+
 		wp_enqueue_style(
 			'simpay-admin-notifications',
-			SIMPLE_PAY_INC_URL . '/core/assets/css/simpay-admin-notifications.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-notifications.min.css', // @phpstan-ignore-line
 			array(
 				'wp-components',
 			),

@@ -55,7 +55,7 @@ class ButtonBlock extends AbstractBlock {
 	 * @return void
 	 */
 	public function enqueue_block_editor_assets() {
-		$asset_file = SIMPLE_PAY_INC . '/core/assets/js/simpay-block-button.min.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-block-button.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -65,7 +65,7 @@ class ButtonBlock extends AbstractBlock {
 
 		wp_enqueue_script(
 			'simpay-block-button',
-			SIMPLE_PAY_INC_URL . '/core/assets/js/simpay-block-button.min.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-block-button.js', // @phpstan-ignore-line
 			$script_data['dependencies'],
 			$script_data['version']
 		);

@@ -234,6 +234,7 @@ final class Plugin {
 				new Admin\DashboardWidget\DashboardWidgetServiceProvider,
 				new Admin\Education\EducationServiceProvider,
 				new Admin\SiteHealth\SiteHealthServiceProvider,
+				new Admin\Translations\TranslationsServiceProvider,
 			);
 
 			if ( version_compare( $wp_version, '5.5', '>=' ) ) {

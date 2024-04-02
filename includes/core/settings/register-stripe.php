@@ -111,7 +111,7 @@ function register_account_settings( $settings ) {
 					'setting label',
 					'stripe'
 				),
-				'output'     => function() {
+				'output'     => function () {
 					$html = '';
 
 					$mode = simpay_is_test_mode()
@@ -205,7 +205,7 @@ function register_account_settings( $settings ) {
 			)
 		);
 
-		$priority++;
+		++$priority;
 	}
 
 	// Test Mode.
@@ -274,7 +274,8 @@ function register_account_settings( $settings ) {
 	if ( empty( simpay_get_secret_key() ) && false === simpay_can_site_manage_stripe_keys() ) {
 		return;
 	}
-
+	$countries = i18n\get_stripe_countries();
+	asort( $countries );
 	// Country.
 	$settings->add(
 		new Settings\Setting_Select(
@@ -283,7 +284,7 @@ function register_account_settings( $settings ) {
 				'section'     => 'stripe',
 				'subsection'  => 'account',
 				'label'       => esc_html_x( 'Country', 'setting label', 'stripe' ),
-				'options'     => i18n\get_stripe_countries(),
+				'options'     => $countries,
 				'value'       => simpay_get_setting( 'account_country', 'US' ),
 				'description' => wpautop(
 					esc_html__(
@@ -309,6 +310,13 @@ function register_account_settings( $settings ) {
  */
 function register_locale_settings( $settings ) {
 	// Stripe Checkout locale.
+	$locals = i18n\get_stripe_checkout_locales();
+	// Keep auto detect at the top.
+	$auto_detect = $locals['auto'];
+	unset( $locals['auto'] );
+	asort( $locals );
+	$locals = array_merge( array( 'auto' => $auto_detect ), $locals );
+
 	$settings->add(
 		new Settings\Setting_Select(
 			array(
@@ -316,7 +324,7 @@ function register_locale_settings( $settings ) {
 				'section'     => 'stripe',
 				'subsection'  => 'locale',
 				'label'       => esc_html_x( 'Stripe Checkout', 'setting label', 'stripe' ),
-				'options'     => i18n\get_stripe_checkout_locales(),
+				'options'     => $locals,
 				'value'       => simpay_get_setting( 'stripe_checkout_locale', '' ),
 				'description' => wpautop(
 					esc_html__(
@@ -324,7 +332,7 @@ function register_locale_settings( $settings ) {
 						'stripe'
 					)
 				),
-				'schema'     => array(
+				'schema'      => array(
 					'type' => 'string',
 				),
 			)

@@ -19,7 +19,7 @@
 			<a href="<?php echo esc_url( $logo_url ); ?>" target="_blank" rel="noopener noreferrer">
 		<?php endif; ?>
 		<img
-			src="<?php echo esc_url( SIMPLE_PAY_INC_URL . '/core/assets/images/wp-simple-pay.svg' ); // @phpstan-ignore-line ?>"
+			src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/wp-simple-pay.svg' ); // @phpstan-ignore-line ?>"
 			alt="WP Simple Pay"
 			class="simpay-branding-bar__logo"
 		/>

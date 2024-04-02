@@ -357,7 +357,7 @@ function choose_captcha_type() {
 				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				__( 'Learn more about CAPTCHA and how to choose the best option for your website in our %1$sdocumentation%2$s', 'stripe' ),
 				sprintf(
-					'<a href="%s" class="simpay-external-link">',
+					'<a href="%s" target="_blank" class="simpay-external-link">',
 					simpay_docs_link(
 						'',
 						'recaptcha',

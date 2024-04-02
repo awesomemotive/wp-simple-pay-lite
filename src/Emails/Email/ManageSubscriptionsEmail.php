@@ -38,6 +38,18 @@ class ManageSubscriptionsEmail extends AbstractEmail {
 	/**
 	 * {@inheritdoc}
 	 */
+	public function get_licenses() {
+		return array(
+			'plus',
+			'professional',
+			'ultimate',
+			'elite',
+		);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get_label() {
 		return __( 'Manage Subscriptions', 'stripe' );
 	}

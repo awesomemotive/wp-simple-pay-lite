@@ -113,16 +113,35 @@ class PaymentNotificationEmail extends AbstractEmail {
 	 * @return string
 	 */
 	public static function get_473_default_body() {
-		return ( '<h1>🎉 Congrats! You just received {total-amount}</h1>
-
-A payment from <strong>{customer-email}</strong> for <strong>{form-title}</strong> has been received on <strong>{charge-date}</strong>.
-
-<ul>
- 	<li><a href="{payment-url}">View {total-amount} payment in Stripe →</a></li>
- 	<li><a href="{customer-url}">View {customer-email} in Stripe →</a></li>
-</ul>
-
-{custom-fields}' );
+		return sprintf(
+			'<h1>%s</h1>%s<ul>%s%s</ul>%s',
+			esc_html__( '🎉 Congrats! You just received {total-amount}', 'stripe' ),
+			sprintf(
+				/* translators: %1$s: Customer email, %2$s: Form title, %3$s: Charge date */
+				esc_html__( 'A payment from <strong>%1$s</strong> for <strong>%2$s</strong> has been received on <strong>%3$s</strong>.', 'stripe' ),
+				'{customer-email}',
+				'{form-title}',
+				'{charge-date}'
+			),
+			sprintf(
+				'<li><a href="%s">%s</a></li>',
+				esc_url( '{payment-url}' ),
+				sprintf(
+					/* translators: %s: Total amount */
+					esc_html__( 'View %s payment in Stripe →', 'stripe' ),
+					'{total-amount}'
+				)
+			),
+			sprintf(
+				'<li><a href="%s">%s</a></li>',
+				esc_url( '{customer-url}' ),
+				sprintf(
+					/* translators: %s: Customer email */
+					esc_html__( 'View %s in Stripe →', 'stripe' ),
+					'{customer-email}'
+				)
+			),
+			'{custom-fields}'
+		);
 	}
-
 }

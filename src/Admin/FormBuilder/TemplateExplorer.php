@@ -157,7 +157,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function render() {
-		$asset_file = SIMPLE_PAY_INC . '/core/assets/js/simpay-admin-form-template-explorer.min.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-form-template-explorer.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -167,7 +167,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 
 		wp_enqueue_script(
 			'simpay-admin-form-template-explorer',
-			SIMPLE_PAY_INC_URL . '/core/assets/js/simpay-admin-form-template-explorer.min.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-form-template-explorer.js', // @phpstan-ignore-line
 			$asset_data['dependencies'],
 			$asset_data['version'],
 			true
@@ -236,7 +236,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 
 		wp_enqueue_style(
 			'simpay-admin-form-template-explorer',
-			SIMPLE_PAY_INC_URL . '/core/assets/css/simpay-admin-form-template-explorer.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-form-template-explorer.min.css', // @phpstan-ignore-line
 			array(
 				'wp-components',
 			),

@@ -124,9 +124,6 @@ class Checkout_Session_Controller extends Controller {
 				);
 			}
 
-			// Handle legacy form processing.
-			Legacy\Hooks\simpay_process_form( $form, $form_data, $form_values, $customer_id );
-
 			$session_args = $this->get_args_from_payment_form_request(
 				$form,
 				$form_data,
@@ -372,10 +369,8 @@ class Checkout_Session_Controller extends Controller {
 			// Fall back to Payment Form title if set.
 			// This is a change in behavior in 4.1, but matches the Stripe Checkout
 			// usage that falls back to the Product title (Payment Form title).
-		} else {
-			if ( ! empty( $form->company_name ) ) {
+		} elseif ( ! empty( $form->company_name ) ) {
 				$item['description'] = $form->company_name;
-			}
 		}
 
 		$session_args['line_items'] = array( $item );
