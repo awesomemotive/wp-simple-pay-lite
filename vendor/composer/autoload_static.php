@@ -4,52 +4,18 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit701e4bb2effeb4cb61f223daf5d29988
+class ComposerStaticInitc67ad27e892acdfcae5f60503f3a27f3
 {
     public static $prefixLengthsPsr4 = array (
-        'T' => 
-        array (
-            'TijsVerkoyen\\CssToInlineStyles\\' => 31,
-        ),
         'S' => 
         array (
-            'Symfony\\Component\\CssSelector\\' => 30,
-            'Stripe\\' => 7,
             'SimplePay\\Vendor\\Stripe\\' => 24,
             'SimplePay\\Vendor\\' => 17,
             'SimplePay\\Core\\' => 15,
         ),
-        'P' => 
-        array (
-            'Psr\\Container\\' => 14,
-        ),
-        'L' => 
-        array (
-            'League\\Container\\' => 17,
-        ),
-        'I' => 
-        array (
-            'Interop\\Container\\' => 18,
-        ),
-        'B' => 
-        array (
-            'BerlinDB\\' => 9,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'TijsVerkoyen\\CssToInlineStyles\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src',
-        ),
-        'Symfony\\Component\\CssSelector\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/css-selector',
-        ),
-        'Stripe\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
-        ),
         'SimplePay\\Vendor\\Stripe\\' => 
         array (
             0 => __DIR__ . '/../..' . '/lib/Stripe/lib',
@@ -62,22 +28,6 @@ class ComposerStaticInit701e4bb2effeb4cb61f223daf5d29988
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'Psr\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'League\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/container/src',
-        ),
-        'Interop\\Container\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
-        ),
-        'BerlinDB\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/berlindb/core/src',
-        ),
     );
 
     public static $classMap = array (
@@ -87,9 +37,9 @@ class ComposerStaticInit701e4bb2effeb4cb61f223daf5d29988
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit701e4bb2effeb4cb61f223daf5d29988::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit701e4bb2effeb4cb61f223daf5d29988::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit701e4bb2effeb4cb61f223daf5d29988::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc67ad27e892acdfcae5f60503f3a27f3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc67ad27e892acdfcae5f60503f3a27f3::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitc67ad27e892acdfcae5f60503f3a27f3::$classMap;
 
         }, null, ClassLoader::class);
     }
