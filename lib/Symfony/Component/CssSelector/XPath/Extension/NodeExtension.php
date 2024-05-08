@@ -27,21 +27,27 @@ use SimplePay\Vendor\Symfony\Component\CssSelector\XPath\XPathExpr;
  */
 class NodeExtension extends AbstractExtension
 {
-    public const ELEMENT_NAME_IN_LOWER_CASE = 1;
-    public const ATTRIBUTE_NAME_IN_LOWER_CASE = 2;
-    public const ATTRIBUTE_VALUE_IN_LOWER_CASE = 4;
+    const ELEMENT_NAME_IN_LOWER_CASE = 1;
+    const ATTRIBUTE_NAME_IN_LOWER_CASE = 2;
+    const ATTRIBUTE_VALUE_IN_LOWER_CASE = 4;
 
     private $flags;
 
-    public function __construct(int $flags = 0)
+    /**
+     * @param int $flags
+     */
+    public function __construct($flags = 0)
     {
         $this->flags = $flags;
     }
 
     /**
+     * @param int  $flag
+     * @param bool $on
+     *
      * @return $this
      */
-    public function setFlag(int $flag, bool $on): self
+    public function setFlag($flag, $on)
     {
         if ($on && !$this->hasFlag($flag)) {
             $this->flags += $flag;
@@ -54,7 +60,12 @@ class NodeExtension extends AbstractExtension
         return $this;
     }
 
-    public function hasFlag(int $flag): bool
+    /**
+     * @param int $flag
+     *
+     * @return bool
+     */
+    public function hasFlag($flag)
     {
         return (bool) ($this->flags & $flag);
     }
@@ -62,7 +73,7 @@ class NodeExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getNodeTranslators(): array
+    public function getNodeTranslators()
     {
         return [
             'Selector' => [$this, 'translateSelector'],
@@ -70,24 +81,33 @@ class NodeExtension extends AbstractExtension
             'Negation' => [$this, 'translateNegation'],
             'Function' => [$this, 'translateFunction'],
             'Pseudo' => [$this, 'translatePseudo'],
-            'SimplePay_Attribute' => [$this, 'translateAttribute'],
+            'Attribute' => [$this, 'translateAttribute'],
             'Class' => [$this, 'translateClass'],
             'Hash' => [$this, 'translateHash'],
             'Element' => [$this, 'translateElement'],
         ];
     }
 
-    public function translateSelector(Node\SelectorNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateSelector(Node\SelectorNode $node, Translator $translator)
     {
         return $translator->nodeToXPath($node->getTree());
     }
 
-    public function translateCombinedSelector(Node\CombinedSelectorNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateCombinedSelector(Node\CombinedSelectorNode $node, Translator $translator)
     {
         return $translator->addCombination($node->getCombinator(), $node->getSelector(), $node->getSubSelector());
     }
 
-    public function translateNegation(Node\NegationNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateNegation(Node\NegationNode $node, Translator $translator)
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
         $subXpath = $translator->nodeToXPath($node->getSubSelector());
@@ -100,21 +120,30 @@ class NodeExtension extends AbstractExtension
         return $xpath->addCondition('0');
     }
 
-    public function translateFunction(Node\FunctionNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateFunction(Node\FunctionNode $node, Translator $translator)
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
 
         return $translator->addFunction($xpath, $node);
     }
 
-    public function translatePseudo(Node\PseudoNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translatePseudo(Node\PseudoNode $node, Translator $translator)
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
 
         return $translator->addPseudoClass($xpath, $node->getIdentifier());
     }
 
-    public function translateAttribute(Node\AttributeNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateAttribute(Node\AttributeNode $node, Translator $translator)
     {
         $name = $node->getAttribute();
         $safe = $this->isSafeName($name);
@@ -139,25 +168,34 @@ class NodeExtension extends AbstractExtension
         return $translator->addAttributeMatching($xpath, $node->getOperator(), $attribute, $value);
     }
 
-    public function translateClass(Node\ClassNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateClass(Node\ClassNode $node, Translator $translator)
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
 
         return $translator->addAttributeMatching($xpath, '~=', '@class', $node->getName());
     }
 
-    public function translateHash(Node\HashNode $node, Translator $translator): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateHash(Node\HashNode $node, Translator $translator)
     {
         $xpath = $translator->nodeToXPath($node->getSelector());
 
         return $translator->addAttributeMatching($xpath, '=', '@id', $node->getId());
     }
 
-    public function translateElement(Node\ElementNode $node): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateElement(Node\ElementNode $node)
     {
         $element = $node->getElement();
 
-        if ($element && $this->hasFlag(self::ELEMENT_NAME_IN_LOWER_CASE)) {
+        if ($this->hasFlag(self::ELEMENT_NAME_IN_LOWER_CASE)) {
             $element = strtolower($element);
         }
 
@@ -185,12 +223,19 @@ class NodeExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getName(): string
+    public function getName()
     {
         return 'node';
     }
 
-    private function isSafeName(string $name): bool
+    /**
+     * Tests if given name is safe.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    private function isSafeName($name)
     {
         return 0 < preg_match('~^[a-zA-Z_][a-zA-Z0-9_.-]*$~', $name);
     }

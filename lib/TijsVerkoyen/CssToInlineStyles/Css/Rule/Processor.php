@@ -8,11 +8,10 @@ use \SimplePay\Vendor\TijsVerkoyen\CssToInlineStyles\Css\Property\Processor as P
 class Processor
 {
     /**
-     * Splits a string into separate rules
+     * Split a string into seperate rules
      *
      * @param string $rulesString
-     *
-     * @return string[]
+     * @return array
      */
     public function splitIntoSeparateRules($rulesString)
     {
@@ -23,7 +22,6 @@ class Processor
 
     /**
      * @param string $string
-     *
      * @return string
      */
     private function cleanup($string)
@@ -41,12 +39,11 @@ class Processor
     }
 
     /**
-     * Converts a rule-string into an object
+     * Convert a rule-string into an object
      *
      * @param string $rule
      * @param int    $originalOrder
-     *
-     * @return Rule[]
+     * @return array
      */
     public function convertToObjects($rule, $originalOrder)
     {
@@ -77,13 +74,11 @@ class Processor
     }
 
     /**
-     * Calculates the specificity based on a CSS Selector string,
+     * Calculate the specificity based on a CSS Selector string,
      * Based on the patterns from premailer/css_parser by Alex Dunae
      *
      * @see https://github.com/premailer/css_parser/blob/master/lib/css_parser/regexps.rb
-     *
      * @param string $selector
-     *
      * @return Specificity
      */
     public function calculateSpecificityBasedOnASelector($selector)
@@ -123,9 +118,7 @@ class Processor
     }
 
     /**
-     * @param string[] $rules
-     * @param Rule[]   $objects
-     *
+     * @param array $rules
      * @return Rule[]
      */
     public function convertArrayToObjects(array $rules, array $objects = array())
@@ -140,13 +133,12 @@ class Processor
     }
 
     /**
-     * Sorts an array on the specificity element in an ascending way
+     * Sort an array on the specificity element in an ascending way
      * Lower specificity will be sorted to the beginning of the array
      *
-     * @param Rule $e1 The first element.
-     * @param Rule $e2 The second element.
-     *
      * @return int
+     * @param  Rule $e1 The first element.
+     * @param  Rule $e2 The second element.
      */
     public static function sortOnSpecificity(Rule $e1, Rule $e2)
     {

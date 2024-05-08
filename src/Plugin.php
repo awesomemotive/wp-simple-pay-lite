@@ -81,7 +81,7 @@ final class Plugin {
 	 * @return \SimplePay\Core\PluginContainer
 	 */
 	public function setup_container() {
-		$this->container = new PluginContainer();
+		$this->container = new PluginContainer;
 
 		// Event management.
 		$this->container->share(
@@ -92,7 +92,7 @@ final class Plugin {
 		// Scheduler.
 		$this->container->share(
 			'scheduler',
-			function () {
+			function() {
 				$events = $this->container->get( 'event-manager' );
 
 				if ( ! $events instanceof EventManager ) {
@@ -108,7 +108,7 @@ final class Plugin {
 					return new Scheduler\WpCronScheduler( $events );
 				}
 
-				return new Scheduler\ActionScheduler();
+				return new Scheduler\ActionScheduler;
 			}
 		);
 
@@ -200,42 +200,57 @@ final class Plugin {
 		global $wp_version;
 
 		$service_providers = array(
-			new AdminBar\AdminBarServiceProvider(),
-			new AntiSpam\AntiSpamServiceProvider(),
-			new Block\BlockServiceProvider(),
-			new Connect\ConnectServiceProvider(),
-			new CustomerSuccess\CustomerSuccessServiceProvider(),
-			new Emails\EmailServiceProvider(),
-			new FormPreview\FormPreviewServiceProvider(),
-			new Help\HelpServiceProvider(),
-			new Integration\IntegrationServiceProvider(),
-			new License\LicenseServiceProvider(),
-			new NotificationInbox\NotificationInboxServiceProvider(),
-			new PaymentPage\PaymentPageServiceProvider(),
-			new Report\ReportServiceProvider(),
-			new RestApi\RestApiServiceProvider(),
-			new StripeConnect\StripeConnectServiceProvider(),
-			new Transaction\TransactionServiceProvider(),
-			new Webhook\WebhookServiceProvider(),
+			new AdminBar\AdminBarServiceProvider,
+			new AntiSpam\AntiSpamServiceProvider,
+			new CustomerSuccess\CustomerSuccessServiceProvider,
+			new Emails\EmailServiceProvider,
+			new FormPreview\FormPreviewServiceProvider,
+			new Integration\IntegrationServiceProvider,
+			new License\LicenseServiceProvider,
+			new Connect\ConnectServiceProvider,
+			new PaymentPage\PaymentPageServiceProvider,
+			new Report\ReportServiceProvider,
+			new RestApi\RestApiServiceProvider,
+			new StripeConnect\StripeConnectServiceProvider,
+			new Transaction\TransactionServiceProvider,
+			new Webhook\WebhookServiceProvider,
 		);
+
+		if ( version_compare( $wp_version, '5.6', '>=' ) ) {
+			$service_providers[] = new Block\BlockServiceProvider;
+		}
+
+		if ( version_compare( $wp_version, '5.7', '>=' ) ) {
+			$service_providers[] = new Help\HelpServiceProvider;
+			$service_providers[] = new NotificationInbox\NotificationInboxServiceProvider;
+		}
 
 		if ( is_admin() ) {
 			global $wp_version;
 
 			$admin_service_providers = array(
-				new Admin\AdminServiceProvider(),
-				new Admin\Addon\AddonServiceProvider(),
-				new Admin\DashboardWidget\DashboardWidgetServiceProvider(),
-				new Admin\Education\EducationServiceProvider(),
-				new Admin\FormBuilder\FormBuilderServiceProvider(),
-				new Admin\SetupWizard\SetupWizardServiceProvider(),
-				new Admin\SiteHealth\SiteHealthServiceProvider(),
-				new Admin\Translations\TranslationsServiceProvider(),
+				new Admin\AdminServiceProvider,
+				new Admin\Addon\AddonServiceProvider,
+				new Admin\DashboardWidget\DashboardWidgetServiceProvider,
+				new Admin\Education\EducationServiceProvider,
+				new Admin\SiteHealth\SiteHealthServiceProvider,
+				new Admin\Translations\TranslationsServiceProvider,
 			);
+
+			if ( version_compare( $wp_version, '5.5', '>=' ) ) {
+				$admin_service_providers[] =
+					new Admin\SetupWizard\SetupWizardServiceProvider;
+			}
+
+			if ( version_compare( $wp_version, '5.6', '>=' ) ) {
+				$admin_service_providers[] =
+					new Admin\FormBuilder\FormBuilderServiceProvider;
+			}
 
 			return array_merge( $admin_service_providers, $service_providers );
 		}
 
 		return $service_providers;
 	}
+
 }

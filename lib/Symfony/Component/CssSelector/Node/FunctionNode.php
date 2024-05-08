@@ -30,21 +30,28 @@ class FunctionNode extends AbstractNode
     private $arguments;
 
     /**
+     * @param string  $name
      * @param Token[] $arguments
      */
-    public function __construct(NodeInterface $selector, string $name, array $arguments = [])
+    public function __construct(NodeInterface $selector, $name, array $arguments = [])
     {
         $this->selector = $selector;
         $this->name = strtolower($name);
         $this->arguments = $arguments;
     }
 
-    public function getSelector(): NodeInterface
+    /**
+     * @return NodeInterface
+     */
+    public function getSelector()
     {
         return $this->selector;
     }
 
-    public function getName(): string
+    /**
+     * @return string
+     */
+    public function getName()
     {
         return $this->name;
     }
@@ -52,7 +59,7 @@ class FunctionNode extends AbstractNode
     /**
      * @return Token[]
      */
-    public function getArguments(): array
+    public function getArguments()
     {
         return $this->arguments;
     }
@@ -60,12 +67,15 @@ class FunctionNode extends AbstractNode
     /**
      * {@inheritdoc}
      */
-    public function getSpecificity(): Specificity
+    public function getSpecificity()
     {
         return $this->selector->getSpecificity()->plus(new Specificity(0, 1, 0));
     }
 
-    public function __toString(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
     {
         $arguments = implode(', ', array_map(function (Token $token) {
             return "'".$token->getValue()."'";

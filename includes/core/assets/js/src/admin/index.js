@@ -554,8 +554,9 @@ let spAdmin = {};
 
 			e.preventDefault();
 
-			spFormSettings.find( '.postbox' ).each( function () {
+			spFormSettings.find( '.simpay-field-data' ).each( function () {
 				if ( $( this ).is( ':visible' ) ) {
+					$( this ).hide();
 					$( this ).addClass( 'closed' );
 				}
 			} );

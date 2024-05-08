@@ -39,7 +39,7 @@ class HtmlExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getPseudoClassTranslators(): array
+    public function getPseudoClassTranslators()
     {
         return [
             'checked' => [$this, 'translateChecked'],
@@ -56,14 +56,17 @@ class HtmlExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctionTranslators(): array
+    public function getFunctionTranslators()
     {
         return [
             'lang' => [$this, 'translateLang'],
         ];
     }
 
-    public function translateChecked(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateChecked(XPathExpr $xpath)
     {
         return $xpath->addCondition(
             '(@checked '
@@ -72,12 +75,18 @@ class HtmlExtension extends AbstractExtension
         );
     }
 
-    public function translateLink(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateLink(XPathExpr $xpath)
     {
         return $xpath->addCondition("@href and (name(.) = 'a' or name(.) = 'link' or name(.) = 'area')");
     }
 
-    public function translateDisabled(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateDisabled(XPathExpr $xpath)
     {
         return $xpath->addCondition(
             '('
@@ -103,7 +112,10 @@ class HtmlExtension extends AbstractExtension
         // todo: in the second half, add "and is not a descendant of that fieldset element's first legend element child, if any."
     }
 
-    public function translateEnabled(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateEnabled(XPathExpr $xpath)
     {
         return $xpath->addCondition(
             '('
@@ -137,9 +149,11 @@ class HtmlExtension extends AbstractExtension
     }
 
     /**
+     * @return XPathExpr
+     *
      * @throws ExpressionErrorException
      */
-    public function translateLang(XPathExpr $xpath, FunctionNode $function): XPathExpr
+    public function translateLang(XPathExpr $xpath, FunctionNode $function)
     {
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
@@ -157,22 +171,34 @@ class HtmlExtension extends AbstractExtension
         ));
     }
 
-    public function translateSelected(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateSelected(XPathExpr $xpath)
     {
         return $xpath->addCondition("(@selected and name(.) = 'option')");
     }
 
-    public function translateInvalid(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateInvalid(XPathExpr $xpath)
     {
         return $xpath->addCondition('0');
     }
 
-    public function translateHover(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateHover(XPathExpr $xpath)
     {
         return $xpath->addCondition('0');
     }
 
-    public function translateVisited(XPathExpr $xpath): XPathExpr
+    /**
+     * @return XPathExpr
+     */
+    public function translateVisited(XPathExpr $xpath)
     {
         return $xpath->addCondition('0');
     }
@@ -180,7 +206,7 @@ class HtmlExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getName(): string
+    public function getName()
     {
         return 'html';
     }

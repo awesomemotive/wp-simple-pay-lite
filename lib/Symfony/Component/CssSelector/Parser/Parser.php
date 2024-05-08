@@ -29,15 +29,15 @@ class Parser implements ParserInterface
 {
     private $tokenizer;
 
-    public function __construct(?Tokenizer $tokenizer = null)
+    public function __construct(Tokenizer $tokenizer = null)
     {
-        $this->tokenizer = $tokenizer ?? new Tokenizer();
+        $this->tokenizer = $tokenizer ?: new Tokenizer();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function parse(string $source): array
+    public function parse($source)
     {
         $reader = new Reader($source);
         $stream = $this->tokenizer->tokenize($reader);
@@ -50,9 +50,11 @@ class Parser implements ParserInterface
      *
      * @param Token[] $tokens
      *
+     * @return array
+     *
      * @throws SyntaxErrorException
      */
-    public static function parseSeries(array $tokens): array
+    public static function parseSeries(array $tokens)
     {
         foreach ($tokens as $token) {
             if ($token->isString()) {
@@ -79,12 +81,12 @@ class Parser implements ParserInterface
                 return [2, 0];
             case 'n' === $joined:
                 return [1, 0];
-            case !str_contains($joined, 'n'):
+            case false === strpos($joined, 'n'):
                 return [0, $int($joined)];
         }
 
         $split = explode('n', $joined);
-        $first = $split[0] ?? null;
+        $first = isset($split[0]) ? $split[0] : null;
 
         return [
             $first ? ('-' === $first || '+' === $first ? $int($first.'1') : $int($first)) : 1,
@@ -92,7 +94,12 @@ class Parser implements ParserInterface
         ];
     }
 
-    private function parseSelectorList(TokenStream $stream): array
+    /**
+     * Parses selector nodes.
+     *
+     * @return array
+     */
+    private function parseSelectorList(TokenStream $stream)
     {
         $stream->skipWhitespace();
         $selectors = [];
@@ -111,9 +118,16 @@ class Parser implements ParserInterface
         return $selectors;
     }
 
-    private function parserSelectorNode(TokenStream $stream): Node\SelectorNode
+    /**
+     * Parses next selector or combined node.
+     *
+     * @return Node\SelectorNode
+     *
+     * @throws SyntaxErrorException
+     */
+    private function parserSelectorNode(TokenStream $stream)
     {
-        [$result, $pseudoElement] = $this->parseSimpleSelector($stream);
+        list($result, $pseudoElement) = $this->parseSimpleSelector($stream);
 
         while (true) {
             $stream->skipWhitespace();
@@ -134,7 +148,7 @@ class Parser implements ParserInterface
                 $combinator = ' ';
             }
 
-            [$nextSelector, $pseudoElement] = $this->parseSimpleSelector($stream);
+            list($nextSelector, $pseudoElement) = $this->parseSimpleSelector($stream);
             $result = new Node\CombinedSelectorNode($result, $combinator, $nextSelector);
         }
 
@@ -144,9 +158,13 @@ class Parser implements ParserInterface
     /**
      * Parses next simple node (hash, class, pseudo, negation).
      *
+     * @param bool $insideNegation
+     *
+     * @return array
+     *
      * @throws SyntaxErrorException
      */
-    private function parseSimpleSelector(TokenStream $stream, bool $insideNegation = false): array
+    private function parseSimpleSelector(TokenStream $stream, $insideNegation = false)
     {
         $stream->skipWhitespace();
 
@@ -209,7 +227,7 @@ class Parser implements ParserInterface
                         throw SyntaxErrorException::nestedNot();
                     }
 
-                    [$argument, $argumentPseudoElement] = $this->parseSimpleSelector($stream, true);
+                    list($argument, $argumentPseudoElement) = $this->parseSimpleSelector($stream, true);
                     $next = $stream->getNext();
 
                     if (null !== $argumentPseudoElement) {
@@ -260,7 +278,12 @@ class Parser implements ParserInterface
         return [$result, $pseudoElement];
     }
 
-    private function parseElementNode(TokenStream $stream): Node\ElementNode
+    /**
+     * Parses next element node.
+     *
+     * @return Node\ElementNode
+     */
+    private function parseElementNode(TokenStream $stream)
     {
         $peek = $stream->getPeek();
 
@@ -286,7 +309,14 @@ class Parser implements ParserInterface
         return new Node\ElementNode($namespace, $element);
     }
 
-    private function parseAttributeNode(Node\NodeInterface $selector, TokenStream $stream): Node\AttributeNode
+    /**
+     * Parses next attribute node.
+     *
+     * @return Node\AttributeNode
+     *
+     * @throws SyntaxErrorException
+     */
+    private function parseAttributeNode(Node\NodeInterface $selector, TokenStream $stream)
     {
         $stream->skipWhitespace();
         $attribute = $stream->getNextIdentifierOrStar();

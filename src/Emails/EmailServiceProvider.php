@@ -32,10 +32,6 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 			'email-upcoming-invoice',
 			'email-summary-report',
 			'email-manage-subscriptions',
-			'email-payment-processing-confirmation',
-			'email-payment-processing-notification',
-			'email-payment-refunded-confirmation',
-			'email-subscription-cancel',
 		);
 	}
 
@@ -89,31 +85,6 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 			Email\ManageSubscriptionsEmail::class
 		);
 
-		$container->add(
-			'email-payment-processing-confirmation',
-			Email\PaymentProcessingConfirmationEmail::class
-		);
-
-		$container->add(
-			'email-payment-processing-notification',
-			Email\PaymentProcessingNotificationEmail::class
-		);
-
-		$container->add(
-			'email-payment-refunded-confirmation',
-			Email\PaymentRefundedConfirmationEmail::class
-		);
-
-		$container->add(
-			'email-subscription-cancel-confirmation',
-			Email\SubscriptionCancellationConfirmation::class
-		);
-
-		$container->add(
-			'email-subscription-cancel-notification',
-			Email\SubscriptionCancellationNotification::class
-		);
-
 		// Summary report scheduler.
 		$container->add(
 			'email-summary-report-scheduler',
@@ -130,17 +101,12 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 		$container->share( 'email-subscriber', EmailSubscriber::class )
 			->withArgument(
 				array(
-					'invoice-confirmation'             => $container->get( 'email-invoice-confirmation' ),
-					'payment-confirmation'             => $container->get( 'email-payment-confirmation' ),
-					'payment-notification'             => $container->get( 'email-payment-notification' ),
-					'upcoming-invoice'                 => $container->get( 'email-upcoming-invoice' ),
-					'summary-report'                   => $container->get( 'email-summary-report' ),
-					'manage-subscriptions'             => $container->get( 'email-manage-subscriptions' ),
-					'subscription-cancel-confirmation' => $container->get( 'email-subscription-cancel-confirmation' ),
-					'subscription-cancel-notification' => $container->get( 'email-subscription-cancel-notification' ),
-					'payment-processing-confirmation'  => $container->get( 'email-payment-processing-confirmation' ),
-					'payment-processing-notification'  => $container->get( 'email-payment-processing-notification' ),
-					'payment-refunded-confirmation'    => $container->get( 'email-payment-refunded-confirmation' ),
+					'invoice-confirmation' => $container->get( 'email-invoice-confirmation' ),
+					'payment-confirmation' => $container->get( 'email-payment-confirmation' ),
+					'payment-notification' => $container->get( 'email-payment-notification' ),
+					'upcoming-invoice'     => $container->get( 'email-upcoming-invoice' ),
+					'summary-report'       => $container->get( 'email-summary-report' ),
+					'manage-subscriptions' => $container->get( 'email-manage-subscriptions' ),
 				)
 			);
 	}

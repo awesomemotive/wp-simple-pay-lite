@@ -49,40 +49,63 @@ class TokenizerPatterns
         $this->identifierPattern = '-?(?:'.$this->nmStartPattern.')(?:'.$this->nmCharPattern.')*';
         $this->hashPattern = '#((?:'.$this->nmCharPattern.')+)';
         $this->numberPattern = '[+-]?(?:[0-9]*\.[0-9]+|[0-9]+)';
-        $this->quotedStringPattern = '([^\n\r\f\\\\%s]|'.$this->stringEscapePattern.')*';
+        $this->quotedStringPattern = '([^\n\r\f%s]|'.$this->stringEscapePattern.')*';
     }
 
-    public function getNewLineEscapePattern(): string
+    /**
+     * @return string
+     */
+    public function getNewLineEscapePattern()
     {
-        return '~'.$this->newLineEscapePattern.'~';
+        return '~^'.$this->newLineEscapePattern.'~';
     }
 
-    public function getSimpleEscapePattern(): string
+    /**
+     * @return string
+     */
+    public function getSimpleEscapePattern()
     {
-        return '~'.$this->simpleEscapePattern.'~';
+        return '~^'.$this->simpleEscapePattern.'~';
     }
 
-    public function getUnicodeEscapePattern(): string
+    /**
+     * @return string
+     */
+    public function getUnicodeEscapePattern()
     {
-        return '~'.$this->unicodeEscapePattern.'~i';
+        return '~^'.$this->unicodeEscapePattern.'~i';
     }
 
-    public function getIdentifierPattern(): string
+    /**
+     * @return string
+     */
+    public function getIdentifierPattern()
     {
         return '~^'.$this->identifierPattern.'~i';
     }
 
-    public function getHashPattern(): string
+    /**
+     * @return string
+     */
+    public function getHashPattern()
     {
         return '~^'.$this->hashPattern.'~i';
     }
 
-    public function getNumberPattern(): string
+    /**
+     * @return string
+     */
+    public function getNumberPattern()
     {
         return '~^'.$this->numberPattern.'~';
     }
 
-    public function getQuotedStringPattern(string $quote): string
+    /**
+     * @param string $quote
+     *
+     * @return string
+     */
+    public function getQuotedStringPattern($quote)
     {
         return '~^'.sprintf($this->quotedStringPattern, $quote).'~i';
     }

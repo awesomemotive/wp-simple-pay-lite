@@ -44,22 +44,22 @@ class Notice_Manager {
 	 */
 	public function __construct() {
 		self::$core_notices = array(
-			'rest_api_error' => array(
+			'rest_api_error'     => array(
 				'dismissible' => false,
 				'type'        => 'error',
 				'callback'    => 'SimplePay\Core\Admin\Notices\no_rest_api',
 			),
-			'ssl_error'      => array(
+			'ssl_error'          => array(
 				'dismissible' => false,
 				'type'        => 'error',
 				'callback'    => 'SimplePay\Core\Admin\Notices\no_ssl',
 			),
-			'php_version_72' => array(
+			'php_version_56'     => array(
 				'dismissible' => false,
 				'type'        => 'error',
-				'callback'    => 'SimplePay\Core\Admin\Notices\php_version_72',
+				'callback'    => 'SimplePay\Core\Admin\Notices\php_version_56',
 			),
-			'stripe_connect' => array(
+			'stripe_connect'     => array(
 				'dismissible' => true,
 				'type'        => 'info',
 				'callback'    => 'SimplePay\Core\Admin\Notices\stripe_connect',
@@ -217,7 +217,7 @@ class Notice_Manager {
 			return wp_send_json_error();
 		}
 
-		$lifespan = isset( $_POST['lifespan'] )
+		$lifespan  = isset( $_POST['lifespan'] )
 			? sanitize_text_field( $_POST['lifespan'] )
 			: '';
 
@@ -239,6 +239,7 @@ class Notice_Manager {
 		$nonce = isset( $_GET['simpay_dismiss_notice_nonce'] )
 			? sanitize_text_field( $_GET['simpay_dismiss_notice_nonce'] )
 			: false;
+
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;

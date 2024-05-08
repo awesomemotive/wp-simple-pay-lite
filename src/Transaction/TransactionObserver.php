@@ -106,7 +106,6 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					array( 'update_on_failed', 10, 2 ),
 					array( 'maybe_increment_stock', 10, 2 ),
 				),
-			'simpay_webhook_charge_refunded'            => array( 'add_refund_log', 10, 3 ),
 		);
 
 		// Update Checkout Session in Lite when viewing confirmation.
@@ -116,60 +115,6 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		}
 
 		return $observe;
-	}
-
-	/**
-	 * Logs a transaction when a refund is created.
-	 *
-	 * @since 4.10.0
-	 *
-	 * @param \SimplePay\Vendor\Stripe\Event  $event Stripe Event object.
-	 * @param \SimplePay\Vendor\Stripe\Charge $charge Stripe Charge object.
-	 * @param \SimplePay\Core\Abstracts\Form  $form Payment Form.
-	 * @return void
-	 */
-	public function add_refund_log( $event, $charge, $form ) {
-		// Check if the payment made form WP Simple Pay.
-		if ( ! isset( $charge->payment_intent->metadata->simpay_form_id ) ) {
-			return;
-		}
-
-		$transaction = $this->transactions->get_by_object_id(
-			$charge->payment_intent->id
-		);
-
-		// Update the transaction status if it exists.
-		if ( $transaction instanceof Transaction ) {
-			$this->transactions->update(
-				$transaction->id,
-				array(
-					'status'          => 'refunded',
-					'amount_refunded' => $charge->amount_refunded,
-				)
-			);
-		} else {
-			// Create a new transaction log if it doesn't exist.
-			$this->transactions->add(
-				array(
-					'form_id'             => $charge->payment_intent->metadata->simpay_form_id,
-					'object'              => 'payment_intent',
-					'object_id'           => $charge->payment_intent->id,
-					'livemode'            => (bool) $charge->livemode,
-					'amount_total'        => $charge->amount,
-					'amount_subtotal'     => $charge->amount_refunded,
-					'amount_shipping'     => 0,
-					'amount_discount'     => 0,
-					'amount_refunded'     => $charge->amount_refunded,
-					'currency'            => $charge->currency,
-					'payment_method_type' => null,
-					'email'               => $charge->billing_details->email, // @phpstan-ignore-line
-					'customer_id'         => $charge->customer->id, // @phpstan-ignore-line
-					'subscription_id'     => null,
-					'status'              => 'refunded',
-					'application_fee'     => $this->application_fee->has_application_fee(),
-				)
-			);
-		}
 	}
 
 	/**
@@ -346,7 +291,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				 * @param int       $total_discount Total discount, so far.
 				 * @param \stdClass $discount Discount object.
 				 */
-				function ( $total_discount, $discount ) {
+				function( $total_discount, $discount ) {
 					/** @var \stdClass $discount */
 					return $total_discount + $discount->amount;
 				},
@@ -542,7 +487,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 		 * @property int $amount_discount
 		 * @property int $amount_tax
 		 */
-		$default_totals                  = new stdClass();
+		$default_totals                  = new stdClass;
 		$default_totals->amount_shipping = 0;
 		$default_totals->amount_discount = 0;
 		$default_totals->amount_tax      = 0;
@@ -634,7 +579,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			 * @property int $amount_discount
 			 * @property int $amount_tax
 			 */
-			$default_totals                  = new stdClass();
+			$default_totals                  = new stdClass;
 			$default_totals->amount_shipping = 0;
 			$default_totals->amount_discount = 0;
 			$default_totals->amount_tax      = 0;
@@ -726,7 +671,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				 * @param int       $total_discount Total discount, so far.
 				 * @param \stdClass $discount Discount object.
 				 */
-				function ( $total_discount, $discount ) {
+				function( $total_discount, $discount ) {
 					/** @var \stdClass $discount */
 					return $total_discount + $discount->amount;
 				},
@@ -907,4 +852,5 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			$form->adjust_inventory( 'increment', $quantity, $instance_id );
 		}
 	}
+
 }

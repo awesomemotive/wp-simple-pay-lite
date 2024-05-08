@@ -26,5 +26,8 @@ use SimplePay\Vendor\Symfony\Component\CssSelector\Parser\TokenStream;
  */
 interface HandlerInterface
 {
-    public function handle(Reader $reader, TokenStream $stream): bool;
+    /**
+     * @return bool
+     */
+    public function handle(Reader $reader, TokenStream $stream);
 }

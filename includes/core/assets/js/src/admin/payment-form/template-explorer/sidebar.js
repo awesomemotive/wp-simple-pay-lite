@@ -6,10 +6,13 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { Button, NavigableMenu , SearchControl } from '@wordpress/components';
+import { Button, NavigableMenu } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-
+/**
+ * Internal dependencies
+ */
+import SearchControl from './search-control.js';
 
 const baseClassName = 'simpay-form-template-explorer-main__sidebar';
 

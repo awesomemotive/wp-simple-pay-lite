@@ -27,24 +27,36 @@ class CombinedSelectorNode extends AbstractNode
     private $combinator;
     private $subSelector;
 
-    public function __construct(NodeInterface $selector, string $combinator, NodeInterface $subSelector)
+    /**
+     * @param string $combinator
+     */
+    public function __construct(NodeInterface $selector, $combinator, NodeInterface $subSelector)
     {
         $this->selector = $selector;
         $this->combinator = $combinator;
         $this->subSelector = $subSelector;
     }
 
-    public function getSelector(): NodeInterface
+    /**
+     * @return NodeInterface
+     */
+    public function getSelector()
     {
         return $this->selector;
     }
 
-    public function getCombinator(): string
+    /**
+     * @return string
+     */
+    public function getCombinator()
     {
         return $this->combinator;
     }
 
-    public function getSubSelector(): NodeInterface
+    /**
+     * @return NodeInterface
+     */
+    public function getSubSelector()
     {
         return $this->subSelector;
     }
@@ -52,12 +64,15 @@ class CombinedSelectorNode extends AbstractNode
     /**
      * {@inheritdoc}
      */
-    public function getSpecificity(): Specificity
+    public function getSpecificity()
     {
         return $this->selector->getSpecificity()->plus($this->subSelector->getSpecificity());
     }
 
-    public function __toString(): string
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
     {
         $combinator = ' ' === $this->combinator ? '<followed>' : $this->combinator;
 

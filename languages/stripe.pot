@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-03T12:05:38+00:00\n"
+"POT-Creation-Date: 2024-05-08T14:57:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: stripe\n"
@@ -280,7 +280,7 @@ msgstr ""
 
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
-msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
+msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.0</code>, <code>7.1</code>, or <code>7.2</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>7.1</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>7.x</code>, so more testing may be required."
 msgstr ""
 
 #: includes/core/admin/functions/notices.php:181
@@ -605,7 +605,7 @@ msgid "The Custom Amount Input field is required because you have set a custom a
 msgstr ""
 
 #: includes/core/forms/functions.php:580
-msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
+msgid "Custom Amount Input has been removed from the payment form. A price option with that allows user-defined amounts is required. "
 msgstr ""
 
 #: includes/core/forms/functions.php:594
@@ -10317,77 +10317,75 @@ msgid ""
 msgstr ""
 
 #: includes/core/payments/customer.php:213
-#: src/RestApi/Internal/Payment/TaxCalculationRoute.php:162
 #: src/RestApi/Internal/Payment/Traits/CustomerTrait.php:219
 msgid "Please select a valid Tax ID type."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:694
+#: includes/core/payments/payment-confirmation-template-tags.php:647
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:490
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:498
 msgid "Subscription"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:696
+#: includes/core/payments/payment-confirmation-template-tags.php:649
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:481
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:485
 msgid "One time"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:760
+#: includes/core/payments/payment-confirmation-template-tags.php:713
 msgid "The form's title."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:764
+#: includes/core/payments/payment-confirmation-template-tags.php:717
 msgid "The form's description."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:768
+#: includes/core/payments/payment-confirmation-template-tags.php:721
 msgid "The total price of the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:772
+#: includes/core/payments/payment-confirmation-template-tags.php:725
 msgid "The value of the Name form field."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:776
+#: includes/core/payments/payment-confirmation-template-tags.php:729
 msgid "The charge date returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:780
+#: includes/core/payments/payment-confirmation-template-tags.php:733
 msgid "The unique charge ID returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:784
-#: includes/core/payments/payment-confirmation-template-tags.php:791
+#: includes/core/payments/payment-confirmation-template-tags.php:740
 msgid "The cumulative cost of selected items."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:798
+#: includes/core/payments/payment-confirmation-template-tags.php:747
 msgid "The type of payment (one-time or recurring)."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:803
+#: includes/core/payments/payment-confirmation-template-tags.php:752
 msgid "The brand of the card used. Visa, Amex, etc."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:808
+#: includes/core/payments/payment-confirmation-template-tags.php:757
 msgid "The last four digits of the card used."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:813
+#: includes/core/payments/payment-confirmation-template-tags.php:762
 msgid "The calculated tax amount based on the total and the tax percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:818
+#: includes/core/payments/payment-confirmation-template-tags.php:767
 msgid "The calculated fee recovery amount based on the total and the fee recovery percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:824
+#: includes/core/payments/payment-confirmation-template-tags.php:773
 msgid "The amount of the coupon applied to the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:852
+#: includes/core/payments/payment-confirmation-template-tags.php:801
 msgid "Available smart tags:"
 msgstr ""
 
@@ -11056,7 +11054,7 @@ msgid "Learn more"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:288
-#: includes/core/settings/register-emails.php:449
+#: includes/core/settings/register-emails.php:444
 msgid "Other"
 msgstr ""
 
@@ -11650,8 +11648,6 @@ msgstr ""
 
 #: includes/core/rest-api/class-controller.php:104
 #: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:72
-#: src/RestApi/Internal/Payment/ProPaymentCreateRoute.php:88
-#: src/RestApi/Internal/Payment/UpdatePaymentMethodRoute.php:147
 msgid "Sorry, you have made too many requests. Please try again later."
 msgstr ""
 
@@ -11661,8 +11657,6 @@ msgstr ""
 #: includes/core/rest-api/v2/class-paymentintent-controller.php:143
 #: src/AntiSpam/EmailVerification.php:578
 #: src/AntiSpam/EmailVerification.php:672
-#: src/RestApi/Internal/Payment/ProPaymentCreateRoute.php:136
-#: src/RestApi/Internal/Payment/TaxCalculationRoute.php:108
 #: src/RestApi/Internal/Payment/Traits/PaymentIntentTrait.php:142
 #: src/RestApi/Internal/Payment/Utils/CouponUtils.php:119
 msgid "Invalid request. Please try again."
@@ -11829,21 +11823,21 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
-#: includes/core/settings/register-emails.php:466
+#: includes/core/settings/register-emails.php:461
 msgid "Select an email to configure&hellip;"
 msgstr ""
 
 #. translators: Email label.
-#: includes/core/settings/register-emails.php:476
+#: includes/core/settings/register-emails.php:471
 msgid "Unlock \"%s\" Email"
 msgstr ""
 
 #. translators: %1$s Email label. %2$s License level required.
-#: includes/core/settings/register-emails.php:485
+#: includes/core/settings/register-emails.php:480
 msgid "We're sorry, sending and customizing the \"%1$s\" email is not available on your plan. Please upgrade to the <strong>%2$s</strong> plan or higher to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/settings/register-emails.php:539
+#: includes/core/settings/register-emails.php:534
 msgid "Configure"
 msgstr ""
 
@@ -12798,7 +12792,6 @@ msgstr ""
 
 #: src/Block/ManageSubscriptionsBlock.php:63
 #: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:82
-#: src/RestApi/Internal/Payment/ProPaymentCreateRoute.php:109
 #: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:146
 msgid "Invalid CAPTCHA. Please try again."
 msgstr ""
@@ -12946,71 +12939,6 @@ msgstr ""
 #. translators: %s: Customer email
 #: src/Emails/Email/PaymentNotificationEmail.php:140
 msgid "View %s in Stripe →"
-msgstr ""
-
-#: src/Emails/Email/PaymentProcessingConfirmationEmail.php:44
-msgid "Payment Processing Confirmation"
-msgstr ""
-
-#: src/Emails/Email/PaymentProcessingConfirmationEmail.php:51
-msgid "Send a payment processing confirmation email to the customer upon successful payment"
-msgstr ""
-
-#. translators: %s Site name
-#: src/Emails/Email/PaymentProcessingConfirmationEmail.php:71
-msgid "Payment Processing Confirmation for %s"
-msgstr ""
-
-#: src/Emails/Email/PaymentProcessingNotificationEmail.php:44
-msgid "Payment Processing Notification"
-msgstr ""
-
-#: src/Emails/Email/PaymentProcessingNotificationEmail.php:51
-msgid "Send a payment processing notification email to the merchant upon successful payment"
-msgstr ""
-
-#. translators: %s Site name
-#: src/Emails/Email/PaymentProcessingNotificationEmail.php:88
-msgid "Payment Processing Notification for %s"
-msgstr ""
-
-#: src/Emails/Email/PaymentRefundedConfirmationEmail.php:44
-msgid "Payment Refunded Confirmation"
-msgstr ""
-
-#: src/Emails/Email/PaymentRefundedConfirmationEmail.php:51
-msgid "Send a confirmation email for a payment refund"
-msgstr ""
-
-#. translators: %s Site name
-#: src/Emails/Email/PaymentRefundedConfirmationEmail.php:87
-msgid "Payment refunded on %s"
-msgstr ""
-
-#: src/Emails/Email/SubscriptionCancellationConfirmation.php:53
-msgid "Subscription Cancellation Confirmation"
-msgstr ""
-
-#: src/Emails/Email/SubscriptionCancellationConfirmation.php:60
-msgid "Email sent to users when their subscription is cancelled."
-msgstr ""
-
-#. translators: %s Site name
-#: src/Emails/Email/SubscriptionCancellationConfirmation.php:80
-msgid "Subscription Cancelled for %s"
-msgstr ""
-
-#: src/Emails/Email/SubscriptionCancellationNotification.php:53
-msgid "Subscription Cancellation Notification"
-msgstr ""
-
-#: src/Emails/Email/SubscriptionCancellationNotification.php:60
-msgid "Email sent to merchants when a subscription is cancelled."
-msgstr ""
-
-#. translators: %s Site name
-#: src/Emails/Email/SubscriptionCancellationNotification.php:97
-msgid "Subscription Cancellation Notification for %s"
 msgstr ""
 
 #: src/Emails/Email/SummaryReportEmail.php:47
@@ -13242,18 +13170,6 @@ msgstr ""
 msgid "Counting results via a query is not allowed. Use the ::count() method."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/PaymentUpdateRoute.php:114
-#: src/RestApi/Internal/Payment/PaymentUpdateRoute.php:149
-#: src/RestApi/Internal/Payment/PaymentUpdateRoute.php:159
-#: src/RestApi/Internal/Payment/PaymentUpdateRoute.php:169
-#: src/RestApi/Internal/Payment/PaymentUpdateRoute.php:196
-msgid "Invalid request. Please try again"
-msgstr ""
-
-#: src/RestApi/Internal/Payment/TaxCalculationRoute.php:133
-msgid "Please enter a valid address to calculate tax."
-msgstr ""
-
 #: src/RestApi/Internal/Payment/Traits/SubscriptionTrait.php:407
 msgid "Plan Setup Fee"
 msgstr ""
@@ -13449,14 +13365,6 @@ msgstr ""
 msgid "The %s field can not be empty."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/ValidateCouponRoute.php:103
-msgid "Please enter a coupon code."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/ValidateCouponRoute.php:133
-msgid "Coupon is invalid."
-msgstr ""
-
 #: src/RestApi/Internal/Report/GrossVolumePeriodOverPeriodReport.php:152
 #: src/RestApi/Internal/Report/SuccessfulPaymentsPeriodOverPeriodReport.php:142
 msgid "Current period"
@@ -13468,29 +13376,21 @@ msgid "Previous period"
 msgstr ""
 
 #. translators: %s Payment created date.
-#: src/RestApi/Internal/Report/LatestPaymentsReport.php:160
+#: src/RestApi/Internal/Report/LatestPaymentsReport.php:155
 msgid "%s ago"
 msgstr ""
 
-#: src/RestApi/Internal/Report/LatestPaymentsReport.php:194
+#: src/RestApi/Internal/Report/LatestPaymentsReport.php:188
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:356
 msgid "Succeeded"
 msgstr ""
 
-#: src/RestApi/Internal/Report/LatestPaymentsReport.php:196
+#: src/RestApi/Internal/Report/LatestPaymentsReport.php:190
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:354
 msgid "Failed"
 msgstr ""
 
-#: src/RestApi/Internal/Report/LatestPaymentsReport.php:198
-msgid "Refunded"
-msgstr ""
-
-#: src/RestApi/Internal/Report/LatestPaymentsReport.php:200
-msgid "Partially Refunded"
-msgstr ""
-
-#: src/RestApi/Internal/Report/LatestPaymentsReport.php:202
+#: src/RestApi/Internal/Report/LatestPaymentsReport.php:192
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:358
 msgid "Incomplete"
 msgstr ""
@@ -14280,6 +14180,11 @@ msgid "To speed up the process you can select from one of our pre-made templates
 msgstr ""
 
 #: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
+#: includes/core/assets/js/dist/simpay-admin-help.js:1
+msgid "Reset search"
+msgstr ""
+
+#: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:1
 msgid "Search for templates"
 msgstr ""
 
@@ -14433,10 +14338,6 @@ msgstr ""
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "Please select a different currency or check back later."
-msgstr ""
-
-#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
-msgid "%s refund was initiated"
 msgstr ""
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2

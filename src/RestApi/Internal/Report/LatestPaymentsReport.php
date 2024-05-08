@@ -114,7 +114,7 @@ class LatestPaymentsReport implements SubscriberInterface {
 		$results = $wpdb->get_results(
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->prepare(
-				"SELECT * FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status IN ( 'succeeded', 'failed', 'requires_payment_method', 'refunded') AND object IN ('payment_intent', 'setup_intent') ORDER BY date_created DESC LIMIT 0, 10",
+				"SELECT * FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status IN ( 'succeeded', 'failed', 'requires_payment_method') AND object IN ('payment_intent', 'setup_intent') ORDER BY date_created DESC LIMIT 0, 10",
 				simpay_is_test_mode() ? 0 : 1,
 				$currency
 			),
@@ -144,16 +144,11 @@ class LatestPaymentsReport implements SubscriberInterface {
 			$result->currency
 		);
 
-		$result->amount_refunded_formatted = simpay_format_currency(
-			$result->amount_refunded,
-			$result->currency
-		);
-
 		$result->payment_method_type_icon = $this->get_payment_method_type_icon(
 			$result->payment_method_type
 		);
 
-		$result->status_formatted = $this->format_status( $result );
+		$result->status_formatted = $this->format_status( $result->status );
 
 		$result->date_created_human_time_diff = sprintf(
 			/* translators: %s Payment created date. */
@@ -184,39 +179,18 @@ class LatestPaymentsReport implements SubscriberInterface {
 	 *
 	 * @since 4.6.7
 	 *
-	 * @param \stdClass $result Result object.
+	 * @param string $status Status.
 	 * @return string
 	 */
-	private function format_status( $result ) {
-		$status = $this->get_status( $result );
+	private function format_status( $status ) {
 		switch ( $status ) {
 			case 'succeeded':
 				return __( 'Succeeded', 'stripe' );
 			case 'failed':
 				return __( 'Failed', 'stripe' );
-			case 'refunded':
-				return __( 'Refunded', 'stripe' );
-			case 'partial_refund':
-				return __( 'Partially Refunded', 'stripe' );
 			default:
 				return __( 'Incomplete', 'stripe' );
 		}
-	}
-
-	/**
-	 * Formats status for the Latest Payments report.
-	 *
-	 * @since 4.10.0
-	 *
-	 * @param \stdClass $result Result object.
-	 * @return string
-	 */
-	private function get_status( $result ) {
-		if ( $result->amount_refunded !== $result->amount_total && 'refunded' === $result->status ) {
-			return 'partial_refund';
-		}
-
-		return $result->status;
 	}
 
 	/**
@@ -262,4 +236,5 @@ class LatestPaymentsReport implements SubscriberInterface {
 			return $payment_method->icon_sm;
 		}
 	}
+
 }

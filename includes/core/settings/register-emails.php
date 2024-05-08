@@ -438,11 +438,6 @@ function add_email_selector() {
 				Emails\Email\UpcomingInvoiceEmail::class,
 				Emails\Email\InvoiceConfirmationEmail::class,
 				Emails\Email\ManageSubscriptionsEmail::class,
-				Emails\Email\PaymentProcessingConfirmationEmail::class,
-				Emails\Email\PaymentProcessingNotificationEmail::class,
-				Emails\Email\PaymentRefundedConfirmationEmail::class,
-				Emails\Email\SubscriptionCancellationConfirmation::class,
-				Emails\Email\SubscriptionCancellationNotification::class,
 			),
 		),
 		'general' => array(

@@ -7,11 +7,10 @@ use SimplePay\Vendor\Symfony\Component\CssSelector\Node\Specificity;
 class Processor
 {
     /**
-     * Split a string into separate properties
+     * Split a string into seperate properties
      *
      * @param string $propertiesString
-     *
-     * @return string[]
+     * @return array
      */
     public function splitIntoSeparateProperties($propertiesString)
     {
@@ -41,9 +40,8 @@ class Processor
     }
 
     /**
-     * @param string $string
-     *
-     * @return string
+     * @param $string
+     * @return mixed|string
      */
     private function cleanup($string)
     {
@@ -60,10 +58,9 @@ class Processor
     }
 
     /**
-     * Converts a property-string into an object
+     * Convert a property-string into an object
      *
      * @param string $property
-     *
      * @return Property|null
      */
     public function convertToObject($property, Specificity $specificity = null)
@@ -85,10 +82,9 @@ class Processor
     }
 
     /**
-     * Converts an array of property-strings into objects
+     * Convert an array of property-strings into objects
      *
-     * @param string[] $properties
-     *
+     * @param array $properties
      * @return Property[]
      */
     public function convertArrayToObjects(array $properties, Specificity $specificity = null)
@@ -110,8 +106,7 @@ class Processor
     /**
      * Build the property-string for multiple properties
      *
-     * @param Property[] $properties
-     *
+     * @param array $properties
      * @return string
      */
     public function buildPropertiesString(array $properties)

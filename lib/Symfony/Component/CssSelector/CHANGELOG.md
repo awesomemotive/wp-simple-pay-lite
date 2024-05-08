@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-4.4.0
------
-
- * Added support for `*:only-of-type`
-
 2.8.0
 -----
 

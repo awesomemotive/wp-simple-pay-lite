@@ -11,7 +11,7 @@ import {
 	useFocusOnMount,
 	useConstrainedTabbing,
 } from '@wordpress/compose';
-import { Animate , SearchControl } from '@wordpress/components';
+import { Animate } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,6 +20,7 @@ import { __ } from '@wordpress/i18n';
 import { useMergeRefs } from './../../hooks';
 import HelpPanelHeader from './header.js';
 import HelpPanelFooter from './footer.js';
+import SearchControl from './search-control.js';
 import SearchResults from './search-results.js';
 
 function HelpPanel( { onClose, onSearch, searchTerm } ) {
