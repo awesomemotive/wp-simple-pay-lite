@@ -132,7 +132,7 @@ class HelpUi implements SubscriberInterface, LicenseAwareInterface {
 
 		wp_set_script_translations(
 			'simpay-admin-help',
-			'simple-pay',
+			'stripe',
 			SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
 		);
 
