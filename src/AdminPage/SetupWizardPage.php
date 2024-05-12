@@ -170,7 +170,7 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 
 			wp_set_script_translations(
 				'simpay-setup-wizard',
-				'simple-pay',
+				'stripe',
 				SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
 			);
 
