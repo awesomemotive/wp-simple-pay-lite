@@ -230,7 +230,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 
 		wp_set_script_translations(
 			'simpay-admin-form-template-explorer',
-			'simple-pay',
+			'stripe',
 			SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
 		);
 
