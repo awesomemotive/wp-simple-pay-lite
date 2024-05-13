@@ -102,6 +102,10 @@ function parse_content( $content, $payment_confirmation_data ) {
 
 			if ( has_filter( sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ) ) ) {
 				foreach ( $tags_with_keys as $tag_with_keys ) {
+					$keys = explode( '|', $tag_with_keys );
+
+					$fallback_value = isset( $keys[1] ) ? trim( trim( substr( $keys[1], 1, -1 ), '"' ) ) : '';
+
 					/**
 					 * Filters the value used to replace the smart tag with.
 					 *
@@ -121,6 +125,7 @@ function parse_content( $content, $payment_confirmation_data ) {
 					 * @param string  $tag Payment confirmation smart tag name, excluding curly braces.
 					 * @param array   $tags_with_keys Payment confirmation smart tags including keys, excluding curly braces.
 					 */
+
 					$value = apply_filters(
 						sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 						$value,
@@ -128,6 +133,10 @@ function parse_content( $content, $payment_confirmation_data ) {
 						$tag,
 						$tag_with_keys
 					);
+
+					if ( empty( $value ) ) {
+						$value = $fallback_value;
+					}
 
 					$content = replace_tag( $tag_with_keys, $value, $content );
 				}
@@ -149,7 +158,30 @@ function parse_content( $content, $payment_confirmation_data ) {
  * @return string
  */
 function replace_tag( $tag, $value, $content ) {
-	return str_replace( '{' . $tag . '}', $value, $content );
+	// Remove non-breaking spaces for tag only.
+	$content = preg_replace_callback(
+		'/\{([^}]*)\}/',
+		function ( $matches ) {
+			return str_replace( "\xC2\xA0", '', $matches[0] );
+		},
+		$content
+	);
+	$pattern = '/{(' . $tag . '(?::\w+)*)(?:\s*\|\s*"((?:\\"|[^"])*?)")?\}/U';
+	$content = preg_replace( '/\{\s*(.*?)\s*\}/', '{$1}', $content );
+	preg_match_all( $pattern, $content, $matches, PREG_SET_ORDER );
+
+	if ( ! empty( $matches ) ) {
+		foreach ( $matches as $match ) {
+			// If value is empty, use the fallback value.
+			if ( empty( $value ) ) {
+				$value = isset( $match[2] ) ? $match[2] : $value;
+			}
+			// $match[0] is the full tag. Example: {form-details}.
+			$content = str_replace( $match[0], $value, $content );
+		}
+	}
+
+	return $content;
 }
 
 /**
@@ -164,16 +196,31 @@ function replace_tag( $tag, $value, $content ) {
  * @return string $tags_with_keys Tag including keys, excluding curly braces.
  */
 function get_tags_with_keys( $tag, $content ) {
+	// Remove non-breaking spaces for tag only.
+	$content        = preg_replace_callback(
+		'/\{([^}]*)\}/',
+		function ( $matches ) {
+			return str_replace( "\xC2\xA0", '', $matches[0] );
+		},
+		$content
+	);
 	$tags_with_keys = array();
+	$pattern        = '/{(' . $tag . '(?::\w+)*)(?:\s*\|\s*"((?:\\"|[^"])*?)")?\}/U';
+	$content        = preg_replace( '/\{\s*(.*?)\s*\}/', '{$1}', $content );
 
-	preg_match_all( '/{' . $tag . '(:.*)?}/U', $content, $matches );
+	preg_match_all( $pattern, $content, $matches, PREG_SET_ORDER );
 
 	if ( ! empty( $matches ) ) {
-		$full_matches = $matches[0];
 
-		foreach ( $full_matches as $match ) {
-			// Remove { from start and } from end.
-			$tags_with_keys[] = substr( $match, 1, -1 );
+		foreach ( $matches as $match ) {
+			$tag_with_key = $match[1];
+			$key          = isset( $match[2] ) ? stripcslashes( $match[2] ) : '';
+
+			$unique_key = $tag_with_key . ( $key ? " | \"$key\"" : '' );
+
+			if ( ! in_array( $unique_key, $tags_with_keys, true ) ) {
+				$tags_with_keys[] = $unique_key;
+			}
 		}
 	}
 

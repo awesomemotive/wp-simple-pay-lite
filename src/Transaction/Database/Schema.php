@@ -104,6 +104,16 @@ class Schema extends BerlinDBSchema {
 			'validate'   => 'intval',
 		),
 
+		// amount_refunded.
+		array(
+			'name'       => 'amount_refunded',
+			'type'       => 'bigint',
+			'length'     => '20',
+			'default'    => 0,
+			'allow_null' => false,
+			'validate'   => 'intval',
+		),
+
 		// amount_tax.
 		array(
 			'name'       => 'amount_tax',

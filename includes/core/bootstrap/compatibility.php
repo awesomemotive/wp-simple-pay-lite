@@ -33,8 +33,8 @@ function get_requirements_list() {
 	return array(
 		'wp'       => array(
 			'name'     => 'WordPress',
-			'requires' => '5.2',
-			'met'      => version_compare( get_bloginfo( 'version' ), '5.2', '>=' ),
+			'requires' => '5.9',
+			'met'      => version_compare( get_bloginfo( 'version' ), '5.9', '>=' ),
 		),
 		'php'      => array(
 			'name'     => 'PHP',
@@ -97,7 +97,7 @@ function show_admin_notices() {
 		 */
 		add_action(
 			'admin_notices',
-			function() use ( $requirement ) {
+			function () use ( $requirement ) {
 				?>
 
 <div class="error">

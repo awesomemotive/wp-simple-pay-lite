@@ -577,7 +577,7 @@ function simpay_payment_form_add_missing_custom_fields(
 	} elseif ( false === $has_custom_amount ) {
 		if ( isset( $fields['custom_amount'] ) ) {
 			unset( $fields['custom_amount'] );
-			$changes[] = __( 'Custom Amount Input has been removed from the payment form. A price option with that allows user-defined amounts is required. ', 'stripe' );
+			$changes[] = __( 'Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. ', 'stripe' );
 		}
 	}
 

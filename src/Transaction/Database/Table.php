@@ -42,7 +42,7 @@ class Table extends BerlinDBTable {
 	 *
 	 * @var int
 	 */
-	protected $version = 202301090001;
+	protected $version = 202404230001;
 
 	/**
 	 * {@inheritdoc}
@@ -59,6 +59,7 @@ class Table extends BerlinDBTable {
 	protected $upgrades = array( // @phpstan-ignore-line
 		'202206170001' => 202206170001,
 		'202301090001' => 202301090001,
+		'202404230001' => 202404230001,
 	);
 
 	/**
@@ -77,6 +78,7 @@ class Table extends BerlinDBTable {
 			amount_subtotal bigint(20) NOT NULL,
 			amount_shipping bigint(20) NOT NULL,
 			amount_discount bigint(20) NOT NULL,
+			amount_refunded bigint(20) NOT NULL DEFAULT 0,
 			amount_tax bigint(20) NOT NULL,
 			currency varchar(3) NOT NULL,
 			payment_method_type varchar(50) DEFAULT NULL,
@@ -151,4 +153,20 @@ class Table extends BerlinDBTable {
 		return $this->is_success( true );
 	}
 
+	/**
+	 * Upgrade to version 202404230001.
+	 *  - Add a new `amount_refunded` column.
+	 *
+	 * @since 4.10.0
+	 *
+	 * @return bool
+	 */
+	protected function __202404230001() {
+		// Add the `amount_refunded` column after `amount_discount`.
+		$this->get_db()->query(
+			"ALTER TABLE {$this->table_name} ADD COLUMN `amount_refunded` bigint(20) NOT NULL DEFAULT 0 AFTER `amount_discount`"
+		);
+
+		return $this->is_success( true );
+	}
 }
