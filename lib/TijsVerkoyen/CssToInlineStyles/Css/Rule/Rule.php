@@ -3,6 +3,7 @@
 namespace SimplePay\Vendor\TijsVerkoyen\CssToInlineStyles\Css\Rule;
 
 use SimplePay\Vendor\Symfony\Component\CssSelector\Node\Specificity;
+use SimplePay\Vendor\TijsVerkoyen\CssToInlineStyles\Css\Property\Property;
 
 final class Rule
 {
@@ -12,7 +13,7 @@ final class Rule
     private $selector;
 
     /**
-     * @var array
+     * @var Property[]
      */
     private $properties;
 
@@ -55,7 +56,7 @@ final class Rule
     /**
      * Get properties
      *
-     * @return array
+     * @return Property[]
      */
     public function getProperties()
     {

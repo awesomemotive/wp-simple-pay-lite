@@ -33,13 +33,13 @@ function get_requirements_list() {
 	return array(
 		'wp'       => array(
 			'name'     => 'WordPress',
-			'requires' => '5.2',
-			'met'      => version_compare( get_bloginfo( 'version' ), '5.2', '>=' ),
+			'requires' => '5.9',
+			'met'      => version_compare( get_bloginfo( 'version' ), '5.9', '>=' ),
 		),
 		'php'      => array(
 			'name'     => 'PHP',
-			'requires' => '5.6.0',
-			'met'      => version_compare( PHP_VERSION, '5.6.0', '>=' ),
+			'requires' => '7.2',
+			'met'      => version_compare( PHP_VERSION, '7.2', '>=' ),
 		),
 		'curl'     => array(
 			'name' => 'cURL',
@@ -97,7 +97,7 @@ function show_admin_notices() {
 		 */
 		add_action(
 			'admin_notices',
-			function() use ( $requirement ) {
+			function () use ( $requirement ) {
 				?>
 
 <div class="error">

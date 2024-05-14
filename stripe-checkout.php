@@ -5,7 +5,7 @@
  * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
  * Author: WP Simple Pay
  * Author URI: https://wpsimplepay.com
- * Version: 4.9.0
+ * Version: 4.10.0
  * Text Domain: stripe
  * Domain Path: /languages
  */
@@ -54,7 +54,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	//
 	// Lite/Pro-specific.
 	//
-	define( 'SIMPLE_PAY_VERSION', '4.9.0' );
+	define( 'SIMPLE_PAY_VERSION', '4.10.0' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );
@@ -99,15 +99,15 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	}
 
 	// Compatibility files.
-	require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/compatibility.php' );
+	require_once SIMPLE_PAY_DIR . 'includes/core/bootstrap/compatibility.php';
 
 	if ( Compatibility\server_requirements_met() ) {
 		// Autoloader.
-		require_once( SIMPLE_PAY_DIR . 'vendor/autoload.php' );
-		require_once( SIMPLE_PAY_DIR . 'includes/core/bootstrap/autoload.php' );
+		require_once SIMPLE_PAY_DIR . 'vendor/autoload.php';
+		require_once SIMPLE_PAY_DIR . 'includes/core/bootstrap/autoload.php';
 
 		// Plugin files.
-		require_once( SIMPLE_PAY_DIR . 'includes/core/class-simplepay.php' );
+		require_once SIMPLE_PAY_DIR . 'includes/core/class-simplepay.php';
 
 		// New plugin container.
 		$plugin = new Plugin( __FILE__ );
@@ -115,7 +115,6 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	} else {
 		Compatibility\show_admin_notices();
 	}
-
 } else {
 	deactivate_plugins( plugin_basename( SIMPLE_PAY_MAIN_FILE ) );
 }

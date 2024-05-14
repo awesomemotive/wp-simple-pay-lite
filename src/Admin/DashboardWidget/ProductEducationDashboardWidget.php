@@ -248,7 +248,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 
 		wp_set_script_translations(
 			'simpay-admin-dashboard-widget-report',
-			'simple-pay',
+			'stripe',
 			SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
 		);
 
