@@ -249,12 +249,8 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
-= Stripe Payment Forms v4.10.0 - May 2, 2024 =
+= Stripe Payment Forms v4.10.0 - May 14, 2024 =
 
-* New: Emails - Add Support for Delayed Notification Payment Methods (ACH Direct Debit, etc).
-* New: Emails - Notify Merchant and Users of Cancelled Subscriptions.
-* New: Emails - Notify Users about Refunds.
-* New: Add Refunded and Partially Refunded statuses to the latest payments.
 * New: Smart Tags - Provide Fallback For Optional Fields.
 * Fix: Form Builder - Custom Fields Can Become Unexpandable.
 * Fix: Remove Redundant Word in Sentence.
@@ -302,8 +298,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 * New: Form Builder - add per-form confirmation and email messages.
 * Fix: Form Preview - avoid calling wp_head() more than once.
-
-= Stripe Payment Forms v4.7.8 - August 2, 2023 =
-
-* New: Add "Automations" tab to the form builder.
-* Fix: Ensure at least one payment method is active when updating a payment form.
