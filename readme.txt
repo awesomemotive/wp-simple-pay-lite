@@ -28,7 +28,7 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Accept Giropay payments in Stripe from customers in Germany
 - Accept iDEAL payments in Stripe from customers in The Netherlands
 - Accept Przelewy24 (P24) in Stripe payments from customers in Poland
-- Custom branding on Stripe Checkout payment formsdd
+- Custom branding on Stripe Checkout payment forms
 - Collect customer billing & shipping addresses in Stripe
 - Collect additional custom fields in Stripe Checkout
 - Support for 30+ languages, 45+ countries, and 135+ currencies
