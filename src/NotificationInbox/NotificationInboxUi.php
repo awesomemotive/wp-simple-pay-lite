@@ -86,7 +86,7 @@ class NotificationInboxUi implements SubscriberInterface, LicenseAwareInterface,
 
 		wp_set_script_translations(
 			'simpay-admin-notifications',
-			'simple-pay',
+			'stripe',
 			SIMPLE_PAY_INC . 'core/languages' // @phpstan-ignore-line
 		);
 

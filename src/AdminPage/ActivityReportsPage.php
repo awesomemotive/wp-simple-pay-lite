@@ -129,7 +129,7 @@ class ActivityReportsPage extends AbstractAdminPage implements AdminSecondaryPag
 
 			wp_set_script_translations(
 				'simpay-admin-page-activity-reports',
-				'simple-pay',
+				'stripe',
 				SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
 			);
 
