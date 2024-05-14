@@ -1,10 +1,10 @@
 === Stripe Payment Forms by WP Simple Pay - Accept Credit Card Payments + Subscriptions with Stripe ===
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
-Requires at least: 5.2
+Requires at least: 5.9
 Tested up to: 6.5
 Stable tag: 4.10.0
-Requires PHP: 5.6
+Requires PHP: 7.2
 License: GPLv2 or later
 
 🤩 Accept Stripe payments on your WordPress using WP Simple Pay, the best Stripe payments plugin! 🚀
