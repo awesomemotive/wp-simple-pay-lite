@@ -256,6 +256,14 @@ class Assets {
 								'recurring interval',
 								'stripe'
 							),
+							'priceOptionalRecurring'   => esc_html__(
+								'Allow price to optionally be purchased as a subscription',
+								'stripe'
+							),
+							'priceRecurring'           => esc_html__(
+								'Automatically activate a recurring subscription',
+								'stripe'
+							),
 
 						),
 					)

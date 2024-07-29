@@ -137,6 +137,11 @@ class SchemaValidationUtils {
 			return false;
 		}
 
+		// Validate that the price IDs are valid.
+		if ( $form->allows_multiple_line_items() ) {
+			return self::is_valid_price_ids( $request, $form );
+		}
+
 		// Next, determine if a custom amount also needs to be supplied.
 		//
 		// We do not require the `custom_amount` parameter at the schema level...
@@ -199,6 +204,11 @@ class SchemaValidationUtils {
 			return false;
 		}
 
+		// Validate that the price IDs are valid.
+		if ( $form->allows_multiple_line_items() ) {
+			return self::is_valid_price_ids( $request, $form );
+		}
+
 		// Next, determine if the price still has enough stock remaining.
 		if ( ! $price->is_in_stock( $value ) ) {
 			return false;
@@ -251,6 +261,11 @@ class SchemaValidationUtils {
 
 		if ( ! $price instanceof PriceOption ) {
 			return false;
+		}
+
+		// Validate that the price IDs are valid.
+		if ( $form->allows_multiple_line_items() ) {
+			return self::is_valid_price_ids( $request, $form );
 		}
 
 		// Next, validate that the price option is a custom amount. If it is not,
@@ -468,5 +483,42 @@ class SchemaValidationUtils {
 		 * Finally, these values can be used.
 		 */
 		return true;
+	}
+
+	/**
+	 * Validate line items.
+	 *
+	 * @since 4.11.0
+	 * @param \WP_REST_Request               $request The payment request.
+	 * @param \SimplePay\Core\Abstracts\Form $form The payment form.
+	 * @return bool
+	 */
+	public static function is_valid_price_ids( $request, $form ) {
+		$line_items = PaymentRequestUtils::get_price_ids( $request );
+
+		$valid = array_filter(
+			$line_items,
+			function( $line_item ) use ( $form ) {
+				/** @var \SimplePay\Core\PaymentForm\PriceOption $price */
+				$price = simpay_payment_form_prices_get_price_by_id( $form, $line_item['price_id'] );
+
+				if ( ! $price instanceof PriceOption ) {
+					return false;
+				}
+
+				// Check if the price is custom.
+				if ( ! simpay_payment_form_prices_is_defined_price( $line_item['price_id'] ) ) {
+
+					// Validate for custom price.
+					if ( $price->unit_amount_min > $line_item['custom_amount'] ) {
+						return false;
+					}
+				}
+
+				return true;
+			}
+		);
+
+		return count( $valid ) > 0;
 	}
 }

@@ -215,8 +215,7 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 				'id'     => $session_id,
 				'expand' => array(
 					'customer',
-					'customer.subscriptions',
-					'customer.subscriptions.data.latest_invoice',
+					'line_items',
 				),
 			),
 			$form->get_api_request_args(),
@@ -225,32 +224,23 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 			)
 		);
 
-		$customer      = $session->customer;
-		$subscriptions = $session->subscriptions;
+		$payment_confirmation_data['checkout_session'] = $session;
+
+		$customer = $session->customer;
 	} else {
 		$customer = API\Customers\retrieve(
 			array(
-				'id'     => $customer_id,
-				'expand' => array(
-					'subscriptions',
-					'subscriptions.data.latest_invoice',
-				),
+				'id' => $customer_id,
 			),
 			$form->get_api_request_args(),
 			array(
 				'cached' => $is_cache,
 			)
 		);
-
-		$subscriptions = $customer->subscriptions;
 	}
 
 	if ( $customer ) {
 		$payment_confirmation_data['customer'] = $customer;
-	}
-
-	if ( $subscriptions ) {
-		$payment_confirmation_data['subscriptions'] = $subscriptions->data;
 	}
 
 	// Retrieve the PaymentIntent the Customer is linked to.

@@ -62,14 +62,16 @@ function retrieve( $subscription, $api_request_args = array() ) {
  *
  *   @type string $api_key API Secret Key to use.
  * }
+ * @param array        $opts Per-request options, default empty.
  * @return object
  */
-function all( $subscriptions = array(), $api_request_args = array() ) {
+function all( $subscriptions = array(), $api_request_args = array(), $opts = array() ) {
 	return Stripe_API::request(
 		'Subscription',
 		'all',
 		$subscriptions,
-		$api_request_args
+		$api_request_args,
+		$opts
 	);
 }
 

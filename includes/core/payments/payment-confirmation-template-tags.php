@@ -10,11 +10,6 @@
 
 namespace SimplePay\Core\Payments\Payment_Confirmation\Template_Tags;
 
-use SimplePay\Core\Utils;
-use SimplePay\Core\Payments;
-use SimplePay\Core\Payments\Stripe_API;
-use function SimplePay\Core\SimplePay;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -55,6 +50,7 @@ function get_tags( $payment_confirmation_data ) {
 		'payment-type',
 		'payment-url',
 		'subtotal-amount',
+		'receipt',
 	);
 
 	/**
@@ -104,6 +100,7 @@ function parse_content( $content, $payment_confirmation_data ) {
 				foreach ( $tags_with_keys as $tag_with_keys ) {
 					$keys = explode( '|', $tag_with_keys );
 
+					$tag_with_keys  = isset( $keys[0] ) ? trim( $keys[0] ) : '';
 					$fallback_value = isset( $keys[1] ) ? trim( trim( substr( $keys[1], 1, -1 ), '"' ) ) : '';
 
 					/**
@@ -166,20 +163,13 @@ function replace_tag( $tag, $value, $content ) {
 		},
 		$content
 	);
-	$pattern = '/{(' . $tag . '(?::\w+)*)(?:\s*\|\s*"((?:\\"|[^"])*?)")?\}/U';
-	$content = preg_replace( '/\{\s*(.*?)\s*\}/', '{$1}', $content );
-	preg_match_all( $pattern, $content, $matches, PREG_SET_ORDER );
 
-	if ( ! empty( $matches ) ) {
-		foreach ( $matches as $match ) {
-			// If value is empty, use the fallback value.
-			if ( empty( $value ) ) {
-				$value = isset( $match[2] ) ? $match[2] : $value;
-			}
-			// $match[0] is the full tag. Example: {form-details}.
-			$content = str_replace( $match[0], $value, $content );
-		}
-	}
+	$pattern = '/{\s*' . preg_quote( $tag, '/' ) . '(?:\s*\|\s*"([^"]*)")?\s*}/';
+
+	// Escape dollar signs in the value to prevent them from being interpreted as backreferences.
+	$escaped_value = str_replace( '$', '\$', $value );
+
+	$content = preg_replace( $pattern, $escaped_value, $content );
 
 	return $content;
 }
@@ -205,22 +195,13 @@ function get_tags_with_keys( $tag, $content ) {
 		$content
 	);
 	$tags_with_keys = array();
-	$pattern        = '/{(' . $tag . '(?::\w+)*)(?:\s*\|\s*"((?:\\"|[^"])*?)")?\}/U';
-	$content        = preg_replace( '/\{\s*(.*?)\s*\}/', '{$1}', $content );
+	$pattern        = '/{\s*' . $tag . '(?::[\w\s-]+)*(?:\s*\|\s*["\'][^"\']*["\'])?\s*}/';
 
-	preg_match_all( $pattern, $content, $matches, PREG_SET_ORDER );
+	preg_match_all( $pattern, $content, $matches );
 
-	if ( ! empty( $matches ) ) {
-
-		foreach ( $matches as $match ) {
-			$tag_with_key = $match[1];
-			$key          = isset( $match[2] ) ? stripcslashes( $match[2] ) : '';
-
-			$unique_key = $tag_with_key . ( $key ? " | \"$key\"" : '' );
-
-			if ( ! in_array( $unique_key, $tags_with_keys, true ) ) {
-				$tags_with_keys[] = $unique_key;
-			}
+	if ( ! empty( $matches[0] ) ) {
+		foreach ( $matches[0] as $match ) {
+			$tags_with_keys[] = trim( $match, '{} ' );
 		}
 	}
 
@@ -278,6 +259,327 @@ function get_object_property_deep( $keys, $ref ) {
 
 	return $value;
 }
+
+/**
+ * Replaces the {receipt} Smart Tag with the purchase receipt data.
+ *
+ * @since 4.11.0
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form    $form Payment form.
+ *   @type object                            $subscriptions Subscriptions associated with the Customer.
+ *   @type object                            $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function receipt( $value, $payment_confirmation_data ) {
+	if ( empty( $payment_confirmation_data['customer'] ) ) {
+		return $value;
+	}
+
+	$form       = $payment_confirmation_data['form'];
+	$tax_status = get_post_meta( $form->id, '_tax_status', true );
+
+	$currency     = 'USD';
+	$line_items   = array();
+	$subtotal     = 0;
+	$discount     = 0;
+	$fee_recovery = 0;
+	$tax          = 0;
+	$total        = 0;
+
+	if ( $form->allows_multiple_line_items() ) {
+
+		// Subscription (on-site or Stripe Checkout) or One-Time Invoice (on-site).
+		if ( isset( $payment_confirmation_data['initial_invoice'] ) ) {
+			$invoice = $payment_confirmation_data['initial_invoice'];
+
+			if ( $invoice->subscription ) {
+				if ( isset( $invoice->subscription->metadata->simpay_price_instances ) ) {
+					$price_instances = $invoice->subscription->metadata->simpay_price_instances;
+				} elseif ( isset( $payment_confirmation_data['checkout_session'] ) ) {
+					$price_instances = $payment_confirmation_data['checkout_session']->metadata->simpay_price_instances;
+				}
+			} else {
+				$price_instances = $invoice->metadata->simpay_price_instances;
+			}
+
+			$price_instances = explode( '|', $price_instances );
+			$price_instances = array_map(
+				function ( $price_instance ) {
+					$parts = explode( ':', $price_instance );
+
+					return array(
+						'instance_id' => $parts[0],
+						'quantity'    => (int) $parts[1],
+						'amount'      => (int) $parts[2],
+					);
+				},
+				$price_instances
+			);
+
+			$currency = strtoupper( $invoice->currency );
+
+			$unknown_price_instances_pool = $price_instances;
+
+			$line_items = array_map(
+				function ( $line_item ) use ( $form, &$unknown_price_instances_pool ) {
+					$price_option = null;
+
+					foreach ( $unknown_price_instances_pool as $k => $unknown_price_instance ) {
+						if (
+							$unknown_price_instance['amount'] === $line_item->price->unit_amount &&
+							$unknown_price_instance['quantity'] === $line_item->quantity
+						) {
+							$price_option = simpay_payment_form_prices_get_price_by_instance_id(
+								$form,
+								$unknown_price_instance['instance_id']
+							);
+
+							unset( $unknown_price_instances_pool[ $k ] );
+
+							break;
+						}
+					}
+
+					$description = $price_option
+						? $price_option->get_display_label()
+						: $line_item->description;
+
+					return array(
+						'description' => $description,
+						'quantity'    => $line_item->quantity,
+						'unit_amount' => $line_item->price->unit_amount,
+						'amount'      => $line_item->amount,
+					);
+				},
+				$invoice->lines->data
+			);
+
+			$subtotal = $invoice->subtotal;
+
+			$discount = array_reduce(
+				$invoice->total_discount_amounts,
+				function ( $carry, $discount_amount ) {
+					return $carry + $discount_amount->amount;
+				},
+				0
+			);
+
+			$fee_recovery = isset( $invoice->subscription->metadata->simpay_fee_recovery_unit_amount )
+				? $invoice->subscription->metadata->simpay_fee_recovery_unit_amount
+				: $invoice->metadata->simpay_fee_recovery_unit_amount;
+
+			$tax = array_reduce(
+				$invoice->total_tax_amounts,
+				function ( $carry, $tax_amount ) {
+					return $carry + $tax_amount->amount;
+				},
+				0
+			);
+
+			$total = $invoice->total;
+
+			// One-Time Stripe Checkout.
+		} elseif ( isset( $payment_confirmation_data['checkout_session'] ) ) {
+			$payment_intent   = current( $payment_confirmation_data['paymentintents'] );
+			$checkout_session = $payment_confirmation_data['checkout_session'];
+
+			$currency = $payment_intent->currency;
+
+			$price_instances = $payment_intent->metadata->simpay_price_instances;
+			$price_instances = explode( '|', $price_instances );
+			$price_instances = array_map(
+				function ( $price_instance ) {
+					$parts = explode( ':', $price_instance );
+
+					return array(
+						'instance_id' => $parts[0],
+						'quantity'    => (int) $parts[1],
+						'amount'      => (int) $parts[2],
+					);
+				},
+				$price_instances
+			);
+
+			$unknown_price_instances_pool = $price_instances;
+
+			$line_items = array_map(
+				function ( $line_item ) use ( $form, $unknown_price_instances_pool ) {
+					$price_option = null;
+
+					foreach ( $unknown_price_instances_pool as $k => $unknown_price_instance ) {
+						if (
+							$unknown_price_instance['amount'] === $line_item->price->unit_amount &&
+							$unknown_price_instance['quantity'] === $line_item->quantity
+						) {
+							$price_option = simpay_payment_form_prices_get_price_by_instance_id(
+								$form,
+								$unknown_price_instance['instance_id']
+							);
+
+							unset( $unknown_price_instances_pool[ $k ] );
+
+							break;
+						}
+					}
+
+					$description = $price_option
+						? $price_option->get_display_label()
+						: $line_item->description;
+
+					return array(
+						'description' => $description,
+						'quantity'    => $line_item->quantity,
+						'unit_amount' => $line_item->price->unit_amount,
+						'amount'      => $line_item->amount_total,
+					);
+				},
+				$checkout_session->line_items->data
+			);
+
+			$subtotal = (
+				$payment_intent->metadata->simpay_unit_amount * $payment_intent->metadata->simpay_quantity
+			);
+
+			$discount = isset( $payment_intent->metadata->simpay_discount_unit_amount )
+				? $payment_intent->metadata->simpay_discount_unit_amount
+				: 0;
+
+			$fee_recovery = isset( $payment_intent->metadata->simpay_fee_recovery_unit_amount )
+				? $payment_intent->metadata->simpay_fee_recovery_unit_amount
+				: 0;
+
+			$tax = isset( $payment_intent->metadata->simpay_tax_unit_amount_exclusive )
+				? $payment_intent->metadata->simpay_tax_unit_amount_exclusive
+				: 0;
+
+			$total = $payment_intent->amount;
+
+			$is_recurring = false;
+		}
+	} elseif ( ! empty( $payment_confirmation_data['subscriptions'] ) ) {
+			$subscription    = current( $payment_confirmation_data['subscriptions'] );
+			$initial_invoice = $payment_confirmation_data['initial_invoice'];
+			$payment_intent  = $subscription->latest_invoice->payment_intent;
+
+			$currency = $payment_intent->currency;
+
+			$price_instances   = explode( ':', $subscription->metadata->simpay_price_instances );
+			$price_instance_id = $price_instances[0];
+
+			$price_option = simpay_payment_form_prices_get_price_by_instance_id(
+				$form,
+				$price_instance_id
+			);
+
+			// Remove line items that are not part of the form (i.e processing fee).
+			$line_items = array_filter(
+				$initial_invoice->lines->data,
+				function ( $line_item ) use ( $form, $price_option ) {
+					// Keep one-time line items (i.e. setup fee) if the amount
+					// is greater than the price option amount.
+					$has_setup_fee = ! empty( $price_option->line_items );
+
+					if (
+						'invoiceitem' === $line_item->type &&
+						(
+							$has_setup_fee &&
+							$line_item->amount < $price_option->line_items[0]['unit_amount']
+						)
+					) {
+						return false;
+					}
+
+					return true;
+				}
+			);
+
+			$line_items = array_map(
+				function ( $line_item ) use ( $form ) {
+					return array(
+						'description' => 'invoiceitem' === $line_item->type
+							? __( 'Subscription Setup Fee', 'stripe' )
+							: $form->company_name,
+						'quantity'    => $line_item->quantity,
+						'unit_amount' => $line_item->price->unit_amount,
+						'amount'      => $line_item->amount,
+					);
+				},
+				$line_items
+			);
+
+			$subtotal = $initial_invoice->subtotal;
+
+			$discount = array_reduce(
+				$initial_invoice->total_discount_amounts,
+				function ( $carry, $discount_amount ) {
+					return $carry + $discount_amount->amount;
+				},
+				0
+			);
+
+			$fee_recovery = isset( $subscription->metadata->simpay_fee_recovery_unit_amount )
+			? $subscription->metadata->simpay_fee_recovery_unit_amount
+			: 0;
+
+			$tax = array_reduce(
+				$initial_invoice->total_tax_amounts,
+				function ( $carry, $tax_amount ) {
+					return $carry + $tax_amount->amount;
+				},
+				0
+			);
+
+			$total = $initial_invoice->total;
+	} else {
+		$payment_intent = current( $payment_confirmation_data['paymentintents'] );
+
+		$currency = $payment_intent->currency;
+
+		$line_items = array(
+			array(
+				'description' => $payment_intent->description,
+				'quantity'    => $payment_intent->metadata->simpay_quantity,
+				'unit_amount' => $payment_intent->metadata->simpay_unit_amount,
+				'amount'      => (
+					$payment_intent->metadata->simpay_quantity * $payment_intent->metadata->simpay_unit_amount
+				),
+			),
+		);
+
+		$subtotal = (
+			$payment_intent->metadata->simpay_unit_amount * $payment_intent->metadata->simpay_quantity
+		);
+
+		$discount = isset( $payment_intent->metadata->simpay_discount_unit_amount )
+			? $payment_intent->metadata->simpay_discount_unit_amount
+			: 0;
+
+		$fee_recovery = isset( $payment_intent->metadata->simpay_fee_recovery_unit_amount )
+			? $payment_intent->metadata->simpay_fee_recovery_unit_amount
+			: 0;
+
+		$tax = isset( $payment_intent->metadata->simpay_tax_unit_amount_exclusive )
+			? $payment_intent->metadata->simpay_tax_unit_amount_exclusive
+			: 0;
+
+		$total = $payment_intent->amount;
+
+		$is_recurring = false;
+	}
+
+	ob_start();
+
+	include SIMPLE_PAY_DIR . '/views/smart-tag-receipt.php'; // @phpstan-ignore-line
+
+	return ob_get_clean();
+}
+add_filter( 'simpay_payment_confirmation_template_tag_receipt', __NAMESPACE__ . '\\receipt', 10, 2 );
 
 /**
  * Replaces the {customer-name} template tag with the name of the Customer.
@@ -724,6 +1026,15 @@ function subtotal_amount( $value, $payment_confirmation_data ) {
 		return $value;
 	}
 
+	if ( $payment_confirmation_data['form']->allows_multiple_line_items() ) {
+		$invoice = $payment_confirmation_data['initial_invoice'];
+
+		return simpay_format_currency(
+			$invoice->subtotal,
+			$invoice->currency
+		);
+	}
+
 	$subscription = current( $payment_confirmation_data['subscriptions'] );
 
 	if ( $subscription ) {
@@ -813,6 +1124,11 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 
 		$tags['fee-recovery-amount'] = esc_html__(
 			'The calculated fee recovery amount based on the total and the fee recovery percent setting.',
+			'stripe'
+		);
+
+		$tags['receipt'] = esc_html__(
+			'The receipt breakdown of the payment including items, adjustments, and totals.',
 			'stripe'
 		);
 

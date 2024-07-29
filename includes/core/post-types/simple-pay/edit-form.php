@@ -177,13 +177,15 @@ function get_form_settings( $post ) {
 	);
 
 	$license = simpay_get_license();
+
+	$data_lite = $license->is_lite() ? 'data-lite' : 'data-pro';
 	?>
 
 <style>
 .page-title-action { display: none; }
 </style>
 
-<div id="simpay-form-settings" <?php if ( $license->is_lite() ) : ?>data-lite<?php endif; ?>>
+<div id="simpay-form-settings" <?php echo esc_attr( $data_lite ); ?>>
 	<div class="simpay-panels-wrap">
 		<input type="hidden" name="simpay_form_id" value="<?php echo esc_attr( $post->ID ); ?>" />
 		<input type="hidden" name="simpay_form_settings_tab" value="#form-display-options-settings-panel" />
@@ -444,7 +446,7 @@ function get_form_settings( $post ) {
  * @param WP_Post $post Payment Form \WP_Post object.
  */
 function settings_tabs( $post ) {
-	$tabs = array();
+	$tabs    = array();
 	$license = simpay_get_license();
 
 	// "Email Notifications" upgrade modal for Lite.
@@ -475,7 +477,12 @@ function settings_tabs( $post ) {
 	);
 
 	$tabs['payment_options'] = array(
-		'label'  => esc_html__( 'Payment', 'stripe' ),
+		'label'  => wp_kses(
+			__( 'Payment <span>New!</span>', 'stripe' ),
+			array(
+				'span' => array(),
+			)
+		),
 		'target' => 'payment-options-settings-panel',
 		'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M2.5 4A1.5 1.5 0 001 5.5V6h18v-.5A1.5 1.5 0 0017.5 4h-15zM19 8.5H1v6A1.5 1.5 0 002.5 16h15a1.5 1.5 0 001.5-1.5v-6zM3 13.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zm4.75-.75a.75.75 0 000 1.5h3.5a.75.75 0 000-1.5h-3.5z" clip-rule="evenodd" /></svg>',
 	);
@@ -574,7 +581,7 @@ function settings_tabs( $post ) {
 		$html = (
 			'<a href="#' . esc_attr( $tab['target'] ) . '" class="simpay-tab-item">' .
 				$icon .
-				'<span>' .  $tab['label'] . '</span>' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				'<span>' . $tab['label'] . '</span>' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			'</a>'
 		);
 
@@ -644,7 +651,7 @@ function settings_tabs( $post ) {
 	data-tab="<?php echo esc_attr( $key ); ?>"
 	data-if="_form_type"
 	data-is="off-site"
-	<?php if ( 'notifications' === $key && $license->is_lite() ) : ?>
+		<?php if ( 'notifications' === $key && $license->is_lite() ) : ?>
 		data-available="no"
 		data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
 		data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"

@@ -81,6 +81,15 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					// but it makes enough sense for now.
 					array( 'maybe_decrement_stock', 10, 4 ),
 				),
+			// Initial invoice payment.
+			'simpay_after_invoice_from_payment_form_request' =>
+				array(
+					array( 'add_on_multiple_line_invoice', 10, 2 ),
+					array( 'maybe_decrement_stock', 10, 4 ),
+				),
+			'simpay_webhook_invoice_paid'               => array(
+				array( 'update_on_multiple_line_invoice', 10, 2 ),
+			),
 			// Initial Checkout Session.
 			'simpay_after_checkout_session_from_payment_form_request' =>
 				array( 'add_on_checkout_session', 10, 2 ),
@@ -304,6 +313,135 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	}
 
 	/**
+	 * Logs a transaction when a subsequent Invoice is created.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Invoice $invoice Invoice object.
+	 *
+	 * @return void
+	 */
+	public function add_on_multiple_line_invoice( $invoice ) {
+		if ( ! is_string( $invoice->payment_intent ) ) {
+			return;
+		}
+
+		$transaction = $this->transactions->get_by_object_id(
+			$invoice->payment_intent
+		);
+
+		// Do nothing if the PaymentIntent has already been logged.
+		if ( $transaction instanceof Transaction ) {
+			return;
+		}
+
+		if ( null === $invoice->total_discount_amounts ) {
+			$total_discount = 0;
+		} else {
+			$total_discount = array_reduce(
+				$invoice->total_discount_amounts,
+				/**
+				 * Adds a discount amount to the total discount.
+				 *
+				 * @since 4.4.6
+				 *
+				 * @param int       $total_discount Total discount, so far.
+				 * @param \stdClass $discount Discount object.
+				 */
+				function ( $total_discount, $discount ) {
+					/** @var \stdClass $discount */
+					return $total_discount + $discount->amount;
+				},
+				0
+			);
+		}
+
+		$metadata = $invoice->metadata;
+
+		if ( ! isset( $metadata->simpay_form_id ) ) {
+			return;
+		}
+
+		$this->transactions->add(
+			array(
+				'form_id'             => (int) $metadata->simpay_form_id,
+				'object'              => 'payment_intent',
+				'object_id'           => $invoice->payment_intent,
+				'livemode'            => (bool) $invoice->livemode,
+				'amount_total'        => $invoice->total,
+				'amount_subtotal'     => $invoice->subtotal,
+				'amount_discount'     => $total_discount,
+				'amount_shipping'     => 0,
+				'amount_tax'          => null === $invoice->tax
+					? 0
+					: $invoice->tax,
+				'currency'            => $invoice->currency,
+				'payment_method_type' => null,
+				'email'               => $invoice->customer_email,
+				'customer_id'         => $invoice->customer,
+				'subscription_id'     => $invoice->subscription,
+				'status'              => $invoice->status,
+				'application_fee'     => $this->application_fee->has_application_fee(),
+			)
+		);
+	}
+
+	/**
+	 * Updates a transaction's status when a subsequent Invoice is paid.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Event   $event Event object.
+	 * @param \SimplePay\Vendor\Stripe\Invoice $invoice Invoice object.
+	 * @return void
+	 */
+	public function update_on_multiple_line_invoice( $event, $invoice ) {
+		if ( ! is_string( $invoice->payment_intent ) ) {
+			return;
+		}
+
+		$transaction = $this->transactions->get_by_object_id(
+			$invoice->payment_intent
+		);
+
+		if ( ! $transaction instanceof Transaction ) {
+			return;
+		}
+
+		$form = simpay_get_form( $transaction->form_id );
+
+		if ( false === $form ) {
+			return;
+		}
+
+		$invoice = API\Invoices\retrieve(
+			array(
+				'id'     => (string) $invoice->id,
+				'expand' => array(
+					'payment_intent.payment_method',
+				),
+			),
+			$form->get_api_request_args()
+		);
+
+		/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
+		$payment_intent = $invoice->payment_intent;
+
+		/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+		$payment_method = $payment_intent->payment_method;
+
+		$this->transactions->update(
+			$transaction->id,
+			array(
+				'payment_method_type' => $payment_method->type,
+				'status'              => 'paid' === $invoice->status
+					? 'succeeded'
+					: 'canceled',
+			)
+		);
+	}
+
+	/**
 	 * Logs a transaction when a subsequent Subscription Invoice is created.
 	 *
 	 * @since 4.4.6
@@ -316,7 +454,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	public function add_on_invoice( $event, $invoice, $subscription ) {
 		// Do nothing if this invoice event was triggered by creating a Subscription.
 		// A previously inserted record will be updated instead.
-		if ( 'subscription_create' === $invoice->billing_reason ) {
+		if ( 'subscription_cycle' !== $invoice->billing_reason ) {
 			return;
 		}
 

@@ -163,6 +163,9 @@ final class SimplePay {
 		require_once SIMPLE_PAY_INC . 'core/api/sessions.php';
 		require_once SIMPLE_PAY_INC . 'core/api/setupintents.php';
 		require_once SIMPLE_PAY_INC . 'core/api/subscriptions.php';
+		require_once SIMPLE_PAY_INC . 'core/api/subscriptionitems.php';
+		require_once SIMPLE_PAY_INC . 'core/api/invoices.php';
+		require_once SIMPLE_PAY_INC . 'core/api/invoiceitems.php';
 		require_once SIMPLE_PAY_INC . 'core/api/tax-rates.php';
 
 		// REST API.

@@ -189,7 +189,6 @@ function save( $post_id, $post, $update ) {
 		'alipay',
 		'ideal',
 		'fpx',
-		'giropay',
 		'p24',
 	);
 
@@ -738,6 +737,26 @@ function save_prices( $post_id, $post, $form ) {
 		// Line items.
 		if ( ! empty( $line_item_args ) ) {
 			$price_args['line_items'] = $line_item_args;
+		}
+
+		// Quantity.
+		if ( isset( $price['quantity_toggle'] ) && ! empty( $price['quantity_toggle'] ) ) {
+			$price_args['quantity_toggle'] = $price['quantity_toggle'];
+		}
+
+		// Quantity label.
+		if ( isset( $price['quantity_label'] ) && ! empty( $price['quantity_label'] ) ) {
+			$price_args['quantity_label'] = $price['quantity_label'];
+		}
+
+		// Quantity minimum.
+		if ( isset( $price['quantity_minimum'] ) && ! empty( $price['quantity_minimum'] ) ) {
+			$price_args['quantity_minimum'] = $price['quantity_minimum'];
+		}
+
+		// Quantity maximum.
+		if ( isset( $price['quantity_maximum'] ) && ! empty( $price['quantity_maximum'] ) ) {
+			$price_args['quantity_maximum'] = $price['quantity_maximum'];
 		}
 
 		$_prices[ $instance_id ] = $price_args;

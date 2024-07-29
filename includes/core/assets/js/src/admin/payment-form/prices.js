@@ -1,4 +1,4 @@
-/* global simpayAdmin, jQuery */
+/* global simpayAdmin, jQuery, $ */
 
 /**
  * WordPress dependencies
@@ -13,6 +13,66 @@ import {
 	maybeBlockButtonWithUpgradeModal,
 	upgradeModal,
 } from '@wpsimplepay/utils';
+import { allowMultipleLineItems } from './payment';
+
+/**
+ * Shows or hides the "Price Select" field based on the current settings.
+ *
+ * @since 4.11.0
+ */
+export function togglePriceSelectField() {
+	const priceSelectFieldEl = document.querySelector(
+		'.simpay-custom-field-plan-select'
+	);
+
+	const priceListEl = document.getElementById( 'simpay-prices' );
+
+	if ( ! priceSelectFieldEl || ! priceListEl ) {
+		return;
+	}
+
+	const priceListCount = priceListEl.querySelectorAll( '.simpay-price' )
+		.length;
+
+	const allowMultipleLineItemsInputEl = document.querySelector(
+		'#_allow_purchasing_multiple_line_items'
+	);
+
+	if (
+		allowMultipleLineItemsInputEl &&
+		allowMultipleLineItemsInputEl.checked
+	) {
+		const optionalRecurringInputEls = document.querySelectorAll(
+			'input.simpay-price-enable-optional-subscription[type="checkbox"]'
+		);
+
+		const quantityToggleInputEls = document.querySelectorAll(
+			'.simpay-quantity-toggle input.simpay-price-quantity[type="checkbox"]'
+		);
+
+		const customAmountInputEls = document.querySelectorAll(
+			'.simpay-price-enable-custom-amount'
+		);
+
+		// If any of the inputs are checked, show the price select field.
+		// Otherwise hide it when there is only one price option.
+		if (
+			[
+				...optionalRecurringInputEls,
+				...quantityToggleInputEls,
+				...customAmountInputEls,
+			].some( ( inputEl ) => inputEl.checked )
+		) {
+			priceSelectFieldEl.style.display = 'block';
+		} else {
+			priceSelectFieldEl.style.display =
+				priceListCount > 1 ? 'block' : 'none';
+		}
+	} else {
+		priceSelectFieldEl.style.display =
+			priceListCount > 1 ? 'block' : 'none';
+	}
+}
 
 /**
  * Toggles price option label display if there is more than one price option.
@@ -76,15 +136,7 @@ function togglePriceOptionSingle() {
 					priceListCount > 1 ? 'block' : 'none' )
 		);
 
-	// Price Select custom field.
-	const priceSelectFieldEl = document.querySelector(
-		'.simpay-custom-field-plan-select'
-	);
-
-	if ( priceSelectFieldEl ) {
-		priceSelectFieldEl.style.display =
-			priceListCount > 1 ? 'block' : 'none';
-	}
+	togglePriceSelectField();
 }
 
 /**
@@ -214,6 +266,43 @@ function onChangeCurrency( priceEl ) {
 }
 
 /**
+ * Changes the status of the recurring toggle based on the amount type.
+ *
+ * @param {HTMLElement} priceEl Price container element.
+ * @param {Object} toggle Price type toggle element.
+ */
+function changeRecurringToggleStatus( priceEl, toggle ) {
+	const { amountType } = toggle.dataset;
+
+	// if amount type is recurring the check the @canRecurToggle and make it disable otherwise make it enable.
+	// also change the label text to 'Automatically activate a recurring subscription' if amount type is recurring.
+	// otherwise change the label text to 'Allow price to optionally be purchased as a subscription'.
+	const canRecurLabel = priceEl.querySelector(
+		'.simpay-price-can-recur-label'
+	);
+	const canRecurToggle = priceEl.querySelector(
+		'.simpay-price-enable-optional-subscription'
+	);
+	const falseRecurToggle = priceEl.querySelector(
+		'.simpay-false-recurring-checkbox'
+	);
+	if ( 'recurring' === amountType ) {
+		let recurringText = simpayAdmin.i18n.priceRecurring;
+		if ( canRecurToggle.checked ) {
+			recurringText = simpayAdmin.i18n.priceOptionalRecurring;
+		}
+		canRecurLabel.innerHTML = recurringText;
+		canRecurToggle.style.display = 'none';
+		falseRecurToggle.style.display = '';
+		canRecurToggle.checked = false;
+	} else {
+		canRecurLabel.innerHTML = simpayAdmin.i18n.priceOptionalRecurring;
+		canRecurToggle.style.display = '';
+		falseRecurToggle.style.display = 'none';
+	}
+}
+
+/**
  * Handles displaying the current price's relevant settings when a Price's
  * "Amount Type" changes.
  *
@@ -233,58 +322,13 @@ function onToggleAmountType( priceEl, toggle ) {
 	// Update current toggle and show relevant settings.
 	const { amountType } = toggle.dataset;
 
-	const recurringSettings = priceEl.querySelector(
-		'.simpay-price-recurring-settings'
-	);
-
 	toggle.classList.add( 'button-primary' );
-	recurringSettings.style.display =
-		'recurring' === amountType ? 'table' : 'none';
 
 	// Hide "optional recur" setting.
-	const canRecurSetting = priceEl.querySelector(
-		'.simpay-price-recurring-amount-toggle'
-	);
-
-	const canRecurToggle = priceEl.querySelector(
-		'.simpay-price-enable-optional-subscription'
-	);
-
-	canRecurSetting.style.display =
-		'recurring' === amountType ? 'none' : 'block';
-	canRecurToggle.checked = false;
+	changeRecurringToggleStatus( priceEl, toggle );
 
 	// Update the hidden field to track the amount type.
 	priceEl.querySelector( '.simpay-price-amount-type' ).value = amountType;
-}
-
-/**
- * Handles displaying the current price's recurring settings
- * if the "Can optionally be purchased as a subscription" setting is checked.
- *
- * @param {HTMLElement} priceEl Price container element.
- * @param {HTMLElement} checkbox Recurring toggle element.
- */
-function onToggleCanRecur( priceEl, checkbox ) {
-	const recurringSettings = priceEl.querySelector(
-		'.simpay-price-recurring-settings'
-	);
-
-	recurringSettings.style.display = checkbox.checked ? 'table' : 'none';
-}
-
-/**
- * Handles displaying the current price's custom amount settings.
- *
- * @param {HTMLElement} priceEl Price container element.
- * @param {HTMLElement} checkbox Custom amount toggle element.
- */
-function onToggleCustomAmount( priceEl, checkbox ) {
-	const customAmountSettings = priceEl.querySelector(
-		'.simpay-price-custom-amount'
-	);
-
-	customAmountSettings.style.display = checkbox.checked ? 'table' : 'none';
 }
 
 /**
@@ -418,6 +462,9 @@ function onAddPrice( buttonEl ) {
 			// Toggle label fields.
 			togglePriceOptionSingle();
 
+			// Toggle quantity field.
+			allowMultipleLineItems();
+
 			doAction( 'simpayFormBuilderPriceAdded', response );
 		},
 		error: ( { message } ) => {
@@ -523,9 +570,6 @@ function bindPriceOptions() {
 	const pricesEls = document.querySelectorAll( '.simpay-price' );
 
 	pricesEls.forEach( ( priceEl ) => {
-		const amountType = priceEl.querySelector( '.simpay-price-amount-type' )
-			.value;
-
 		// Label.
 		const labelInput = priceEl.querySelector( '.simpay-price-label' );
 
@@ -548,10 +592,12 @@ function bindPriceOptions() {
 		);
 
 		if ( amountTypeToggles.length > 0 ) {
-			amountTypeToggles.forEach( ( amountTypeToggle ) =>
+			amountTypeToggles.forEach( ( amountTypeToggle ) => {
+				if ( amountTypeToggle.classList.contains( 'button-primary' ) ) {
+					changeRecurringToggleStatus( priceEl, amountTypeToggle );
+				}
 				amountTypeToggle.addEventListener( 'click', ( e ) => {
 					e.preventDefault();
-
 					const {
 						available,
 						upgradeTitle,
@@ -571,8 +617,8 @@ function bindPriceOptions() {
 						onToggleAmountType( priceEl, e.target );
 						onChangeLabel( priceEl );
 					}
-				} )
-			);
+				} );
+			} );
 		}
 
 		// Amount.
@@ -607,14 +653,10 @@ function bindPriceOptions() {
 						purchasedUrl: upgradePurchasedUrl,
 					} );
 				} else {
-					onToggleCanRecur( priceEl, target );
 					onChangeLabel( priceEl );
+					togglePriceSelectField();
 				}
 			} );
-
-			if ( 'recurring' !== amountType ) {
-				onToggleCanRecur( priceEl, canRecurToggle );
-			}
 		}
 
 		// Custom amount toggle.
@@ -623,8 +665,8 @@ function bindPriceOptions() {
 		);
 
 		customAmountToggle.addEventListener( 'change', () => {
-			onToggleCustomAmount( priceEl, customAmountToggle );
 			onChangeLabel( priceEl );
+			togglePriceSelectField();
 		} );
 
 		// Recurring interval.
@@ -680,10 +722,51 @@ function bindPriceOptions() {
 			e.preventDefault();
 			onRemove( priceEl );
 		} );
+
+		// Configure Button.
+		const configureButtons = priceEl.querySelectorAll(
+			'.simpay-price-configure-btn'
+		);
+
+		configureButtons.forEach( ( configureButton ) => {
+			const isButtonLocked = configureButton.classList.contains(
+				'simpay-price-locked'
+			);
+			configureButton.addEventListener( 'click', ( e ) => {
+				e.preventDefault();
+
+				if ( isButtonLocked ) {
+					return;
+				}
+
+				const targetId = configureButton.getAttribute(
+					'data-target-id'
+				);
+
+				const targetTitle = configureButton.getAttribute(
+					'data-dialog-title'
+				);
+
+				onConfigure( targetId, targetTitle );
+				$( `#${ targetId }` ).dialog( 'open' );
+			} );
+		} );
+
+		// Quantity toggle.
+		const quantityToggle = priceEl.querySelector(
+			'.simpay-quantity-toggle input.simpay-price-quantity[type="checkbox"]'
+		);
+
+		if ( quantityToggle ) {
+			quantityToggle.addEventListener( 'change', () => {
+				togglePriceSelectField();
+			} );
+		}
 	} );
 
 	// Toggle label fields.
 	togglePriceOptionSingle();
+	togglePriceSelectField();
 }
 
 /**
@@ -809,6 +892,44 @@ function ensureDefaultPrice() {
 	if ( ! document.querySelector( '.simpay-price-default:checked' ) ) {
 		prices[ 0 ].querySelector( '.simpay-price-default' ).checked = true;
 	}
+}
+
+/**
+ * Opens a jQuery UI dialog to configure the Price.
+ *
+ * @since 4.11.0
+ * @param {string} id Price Option ID.
+ * @param {string} title Price Option title.
+ */
+function onConfigure( id, title ) {
+	const dialogEl = $( `#${ id }` );
+
+	dialogEl.dialog( {
+		title,
+		position: {
+			my: 'center',
+			at: 'center',
+			of: window,
+		},
+		modal: true,
+		width: 500,
+		resizable: false,
+		draggable: false,
+		appendTo: dialogEl.parent().parent(),
+		open( event ) {
+			$( event.target )
+				.find( '.update, .simpay-tab-link' )
+				.on( 'click', ( clickEvent ) => {
+					clickEvent.preventDefault();
+
+					$( this ).dialog( 'close' );
+				} );
+		},
+		create() {
+			// style fix for WordPress admin
+			$( '.ui-dialog-titlebar-close' ).addClass( 'ui-button' );
+		},
+	} );
 }
 
 /**

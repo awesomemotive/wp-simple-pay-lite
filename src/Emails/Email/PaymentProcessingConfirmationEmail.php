@@ -34,7 +34,7 @@ class PaymentProcessingConfirmationEmail extends AbstractEmail {
 	 * {@inheritdoc}
 	 */
 	public function get_type() {
-		return AbstractEmail::INTERNAL_TYPE;
+		return AbstractEmail::EXTERNAL_TYPE;
 	}
 
 	/**

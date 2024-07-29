@@ -240,9 +240,59 @@ trait SubscriptionTrait {
 		$tax_status    = get_post_meta( $form->id, '_tax_status', true );
 		$tax_behavior  = get_post_meta( $form->id, '_tax_behavior', true );
 
-		// Add the base line item.
+		// If multiple line items are allowed, then add them.
+		if ( $form->allows_multiple_line_items() ) {
+			$prices      = (array) $request->get_param( 'price_ids' );
+			$price_items = array();
+
+			foreach ( $prices as $price ) {
+				// Skip one-time prices. These are added to the first invoice only
+				// via `self::get_subscription_additional_invoice_line_items()`.
+				/** @var array $price */
+				if ( ! PaymentRequestUtils::is_recurring( $request, $price ) ) { // @phpstan-ignore-line.
+					continue;
+				}
+
+				$price_item = array(
+					'quantity' => $price['quantity'],
+					'metadata' => array(
+						'simpay_price_instance_id' => $price['price_data']['instance_id'],
+					),
+				);
+
+				if (
+					! simpay_payment_form_prices_is_defined_price( $price['price_id'] ) ||
+					$price['is_optionally_recurring']
+				) {
+					$price_item['price_data'] = array(
+						'unit_amount' => $price['custom_amount'],
+						'currency'    => $price['price_data']['currency'],
+						'product'     => $price['price_data']['product_id'],
+						'recurring'   => array(
+							'interval'       => $price['price_data']['recurring']['interval'],
+							'interval_count' => $price['price_data']['recurring']['interval_count'],
+						),
+						'tax_behavior' => 'automatic' === $tax_status
+							? $tax_behavior
+							: 'unspecified',
+					);
+
+				} else {
+					$price_item['price'] = $price['price_id'];
+				}
+
+				$price_items[] = $price_item;
+			}
+
+			return $price_items;
+		}
+
+		// Otherwise add a single line item.
 		$base_item = array(
 			'quantity' => $quantity,
+			'metadata'    => array(
+				'simpay_price_instance_id' => $price->instance_id,
+			)
 		);
 
 		$custom_price_data = array(
@@ -302,8 +352,6 @@ trait SubscriptionTrait {
 
 		$line_items[] = $base_item;
 
-		// Set the line item tax behavior, if needed.
-
 		return $line_items;
 	}
 
@@ -318,6 +366,59 @@ trait SubscriptionTrait {
 	 * @return array<int, array<string, mixed>>
 	 */
 	private function get_subscription_additional_invoice_line_items( $request ) {
+		$form = PaymentRequestUtils::get_form( $request );
+
+		// If multiple line items are allowed, add non-recurring price options, or fees.
+		if ( $form->allows_multiple_line_items() ) {
+			$prices      = (array) $request->get_param( 'price_ids' );
+			$price_items = array();
+
+			foreach ( $prices as $price ) {
+				/** @var array $price */
+
+				// If the price is recurring, look for Setup Fees.
+				if ( PaymentRequestUtils::is_recurring( $request, $price ) ) { // @phpstan-ignore-line.
+
+					if (
+						isset( $price['price_data']['line_items'] ) &&
+						! empty( $price['price_data']['line_items'] )
+					) {
+						foreach ( $price['price_data']['line_items']  as $fees ) {
+							$price_items[] = array(
+								'price_data'   => array(
+									'unit_amount' => $fees['unit_amount'],
+									'currency'    => $price['price_data']['currency'],
+									'product'     => $price['price_data']['product_id'],
+								),
+								'quantity'     => 1,
+							);
+						}
+					}
+
+					// Otherwise, skip.
+					continue;
+				}
+
+				$price_item = array(
+					'quantity'   => $price['quantity'],
+				);
+
+				if ( ! simpay_payment_form_prices_is_defined_price( $price['price_id'] ) ) {
+					$price_item['price_data'] = array(
+						'unit_amount' => $price['custom_amount'],
+						'currency'    => $price['price_data']['currency'],
+						'product'     => $price['price_data']['product_id'],
+					);
+				} else {
+					$price_item['price'] = $price['price_id'];
+				}
+
+				$price_items[] = $price_item;
+			}
+
+			return $price_items;
+		}
+
 		$line_items = array();
 
 		// Add a line item for the legacy per-plan fee, if needed.
@@ -424,8 +525,8 @@ trait SubscriptionTrait {
 		}
 
 		$filter_name = 'plan' === $type
-			? 'simpay_get_plan_setup_fee_args_from_payment_form_request'
-			: 'simpay_get_setup_fee_args_from_payment_form_request';
+		? 'simpay_get_plan_setup_fee_args_from_payment_form_request'
+		: 'simpay_get_setup_fee_args_from_payment_form_request';
 
 		/**
 		 * Filters the arguments used to create the additional line item.
@@ -464,5 +565,4 @@ trait SubscriptionTrait {
 
 		return $subscription_key;
 	}
-
 }

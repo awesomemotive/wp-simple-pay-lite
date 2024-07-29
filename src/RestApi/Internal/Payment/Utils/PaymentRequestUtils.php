@@ -89,6 +89,44 @@ class PaymentRequestUtils {
 	}
 
 	/**
+	 * Returns a list of selected price IDs for the given request.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @param \WP_REST_Request $request The payment request.
+	 * @return array{
+	 *     array{
+	 *         price_id: string,
+	 *         custom_amount: int,
+	 *         quantity: int,
+	 *         price_data: array{
+	 *             label: string,
+	 *             currency: string,
+	 *             instance_id: string,
+	 *             unit_amount: int,
+	 *         }
+	 *     }
+	 * }
+	 */
+	public static function get_price_ids( $request ) {
+		/** @var array{
+		 *     array{
+		 *         price_id: string,
+		 *         custom_amount: int,
+		 *         quantity: int,
+		 *         price_data: array{
+		 *             label: string,
+		 *             currency: string,
+		 *             instance_id: string,
+		 *             unit_amount: int,
+		 *         }
+		 *     }
+		 * }
+		 */
+		return $request->get_param( 'price_ids' );
+	}
+
+	/**
 	 * Returns the currency for the given request.
 	 *
 	 * @since 4.7.0
@@ -197,12 +235,18 @@ class PaymentRequestUtils {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @param \WP_REST_Request $request The payment request.
+	 * @param \WP_REST_Request          $request The payment request.
+	 * @param array<string, mixed>|null $price_data Optional price data to use instead of request data.
 	 * @return bool
 	 */
-	public static function is_recurring( $request ) {
-		$price                   = self::get_price( $request );
-		$is_optionally_recurring = self::is_optionally_recurring( $request );
+	public static function is_recurring( $request, $price_data = null ) {
+		if ( null !== $price_data ) {
+			$price                   = (object) $price_data['price_data'];
+			$is_optionally_recurring = $price_data['is_optionally_recurring'];
+		} else {
+			$price                   = self::get_price( $request );
+			$is_optionally_recurring = self::is_optionally_recurring( $request );
+		}
 
 		// Price option can recur, and is, so it is recurring.
 		if ( $price->can_recur && $is_optionally_recurring ) {
@@ -239,6 +283,42 @@ class PaymentRequestUtils {
 	}
 
 	/**
+	 * Returns the unit amount for the given request.
+	 *
+	 * If a custom amount is being used, return that.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @param \WP_REST_Request $request The payment request.
+	 * @return int
+	 */
+	public static function get_multiple_line_items_unit_amount( $request ) {
+		$prices            = PaymentRequestUtils::get_price_ids( $request );
+		$final_unit_amount = 0;
+
+		foreach ( $prices as $price ) {
+			$unit_amount = $price['custom_amount'];
+			$quantity    = $price['quantity'];
+			$unit_amount = $unit_amount * $quantity;
+
+			// Add setup fee(s).
+			if ( isset( $price['price_data']['line_items'] ) ) {
+				$unit_amount += array_reduce(
+					$price['price_data']['line_items'],
+					function ( $total, $line_item ) {
+						return $total + (int) $line_item['unit_amount'];
+					},
+					0
+				);
+			}
+
+			$final_unit_amount += $unit_amount;
+		}
+
+		return $final_unit_amount;
+	}
+
+	/**
 	 * Returns the total amount for a given request. This accounts for quantity,
 	 * discounts, fee recovery, and taxes.
 	 *
@@ -255,6 +335,10 @@ class PaymentRequestUtils {
 		$tax_behavior = get_post_meta( $form->id, '_tax_behavior', true );
 
 		$unit_amount = $unit_amount * $quantity;
+
+		if ( $form->allows_multiple_line_items() ) {
+			$unit_amount = self::get_multiple_line_items_unit_amount( $request );
+		}
 
 		// Add the fee recovery amount, if needed.
 		if ( $form->has_fee_recovery() ) {
@@ -313,16 +397,19 @@ class PaymentRequestUtils {
 			'metadata' => self::get_payment_metadata( $request ),
 		);
 
-		// Set the description.
-		// Use price option label if one is set.
-		if ( null !== $price->label ) {
+		// If multiple line items are used, use the form title.
+		if ( $form->allows_multiple_line_items() && ! empty( $form->company_name ) ) {
+			$payment_intent_data['description'] = $form->company_name;
+
+			// Use price option label if one is set.
+		} elseif ( null !== $price->label ) {
 			$payment_intent_data['description'] = $price->get_display_label();
 
 			// Fall back to Payment Form title if set.
 			// This is a change in behavior in 4.1, but matches the Stripe Checkout
 			// usage that falls back to the Product title (Payment Form title).
 		} elseif ( ! empty( $form->company_name ) ) {
-				$payment_intent_data['description'] = $form->company_name;
+			$payment_intent_data['description'] = $form->company_name;
 		}
 
 		return $payment_intent_data;
@@ -342,21 +429,49 @@ class PaymentRequestUtils {
 	public static function get_payment_metadata( $request ) {
 		$form        = self::get_form( $request );
 		$form_values = self::get_form_values( $request );
-		$price       = self::get_price( $request );
-		$unit_amount = self::get_unit_amount( $request );
-		$quantity    = self::get_quantity( $request );
-		$subtotal    = $unit_amount * $quantity;
+		$metadata    = array(
+			'simpay_form_id' => $form->id,
+		);
 
-		$metadata = array(
-			'simpay_form_id'         => $form->id,
-			'simpay_unit_amount'     => $unit_amount,
-			'simpay_quantity'        => $quantity,
-			'simpay_price_instances' => sprintf(
+		if ( $form->allows_multiple_line_items() ) {
+			$price_instances = array();
+			$items           = PaymentRequestUtils::get_price_ids( $request );
+
+			foreach ( $items as $item ) {
+				$price_instances[] = sprintf(
+					'%s:%d:%d',
+					$item['price_data']['instance_id'],
+					$item['quantity'],
+					simpay_payment_form_prices_is_defined_price( $item['price_id'] )
+						? $item['price_data']['unit_amount']
+						: $item['custom_amount']
+				);
+			}
+
+			$price_instances = implode( '|', $price_instances );
+
+			$subtotal = self::get_multiple_line_items_unit_amount( $request );
+
+			$metadata['simpay_price_instances'] = $price_instances;
+
+			// Retrieve a single price option.
+		} else {
+			$price = self::get_price( $request );
+
+			$unit_amount = self::get_unit_amount( $request );
+			$quantity    = self::get_quantity( $request );
+			$subtotal    = $unit_amount * $quantity;
+
+			$price_instances = sprintf(
 				'%s:%d',
 				$price->instance_id,
 				$quantity
-			),
-		);
+			);
+
+			$metadata['simpay_unit_amount']     = $unit_amount;
+			$metadata['simpay_quantity']        = $quantity;
+			$metadata['simpay_price_instances'] = $price_instances;
+		}
 
 		$license = simpay_get_license();
 
@@ -377,8 +492,6 @@ class PaymentRequestUtils {
 				$metadata[ $key ] = $value;
 			}
 
-			$amount = self::get_amount( $request );
-
 			// Fee recovery.
 			$fee_recovery = FeeRecoveryUtils::get_fee_recovery_unit_amount(
 				$request,
@@ -390,17 +503,19 @@ class PaymentRequestUtils {
 			}
 
 			// Tax.
+			$total = self::get_amount( $request );
+
 			$tax_status      = get_post_meta( $form->id, '_tax_status', true );
 			$tax_behavior    = get_post_meta( $form->id, '_tax_behavior', true );
 			$tax_unit_amount = TaxUtils::get_tax_unit_amount(
 				$request,
-				$unit_amount
+				$subtotal
 			);
 
 			switch ( $tax_status ) {
 				case 'automatic':
 					// Find the tax percent based on the total amount, and tax amount.
-					$tax_percent = ( $tax_unit_amount / ( $amount - $tax_unit_amount ) ) * 100;
+					$tax_percent = ( $tax_unit_amount / ( $total - $tax_unit_amount ) ) * 100;
 					$tax_percent = round( $tax_percent );
 
 					if ( 'exclusive' === $tax_behavior ) {
@@ -418,7 +533,16 @@ class PaymentRequestUtils {
 						'exclusive'
 					);
 
-					$metadata['simpay_tax_unit_amount_exclusive'] = round( $amount - $subtotal );
+					$discount_amount = CouponUtils::get_discount_unit_amount(
+						$request,
+						$subtotal,
+						null
+					);
+
+					$metadata['simpay_tax_unit_amount_exclusive'] = (
+						round( $subtotal - $discount_amount ) *
+						( $metadata['simpay_tax_percent_exclusive'] / 100 )
+					);
 
 					$metadata['simpay_tax_percent_inclusive'] = simpay_get_payment_form_tax_percentage(
 						$form,
@@ -429,7 +553,7 @@ class PaymentRequestUtils {
 
 					if ( 0 !== $metadata['simpay_tax_percent_inclusive'] ) {
 						$metadata['simpay_tax_unit_amount_inclusive'] = round(
-							( $amount - $subtotal ) - ( $metadata['simpay_tax_percent_inclusive'] / 100 )
+							( $total - $subtotal ) - ( $metadata['simpay_tax_percent_inclusive'] / 100 )
 						);
 					}
 
@@ -440,7 +564,7 @@ class PaymentRequestUtils {
 			$coupon_data = CouponUtils::get_coupon_data(
 				$request,
 				self::get_coupon_code( $request ),
-				$unit_amount,
+				$subtotal,
 				self::get_currency( $request )
 			);
 
@@ -638,6 +762,15 @@ class PaymentRequestUtils {
 				'setup_future_usage' => 'off_session',
 			),
 		);
+
+		// Adjust payment method options if multiple line items enabled.
+		if ( $form->allows_multiple_line_items() ) {
+			// Subscription does not have `setup_future_usage` field.
+			// For more information, refer to the Stripe API documentation:
+			// https://docs.stripe.com/api/subscriptions/create#create_subscription-payment_settings-payment_method_options-card.
+			$payment_method_options['card'] = array();
+			$payment_method_options['link'] = array();
+		}
 
 		// If ach-debit is enabled, check if the verification_method.instant
 		// flag is set. If it is not, force instant verification.

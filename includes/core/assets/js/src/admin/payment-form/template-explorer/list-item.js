@@ -29,7 +29,6 @@ const noDemo = [
 	'recurring-service-trial-period-form',
 	'recurring-services-form',
 	'alipay-payment-button',
-	'giropay-payment-button',
 	'ideal-payment-button',
 	'przelewy24-payment-button',
 ];

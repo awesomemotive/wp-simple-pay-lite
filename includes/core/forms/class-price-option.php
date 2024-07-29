@@ -155,6 +155,39 @@ class PriceOption {
 	public $line_items;
 
 	/**
+	 * Determines if quantity option is enabled or not.
+	 * 'yes' or null.
+	 *
+	 * @since 4.11.0
+	 * @var string
+	 */
+	public $quantity_toggle;
+
+	/**
+	 * Quantity label.
+	 *
+	 * @since 4.11.0
+	 * @var string
+	 */
+	public $quantity_label;
+
+	/**
+	 * Quantity minimum.
+	 *
+	 * @since 4.11.0
+	 * @var int
+	 */
+	public $quantity_minimum;
+
+	/**
+	 * Quantity maximum.
+	 *
+	 * @since 4.11.0
+	 * @var int
+	 */
+	public $quantity_maximum;
+
+	/**
 	 * Optional. Stripe Price or Plan (legacy) for legacy filter usage.
 	 *
 	 * @since 4.1.0
@@ -167,8 +200,8 @@ class PriceOption {
 	 *
 	 * @since 4.1.0
 	 *
-	 * @param array                         $price_data {
-	 *                           Price data.
+	 * @param array                          $price_data {
+	 *                            Price data.
 	 *
 	 *   @type int    $id              Optional. Stripe Price ID if using a defined amount.
 	 *   @type bool   $default         Determines if the price should be preselected
@@ -202,9 +235,9 @@ class PriceOption {
 	 *     @type string $currency    Line item currency.
 	 *   }
 	 * }
-	 * @param \SimplePay\Core\Abstract\Form $form Payment Form.
-	 * @param string|null                   $instance_id Price option instance ID.
-	 *                                                   Passing null falls back to a random instance ID.
+	 * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+	 * @param string|null                    $instance_id Price option instance ID.
+	 *                                                    Passing null falls back to a random instance ID.
 	 * @throws \Exception If the PriceOption is invalid.
 	 */
 	public function __construct( $price_data, $form, $instance_id = null ) {
@@ -403,7 +436,7 @@ class PriceOption {
 						$id   = 'plan-setup-fee';
 						$name = 'Plan Setup Fee';
 						break;
-				};
+				}
 
 				$line_items[] = array(
 					'id'          => $id,
@@ -416,6 +449,26 @@ class PriceOption {
 			if ( ! empty( $line_items ) ) {
 				$this->line_items = $line_items;
 			}
+		}
+
+		// Quantity toggle.
+		if ( isset( $price_data['quantity_toggle'] ) ) {
+			$this->quantity_toggle = $price_data['quantity_toggle'];
+		}
+
+		// Quantity label.
+		if ( isset( $price_data['quantity_label'] ) ) {
+			$this->quantity_label = $price_data['quantity_label'];
+		}
+
+		// Quantity minimum.
+		if ( isset( $price_data['quantity_minimum'] ) ) {
+			$this->quantity_minimum = $price_data['quantity_minimum'];
+		}
+
+		// Quantity maximum.
+		if ( isset( $price_data['quantity_maximum'] ) ) {
+			$this->quantity_maximum = $price_data['quantity_maximum'];
 		}
 	}
 
@@ -537,7 +590,7 @@ class PriceOption {
 			) {
 				$setup_fee_amount = array_reduce(
 					$this->line_items,
-					function( $amount, $line_item ) {
+					function ( $amount, $line_item ) {
 						return $amount + $line_item['unit_amount'];
 					},
 					0
@@ -736,6 +789,34 @@ class PriceOption {
 	}
 
 	/**
+	 * Returns the remaining stock for the price option.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @return int
+	 */
+	public function get_remaining_stock() {
+		// Add inventory data.
+		if ( true !== $this->form->is_managing_inventory() ) {
+			return 0;
+		}
+
+		$behavior = $this->form->get_inventory_behavior();
+
+		switch ( $behavior ) {
+			case 'combined':
+				$combined  = $this->form->get_combined_inventory_data();
+				return $combined['available'];
+			case 'individual':
+				$individual = $this->form->get_individual_inventory_data();
+
+				return $individual[ $this->instance_id ]['available'];
+			default:
+				return 0;
+		}
+	}
+
+	/**
 	 * Returns an array containing the representation of the public properties.
 	 *
 	 * @since 4.1.0
@@ -749,25 +830,9 @@ class PriceOption {
 
 		// Add inventory data.
 		if ( true === $this->form->is_managing_inventory() ) {
-			$behavior = $this->form->get_inventory_behavior();
-
-			switch ( $behavior ) {
-				case 'combined':
-					$combined  = $this->form->get_combined_inventory_data();
-					$inventory = $combined['available'];
-
-					break;
-				case 'individual':
-					$individual = $this->form->get_individual_inventory_data();
-					$inventory  = $individual[ $this->instance_id ]['available'];
-
-					break;
-			}
-
-			$price_data['inventory'] = $inventory;
+			$price_data['inventory'] = $this->get_remaining_stock();
 		}
 
 		return $price_data;
 	}
-
 }
