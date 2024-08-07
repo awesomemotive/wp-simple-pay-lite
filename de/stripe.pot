@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 16:02\n"
+"PO-Revision-Date: 2024-08-07 18:26\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -151,7 +151,7 @@ msgstr "Erlauben, dass der Preis optional als Abonnement gekauft werden kann"
 
 #: includes/core/admin/class-assets.php:263
 msgid "Automatically activate a recurring subscription"
-msgstr ""
+msgstr "Automatisch ein wiederkehrendes Abonnement aktivieren"
 
 #: includes/core/admin/class-menus.php:79
 #: includes/core/admin/class-menus.php:190
@@ -301,7 +301,7 @@ msgstr "Auf welche Version sollte ich ein Upgrade durchführen?"
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
-msgstr ""
+msgstr "Um mit zukünftigen Versionen von WP Simple Pay kompatibel zu sein, solltest du deine PHP-Version auf %1$s, <code>7.4</code> oder <code>8.0</code> aktualisieren. Auf einer normalen WordPress Website sollte die Umstellung auf PHP <code>%1$s</code> sollte keine Probleme verursachen. Wir würden dir jedoch empfehlen, auf PHP <code>8.0</code> oder höher umzusteigen, um die Geschwindigkeits- und Sicherheitsvorteile modernerer und vollständig unterstützter PHP-Versionen zu nutzen. Allerdings sind einige Plugins möglicherweise nicht vollständig mit PHP <code>8.x</code> kompatibel, so dass weitere Tests erforderlich sein können."
 
 #: includes/core/admin/functions/notices.php:181
 msgid "Need help upgrading? Ask your web host!"
@@ -622,16 +622,16 @@ msgstr "Die Preisauswahl ist erforderlich und wurde dem Zahlungsformular hinzuge
 
 #: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr ""
+msgstr "Die individuelle Beträgeingabe wurde aus dem Zahlungsformular entfernt. Dieses Feld wird bei mehreren Positionen automatisch angezeigt."
 
 #: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr ""
+msgstr "Der Schalter für wiederkehrende Beträge wurde aus dem Zahlungsformular entfernt. Dieses Feld wird bei mehreren Positionen automatisch angezeigt."
 
 #: includes/core/forms/functions.php:599
 #: includes/core/forms/functions.php:610
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr ""
+msgstr "Die Mengeneingabe wurde aus dem Zahlungsformular entfernt. Dieses Feld wird bei mehreren Positionen automatisch angezeigt."
 
 #: includes/core/forms/functions.php:627
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
@@ -639,7 +639,7 @@ msgstr "Das Eingabefeld „Individueller Betrag“ ist erforderlich, weil du ein
 
 #: includes/core/forms/functions.php:636
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
-msgstr ""
+msgstr "Die individuelle Beträgeingabe wurde aus dem Zahlungsformular entfernt. Eine Preisoption, die benutzerdefinierte Beträge zulässt, ist erforderlich. "
 
 #: includes/core/forms/functions.php:654
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
@@ -10414,7 +10414,7 @@ msgstr "Der berechnete Gebühreneinzug basiert auf der Gesamtsumme und der proze
 
 #: includes/core/payments/payment-confirmation-template-tags.php:992
 msgid "The receipt breakdown of the payment including items, adjustments, and totals."
-msgstr ""
+msgstr "Die Aufschlüsselung des Zahlungseingangs einschließlich der Posten, Anpassungen und Summen."
 
 #: includes/core/payments/payment-confirmation-template-tags.php:998
 msgid "The amount of the coupon applied to the payment."
@@ -10900,15 +10900,15 @@ msgstr "Automatisch nach Position berechnet"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1171
 msgid "Unlock \"Purchase Mode\" Setting"
-msgstr ""
+msgstr "Einstellung \"Kaufmodus\" freischalten"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1176
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
-msgstr ""
+msgstr "Es tut uns leid, aber die Einstellung Kaufmodus ist in WP Simple Pay Lite nicht verfügbar. Bitte upgrade auf <strong>WP Simple Pay Pro</strong>, um diese und andere fantastische Funktionen freizuschalten."
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1198
 msgid "Purchase Mode"
-msgstr ""
+msgstr "Kaufmodus"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1202
 #: src/AdminPage/FormTemplatesPage.php:71
@@ -10917,11 +10917,11 @@ msgstr "Neu!"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1220
 msgid "Allow purchasing multiple price options"
-msgstr ""
+msgstr "Erlaube den Kauf mehrerer Optionen"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1229
 msgid "Purchase multiple price options in a single transaction."
-msgstr ""
+msgstr "Kaufe mehrere Optionen in einer einzigen Transaktion."
 
 #: includes/core/post-types/simple-pay/edit-form-payment-page.php:38
 msgid "Payment Page Mode"
@@ -11164,7 +11164,7 @@ msgstr "Allgemein"
 
 #: includes/core/post-types/simple-pay/edit-form.php:481
 msgid "Payment <span>New!</span>"
-msgstr ""
+msgstr "Bezahlung <span>Neu!</span>"
 
 #: includes/core/post-types/simple-pay/edit-form.php:497
 msgid "Purchase Restrictions"
@@ -12992,68 +12992,68 @@ msgstr "%s in Stripe anzeigen →"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:44
 msgid "Payment Processing Confirmation"
-msgstr ""
+msgstr "Bestätigung der Zahlungsabwicklung"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:51
 msgid "Send a payment processing confirmation email to the customer upon successful payment"
-msgstr ""
+msgstr "Sende nach erfolgreicher Zahlung eine E-Mail zur Bestätigung der Zahlungsabwicklung an den Kunden"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:71
 msgid "Payment Processing Confirmation for %s"
-msgstr ""
+msgstr "Bestätigung der Zahlungsabwicklung für %s"
 
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:44
 msgid "Payment Processing Notification"
-msgstr ""
+msgstr "Benachrichtigung über die Zahlungsabwicklung"
 
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:51
 msgid "Send a payment processing notification email to the merchant upon successful payment"
-msgstr ""
+msgstr "Sende eine E-Mail an den Händler, wenn die Zahlung erfolgreich abgeschlossen wurde."
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:88
 msgid "Payment Processing Notification for %s"
-msgstr ""
+msgstr "Benachrichtigung über die Zahlungsabwicklung für %s"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:44
 msgid "Payment Refunded Confirmation"
-msgstr ""
+msgstr "Erstattungsbestätigung der Zahlung"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:51
 msgid "Send a confirmation email for a payment refund"
-msgstr ""
+msgstr "Sende eine E-Mail zur Bestätigung einer Zahlungsrückerstattung"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:87
 msgid "Payment refunded on %s"
-msgstr ""
+msgstr "Rückerstattung der Zahlung auf %s"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:53
 msgid "Subscription Cancellation Confirmation"
-msgstr ""
+msgstr "Kündigungsbestätigung für das Abonnement"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:60
 msgid "Email sent to users when their subscription is cancelled."
-msgstr ""
+msgstr "E-Mails, die an Benutzer gesendet werden, wenn ihr Abonnement gekündigt wird."
 
 #. translators: %s Site name
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:80
 msgid "Subscription Cancelled for %s"
-msgstr ""
+msgstr "Abonnement gekündigt für %s"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:53
 msgid "Subscription Cancellation Notification"
-msgstr ""
+msgstr "Benachrichtigung über die Kündigung des Abonnements"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:60
 msgid "Email sent to merchants when a subscription is cancelled."
-msgstr ""
+msgstr "E-Mails, die an Händler gesendet werden, wenn ein Abonnement gekündigt wird."
 
 #. translators: %s Site name
 #: src/Emails/Email/SubscriptionCancellationNotification.php:97
 msgid "Subscription Cancellation Notification for %s"
-msgstr ""
+msgstr "Benachrichtigung über die Kündigung des Abonnements für %s"
 
 #: src/Emails/Email/SummaryReportEmail.php:47
 msgid "Summary Report"
@@ -13439,50 +13439,50 @@ msgstr "Länder-/Regionalcode im ISO 3166-1 Alpha-2-Format."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:382
 msgid "The provided form ID is invalid."
-msgstr ""
+msgstr "Die angegebene Formular-ID ist ungültig."
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:410
 msgid "The required field \"%s\" is missing."
-msgstr ""
+msgstr "Das erforderliche Feld \"%s\" fehlt."
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:416
 msgid "The required field \"%s\" cannot be empty."
-msgstr ""
+msgstr "Das erforderliche Feld \"%s\" darf nicht leer sein."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
-msgstr ""
+msgstr "Steuer-ID und Steuer-ID-Typ sind erforderliche Felder."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
 msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr ""
+msgstr "Steuer-ID und Steuer-ID-Typ dürfen nicht leer sein."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
 msgid "The %s address name is required."
-msgstr ""
+msgstr "Der Name der Adresse %s ist erforderlich."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
 msgid "The %s address country is required."
-msgstr ""
+msgstr "Das Land der Adresse %s ist erforderlich."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
 msgid "The %s address postal code is required."
-msgstr ""
+msgstr "Die Postleitzahl der Adresse %s ist erforderlich."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
 msgid "The %s field is required."
-msgstr ""
+msgstr "Das Feld %s ist erforderlich."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:475
 msgid "The %s field can not be empty."
-msgstr ""
+msgstr "Das Feld %s darf nicht leer sein."
 
 #: src/RestApi/Internal/Report/GrossVolumePeriodOverPeriodReport.php:152
 #: src/RestApi/Internal/Report/SuccessfulPaymentsPeriodOverPeriodReport.php:142
@@ -14248,7 +14248,7 @@ msgstr "Stückpreis"
 
 #: views/smart-tag-receipt.php:78
 msgid "(Trial)"
-msgstr ""
+msgstr "(Versuch)"
 
 #: views/smart-tag-receipt.php:89
 msgid "Subscription Setup Fee"
@@ -14269,7 +14269,7 @@ msgstr "Steuer"
 
 #: views/smart-tag-receipt.php:205
 msgid "Total due"
-msgstr ""
+msgstr "Insgesamt fällig"
 
 #: views/smart-tag-receipt.php:207
 msgid "Total"
@@ -14506,7 +14506,7 @@ msgstr "Bitte wähle eine andere Währung oder komm später wieder."
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "%s refund was initiated"
-msgstr ""
+msgstr "%s Erstattung eingeleitet wurde"
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "View customer records"
