@@ -52,10 +52,45 @@ export function allowMultipleLineItems() {
 	};
 
 	// Handle toggle on multiple line item setting change.
-	enableEl.addEventListener( 'change', toggleUserQuantity );
+	enableEl.addEventListener( 'change', () => {
+		toggleUserQuantity();
+		enableDisableOneTimePaymentMethods( enableEl );
+	} );
 
 	// Handle toggle on load.
 	toggleUserQuantity();
+	enableDisableOneTimePaymentMethods( enableEl );
+}
+
+/**
+ * Enable/Disable one time payment methods based on multiple line item setting.
+ *
+ * @since 4.11.0
+ * @param {HTMLElement} enableEl Enable/Disable multiple line item setting.
+ * @return {void}
+ */
+export function enableDisableOneTimePaymentMethods( enableEl ) {
+	const paymentMethodsFilter = document.querySelectorAll(
+		'.simpay-panel-field-payment-method-filter'
+	);
+	const paymentMethods = document.querySelectorAll(
+		'.simpay-panel-field-payment-method[data-payment-method]'
+	);
+
+	[ ...paymentMethods ].forEach( ( paymentMethod ) => {
+		const { recurring, scope } = JSON.parse(
+			paymentMethod.dataset.paymentMethod
+		);
+
+		if ( enableEl.checked ) {
+			paymentMethod.style.display = ! recurring ? 'none' : 'block';
+		} else {
+			const maybeShow = 'popular' === scope ? 'block' : 'none';
+
+			paymentMethod.style.display =
+				'all' === paymentMethodsFilter[ 0 ].value ? 'block' : maybeShow;
+		}
+	} );
 }
 
 /**

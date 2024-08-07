@@ -9,12 +9,17 @@
  *
  * @var SimplePay\Core\Abstracts\Form $form
  * @var string $currency
- * @var array{array{description: string, quantity: int, unit_amount: int, amount: int}} $line_items
+ * @var array{array{description: string, quantity: int, unit_amount: int, amount: int, is_trial: bool}} $line_items
  * @var int $subtotal
  * @var int $discount
  * @var int $fee_recovery
+ * @var int $setup_fee
  * @var int $tax
  * @var int $total
+ * @var string $recurring Full recurring string the same as `{recurring-total}`
+ *
+ * @phpcs:disable Squiz.PHP.EmbeddedPhp.ContentBeforeOpen
+ * @phpcs:disable Squiz.PHP.EmbeddedPhp.ContentAfterOpen
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -68,12 +73,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 							$currency
 						)
 					);
+
+					if ( true === $line_item['is_trial'] ) {
+						echo '&nbsp;<small>' . esc_html__( '(Trial)', 'stripe' ) . '</small>';
+					}
 					?>
 				</td>
 			</tr>
 			<?php endforeach; ?>
 		</tbody>
 		<tfoot>
+			<?php if ( $setup_fee > 0 ) : ?>
+			<tr class="text-right">
+				<td colspan="3" class="text-right">
+					<?php esc_html_e( 'Subscription Setup Fee', 'stripe' ); ?>
+				</td>
+				<td class="text-right">
+					<?php
+					echo esc_html(
+						simpay_format_currency( $setup_fee, $currency )
+					);
+					?>
+				</td>
+			</tr>
+			<?php endif; ?>
+
 			<?php
 			if ( $subtotal !== $total ) :
 				$fields = $form->custom_fields;
@@ -87,7 +111,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				if ( ! empty( $total_amount_field ) ) {
 					$total_amount_field = reset( $total_amount_field );
-					$label              = $total_amount_field['subtotal_label'];
+					$label              = isset( $total_amount_field['subtotal_label'] ) ? $total_amount_field['subtotal_label'] : __( 'Subtotal', 'stripe' );
 				} else {
 					$label = __( 'Subtotal', 'stripe' );
 				}
@@ -112,12 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php esc_html_e( 'Discount', 'stripe' ); ?>
 				</td>
 				<td class="text-right">
-					&ndash;
-					<?php
-					echo esc_html(
-						simpay_format_currency( $discount, $currency )
-					);
-					?>
+					&ndash;<?php echo esc_html( simpay_format_currency( $discount, $currency ) ); ?>
 				</td>
 			</tr>
 			<?php endif; ?>
@@ -183,7 +202,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					if ( ! empty( $total_amount_field ) ) {
 						$total_amount_field = reset( $total_amount_field );
-						$label              = $total_amount_field['label'];
+						$label              = isset( $total_amount_field['label'] ) ? $total_amount_field['label'] : __( 'Total due', 'stripe' );
 					} else {
 						$label = __( 'Total', 'stripe' );
 					}
@@ -199,6 +218,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 				</td>
 			</tr>
+
+			<?php if ( '' !== $recurring ) : ?>
+			<tr class="text-right">
+				<td colspan="3" class="text-right">
+					<?php
+					$fields = $form->custom_fields;
+
+					$total_amount_field = array_filter(
+						$fields,
+						function ( $field ) {
+							return 'total_amount' === $field['type'];
+						}
+					);
+
+					if ( ! empty( $total_amount_field ) ) {
+						$total_amount_field = reset( $total_amount_field );
+						$label              = isset( $total_amount_field['recurring_label'] )
+							? $total_amount_field['label']
+							: __( 'Recurring payment', 'stripe' );
+					} else {
+						$label = __( 'Recurring payment', 'stripe' );
+					}
+
+					echo esc_html( $label );
+					?>
+				</td>
+				<td class="text-right">
+					<?php echo esc_html( $recurring ); ?>
+				</td>
+			</tr>
+			<?php endif; ?>
 		</tfoot>
 	</table>
 </div>

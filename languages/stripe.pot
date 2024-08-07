@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.10.0\n"
+"Project-Id-Version: WP Simple Pay Lite 4.11.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-29T15:32:49+00:00\n"
+"POT-Creation-Date: 2024-08-07T11:33:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
@@ -10343,83 +10343,78 @@ msgid ""
 msgstr ""
 
 #: includes/core/payments/customer.php:213
-#: src/RestApi/Internal/Payment/Traits/CustomerTrait.php:219
 msgid "Please select a valid Tax ID type."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:506
-msgid "Subscription Setup Fee"
-msgstr ""
-
-#: includes/core/payments/payment-confirmation-template-tags.php:996
+#: includes/core/payments/payment-confirmation-template-tags.php:858
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:490
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:498
 msgid "Subscription"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:998
+#: includes/core/payments/payment-confirmation-template-tags.php:860
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:481
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:485
 msgid "One time"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1071
+#: includes/core/payments/payment-confirmation-template-tags.php:933
 msgid "The form's title."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1075
+#: includes/core/payments/payment-confirmation-template-tags.php:937
 msgid "The form's description."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1079
+#: includes/core/payments/payment-confirmation-template-tags.php:941
 msgid "The total price of the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1083
+#: includes/core/payments/payment-confirmation-template-tags.php:945
 msgid "The value of the Name form field."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1087
+#: includes/core/payments/payment-confirmation-template-tags.php:949
 msgid "The charge date returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1091
+#: includes/core/payments/payment-confirmation-template-tags.php:953
 msgid "The unique charge ID returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1098
+#: includes/core/payments/payment-confirmation-template-tags.php:960
 msgid "The cumulative cost of selected items."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1105
+#: includes/core/payments/payment-confirmation-template-tags.php:967
 msgid "The type of payment (one-time or recurring)."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1110
+#: includes/core/payments/payment-confirmation-template-tags.php:972
 msgid "The brand of the card used. Visa, Amex, etc."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1115
+#: includes/core/payments/payment-confirmation-template-tags.php:977
 msgid "The last four digits of the card used."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1120
+#: includes/core/payments/payment-confirmation-template-tags.php:982
 msgid "The calculated tax amount based on the total and the tax percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1125
+#: includes/core/payments/payment-confirmation-template-tags.php:987
 msgid "The calculated fee recovery amount based on the total and the fee recovery percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1130
+#: includes/core/payments/payment-confirmation-template-tags.php:992
 msgid "The receipt breakdown of the payment including items, adjustments, and totals."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1136
+#: includes/core/payments/payment-confirmation-template-tags.php:998
 msgid "The amount of the coupon applied to the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1164
+#: includes/core/payments/payment-confirmation-template-tags.php:1026
 msgid "Available smart tags:"
 msgstr ""
 
@@ -10762,7 +10757,7 @@ msgid "Default Price"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:407
-#: views/smart-tag-receipt.php:40
+#: views/smart-tag-receipt.php:45
 msgid "Amount"
 msgstr ""
 
@@ -11199,7 +11194,7 @@ msgid "A payment form title is required."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:740
-#: views/smart-tag-receipt.php:31
+#: views/smart-tag-receipt.php:36
 msgid "Description"
 msgstr ""
 
@@ -11700,7 +11695,6 @@ msgid "Disabling CAPTCHA will make your site more vulnerable to spam and fraudul
 msgstr ""
 
 #: includes/core/rest-api/class-controller.php:104
-#: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:72
 msgid "Sorry, you have made too many requests. Please try again later."
 msgstr ""
 
@@ -11710,8 +11704,6 @@ msgstr ""
 #: includes/core/rest-api/v2/class-paymentintent-controller.php:143
 #: src/AntiSpam/EmailVerification.php:578
 #: src/AntiSpam/EmailVerification.php:672
-#: src/RestApi/Internal/Payment/Traits/PaymentIntentTrait.php:142
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:119
 msgid "Invalid request. Please try again."
 msgstr ""
 
@@ -12840,7 +12832,6 @@ msgid "Request failed."
 msgstr ""
 
 #: src/Block/ManageSubscriptionsBlock.php:63
-#: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:82
 #: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:146
 msgid "Invalid CAPTCHA. Please try again."
 msgstr ""
@@ -13282,206 +13273,6 @@ msgstr ""
 
 #: src/Repository/BerlinDbRepository.php:166
 msgid "Counting results via a query is not allowed. Use the ::count() method."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Traits/InvoiceTrait.php:134
-#: views/smart-tag-receipt.php:140
-msgid "Processing fee"
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Traits/SubscriptionTrait.php:508
-msgid "Plan Setup Fee"
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Traits/SubscriptionTrait.php:509
-msgid "Initial Setup Fee"
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:58
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:68
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:85
-msgid "Sorry, this coupon not valid."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:105
-msgid "Sorry, this coupon not valid for the selected currency."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:133
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:143
-msgid "Sorry, this coupon puts the total below the required minimum amount."
-msgstr ""
-
-#. translators: %1$s Coupon code. %2$s discount amount.
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:155
-msgid "%1$s: %2$s off"
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:35
-msgid "The payment form ID to use for the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:62
-msgid "The payment form values to use for the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:92
-msgid "A security token (usually from a CAPTCHA service) to verify the payment request."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:117
-msgid "The ID of the price to use for the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:145
-msgid "The purchase quantity for the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:172
-msgid "The custom amount for the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:203
-msgid "The currency for the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:232
-msgid "If the user has opted in to a recurring payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:256
-msgid "If the user has opted in to pay processing fees."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:280
-msgid "The coupon code to apply to the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:310
-msgid "The subtotal of the payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:334
-msgid "The customers's billing address."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:341
-msgid "Name."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:367
-msgid "The customers's shipping address."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:374
-msgid "Recipient name."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:378
-msgid "Recipient phone number."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:404
-msgid "The payment method type used to make a payment."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:431
-msgid "The payment's customer."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:455
-msgid "The payment's subscription ID."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:479
-msgid "The payment's SetupIntent ID."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:503
-msgid "The payment method's ID."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:527
-msgid "The payment's subscription key."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:551
-msgid "The payment object to update."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:575
-msgid "The payment's tax calculation."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:595
-msgid "Address."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:599
-msgid "Apartment, suite, etc."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:603
-msgid "City."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:607
-msgid "State/County code, or name of the state, county, province, or district."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:611
-msgid "Postal code."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:615
-msgid "Country/Region code in ISO 3166-1 alpha-2 format."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:382
-msgid "The provided form ID is invalid."
-msgstr ""
-
-#. translators: %s is replaced with the required field.
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:410
-msgid "The required field \"%s\" is missing."
-msgstr ""
-
-#. translators: %s is replaced with the required field.
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:416
-msgid "The required field \"%s\" cannot be empty."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
-msgid "Tax ID and Tax ID Type are required fields."
-msgstr ""
-
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
-msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr ""
-
-#. translators: %s is replaced with the address type (billing or shipping).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
-msgid "The %s address name is required."
-msgstr ""
-
-#. translators: %s is replaced with the address type (billing or shipping).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
-msgid "The %s address country is required."
-msgstr ""
-
-#. translators: %s is replaced with the address type (billing or shipping).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
-msgid "The %s address postal code is required."
-msgstr ""
-
-#. translators: %s is replaced with the field type (email, customer_name, or telephone).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
-msgid "The %s field is required."
-msgstr ""
-
-#. translators: %s is replaced with the field type (email, customer_name, or telephone).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:475
-msgid "The %s field can not be empty."
 msgstr ""
 
 #: src/RestApi/Internal/Report/GrossVolumePeriodOverPeriodReport.php:152
@@ -14238,28 +14029,50 @@ msgstr ""
 msgid "powered by"
 msgstr ""
 
-#: views/smart-tag-receipt.php:34
+#: views/smart-tag-receipt.php:39
 msgid "Quantity"
 msgstr ""
 
-#: views/smart-tag-receipt.php:37
+#: views/smart-tag-receipt.php:42
 msgid "Unit Price"
 msgstr ""
 
-#: views/smart-tag-receipt.php:92
+#: views/smart-tag-receipt.php:78
+msgid "(Trial)"
+msgstr ""
+
+#: views/smart-tag-receipt.php:89
+msgid "Subscription Setup Fee"
+msgstr ""
+
+#: views/smart-tag-receipt.php:114
+#: views/smart-tag-receipt.php:116
 msgid "Subtotal"
 msgstr ""
 
-#: views/smart-tag-receipt.php:112
+#: views/smart-tag-receipt.php:136
 msgid "Discount"
 msgstr ""
 
-#: views/smart-tag-receipt.php:160
+#: views/smart-tag-receipt.php:159
+msgid "Processing fee"
+msgstr ""
+
+#: views/smart-tag-receipt.php:179
 msgid "Tax"
 msgstr ""
 
-#: views/smart-tag-receipt.php:188
+#: views/smart-tag-receipt.php:205
+msgid "Total due"
+msgstr ""
+
+#: views/smart-tag-receipt.php:207
 msgid "Total"
+msgstr ""
+
+#: views/smart-tag-receipt.php:239
+#: views/smart-tag-receipt.php:241
+msgid "Recurring payment"
 msgstr ""
 
 #: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1

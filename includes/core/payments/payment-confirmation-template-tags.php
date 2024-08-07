@@ -284,293 +284,155 @@ function receipt( $value, $payment_confirmation_data ) {
 	$form       = $payment_confirmation_data['form'];
 	$tax_status = get_post_meta( $form->id, '_tax_status', true );
 
-	$currency     = 'USD';
-	$line_items   = array();
-	$subtotal     = 0;
-	$discount     = 0;
-	$fee_recovery = 0;
-	$tax          = 0;
-	$total        = 0;
+	$currency        = 'USD';
+	$line_items      = array();
+	$subtotal        = 0;
+	$discount        = 0;
+	$fee_recovery    = 0;
+	$setup_fee       = 0;
+	$tax             = 0;
+	$total           = 0;
+	$recurring       = '';
+	$price_instances = null;
+	$is_recurring    = false;
 
-	if ( $form->allows_multiple_line_items() ) {
+	// Subscription (on-site or Stripe Checkout) or One-Time Invoice (on-site).
+	if ( isset( $payment_confirmation_data['initial_invoice'] ) ) {
+		$invoice = $payment_confirmation_data['initial_invoice'];
 
-		// Subscription (on-site or Stripe Checkout) or One-Time Invoice (on-site).
-		if ( isset( $payment_confirmation_data['initial_invoice'] ) ) {
-			$invoice = $payment_confirmation_data['initial_invoice'];
+		$currency = strtoupper( $invoice->currency );
 
-			if ( $invoice->subscription ) {
-				if ( isset( $invoice->subscription->metadata->simpay_price_instances ) ) {
-					$price_instances = $invoice->subscription->metadata->simpay_price_instances;
-				} elseif ( isset( $payment_confirmation_data['checkout_session'] ) ) {
-					$price_instances = $payment_confirmation_data['checkout_session']->metadata->simpay_price_instances;
-				}
-			} else {
-				$price_instances = $invoice->metadata->simpay_price_instances;
+		$discount = array_reduce(
+			$invoice->total_discount_amounts,
+			function ( $carry, $discount_amount ) {
+				return $carry + $discount_amount->amount;
+			},
+			0
+		);
+
+		if ( $invoice->subscription ) {
+			$fee_recovery = isset( $invoice->subscription->metadata->simpay_fee_recovery_initial_unit_amount )
+				? $invoice->subscription->metadata->simpay_fee_recovery_initial_unit_amount
+				: ( isset( $invoice->subscription->metadata->simpay_fee_recovery_unit_amount )
+					? $invoice->subscription->metadata->simpay_fee_recovery_unit_amount
+					: 0 );
+
+			$is_recurring = true;
+		} else {
+			$fee_recovery = isset( $invoice->metadata->simpay_fee_recovery_unit_amount )
+				? $invoice->metadata->simpay_fee_recovery_unit_amount
+				: 0;
+		}
+
+		$subtotal = $invoice->subtotal;
+		$subtotal = $subtotal - $fee_recovery;
+
+		$tax = array_reduce(
+			$invoice->total_tax_amounts,
+			function ( $carry, $tax_amount ) {
+				return $carry + $tax_amount->amount;
+			},
+			0
+		);
+
+		$total = $invoice->total;
+
+		if ( $invoice->subscription ) {
+			if ( isset( $invoice->subscription->metadata->simpay_price_instances ) ) {
+				$price_instances = $invoice->subscription->metadata->simpay_price_instances;
+			} elseif ( isset( $payment_confirmation_data['checkout_session'] ) ) {
+				$price_instances = $payment_confirmation_data['checkout_session']->metadata->simpay_price_instances;
 			}
+		} else {
+			$price_instances = $invoice->metadata->simpay_price_instances;
+		}
+	} else {
+		$payment_intent = current( $payment_confirmation_data['paymentintents'] );
 
-			$price_instances = explode( '|', $price_instances );
-			$price_instances = array_map(
-				function ( $price_instance ) {
-					$parts = explode( ':', $price_instance );
+		$currency = $payment_intent->currency;
 
-					return array(
-						'instance_id' => $parts[0],
-						'quantity'    => (int) $parts[1],
-						'amount'      => (int) $parts[2],
-					);
-				},
-				$price_instances
-			);
+		$fee_recovery = isset( $payment_intent->metadata->simpay_fee_recovery_unit_amount )
+			? $payment_intent->metadata->simpay_fee_recovery_unit_amount
+			: 0;
 
-			$currency = strtoupper( $invoice->currency );
-
-			$unknown_price_instances_pool = $price_instances;
-
-			$line_items = array_map(
-				function ( $line_item ) use ( $form, &$unknown_price_instances_pool ) {
-					$price_option = null;
-
-					foreach ( $unknown_price_instances_pool as $k => $unknown_price_instance ) {
-						if (
-							$unknown_price_instance['amount'] === $line_item->price->unit_amount &&
-							$unknown_price_instance['quantity'] === $line_item->quantity
-						) {
-							$price_option = simpay_payment_form_prices_get_price_by_instance_id(
-								$form,
-								$unknown_price_instance['instance_id']
-							);
-
-							unset( $unknown_price_instances_pool[ $k ] );
-
-							break;
-						}
-					}
-
-					$description = $price_option
-						? $price_option->get_display_label()
-						: $line_item->description;
-
-					return array(
-						'description' => $description,
-						'quantity'    => $line_item->quantity,
-						'unit_amount' => $line_item->price->unit_amount,
-						'amount'      => $line_item->amount,
-					);
-				},
-				$invoice->lines->data
-			);
-
-			$subtotal = $invoice->subtotal;
-
-			$discount = array_reduce(
-				$invoice->total_discount_amounts,
-				function ( $carry, $discount_amount ) {
-					return $carry + $discount_amount->amount;
-				},
-				0
-			);
-
-			$fee_recovery = isset( $invoice->subscription->metadata->simpay_fee_recovery_unit_amount )
-				? $invoice->subscription->metadata->simpay_fee_recovery_unit_amount
-				: $invoice->metadata->simpay_fee_recovery_unit_amount;
-
-			$tax = array_reduce(
-				$invoice->total_tax_amounts,
-				function ( $carry, $tax_amount ) {
-					return $carry + $tax_amount->amount;
-				},
-				0
-			);
-
-			$total = $invoice->total;
-
-			// One-Time Stripe Checkout.
-		} elseif ( isset( $payment_confirmation_data['checkout_session'] ) ) {
-			$payment_intent   = current( $payment_confirmation_data['paymentintents'] );
-			$checkout_session = $payment_confirmation_data['checkout_session'];
-
-			$currency = $payment_intent->currency;
-
-			$price_instances = $payment_intent->metadata->simpay_price_instances;
-			$price_instances = explode( '|', $price_instances );
-			$price_instances = array_map(
-				function ( $price_instance ) {
-					$parts = explode( ':', $price_instance );
-
-					return array(
-						'instance_id' => $parts[0],
-						'quantity'    => (int) $parts[1],
-						'amount'      => (int) $parts[2],
-					);
-				},
-				$price_instances
-			);
-
-			$unknown_price_instances_pool = $price_instances;
-
-			$line_items = array_map(
-				function ( $line_item ) use ( $form, $unknown_price_instances_pool ) {
-					$price_option = null;
-
-					foreach ( $unknown_price_instances_pool as $k => $unknown_price_instance ) {
-						if (
-							$unknown_price_instance['amount'] === $line_item->price->unit_amount &&
-							$unknown_price_instance['quantity'] === $line_item->quantity
-						) {
-							$price_option = simpay_payment_form_prices_get_price_by_instance_id(
-								$form,
-								$unknown_price_instance['instance_id']
-							);
-
-							unset( $unknown_price_instances_pool[ $k ] );
-
-							break;
-						}
-					}
-
-					$description = $price_option
-						? $price_option->get_display_label()
-						: $line_item->description;
-
-					return array(
-						'description' => $description,
-						'quantity'    => $line_item->quantity,
-						'unit_amount' => $line_item->price->unit_amount,
-						'amount'      => $line_item->amount_total,
-					);
-				},
-				$checkout_session->line_items->data
-			);
-
-			$subtotal = (
-				$payment_intent->metadata->simpay_unit_amount * $payment_intent->metadata->simpay_quantity
-			);
-
+		if ( isset( $payment_confirmation_data['checkout_session'] ) ) {
+			$session  = $payment_confirmation_data['checkout_session'];
+			$discount = $session->total_details->amount_discount;
+			$tax      = $session->total_details->amount_tax;
+			$subtotal = $session->amount_subtotal;
+			$total    = $session->amount_total;
+		} else {
 			$discount = isset( $payment_intent->metadata->simpay_discount_unit_amount )
 				? $payment_intent->metadata->simpay_discount_unit_amount
-				: 0;
-
-			$fee_recovery = isset( $payment_intent->metadata->simpay_fee_recovery_unit_amount )
-				? $payment_intent->metadata->simpay_fee_recovery_unit_amount
 				: 0;
 
 			$tax = isset( $payment_intent->metadata->simpay_tax_unit_amount_exclusive )
 				? $payment_intent->metadata->simpay_tax_unit_amount_exclusive
 				: 0;
 
+			$subtotal = $payment_intent->amount - $fee_recovery - $tax;
+
 			$total = $payment_intent->amount;
-
-			$is_recurring = false;
 		}
-	} elseif ( ! empty( $payment_confirmation_data['subscriptions'] ) ) {
-			$subscription    = current( $payment_confirmation_data['subscriptions'] );
-			$initial_invoice = $payment_confirmation_data['initial_invoice'];
-			$payment_intent  = $subscription->latest_invoice->payment_intent;
-
-			$currency = $payment_intent->currency;
-
-			$price_instances   = explode( ':', $subscription->metadata->simpay_price_instances );
-			$price_instance_id = $price_instances[0];
-
-			$price_option = simpay_payment_form_prices_get_price_by_instance_id(
-				$form,
-				$price_instance_id
-			);
-
-			// Remove line items that are not part of the form (i.e processing fee).
-			$line_items = array_filter(
-				$initial_invoice->lines->data,
-				function ( $line_item ) use ( $form, $price_option ) {
-					// Keep one-time line items (i.e. setup fee) if the amount
-					// is greater than the price option amount.
-					$has_setup_fee = ! empty( $price_option->line_items );
-
-					if (
-						'invoiceitem' === $line_item->type &&
-						(
-							$has_setup_fee &&
-							$line_item->amount < $price_option->line_items[0]['unit_amount']
-						)
-					) {
-						return false;
-					}
-
-					return true;
-				}
-			);
-
-			$line_items = array_map(
-				function ( $line_item ) use ( $form ) {
-					return array(
-						'description' => 'invoiceitem' === $line_item->type
-							? __( 'Subscription Setup Fee', 'stripe' )
-							: $form->company_name,
-						'quantity'    => $line_item->quantity,
-						'unit_amount' => $line_item->price->unit_amount,
-						'amount'      => $line_item->amount,
-					);
-				},
-				$line_items
-			);
-
-			$subtotal = $initial_invoice->subtotal;
-
-			$discount = array_reduce(
-				$initial_invoice->total_discount_amounts,
-				function ( $carry, $discount_amount ) {
-					return $carry + $discount_amount->amount;
-				},
-				0
-			);
-
-			$fee_recovery = isset( $subscription->metadata->simpay_fee_recovery_unit_amount )
-			? $subscription->metadata->simpay_fee_recovery_unit_amount
-			: 0;
-
-			$tax = array_reduce(
-				$initial_invoice->total_tax_amounts,
-				function ( $carry, $tax_amount ) {
-					return $carry + $tax_amount->amount;
-				},
-				0
-			);
-
-			$total = $initial_invoice->total;
-	} else {
-		$payment_intent = current( $payment_confirmation_data['paymentintents'] );
-
-		$currency = $payment_intent->currency;
-
-		$line_items = array(
-			array(
-				'description' => $payment_intent->description,
-				'quantity'    => $payment_intent->metadata->simpay_quantity,
-				'unit_amount' => $payment_intent->metadata->simpay_unit_amount,
-				'amount'      => (
-					$payment_intent->metadata->simpay_quantity * $payment_intent->metadata->simpay_unit_amount
-				),
-			),
-		);
-
-		$subtotal = (
-			$payment_intent->metadata->simpay_unit_amount * $payment_intent->metadata->simpay_quantity
-		);
-
-		$discount = isset( $payment_intent->metadata->simpay_discount_unit_amount )
-			? $payment_intent->metadata->simpay_discount_unit_amount
-			: 0;
-
-		$fee_recovery = isset( $payment_intent->metadata->simpay_fee_recovery_unit_amount )
-			? $payment_intent->metadata->simpay_fee_recovery_unit_amount
-			: 0;
-
-		$tax = isset( $payment_intent->metadata->simpay_tax_unit_amount_exclusive )
-			? $payment_intent->metadata->simpay_tax_unit_amount_exclusive
-			: 0;
-
-		$total = $payment_intent->amount;
 
 		$is_recurring = false;
+
+		$price_instances = $payment_intent->metadata->simpay_price_instances;
+	}
+
+	if ( ! is_null( $price_instances ) ) {
+		$price_instances = explode( '|', $price_instances );
+		$price_instances = array_map(
+			function ( $price_instance ) {
+				$parts = explode( ':', $price_instance );
+
+				return array(
+					'instance_id' => $parts[0],
+					'quantity'    => (int) $parts[1],
+				);
+			},
+			$price_instances
+		);
+
+		foreach ( $price_instances as $price_instance ) {
+			$price_option = simpay_payment_form_prices_get_price_by_instance_id(
+				$form,
+				$price_instance['instance_id']
+			);
+
+			if ( isset( $price_option->recurring, $price_option->recurring['trial_period_days'] ) ) {
+				$amount   = 0;
+				$is_trial = true;
+			} else {
+				$amount   = $price_instance['quantity'] * $price_option->unit_amount;
+				$is_trial = false;
+			}
+
+			$line_items[] = array(
+				'description' => $price_option->get_display_label(),
+				'quantity'    => $price_instance['quantity'],
+				'unit_amount' => $price_option->unit_amount,
+				'amount'      => $amount,
+				'is_trial'    => $is_trial,
+			);
+
+			if (
+				$is_recurring &&
+				$price_option->line_items &&
+				! empty( $price_option->line_items )
+			) {
+				foreach ( $price_option->line_items as $line_item ) {
+					$setup_fee += $line_item['unit_amount'];
+				}
+			}
+		}
+	}
+
+	if ( function_exists( '\SimplePay\Pro\Payments\Payment_Confirmation\Template_Tags\recurring_amount' ) ) {
+		$recurring = \SimplePay\Pro\Payments\Payment_Confirmation\Template_Tags\recurring_amount(
+			'',
+			$payment_confirmation_data
+		);
 	}
 
 	ob_start();

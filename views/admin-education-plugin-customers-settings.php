@@ -40,7 +40,7 @@ use SimplePay\Core\Utils;
 
 	<section class="simpay-landing-zone__screenshot">
 		<div class="simpay-landing-zone__screenshot-img">
-			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/customers-thumb.png' ); // @phpstan-ignore-line ?>" alt="<?php echo esc_attr( 'Payment Receipt settings', 'simple-pay' ); ?>" />
+			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/customers-thumb.png' ); // @phpstan-ignore-line ?>" alt="<?php echo esc_attr__( 'Payment Receipt settings', 'simple-pay' ); ?>" />
 			<a href="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/customers-full.png' ); // @phpstan-ignore-line ?>" class="hover" data-lity></a>
 		</div>
 
