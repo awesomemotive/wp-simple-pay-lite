@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 17:24\n"
+"PO-Revision-Date: 2024-08-07 18:27\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -622,7 +622,7 @@ msgstr "Prijs selector is vereist en is toegevoegd aan het betalingsformulier. "
 
 #: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "Custom Amount Input is verwijderd van het betalingsformulier. Dit veld wordt automatisch getoond met meerdere regelitems."
+msgstr "Aangepast bedrag invoer is verwijderd van het betalingsformulier. Dit veld wordt automatisch getoond met meerdere regelitems."
 
 #: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
@@ -631,7 +631,7 @@ msgstr "Toggle voor terugkerend bedrag is verwijderd van het betalingsformulier.
 #: includes/core/forms/functions.php:599
 #: includes/core/forms/functions.php:610
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "Aantal Input is verwijderd van het betalingsformulier. Dit veld wordt automatisch getoond met meerdere regelitems."
+msgstr "Aantal invoer is verwijderd van het betalingsformulier. Dit veld wordt automatisch getoond met meerdere regelitems."
 
 #: includes/core/forms/functions.php:627
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
@@ -639,7 +639,7 @@ msgstr "Het veld voor aangepast bedrag is vereist omdat je een aangepast bedrag 
 
 #: includes/core/forms/functions.php:636
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
-msgstr "aangepast bedrag invoerveld is verwijderd van het betalingsformulier. Een prijsoptie waarbij gebruikers zelf bedragen kunnen bepalen is vereist."
+msgstr "Aangepast bedrag invoerveld is verwijderd van het betalingsformulier. Een prijsoptie waarbij gebruikers zelf bedragen kunnen bepalen is vereist."
 
 #: includes/core/forms/functions.php:654
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
@@ -10899,7 +10899,7 @@ msgstr "Automatisch berekend op locatie"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1171
 msgid "Unlock \"Purchase Mode\" Setting"
-msgstr "Ontgrendel de \"Purchase Mode\" instelling"
+msgstr "Ontgrendel de \"Aankoopmodus\" instelling"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1176
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
@@ -10907,7 +10907,7 @@ msgstr "De aankoopmodus instelling is niet beschikbaar in WP Simple Pay Lite. Up
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1198
 msgid "Purchase Mode"
-msgstr "Purchase Mode"
+msgstr "Aankoopmodus"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1202
 #: src/AdminPage/FormTemplatesPage.php:71
@@ -10916,11 +10916,11 @@ msgstr "Nieuw!"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1220
 msgid "Allow purchasing multiple price options"
-msgstr "Toe te staan meerdere prijsopties te kopen"
+msgstr "Kopen meerdere prijs opties toestaan"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1229
 msgid "Purchase multiple price options in a single transaction."
-msgstr "Koop meerdere prijsopties in een enkele transactie."
+msgstr "Koop meerdere prijs opties in een enkele transactie."
 
 #: includes/core/post-types/simple-pay/edit-form-payment-page.php:38
 msgid "Payment Page Mode"
@@ -12991,16 +12991,16 @@ msgstr "Bekijk %s in Stripe →"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:44
 msgid "Payment Processing Confirmation"
-msgstr "Betalingsverwerkingsbevestiging"
+msgstr "Betaling verwerkingsbevestiging"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:51
 msgid "Send a payment processing confirmation email to the customer upon successful payment"
-msgstr "Verzend een betalingsverwerkingsbevestiging e-mail naar de klant na succesvolle betaling"
+msgstr "Verzend een betaling verwerkingsbevestiging e-mail naar de klant na succesvolle betaling"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:71
 msgid "Payment Processing Confirmation for %s"
-msgstr "Betalingsverwerkingsbevestiging voor %s"
+msgstr "Betaling verwerkingsbevestiging voor %s"
 
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:44
 msgid "Payment Processing Notification"
@@ -13030,7 +13030,7 @@ msgstr "Betaling terugbetaald op %s"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:53
 msgid "Subscription Cancellation Confirmation"
-msgstr "Bevestiging van abonnementsannulering"
+msgstr "Bevestiging van abonnement annulering"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:60
 msgid "Email sent to users when their subscription is cancelled."
@@ -13043,7 +13043,7 @@ msgstr "Abonnement geannuleerd voor %s"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:53
 msgid "Subscription Cancellation Notification"
-msgstr "Melding van abonnementsannulering"
+msgstr "Melding van abonnement annulering"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:60
 msgid "Email sent to merchants when a subscription is cancelled."
@@ -13052,7 +13052,7 @@ msgstr "E-mail verzonden naar handelaren wanneer een abonnement is geannuleerd."
 #. translators: %s Site name
 #: src/Emails/Email/SubscriptionCancellationNotification.php:97
 msgid "Subscription Cancellation Notification for %s"
-msgstr "Melding van abonnementsannulering voor %s"
+msgstr "Melding van abonnement annulering voor %s"
 
 #: src/Emails/Email/SummaryReportEmail.php:47
 msgid "Summary Report"
@@ -13438,50 +13438,50 @@ msgstr "Land/regio code in ISO 3166-1 alpha-2 format."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:382
 msgid "The provided form ID is invalid."
-msgstr "de opgegeven formulier id is ongeldig."
+msgstr "Het opgegeven formulier ID is ongeldig."
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:410
 msgid "The required field \"%s\" is missing."
-msgstr "het verplichte veld \"%s\" ontbreekt."
+msgstr "Het vereiste veld \"%s\" ontbreekt."
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:416
 msgid "The required field \"%s\" cannot be empty."
-msgstr "het verplichte veld \"%s\" kan niet leeg zijn."
+msgstr "Het vereiste veld \"%s\" kan niet leeg zijn."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
-msgstr "BTW id en BTW id type zijn vereiste velden."
+msgstr "BTW ID en BTW ID type zijn vereiste velden."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
 msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr "BTW id en BTW id type kunnen niet leeg zijn."
+msgstr "BTW ID en BTW ID type kunnen niet leeg zijn."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
 msgid "The %s address name is required."
-msgstr "de %s adresnaam is verplicht."
+msgstr "De %s adresnaam is vereist."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
 msgid "The %s address country is required."
-msgstr "het %s adresland is verplicht."
+msgstr "Het %s adres land is vereist."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
 msgid "The %s address postal code is required."
-msgstr "de %s postcode is verplicht."
+msgstr "De %s postcode is vereist."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
 msgid "The %s field is required."
-msgstr "het %s veld is verplicht."
+msgstr "Het %s veld is vereist."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:475
 msgid "The %s field can not be empty."
-msgstr "het %s veld kan niet leeg zijn."
+msgstr "Het %s veld kan niet leeg zijn."
 
 #: src/RestApi/Internal/Report/GrossVolumePeriodOverPeriodReport.php:152
 #: src/RestApi/Internal/Report/SuccessfulPaymentsPeriodOverPeriodReport.php:142
@@ -14243,7 +14243,7 @@ msgstr "Hoeveelheid"
 
 #: views/smart-tag-receipt.php:42
 msgid "Unit Price"
-msgstr "Prijs per eenheid"
+msgstr "Eenheid prijs"
 
 #: views/smart-tag-receipt.php:78
 msgid "(Trial)"
