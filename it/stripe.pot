@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:26\n"
+"PO-Revision-Date: 2024-08-08 16:28\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -301,7 +301,7 @@ msgstr "A quale versione devo aggiornare?"
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
-msgstr "In ordine di compatibilità con le future versioni di WP Simple Pay, devi aggiornare la tua versione di PHP a %1$s, <code>7.4</code> o <code>8.0</code>. Su un normale sito WordPress, il passaggio a PHP <code>%1$s</code> non dovrebbe causare problemi. Tuttavia, ti consigliamo di passare a PHP <code>8.0</code> o superiore per ottenere tutti i vantaggi in termini di velocità e sicurezza offerti dalle versioni più moderne e pienamente supportate di PHP. Tuttavia, alcuni plugin richiesti potrebbero non essere pienamente compatibili con PHP <code>8.x</code>, per cui potrebbero essere necessari ulteriori test."
+msgstr "Per garantire la compatibilità con le future versioni di WP Simple Pay, devi aggiornare la tua versione di PHP a %1$s, <code>7.4</code> o <code>8.0</code>. Su un normale sito WordPress, il passaggio a PHP <code>%1$s</code> non dovrebbe causare problemi. Tuttavia, ti consigliamo di passare a PHP <code>8.0</code> o superiore per ottenere tutti i vantaggi in termini di velocità e sicurezza offerti dalle versioni più moderne e pienamente supportate di PHP. Tuttavia, alcuni plugin richiesti potrebbero non essere pienamente compatibili con PHP <code>8.x</code>, per cui potrebbero essere necessari ulteriori test."
 
 #: includes/core/admin/functions/notices.php:181
 msgid "Need help upgrading? Ask your web host!"
@@ -622,7 +622,7 @@ msgstr "Il Selettore di prezzo è obbligatorio ed è stato aggiunto al modulo di
 
 #: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "L'input dell'importo personalizzato è stato rimosso dal modulo di pagamento. Questo campo viene visualizzato automaticamente con elementi multipli."
+msgstr "L'input Importo personalizzato è stato rimosso dal modulo di pagamento. Questo campo viene visualizzato automaticamente con elementi multipli."
 
 #: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
@@ -631,7 +631,7 @@ msgstr "L'opzione Importo ricorrente è stata rimossa dal modulo di pagamento. Q
 #: includes/core/forms/functions.php:599
 #: includes/core/forms/functions.php:610
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "L'input della quantità è stato rimosso dal modulo di pagamento. Questo campo viene visualizzato automaticamente con elementi multipli."
+msgstr "L'input Quantità è stato rimosso dal modulo di pagamento. Questo campo viene visualizzato automaticamente con elementi multipli."
 
 #: includes/core/forms/functions.php:627
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
@@ -639,7 +639,7 @@ msgstr "Il campo Immissione importo personalizzato è obbligatorio perché hai i
 
 #: includes/core/forms/functions.php:636
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
-msgstr "L'input dell'importo personalizzato è stato rimosso dal modulo di pagamento. È necessaria un'opzione di prezzo che consenta di inserire importi definiti dall'utente. "
+msgstr "L'input Importo personalizzato è stato rimosso dal modulo di pagamento. È necessaria un'opzione di prezzo che consenta di inserire importi definiti dall'utente. "
 
 #: includes/core/forms/functions.php:654
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
@@ -10900,11 +10900,11 @@ msgstr "Calcolo automatico in base alla posizione"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1171
 msgid "Unlock \"Purchase Mode\" Setting"
-msgstr "Sbloccare l'impostazione della \"Modalità acquisto"
+msgstr "Sbloccare l'impostazione \"Modalità di acquisto\""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1176
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
-msgstr "NON SI TRADUCE, l'impostazione Modalità di acquisto non è disponibile in WP Simple Pay Lite. Ti invitiamo a passare a <strong>WP Simple Pay Pro</strong> per sbloccare questa e altre fantastiche caratteristiche."
+msgstr "L'impostazione Modalità di acquisto non è disponibile in WP Simple Pay Lite. Ti invitiamo a passare a <strong>WP Simple Pay Pro</strong> per sbloccare questa e altre fantastiche funzionalità."
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1198
 msgid "Purchase Mode"
@@ -11164,7 +11164,7 @@ msgstr "Generale"
 
 #: includes/core/post-types/simple-pay/edit-form.php:481
 msgid "Payment <span>New!</span>"
-msgstr "<span>Novità: il</span> pagamento <span>!</span>"
+msgstr "<span>Novità!</span> Pagamento"
 
 #: includes/core/post-types/simple-pay/edit-form.php:497
 msgid "Purchase Restrictions"
@@ -12996,7 +12996,7 @@ msgstr "Conferma dell'elaborazione del pagamento"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:51
 msgid "Send a payment processing confirmation email to the customer upon successful payment"
-msgstr "Inviare un'email di conferma dell'elaborazione del pagamento al cliente dopo che il pagamento è andato a buon fine"
+msgstr "Invia un'email di conferma dell'elaborazione del pagamento al cliente dopo che il pagamento è andato a buon fine"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:71
@@ -13022,7 +13022,7 @@ msgstr "Conferma del pagamento rimborsato"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:51
 msgid "Send a confirmation email for a payment refund"
-msgstr "Inviare un'email di conferma per il rimborso del pagamento"
+msgstr "Invia un'email di conferma per il rimborso del pagamento"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:87
