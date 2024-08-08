@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-08 11:34\n"
+"PO-Revision-Date: 2024-08-08 12:48\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -10921,7 +10921,7 @@ msgstr "Erlaube mehrere Preisoptionen beim Kauf"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1229
 msgid "Purchase multiple price options in a single transaction."
-msgstr "Kaufe mehrere Optionen in einer einzigen Transaktion."
+msgstr "Kaufe mehrere Preisoptionen in einer einzigen Transaktion."
 
 #: includes/core/post-types/simple-pay/edit-form-payment-page.php:38
 msgid "Payment Page Mode"
@@ -11181,7 +11181,7 @@ msgstr "Bezahlseite"
 
 #: includes/core/post-types/simple-pay/edit-form.php:516
 msgid "Confirmation Page"
-msgstr "Bestätigungs-Seite"
+msgstr "Bestätigungsseite"
 
 #: includes/core/post-types/simple-pay/edit-form.php:525
 msgid "Email Notifications"
