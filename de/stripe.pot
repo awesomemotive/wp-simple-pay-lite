@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:26\n"
+"PO-Revision-Date: 2024-08-08 11:34\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -301,7 +301,7 @@ msgstr "Auf welche Version sollte ich ein Upgrade durchführen?"
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
-msgstr "Um mit zukünftigen Versionen von WP Simple Pay kompatibel zu sein, solltest du deine PHP-Version auf %1$s, <code>7.4</code> oder <code>8.0</code> aktualisieren. Auf einer normalen WordPress Website sollte die Umstellung auf PHP <code>%1$s</code> sollte keine Probleme verursachen. Wir würden dir jedoch empfehlen, auf PHP <code>8.0</code> oder höher umzusteigen, um die Geschwindigkeits- und Sicherheitsvorteile modernerer und vollständig unterstützter PHP-Versionen zu nutzen. Allerdings sind einige Plugins möglicherweise nicht vollständig mit PHP <code>8.x</code> kompatibel, so dass weitere Tests erforderlich sein können."
+msgstr "Um mit zukünftigen Versionen von WP Simple Pay kompatibel zu sein, solltest du deine PHP-Version auf %1$s, <code>7.4</code> oder <code>8.0</code> aktualisieren. Auf einer normalen WordPress Website sollte die Umstellung auf PHP <code>%1$s</code> keine Probleme verursachen. Wir würden dir jedoch empfehlen, auf PHP <code>8.0</code> oder höher umzusteigen, um die Geschwindigkeits- und Sicherheitsvorteile modernerer und vollständig unterstützter PHP-Versionen zu nutzen. Allerdings sind einige Plugins möglicherweise nicht vollständig mit PHP <code>8.x</code> kompatibel, so dass weitere Tests erforderlich sein können."
 
 #: includes/core/admin/functions/notices.php:181
 msgid "Need help upgrading? Ask your web host!"
@@ -622,11 +622,11 @@ msgstr "Die Preisauswahl ist erforderlich und wurde dem Zahlungsformular hinzuge
 
 #: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "Die individuelle Beträgeingabe wurde aus dem Zahlungsformular entfernt. Dieses Feld wird bei mehreren Positionen automatisch angezeigt."
+msgstr "Die individuellen Betragseingaben wurde aus dem Zahlungsformular entfernt. Dieses Feld wird bei mehreren Elementen automatisch angezeigt."
 
 #: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "Der Schalter für wiederkehrende Beträge wurde aus dem Zahlungsformular entfernt. Dieses Feld wird bei mehreren Positionen automatisch angezeigt."
+msgstr "Der Umschalter für wiederkehrende Beträge wurde aus dem Zahlungsformular entfernt. Dieses Feld wird bei mehreren Elementen automatisch angezeigt."
 
 #: includes/core/forms/functions.php:599
 #: includes/core/forms/functions.php:610
@@ -639,7 +639,7 @@ msgstr "Das Eingabefeld „Individueller Betrag“ ist erforderlich, weil du ein
 
 #: includes/core/forms/functions.php:636
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
-msgstr "Die individuelle Beträgeingabe wurde aus dem Zahlungsformular entfernt. Eine Preisoption, die benutzerdefinierte Beträge zulässt, ist erforderlich. "
+msgstr "Die individuelle Betragseingabe wurde aus dem Zahlungsformular entfernt. Eine Preisoption, die benutzerdefinierte Beträge zulässt, ist erforderlich. "
 
 #: includes/core/forms/functions.php:654
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
@@ -10414,7 +10414,7 @@ msgstr "Der berechnete Gebühreneinzug basiert auf der Gesamtsumme und der proze
 
 #: includes/core/payments/payment-confirmation-template-tags.php:992
 msgid "The receipt breakdown of the payment including items, adjustments, and totals."
-msgstr "Die Aufschlüsselung des Zahlungseingangs einschließlich der Posten, Anpassungen und Summen."
+msgstr "Die Aufschlüsselung des Zahlungseingangs, einschließlich der Posten, Anpassungen und Summen."
 
 #: includes/core/payments/payment-confirmation-template-tags.php:998
 msgid "The amount of the coupon applied to the payment."
@@ -10917,7 +10917,7 @@ msgstr "Neu!"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1220
 msgid "Allow purchasing multiple price options"
-msgstr "Erlaube den Kauf mehrerer Optionen"
+msgstr "Erlaube mehrere Preisoptionen beim Kauf"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1229
 msgid "Purchase multiple price options in a single transaction."
