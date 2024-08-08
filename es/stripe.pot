@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:26\n"
+"PO-Revision-Date: 2024-08-08 21:33\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -14244,11 +14244,11 @@ msgstr "Cantidad"
 
 #: views/smart-tag-receipt.php:42
 msgid "Unit Price"
-msgstr "Precio unidad"
+msgstr "Precio unitario"
 
 #: views/smart-tag-receipt.php:78
 msgid "(Trial)"
-msgstr "(periodo de prueba)"
+msgstr "(Periodo de prueba)"
 
 #: views/smart-tag-receipt.php:89
 msgid "Subscription Setup Fee"
@@ -14506,7 +14506,7 @@ msgstr "Selecciona otra moneda o vuelve a comprobarlo más tarde."
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "%s refund was initiated"
-msgstr "%s se inició el reembolso"
+msgstr "Se inició el reembolso %s"
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "View customer records"
