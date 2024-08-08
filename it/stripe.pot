@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-08 16:28\n"
+"PO-Revision-Date: 2024-08-08 17:28\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -13453,31 +13453,31 @@ msgstr "Il campo necessario \"%s\" non può essere vuoto."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
-msgstr "I campi ID e Tipo di ID sono necessari."
+msgstr "I campi Codice fiscale e Tipo di codice fiscale sono obbligatori."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
 msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr "ID fiscale e Tipo di ID fiscale non possono essere vuoti."
+msgstr "I campi Codice fiscale e Tipo di codice fiscale non possono essere vuoti."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
 msgid "The %s address name is required."
-msgstr "Il nome dell'indirizzo %s è necessario."
+msgstr "Il nome dell'indirizzo %s è obbligatorio."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
 msgid "The %s address country is required."
-msgstr "È necessario indicare il paese dell'indirizzo %s ."
+msgstr "È obbligatorio indicare il paese dell'indirizzo %s ."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
 msgid "The %s address postal code is required."
-msgstr "È necessario il codice postale dell'indirizzo %s ."
+msgstr "È obbligatorio indicare il codice postale dell'indirizzo %s ."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
 msgid "The %s field is required."
-msgstr "Il campo %s è necessario."
+msgstr "Il campo %s è obbligatorio."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:475
@@ -14506,7 +14506,7 @@ msgstr "Seleziona una valuta diversa o torna a trovarci più tardi."
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "%s refund was initiated"
-msgstr "%s il rimborso è stato avviato"
+msgstr "Il rimborso %s è stato avviato"
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "View customer records"
