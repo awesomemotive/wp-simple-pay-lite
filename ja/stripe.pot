@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:26\n"
+"PO-Revision-Date: 2024-08-09 08:42\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -151,7 +151,7 @@ msgstr "オプションで価格をサブスクリプションとして購入で
 
 #: includes/core/admin/class-assets.php:263
 msgid "Automatically activate a recurring subscription"
-msgstr "定期購読の自動有効化"
+msgstr "継続的なサブスクリプションの自動的な有効化"
 
 #: includes/core/admin/class-menus.php:79
 #: includes/core/admin/class-menus.php:190
@@ -13444,7 +13444,7 @@ msgstr "必要なフィールド \"%s\" がありません。"
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:416
 msgid "The required field \"%s\" cannot be empty."
-msgstr "必須フィールド \"%s\" を空にすることはできません。"
+msgstr "必須フィールド「%s」を空にすることはできません。"
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
