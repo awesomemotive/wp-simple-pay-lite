@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-10 02:12\n"
+"PO-Revision-Date: 2024-08-10 09:49\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -11164,7 +11164,7 @@ msgstr "一般"
 
 #: includes/core/post-types/simple-pay/edit-form.php:481
 msgid "Payment <span>New!</span>"
-msgstr "<span>新規</span>支払い<span>！</span>"
+msgstr "支払いの<span>新機能 !</span>"
 
 #: includes/core/post-types/simple-pay/edit-form.php:497
 msgid "Purchase Restrictions"
@@ -12991,7 +12991,7 @@ msgstr "支払い処理の確認"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:51
 msgid "Send a payment processing confirmation email to the customer upon successful payment"
-msgstr "支払いが成功した時点で、支払い処理確認メールを顧客に送信します。"
+msgstr "支払いが完了した時点で、支払い処理確認メールを顧客に送信します。"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:71
@@ -13457,17 +13457,17 @@ msgstr "納税者番号と納税者番号の種類を空にすることはでき
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
 msgid "The %s address name is required."
-msgstr "%s住所の名前は必須です。"
+msgstr "%s住所の名前は必須項目です。"
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
 msgid "The %s address country is required."
-msgstr "%s住所の国は必須です"
+msgstr "%s住所の国は必須項目です"
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
 msgid "The %s address postal code is required."
-msgstr "%s住所の郵便番号は必須です。"
+msgstr "%s住所の郵便番号は必須項目です。"
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
