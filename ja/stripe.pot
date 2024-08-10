@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-09 08:42\n"
+"PO-Revision-Date: 2024-08-10 01:07\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -301,7 +301,7 @@ msgstr "どのバージョンにアップグレードするべきですか ?"
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
-msgstr "WP Simple Payの将来のバージョンと互換性を持たせるためには、PHPのバージョンを %1$s,<code>7.4</code>, または<code>8.0に</code>更新する必要があります。通常の WordPress サイトでは、PHP に切り替えても問題は発生しません。 <code>%1$s</code>に切り替えても問題は発生しません。しかし、PHPの最新バージョンと完全にサポートされているバージョンに提供される速度とセキュリティの完全な利点を受けるために、PHP<code>8.0</code>以上に切り替えることをお勧めします。ただし、プラグインによってはPHP<code>8.xと</code>完全に互換性がないものもあるため、より多くのテストが必要な場合があります。"
+msgstr "WP Simple Pay の今後のバージョンとの互換性を確保するには、PHP のバージョンを%1$s、<code>7.4</code>、または<code>8.0</code>に更新する必要があります。通常の WordPress サイトでは、PHP <code>%1$s</code>に切り替えても問題は発生しませんが、PHP <code>8.0</code>以上に切り替えることをお勧めします。これにより、さらに最新で完全にサポートされたバージョンの PHP で提供されるスピードとセキュリティのすべてのメリットを活用できます。ただし、一部のプラグインは、PHP <code>8.x</code> と完全には互換性がないため、より多くのテストが必要になる可能性があります。"
 
 #: includes/core/admin/functions/notices.php:181
 msgid "Need help upgrading? Ask your web host!"
@@ -622,16 +622,16 @@ msgstr "価格セレクターは必須です。支払いフォームに追加さ
 
 #: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "カスタム金額入力は支払いフォームから削除されました。このフィールドは複数の項目で自動的に表示されます。"
+msgstr "「カスタム金額入力」が支払いフォームから削除されました。このフィールドは複数のラインアイテムで自動的に表示されます。"
 
 #: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "支払フォームから定期金額トグルが削除されました。このフィールドは複数の項目で自動的に表示されます。"
+msgstr "「継続金額の切り替え」が支払いフォームから削除されました。このフィールドは複数のラインアイテムで自動的に表示されます。"
 
 #: includes/core/forms/functions.php:599
 #: includes/core/forms/functions.php:610
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "支払フォームから数量入力が削除されました。このフィールドは複数の行項目で自動的に表示されます。"
+msgstr "「数量入力」が支払いフォームから削除されました。このフィールドは複数のラインアイテムで自動的に表示されます。"
 
 #: includes/core/forms/functions.php:627
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
@@ -639,7 +639,7 @@ msgstr "価格リストにカスタム金額を設定し支払いフォームに
 
 #: includes/core/forms/functions.php:636
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
-msgstr "カスタム金額入力は支払いフォームから削除されました。ユーザー定義の金額を使用できる設定オプションが必要です。 "
+msgstr "「カスタム金額入力」が支払いフォームから削除されました。ユーザー定義の金額を使用できる価格オプションが必要です。 "
 
 #: includes/core/forms/functions.php:654
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
@@ -12991,12 +12991,12 @@ msgstr "支払い処理の確認"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:51
 msgid "Send a payment processing confirmation email to the customer upon successful payment"
-msgstr "支払いが完了したら、支払い処理の確認メールをカスタマイザーに送信します。"
+msgstr "支払いが成功した時点で、支払い処理確認メールを顧客に送信します。"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:71
 msgid "Payment Processing Confirmation for %s"
-msgstr "%sの支払い処理確認"
+msgstr "%s の支払い処理の確認"
 
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:44
 msgid "Payment Processing Notification"
@@ -13004,16 +13004,16 @@ msgstr "支払い処理の通知"
 
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:51
 msgid "Send a payment processing notification email to the merchant upon successful payment"
-msgstr "支払いが完了したら、加盟店に支払い処理完了の通知メールを送信する。"
+msgstr "支払いが完了した時点で、販売者に支払い処理の通知メールを送信します。"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:88
 msgid "Payment Processing Notification for %s"
-msgstr "%sへの支払い処理通知"
+msgstr "%s の支払い処理の通知"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:44
 msgid "Payment Refunded Confirmation"
-msgstr "払い戻し確認書"
+msgstr "返金確認書"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:51
 msgid "Send a confirmation email for a payment refund"
@@ -13022,33 +13022,33 @@ msgstr "返金確認メールの送信"
 #. translators: %s Site name
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:87
 msgid "Payment refunded on %s"
-msgstr "%sで払い戻し"
+msgstr "%s で支払いが返金されました"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:53
 msgid "Subscription Cancellation Confirmation"
-msgstr "購読解約の確認"
+msgstr "サブスクリプションキャンセルの確認"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:60
 msgid "Email sent to users when their subscription is cancelled."
-msgstr "購読がキャンセルされたときにユーザーに送信されるメール。"
+msgstr "サブスクリプションがキャンセルされたときにユーザーに送信されるメール。"
 
 #. translators: %s Site name
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:80
 msgid "Subscription Cancelled for %s"
-msgstr "%sのために購読をキャンセル"
+msgstr "%s のサブスクリプションがキャンセルされました"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:53
 msgid "Subscription Cancellation Notification"
-msgstr "購読中止のお知らせ"
+msgstr "サブスクリプションキャンセルの通知"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:60
 msgid "Email sent to merchants when a subscription is cancelled."
-msgstr "購読がキャンセルされたときに加盟店に送信されるメール。"
+msgstr "サブスクリプションがキャンセルされたときに販売者に送信されるメール。"
 
 #. translators: %s Site name
 #: src/Emails/Email/SubscriptionCancellationNotification.php:97
 msgid "Subscription Cancellation Notification for %s"
-msgstr "サブスクリプションのキャンセル通知（ %s"
+msgstr "%s のサブスクリプションのキャンセルの通知"
 
 #: src/Emails/Email/SummaryReportEmail.php:47
 msgid "Summary Report"
