@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-10 01:07\n"
+"PO-Revision-Date: 2024-08-10 02:12\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -13434,12 +13434,12 @@ msgstr "ISO 3166-1 alpha-2形式の国名/地域コード。"
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:382
 msgid "The provided form ID is invalid."
-msgstr "プロバイダーのフォームIDが無効です。"
+msgstr "プロバイダーのフォーム ID が無効です。"
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:410
 msgid "The required field \"%s\" is missing."
-msgstr "必要なフィールド \"%s\" がありません。"
+msgstr "必須フィールド「%s」がありません。"
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:416
@@ -13448,36 +13448,36 @@ msgstr "必須フィールド「%s」を空にすることはできません。"
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
-msgstr "Tax IDとTax ID Typeは必須項目です。"
+msgstr "納税者番号と納税者番号の種類は必須フィールドです。"
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
 msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr "Tax IDとTax ID Typeを空にすることはできません。"
+msgstr "納税者番号と納税者番号の種類を空にすることはできません。"
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
 msgid "The %s address name is required."
-msgstr "%s アドレス名は必須。"
+msgstr "%s住所の名前は必須です。"
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
 msgid "The %s address country is required."
-msgstr "%s アドレスの国は必須。"
+msgstr "%s住所の国は必須です"
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
 msgid "The %s address postal code is required."
-msgstr "%s 住所の郵便番号が必要。"
+msgstr "%s住所の郵便番号は必須です。"
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
 msgid "The %s field is required."
-msgstr "%s フィールドは必須。"
+msgstr "%sフィールドは必須です。"
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:475
 msgid "The %s field can not be empty."
-msgstr "%s フィールドを空にすることはできない。"
+msgstr "%sフィールドを空にすることはできません。"
 
 #: src/RestApi/Internal/Report/GrossVolumePeriodOverPeriodReport.php:152
 #: src/RestApi/Internal/Report/SuccessfulPaymentsPeriodOverPeriodReport.php:142
@@ -13506,11 +13506,11 @@ msgstr "失敗"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:198
 msgid "Refunded"
-msgstr "払い戻し済み"
+msgstr "返金済み"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:200
 msgid "Partially Refunded"
-msgstr "一部払い戻し"
+msgstr "一部返金済み"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:202
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:358
