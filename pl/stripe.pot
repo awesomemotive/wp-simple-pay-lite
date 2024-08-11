@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-11 19:38\n"
+"PO-Revision-Date: 2024-08-11 20:37\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -631,7 +631,7 @@ msgstr "Przełącznik kwoty cyklicznej został usunięty z formularza płatnośc
 #: includes/core/forms/functions.php:599
 #: includes/core/forms/functions.php:610
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "Pole na wpisanie ilości zostało usunięte z formularza płatności. Pole to jest automatycznie wyświetlane w przypadku wielu pozycji."
+msgstr "Pole podania ilości zostało usunięte z formularza płatności. Pole to jest automatycznie wyświetlane w przypadku wielu pozycji."
 
 #: includes/core/forms/functions.php:627
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
