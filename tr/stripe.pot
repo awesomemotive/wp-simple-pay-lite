@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-10 23:36\n"
+"PO-Revision-Date: 2024-08-11 00:36\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -10904,11 +10904,11 @@ msgstr "\"Satın Alma Modu\" Ayarının Kilidini Açın"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1176
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
-msgstr "Üzgünüz, Satın Alma Kip ayar WP Simple Pay Lite'ta mevcut değil. Lütfen bu ve diğer harika özelliklerin kilidini açmak için <strong>WP Simple Pay Pro</strong> yükseltme ."
+msgstr "Üzgünüz, Satın Alma Modu ayarı WP Simple Pay Lite'ta mevcut değil. Lütfen bu ve diğer harika özelliklerin kilidini açmak için <strong>WP Simple Pay Pro</strong>'ya yükseltin."
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1198
 msgid "Purchase Mode"
-msgstr "Satın Alma Kip"
+msgstr "Satın Alma Modu"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1202
 #: src/AdminPage/FormTemplatesPage.php:71
@@ -10917,7 +10917,7 @@ msgstr "Yeni!"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1220
 msgid "Allow purchasing multiple price options"
-msgstr "Birden fazla fiyat seçeneği satın almaya izin ver"
+msgstr "Birden fazla fiyat seçeneği satın almaya izin verin"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1229
 msgid "Purchase multiple price options in a single transaction."
@@ -11181,7 +11181,7 @@ msgstr "Ödeme Sayfası"
 
 #: includes/core/post-types/simple-pay/edit-form.php:516
 msgid "Confirmation Page"
-msgstr "Doğrulama Sayfası"
+msgstr "Onay Sayfası"
 
 #: includes/core/post-types/simple-pay/edit-form.php:525
 msgid "Email Notifications"
@@ -12996,64 +12996,64 @@ msgstr "Ödeme İşleme Onayı"
 
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:51
 msgid "Send a payment processing confirmation email to the customer upon successful payment"
-msgstr "Başarılı ödeme sonrasında müşteriye bir ödeme işleme onay e-posta gönderin"
+msgstr "Başarılı ödeme sonrasında müşteriye ödemenin işleme alınmasına dair bir onay e-postası gönderin"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingConfirmationEmail.php:71
 msgid "Payment Processing Confirmation for %s"
-msgstr "%siçin Ödeme İşleme Onayı"
+msgstr "%s için Ödeme İşleme Onayı"
 
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:44
 msgid "Payment Processing Notification"
-msgstr "Ödeme İşleme Bildirim"
+msgstr "Ödeme İşleme Bildirimi"
 
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:51
 msgid "Send a payment processing notification email to the merchant upon successful payment"
-msgstr "Başarılı ödeme sonrasında satıcıya bir ödeme işleme bildirim e-posta gönderin"
+msgstr "Başarılı ödeme sonrasında satıcıya ödemenin işleme alınmasına dair bir bildirim e-postası gönderin"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentProcessingNotificationEmail.php:88
 msgid "Payment Processing Notification for %s"
-msgstr "%siçin Ödeme İşleme Bildirim"
+msgstr "%s için Ödeme İşleme Bildirimi"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:44
 msgid "Payment Refunded Confirmation"
-msgstr "Ödeme İadesi Onayı"
+msgstr "Ödeme İadesi Yapıldı Onayı"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:51
 msgid "Send a confirmation email for a payment refund"
-msgstr "Ödeme iadesi için bir onay e-posta gönderin"
+msgstr "Ödeme iadesi için bir onay e-postası gönderin"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:87
 msgid "Payment refunded on %s"
-msgstr "Ödeme %starihinde iade edildi"
+msgstr "Ödeme %s tarihinde iade edildi"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:53
 msgid "Subscription Cancellation Confirmation"
-msgstr "Abonelik İptal Onayı"
+msgstr "Abonelik İptali Onayı"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:60
 msgid "Email sent to users when their subscription is cancelled."
-msgstr "Abonelik iptal edildiğinde kullanıcılar gönderilen e-posta ."
+msgstr "Abonelikleri iptal edildiğinde kullanıcılara gönderilen e-posta."
 
 #. translators: %s Site name
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:80
 msgid "Subscription Cancelled for %s"
-msgstr "Abonelik %siçin İptal Edildi"
+msgstr "%s için Abonelik İptal Edildi"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:53
 msgid "Subscription Cancellation Notification"
-msgstr "Abonelik İptal Bildirim"
+msgstr "Abonelik İptali Bildirimi"
 
 #: src/Emails/Email/SubscriptionCancellationNotification.php:60
 msgid "Email sent to merchants when a subscription is cancelled."
-msgstr "Abonelik iptal edildiğinde satıcılara gönderilen e-posta ."
+msgstr "Abonelik iptal edildiğinde satıcılara gönderilen e-posta."
 
 #. translators: %s Site name
 #: src/Emails/Email/SubscriptionCancellationNotification.php:97
 msgid "Subscription Cancellation Notification for %s"
-msgstr "%sAbonelik İptal Bildirim"
+msgstr "%s için Abonelik İptali Bildirimi"
 
 #: src/Emails/Email/SummaryReportEmail.php:47
 msgid "Summary Report"
@@ -13439,45 +13439,45 @@ msgstr "ISO 3166-1 alpha-2 formatında Ülke/Bölge kodu."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:382
 msgid "The provided form ID is invalid."
-msgstr "Verilen form kimlik geçersiz."
+msgstr "Verilen form kimliği geçersiz."
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:410
 msgid "The required field \"%s\" is missing."
-msgstr "Gerekli alan \"%s\" eksik."
+msgstr "Gerekli alana ait \"%s\" eksik."
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:416
 msgid "The required field \"%s\" cannot be empty."
-msgstr "Gerekli alan \"%s\" boş olamaz."
+msgstr "Gerekli alana ait \"%s\" boş bırakılamaz."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
-msgstr "Vergi Kimlik ve Vergi Kimlik Tür gerekli alanlardır."
+msgstr "Vergi Kimliği ve Vergi Kimlik Türü gerekli alanlardır."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
 msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr "Vergi Kimlik ve Vergi Kimlik Tür boş bırakılamaz."
+msgstr "Vergi Kimliği ve Vergi Kimlik Türü boş bırakılamaz."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
 msgid "The %s address name is required."
-msgstr "%s adres ad gerekli."
+msgstr "%s adres adı gerekir."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
 msgid "The %s address country is required."
-msgstr "%s adres ülkesi gerekli."
+msgstr "%s adres ülkesi gerekir."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
 msgid "The %s address postal code is required."
-msgstr "%s adres posta kodu gerekli."
+msgstr "%s adres posta kodu gerekir."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
 msgid "The %s field is required."
-msgstr "%s alanı gerekli."
+msgstr "%s alanı gerekir."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:475
@@ -14248,7 +14248,7 @@ msgstr "Birim Fiyat"
 
 #: views/smart-tag-receipt.php:78
 msgid "(Trial)"
-msgstr "(Duruşma)"
+msgstr "(Deneme)"
 
 #: views/smart-tag-receipt.php:89
 msgid "Subscription Setup Fee"
@@ -14269,7 +14269,7 @@ msgstr "Vergi"
 
 #: views/smart-tag-receipt.php:205
 msgid "Total due"
-msgstr "Toplam vadesi gelen"
+msgstr "Ödenecek toplam"
 
 #: views/smart-tag-receipt.php:207
 msgid "Total"
@@ -14506,7 +14506,7 @@ msgstr "Lütfen farklı bir para birimi seçin veya daha sonra tekrar kontrol ed
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "%s refund was initiated"
-msgstr "%s geri ödeme başlatıldı"
+msgstr "%s iadesi başlatıldı"
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "View customer records"
