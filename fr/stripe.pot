@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:26\n"
+"PO-Revision-Date: 2024-08-11 18:37\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -301,7 +301,7 @@ msgstr "Vers quelle version dois-je mettre à niveau ?"
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
-msgstr "Afin d’être compatible avec les futures versions de WP Simple Pay, vous devez mettre à jour votre version PHP vers %1$s, <code>7.4</code>, ou <code>8.0</code>. Sur un site WordPress normal, le passage à PHP <code>%1$s</code> ne devrait jamais générer de problèmes. Nous vous recommandons toutefois de passer à PHP <code>8.0</code> ou à une version plus récente afin de bénéficier de tous les avantages en termes de vitesse et de sécurité qu’offrent les versions plus modernes et entièrement prises en charge de PHP. Cependant, certaines extensions peuvent ne pas être totalement compatibles avec PHP <code>8.x</code>, et des tests supplémentaires peuvent donc être nécessaires."
+msgstr "Afin d’être compatible avec les futures versions de WP Simple Pay, vous devez mettre à jour votre version PHP vers %1$s, <code>7.4</code> ou <code>8.0</code>. Sur un site WordPress standard, le passage à PHP <code>%1$s</code> ne devrait jamais générer de problèmes. Nous vous recommandons toutefois de passer à PHP <code>8.0</code> ou à une version plus récente afin de bénéficier de tous les avantages en termes de vitesse et de sécurité qu’offrent les versions plus modernes et entièrement prises en charge de PHP. Toutefois, certaines extensions risquent de ne pas être totalement compatibles avec PHP <code>8.x</code>. Vous devrez donc procéder à des tests supplémentaires."
 
 #: includes/core/admin/functions/notices.php:181
 msgid "Need help upgrading? Ask your web host!"
@@ -622,16 +622,16 @@ msgstr "Le Sélecteur de prix est obligatoire et a été ajouté au formulaire d
 
 #: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "L’entrée du montant personnalisé a été retirée du formulaire de paiement. Ce champ est automatiquement affiché avec plusieurs articles."
+msgstr "Les saisies de montants personnalisés ont été retirées du formulaire de paiement. Ce champ est automatiquement affiché avec plusieurs articles."
 
 #: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "La bascule d’activation du montant récurrent a été retirée du formulaire de paiement. Ce champ est automatiquement affiché avec plusieurs articles."
+msgstr "Le commutateur d’activation du montant récurrent a été retiré du formulaire de paiement. Ce champ est automatiquement affiché avec plusieurs articles."
 
 #: includes/core/forms/functions.php:599
 #: includes/core/forms/functions.php:610
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "L’entrée de la quantité a été retirée du formulaire de paiement. Ce champ est automatiquement affiché avec plusieurs articles."
+msgstr "La saisie de la quantité a été retirée du formulaire de paiement. Ce champ est automatiquement affiché avec plusieurs articles."
 
 #: includes/core/forms/functions.php:627
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
@@ -639,7 +639,7 @@ msgstr "Le champ Montant personnalisé est obligatoire, car vous avez défini un
 
 #: includes/core/forms/functions.php:636
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
-msgstr "Le champ Montant personnalisé a été retiré du formulaire de paiement. Une option de prix qui permet des montants définis par l’utilisateur/utilisatrice est nécessaire."
+msgstr "Les saisies de montants personnalisés ont été retirées du formulaire de paiement. Une option de prix qui permet des montants définis par l’utilisateur/utilisatrice est nécessaire. "
 
 #: includes/core/forms/functions.php:654
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
@@ -10904,7 +10904,7 @@ msgstr "Déverrouiller le réglage « Mode d’achat »"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1176
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
-msgstr "Nous sommes désolés, le réglage du mode d’achat n’est pas disponible dans WP Simple Pay Lite. Veuillez passer à <strong>WP Simple Pay Pro</strong> pour déverrouiller cette fonctionnalité et d’autres formidables fonctionnalités."
+msgstr "Malheureusement, le réglage du mode d’achat n’est pas disponible dans WP Simple Pay Lite. Veuillez passer à <strong>WP Simple Pay Pro</strong> pour déverrouiller cette fonctionnalité et d’autres formidables fonctionnalités."
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1198
 msgid "Purchase Mode"
@@ -10917,7 +10917,7 @@ msgstr "Nouveaux!"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1220
 msgid "Allow purchasing multiple price options"
-msgstr "Autoriser l’achat de plusieurs options de prix"
+msgstr "Autoriser plusieurs options de prix lors de l’achat"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1229
 msgid "Purchase multiple price options in a single transaction."
@@ -11164,7 +11164,7 @@ msgstr "Général"
 
 #: includes/core/post-types/simple-pay/edit-form.php:481
 msgid "Payment <span>New!</span>"
-msgstr "Paiement <span>Nouveauté !</span>"
+msgstr "Paiement <span>Nouveau !</span>"
 
 #: includes/core/post-types/simple-pay/edit-form.php:497
 msgid "Purchase Restrictions"
@@ -13439,7 +13439,7 @@ msgstr "Code pays/région au format ISO 3166-1 alpha-2."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:382
 msgid "The provided form ID is invalid."
-msgstr "L’ID du formulaire fourni est invalide."
+msgstr "L’ID du formulaire fourni n'est pas valide."
 
 #. translators: %s is replaced with the required field.
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:410
@@ -13453,11 +13453,11 @@ msgstr "Le champ obligatoire \"%s\" ne peut pas être vide."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
-msgstr "Les champs ID fiscal et Type d’ID fiscal sont obligatoires."
+msgstr "Les champs Numéro d'identification fiscale et Type d’ID fiscal sont obligatoires."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
 msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr "Les champs ID fiscal et Type d’ID fiscal ne peuvent pas être vides."
+msgstr "Les champs Numéro d'identification fiscale et Type d’ID fiscal ne peuvent pas être vides."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
@@ -14248,7 +14248,7 @@ msgstr "Prix unitaire"
 
 #: views/smart-tag-receipt.php:78
 msgid "(Trial)"
-msgstr "(Essai)"
+msgstr "(Test)"
 
 #: views/smart-tag-receipt.php:89
 msgid "Subscription Setup Fee"
