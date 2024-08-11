@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:27\n"
+"PO-Revision-Date: 2024-08-11 17:40\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -301,7 +301,7 @@ msgstr "Na którą wersję mam przejść?"
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
-msgstr "Aby być zgodnym [może być też <code>\"</code>kompatybilnym\"] z przyszłymi wersjami WP Simple Pay, powinieneś zaktualizować twoją wersję PHP do %1$s, <code>7.4</code> lub <code>8.0</code>. Na normalnej witrynie WordPress przejście na PHP <code>%1$s</code> nie powinno powodować problemów. Zalecamy jednak przejście na PHP <code>8.0</code> lub nowszą wersję, aby uzyskać pełną szybkość i zabezpieczenia zapewniane przez bardziej nowoczesne i w pełni obsługiwane wersje PHP. Jednak niektóre wtyczki mogą nie być w pełni zgodne z PHP <code>8.x</code>, więc może być wymagane więcej testów."
+msgstr "Aby zachować zgodność z przyszłymi wersjami wtyczki WP Simple Pay, uaktualnij swoją wersję PHP do %1$s, <code>7.4</code> lub <code>8.0</code>. W normalnej witrynie w WordPressie przejście na PHP <code>%1$s</code> nie powinno spowodować żadnych problemów. Zalecamy jednak przejście na PHP w wersji <code>8.0</code> lub wyższej, dzięki czemu uzyskasz wszystkie korzyści związane z szybkością i bezpieczeństwem, które zapewniają nowocześniejsze i w pełni obsługiwane wersje PHP. Z drugiej strony niektóre wtyczki mogą nie być w pełni zgodne z PHP <code>8.x</code>, co może oznaczać konieczność przeprowadzenia dodatkowych testów."
 
 #: includes/core/admin/functions/notices.php:181
 msgid "Need help upgrading? Ask your web host!"
@@ -622,7 +622,7 @@ msgstr "Selektor cen jest wymagany i został dodany do formularza płatności. "
 
 #: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
-msgstr "Pole Custom Amount Input zostało usuwane z formularza płatności. Pole to jest automatycznie wyświetlane w przypadku wielu pozycji."
+msgstr "Usunięto pole Podanie kwoty własnej z formularza płatności. Pole to jest automatycznie wyświetlane w przypadku wielu pozycji."
 
 #: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
