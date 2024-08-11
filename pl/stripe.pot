@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-11 18:37\n"
+"PO-Revision-Date: 2024-08-11 19:38\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
@@ -13463,26 +13463,26 @@ msgstr "Wymagane pole „%s” nie może być puste."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:424
 msgid "Tax ID and Tax ID Type are required fields."
-msgstr "Identyfikator podatkowy i rodzaj identyfikatora podatkowego są polami wymaganymi."
+msgstr "Identyfikator podatkowy i Rodzaj identyfikatora podatkowego są polami wymaganymi."
 
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:435
 msgid "Tax ID and Tax ID Type cannot be empty."
-msgstr "Identyfikator podatkowy i rodzaj identyfikatora podatkowego nie mogą być puste."
+msgstr "Pola Identyfikator podatkowy i Rodzaj identyfikatora podatkowego nie mogą być puste."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:446
 msgid "The %s address name is required."
-msgstr "Nazwa adresu %s jest wymagana."
+msgstr "Wymagana jest nazwa adresu typu „%s”."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:451
 msgid "The %s address country is required."
-msgstr "Wymagany jest kraj adresu %s ."
+msgstr "Wymagany jest kraj adresu typu „%s”."
 
 #. translators: %s is replaced with the address type (billing or shipping).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:456
 msgid "The %s address postal code is required."
-msgstr "Wymagany jest kod pocztowy adresu %s ."
+msgstr "Wymagany jest kod pocztowy adresu typu „%s”."
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
 #: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:466
@@ -13521,11 +13521,11 @@ msgstr "Niepowodzenie"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:198
 msgid "Refunded"
-msgstr "Zwrócono pieniądze"
+msgstr "Zwrócono"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:200
 msgid "Partially Refunded"
-msgstr "Częściowy zwrot środków"
+msgstr "Częściowo zwrócono"
 
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:202
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:358
@@ -14258,7 +14258,7 @@ msgstr "Cena jednostkowa"
 
 #: views/smart-tag-receipt.php:78
 msgid "(Trial)"
-msgstr "(Proces)"
+msgstr "(Okres próbny)"
 
 #: views/smart-tag-receipt.php:89
 msgid "Subscription Setup Fee"
@@ -14279,7 +14279,7 @@ msgstr "Podatek"
 
 #: views/smart-tag-receipt.php:205
 msgid "Total due"
-msgstr "Należność ogółem"
+msgstr "Należna suma"
 
 #: views/smart-tag-receipt.php:207
 msgid "Total"
@@ -14520,7 +14520,7 @@ msgstr "Wybierz inną walutę lub wróć tu później."
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "%s refund was initiated"
-msgstr "%s zwrot został zainicjowany"
+msgstr "Zainicjowano zwrot %s"
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "View customer records"
