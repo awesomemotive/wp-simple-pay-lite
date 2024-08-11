@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-10 09:49\n"
+"PO-Revision-Date: 2024-08-11 01:36\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -10414,7 +10414,7 @@ msgstr "合計金額と設定された手数料回収率の設定に基づいて
 
 #: includes/core/payments/payment-confirmation-template-tags.php:992
 msgid "The receipt breakdown of the payment including items, adjustments, and totals."
-msgstr "項目、調整、合計を含む支払いの受領内訳。"
+msgstr "項目、調整、合計を含む支払いの領収書の明細。"
 
 #: includes/core/payments/payment-confirmation-template-tags.php:998
 msgid "The amount of the coupon applied to the payment."
@@ -10900,11 +10900,11 @@ msgstr "所在地によって自動計算"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1171
 msgid "Unlock \"Purchase Mode\" Setting"
-msgstr "購入モード」設定のロック解除"
+msgstr "「購入モード」設定を利用しましょう"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1176
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
-msgstr "申し訳ございませんが、WP Simple Pay Liteでは購入モードの設定はご利用いただけません。<strong>WP Simple Pay Proに</strong>アップグレードしてください。"
+msgstr "申し訳ございません。「購入モード」設定は WP Simple Pay Lite ではご利用いただけません。この機能やその他の素晴らしい機能をご利用になるには <strong>WP Simple Pay Pro</strong> にアップグレードしてください。"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1198
 msgid "Purchase Mode"
@@ -10917,11 +10917,11 @@ msgstr "新規 !"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1220
 msgid "Allow purchasing multiple price options"
-msgstr "複数の価格オプションを購入できるようにする。"
+msgstr "複数の価格オプションの購入を可能にする"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:1229
 msgid "Purchase multiple price options in a single transaction."
-msgstr "複数の価格オプションを個別取引で購入。"
+msgstr "1回の取引において複数の価格オプションを購入できます。"
 
 #: includes/core/post-types/simple-pay/edit-form-payment-page.php:38
 msgid "Payment Page Mode"
@@ -13013,16 +13013,16 @@ msgstr "%s の支払い処理の通知"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:44
 msgid "Payment Refunded Confirmation"
-msgstr "返金確認書"
+msgstr "返金確認"
 
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:51
 msgid "Send a confirmation email for a payment refund"
-msgstr "返金確認メールの送信"
+msgstr "返金の確認メールを送信"
 
 #. translators: %s Site name
 #: src/Emails/Email/PaymentRefundedConfirmationEmail.php:87
 msgid "Payment refunded on %s"
-msgstr "%s で支払いが返金されました"
+msgstr "%s での支払いが返金されました"
 
 #: src/Emails/Email/SubscriptionCancellationConfirmation.php:53
 msgid "Subscription Cancellation Confirmation"
@@ -14243,7 +14243,7 @@ msgstr "単価"
 
 #: views/smart-tag-receipt.php:78
 msgid "(Trial)"
-msgstr "(トライアル）"
+msgstr "(試用)"
 
 #: views/smart-tag-receipt.php:89
 msgid "Subscription Setup Fee"
@@ -14264,7 +14264,7 @@ msgstr "税金"
 
 #: views/smart-tag-receipt.php:205
 msgid "Total due"
-msgstr "支払総額"
+msgstr "合計請求額"
 
 #: views/smart-tag-receipt.php:207
 msgid "Total"
@@ -14499,7 +14499,7 @@ msgstr "別の通貨を選択するか、後でもう一度確認してくださ
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "%s refund was initiated"
-msgstr "%s 払い戻しが開始された"
+msgstr "%s の返金が開始されました"
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:2
 msgid "View customer records"
