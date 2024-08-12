@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:27\n"
+"PO-Revision-Date: 2024-08-12 11:43\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
@@ -301,7 +301,7 @@ msgstr "До какой версии мне следует обновиться?
 #. translators: %1$s Future PHP version requirement.
 #: includes/core/admin/functions/notices.php:167
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
-msgstr "Для совместимости с будущими версиями WP Simple Pay вам следует обновить версию PHP до %1$s, <code>7.4</code>или <code>8.0</code>На обычном сайте WordPress переключение на PHP <code>%1$s</code> никогда не должно вызывать проблем. Однако мы бы рекомендовали вам перейти на PHP <code>8.0</code> или выше, чтобы получить все преимущества скорости и безопасности, предоставляемые более современными и полностью поддерживаемыми версиями PHP. Однако некоторые плагины могут быть не полностью совместимы с PHP <code>8.x</code>, поэтому может потребоваться дополнительное тестирование."
+msgstr "Для совместимости с будущими версиями WP Simple Pay вам следует обновить версию PHP до %1$s, <code>7.4</code>или <code>8.0</code>. На обычном сайте WordPress переключение на PHP <code>%1$s</code> не должно вызывать проблем. Однако мы бы рекомендовали вам перейти на PHP <code>8.0</code> или выше, чтобы получить все преимущества по скорости и безопасности, которые дают более современные и полностью поддерживаемые версии PHP. Однако некоторые плагины могут быть не полностью совместимы с PHP <code>8.x</code>, поэтому может потребоваться дополнительное тестирование."
 
 #: includes/core/admin/functions/notices.php:181
 msgid "Need help upgrading? Ask your web host!"
