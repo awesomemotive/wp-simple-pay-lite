@@ -23,10 +23,13 @@ namespace SimplePay\Vendor\Symfony\Component\CssSelector\Node;
  */
 class ElementNode extends AbstractNode
 {
-    public function __construct(
-        private ?string $namespace = null,
-        private ?string $element = null,
-    ) {
+    private $namespace;
+    private $element;
+
+    public function __construct(?string $namespace = null, ?string $element = null)
+    {
+        $this->namespace = $namespace;
+        $this->element = $element;
     }
 
     public function getNamespace(): ?string
@@ -39,6 +42,9 @@ class ElementNode extends AbstractNode
         return $this->element;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSpecificity(): Specificity
     {
         return new Specificity(0, 0, $this->element ? 1 : 0);

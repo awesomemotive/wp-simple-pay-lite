@@ -21,9 +21,11 @@ namespace SimplePay\Vendor\Symfony\Component\CssSelector\Node;
  *
  * @internal
  */
-interface NodeInterface extends \Stringable
+interface NodeInterface
 {
     public function getNodeName(): string;
 
     public function getSpecificity(): Specificity;
+
+    public function __toString(): string;
 }

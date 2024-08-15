@@ -389,6 +389,7 @@ function receipt( $value, $payment_confirmation_data ) {
 				return array(
 					'instance_id' => $parts[0],
 					'quantity'    => (int) $parts[1],
+					'amount'      => isset( $parts[2] ) ? (int) $parts[2] : 0,
 				);
 			},
 			$price_instances
@@ -400,11 +401,14 @@ function receipt( $value, $payment_confirmation_data ) {
 				$price_instance['instance_id']
 			);
 
+			$amount = 0 === $price_instance['amount']
+				? $price_instance['quantity'] * $price_option->unit_amount
+				: $price_instance['amount'];
+
 			if ( isset( $price_option->recurring, $price_option->recurring['trial_period_days'] ) ) {
 				$amount   = 0;
 				$is_trial = true;
 			} else {
-				$amount   = $price_instance['quantity'] * $price_option->unit_amount;
 				$is_trial = false;
 			}
 

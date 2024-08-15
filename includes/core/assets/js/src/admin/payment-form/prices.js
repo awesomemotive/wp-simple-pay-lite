@@ -13,7 +13,10 @@ import {
 	maybeBlockButtonWithUpgradeModal,
 	upgradeModal,
 } from '@wpsimplepay/utils';
-import { allowMultipleLineItems } from './payment';
+import {
+	allowMultipleLineItems,
+	toggleOptionalRecurringLabel,
+} from './payment';
 
 /**
  * Shows or hides the "Price Select" field based on the current settings.
@@ -211,6 +214,10 @@ function onChangeLabel( priceEl ) {
 				'.simpay-price-recurring-interval-count'
 			);
 
+			if ( ! recurringInterval || ! recurringIntervalCount ) {
+				return;
+			}
+
 			const recurringIntervalDisplayNouns =
 				recurringIntervals[
 					recurringInterval.options[ recurringInterval.selectedIndex ]
@@ -327,6 +334,8 @@ function onToggleAmountType( priceEl, toggle ) {
 	// Hide "optional recur" setting.
 	changeRecurringToggleStatus( priceEl, toggle );
 
+	toggleOptionalRecurringLabel( priceEl )
+
 	// Update the hidden field to track the amount type.
 	priceEl.querySelector( '.simpay-price-amount-type' ).value = amountType;
 }
@@ -344,6 +353,10 @@ function onChangeRecurring( priceEl ) {
 	const recurringIntervalCount = priceEl.querySelector(
 		'.simpay-price-recurring-interval-count'
 	);
+
+	if ( ! recurringInterval || ! recurringIntervalCount ) {
+		return;
+	}
 
 	const recurringIntervalCountValue = parseInt(
 		recurringIntervalCount.value
@@ -655,6 +668,7 @@ function bindPriceOptions() {
 				} else {
 					onChangeLabel( priceEl );
 					togglePriceSelectField();
+					toggleOptionalRecurringLabel( priceEl );
 				}
 			} );
 		}
@@ -674,27 +688,29 @@ function bindPriceOptions() {
 			'.simpay-price-recurring-interval'
 		);
 
-		recurringInterval.addEventListener( 'change', () => {
-			onChangeLabel( priceEl );
-			onChangeRecurring( priceEl );
-		} );
-
 		// Recurring interval count.
 		const recurringIntervalCount = priceEl.querySelector(
 			'.simpay-price-recurring-interval-count'
 		);
 
-		onChangeRecurring( priceEl );
+		if ( recurringInterval && recurringIntervalCount ) {
+			recurringInterval.addEventListener( 'change', () => {
+				onChangeLabel( priceEl );
+				onChangeRecurring( priceEl );
+			} );
 
-		recurringIntervalCount.addEventListener( 'keyup', () => {
 			onChangeRecurring( priceEl );
-			onChangeLabel( priceEl );
-		} );
 
-		recurringIntervalCount.addEventListener( 'change', () => {
-			onChangeRecurring( priceEl );
-			onChangeLabel( priceEl );
-		} );
+			recurringIntervalCount.addEventListener( 'keyup', () => {
+				onChangeRecurring( priceEl );
+				onChangeLabel( priceEl );
+			} );
+
+			recurringIntervalCount.addEventListener( 'change', () => {
+				onChangeRecurring( priceEl );
+				onChangeLabel( priceEl );
+			} );
+		}
 
 		// Legacy settings toggle.
 		const legacySettingsToggle = priceEl.querySelector(

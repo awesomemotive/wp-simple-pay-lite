@@ -23,10 +23,13 @@ namespace SimplePay\Vendor\Symfony\Component\CssSelector\Node;
  */
 class NegationNode extends AbstractNode
 {
-    public function __construct(
-        private NodeInterface $selector,
-        private NodeInterface $subSelector,
-    ) {
+    private $selector;
+    private $subSelector;
+
+    public function __construct(NodeInterface $selector, NodeInterface $subSelector)
+    {
+        $this->selector = $selector;
+        $this->subSelector = $subSelector;
     }
 
     public function getSelector(): NodeInterface
@@ -39,6 +42,9 @@ class NegationNode extends AbstractNode
         return $this->subSelector;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSpecificity(): Specificity
     {
         return $this->selector->getSpecificity()->plus($this->subSelector->getSpecificity());

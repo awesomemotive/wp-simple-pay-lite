@@ -188,6 +188,14 @@ class PriceOption {
 	public $quantity_maximum;
 
 	/**
+	 * Recurring amount toggle label.
+	 *
+	 * @since 4.11.0
+	 * @var string
+	 */
+	public $recurring_amount_toggle_label;
+
+	/**
 	 * Optional. Stripe Price or Plan (legacy) for legacy filter usage.
 	 *
 	 * @since 4.1.0
@@ -469,6 +477,11 @@ class PriceOption {
 		// Quantity maximum.
 		if ( isset( $price_data['quantity_maximum'] ) ) {
 			$this->quantity_maximum = $price_data['quantity_maximum'];
+		}
+
+		// Recurring amount toggle label.
+		if ( isset( $price_data['recurring_amount_toggle_label'] ) ) {
+			$this->recurring_amount_toggle_label = $price_data['recurring_amount_toggle_label'];
 		}
 	}
 
@@ -805,7 +818,7 @@ class PriceOption {
 
 		switch ( $behavior ) {
 			case 'combined':
-				$combined  = $this->form->get_combined_inventory_data();
+				$combined = $this->form->get_combined_inventory_data();
 				return $combined['available'];
 			case 'individual':
 				$individual = $this->form->get_individual_inventory_data();

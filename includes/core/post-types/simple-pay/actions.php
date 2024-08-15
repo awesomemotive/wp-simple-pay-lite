@@ -759,6 +759,11 @@ function save_prices( $post_id, $post, $form ) {
 			$price_args['quantity_maximum'] = $price['quantity_maximum'];
 		}
 
+		// Recurring amount toggle label.
+		if ( isset( $price['recurring_amount_toggle_label'] ) && ! empty( $price['recurring_amount_toggle_label'] ) ) {
+			$price_args['recurring_amount_toggle_label'] = $price['recurring_amount_toggle_label'];
+		}
+
 		$_prices[ $instance_id ] = $price_args;
 	}
 

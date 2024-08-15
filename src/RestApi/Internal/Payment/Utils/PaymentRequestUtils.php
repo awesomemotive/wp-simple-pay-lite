@@ -521,8 +521,8 @@ class PaymentRequestUtils {
 					$item['price_data']['instance_id'],
 					$item['quantity'],
 					simpay_payment_form_prices_is_defined_price( $item['price_id'] )
-					? $item['price_data']['unit_amount']
-					: $item['custom_amount']
+						? $item['price_data']['unit_amount']
+						: $item['custom_amount']
 				);
 			}
 
@@ -541,9 +541,10 @@ class PaymentRequestUtils {
 			$subtotal    = $unit_amount * $quantity;
 
 			$price_instances = sprintf(
-				'%s:%d',
+				'%s:%d:%d',
 				$price->instance_id,
-				$quantity
+				$quantity,
+				$unit_amount
 			);
 
 			$metadata['simpay_unit_amount']     = $unit_amount;

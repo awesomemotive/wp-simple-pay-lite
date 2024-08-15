@@ -23,12 +23,12 @@ namespace SimplePay\Vendor\Symfony\Component\CssSelector\Node;
  */
 class PseudoNode extends AbstractNode
 {
-    private string $identifier;
+    private $selector;
+    private $identifier;
 
-    public function __construct(
-        private NodeInterface $selector,
-        string $identifier,
-    ) {
+    public function __construct(NodeInterface $selector, string $identifier)
+    {
+        $this->selector = $selector;
         $this->identifier = strtolower($identifier);
     }
 
@@ -42,6 +42,9 @@ class PseudoNode extends AbstractNode
         return $this->identifier;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSpecificity(): Specificity
     {
         return $this->selector->getSpecificity()->plus(new Specificity(0, 1, 0));
