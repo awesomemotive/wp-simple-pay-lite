@@ -34,7 +34,7 @@
 
 	<section class="simpay-landing-zone__screenshot">
 		<div class="simpay-landing-zone__screenshot-img">
-			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/email-thumb.png' ); // @phpstan-ignore-line ?>" alt="<?php echo esc_attr__( 'Payment Receipt settings', 'simple-pay' ); ?>" />
+			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/email-thumb.png' ); // @phpstan-ignore-line ?>" alt="<?php echo esc_attr__( 'Payment Receipt settings', 'stripe' ); ?>" />
 			<a href="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/email-full.png' ); // @phpstan-ignore-line ?>" class="hover" data-lity></a>
 		</div>
 

@@ -64,7 +64,7 @@ module.exports = function (grunt) {
         src: [
           "includes/**/*.php",
           "includes/core/assets/js/dist/**.js",
-          "views/**/*.php",
+          "views/*.php",
           "src/**/*.php",
           "stripe-checkout.php",
           "uninstall.php",
