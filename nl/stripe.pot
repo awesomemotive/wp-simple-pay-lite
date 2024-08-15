@@ -9,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-07T11:40:25+00:00\n"
-"PO-Revision-Date: 2024-08-07 18:27\n"
+"POT-Creation-Date: 2024-08-15T17:35:46+00:00\n"
+"PO-Revision-Date: 2024-08-15 18:36\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stripe\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -130,15 +130,15 @@ msgstr "Waarschuwing: het verwijderen van een betalingsformulier voorkomt dat ac
 
 #. translators: %s: Minimum payment amount.
 #: includes/core/admin/class-assets.php:251
-#: includes/core/forms/class-price-option.php:613
+#: includes/core/forms/class-price-option.php:626
 #: includes/core/functions/shared.php:546
 msgid "starting at %s"
 msgstr "start vanaf %s"
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval.
 #: includes/core/admin/class-assets.php:254
-#: includes/core/forms/class-price-option.php:565
-#: includes/core/forms/class-price-option.php:702
+#: includes/core/forms/class-price-option.php:578
+#: includes/core/forms/class-price-option.php:715
 #: includes/core/functions/shared.php:549
 msgctxt "recurring interval"
 msgid "%1$s every %2$s %3$s"
@@ -548,29 +548,29 @@ msgstr "Even wachten..."
 msgid "Unable to complete request. Please try again."
 msgstr "Kan aanvraag niet afronden. Probeer het opnieuw."
 
-#: includes/core/forms/class-price-option.php:246
+#: includes/core/forms/class-price-option.php:254
 msgid "Unable to create PriceOption. Invalid form."
 msgstr "Kan geen PriceOption aanmaken. Ongeldig formulier."
 
 #. translators: %s Price option label
-#: includes/core/forms/class-price-option.php:500
-#: includes/core/forms/class-price-option.php:638
-#: includes/core/forms/class-price-option.php:736
+#: includes/core/forms/class-price-option.php:513
+#: includes/core/forms/class-price-option.php:651
+#: includes/core/forms/class-price-option.php:749
 msgid "%s (Sold Out)"
 msgstr "%s (Uitverkocht)"
 
 #. translators: %1$s Trial length. %2$s Generated price label
-#: includes/core/forms/class-price-option.php:581
+#: includes/core/forms/class-price-option.php:594
 msgid "%1$s day free trial then %2$s"
 msgstr "%1$s dagen gratis proefperiode daarna %2$s"
 
 #. translators: %1$s Generated label. %2$s Setup fee amount.
-#: includes/core/forms/class-price-option.php:601
+#: includes/core/forms/class-price-option.php:614
 msgid "%1$s with a %2$s one-time fee"
 msgstr "%1$s met een eenmalige vergoeding van %2$s"
 
 #. translators: %1$s Price option amount. %2$s Recurring interval.
-#: includes/core/forms/class-price-option.php:691
+#: includes/core/forms/class-price-option.php:704
 msgctxt "recurring interval"
 msgid "%1$s/%2$s"
 msgstr "%1$s/%2$s"
@@ -10351,75 +10351,75 @@ msgstr "\n"
 msgid "Please select a valid Tax ID type."
 msgstr "Selecteer een geldig BTW ID type."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:858
+#: includes/core/payments/payment-confirmation-template-tags.php:862
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:490
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:498
 msgid "Subscription"
 msgstr "Abonnement"
 
-#: includes/core/payments/payment-confirmation-template-tags.php:860
+#: includes/core/payments/payment-confirmation-template-tags.php:864
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:481
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:485
 msgid "One time"
 msgstr "Eenmalig"
 
-#: includes/core/payments/payment-confirmation-template-tags.php:933
+#: includes/core/payments/payment-confirmation-template-tags.php:937
 msgid "The form's title."
 msgstr "De titel van het formulier."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:937
+#: includes/core/payments/payment-confirmation-template-tags.php:941
 msgid "The form's description."
 msgstr "De beschrijving van het formulier."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:941
+#: includes/core/payments/payment-confirmation-template-tags.php:945
 msgid "The total price of the payment."
 msgstr "De totale prijs van de betaling."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:945
+#: includes/core/payments/payment-confirmation-template-tags.php:949
 msgid "The value of the Name form field."
 msgstr "De waarde van het naamveld in het formulier."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:949
+#: includes/core/payments/payment-confirmation-template-tags.php:953
 msgid "The charge date returned from Stripe."
 msgstr "De afschrijvingsdatum geretourneerd van Stripe."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:953
+#: includes/core/payments/payment-confirmation-template-tags.php:957
 msgid "The unique charge ID returned from Stripe."
 msgstr "Het unieke doorbelasting ID dat door Stripe wordt teruggestuurd."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:960
+#: includes/core/payments/payment-confirmation-template-tags.php:964
 msgid "The cumulative cost of selected items."
 msgstr "De cumulatieve kosten van geselecteerde items."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:967
+#: includes/core/payments/payment-confirmation-template-tags.php:971
 msgid "The type of payment (one-time or recurring)."
 msgstr "Het type betaling (eenmalig of terugkerend)."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:972
+#: includes/core/payments/payment-confirmation-template-tags.php:976
 msgid "The brand of the card used. Visa, Amex, etc."
 msgstr "Het merk van de gebruikte kaart. Visa, Amex, enz."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:977
+#: includes/core/payments/payment-confirmation-template-tags.php:981
 msgid "The last four digits of the card used."
 msgstr "De laatste vier cijfers van de gebruikte kaart."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:982
+#: includes/core/payments/payment-confirmation-template-tags.php:986
 msgid "The calculated tax amount based on the total and the tax percent setting."
 msgstr "De totale BTW instellingen zijn gebaseerd op het totaal en de BTW instellingen."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:987
+#: includes/core/payments/payment-confirmation-template-tags.php:991
 msgid "The calculated fee recovery amount based on the total and the fee recovery percent setting."
 msgstr "Het berekende bedrag voor kosten recovery gebaseerd op het totaal en de kosten recovery percentage instelling."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:992
+#: includes/core/payments/payment-confirmation-template-tags.php:996
 msgid "The receipt breakdown of the payment including items, adjustments, and totals."
 msgstr "De rekening-specificatie van de betaling inclusief items, aanpassingen en totalen."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:998
+#: includes/core/payments/payment-confirmation-template-tags.php:1002
 msgid "The amount of the coupon applied to the payment."
 msgstr "Het bedrag van de waardebon toegepast op de betaling."
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1026
+#: includes/core/payments/payment-confirmation-template-tags.php:1030
 msgid "Available smart tags:"
 msgstr "Beschikbare slimme tags:"
 
@@ -10447,7 +10447,7 @@ msgid "Sorry, this item is no longer in stock."
 msgstr "Dit item is niet langer in voorraad."
 
 #. translators: %s Payment form name.
-#: includes/core/post-types/simple-pay/actions.php:866
+#: includes/core/post-types/simple-pay/actions.php:871
 msgid "%s - Duplicate"
 msgstr "%s - Dubbel"
 
@@ -13742,6 +13742,10 @@ msgstr "🏷 Bied waardebon codes aan klanten"
 msgid "Allow fixed amount or percentage discounts to one-time or recurring payments with WP Simple Pay Pro. Limit coupon code redemptions by count, date, or specific payment forms."
 msgstr "Laat opgeloste bedrag of percentage kortingen toe op eenmalige of terugkerende betalingen met WP Simple Pay Pro. Beperk waardeboncode inwisselingen op aantal, datum, of specifieke betalingsformulieren."
 
+#: views/admin-education-plugin-coupons.php:42
+msgid "Add new coupon"
+msgstr "Nieuwe waardebon toevoegen"
+
 #: views/admin-education-plugin-coupons.php:48
 msgid "Fixed amount or percentage discounts"
 msgstr "Vast bedrag of percentage korting"
@@ -13774,6 +13778,11 @@ msgstr "🙋‍♀️ Sta klanten toe om abonnementen te beheren"
 #: views/admin-education-plugin-customers-settings.php:34
 msgid "Remind customers about upcoming invoices and give them an opportunity to update their payment method on file or cancel their subscription. Supports both on-site management or the Stripe Customer portal."
 msgstr "Herinner klanten aan komende facturen en geef ze de gelegenheid om hun betalingsmethode in het bestand bij te werken of hun abonnement te annuleren. Ondersteunt zowel on-site beheer of het Stripe klantenportaal."
+
+#: views/admin-education-plugin-customers-settings.php:43
+#: views/admin-education-plugin-email-settings.php:37
+msgid "Payment Receipt settings"
+msgstr "Instellingen betalingsbewijs"
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
 #: views/admin-education-plugin-customers-settings.php:53
@@ -13840,6 +13849,10 @@ msgstr "💸 Belastingen en extra kosten innen"
 #: views/admin-education-plugin-taxes-settings.php:27
 msgid "Add tax rates to your payment forms or charge an additional amount to help cover processing fees with WP Simple Pay Pro."
 msgstr "Voeg belastingtarieven toe aan je betalingsformulieren of reken een extra bedrag om de verwerkingskosten te dekken met WP Simple Pay Pro."
+
+#: views/admin-education-plugin-taxes-settings.php:36
+msgid "Tax settings"
+msgstr "Instellingen belasting"
 
 #: views/admin-education-plugin-taxes-settings.php:42
 msgid "Exclusive or inclusive tax rates"
