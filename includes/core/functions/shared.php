@@ -1493,7 +1493,7 @@ function __unstable_simpay_get_payment_form_templates() {
 			strtotime( $data['created_at'] ) > strtotime( '-4 weeks' )
 		) {
 			$has_new = true;
-		};
+		}
 
 		// Adjust licenses if needed.
 		// Templates that utilize "enhanced" subscription functionality should only continue to be available
@@ -1537,7 +1537,7 @@ function __unstable_simpay_get_payment_form_templates() {
 		// Adjust settings for UPE.
 		if ( simpay_is_upe() ) {
 			$data['data']['fields'] = array_map(
-				function( $field ) {
+				function ( $field ) {
 					// Remove the card field label.
 					if ( 'card' === $field['type'] ) {
 						$field['label'] = '';
@@ -1573,7 +1573,7 @@ function __unstable_simpay_get_payment_form_templates() {
 
 		usort(
 			$templates,
-			function( $a, $b ) {
+			function ( $a, $b ) {
 				return $a['created_at'] < $b['created_at'];
 			}
 		);
@@ -1629,7 +1629,7 @@ function __unstable_simpay_has_new_form_templates() {
 
 	$new = array_filter(
 		$templates,
-		function( $template_data ) {
+		function ( $template_data ) {
 			return (
 				isset( $template_data['created_at'] ) &&
 				strtotime( $template_data['created_at'] ) > strtotime( '-4 weeks' )
@@ -1661,7 +1661,7 @@ function simpay_get_form_list_options() {
 
 		foreach ( $forms as $form_id ) {
 			$options[ $form_id ] = get_the_title( $form_id );
-		};
+		}
 	}
 
 	return $options;
@@ -1947,4 +1947,20 @@ function simpay_docs_link( $text, $slug, $utm_medium, $plain = false ) {
 
 		return $html;
 	}
+}
+
+/**
+ * Get the current date in the WordPress timezone.
+ *
+ * @since 4.11.0
+ *
+ * @param string $timestamp unix timestamp.
+ * @param string $format Date format. Default is the WordPress date format.
+ * @return string
+ */
+function simpay_format_date( $timestamp, $format = '' ) {
+	if ( '' === $format ) {
+		$format = get_option( 'date_format' );
+	}
+	return wp_date( $format, $timestamp );
 }

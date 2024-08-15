@@ -200,6 +200,10 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function maybe_redirect_back() {
+		// Do nothing if it is cancle request.
+		if ( isset( $_GET['cancel'] ) ) {
+			return;
+		}
 		// Avoid redirect loops.
 		if ( isset( $_GET['redirected'] ) ) {
 			return;
@@ -434,7 +438,7 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 
 		$non_simpay_assets = array_filter(
 			$assets->queue,
-			function( $handle ) use ( $simpay_payment_page_asset_handle_allowlist ) {
+			function ( $handle ) use ( $simpay_payment_page_asset_handle_allowlist ) {
 				$allowed = true;
 
 				foreach ( $simpay_payment_page_asset_handle_allowlist as $allowed_handle ) {
@@ -506,5 +510,4 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 
 		return $return;
 	}
-
 }

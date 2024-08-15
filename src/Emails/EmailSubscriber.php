@@ -15,6 +15,7 @@ use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\Payments\Payment_Confirmation;
+use SimplePay\Core\API;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -83,6 +84,12 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 
 		// One-time payment created.
 		$subscribers['simpay_webhook_payment_intent_succeeded'] = array(
+			$payment_notification,
+			$payment_confirmation,
+		);
+
+		// Invoice payment created.
+		$subscribers['simpay_webhook_invoice_paid'] = array(
 			$payment_notification,
 			$payment_confirmation,
 		);
@@ -161,8 +168,17 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$form_id = $object->metadata->simpay_form_id;
 
 		// Retrieve the payment confirmation data.
-		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
-		$customer = $object->customer;
+		if ( $object->customer instanceof \SimplePay\Vendor\Stripe\Customer ) {
+			/** @var \SimplePay\Vendor\Stripe\Customer $customer */
+			$customer = $object->customer;
+
+		} else {
+			$form     = simpay_get_form( $form_id );
+			$customer = API\Customers\retrieve(
+				$object->customer, // @phpstan-ignore-line
+				$form->get_api_request_args() // @phpstan-ignore-line
+			);
+		}
 
 		// Ensure we have data before proceeding.
 		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data(
@@ -256,8 +272,17 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$form_id = $object->metadata->simpay_form_id;
 
 		// Retrieve the payment confirmation data.
-		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
-		$customer = $object->customer;
+		if ( $object->customer instanceof \SimplePay\Vendor\Stripe\Customer ) {
+			/** @var \SimplePay\Vendor\Stripe\Customer $customer */
+			$customer = $object->customer;
+
+		} else {
+			$form     = simpay_get_form( $form_id );
+			$customer = API\Customers\retrieve(
+				$object->customer, // @phpstan-ignore-line
+				$form->get_api_request_args() // @phpstan-ignore-line
+			);
+		}
 
 		// Ensure we have data before proceeding.
 		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data(
@@ -557,12 +582,17 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			$form->id
 		);
 
+		$payment_refund_data['charge'] = $charge;
+
 		// Setup the mailer.
 		$mailer = new Mailer( $email );
 
 		// Set data.
 
 		$mailer->set_data( $payment_refund_data );
+
+		// Register smart tags.
+		$email->register_smart_tags();
 
 		// ...then set the address(es).
 		$mailer->set_to( $payment_refund_data['customer']->email );

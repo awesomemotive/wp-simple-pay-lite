@@ -11,6 +11,7 @@
 
 namespace SimplePay\Core\Model;
 
+#[\AllowDynamicProperties]
 /**
  * AbstractModel class.
  *
@@ -30,5 +31,4 @@ abstract class AbstractModel {
 			$this->{$key} = $value;
 		}
 	}
-
 }

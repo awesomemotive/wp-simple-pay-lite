@@ -2,8 +2,8 @@
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
-Tested up to: 6.5
-Stable tag: 4.10.0
+Tested up to: 6.6
+Stable tag: 4.11.0
 Requires PHP: 7.2
 License: GPLv2 or later
 
@@ -249,6 +249,11 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.11.0 - August 15, 2024 =
+
+* New: [Pro] Allow multiple price options to be purchased at once.
+* Fix: Smart Tags - ensure parsing does not replace values.
+
 = Stripe Payment Forms v4.10.0 - May 14, 2024 =
 
 * New: Smart Tags - Provide Fallback For Optional Fields.
@@ -277,24 +282,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 * New: Improve payment confirmation page performance.
 * Fix: Ensure "Copy Smart Tag" functions as expected after saving a payment form.
 
-= Stripe Payment Forms v4.7.11 - December 7, 2023 =
-
-* New: Access official WP Simple Pay code snippets directly in WPCode.
-* Fix: Avoid the "modern" color scheme from leaking on pages using `@wordpress/components`.
-* i18n: Merge string contexts.
-* Dev: Update Stripe PHP SDK from `10.6.0-beta.1` to `13.3.0`.
-* Dev: Update Stripe API version from `2022-11-15` to `2023-10-16`.
-
-= Stripe Payment Forms v4.7.10 - October 12, 2023 =
-
-* New: Help improve WP Simple Pay with *opt-in* anonymous telemetry reporting https://wpsimplepay.com/doc/what-information-does-wp-simple-pay-collect/
-* Fix: Anti-spam - only add notification in Live Mode.
-* Dev: System Report - show missing database tables.
-* Dev: Show connected Stripe account ID in connection status.
-* Dev: Action Scheduler - update from `3.4.0` to `3.6.2`.
-* Dev: PHP `8.x` compatibility fixes.
-
-= Stripe Payment Forms v4.7.9 - August 22, 2023 =
-
-* New: Form Builder - add per-form confirmation and email messages.
-* Fix: Form Preview - avoid calling wp_head() more than once.

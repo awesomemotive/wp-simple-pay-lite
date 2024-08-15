@@ -38,7 +38,7 @@ function wp_standard_class_filepath( $class ) {
 	}
 
 	// Try prefixes.
-	foreach ( array( 'class', 'abstract', 'interface' ) as $type ) {
+	foreach ( array( 'class', 'abstract', 'interface', 'trait' ) as $type ) {
 		$file = untrailingslashit( SIMPLE_PAY_INC ) . $filepath . $type . '-' . $filename . '.php';
 
 		if ( file_exists( $file ) ) {

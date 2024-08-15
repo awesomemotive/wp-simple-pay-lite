@@ -6,6 +6,7 @@ import {
 	maybeBlockButtonWithUpgradeModal,
 	maybeBlockCheckboxWithUpgradeModal,
 } from '@wpsimplepay/utils';
+import { enableDisableOneTimePaymentMethods } from './payment';
 
 /**
  * Toggles Payment Method visibility when filtering Payment Methods.
@@ -17,7 +18,9 @@ import {
  */
 function onFilter( { target } ) {
 	const filter = target.options[ target.selectedIndex ].value;
-
+	const multipleLineItemOption = document.getElementById(
+		'_allow_purchasing_multiple_line_items'
+	);
 	const paymentMethods = document.querySelectorAll(
 		'.simpay-panel-field-payment-method[data-payment-method]'
 	);
@@ -27,6 +30,7 @@ function onFilter( { target } ) {
 		const maybeShow = 'popular' === scope ? 'block' : 'none';
 
 		paymentMethod.style.display = 'all' === filter ? 'block' : maybeShow;
+		enableDisableOneTimePaymentMethods( multipleLineItemOption );
 	} );
 }
 

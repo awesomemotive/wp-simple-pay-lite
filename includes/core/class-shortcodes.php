@@ -118,7 +118,7 @@ class Shortcodes {
 					)
 				);
 			} else {
-				return'';
+				return '';
 			}
 		}
 
@@ -126,10 +126,12 @@ class Shortcodes {
 
 		// Show a notice to admins if they have not setup Stripe.
 		if ( ! $has_keys && current_user_can( 'manage_options' ) ) {
-			$stripe_account_settings_url = Settings\get_url( array(
-				'section'    => 'stripe',
-				'subsection' => 'account',
-			) );
+			$stripe_account_settings_url = Settings\get_url(
+				array(
+					'section'    => 'stripe',
+					'subsection' => 'account',
+				)
+			);
 
 			return wp_kses_post(
 				sprintf(
@@ -275,6 +277,10 @@ class Shortcodes {
 		try {
 			$payment_confirmation_data = Payment_Confirmation\get_confirmation_data();
 
+			if ( ! isset( $payment_confirmation_data['customer'] ) ) {
+				return Payment_Confirmation\get_error();
+			}
+
 			if ( empty( $payment_confirmation_data ) ) {
 				return Payment_Confirmation\get_error();
 			}
@@ -298,7 +304,7 @@ class Shortcodes {
 				if ( ! empty( $form_message ) ) {
 					add_filter(
 						'simpay_payment_confirmation_content',
-						function() use ( $form_message ) {
+						function () use ( $form_message ) {
 							return $form_message;
 						},
 						99
@@ -395,7 +401,7 @@ class Shortcodes {
 	 *
 	 * @since 4.4.7
 	 *
-	 * @param int $form_id Payment form ID.
+	 * @param int                  $form_id Payment form ID.
 	 * @param array<string, mixed> $atts Shortcode attributes.
 	 * @return void
 	 */

@@ -97,6 +97,13 @@ $error-text-color: #eb1c26;
 	}
 }
 
+.simpay-plan-select-container .simpay-custom-amount-error {
+	.simpay-styled & {
+		font-size: 0.93rem;
+		margin-top: 5px;
+	}
+}
+
 // Test mode badge.
 .simpay-test-mode-badge-container {
 	.simpay-checkout-form--embedded &,
@@ -377,5 +384,35 @@ html body.simpay-payment-page {
 		.form-message {
 			color: #864d0f;
 		}
+	}
+}
+
+
+.simpay-receipt {
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	th, td {
+		border: 1px solid #ddd;
+		padding: 8px;
+	}
+
+	th {
+		background-color: #f2f2f2;
+		text-align: left;
+	}
+
+	.total-row {
+		font-weight: bold;
+	}
+
+	.text-right {
+		text-align: right;
+	}
+
+	.text-center {
+		text-align: center;
 	}
 }

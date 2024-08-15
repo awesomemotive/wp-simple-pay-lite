@@ -8,3 +8,4 @@ import './payment-page.js';
 import './purchase-restrictions.js';
 import './automations.js';
 import './notifications.js';
+import './payment.js';

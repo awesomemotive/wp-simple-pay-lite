@@ -670,53 +670,6 @@ function __unstable_add_payment_methods( $post_id ) {
 				'myr',
 			),
 		),
-		'giropay'    => array(
-			'name'       => __( 'Giropay', 'stripe' ),
-			'icon'       => '<svg height="32" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M0 0h32v32H0z" fill="#fff"/><path d="M4 11.191C4 9.705 5.239 8.5 6.766 8.5h18.468C26.762 8.5 28 9.705 28 11.191v9.618c0 1.486-1.238 2.691-2.766 2.691H6.766C5.239 23.5 4 22.295 4 20.809zm1.02 9.6c0 .944.783 1.71 1.75 1.71h9.213V9.5H6.77c-.967 0-1.75.765-1.75 1.708v9.584zm13.749-.104h2.272v-3.57h.025c.43.782 1.29 1.072 2.084 1.072 1.957 0 3.004-1.615 3.004-3.558 0-1.589-.997-3.319-2.815-3.319-1.035 0-1.994.417-2.45 1.338h-.025v-1.185h-2.095zm5.037-6.005c0 1.047-.518 1.766-1.376 1.766-.758 0-1.39-.72-1.39-1.678 0-.984.556-1.716 1.39-1.716.885 0 1.376.757 1.376 1.627z" fill="#04337b"/><path d="M14.153 11.463v5.71c0 2.657-1.33 3.515-4.017 3.515a7.958 7.958 0 0 1-2.547-.41l.115-1.764c.703.335 1.292.533 2.253.533 1.33 0 2.047-.607 2.047-1.874v-.348h-.026c-.55.757-1.318 1.105-2.24 1.105-1.83 0-2.969-1.34-2.969-3.252 0-1.924.935-3.366 3.007-3.366.985 0 1.78.523 2.267 1.318h.025v-1.168zM9.15 14.64c0 1.005.616 1.576 1.306 1.576.818 0 1.472-.67 1.472-1.664 0-.72-.435-1.527-1.472-1.527-.857 0-1.306.734-1.306 1.615z" fill="#ee3525"/></g></svg>',
-			'is_popular' => false,
-			'is_lite'    => true,
-			'countries'  => array(
-				'au',
-				'at',
-				'be',
-				'bg',
-				'ca',
-				'cy',
-				'cz',
-				'dk',
-				'ee',
-				'fi',
-				'fr',
-				'de',
-				'gr',
-				'hk',
-				'ie',
-				'it',
-				'jp',
-				'lv',
-				'lt',
-				'lu',
-				'mt',
-				'mx',
-				'nl',
-				'nz',
-				'no',
-				'pl',
-				'pt',
-				'ro',
-				'sg',
-				'sk',
-				'si',
-				'es',
-				'se',
-				'ch',
-				'gb',
-				'us',
-			),
-			'currencies' => array(
-				'eur',
-			),
-		),
 		'ideal'      => array(
 			'name'       => __( 'iDEAL', 'stripe' ),
 			'icon'       => '<svg height="32" width="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path fill="#FFF" d="M0 0h32v32H0z"/><g transform="translate(3 5)"><path d="M0 1.694v19.464c0 .936.758 1.694 1.694 1.694h11.63c8.788 0 12.599-4.922 12.599-11.448C25.923 4.903 22.112 0 13.323 0H1.694C.759 0 0 .758 0 1.694z" fill="#FFF"/><path d="M13.321 21.296H3.206A1.628 1.628 0 0 1 1.58 19.67V3.182c.001-.898.729-1.625 1.626-1.626h10.115c9.593 0 11.026 6.17 11.026 9.848 0 6.381-3.916 9.892-11.026 9.892zM3.206 2.098c-.598 0-1.084.485-1.085 1.084V19.67c.001.599.487 1.084 1.085 1.084h10.115c6.76 0 10.484-3.32 10.484-9.35 0-8.097-6.569-9.306-10.484-9.306H3.206z" fill="#000"/><path d="M7.781 4.78v14.377h6.259c5.686 0 8.151-3.213 8.151-7.746 0-4.342-2.465-7.716-8.151-7.716H8.865c-.598 0-1.084.485-1.084 1.084z" fill="#C06"/><path fill="#FFF" d="M19.713 9.47v2.8h1.674v.635h-2.429V9.47zm-2.514 0 1.285 3.435H17.7l-.26-.762h-1.285l-.27.762h-.762l1.3-3.435h.776zm.043 2.107-.433-1.26H16.8l-.447 1.26h.89zm-2.63-2.107v.635h-1.814v.736h1.665v.587h-1.665v.842h1.853v.635h-2.607V9.47zm-4.627 0c.21-.002.42.034.617.106.187.068.356.176.496.318.146.15.257.331.328.529.082.24.122.492.117.746.002.234-.03.467-.096.692-.059.2-.157.387-.29.549-.133.156-.3.28-.487.363-.216.093-.45.138-.685.132H8.503V9.47h1.482zm-.053 2.8a.983.983 0 0 0 .317-.053.703.703 0 0 0 .275-.176.888.888 0 0 0 .192-.319c.052-.155.076-.318.072-.481a2.04 2.04 0 0 0-.05-.47.932.932 0 0 0-.17-.357.74.74 0 0 0-.305-.23 1.212 1.212 0 0 0-.47-.079h-.538v2.165h.677z"/><path d="M4.953 13.683a1.2 1.2 0 0 1 1.2 1.2v4.274a2.401 2.401 0 0 1-2.401-2.401v-1.872a1.2 1.2 0 0 1 1.2-1.2z" fill="#000"/><circle fill="#000" cx="4.953" cy="11.188" r="1.585"/></g></g></svg>',
@@ -1203,5 +1156,91 @@ function __unstable_add_tax_upsell() {
 add_action(
 	'simpay_form_settings_meta_payment_options_panel',
 	__NAMESPACE__ . '\\__unstable_add_tax_upsell',
+	9
+);
+
+/**
+ * Adds "Purchase Mode" upgrade placeholder setting.
+ *
+ * @since 4.11.0
+ *
+ * @return void
+ */
+function __unstable_add_allow_purchasing_multiple_line_items() {
+
+	$upgrade_title = esc_html__(
+		'Unlock "Purchase Mode" Setting',
+		'stripe'
+	);
+
+	$upgrade_description = esc_html__(
+		'We\'re sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features.',
+		'stripe'
+	);
+
+	$upgrade_url = simpay_pro_upgrade_url(
+		'form-payment-options',
+		'Purchase Mode'
+	);
+
+	$upgrade_purchased_url = simpay_docs_link(
+		'Multiple Price Options (already purchased)',
+		'upgrading-wp-simple-pay-lite-to-pro',
+		'form-tax-settings',
+		true
+	);
+	?>
+	<table>
+		<tbody class="simpay-panel-section">
+			<tr class="simpay-panel-field">
+				<th>
+					<strong>
+						<?php esc_html_e( 'Purchase Mode', 'stripe' ); ?>
+					</strong>
+
+					<sup style="color: #f18500; margin-left: 3px;">
+						<?php esc_html_e( 'New!', 'stripe' ); ?>
+					</sup>
+				</th>
+				<td style="border-bottom: 0; padding-bottom: 0;">
+
+					<label for="_allow_purchasing_multiple_line_items">
+						<input
+							type="checkbox"
+							data-available="no"
+							id="_allow_purchasing_multiple_line_items"
+							value="yes"
+							data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
+							data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
+							data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
+							data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+						/>
+
+						<?php
+						esc_html_e(
+							'Allow purchasing multiple price options',
+							'stripe'
+						);
+						?>
+					</label>
+
+					<p class="description">
+					<?php
+					esc_html_e(
+						'Purchase multiple price options in a single transaction.',
+						'stripe'
+					);
+					?>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<?php
+}
+
+add_action(
+	'simpay_form_settings_meta_payment_options_panel',
+	__NAMESPACE__ . '\\__unstable_add_allow_purchasing_multiple_line_items',
 	9
 );

@@ -33,7 +33,7 @@
 
 	<section class="simpay-landing-zone__screenshot">
 		<div class="simpay-landing-zone__screenshot-img">
-			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/taxes-thumb.png' ); // @phpstan-ignore-line ?>" alt="<?php echo esc_attr( 'Tax settings', 'simple-pay' ); ?>" />
+			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/taxes-thumb.png' ); // @phpstan-ignore-line ?>" alt="<?php echo esc_attr__( 'Tax settings', 'stripe' ); ?>" />
 			<a href="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/taxes-full.png' ); // @phpstan-ignore-line ?>" class="hover" data-lity></a>
 		</div>
 

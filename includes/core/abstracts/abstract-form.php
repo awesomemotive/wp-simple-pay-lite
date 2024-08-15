@@ -254,6 +254,102 @@ abstract class Form {
 	public $custom_fields = array();
 
 	/**
+	 * Form subscription amount.
+	 *
+	 * @since 4.11.0
+	 * @var int|float
+	 */
+	public $subscription_amount;
+
+	/**
+	 * Form subscription plans.
+	 *
+	 * @since 4.11.0
+	 * @var array
+	 */
+	public $plans = array();
+
+	/**
+	 * Form subscription plan.
+	 *
+	 * @since 4.11.0
+	 * @var mixed
+	 */
+	public $single_plan;
+
+	/**
+	 * Form subscription plan.
+	 *
+	 * @since 4.11.0
+	 * @var mixed
+	 */
+	public $default_plan;
+
+	/**
+	 * Form subscription display type.
+	 *
+	 * @since 4.11.0
+	 * @var mixed
+	 */
+	public $subscription_display_type;
+
+	/**
+	 * Form subscription custom amount label.
+	 *
+	 * @since 4.11.0
+	 * @var string
+	 */
+	public $subscription_custom_amount_label;
+
+	/**
+	 * Form subscription default amount.
+	 *
+	 * @since 4.11.0
+	 * @var mixed
+	 */
+	public $subscription_default_amount;
+
+	/**
+	 * Form subscription max charges.
+	 *
+	 * @since 4.11.0
+	 * @var mixed
+	 */
+	public $subscription_max_charges;
+
+	/**
+	 * Form recurring tax amount.
+	 *
+	 * @since 4.11.0
+	 * @var float
+	 */
+	public $recurring_tax_amount;
+
+	/**
+	 * Form recurring total amount.
+	 *
+	 * @since 4.11.0
+	 * @var float
+	 */
+	public $recurring_total_amount;
+
+	/**
+	 * Form recurring total amount.
+	 *
+	 * @since 4.11.0
+	 * @var bool
+	 */
+	public $has_max_charges;
+
+	/**
+	 * Form prices.
+	 *
+	 * @since 4.11.0
+	 * @var mixed
+	 */
+	public $prices;
+
+	/**
 	 * Form constructor.
 	 *
 	 * @param int $id Payment Form ID.
@@ -305,7 +401,6 @@ abstract class Form {
 
 			$simpay_displayed_form_ids[ $this->id ] = true;
 		}
-
 	}
 
 	/**
@@ -725,7 +820,7 @@ abstract class Form {
 	public function get_stripe_script_variables() {
 
 		// Key is required so we always include it.
-		$strings['strings']['key'] = $this->publishable_key;
+		$strings['strings']['key']                = $this->publishable_key;
 		$strings['strings']['stripe_api_version'] = SIMPLE_PAY_STRIPE_API_VERSION;
 
 		// Redirect URLs.
@@ -796,7 +891,7 @@ abstract class Form {
 	public function has_forced_fee_recovery() {
 		$fee_recovery_toggle = array_filter(
 			$this->custom_fields,
-			function( $field ) {
+			function ( $field ) {
 				return 'fee_recovery_toggle' === $field['type'];
 			}
 		);
@@ -836,7 +931,7 @@ abstract class Form {
 				$individual = $this->get_individual_inventory_data();
 				$in_stock   = array_filter(
 					$individual,
-					function( $price_option ) {
+					function ( $price_option ) {
 						return $price_option['available'] > 0;
 					}
 				);
@@ -1091,4 +1186,14 @@ abstract class Form {
 		return get_post_meta( $this->id, '_email_notification_message', true );
 	}
 
+	/**
+	 * Returns the form's multiple line items setting.
+	 *
+	 * @since 4.11.0
+	 *
+	 * @return bool
+	 */
+	public function allows_multiple_line_items() {
+		return 'yes' === get_post_meta( $this->id, '_allow_purchasing_multiple_line_items', true );
+	}
 }

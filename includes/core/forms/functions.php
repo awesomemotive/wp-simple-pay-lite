@@ -69,6 +69,32 @@ function simpay_payment_form_prices_get_price_by_id( $form, $price_id ) {
 }
 
 /**
+ * Retrieves a specific price option by instance ID.
+ *
+ * @since 4.11.0
+ *
+ * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+ * @param string                         $instance_id Price option Instance ID.
+ * @return false|\SimplePay\Core\PaymentForm\PriceOption Price option. False if
+ *                                                       not found.
+ */
+function simpay_payment_form_prices_get_price_by_instance_id( $form, $instance_id ) {
+	$prices = simpay_get_payment_form_prices( $form );
+	$prices = array_filter(
+		$prices,
+		function ( $price ) use ( $instance_id ) {
+			return $price->instance_id === $instance_id;
+		}
+	);
+
+	if ( empty( $prices ) ) {
+		return false;
+	}
+
+	return current( $prices );
+}
+
+/**
  * Determines if the stored price has been defined in Stripe.
  *
  * @since 4.1.0
@@ -257,8 +283,9 @@ function simpay_payment_form_add_missing_custom_fields(
 
 	$count = count( $fields );
 
-	$payment_methods = get_post_meta( $form_id, '_payment_methods', true );
-	$tax_status      = get_post_meta( $form_id, '_tax_status', true );
+	$payment_methods  = get_post_meta( $form_id, '_payment_methods', true );
+	$tax_status       = get_post_meta( $form_id, '_tax_status', true );
+	$allow_line_items = get_post_meta( $form_id, '_allow_purchasing_multiple_line_items', true );
 
 	$changes = array();
 
@@ -287,7 +314,7 @@ function simpay_payment_form_add_missing_custom_fields(
 
 			break;
 		case 'embedded':
-			// Ensure "Customer Name" exists if using Bancontact, giropay, or p24, or SEPA.
+			// Ensure "Customer Name" exists if using Bancontact, or p24, or SEPA.
 			if (
 				! simpay_is_upe() &&
 				! isset( $fields['customer_name'] ) &&
@@ -295,10 +322,6 @@ function simpay_payment_form_add_missing_custom_fields(
 					(
 						isset( $payment_methods['stripe-elements']['bancontact'] ) &&
 						isset( $payment_methods['stripe-elements']['bancontact']['id'] )
-					) ||
-					(
-						isset( $payment_methods['stripe-elements']['giropay'] ) &&
-						isset( $payment_methods['stripe-elements']['giropay']['id'] )
 					) ||
 					(
 						isset( $payment_methods['stripe-elements']['p24'] ) &&
@@ -558,33 +581,70 @@ function simpay_payment_form_add_missing_custom_fields(
 		++$count;
 	}
 
-	// Ensure "Custom Amount" field exists if using a custom amount, and no Subscription.
-	$has_custom_amount = simpay_payment_form_prices_has_custom_price( $prices );
-
-	if ( true === $has_custom_amount && ! isset( $fields['custom_amount'] ) ) {
-		$fields['custom_amount'][] = array(
-			'uid'   => $count,
-			'id'    => 'simpay_' . $form_id . '_custom_amount_' . $count,
-			'label' => 'Custom Amount',
-		);
-
-		$changes[] = __(
-			'The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form.',
-			'stripe'
-		);
-
-		++$count;
-	} elseif ( false === $has_custom_amount ) {
+	if ( 'yes' === $allow_line_items ) {
 		if ( isset( $fields['custom_amount'] ) ) {
 			unset( $fields['custom_amount'] );
-			$changes[] = __( 'Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. ', 'stripe' );
+			$changes[] = __( 'Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items.', 'stripe' );
+		}
+
+		if ( isset( $fields['recurring_amount_toggle'] ) ) {
+			unset( $fields['recurring_amount_toggle'] );
+			$changes[] = __( 'Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items.', 'stripe' );
+		}
+
+		if ( isset( $fields['number'] ) ) {
+			foreach ( $fields['number'] as $number_field_index => $number_field ) {
+				if ( isset( $number_field['quantity'] ) && 'yes' === $number_field['quantity'] ) {
+					unset( $fields['number'][ $number_field_index ] );
+					$changes[] = __( 'Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items.', 'stripe' );
+				}
+			}
+		}
+
+		if ( isset( $fields['radio'] ) || isset( $fields['dropdown'] ) ) {
+			foreach ( array( 'radio', 'dropdown' ) as $field_type ) {
+				if ( isset( $fields[ $field_type ] ) ) {
+					foreach ( $fields[ $field_type ] as $field_index => $field ) {
+						if ( isset( $field['amount_quantity'] ) && 'yes' === $field['amount_quantity'] ) {
+							unset( $fields[ $field_type ][ $field_index ] );
+							$changes[] = __( 'Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items.', 'stripe' );
+						}
+					}
+				}
+			}
+		}
+	} else {
+		// Ensure "Custom Amount" field exists if using a custom amount, and no Subscription.
+		$has_custom_amount = simpay_payment_form_prices_has_custom_price( $prices );
+
+		if ( true === $has_custom_amount && ! isset( $fields['custom_amount'] ) ) {
+			$fields['custom_amount'][] = array(
+				'uid'   => $count,
+				'id'    => 'simpay_' . $form_id . '_custom_amount_' . $count,
+				'label' => 'Custom Amount',
+			);
+
+			$changes[] = __(
+				'The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form.',
+				'stripe'
+			);
+
+			++$count;
+		} elseif ( false === $has_custom_amount ) {
+			if ( isset( $fields['custom_amount'] ) ) {
+				unset( $fields['custom_amount'] );
+				$changes[] = __( 'Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. ', 'stripe' );
+			}
 		}
 	}
 
 	// Ensure "Recurring Amount Toggle" field exists if using an optional recurring price.
 	$can_recur = simpay_payment_form_prices_has_recurring_price( $prices );
 
-	if ( true === $can_recur && ! isset( $fields['recurring_amount_toggle'] ) ) {
+	if (
+		'yes' !== $allow_line_items &&
+		true === $can_recur && ! isset( $fields['recurring_amount_toggle'] )
+	) {
 		$fields['recurring_amount_toggle'][] = array(
 			'uid'   => $count,
 			'id'    => 'simpay_' . $form_id . '_recurring_amount_toggle_' . $count,
@@ -597,7 +657,10 @@ function simpay_payment_form_add_missing_custom_fields(
 		);
 
 		++$count;
-	} elseif ( false === $can_recur ) {
+	} elseif (
+		'yes' !== $allow_line_items &&
+		false === $can_recur
+	) {
 		if ( isset( $fields['recurring_amount_toggle'] ) ) {
 			unset( $fields['recurring_amount_toggle'] );
 			$changes[] = __(
