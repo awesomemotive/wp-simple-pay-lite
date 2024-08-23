@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "grunt build",
-    "i18n": "grunt sed && grunt checktextdomain && wp --allow-root i18n make-pot . languages/stripe.pot --domain=stripe --exclude='*/js/src/*' && wp --allow-root i18n make-json languages --no-purge"
+    "i18n": "grunt clean:build && grunt sed:text_domain && grunt checktextdomain && wp --allow-root i18n make-pot . languages/stripe.pot --domain=stripe --exclude='*/js/src/*' && wp --allow-root i18n make-json languages --no-purge"
   },
   "devDependencies": {
     "grunt": "^1.0.4",

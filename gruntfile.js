@@ -25,16 +25,46 @@ module.exports = function (grunt) {
     "!**/*~",
   ];
 
+  const updatedVersion = process.env.PLUGIN_VERSION
+    ? process.env.PLUGIN_VERSION
+    : pkg.version;
+
   grunt.initConfig({
     pkg: pkg,
 
     // Validates text domain.
     sed: {
-      textDomain: {
+      text_domain: {
         pattern: '"simple-pay"',
         replacement: '"stripe"',
         recursive: true,
         path: "includes/core/assets/js/dist",
+      },
+      update_stripe_checkout_version: {
+        path: "stripe-checkout.php",
+        pattern: "Version: [0-9]+\\.[0-9]+\\.[0-9]+",
+        replacement: `Version: ${updatedVersion}`,
+        recursive: false,
+      },
+      // Update the version number in the SIMPLE_PAY_VERSION definition
+      update_stripe_checkout_define: {
+        path: "stripe-checkout.php",
+        pattern:
+          "define\\( 'SIMPLE_PAY_VERSION', '[0-9]+\\.[0-9]+\\.[0-9]+' \\);",
+        replacement: `define( 'SIMPLE_PAY_VERSION', '${updatedVersion}' );`,
+        recursive: false,
+      },
+      update_readme: {
+        path: "readme.txt",
+        pattern: "Stable tag: [0-9]+\\.[0-9]+\\.[0-9]+",
+        replacement: `Stable tag: ${updatedVersion}`,
+        recursive: false,
+      },
+      update_package_json: {
+        path: "package.json",
+        pattern: '"version": "[0-9]+\\.[0-9]+\\.[0-9]+",',
+        replacement: `"version": "${updatedVersion}",`,
+        recursive: false,
       },
     },
 
@@ -116,6 +146,10 @@ module.exports = function (grunt) {
   require("load-grunt-tasks")(grunt);
 
   grunt.registerTask("build", [
+    "sed:update_stripe_checkout_version",
+    "sed:update_stripe_checkout_define",
+    "sed:update_readme",
+    "sed:update_package_json",
     "checktextdomain",
     "clean:build",
     "copy:main",
