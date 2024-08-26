@@ -125,7 +125,7 @@ module.exports = function (grunt) {
       main: {
         options: {
           mode: "zip",
-          archive: "./build/stripe-<%= pkg.version %>.zip",
+          archive: `./build/stripe-${updatedVersion}.zip`,
         },
         expand: true,
         src: distFiles,
