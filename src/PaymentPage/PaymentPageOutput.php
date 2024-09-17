@@ -56,10 +56,6 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * {@inheritdoc}
 	 */
 	public function get_subscribed_events() {
-		if ( true === $this->license->is_lite() ) {
-			return array();
-		}
-
 		return array(
 			'parse_request' => 'parse_pretty_request',
 			'init'          => 'maybe_redirect_back',
@@ -102,7 +98,7 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 
 		if (
 			false === $this->form ||
-			false === $this->is_payment_page_enabled( $payment_form_obj->ID )
+			false === $this->is_dedicated_confirmation_page_enabled( $payment_form_obj->ID )
 		) {
 			return;
 		}
@@ -218,18 +214,18 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 		$form = $payment_confirmation_data['form'];
 
 		// Return standard success URL if Payment Page is not enabled.
-		if ( false === $this->is_payment_page_enabled( $form->id ) ) {
+		if ( false === $this->is_dedicated_confirmation_page_enabled( $form->id ) ) {
 			return;
 		}
 
-		$self_confirmation = get_post_meta(
+		$payment_success_page_type = get_post_meta(
 			$form->id,
-			'_payment_page_self_confirmation',
+			'_success_redirect_type',
 			true
 		);
 
 		// Return standard success URL if self confirmation is not enabled.
-		if ( 'no' === $self_confirmation ) {
+		if ( 'dedicated' !== $payment_success_page_type ) {
 			return;
 		}
 
@@ -285,10 +281,30 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	private function output( $form_id ) {
+		$prefix                                    = '_payment';
+		$is_dedicated_confirmation_page            = simpay_get_saved_meta( $form_id, '_success_redirect_type' ) === 'dedicated' ? true : false;
+		$confirmation_page_use_payment_page_config = simpay_get_saved_meta( $form_id, '_confirmation_page_use_payment_page_config' );
+		$enable_payment_page                       = simpay_get_payment_form_setting(
+			$form_id,
+			'_enable_payment_page',
+			'no',
+			__unstable_simpay_get_payment_form_template_from_url()
+		);
+
+		if ( $is_dedicated_confirmation_page &&
+		isset( $_GET['redirected'] ) &&
+		isset( $_GET['form_id'] ) ) {
+			$prefix = '_confirmation';
+		}
+
+		if ( 'yes' === $enable_payment_page && 'yes' === $confirmation_page_use_payment_page_config ) {
+			$prefix = '_payment';
+		}
+
 		/** @var string $background_color */
 		$background_color = get_post_meta(
 			$form_id,
-			'_payment_page_background_color',
+			$prefix . '_page_background_color',
 			true
 		);
 
@@ -299,25 +315,25 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 
 		$title_desc = get_post_meta(
 			$form_id,
-			'_payment_page_title_description',
+			$prefix . '_page_title_description',
 			true
 		);
 
 		$footer_text = get_post_meta(
 			$form_id,
-			'_payment_page_footer_text',
+			$prefix . '_page_footer_text',
 			true
 		);
 
 		$powered_by = get_post_meta(
 			$form_id,
-			'_payment_page_powered_by',
+			$prefix . '_page_powered_by',
 			true
 		);
 
 		$image = get_post_meta(
 			$form_id,
-			'_payment_page_image_url',
+			$prefix . '_page_image_url',
 			true
 		);
 
@@ -468,14 +484,14 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * @param int $form_id Payment form ID.
 	 * @return bool
 	 */
-	private function is_payment_page_enabled( $form_id ) {
+	private function is_dedicated_confirmation_page_enabled( $form_id ) {
 		$enabled = get_post_meta(
 			$form_id,
-			'_enable_payment_page',
+			'_success_redirect_type',
 			true
 		);
 
-		return 'yes' === $enabled;
+		return 'dedicated' === $enabled;
 	}
 
 	/**

@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.11.0\n"
+"Project-Id-Version: WP Simple Pay Lite 4.11.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-15T17:35:46+00:00\n"
+"POT-Creation-Date: 2024-09-17T10:29:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: stripe\n"
 
 #. Plugin Name of the plugin
@@ -123,15 +123,15 @@ msgstr ""
 
 #. translators: %s: Minimum payment amount.
 #: includes/core/admin/class-assets.php:251
-#: includes/core/forms/class-price-option.php:626
+#: includes/core/forms/class-price-option.php:637
 #: includes/core/functions/shared.php:546
 msgid "starting at %s"
 msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval.
 #: includes/core/admin/class-assets.php:254
-#: includes/core/forms/class-price-option.php:578
-#: includes/core/forms/class-price-option.php:715
+#: includes/core/forms/class-price-option.php:589
+#: includes/core/forms/class-price-option.php:726
 #: includes/core/functions/shared.php:549
 msgctxt "recurring interval"
 msgid "%1$s every %2$s %3$s"
@@ -264,11 +264,12 @@ msgstr ""
 
 #: includes/core/admin/functions/notices.php:99
 #: includes/core/recaptcha/index.php:549
-#: src/Admin/UpeNotification.php:103
 #: src/License/LicenseNotificationSubscriber.php:93
 #: src/License/LicenseNotificationSubscriber.php:180
+#: src/NotificationInbox/Notifications/StripeConnectNotification.php:75
+#: src/NotificationInbox/Notifications/UpeNotification.php:101
+#: src/Webhook/NoneReceivedNotice.php:167
 #: src/Webhook/NoneReceivedNotice.php:169
-#: src/Webhook/NoneReceivedNotice.php:171
 #: views/admin-dashboard-widget-first-form.php:59
 #: views/admin-dashboard-widget-report.php:61
 #: views/admin-dashboard-widget-stripe-connect.php:45
@@ -541,29 +542,29 @@ msgstr ""
 msgid "Unable to complete request. Please try again."
 msgstr ""
 
-#: includes/core/forms/class-price-option.php:254
+#: includes/core/forms/class-price-option.php:262
 msgid "Unable to create PriceOption. Invalid form."
 msgstr ""
 
 #. translators: %s Price option label
-#: includes/core/forms/class-price-option.php:513
-#: includes/core/forms/class-price-option.php:651
-#: includes/core/forms/class-price-option.php:749
+#: includes/core/forms/class-price-option.php:524
+#: includes/core/forms/class-price-option.php:662
+#: includes/core/forms/class-price-option.php:760
 msgid "%s (Sold Out)"
 msgstr ""
 
 #. translators: %1$s Trial length. %2$s Generated price label
-#: includes/core/forms/class-price-option.php:594
+#: includes/core/forms/class-price-option.php:605
 msgid "%1$s day free trial then %2$s"
 msgstr ""
 
 #. translators: %1$s Generated label. %2$s Setup fee amount.
-#: includes/core/forms/class-price-option.php:614
+#: includes/core/forms/class-price-option.php:625
 msgid "%1$s with a %2$s one-time fee"
 msgstr ""
 
 #. translators: %1$s Price option amount. %2$s Recurring interval.
-#: includes/core/forms/class-price-option.php:704
+#: includes/core/forms/class-price-option.php:715
 msgctxt "recurring interval"
 msgid "%1$s/%2$s"
 msgstr ""
@@ -658,28 +659,41 @@ msgid "Select a payment form to add to your post or page."
 msgstr ""
 
 #: includes/core/functions/admin.php:278
+#: includes/core/functions/admin.php:319
 msgid "Click to select. Then press Ctrl&#43;C (&#8984;&#43;C on Mac) to copy."
 msgstr ""
 
 #: includes/core/functions/admin.php:295
+#: includes/core/functions/admin.php:353
+#: includes/core/functions/admin.php:380
 #: views/admin-form-preview-output.php:59
 #: views/admin-form-preview-output.php:67
 msgid "Copied!"
 msgstr ""
 
-#: includes/core/functions/admin.php:318
+#: includes/core/functions/admin.php:355
+msgid "Copy URL"
+msgstr ""
+
+#: includes/core/functions/admin.php:382
+#: includes/core/post-types/simple-pay/edit-form.php:108
+#: views/admin-form-preview-output.php:71
+msgid "Copy Block"
+msgstr ""
+
+#: includes/core/functions/admin.php:394
 msgid "A text label displayed above the field."
 msgstr ""
 
-#: includes/core/functions/admin.php:329
+#: includes/core/functions/admin.php:405
 msgid "A short hint shown when the field is empty."
 msgstr ""
 
-#: includes/core/functions/admin.php:343
+#: includes/core/functions/admin.php:419
 msgid "Determines if the field must be filled out before submitting the payment form."
 msgstr ""
 
-#: includes/core/functions/admin.php:357
+#: includes/core/functions/admin.php:433
 msgid "Used to identify this field within Stripe payment records. Not displayed on the payment form."
 msgstr ""
 
@@ -10443,7 +10457,7 @@ msgid "Sorry, this item is no longer in stock."
 msgstr ""
 
 #. translators: %s Payment form name.
-#: includes/core/post-types/simple-pay/actions.php:871
+#: includes/core/post-types/simple-pay/actions.php:875
 msgid "%s - Duplicate"
 msgstr ""
 
@@ -10476,38 +10490,118 @@ msgstr ""
 msgid "Payment Success Page"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:55
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:62
+msgid "Dedicated Confirmation Page"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:63
 msgid "Global Setting"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:56
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:64
 msgid "Custom Page"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:57
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:65
 msgid "External URL"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:80
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:88
 msgid "Redirect successful payments to the page specified in your %1$sglobal confirmation settings%2$s."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:117
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:119
+msgid "Use a distraction-free payment confirmation page without adding a new page in WordPress."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:143
 msgid "Choose a page from your site to redirect to after a successful transaction."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:146
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:172
 msgid "Enter a custom redirect URL for successful transactions."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:205
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:233
+msgid "Appearance"
+msgstr ""
+
+#. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:258
+msgid "Inherit the %1$sPayment Page's%2$s style."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:278
+msgid "Use the same distraction-free styles configured on the Payment Page"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:284
 msgid "Payment Success Message"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:227
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:306
 msgid "Enter a custom message to display after a sucessful payment is made with this payment form. Leave blank to use your %1$sglobal confirmation settings%2$s."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:364
+msgid "Color Scheme"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:377
+msgid "Blue"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:378
+msgid "Teal"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:379
+msgid "Green"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:380
+msgid "Red"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:381
+msgid "Purple"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:382
+msgid "Gray"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:425
+msgid "Form Title & Description"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:446
+msgid "Display the payment form's title and description"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:453
+msgid "Header Image / Logo"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:481
+#: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:75
+msgid "Choose Image"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:484
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:636
+#: includes/core/settings/register-emails.php:408
+msgid "Remove"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:496
+msgid "Footer Text"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:539
+msgid "Hide WP Simple Pay branding"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:26
@@ -10635,7 +10729,7 @@ msgid "We're sorry, adding additional custom fields is not available in WP Simpl
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:463
-#: includes/core/post-types/simple-pay/edit-form.php:491
+#: includes/core/post-types/simple-pay/edit-form.php:515
 msgid "Form Fields"
 msgstr ""
 
@@ -10645,11 +10739,6 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:491
 msgid "Add Field"
-msgstr ""
-
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:636
-#: includes/core/settings/register-emails.php:408
-msgid "Remove"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-dropdown-html.php:21
@@ -11028,10 +11117,6 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:75
-msgid "Choose Image"
-msgstr ""
-
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:78
 msgid "Displayed conditionally based on payment form settings."
 msgstr ""
@@ -11134,116 +11219,132 @@ msgstr ""
 msgid "(opens in a new tab)"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:79
-msgid "Form Shortcode"
+#: includes/core/post-types/simple-pay/edit-form.php:78
+#: includes/core/post-types/simple-pay/list-table.php:178
+msgid "Shortcode"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:141
+#: includes/core/post-types/simple-pay/edit-form.php:84
+#: includes/core/post-types/simple-pay/list-table.php:205
+#: views/admin-form-preview-output.php:62
+msgid "Copy Shortcode"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:91
+msgid "Payment Page URL"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:97
+#: includes/core/post-types/simple-pay/edit-form.php:98
+msgid "Edit"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:165
 #: src/Integration/Elementor/PaymentFormControl.php:43
 #: views/email-internal-summary-report.php:106
 #: includes/core/assets/js/dist/simpay-block-button.js:1
 msgid "Payment Form"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:454
+#: includes/core/post-types/simple-pay/edit-form.php:478
 msgid "Unlock Email Notifications"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:456
+#: includes/core/post-types/simple-pay/edit-form.php:480
 msgid "We're sorry, the customizable email notifications are not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:474
+#: includes/core/post-types/simple-pay/edit-form.php:498
 msgid "General"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:481
+#: includes/core/post-types/simple-pay/edit-form.php:505
 msgid "Payment <span>New!</span>"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:497
+#: includes/core/post-types/simple-pay/edit-form.php:521
 msgid "Purchase Restrictions"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:503
+#: includes/core/post-types/simple-pay/edit-form.php:527
 msgid "Stripe Checkout"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:509
+#: includes/core/post-types/simple-pay/edit-form.php:533
 #: views/admin-form-preview-output.php:79
 msgid "Payment Page"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:516
+#: includes/core/post-types/simple-pay/edit-form.php:540
 msgid "Confirmation Page"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:525
+#: includes/core/post-types/simple-pay/edit-form.php:549
 msgid "Email Notifications"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:536
+#: includes/core/post-types/simple-pay/edit-form.php:560
 msgid "Automations"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:697
+#: includes/core/post-types/simple-pay/edit-form.php:721
 msgid "Title"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:728
+#: includes/core/post-types/simple-pay/edit-form.php:752
 msgid "A payment form title is required."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:740
+#: includes/core/post-types/simple-pay/edit-form.php:764
 #: views/smart-tag-receipt.php:36
 msgid "Description"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:773
+#: includes/core/post-types/simple-pay/edit-form.php:797
 msgid "Type"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:786
+#: includes/core/post-types/simple-pay/edit-form.php:810
 msgid "Unlock On-Site Payment Forms"
 msgstr ""
 
 #. translators: %s Payment form type.
-#: includes/core/post-types/simple-pay/edit-form.php:792
+#: includes/core/post-types/simple-pay/edit-form.php:816
 msgid "We're sorry, on-site payment forms are not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:827
+#: includes/core/post-types/simple-pay/edit-form.php:851
 msgid "On-site payment form"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:838
+#: includes/core/post-types/simple-pay/edit-form.php:862
 msgid "Off-site Stripe Checkout form"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:858
+#: includes/core/post-types/simple-pay/edit-form.php:882
 msgid "Open in an overlay modal"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:911
+#: includes/core/post-types/simple-pay/edit-form.php:935
 msgid "Spam & Fraud Protection"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:929
+#: includes/core/post-types/simple-pay/edit-form.php:953
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:469
 msgid "CAPTCHA"
 msgstr ""
 
 #. translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form.php:937
+#: includes/core/post-types/simple-pay/edit-form.php:961
 msgid "%1$sConfigure CAPTCHA settings%2$s to adjust anti-spam protection."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:961
+#: includes/core/post-types/simple-pay/edit-form.php:985
 #: src/AntiSpam/EmailVerification.php:326
 msgid "Additional protection enabled!"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:966
+#: includes/core/post-types/simple-pay/edit-form.php:990
 #: src/AntiSpam/EmailVerification.php:331
 msgid "Disabled — missing additional protection!"
 msgstr ""
@@ -11254,15 +11355,6 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/list-table.php:136
 msgid "Duplicate"
-msgstr ""
-
-#: includes/core/post-types/simple-pay/list-table.php:178
-msgid "Shortcode"
-msgstr ""
-
-#: includes/core/post-types/simple-pay/list-table.php:205
-#: views/admin-form-preview-output.php:62
-msgid "Copy Shortcode"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/menu.php:39
@@ -12366,22 +12458,6 @@ msgstr ""
 msgid "All Templates"
 msgstr ""
 
-#: src/Admin/PluginRatingNotification.php:75
-msgid "Are you enjoying WP Simple Pay?"
-msgstr ""
-
-#: src/Admin/PluginRatingNotification.php:80
-msgid "It looks like you have been using WP Simple Pay for a little while now &mdash; we sure hope you're enjoying it.<br /><br />Could you please do us a <strong>BIG favor</strong> and give it a 5-star rating on WordPress.org to help us spread the word and boost our motivation?"
-msgstr ""
-
-#: src/Admin/PluginRatingNotification.php:87
-msgid "Yes! I'll help spread the word"
-msgstr ""
-
-#: src/Admin/PluginRatingNotification.php:92
-msgid "Not really"
-msgstr ""
-
 #: src/Admin/SetupWizard/SetupWizardLaunch.php:112
 #: src/AdminPage/SetupWizardPage.php:45
 #: src/AdminPage/SetupWizardPage.php:52
@@ -12464,14 +12540,6 @@ msgstr ""
 
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:511
 msgid "⚠️ Potential Conflicts"
-msgstr ""
-
-#: src/Admin/UpeNotification.php:81
-msgid "A New Payment Experience is Available"
-msgstr ""
-
-#: src/Admin/UpeNotification.php:98
-msgid "Enable Now"
 msgstr ""
 
 #: src/AdminBar/AdminBarSubscriber.php:130
@@ -12914,7 +12982,7 @@ msgid "Please activate WP Simple Pay Pro from your WordPress plugins page."
 msgstr ""
 
 #. translators: %1$s Website name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: src/Emails/Email/AbstractEmail.php:273
+#: src/Emails/Email/AbstractEmail.php:272
 msgid "This email was automatically generated and sent from your website %1$s.<br />Manage %2$semail settings%3$s."
 msgstr ""
 
@@ -13204,6 +13272,38 @@ msgstr ""
 msgid "Please enter a valid license key."
 msgstr ""
 
+#: src/NotificationInbox/Notifications/PluginRatingNotification.php:74
+msgid "Are you enjoying WP Simple Pay?"
+msgstr ""
+
+#: src/NotificationInbox/Notifications/PluginRatingNotification.php:79
+msgid "It looks like you have been using WP Simple Pay for a little while now &mdash; we sure hope you're enjoying it.<br /><br />Could you please do us a <strong>BIG favor</strong> and give it a 5-star rating on WordPress.org to help us spread the word and boost our motivation?"
+msgstr ""
+
+#: src/NotificationInbox/Notifications/PluginRatingNotification.php:86
+msgid "Yes! I'll help spread the word"
+msgstr ""
+
+#: src/NotificationInbox/Notifications/PluginRatingNotification.php:91
+msgid "Not really"
+msgstr ""
+
+#: src/NotificationInbox/Notifications/StripeConnectNotification.php:61
+msgid "🔐 Stay Secure with Stripe Connect"
+msgstr ""
+
+#: src/NotificationInbox/Notifications/StripeConnectNotification.php:70
+msgid "Connect Now"
+msgstr ""
+
+#: src/NotificationInbox/Notifications/UpeNotification.php:79
+msgid "A New Payment Experience is Available"
+msgstr ""
+
+#: src/NotificationInbox/Notifications/UpeNotification.php:96
+msgid "Enable Now"
+msgstr ""
+
 #: src/Report/ActivityOverviewReport.php:111
 #: views/email-internal-summary-report.php:107
 #: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
@@ -13280,7 +13380,7 @@ msgstr ""
 msgid "Counting results via a query is not allowed. Use the ::count() method."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Traits/InvoiceTrait.php:138
+#: src/RestApi/Internal/Payment/Traits/InvoiceTrait.php:137
 #: views/smart-tag-receipt.php:159
 msgid "Processing fee"
 msgstr ""
@@ -13641,15 +13741,15 @@ msgstr ""
 msgid "Your manually managed %1$s mode API keys are invalid."
 msgstr ""
 
-#: src/Webhook/NoneReceivedNotice.php:147
+#: src/Webhook/NoneReceivedNotice.php:145
 msgid "An expected webhook event was not received."
 msgstr ""
 
-#: src/Webhook/NoneReceivedNotice.php:152
+#: src/Webhook/NoneReceivedNotice.php:150
 msgid "An expected webhook event has not been received. Please ensure you have properly configured your webhook endpoint in Stripe to avoid interruption of functionality."
 msgstr ""
 
-#: src/Webhook/NoneReceivedNotice.php:159
+#: src/Webhook/NoneReceivedNotice.php:157
 msgid "Webhook Settings"
 msgstr ""
 
@@ -13739,10 +13839,6 @@ msgstr ""
 msgid "Allow fixed amount or percentage discounts to one-time or recurring payments with WP Simple Pay Pro. Limit coupon code redemptions by count, date, or specific payment forms."
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:42
-msgid "Add new coupon"
-msgstr ""
-
 #: views/admin-education-plugin-coupons.php:48
 msgid "Fixed amount or percentage discounts"
 msgstr ""
@@ -13774,11 +13870,6 @@ msgstr ""
 
 #: views/admin-education-plugin-customers-settings.php:34
 msgid "Remind customers about upcoming invoices and give them an opportunity to update their payment method on file or cancel their subscription. Supports both on-site management or the Stripe Customer portal."
-msgstr ""
-
-#: views/admin-education-plugin-customers-settings.php:43
-#: views/admin-education-plugin-email-settings.php:37
-msgid "Payment Receipt settings"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
@@ -13847,10 +13938,6 @@ msgstr ""
 msgid "Add tax rates to your payment forms or charge an additional amount to help cover processing fees with WP Simple Pay Pro."
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:36
-msgid "Tax settings"
-msgstr ""
-
 #: views/admin-education-plugin-taxes-settings.php:42
 msgid "Exclusive or inclusive tax rates"
 msgstr ""
@@ -13912,10 +13999,6 @@ msgstr ""
 
 #: views/admin-form-preview-output.php:46
 msgid "This payment form is currently unpublished and will not be able to accept payments until it is published."
-msgstr ""
-
-#: views/admin-form-preview-output.php:71
-msgid "Copy Block"
 msgstr ""
 
 #: views/admin-form-preview-output.php:87

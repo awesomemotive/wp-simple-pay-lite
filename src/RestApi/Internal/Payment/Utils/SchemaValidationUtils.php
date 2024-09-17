@@ -498,7 +498,7 @@ class SchemaValidationUtils {
 
 		$valid = array_filter(
 			$line_items,
-			function( $line_item ) use ( $form ) {
+			function ( $line_item ) use ( $form ) {
 				/** @var \SimplePay\Core\PaymentForm\PriceOption $price */
 				$price = simpay_payment_form_prices_get_price_by_id( $form, $line_item['price_id'] );
 
