@@ -249,6 +249,10 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.12.0 - September 12, 2024
+
+* New: Payment Confirmation - dedicated confirmation page.
+
 = Stripe Payment Forms v4.11.1 - August 15, 2024 =
 
 * New: [Pro] Allow multiple price options to be purchased at once.
