@@ -112,8 +112,21 @@ function toggleAppearnaceSettings() {
 		'_enable_payment_page'
 	);
 
+	const modes = document.getElementsByName( '_success_redirect_type' );
+	let dedicatedMode = false;
+
+	modes.forEach( ( mode ) => {
+		if ( mode.value === 'dedicated' && mode.checked ) {
+			dedicatedMode = true;
+		}
+	} );
+
 	setTimeout( () => {
-		if ( paymentPageModeCheckbox.checked && appearanceMode.checked ) {
+		if (
+			paymentPageModeCheckbox.checked &&
+			appearanceMode.checked &&
+			dedicatedMode
+		) {
 			appearanceSettings.classList.add( 'simpay-panel-hidden' );
 		} else {
 			appearanceSettings.classList.remove( 'simpay-panel-hidden' );
