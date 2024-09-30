@@ -338,7 +338,27 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			$notification_message = $form->get_email_notification_message();
 
 			if ( ! empty( $notification_message ) ) {
-				$body = $notification_message;
+				$type = 'one_time';
+
+				if ( ! empty( $payment_confirmation_data['subscriptions'] ) ) {
+					$type = 'subscription';
+				}
+
+				/**
+				 * Filters the email notification message.
+				 *
+				 * @since 4.12.0
+				 *
+				 * @param string  $notification_message The email notification message.
+				 * @param int     $form_id The form ID.
+				 * @param string  $type The type of payment.
+				 */
+				$body = apply_filters(
+					'simpay_email_payment_notification_message',
+					$notification_message,
+					$form_id,
+					$type
+				);
 			}
 		}
 

@@ -82,7 +82,7 @@
 			<?php endif; ?>
 
 			<?php if ( 'no' === $powered_by ) : ?>
-				<a href="https://wpsimplepay.com/?utm_source=poweredby&utm_medium=link&utm_campaign=paymentpage" class="simpay-payment-page-powered-by">
+				<a href="https://wpsimplepay.com/?utm_source=poweredby&utm_medium=link&utm_campaign=<?php echo '_payment' === esc_attr( $prefix ) ? 'paymentpage' : 'confirmationpage'; // @phpstan-ignore-line ?>" class="simpay-payment-page-powered-by">
 					<?php esc_html_e( 'powered by', 'stripe' ); ?> <img src="<?php echo esc_url( SIMPLE_PAY_INC_URL ); // @phpstan-ignore-line ?>core/assets/images/wp-simple-pay-logo-white.svg" />
 				</a>
 			<?php endif; ?>

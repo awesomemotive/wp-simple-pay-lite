@@ -9,7 +9,7 @@
  * @since 4.7.10
  */
 
-namespace SimplePay\Core\Admin;
+namespace SimplePay\Core\NotificationInbox\Notifications;
 
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
@@ -17,7 +17,6 @@ use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\NotificationInbox\Notification;
 use SimplePay\Core\NotificationInbox\NotificationAwareInterface;
 use SimplePay\Core\NotificationInbox\NotificationAwareTrait;
-use SimplePay\Core\NotificationInbox\NotificationRepository;
 use SimplePay\Core\Settings;
 
 /**
@@ -40,14 +39,13 @@ class UpeNotification implements SubscriberInterface, NotificationAwareInterface
 			return $subscribers;
 		}
 
-		// Alert via Notification Inbox if available.
-		if ( $this->notifications instanceof NotificationRepository ) {
-			if ( ! simpay_is_upe() ) {
-				$subscribers['admin_init'][] = array( 'add_notification' );
-			}
+		// Alert via Notification Inbox.
 
-			$subscribers['pre_update_option_simpay_settings'] = array( 'dismiss_notification' );
+		if ( ! simpay_is_upe() ) {
+			$subscribers['admin_init'][] = array( 'add_notification' );
 		}
+
+		$subscribers['pre_update_option_simpay_settings'] = array( 'dismiss_notification' );
 
 		return $subscribers;
 	}
@@ -60,7 +58,7 @@ class UpeNotification implements SubscriberInterface, NotificationAwareInterface
 	 * @return void
 	 */
 	public function add_notification() {
-		$notification = $this->notifications->get_by( 'slug', 'upe-4710' );
+		$notification = $this->notifications->get_by( 'slug', 'upe-4711' );
 
 		if ( $notification instanceof Notification && $notification->dismissed ) {
 			return;
@@ -82,7 +80,7 @@ class UpeNotification implements SubscriberInterface, NotificationAwareInterface
 					'A New Payment Experience is Available',
 					'stripe'
 				),
-				'slug'       => 'upe-4710',
+				'slug'       => 'upe-4711',
 				'content'    => 'Join the other WP Simple Pay users who have already embraced the new payment experience to offer Stripe Link and other powerful payment form features. With the new smarter payment forms, you get access to:
 
 🔗&nbsp;&nbsp;Stripe Link support for <strong>9x faster payments</strong><br />
@@ -130,10 +128,9 @@ Don\'t wait any longer to harness the power of WP Simple Pay\'s latest and great
 		}
 
 		if ( isset( $settings['is_upe'] ) && 'yes' === $settings['is_upe'] ) {
-			$this->notifications->dismiss( 'upe-4710' );
+			$this->notifications->dismiss( 'upe-4711' );
 		}
 
 		return $settings;
 	}
-
 }

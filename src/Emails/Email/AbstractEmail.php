@@ -180,33 +180,32 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 		$alert = array();
 
 		// If we can use notifications, check for an error notification.
-		if ( $this->notifications instanceof NotificationRepository ) {
-			$internal_alerts = $this->notifications->query(
-				array(
-					'source'         => 'internal',
-					'type'           => 'error',
-					'dismissed'      => false,
-					'is_dismissible' => false,
-				)
+
+		$internal_alerts = $this->notifications->query(
+			array(
+				'source'         => 'internal',
+				'type'           => 'error',
+				'dismissed'      => false,
+				'is_dismissible' => false,
+			)
+		);
+
+		if ( ! empty( $internal_alerts ) ) {
+			/** @var \SimplePay\Core\NotificationInbox\Notification */
+			$notification = $internal_alerts[0];
+
+			$links = array_filter(
+				$notification->actions,
+				function ( $action ) {
+					return 'primary' === $action['type'];
+				}
 			);
 
-			if ( ! empty( $internal_alerts ) ) {
-				/** @var \SimplePay\Core\NotificationInbox\Notification */
-				$notification = $internal_alerts[0];
-
-				$links = array_filter(
-					$notification->actions,
-					function ( $action ) {
-						return 'primary' === $action['type'];
-					}
-				);
-
-				$alert = array(
-					'title'   => $notification->title,
-					'content' => $notification->content,
-					'links'   => $links,
-				);
-			}
+			$alert = array(
+				'title'   => $notification->title,
+				'content' => $notification->content,
+				'links'   => $links,
+			);
 		}
 
 		$logo_url = SIMPLE_PAY_URL . 'includes/core/assets/images/wp-simple-pay.png'; // @phpstan-ignore-line

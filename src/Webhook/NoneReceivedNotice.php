@@ -97,13 +97,11 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 				),
 		);
 
-		if ( $this->notifications instanceof NotificationRepository ) {
-			// Alert via Notification Inbox if available.
-			$subscribers['admin_init'][] = array( 'maybe_add_notification' );
+		// Alert via Notification Inbox.
+		$subscribers['admin_init'][] = array( 'maybe_add_notification' );
 
-			// Clear the expectations when the Stripe account changes.
-			$subscribers['simpay_stripe_account_connected'] = 'reset_expectations';
-		}
+		// Clear the expectations when the Stripe account changes.
+		$subscribers['simpay_stripe_account_connected'] = 'reset_expectations';
 
 		return $subscribers;
 	}
@@ -447,5 +445,4 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 
 		return (int) $expected;
 	}
-
 }

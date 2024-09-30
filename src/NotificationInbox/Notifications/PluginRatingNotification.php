@@ -9,7 +9,7 @@
  * @since 4.7.9
  */
 
-namespace SimplePay\Core\Admin;
+namespace SimplePay\Core\NotificationInbox\Notifications;
 
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\NotificationInbox\Notification;
@@ -46,10 +46,9 @@ class PluginRatingNotification implements SubscriberInterface, NotificationAware
 			return $subscribers;
 		}
 
-		// Alert via Notification Inbox if available.
-		if ( $this->notifications instanceof NotificationRepository ) {
-			$subscribers['admin_init'][] = array( 'add_notification' );
-		}
+		// Alert via Notification Inbox.
+
+		$subscribers['admin_init'][] = array( 'add_notification' );
 
 		return $subscribers;
 	}
@@ -103,5 +102,4 @@ class PluginRatingNotification implements SubscriberInterface, NotificationAware
 			)
 		);
 	}
-
 }

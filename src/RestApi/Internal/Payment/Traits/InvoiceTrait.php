@@ -19,7 +19,6 @@ use SimplePay\Core\RestApi\Internal\Payment\Utils\FeeRecoveryUtils;
 use SimplePay\Core\RestApi\Internal\Payment\Utils\PaymentRequestUtils;
 
 trait InvoiceTrait {
-	use SubscriptionTrait;
 
 	/**
 	 * Application fee handling.

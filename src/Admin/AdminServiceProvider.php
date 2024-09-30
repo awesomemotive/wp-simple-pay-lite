@@ -16,6 +16,8 @@ use SimplePay\Core\AbstractPluginServiceProvider;
 use SimplePay\Core\AdminNotice;
 use SimplePay\Core\AdminPage;
 use SimplePay\Core\NotificationInbox\NotificationRepository;
+use SimplePay\Core\NotificationInbox\Notifications\PluginRatingNotification;
+use SimplePay\Core\NotificationInbox\Notifications\UpeNotification;
 
 /**
  * AdminServiceProvider class.
@@ -50,8 +52,6 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			'admin-branding',
 			'admin-page-subscriber',
 			'admin-notice-subscriber',
-			'admin-notification-five-star-rating',
-			'admin-notification-upe-4710',
 		);
 	}
 
@@ -77,18 +77,6 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			AdminNoticeSubscriber::class
 		)
 			->withArgument( $this->get_notices() );
-
-		// Five Star Rating notification.
-		$container->share(
-			'admin-notification-five-star-rating',
-			PluginRatingNotification::class
-		);
-
-		// UPE (4.7.10) notification.
-		$container->share(
-			'admin-notification-upe-4710',
-			UpeNotification::class
-		);
 	}
 
 	/**
@@ -228,5 +216,4 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 
 		return $notices;
 	}
-
 }

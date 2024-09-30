@@ -37,7 +37,7 @@ class FeeRecoveryUtils {
 		if ( $form->allows_multiple_line_items() ) {
 			$prices = PaymentRequestUtils::get_price_ids( $request );
 			$prices = array_map(
-				function( $price ) use ( $form ) {
+				function ( $price ) use ( $form ) {
 					return new PriceOption(
 						$price['price_data'],
 						$form,
@@ -63,8 +63,8 @@ class FeeRecoveryUtils {
 		$total_line_items = function ( $total, $item ) use ( $form ) {
 			if ( isset( $item['price_data'] ) ) {
 				$unit_amount = (int) $item['price_data']['unit_amount'];
-			}  else {
-				$price = new PriceOption( array( 'id' => $item['price'] ), $form );
+			} else {
+				$price       = new PriceOption( array( 'id' => $item['price'] ), $form );
 				$unit_amount = (int) $price->unit_amount;
 			}
 
@@ -202,15 +202,21 @@ class FeeRecoveryUtils {
 			return 0;
 		}
 
-		$percent = $payment_method_settings['fee_recovery']['percent'];
-		$fixed   = $payment_method_settings['fee_recovery']['amount'];
-
-		return (int) round(
+		$percent                  = $payment_method_settings['fee_recovery']['percent'];
+		$fixed                    = $payment_method_settings['fee_recovery']['amount'];
+		$max_recoverable_fee      = $payment_method_settings['fee_recovery']['max_amount'];
+		$fee_recovery_unit_amount = (int) round(
 			( $amount_to_recover_for + $fixed )
 				/
 			( 1 - ( $percent / 100 ) )
 				-
 			$amount_to_recover_for
 		);
+
+		if ( $max_recoverable_fee && $fee_recovery_unit_amount > $max_recoverable_fee ) {
+			return $max_recoverable_fee;
+		}
+
+		return $fee_recovery_unit_amount;
 	}
 }
