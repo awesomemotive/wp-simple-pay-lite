@@ -29,12 +29,18 @@ use SimplePay\Vendor\Symfony\Component\CssSelector\Parser\TokenStream;
  */
 class HashHandler implements HandlerInterface
 {
-    public function __construct(
-        private TokenizerPatterns $patterns,
-        private TokenizerEscaping $escaping,
-    ) {
+    private $patterns;
+    private $escaping;
+
+    public function __construct(TokenizerPatterns $patterns, TokenizerEscaping $escaping)
+    {
+        $this->patterns = $patterns;
+        $this->escaping = $escaping;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function handle(Reader $reader, TokenStream $stream): bool
     {
         $match = $reader->findPattern($this->patterns->getHashPattern());

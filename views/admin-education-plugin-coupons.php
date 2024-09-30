@@ -39,7 +39,7 @@
 
 		<section class="simpay-landing-zone__screenshot">
 			<div class="simpay-landing-zone__screenshot-img">
-				<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/coupons-thumb.png' ); // @phpstan-ignore-line ?>" alt="<?php echo esc_attr__( 'Add new coupon', 'simple-pay' ); ?>" />
+				<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/coupons-thumb.png' ); /** @phpstan-ignore-line */ ?>" alt="<?php echo esc_attr__( 'Add new coupon', 'stripe' ); ?>" />
 				<a href="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/coupons-full.png' ); // @phpstan-ignore-line ?>" class="hover" data-lity></a>
 			</div>
 

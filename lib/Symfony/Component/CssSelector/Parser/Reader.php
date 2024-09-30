@@ -23,12 +23,13 @@ namespace SimplePay\Vendor\Symfony\Component\CssSelector\Parser;
  */
 class Reader
 {
-    private int $length;
-    private int $position = 0;
+    private $source;
+    private $length;
+    private $position = 0;
 
-    public function __construct(
-        private string $source,
-    ) {
+    public function __construct(string $source)
+    {
+        $this->source = $source;
         $this->length = \strlen($source);
     }
 
@@ -52,14 +53,17 @@ class Reader
         return substr($this->source, $this->position + $offset, $length);
     }
 
-    public function getOffset(string $string): int|false
+    public function getOffset(string $string)
     {
         $position = strpos($this->source, $string, $this->position);
 
         return false === $position ? false : $position - $this->position;
     }
 
-    public function findPattern(string $pattern): array|false
+    /**
+     * @return array|false
+     */
+    public function findPattern(string $pattern)
     {
         $source = substr($this->source, $this->position);
 
@@ -70,12 +74,12 @@ class Reader
         return false;
     }
 
-    public function moveForward(int $length): void
+    public function moveForward(int $length)
     {
         $this->position += $length;
     }
 
-    public function moveToEnd(): void
+    public function moveToEnd()
     {
         $this->position = $this->length;
     }

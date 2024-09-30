@@ -23,9 +23,11 @@ namespace SimplePay\Vendor\Symfony\Component\CssSelector\Parser\Tokenizer;
  */
 class TokenizerEscaping
 {
-    public function __construct(
-        private TokenizerPatterns $patterns,
-    ) {
+    private $patterns;
+
+    public function __construct(TokenizerPatterns $patterns)
+    {
+        $this->patterns = $patterns;
     }
 
     public function escapeUnicode(string $value): string

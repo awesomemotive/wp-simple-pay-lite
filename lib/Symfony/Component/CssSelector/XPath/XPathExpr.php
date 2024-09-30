@@ -23,12 +23,16 @@ namespace SimplePay\Vendor\Symfony\Component\CssSelector\XPath;
  */
 class XPathExpr
 {
-    public function __construct(
-        private string $path = '',
-        private string $element = '*',
-        private string $condition = '',
-        bool $starPrefix = false,
-    ) {
+    private $path;
+    private $element;
+    private $condition;
+
+    public function __construct(string $path = '', string $element = '*', string $condition = '', bool $starPrefix = false)
+    {
+        $this->path = $path;
+        $this->element = $element;
+        $this->condition = $condition;
+
         if ($starPrefix) {
             $this->addStarPrefix();
         }
@@ -42,9 +46,9 @@ class XPathExpr
     /**
      * @return $this
      */
-    public function addCondition(string $condition, string $operator = 'and'): static
+    public function addCondition(string $condition): self
     {
-        $this->condition = $this->condition ? sprintf('(%s) %s (%s)', $this->condition, $operator, $condition) : $condition;
+        $this->condition = $this->condition ? sprintf('(%s) and (%s)', $this->condition, $condition) : $condition;
 
         return $this;
     }
@@ -57,7 +61,7 @@ class XPathExpr
     /**
      * @return $this
      */
-    public function addNameTest(): static
+    public function addNameTest(): self
     {
         if ('*' !== $this->element) {
             $this->addCondition('name() = '.Translator::getXpathLiteral($this->element));
@@ -70,7 +74,7 @@ class XPathExpr
     /**
      * @return $this
      */
-    public function addStarPrefix(): static
+    public function addStarPrefix(): self
     {
         $this->path .= '*/';
 
@@ -82,7 +86,7 @@ class XPathExpr
      *
      * @return $this
      */
-    public function join(string $combiner, self $expr): static
+    public function join(string $combiner, self $expr): self
     {
         $path = $this->__toString().$combiner;
 
@@ -100,7 +104,7 @@ class XPathExpr
     public function __toString(): string
     {
         $path = $this->path.$this->element;
-        $condition = '' === $this->condition ? '' : '['.$this->condition.']';
+        $condition = null === $this->condition || '' === $this->condition ? '' : '['.$this->condition.']';
 
         return $path.$condition;
     }

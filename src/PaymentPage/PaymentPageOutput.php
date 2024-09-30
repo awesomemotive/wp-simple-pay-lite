@@ -96,10 +96,24 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 
 		$this->form = simpay_get_form( $payment_form_obj->ID );
 
-		if (
-			false === $this->form ||
-			false === $this->is_dedicated_confirmation_page_enabled( $payment_form_obj->ID )
-		) {
+		// Do nothing if the form is not a payment form.
+		if ( false === $this->form ) {
+			return;
+		}
+
+		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data();
+
+		// Check the payment confirmation data. If it's empty then we're on the payment page.
+		// If it's not empty then we're on the confirmation page.
+		if ( empty( $payment_confirmation_data ) ) {
+			// We are on the payment page.
+			// If the payment page is not enabled then do nothing.
+			if ( false === $this->is_payment_page_enabled( $payment_form_obj->ID ) ) {
+				return;
+			}
+		} elseif ( false === $this->is_dedicated_confirmation_page_enabled( $payment_form_obj->ID ) ) {
+			// We are on the confirmation page.
+			// If the dedicated confirmation page is not enabled then do nothing.
 			return;
 		}
 
@@ -479,7 +493,7 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	/**
 	 * Determines if Payment Page mode is enabled for a payment form ID.
 	 *
-	 * @since 4.5.0
+	 * @since 4.12.0
 	 *
 	 * @param int $form_id Payment form ID.
 	 * @return bool
@@ -492,6 +506,25 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		return 'dedicated' === $enabled;
+	}
+
+
+	/**
+	 * Determines if Payment Page mode is enabled for a payment form ID.
+	 *
+	 * @since 4.12.0
+	 *
+	 * @param int $form_id Payment form ID.
+	 * @return bool
+	 */
+	private function is_payment_page_enabled( $form_id ) {
+		$enabled = get_post_meta(
+			$form_id,
+			'_enable_payment_page',
+			true
+		);
+
+		return 'yes' === $enabled;
 	}
 
 	/**

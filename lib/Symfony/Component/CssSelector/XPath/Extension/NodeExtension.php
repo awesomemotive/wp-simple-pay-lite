@@ -31,15 +31,17 @@ class NodeExtension extends AbstractExtension
     public const ATTRIBUTE_NAME_IN_LOWER_CASE = 2;
     public const ATTRIBUTE_VALUE_IN_LOWER_CASE = 4;
 
-    public function __construct(
-        private int $flags = 0,
-    ) {
+    private $flags;
+
+    public function __construct(int $flags = 0)
+    {
+        $this->flags = $flags;
     }
 
     /**
      * @return $this
      */
-    public function setFlag(int $flag, bool $on): static
+    public function setFlag(int $flag, bool $on): self
     {
         if ($on && !$this->hasFlag($flag)) {
             $this->flags += $flag;
@@ -57,20 +59,21 @@ class NodeExtension extends AbstractExtension
         return (bool) ($this->flags & $flag);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getNodeTranslators(): array
     {
         return [
-            'Selector' => $this->translateSelector(...),
-            'CombinedSelector' => $this->translateCombinedSelector(...),
-            'Negation' => $this->translateNegation(...),
-            'Matching' => $this->translateMatching(...),
-            'SpecificityAdjustment' => $this->translateSpecificityAdjustment(...),
-            'Function' => $this->translateFunction(...),
-            'Pseudo' => $this->translatePseudo(...),
-            'Attribute' => $this->translateAttribute(...),
-            'Class' => $this->translateClass(...),
-            'Hash' => $this->translateHash(...),
-            'Element' => $this->translateElement(...),
+            'Selector' => [$this, 'translateSelector'],
+            'CombinedSelector' => [$this, 'translateCombinedSelector'],
+            'Negation' => [$this, 'translateNegation'],
+            'Function' => [$this, 'translateFunction'],
+            'Pseudo' => [$this, 'translatePseudo'],
+            'SimplePay_Attribute' => [$this, 'translateAttribute'],
+            'Class' => [$this, 'translateClass'],
+            'Hash' => [$this, 'translateHash'],
+            'Element' => [$this, 'translateElement'],
         ];
     }
 
@@ -95,36 +98,6 @@ class NodeExtension extends AbstractExtension
         }
 
         return $xpath->addCondition('0');
-    }
-
-    public function translateMatching(Node\MatchingNode $node, Translator $translator): XPathExpr
-    {
-        $xpath = $translator->nodeToXPath($node->selector);
-
-        foreach ($node->arguments as $argument) {
-            $expr = $translator->nodeToXPath($argument);
-            $expr->addNameTest();
-            if ($condition = $expr->getCondition()) {
-                $xpath->addCondition($condition, 'or');
-            }
-        }
-
-        return $xpath;
-    }
-
-    public function translateSpecificityAdjustment(Node\SpecificityAdjustmentNode $node, Translator $translator): XPathExpr
-    {
-        $xpath = $translator->nodeToXPath($node->selector);
-
-        foreach ($node->arguments as $argument) {
-            $expr = $translator->nodeToXPath($argument);
-            $expr->addNameTest();
-            if ($condition = $expr->getCondition()) {
-                $xpath->addCondition($condition, 'or');
-            }
-        }
-
-        return $xpath;
     }
 
     public function translateFunction(Node\FunctionNode $node, Translator $translator): XPathExpr
@@ -209,6 +182,9 @@ class NodeExtension extends AbstractExtension
         return $xpath;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): string
     {
         return 'node';

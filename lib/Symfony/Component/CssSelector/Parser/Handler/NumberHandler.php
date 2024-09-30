@@ -28,11 +28,16 @@ use SimplePay\Vendor\Symfony\Component\CssSelector\Parser\TokenStream;
  */
 class NumberHandler implements HandlerInterface
 {
-    public function __construct(
-        private TokenizerPatterns $patterns,
-    ) {
+    private $patterns;
+
+    public function __construct(TokenizerPatterns $patterns)
+    {
+        $this->patterns = $patterns;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function handle(Reader $reader, TokenStream $stream): bool
     {
         $match = $reader->findPattern($this->patterns->getNumberPattern());
