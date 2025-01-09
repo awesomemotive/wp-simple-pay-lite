@@ -2,8 +2,8 @@
 Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
-Tested up to: 6.6
-Stable tag: 4.11.1
+Tested up to: 6.7
+Stable tag: 4.12.2
 Requires PHP: 7.2
 License: GPLv2 or later
 
@@ -249,6 +249,17 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.12.2 - January 9, 2025 =
+
+* New: Payment Confirmations - use a dedicated confirmation page for more focused messaging.
+* Fix: Smart Tags - Ensure `{payment-url}` is not incorrectly escaped.
+* Fix: Ensure translation loading compatibility with WordPress 6.7.
+* Fix: Ensure dependency directory uses the proper casing for autoloading.
+* Fix: Avoid PHP 8.2 deprecation notice during installation.
+* Fix: Avoid PHP 8.2 deprecation notice in form builder.
+* Fix: Avoid PHP 8.2 deprecation notice in token validation.
+* Fix: Avoid PHP 8.2 deprecation notice in caching layer.
+
 = Stripe Payment Forms v4.11.1 - August 15, 2024 =
 
 * New: [Pro] Allow multiple price options to be purchased at once.
@@ -276,9 +287,3 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 * i18n: Various changes for improved translations.
 * Dev: Remove legacy action: `simpay_subscription_created` → `simpay_webhook_subscription_created`.
 * Dev: Remove legacy action: `simpay_charge_created` → `simpay_webhook_payment_intent_succeeded`.
-
-= Stripe Payment Forms v4.8.0 - February 26, 2024 =
-
-* New: Improve payment confirmation page performance.
-* Fix: Ensure "Copy Smart Tag" functions as expected after saving a payment form.
-
