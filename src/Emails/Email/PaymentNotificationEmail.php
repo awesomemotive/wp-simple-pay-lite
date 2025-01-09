@@ -125,7 +125,7 @@ class PaymentNotificationEmail extends AbstractEmail {
 			),
 			sprintf(
 				'<li><a href="%s">%s</a></li>',
-				esc_url( '{payment-url}' ),
+				'{payment-url}',
 				sprintf(
 					/* translators: %s: Total amount */
 					esc_html__( 'View %s payment in Stripe →', 'stripe' ),
@@ -134,7 +134,7 @@ class PaymentNotificationEmail extends AbstractEmail {
 			),
 			sprintf(
 				'<li><a href="%s">%s</a></li>',
-				esc_url( '{customer-url}' ),
+				'{customer-url}',
 				sprintf(
 					/* translators: %s: Customer email */
 					esc_html__( 'View %s in Stripe →', 'stripe' ),

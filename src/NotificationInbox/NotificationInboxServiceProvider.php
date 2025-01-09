@@ -41,6 +41,9 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 
 		if ( is_admin() ) {
 			$subscribers[] = 'notification-inbox-ui';
+			$subscribers[] = 'admin-notification-upe';
+			$subscribers[] = 'admin-notification-five-star-rating';
+			$subscribers[] = 'admin-notification-stripe-connect';
 		}
 
 		return $subscribers;
@@ -55,7 +58,7 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 		// Install repository table.
 		// Create the table with BerlinDB.
 		// Call maybe_upgrade() immediately instead of waiting for admin_init.
-		$table = new Database\Table;
+		$table = new Database\Table();
 		$table->maybe_upgrade();
 
 		// Rule processor.
@@ -102,6 +105,24 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 			'notification-inbox-ui',
 			NotificationInboxUi::class
 		);
+
+		// UPE notification.
+		$container->share(
+			'admin-notification-upe',
+			Notifications\UpeNotification::class
+		);
+
+		// Five Star Rating notification.
+		$container->share(
+			'admin-notification-five-star-rating',
+			Notifications\PluginRatingNotification::class
+		);
+
+		// Stripe Connectnotification.
+		$container->share(
+			'admin-notification-stripe-connect',
+			Notifications\StripeConnectNotification::class
+		);
 	}
 
 	/**
@@ -118,5 +139,4 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 
 		return 'https://plugin.wpsimplepay.com/wp-content/notifications.json';
 	}
-
 }

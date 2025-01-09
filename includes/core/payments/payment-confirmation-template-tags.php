@@ -183,19 +183,23 @@ function replace_tag( $tag, $value, $content ) {
  *
  * @param string $tag Payment confirmation smart tag name, excluding curly braces.
  * @param string $content Payment confirmation content.
- * @return string $tags_with_keys Tag including keys, excluding curly braces.
+ * @return array $tags_with_keys Tag including keys, excluding curly braces.
  */
 function get_tags_with_keys( $tag, $content ) {
 	// Remove non-breaking spaces for tag only.
-	$content        = preg_replace_callback(
+	$content = preg_replace_callback(
 		'/\{([^}]*)\}/',
 		function ( $matches ) {
 			return str_replace( "\xC2\xA0", '', $matches[0] );
 		},
 		$content
 	);
+
 	$tags_with_keys = array();
-	$pattern        = '/{\s*' . $tag . '(?::[\w\s-]+)*(?:\s*\|\s*["\'][^"\']*["\'])?\s*}/';
+
+	// Update pattern to handle special characters.
+	$escaped_tag = preg_quote( $tag, '/' );
+	$pattern     = '/{\s*' . $escaped_tag . '(?::[^}|]*)*(?:\s*\|\s*["\'][^"\']*["\'])?\s*}/u';
 
 	preg_match_all( $pattern, $content, $matches );
 

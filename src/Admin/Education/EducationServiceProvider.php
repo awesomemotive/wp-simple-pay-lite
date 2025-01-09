@@ -34,10 +34,8 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 	public function get_subscribers() {
 		return array(
 			'admin-education-upgrade-modal',
-			'admin-education-dashboard-widget',
 			'admin-education-payment-forms-stripe-connect',
 			'admin-education-payment-forms-first-form',
-			'admin-education-dashboard-widget',
 			'admin-education-plugin-customers-settings',
 			'admin-education-plugin-taxes-settings',
 			'admin-education-plugin-coupons',

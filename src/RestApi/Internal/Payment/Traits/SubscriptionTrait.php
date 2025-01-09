@@ -307,18 +307,31 @@ trait SubscriptionTrait {
 			),
 		);
 
-		$custom_price_data = array(
-			'unit_amount'  => $custom_amount,
-			'currency'     => $price->currency,
-			'recurring'    => array(
-				'interval'       => $price->recurring['interval'],
-				'interval_count' => $price->recurring['interval_count'],
-			),
-			'product'      => $price->product_id,
-			'tax_behavior' => 'automatic' === $tax_status
-				? $tax_behavior
-				: 'unspecified',
-		);
+		// Check if the price is recurring.
+
+		if ( PaymentRequestUtils::is_recurring( $request ) ) {
+			$custom_price_data = array(
+				'unit_amount'  => $custom_amount,
+				'currency'     => $price->currency,
+				'recurring'    => array(
+					'interval'       => $price->recurring['interval'],
+					'interval_count' => $price->recurring['interval_count'],
+				),
+				'product'      => $price->product_id,
+				'tax_behavior' => 'automatic' === $tax_status
+					? $tax_behavior
+					: 'unspecified',
+			);
+		} else {
+			$custom_price_data = array(
+				'unit_amount'  => $custom_amount,
+				'currency'     => $price->currency,
+				'product'      => $price->product_id,
+				'tax_behavior' => 'automatic' === $tax_status
+					? $tax_behavior
+					: 'unspecified',
+			);
+		}
 
 		// Set the base line item price when optionally recurring.
 		if ( true === PaymentRequestUtils::is_optionally_recurring( $request ) ) {

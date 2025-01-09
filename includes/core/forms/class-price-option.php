@@ -122,6 +122,14 @@ class PriceOption {
 	public $can_recur;
 
 	/**
+	 * Optionally recurring option select by default.
+	 *
+	 * @since 4.12.0
+	 * @var string
+	 */
+	public $can_recur_selected_by_default;
+
+	/**
 	 * Optional. Determines if a one-time amount can optionally be purchased
 	 * as a subscription.
 	 *
@@ -202,6 +210,14 @@ class PriceOption {
 	 * @var \SimplePay\Vendor\Stripe\Price|\SimplePay\Vendor\Stripe\Plan
 	 */
 	public $__unstable_stripe_object;
+
+	/**
+	 * Whether the price option has been saved.
+	 *
+	 * @since 4.12.1
+	 * @var bool|null
+	 */
+	public $__unstable_unsaved = null;
 
 	/**
 	 * Constructs a PriceOption.
@@ -285,6 +301,9 @@ class PriceOption {
 
 		$this->can_recur = isset( $price_data['can_recur'] ) &&
 			true === $price_data['can_recur'];
+
+		$this->can_recur_selected_by_default = isset( $price_data['can_recur_selected_by_default'] ) &&
+			'yes' === $price_data['can_recur_selected_by_default'];
 
 		$this->id = isset( $price_data['id'] )
 			? $price_data['id']
