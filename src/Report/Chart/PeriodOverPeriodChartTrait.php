@@ -147,16 +147,14 @@ trait PeriodOverPeriodChartTrait {
 	 *
 	 * @since 4.6.7
 	 *
-	 * @param array<int, \DateTimeInterface>        $dataset The dataset to format. Initial state is
-	 *                                              an list of \DateTime objects.
+	 * @param array<int, \DateTimeInterface>        $dataset The dataset to format.
 	 * @param array<array<int, \DateTimeInterface>> $datasets The full list of datasets.
 	 * @param string                                $interval The date interval used for the dataset.
-	 * @param array<string, \stdClass>              $data The results from the database query, keyed
-	 *                                              by date (formatted based on the interval).
+	 * @param array<string, \stdClass>              $data The results from the database query.
 	 * @param callable                              $value_formatter A function that formats a datapoint value.
 	 * @return array<int, array<string, mixed>>
 	 */
-	function format_chart_period_over_period_dataset(
+	protected function format_chart_period_over_period_dataset(
 		$dataset,
 		$datasets,
 		$interval,
@@ -292,7 +290,9 @@ trait PeriodOverPeriodChartTrait {
 					6 => 'saturday',
 				);
 
-				$first_day_of_week_no = absint( get_option( 'start_of_week' ) );
+				/** @var string|bool $start_of_week */
+				$start_of_week        = get_option( 'start_of_week', '0' );
+				$first_day_of_week_no = absint( (string) $start_of_week );
 				$last_day_of_week_no  = 0 === $first_day_of_week_no
 					? 6
 					: $first_day_of_week_no - 1;
@@ -487,4 +487,3 @@ trait PeriodOverPeriodChartTrait {
 		return array( 220, 220, 220 );
 	}
 }
-

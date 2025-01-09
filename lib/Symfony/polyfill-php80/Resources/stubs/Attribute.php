@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-#[SimplePay_Attribute(Attribute::TARGET_CLASS)]
+#[SimplePay_Attribute(SimplePay_Attribute::TARGET_CLASS)]
 final class SimplePay_Attribute
 {
     public const TARGET_CLASS = 1;

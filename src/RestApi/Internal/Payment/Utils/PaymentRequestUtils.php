@@ -843,8 +843,16 @@ class PaymentRequestUtils {
 	 */
 	public static function get_payment_method_options( $request ) {
 		$form                 = self::get_form( $request );
-		$is_recurring         = self::is_recurring( $request );
 		$payment_method_types = self::get_payment_method_types( $request );
+
+		// Determine if the request being made should be considered "recurring"
+		// in the context of how Stripe handles payment methods.
+		$is_recurring = (
+			// Recurring prices use the Subscription API.
+			self::has_recurring_price( $request ) ||
+			// Multiple line items use the Subscription or Invoice API.
+			$form->allows_multiple_line_items()
+		);
 
 		$payment_method_options = array(
 			'card'            => array(
@@ -860,15 +868,6 @@ class PaymentRequestUtils {
 				'setup_future_usage' => 'off_session',
 			),
 		);
-
-		// Adjust payment method options if multiple line items enabled.
-		if ( $form->allows_multiple_line_items() ) {
-			// Subscription does not have `setup_future_usage` field.
-			// For more information, refer to the Stripe API documentation:
-			// https://docs.stripe.com/api/subscriptions/create#create_subscription-payment_settings-payment_method_options-card.
-			$payment_method_options['card'] = array();
-			$payment_method_options['link'] = array();
-		}
 
 		// If ach-debit is enabled, check if the verification_method.instant
 		// flag is set. If it is not, force instant verification.

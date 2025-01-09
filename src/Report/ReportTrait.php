@@ -96,7 +96,9 @@ trait ReportTrait {
 			case 'D':
 				return '%%Y-%%m-%%d';
 			case 'W':
-				$first_day_of_week = absint( get_option( 'start_of_week' ) );
+				/** @var mixed $start_of_week */
+				$start_of_week     = get_option( 'start_of_week', '0' );
+				$first_day_of_week = absint( is_scalar( $start_of_week ) ? (string) $start_of_week : '0' );
 
 				// Week begins on Monday, ISO 8601.
 				if ( 1 === $first_day_of_week ) {
@@ -154,7 +156,9 @@ trait ReportTrait {
 			case 'D':
 				return "DATE_FORMAT($column, '$date_format')";
 			case 'W':
-				$first_day_of_week = absint( get_option( 'start_of_week' ) );
+				/** @var mixed $start_of_week */
+				$start_of_week     = get_option( 'start_of_week', '0' );
+				$first_day_of_week = absint( is_scalar( $start_of_week ) ? (string) $start_of_week : '0' );
 
 				// Week begins on Monday, ISO 8601.
 				if ( 1 === $first_day_of_week ) {
@@ -193,5 +197,4 @@ trait ReportTrait {
 
 		return $tz_offset;
 	}
-
 }

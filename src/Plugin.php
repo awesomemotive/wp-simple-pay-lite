@@ -58,7 +58,7 @@ final class Plugin {
 	 */
 	public function load() {
 		// Load Action Scheduler before plugins loaded.
-		// https://actionscheduler.org/usage/#loading-action-scheduler
+		// https://actionscheduler.org/usage/#loading-action-scheduler.
 		if (
 			! defined( 'SIMPAY_SCHEDULER_WP_CRON' ) ||
 			false === SIMPAY_SCHEDULER_WP_CRON
@@ -138,8 +138,7 @@ final class Plugin {
 	 *
 	 * @since 4.4.3
 	 *
-	 * @param array<\SimplePay\Vendor\League\Container\ServiceProvider\ServiceProviderInterface> $service_providers
-	 *                                                                                           Service providers.
+	 * @param array<\SimplePay\Vendor\League\Container\ServiceProvider\ServiceProviderInterface> $service_providers Service providers.
 	 * @return void
 	 */
 	private function add_service_providers( $service_providers ) {
@@ -200,6 +199,7 @@ final class Plugin {
 		global $wp_version;
 
 		$service_providers = array(
+			new License\LicenseServiceProvider(),
 			new AdminBar\AdminBarServiceProvider(),
 			new AntiSpam\AntiSpamServiceProvider(),
 			new Block\BlockServiceProvider(),
@@ -209,7 +209,6 @@ final class Plugin {
 			new FormPreview\FormPreviewServiceProvider(),
 			new Help\HelpServiceProvider(),
 			new Integration\IntegrationServiceProvider(),
-			new License\LicenseServiceProvider(),
 			new NotificationInbox\NotificationInboxServiceProvider(),
 			new PaymentPage\PaymentPageServiceProvider(),
 			new Report\ReportServiceProvider(),

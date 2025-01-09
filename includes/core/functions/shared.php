@@ -112,6 +112,11 @@ function simpay_get_setting( $setting, $default = null, $raw = true ) {
 function simpay_update_setting( $setting, $value ) {
 	$existing_settings = get_option( 'simpay_settings', array() );
 
+	// Ensure we have an array to work with.
+	if ( ! is_array( $existing_settings ) ) {
+		$existing_settings = array();
+	}
+
 	$settings_to_update = array(
 		$setting => $value,
 	);

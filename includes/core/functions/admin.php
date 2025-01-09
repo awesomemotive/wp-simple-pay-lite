@@ -308,6 +308,82 @@ function simpay_print_shortcode_tip( $post_id, $copy_button_text = '' ) {
 }
 
 /**
+ * Output the copy permalink markup on the forms page.
+ *
+ * @since 4.12.0
+ *
+ * @param int $post_id Payment Form ID.
+ * @return void
+ */
+function simpay_print_payment_form_permalink( $post_id ) {
+	$shortcut = __(
+		'Click to select. Then press Ctrl&#43;C (&#8984;&#43;C on Mac) to copy.',
+		'stripe'
+	);
+
+	$post_name  = get_post_field( 'post_name', $post_id );
+	$form_title = simpay_get_payment_form_setting(
+		$post_id,
+		'title',
+		get_bloginfo( 'name' ),
+		__unstable_simpay_get_payment_form_template_from_url()
+	);
+
+	// If the slug hasn't been set previously (using ID), create one from the title.
+	$slug = is_numeric( $post_name ) || empty( $post_name )
+		? sanitize_title( $form_title )
+		: $post_name;
+	$slug = '/' . wp_unique_post_slug(
+		$slug,
+		$post_id,
+		'publish',
+		'simple-pay',
+		0
+	);
+
+	printf(
+		'<textarea type="text" readonly="readonly" id="simpay-payment-url-preview-%1$s" class="simpay-shortcode simpay-form-shortcode simpay-shortcode-tip" title="%2$s">%3$s</textarea>',
+		esc_attr( $post_id ),
+		esc_attr( $shortcut ),
+		esc_attr( $slug )
+	);
+
+	printf(
+		'<button type="button" class="button button-secondary simpay-copy-button simpay-payment-page-url" data-copied="%1$s" data-clipboard-text="%2$s" style="margin-left: 5px;">%3$s</button>',
+		esc_attr__( 'Copied!', 'stripe' ),
+		esc_url( get_permalink( $post_id ) ),
+		esc_html__( 'Copy URL', 'stripe' )
+	);
+}
+
+/**
+ * Output the copy block makrup.
+ *
+ * @since 4.12.0
+ * @param int $post_id Payment Form ID.
+ * @return void
+ */
+function simpay_print_copy_block( $post_id ) {
+
+	$block_code       = '<!-- wp:simpay/payment-form {"formId":' . esc_attr( (string) $post_id ) . '} /-->';
+	$short_block_code = ( strlen( $block_code ) > 20 ) ? substr( $block_code, 0, 20 ) . '...' : $block_code;
+	$shortcut         = $block_code;
+	printf(
+		'<textarea type="text" readonly="readonly" id="simpay-payment-copy-block-%1$s" class="simpay-shortcode simpay-form-shortcode simpay-shortcode-tip" title="%2$s">%3$s</textarea>',
+		esc_attr( $post_id ),
+		esc_attr( $shortcut ),
+		esc_attr( $short_block_code )
+	);
+
+	printf(
+		'<button type="button" class="button button-secondary simpay-copy-button simpay-payment-copy-block" data-copied="%1$s" data-clipboard-text="%2$s" style="margin-left: 5px;">%3$s</button>',
+		esc_attr__( 'Copied!', 'stripe' ),
+		esc_attr( $block_code ),
+		esc_html__( 'Copy Block', 'stripe' )
+	);
+}
+
+/**
  * Returns the description for Form Field Label.
  *
  * @since 3.8.0

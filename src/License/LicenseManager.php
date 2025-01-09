@@ -112,7 +112,7 @@ class LicenseManager {
 		/** @var \stdClass $license_data */
 
 		// $license_data->license will be either "deactivated" or "failed".
-		if ( $license_data->license == 'deactivated' ) {
+		if ( 'deactivated' === $license_data->license || 'failed' === $license_data->license ) {
 
 			// Remove saved license data, key & next check options.
 			delete_option( 'simpay_license_data' );
@@ -122,5 +122,4 @@ class LicenseManager {
 
 		return new License( '' );
 	}
-
 }

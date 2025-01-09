@@ -127,14 +127,20 @@ class Stripe_API {
 			? $id_or_args['id']
 			: $id_or_args;
 
-		$cache_id = is_array( $cache_id )
-			? md5( serialize( $cache_id ) )
-			: md5( $cache_id );
-
-		$cache_key = sprintf( 'simpay_stripe_%s', $cache_id );
+		// Ensure we have a valid string for md5() and avoid empty cache IDs.
+		if ( empty( $cache_id ) ) {
+			// Skip caching for empty IDs to avoid shared cache keys.
+			$cache_key = false;
+		} elseif ( is_array( $cache_id ) ) {
+			$cache_id  = serialize( $cache_id );
+			$cache_key = sprintf( 'simpay_stripe_%s', md5( $cache_id ) );
+		} else {
+			$cache_key = sprintf( 'simpay_stripe_%s', md5( $cache_id ) );
+		}
 
 		// Cache if retrieving, and set.
 		if (
+			$cache_key && // Only proceed with caching if we have a valid cache key.
 			in_array( $function, array( 'retrieve', 'all' ), true ) &&
 			isset( $opts['cached'] ) &&
 			true === $opts['cached']

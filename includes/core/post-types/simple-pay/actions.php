@@ -78,7 +78,7 @@ function save( $post_id, $post, $update ) {
 	// Success redirect type.
 	$success_redirect_type = isset( $_POST['_success_redirect_type'] )
 		? esc_attr( $_POST['_success_redirect_type'] )
-		: 'default';
+		: 'dedicated';
 
 	update_post_meta( $post_id, '_success_redirect_type', $success_redirect_type );
 
@@ -764,6 +764,10 @@ function save_prices( $post_id, $post, $form ) {
 			$price_args['recurring_amount_toggle_label'] = $price['recurring_amount_toggle_label'];
 		}
 
+		if ( isset( $price['can_recur_selected_by_default'] ) && ! empty( $price['can_recur_selected_by_default'] ) ) {
+			$price_args['can_recur_selected_by_default'] = $price['can_recur_selected_by_default'];
+		}
+
 		$_prices[ $instance_id ] = $price_args;
 	}
 
@@ -883,3 +887,91 @@ function duplicate() {
 	wp_safe_redirect( $redirect );
 }
 add_action( 'admin_init', __NAMESPACE__ . '\\duplicate' );
+
+/**
+ * Saves the Payment Form's Confirmation Page settings.
+ *
+ * @since 4.5.0
+ *
+ * @param int                            $post_id Payment Form ID.
+ * @param \WP_Post                       $post Payment Form \WP_Post object.
+ * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+ */
+function save_confirmation_page( $post_id, $post, $form ) {
+	// Import customization config from payment page.
+	$enable_confirmation_page = isset( $_POST['_confirmation_page_use_payment_page_config'] )
+		? 'yes'
+		: 'no';
+
+	update_post_meta( $post_id, '_confirmation_page_use_payment_page_config', $enable_confirmation_page );
+
+	// Show Title/Description.
+	$confirmation_page_title_description = isset( $_POST['_confirmation_page_title_description'] )
+		? 'yes'
+		: 'no';
+
+	update_post_meta(
+		$post_id,
+		'_confirmation_page_title_description',
+		$confirmation_page_title_description
+	);
+
+	// Color scheme.
+	$background_color = sanitize_hex_color(
+		$_POST['_confirmation_page_background_color']
+	);
+
+	update_post_meta(
+		$post_id,
+		'_confirmation_page_background_color',
+		$background_color
+	);
+
+	// Footer text.
+	$footer_text = sanitize_text_field(
+		$_POST['_confirmation_page_footer_text']
+	);
+
+	update_post_meta(
+		$post_id,
+		'_confirmation_page_footer_text',
+		$footer_text
+	);
+
+	// Powered by.
+	$confirmation_page_powered_by = isset( $_POST['_confirmation_page_powered_by'] )
+		? 'yes'
+		: 'no';
+
+	update_post_meta(
+		$post_id,
+		'_confirmation_page_powered_by',
+		$confirmation_page_powered_by
+	);
+
+	// Image URL.
+	$confirmation_page_image = esc_url( $_POST['_confirmation_page_image_url'] );
+
+	update_post_meta(
+		$post_id,
+		'_confirmation_page_image_url',
+		$confirmation_page_image
+	);
+
+	// Self confirmation.
+	$confirmation_page_self_confirmation = isset( $_POST['_confirmation_page_self_confirmation'] )
+		? 'yes'
+		: 'no';
+
+	update_post_meta(
+		$post_id,
+		'_confirmation_page_self_confirmation',
+		$confirmation_page_self_confirmation
+	);
+}
+add_action(
+	'simpay_save_form_settings',
+	__NAMESPACE__ . '\\save_confirmation_page',
+	50,
+	3
+);

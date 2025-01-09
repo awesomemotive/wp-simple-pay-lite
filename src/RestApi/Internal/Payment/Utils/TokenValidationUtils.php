@@ -14,7 +14,7 @@ namespace SimplePay\Core\RestApi\Internal\Payment\Utils;
 use SimplePay\Core\Utils;
 
 /**
- * TokenValidationTrait trait.
+ * TokenValidationUtils Class.
  *
  * Helpers for managing payment form tokens. At this time tokens are limited to
  * external CAPTCHA services, but in the future we could add further built in options.
@@ -23,18 +23,24 @@ use SimplePay\Core\Utils;
  *
  * @since 4.7.0
  */
-trait TokenValidationUtils {
+class TokenValidationUtils {
 
 	/**
 	 * Validates a payment form's CAPTCHA token.
 	 *
 	 * @since 4.7.0
 	 *
-	 * @param \WP_REST_Request $request The payment request.
+	 * @param \WP_REST_Request<array<string, mixed>> $request The payment request.
 	 * @return bool True if the parameter is valid, false otherwise.
 	 */
 	public static function validate_token( $request ) {
-		$token              = $request->get_param( 'token' );
+		$token = $request->get_param( 'token' );
+
+		// Early return if token is not a string.
+		if ( ! is_string( $token ) ) {
+			return false;
+		}
+
 		$existing_recaptcha = simpay_get_setting( 'recaptcha_site_key', '' );
 		$default            = ! empty( $existing_recaptcha )
 			? 'recaptcha-v3'
@@ -78,7 +84,18 @@ trait TokenValidationUtils {
 			return false;
 		}
 
-		$response = json_decode( wp_remote_retrieve_body( $request ), true );
+		$body = wp_remote_retrieve_body( $request );
+		if ( empty( $body ) ) {
+			return false;
+		}
+
+		/** @var array{score?: float, action?: string}|null */
+		$response = json_decode( $body, true );
+
+		// Invalid JSON response.
+		if ( null === $response ) {
+			return false;
+		}
 
 		// No score available.
 		if ( ! isset( $response['score'] ) ) {
@@ -106,13 +123,7 @@ trait TokenValidationUtils {
 				$minimum_score = '0.50';
 		}
 
-		/**
-		 * Filter the minimum score allowed for a reCAPTCHA response to allow form submission.
-		 *
-		 * @since 3.9.6
-		 *
-		 * @param string $minimum_score Minumum score.
-		 */
+		/** @var string */
 		$minimum_score = apply_filters( 'simpay_recpatcha_minimum_score', $minimum_score );
 
 		return floatval( $response['score'] ) >= floatval( $minimum_score );
@@ -144,13 +155,14 @@ trait TokenValidationUtils {
 			return false;
 		}
 
-		$response = wp_remote_retrieve_body( $request );
+		$body = wp_remote_retrieve_body( $request );
 
-		if ( empty( $response ) ) {
+		if ( empty( $body ) ) {
 			return false;
 		}
 
-		$response = json_decode( $response );
+		/** @var object{success: bool}|null */
+		$response = json_decode( $body );
 
 		if ( null === $response ) {
 			return false;
@@ -164,8 +176,8 @@ trait TokenValidationUtils {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @param string           $token The CAPTCHA token.
-	 * @param \WP_REST_Request $payment_request The payment request.
+	 * @param string                                 $token The CAPTCHA token.
+	 * @param \WP_REST_Request<array<string, mixed>> $payment_request The payment request.
 	 * @return bool
 	 */
 	private static function validate_cloudflare_turnstile_token( $token, $payment_request ) {
@@ -188,13 +200,14 @@ trait TokenValidationUtils {
 			return false;
 		}
 
-		$response = wp_remote_retrieve_body( $request );
+		$body = wp_remote_retrieve_body( $request );
 
-		if ( empty( $response ) ) {
+		if ( empty( $body ) ) {
 			return false;
 		}
 
-		$response = json_decode( $response );
+		/** @var object{action: string, success: bool}|null */
+		$response = json_decode( $body );
 
 		if ( null === $response ) {
 			return false;
