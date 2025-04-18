@@ -1,5 +1,5 @@
 === Stripe Payment Forms by WP Simple Pay - Accept Credit Card Payments + Subscriptions with Stripe ===
-Contributors: wpsimplepay, pderksen, spencerfinnell, adamjlea, mordauk, cklosows, sdavis2702, dgoldak, nickyoung87, nekojira, smub, am, griffinjt
+Contributors: wpsimplepay, am, spencerfinnell, adamjlea, cklosows, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 6.7
