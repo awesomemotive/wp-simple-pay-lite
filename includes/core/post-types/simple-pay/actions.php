@@ -378,6 +378,55 @@ function save_product( $post_id, $post, $form ) {
 }
 
 /**
+ * Determines if skipping or creating a price is needed.
+ *
+ * @since 4.14.0
+ *
+ * @param array $price Price data.
+ * @param array $recurring_args Recurring args.
+ * @return bool
+ */
+function should_skip_price_update( $price, $recurring_args ) {
+	$unit_amount_current = isset( $price['unit_amount_current'] )
+			? sanitize_text_field( $price['unit_amount_current'] )
+			: false;
+
+	$currency_current = isset( $price['currency_current'] )
+		? sanitize_text_field( $price['currency_current'] )
+		: false;
+
+	$current_amount_type = isset( $price['amount_type_current'] )
+		? sanitize_text_field( $price['amount_type_current'] )
+		: false;
+
+	$amount_type = isset( $price['amount_type'] )
+		? sanitize_text_field( $price['amount_type'] )
+		: false;
+
+	$currency      = sanitize_text_field( $price['currency'] );
+	$unit_amount   = sanitize_text_field( $price['unit_amount'] );
+	$unsaved_price = isset( $price['unsaved'] ) && 'yes' === $price['unsaved'] ? true : false;
+
+	$is_recurring_interval_changed = false;
+	$recurring_interval_current    = isset( $price['recurring_interval_current'] )
+		? sanitize_text_field( $price['recurring_interval_current'] )
+		: false;
+
+	if ( ! empty( $recurring_args ) ) {
+		$is_recurring_interval_changed = isset( $recurring_args['interval'] ) && $recurring_args['interval'] !== $recurring_interval_current;
+	}
+
+	return false !== $currency_current &&
+		$currency_current === $currency &&
+		false !== $unit_amount_current &&
+		$unit_amount_current === $unit_amount &&
+		false !== $amount_type &&
+		$amount_type === $current_amount_type &&
+		! $unsaved_price &&
+		! $is_recurring_interval_changed;
+}
+
+/**
  * Saves the Payment Form's Prices.
  *
  * @since 4.1.0
@@ -415,7 +464,8 @@ function save_prices( $post_id, $post, $form ) {
 
 	foreach ( $prices as $instance_id => $price ) {
 		$price_args = array(
-			'default' => isset( $price['default'] ) || 1 === count( $prices ),
+			'default'  => isset( $price['default'] ) || 1 === count( $prices ),
+			'required' => isset( $price['required'] ) && 'on' === $price['required'],
 		);
 
 		$recurring_args = array();
@@ -426,38 +476,16 @@ function save_prices( $post_id, $post, $form ) {
 		$currency    = sanitize_text_field( $price['currency'] );
 		$unit_amount = sanitize_text_field( $price['unit_amount'] );
 
-		// Short circuit for Lite. If the current unit amount is
-		// the same as the new amount, do nothing.
-		$unit_amount_current = isset( $price['unit_amount_current'] )
-			? sanitize_text_field( $price['unit_amount_current'] )
+		$amount_type = isset( $price['amount_type'] )
+			? sanitize_text_field( $price['amount_type'] )
 			: false;
 
-		$currency_current = isset( $price['currency_current'] )
-			? sanitize_text_field( $price['currency_current'] )
-			: false;
-
-		if (
-			false !== $currency_current &&
-			$currency_current === $currency &&
-			false !== $unit_amount_current &&
-			$unit_amount_current === $unit_amount
-		) {
-			$price_id = sanitize_text_field( $price['id_current'] );
-
-			$_prices[ $instance_id ] = array_merge(
-				$price_args,
-				array(
-					'id' => $price_id,
-				)
-			);
-
-			continue;
-		}
+		$license = simpay_get_license();
 
 		$is_zero_decimal     = simpay_is_zero_decimal( $currency );
 		$currency_min_amount = simpay_get_currency_minimum( $currency );
-
-		$unit_amount = $is_zero_decimal
+		$currency_max_amount = simpay_get_currency_maximum( $currency );
+		$unit_amount         = $is_zero_decimal
 			? simpay_unformat_currency( $unit_amount )
 			: simpay_convert_amount_to_cents( $unit_amount );
 
@@ -541,6 +569,22 @@ function save_prices( $post_id, $post, $form ) {
 			$recurring_args = array();
 		}
 
+		// Short circuit for Lite. If the current price data is
+		// the same as the new price data, do nothing.
+
+		if ( should_skip_price_update( $price, $recurring_args ) ) {
+			$price_id = sanitize_text_field( $price['id_current'] );
+
+			$_prices[ $instance_id ] = array_merge(
+				$price_args,
+				array(
+					'id' => $price_id,
+				)
+			);
+
+			continue;
+		}
+
 		// Custom price data.
 		if ( isset( $price['custom'] ) ) {
 			$price_args['id']          = $price['id'];
@@ -559,13 +603,28 @@ function save_prices( $post_id, $post, $form ) {
 				$unit_amount_min = $currency_min_amount;
 			}
 
+			$unit_amount_max = isset( $price['unit_amount_max'] )
+				? sanitize_text_field(
+					$is_zero_decimal
+						? simpay_unformat_currency( $price['unit_amount_max'] )
+						: simpay_convert_amount_to_cents( $price['unit_amount_max'] )
+				)
+				: '';
+
+			if ( $unit_amount_max < $unit_amount_min ) {
+				$unit_amount_max = '';
+			}
+
 			$price_args['unit_amount_min'] = $unit_amount_min;
+			if ( ! empty( $unit_amount_max ) ) {
+				$price_args['unit_amount_max'] = $unit_amount_max;
+			}
 
 			// Defined Price.
 		} else {
 
 			// Existing Price.
-			if ( simpay_payment_form_prices_is_defined_price( $price['id'] ) ) {
+			if ( simpay_payment_form_prices_is_defined_price( $price['id'] ) && ! $license->is_lite() ) {
 				$price_args['id'] = $price['id'];
 
 				// Update tax_behavior if not previously set, and using automatic taxes.

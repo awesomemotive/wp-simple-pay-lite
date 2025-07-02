@@ -165,18 +165,6 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			: __( 'Live Mode', 'stripe' );
 	}
 
-	/**
-	 * Returns "Yes" or "No" depending on if UPE is being used
-	 *
-	 * @since 4.7.0
-	 *
-	 * @return string
-	 */
-	private function get_upe_yes_or_upe_no() {
-		return simpay_is_upe()
-			? __( 'Yes', 'stripe' )
-			: __( 'No', 'stripe' );
-	}
 
 	/**
 	 * Returns "Enabled" or "Disabled" depending on Opinonated styles setting
@@ -385,7 +373,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		$plugins = get_plugins();
 		$plugins = array_filter(
 			$plugins,
-			function( $plugin_path ) {
+			function ( $plugin_path ) {
 				return is_plugin_active( $plugin_path );
 			},
 			ARRAY_FILTER_USE_KEY
@@ -407,7 +395,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 
 		$plugins = array_filter(
 			$active_plugins,
-			function( $plugin_path ) use ( $potential_conflicts ) {
+			function ( $plugin_path ) use ( $potential_conflicts ) {
 				return in_array(
 					$plugin_path,
 					$potential_conflicts,
@@ -422,7 +410,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		}
 
 		$plugins = array_map(
-			function( $plugin_data ) {
+			function ( $plugin_data ) {
 				return $plugin_data['Name'];
 			},
 			$plugins
@@ -497,10 +485,6 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 					'label' => __( 'Database Tables', 'stripe' ),
 					'value' => $this->get_custom_database_tables(),
 				),
-				'upe'                      => array(
-					'label' => __( 'Using UPE', 'stripe' ),
-					'value' => $this->get_upe_yes_or_upe_no(),
-				),
 			),
 		);
 
@@ -533,7 +517,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 
 		// Remove " | " after the auto update string has been filtered out. Pointless...
 		$active_plugins_cleaned = array_map(
-			function( $plugin_data ) {
+			function ( $plugin_data ) {
 				return array_merge(
 					$plugin_data,
 					array(
@@ -592,5 +576,4 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 
 		return $ret;
 	}
-
 }

@@ -71,6 +71,19 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function parse_pretty_request( $wp ) {
+		// Check if this is a payment confirmation page with a failed payment.
+		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data();
+		if ( ! empty( $payment_confirmation_data ) ) {
+			$payment_intent = isset( $payment_confirmation_data['paymentintents'] )
+				? current( $payment_confirmation_data['paymentintents'] )
+				: false;
+
+			// If we have a payment intent and it's not successful, let the payment method handler handle the redirect.
+			if ( $payment_intent && ( 'succeeded' !== $payment_intent->status && 'processing' !== $payment_intent->status ) ) {
+				return;
+			}
+		}
+
 		if ( ! empty( $wp->query_vars['name'] ) ) {
 			$request = $wp->query_vars['name'];
 		}
@@ -100,8 +113,6 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 		if ( false === $this->form ) {
 			return;
 		}
-
-		$payment_confirmation_data = Payment_Confirmation\get_confirmation_data();
 
 		// Check the payment confirmation data. If it's empty then we're on the payment page.
 		// If it's not empty then we're on the confirmation page.

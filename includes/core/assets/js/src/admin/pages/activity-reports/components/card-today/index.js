@@ -35,7 +35,11 @@ function CardToday() {
 	const { stats, top_forms: topForms, tip } = report.data;
 
 	return (
-		<Card elevation={ 2 } className={ baseClassName }>
+		<Card
+			elevation={ 2 }
+			style={ { height: '100%' } }
+			className={ baseClassName }
+		>
 			<CardHeader>
 				<h2 className="simpay-activity-reports-card-title">
 					{ __( 'Today', 'simple-pay' ) }

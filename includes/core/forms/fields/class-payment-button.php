@@ -86,22 +86,12 @@ class Payment_Button extends Custom_Field {
 
 		$html .= '<div class="simpay-form-control">';
 
-		if ( simpay_is_upe() ) {
-			$html .= sprintf(
-				'<button id="%1$s" class="%2$s"><span>%3$s</span></button>',
-				esc_attr( $id ),
-				self::get_payment_button_classes( $style ),
-				$text
-			);
-		} else {
-			$html .= sprintf(
-				'<button id="%1$s" class="%2$s" %3$s><span>%4$s</span></button>',
-				esc_attr( $id ),
-				self::get_payment_button_classes( $style ),
-				'overlay' === self::$form->get_display_type() ? '' : 'disabled',
-				$text
-			);
-		}
+		$html .= sprintf(
+			'<button id="%1$s" class="%2$s"><span>%3$s</span></button>',
+			esc_attr( $id ),
+			self::get_payment_button_classes( $style ),
+			$text
+		);
 
 		$html .= '</div>';
 
@@ -121,10 +111,6 @@ class Payment_Button extends Custom_Field {
 			'simpay-btn',
 			'simpay-payment-btn',
 		);
-
-		if ( ! simpay_is_upe() ) {
-			$classes[] = 'simpay-disabled';
-		}
 
 		// Also add default CSS class from Stripe unless option set to "none".
 		if ( 'none' != $button_style ) {

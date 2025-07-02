@@ -172,7 +172,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			'simpay-block-payment-form',
 			'simpayBlockPaymentForm',
 			array(
-				'isUpe'    => simpay_is_upe(),
+				'isUpe'    => true,
 				'isLite'   => $this->license->is_lite() ? 1 : 0,
 				'previews' => array(
 					'pro'  => SIMPLE_PAY_INC_URL . 'core/assets/images/blocks/payment-form-preview-pro.png', // @phpstan-ignore-line
@@ -209,38 +209,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 
 		/** @var \SimplePay\Core\Forms\Default_Form $form */
 
-		if ( simpay_is_upe() ) {
-			$vars = $form->get_upe_script_variables();
-		} else {
-			$vars = array(
-				'id'     => $form->id,
-				'type'   => 'stripe_checkout' === $form->get_display_type()
-					? 'stripe-checkout'
-					: 'stripe-elements',
-				'form'   => $form->get_form_script_variables(),
-				'stripe' => array_merge(
-					array(
-						'amount'  => $form->total_amount,
-						'country' => $form->country,
-					),
-					$form->get_stripe_script_variables()
-				),
-			);
-
-			if ( false === $is_lite ) {
-				$temp              = array();
-				$temp[ $form->id ] = $vars;
-
-				/** @var \SimplePay\Pro\Forms\Pro_Form $form */
-
-				$pro = $form->pro_get_form_script_variables( $temp, $form->id );
-
-				$vars = wp_parse_args(
-					$vars['form'],
-					$pro[ $form->id ]
-				);
-			}
-		}
+		$vars = $form->get_upe_script_variables();
 
 		return $vars;
 	}

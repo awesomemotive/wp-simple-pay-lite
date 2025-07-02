@@ -19,6 +19,7 @@ use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\Scheduler\SchedulerInterface;
 use SimplePay\Core\Settings;
 use SimplePay\Core\Transaction\TransactionRepository;
+use SimplePay\Core\Utils;
 
 /**
  * ApplicationFee class.
@@ -80,17 +81,6 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 				'remove_application_fees',
 		);
 
-		// Not using UPE, use the old method of adding application fees.
-		// Otherwise the application fees are added directly during the pament creation
-		// in the UPE flow.
-		if ( ! simpay_is_upe() ) {
-			$subscribers['simpay_get_paymentintent_args_from_payment_form_request'] =
-				'maybe_add_one_time_application_fee';
-
-			$subscribers['simpay_get_subscription_args_from_payment_form_request'] =
-				'maybe_add_subscription_application_fee';
-		}
-
 		return $subscribers;
 	}
 
@@ -103,11 +93,22 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	 * @return string
 	 */
 	public function maybe_show_application_fee( $message ) {
+		$message .= '<br /><br />';
+
 		if ( false === $this->has_application_fee() ) {
+			$message .= sprintf(
+				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+				__(
+					'Your %1$s license is active. No added transaction fees from WP Simple Pay — some Stripe tools may have their own costs. %2$sLearn more%3$s',
+					'stripe'
+				),
+				'<strong>' . ucfirst( $this->license->get_level() ) . '</strong>',
+				'<a href="' . esc_url( simpay_docs_link( 'Learn More', 'stripe-and-wp-simple-pay-fees', 'stripe-account-settings', true ) ) . '" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+				Utils\get_external_link_markup() . '</a>'
+			);
+
 			return $message;
 		}
-
-		$message .= '<br /><br />';
 
 		if ( $this->license->is_lite() ) {
 			$upgrade_url = simpay_pro_upgrade_url( 'stripe-account-settings' );
@@ -531,7 +532,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 
 		// Return a subset of the data to keep the arguments passed to the scheduler smaller.
 		return array_map(
-			function( $transaction ) {
+			function ( $transaction ) {
 				return array(
 					'id'              => $transaction->id,
 					'form_id'         => $transaction->form_id,
@@ -543,5 +544,4 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			$transactions
 		);
 	}
-
 }

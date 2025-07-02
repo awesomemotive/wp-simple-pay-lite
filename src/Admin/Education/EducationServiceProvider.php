@@ -40,6 +40,7 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			'admin-education-plugin-taxes-settings',
 			'admin-education-plugin-coupons',
 			'admin-education-instant-payouts',
+			'admin-education-plugin-cancelled-payment-confirmation',
 		);
 	}
 
@@ -90,6 +91,12 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 				PluginCouponMenuItem::class
 			)
 				->withArgument( $license );
+
+			// "Subscription Cancelled" settings teaser.
+			$container->share(
+				'admin-education-plugin-cancelled-payment-confirmation',
+				PluginCancellationConfirmation::class
+			)->withArgument( $license );
 		}
 
 		// Instant payouts.
@@ -98,5 +105,4 @@ class EducationServiceProvider extends AbstractPluginServiceProvider {
 			InstantPayouts::class
 		);
 	}
-
 }

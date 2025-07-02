@@ -34,7 +34,7 @@ function register_collections() {
 	 */
 	do_action( 'simpay_register_collections', $collections );
 }
-add_action( 'plugins_loaded', __NAMESPACE__ . '\\register_collections' );
+add_action( 'init', __NAMESPACE__ . '\\register_collections' );
 
 /**
  * Returns a Collection from the Collections registry.

@@ -12,6 +12,7 @@
 namespace SimplePay\Core\Webhook;
 
 use SimplePay\Core\AbstractPluginServiceProvider;
+use SimplePay\Core\Webhook\CreateWebhookTool;
 
 /**
  * WebhookServiceProvider class.
@@ -37,6 +38,7 @@ class WebhookServiceProvider extends AbstractPluginServiceProvider {
 			'webhook-none-received-notice',
 			'webhook-stripe-connect-sync',
 			'webhook-endpoint-health-check',
+			'webhook-create-tool',
 		);
 	}
 
@@ -71,6 +73,12 @@ class WebhookServiceProvider extends AbstractPluginServiceProvider {
 			'webhook-none-received-notice',
 			NoneReceivedNotice::class
 		);
+
+		// Create Webhook Tool.
+		$container->share(
+			'webhook-create-tool',
+			CreateWebhookTool::class
+		)->withArgument($container->get('webhook-endpoint-manager'));
 	}
 
 }

@@ -10,6 +10,8 @@
 
 namespace SimplePay\Core\Admin;
 
+use SimplePay\Core\Utils;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -180,7 +182,7 @@ class Assets {
 						'thousandSeparator' => simpay_get_thousand_separator(),
 						'decimalPlaces'     => simpay_get_decimal_places(),
 						'minAmount'         => simpay_global_minimum_amount(),
-						'isUpe'             => simpay_is_upe(),
+						'isUpe'             => true,
 						'i18n'              => array(
 							'dateFormat'               => simpay_get_date_format(),
 							'mediaTitle'               => esc_html__(
@@ -256,15 +258,50 @@ class Assets {
 								'recurring interval',
 								'stripe'
 							),
-							'priceOptionalRecurring'   => esc_html__(
-								'Allow price to optionally be purchased as a subscription',
-								'stripe'
+							'priceOptionalRecurring'   => wp_kses(
+								sprintf(
+									/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+									__(
+										'Allow price to optionally be purchased as a subscription. %1$sLearn more%2$s',
+										'stripe'
+									),
+									'<a href="' . esc_url( simpay_docs_link( 'Learn More', 'payment-options', 'form-settings', true ) ) . '#price-options" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+									Utils\get_external_link_markup() . '</a>'
+								),
+								array(
+									'a'    => array(
+										'href'   => array(),
+										'target' => array(),
+										'rel'    => array(),
+										'class'  => array(),
+									),
+									'span' => array(
+										'class' => array(),
+									),
+								)
 							),
-							'priceRecurring'           => esc_html__(
-								'Automatically activate a recurring subscription',
-								'stripe'
+							'priceRecurring'           => wp_kses(
+								sprintf(
+									/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+									__(
+										'Automatically activate a recurring subscription. %1$sLearn more%2$s',
+										'stripe'
+									),
+									'<a href="' . esc_url( simpay_docs_link( 'Learn More', 'payment-options', 'form-settings', true ) ) . '#price-options" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+									Utils\get_external_link_markup() . '</a>'
+								),
+								array(
+									'a'    => array(
+										'href'   => array(),
+										'target' => array(),
+										'rel'    => array(),
+										'class'  => array(),
+									),
+									'span' => array(
+										'class' => array(),
+									),
+								)
 							),
-
 						),
 					)
 				);

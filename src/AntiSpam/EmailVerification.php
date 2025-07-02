@@ -83,13 +83,9 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 			$this->is_latest_fraud_event_in_timeframe()
 		) {
 			// Send the verification code.
-			if ( simpay_is_upe() ) {
-				$subscribers['simpay_before_payment_create'] =
-					array( 'send_verification_code_upe', 10, 4 );
-			} else {
-				$subscribers['simpay_before_customer_from_payment_form_request'] =
-					array( 'send_verification_code', 10, 4 );
-			}
+
+			$subscribers['simpay_before_payment_create'] =
+				array( 'send_verification_code_upe', 10, 4 );
 
 			// ...verify on PaymentIntent.
 			$subscribers['simpay_before_paymentintent_from_payment_form_request'] =
@@ -926,5 +922,4 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 			esc_html__( 'Verification Code', 'stripe' )
 		);
 	}
-
 }

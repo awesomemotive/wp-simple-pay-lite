@@ -11,11 +11,19 @@ const reducer = ( state, action ) => {
 			return {
 				...state,
 				data: action.data,
+				error: null,
+			};
+		case 'ERROR':
+			return {
+				...state,
+				error: action.error,
+				data: false,
 			};
 		case 'START_RESOLUTION':
 			return {
 				...state,
 				isLoading: true,
+				error: null,
 			};
 		case 'FINISH_RESOLUTION':
 			return {
@@ -31,6 +39,7 @@ function useRestApiReport( restApiPath, args, deps ) {
 	const [ report, dispatchReport ] = useReducer( reducer, {
 		data: false,
 		isLoading: true,
+		error: null,
 	} );
 
 	/**
@@ -45,16 +54,24 @@ function useRestApiReport( restApiPath, args, deps ) {
 
 		apiFetch( {
 			path,
-		} ).then( ( reportData ) => {
-			dispatchReport( {
-				type: 'RECEIVE',
-				data: reportData,
+		} )
+			.then( ( reportData ) => {
+				dispatchReport( {
+					type: 'RECEIVE',
+					data: reportData,
+				} );
+			} )
+			.catch( ( error ) => {
+				dispatchReport( {
+					type: 'ERROR',
+					error,
+				} );
+			} )
+			.finally( () => {
+				dispatchReport( {
+					type: 'FINISH_RESOLUTION',
+				} );
 			} );
-
-			dispatchReport( {
-				type: 'FINISH_RESOLUTION',
-			} );
-		} );
 	}, deps );
 
 	return report;

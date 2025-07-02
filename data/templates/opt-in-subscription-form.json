@@ -2,7 +2,7 @@
 	"id": "0ed465fa-85a7-4b9f-b7f1-c38d647e5248",
 	"created_at": "2022-11-01 00:00:00",
 	"updated_at": "2022-11-01 00:00:00",
-	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"license": [ "plus", "personal", "professional", "ultimate", "elite" ],
 	"categories": [ "features-functionality" ],
 	"keywords": [ "subscription", "opt-in", "checkbox" ],
 	"slug": "opt-in-subscription-form",

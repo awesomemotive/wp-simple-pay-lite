@@ -26,7 +26,6 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 		$asset_file = SIMPLE_PAY_INC . 'pro/assets/js/dist/simpay-block-manage-subscriptions.asset.php'; // @phpstan-ignore-line
 
 		if ( ! file_exists( $asset_file ) ) {
-			error_log( 'file does not exists' );
 			return;
 		}
 

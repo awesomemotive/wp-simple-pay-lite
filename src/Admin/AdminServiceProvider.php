@@ -17,7 +17,6 @@ use SimplePay\Core\AdminNotice;
 use SimplePay\Core\AdminPage;
 use SimplePay\Core\NotificationInbox\NotificationRepository;
 use SimplePay\Core\NotificationInbox\Notifications\PluginRatingNotification;
-use SimplePay\Core\NotificationInbox\Notifications\UpeNotification;
 
 /**
  * AdminServiceProvider class.

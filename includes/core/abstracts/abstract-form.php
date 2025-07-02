@@ -350,6 +350,14 @@ abstract class Form {
 	public $prices;
 
 	/**
+	 * Form checkout button text.
+	 *
+	 * @since 4.14.0
+	 * @var string
+	 */
+	public $checkout_button_text;
+
+	/**
 	 * Form constructor.
 	 *
 	 * @param int $id Payment Form ID.

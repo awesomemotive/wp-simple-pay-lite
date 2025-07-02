@@ -170,7 +170,7 @@ class Stripe_API {
 
 		// Special handling for tax calculations.
 		// If the request starts with Tax, handle it.
-		if ( simpay_is_upe() && false !== strpos( $class, 'Tax' ) ) {
+		if ( false !== strpos( $class, 'Tax' ) ) {
 			switch ( $function ) {
 				case 'allLineItems':
 					return call_user_func(
@@ -189,11 +189,6 @@ class Stripe_API {
 						$opts
 					);
 			}
-		}
-
-		// If we are not using UPE, set the API version to the legacy version.
-		if ( ! simpay_is_upe() ) {
-			Stripe::setApiVersion( '2020-08-27' );
 		}
 
 		return call_user_func(

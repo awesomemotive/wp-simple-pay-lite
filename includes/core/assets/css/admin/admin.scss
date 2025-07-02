@@ -14,6 +14,13 @@
 	padding: 4px 12px;
 }
 
+.simpay-dialog-section {
+	line-height: normal;
+	padding-bottom: 1rem;
+	margin-bottom: 1rem;
+	border-bottom: 1px solid #eee;
+}
+
 .simpay-copy-hidden-input {
 	clip: rect(1px, 1px, 1px, 1px);
 	clip-path: inset(50%);
@@ -2516,4 +2523,20 @@ body.post-type-simple-pay #wpbody-content {
 
 .simpay-payment-page-background-color .wp-picker-open + .wp-picker-input-wrap {
 	display: none;
+}
+
+.simpay-dialog-label {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 5px;
+}
+
+.simpay-dialog-actions {
+	margin: 16px -16px -16px;
+	padding: 16px;
+	border-top: 1px solid #dfdfdf;
+	background: #fcfcfc;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }

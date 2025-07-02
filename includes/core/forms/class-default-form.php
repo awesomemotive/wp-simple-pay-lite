@@ -35,6 +35,14 @@ class Default_Form extends Form {
 	public $total_amount = '';
 
 	/**
+	 * Is one time custom amount.
+	 *
+	 * @var bool
+	 * @since 4.13.0
+	 */
+	public $is_one_time_custom_amount = false;
+
+	/**
 	 * Default_Form constructor.
 	 *
 	 * @param int $id Payment Form ID.
@@ -77,7 +85,7 @@ class Default_Form extends Form {
 	public function get_upe_script_variables() {
 		$prices = simpay_get_payment_form_prices( $this );
 		$prices = array_map(
-			function( $price ) {
+			function ( $price ) {
 				return $price->to_array();
 			},
 			$prices
@@ -114,7 +122,7 @@ class Default_Form extends Form {
 			'stripe'   => array(
 				'apiKey'     => $this->publishable_key,
 				'apiVersion' => SIMPLE_PAY_STRIPE_API_VERSION,
-				'locale'      => $this->locale,
+				'locale'     => $this->locale,
 			),
 			'settings' => array(
 				'prices'     => $prices,
@@ -141,24 +149,7 @@ class Default_Form extends Form {
 	 */
 	public function set_script_variables() {
 
-		if ( simpay_is_upe() ) {
-			$temp[ $this->id ] = $this->get_upe_script_variables();
-		} else {
-			$temp[ $this->id ] = array(
-				'id'     => $this->id,
-				'type'   => 'stripe_checkout' === $this->get_display_type()
-					? 'stripe-checkout'
-					: 'stripe-elements',
-				'form'   => $this->get_form_script_variables(),
-				'stripe' => array_merge(
-					array(
-						'amount'  => $this->total_amount,
-						'country' => $this->country,
-					),
-					$this->get_stripe_script_variables()
-				),
-			);
-		}
+		$temp[ $this->id ] = $this->get_upe_script_variables();
 
 		$temp = apply_filters( 'simpay_form_' . absint( $this->id ) . '_script_variables', $temp, $this->id );
 
@@ -219,9 +210,9 @@ class Default_Form extends Form {
 				 */
 				do_action( 'simpay_form_before_form_top', $this->id, $this );
 
-				if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
-					echo $this->print_custom_fields();
-				}
+		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
+			echo $this->print_custom_fields();
+		}
 
 				// Form validation error message container.
 				echo '<div class="simpay-generic-error simpay-errors" id="' . esc_attr( $id ) . '-error" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div>';
@@ -230,9 +221,9 @@ class Default_Form extends Form {
 				echo '<input type="hidden" name="simpay_form_id" value="' . esc_attr( $this->id ) . '" />';
 				echo '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
 
-				if ( true === $this->test_mode ) {
-					echo simpay_get_test_mode_badge();
-				}
+		if ( true === $this->test_mode ) {
+			echo simpay_get_test_mode_badge();
+		}
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', $this );
 
@@ -285,7 +276,6 @@ class Default_Form extends Form {
 		$classes = apply_filters( 'simpay_form_' . absint( $this->id ) . '_classes', $classes );
 
 		return trim( implode( ' ', array_map( 'trim', array_map( 'sanitize_html_class', array_unique( $classes ) ) ) ) );
-
 	}
 
 	/**
@@ -359,7 +349,7 @@ class Default_Form extends Form {
 	public function get_form_script_variables() {
 		$prices = simpay_get_payment_form_prices( $this );
 		$prices = array_map(
-			function( $price ) {
+			function ( $price ) {
 				return $price->to_array();
 			},
 			$prices

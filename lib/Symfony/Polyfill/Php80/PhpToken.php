@@ -29,7 +29,7 @@ class SimplePay_PhpToken implements \SimplePay_Stringable
     public $text;
 
     /**
-     * @var int
+     * @var -1|positive-int
      */
     public $line;
 
@@ -38,6 +38,9 @@ class SimplePay_PhpToken implements \SimplePay_Stringable
      */
     public $pos;
 
+    /**
+     * @param -1|positive-int $line
+     */
     public function __construct(int $id, string $text, int $line = -1, int $position = -1)
     {
         $this->id = $id;
@@ -80,7 +83,7 @@ class SimplePay_PhpToken implements \SimplePay_Stringable
     }
 
     /**
-     * @return static[]
+     * @return list<static>
      */
     public static function tokenize(string $code, int $flags = 0): array
     {

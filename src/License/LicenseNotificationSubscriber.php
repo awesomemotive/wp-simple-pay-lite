@@ -43,8 +43,8 @@ class LicenseNotificationSubscriber implements SubscriberInterface, LicenseAware
 		return array(
 			'init'                                  =>
 				array(
-					array( 'add_missing_license_notification', 0 ),
-					array( 'add_expired_license_notification', 0 ),
+					array( 'add_missing_license_notification', 10 ),
+					array( 'add_expired_license_notification', 10 ),
 				),
 			'pre_update_option_simpay_license_data' =>
 				'dismiss_license_notifications',

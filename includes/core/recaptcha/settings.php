@@ -242,72 +242,71 @@ function register_settings( $settings ) {
 	);
 
 	// Cloudflare Turnstile Setup.
-	if ( simpay_is_upe() ) {
-		$settings->add(
-			new Setting(
-				array(
-					'id'         => 'cloudflare_turnstile_setup',
-					'section'    => 'general',
-					'subsection' => 'recaptcha',
-					'label'      => esc_html_x(
-						'Cloudflare Turnstile',
-						'captcha setup setting label',
-						'stripe'
-					),
-					'output'     => __NAMESPACE__ . '\\cloudflare_turnstile_setup_description',
-					'priority'   => 30,
-				)
-			)
-		);
 
-		// Cloudflare Turnstile Site Key.
-		$settings->add(
-			new Setting_Input(
-				array(
-					'id'         => 'cloudflare_turnstile_site_key',
-					'section'    => 'general',
-					'subsection' => 'recaptcha',
-					'label'      => esc_html_x(
-						'Site Key',
-						'captcha setting label',
-						'stripe'
-					),
-					'value'      => simpay_get_setting( 'cloudflare_turnstile_site_key', '' ),
-					'classes'    => array(
-						'regular-text',
-					),
-					'priority'   => 31,
-					'schema'     => array(
-						'type' => 'string',
-					),
-				)
+	$settings->add(
+		new Setting(
+			array(
+				'id'         => 'cloudflare_turnstile_setup',
+				'section'    => 'general',
+				'subsection' => 'recaptcha',
+				'label'      => esc_html_x(
+					'Cloudflare Turnstile',
+					'captcha setup setting label',
+					'stripe'
+				),
+				'output'     => __NAMESPACE__ . '\\cloudflare_turnstile_setup_description',
+				'priority'   => 30,
 			)
-		);
+		)
+	);
 
-		// Cloudflare Turnstile Secret Key.
-		$settings->add(
-			new Setting_Input(
-				array(
-					'id'         => 'cloudflare_turnstile_secret_key',
-					'section'    => 'general',
-					'subsection' => 'recaptcha',
-					'label'      => esc_html_x(
-						'Secret Key',
-						'captcha setting label',
-						'stripe'
-					),
-					'value'      => simpay_get_setting( 'cloudflare_turnstile_secret_key', '' ),
-					'classes'    => array(
-						'regular-text',
-					),
-					'priority'   => 32,
-					'schema'     => array(
-						'type' => 'string',
-					),
-				)
+	// Cloudflare Turnstile Site Key.
+	$settings->add(
+		new Setting_Input(
+			array(
+				'id'         => 'cloudflare_turnstile_site_key',
+				'section'    => 'general',
+				'subsection' => 'recaptcha',
+				'label'      => esc_html_x(
+					'Site Key',
+					'captcha setting label',
+					'stripe'
+				),
+				'value'      => simpay_get_setting( 'cloudflare_turnstile_site_key', '' ),
+				'classes'    => array(
+					'regular-text',
+				),
+				'priority'   => 31,
+				'schema'     => array(
+					'type' => 'string',
+				),
 			)
-		);
-	}
+		)
+	);
+
+	// Cloudflare Turnstile Secret Key.
+	$settings->add(
+		new Setting_Input(
+			array(
+				'id'         => 'cloudflare_turnstile_secret_key',
+				'section'    => 'general',
+				'subsection' => 'recaptcha',
+				'label'      => esc_html_x(
+					'Secret Key',
+					'captcha setting label',
+					'stripe'
+				),
+				'value'      => simpay_get_setting( 'cloudflare_turnstile_secret_key', '' ),
+				'classes'    => array(
+					'regular-text',
+				),
+				'priority'   => 32,
+				'schema'     => array(
+					'type' => 'string',
+				),
+			)
+		)
+	);
 
 	// None warning.
 	$settings->add(
@@ -442,7 +441,7 @@ function choose_captcha_type() {
 			</span>
 		</label>
 
-		<?php if ( simpay_is_upe() ) : ?>
+		
 		<input
 			type="radio"
 			value="cloudflare-turnstile"
@@ -473,7 +472,7 @@ function choose_captcha_type() {
 				</small>
 			</span>
 		</label>
-		<?php endif; ?>
+		
 
 		<input
 			type="radio"

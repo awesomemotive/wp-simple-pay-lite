@@ -393,6 +393,10 @@ class Shortcodes {
 			do_shortcode( $content )
 		);
 
+		if ( ! $this->is_allow_content( $payment_confirmation_data ) ) {
+			return $before_html . $after_html;
+		}
+
 		return $before_html . $content . $after_html;
 	}
 
@@ -422,5 +426,44 @@ class Shortcodes {
 			esc_js( $atts['instanceid'] ),
 			esc_js( $form_id )
 		);
+	}
+
+	/**
+	 * Check if the content should be allowed to be displayed.
+	 *
+	 * @param array $payment_confirmation_data Payment confirmation data.
+	 * @return bool
+	 */
+	private function is_allow_content( $payment_confirmation_data ) {
+		$subscription_management = simpay_get_setting( 'subscription_management', 'on-site' );
+		
+		// Skip check if not on-site subscription management.
+		if ( 'on-site' !== $subscription_management ) {
+			return true;
+		}
+
+		// Skip check if no subscription key in URL.
+		if ( ! isset( $_GET['subscription_key'] ) ) {
+			return true;
+		}
+
+		// Skip check if no subscriptions data.
+		if ( ! isset( $payment_confirmation_data['subscriptions'] ) || empty( $payment_confirmation_data['subscriptions'] ) ) {
+			return true;
+		}
+
+		$subscription = $payment_confirmation_data['subscriptions'][0];
+
+		// Check subscription status.
+		if ( empty( $subscription->canceled_at ) ) {
+			return false;
+		}
+
+		// If subscription is canceled but not set to end at period end.
+		if ( ! empty( $subscription->canceled_at ) && empty( $subscription->cancel_at_period_end ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }

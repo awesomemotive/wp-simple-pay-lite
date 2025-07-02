@@ -23,7 +23,7 @@ class Cryption {
 	/**
 	 * Encrypts data using RSA public key.
 	 *
-	 * @param array<string, mixed> $data Data to encrypt.
+	 * @param string $data Data to encrypt.
 	 * @return string|bool Base64 encoded encrypted data or false on failure.
 	 */
 	public function encrypt( $data ) {
@@ -42,13 +42,10 @@ class Cryption {
 				return false;
 			}
 
-			// Encrypt the API params.
-			$api_params_string = http_build_query( $data );
-
 			// Encrypt data with OAEP padding using OpenSSL.
 			$encrypted_data     = '';
 			$encryption_success = openssl_public_encrypt(
-				$api_params_string,
+				$data,
 				$encrypted_data,
 				$public_key,
 				OPENSSL_PKCS1_OAEP_PADDING  // Set padding to OAEP.
@@ -66,5 +63,14 @@ class Cryption {
 		} catch ( Exception $e ) {
 			return false;
 		}
+	}
+
+	/**
+	 * Check if openssl is enabled.
+	 *
+	 * @return bool
+	 */
+	public function is_openssl_enabled() {
+		return extension_loaded( 'openssl' );
 	}
 }

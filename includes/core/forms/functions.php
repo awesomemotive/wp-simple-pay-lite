@@ -316,32 +316,31 @@ function simpay_payment_form_add_missing_custom_fields(
 		case 'embedded':
 			// Ensure "Customer Name" exists if using Bancontact, or p24, or SEPA.
 			if (
-				! simpay_is_upe() &&
 				! isset( $fields['customer_name'] ) &&
 				(
 					(
 						isset( $payment_methods['stripe-elements']['bancontact'] ) &&
-						isset( $payment_methods['stripe-elements']['bancontact']['id'] )
+							isset( $payment_methods['stripe-elements']['bancontact']['id'] )
 					) ||
 					(
 						isset( $payment_methods['stripe-elements']['p24'] ) &&
-						isset( $payment_methods['stripe-elements']['p24']['id'] )
+							isset( $payment_methods['stripe-elements']['p24']['id'] )
 					) ||
 					(
 						isset( $payment_methods['stripe-elements']['sepa-debit'] ) &&
-						isset( $payment_methods['stripe-elements']['sepa-debit']['id'] )
+							isset( $payment_methods['stripe-elements']['sepa-debit']['id'] )
 					) ||
 					(
 						isset( $payment_methods['stripe-elements']['klarna'] ) &&
-						isset( $payment_methods['stripe-elements']['klarna']['id'] )
+							isset( $payment_methods['stripe-elements']['klarna']['id'] )
 					) ||
 					(
 						isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
+							isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
 					) ||
 					(
 						isset( $payment_methods['stripe-elements']['ach-debit'] ) &&
-						isset( $payment_methods['stripe-elements']['ach-debit']['id'] )
+							isset( $payment_methods['stripe-elements']['ach-debit']['id'] )
 					)
 				)
 			) {
@@ -378,13 +377,12 @@ function simpay_payment_form_add_missing_custom_fields(
 
 			$needs_required_address = (
 				(
-					! simpay_is_upe() &&
 					isset( $payment_methods['stripe-elements']['klarna'] ) &&
-					isset( $payment_methods['stripe-elements']['klarna']['id'] )
+						isset( $payment_methods['stripe-elements']['klarna']['id'] )
 				) ||
 				(
 					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-					isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
+						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
 				) ||
 				'automatic' === $tax_status
 			);
@@ -394,30 +392,16 @@ function simpay_payment_form_add_missing_custom_fields(
 				! isset( $fields['address'] ) &&
 				true === $needs_required_address
 			) {
-				if ( ! simpay_is_upe() ) {
-					$args = array(
-						'uid'                     => $count,
-						'id'                      => 'simpay_' . $form_id . '_address',
-						'billing-container-label' => 'Billing Address',
-						'label-street'            => 'Street Address',
-						'label-city'              => 'City',
-						'label-state'             => 'State',
-						'label-zip'               => 'Postal Code',
-						'label-country'           => 'Country',
-						'required'                => 'yes',
-					);
-				} else {
-					$args = array(
-						'uid'              => $count,
-						'id'               => 'simpay_' . $form_id . '_address',
-						'collect-shipping' => 'no',
-						'required'         => 'yes',
-					);
-				}
+				$args = array(
+					'uid'              => $count,
+					'id'               => 'simpay_' . $form_id . '_address',
+					'collect-shipping' => 'no',
+					'required'         => 'yes',
+				);
 
 				if (
 					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-					isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
+						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
 				) {
 					$args['collect-shipping'] = 'yes';
 				}
@@ -441,7 +425,7 @@ function simpay_payment_form_add_missing_custom_fields(
 
 				if (
 					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-					isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
+						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
 				) {
 					$args['collect-shipping'] = 'yes';
 				}
@@ -485,7 +469,7 @@ function simpay_payment_form_add_missing_custom_fields(
 					'order' => 9998,
 					'uid'   => $count,
 					'id'    => 'simpay_' . $form_id . '_card',
-					'label' => ! simpay_is_upe() ? 'Payment Method' : '',
+					'label' => '',
 				);
 
 				$changes[] = __(
@@ -702,10 +686,8 @@ function simpay_payment_form_add_missing_custom_fields(
 		}
 	}
 
-	// Remove "1-Click Payment Methods" (Payment Request Button) if using UPE.
-	if ( simpay_is_upe() ) {
-		unset( $fields['payment_request_button'] );
-	}
+	// Remove "1-Click Payment Methods" (Payment Request Button)
+	unset( $fields['payment_request_button'] );
 
 	// General sorting template for auto-added fields.
 	$fields = array_merge(

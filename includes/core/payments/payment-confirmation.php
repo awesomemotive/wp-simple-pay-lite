@@ -317,10 +317,19 @@ function get_one_time_amount_message_default() {
  * @return string
  */
 function get_content() {
-	$content = simpay_get_setting(
-		'one_time_payment_details',
-		get_one_time_amount_message_default()
-	);
+	$payment_confirmation_data = get_confirmation_data();
+
+	if ( isset( $payment_confirmation_data['checkout_session'] ) && isset( $payment_confirmation_data['checkout_session']['mode'] ) && 'subscription' === $payment_confirmation_data['checkout_session']['mode'] ) {
+		$content = simpay_get_setting(
+			'subscription_details',
+			get_subscription_message_default()
+		);
+	} else {
+		$content = simpay_get_setting(
+			'one_time_payment_details',
+			get_one_time_amount_message_default()
+		);
+	}
 
 	$display_options = array();
 
@@ -367,4 +376,37 @@ function get_error() {
 	 * @param string Error message.
 	 */
 	return apply_filters( 'simpay_charge_error_message', $message );
+}
+
+/**
+ * Returns the default Payment Confirmation message for "Subscription" payments.
+ *
+ * @since 4.0.0
+ *
+ * @return string
+ */
+function get_subscription_message_default() {
+	$email     = new Emails\Email\PaymentConfirmationEmail();
+	$has_email = $email->is_enabled();
+	$message   = '';
+
+	if ( true === $has_email ) {
+		$message = sprintf(
+			/* translators: %1$s: Total amount, %2$s: Recurring amount, %3$s: Next invoice date */
+			esc_html__( 'Thank you. Your payment of %1$s has been received and your subscription has been activated. You will be charged %2$s from %3$s. Please check your email for additional information.', 'stripe' ),
+			'{total-amount}',
+			'{recurring-amount}',
+			'{next-invoice-date}'
+		);
+	} else {
+		$message = sprintf(
+			/* translators: %1$s: Total amount, %2$s: Recurring amount, %3$s: Next invoice date */
+			esc_html__( 'Thank you. Your payment of %1$s has been received and your subscription has been activated. You will be charged %2$s from %3$s.', 'stripe' ),
+			'{total-amount}',
+			'{recurring-amount}',
+			'{next-invoice-date}'
+		);
+	}
+
+	return $message;
 }

@@ -69,19 +69,44 @@ export function allowMultipleLineItems() {
 		} );
 	}
 
-	const optionToggle = document.querySelectorAll( '.simpay-quantity-toggle' );
-	const priceSelectorDisplayStyle = document.querySelector(
-		'.simpay-price-select-display-type'
-	);
 	const toggleUserQuantity = () => {
-		optionToggle.forEach( function ( el ) {
-			// if enableEl is checked, remove the hidden class from the element
+		const optionQuantityToggle = document.querySelectorAll( '.simpay-quantity-toggle' );
+
+		if ( optionQuantityToggle ) {
+			optionQuantityToggle.forEach( function ( el ) {
+				if ( enableEl.checked ) {
+					el.classList.remove( 'hidden' );
+				} else {
+					el.classList.add( 'hidden' );
+				}
+			} );
+		}
+
+		const priceSelectorDisplayStyle = document.querySelector(
+			'.simpay-price-select-display-type'
+		);
+
+		if ( priceSelectorDisplayStyle ) {
 			if ( enableEl.checked ) {
-				el.classList.remove( 'hidden' );
 				priceSelectorDisplayStyle.style.display = 'none';
 			} else {
-				el.classList.add( 'hidden' );
 				priceSelectorDisplayStyle.style.display = 'block';
+			}
+		}
+	};
+
+	const toggleRequiredToggle = () => {
+		const optionRequiredToggle = document.querySelectorAll( '.simpay-price-required-check' );
+
+		if ( ! optionRequiredToggle ) {
+			return;
+		}
+
+		optionRequiredToggle.forEach( function ( el ) {
+			if ( enableEl.checked ) {
+				el.style.display = 'block';
+			} else {
+				el.style.display = 'none';
 			}
 		} );
 	};
@@ -97,12 +122,14 @@ export function allowMultipleLineItems() {
 	// Handle toggle on multiple line item setting change.
 	enableEl.addEventListener( 'change', ( e ) => {
 		toggleUserQuantity();
+		toggleRequiredToggle();
 		toggleAllOptionalRecurringLabels( e.target.checked );
 		enableDisableOneTimePaymentMethods( enableEl );
 	} );
 
 	// Handle toggle on load.
 	toggleUserQuantity();
+	toggleRequiredToggle();
 	toggleAllOptionalRecurringLabels();
 	enableDisableOneTimePaymentMethods( enableEl );
 }

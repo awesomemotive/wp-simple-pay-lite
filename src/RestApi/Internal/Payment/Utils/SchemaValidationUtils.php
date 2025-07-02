@@ -287,6 +287,13 @@ class SchemaValidationUtils {
 			return false;
 		}
 
+		// Validate that the custom amount is not greater than the maximum amount.
+		$unit_amount_max = intval( $price->unit_amount_max );
+
+		if ( 0 !== $unit_amount_max && $value > $unit_amount_max ) {
+			return false;
+		}
+
 		// Finally, this custom amount can be used.
 		return true;
 	}
@@ -509,8 +516,14 @@ class SchemaValidationUtils {
 				// Check if the price is custom.
 				if ( ! simpay_payment_form_prices_is_defined_price( $line_item['price_id'] ) ) {
 
-					// Validate for custom price.
+					// Validate minimum amount for custom price.
 					if ( $price->unit_amount_min > $line_item['custom_amount'] ) {
+						return false;
+					}
+
+					// Validate maximum amount for custom price.
+					$unit_amount_max = intval( $price->unit_amount_max );
+					if ( 0 !== $unit_amount_max && $unit_amount_max < $line_item['custom_amount'] ) {
 						return false;
 					}
 				}

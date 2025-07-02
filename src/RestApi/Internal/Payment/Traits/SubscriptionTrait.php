@@ -293,6 +293,20 @@ trait SubscriptionTrait {
 					$price_item['price'] = $price['price_id'];
 				}
 
+				if ( $price['is_optionally_recurring'] ) {
+					$price_item['metadata']['is_optionally_recurring'] = true;
+				} else {
+					$price_item['metadata']['is_optionally_recurring'] = false;
+				}
+
+				if ( $price['price_data']['can_recur'] ) {
+					$price_item['metadata']['can_recur'] = true;
+				} else {
+					$price_item['metadata']['can_recur'] = false;
+				}
+
+				$price_item['metadata']['name'] = $price['price_data']['label'];
+
 				$price_items[] = $price_item;
 			}
 
@@ -390,7 +404,7 @@ trait SubscriptionTrait {
 	 * @param \WP_REST_Request $request The payment request.
 	 * @return array<int, array<string, mixed>>
 	 */
-	private function get_subscription_additional_invoice_line_items( $request ) {
+	public function get_subscription_additional_invoice_line_items( $request ) {
 		$form = PaymentRequestUtils::get_form( $request );
 
 		// If multiple line items are allowed, add non-recurring price options, or fees.
@@ -412,6 +426,9 @@ trait SubscriptionTrait {
 									'unit_amount' => $fees['unit_amount'],
 									'currency'    => $price['price_data']['currency'],
 									'product'     => $price['price_data']['product_id'],
+									'metadata'    => array(
+										'simpay_price_instance_id' => $price['price_data']['instance_id'],
+									),
 								),
 								'quantity'   => 1,
 							);
@@ -431,10 +448,30 @@ trait SubscriptionTrait {
 						'unit_amount' => $price['custom_amount'],
 						'currency'    => $price['price_data']['currency'],
 						'product'     => $price['price_data']['product_id'],
+						'metadata'    => array(
+							'simpay_price_instance_id' => $price['price_data']['instance_id'],
+						),
 					);
 				} else {
-					$price_item['price'] = $price['price_id'];
+					$price_item['price']    = $price['price_id'];
+					$price_item['metadata'] = array(
+						'simpay_price_instance_id' => $price['price_data']['instance_id'],
+					);
 				}
+
+				if ( $price['price_data']['can_recur'] ) {
+					$price_item['metadata']['can_recur'] = true;
+				} else {
+					$price_item['metadata']['can_recur'] = false;
+				}
+
+				if ( $price['is_optionally_recurring'] ) {
+					$price_item['metadata']['is_optionally_recurring'] = true;
+				} else {
+					$price_item['metadata']['is_optionally_recurring'] = false;
+				}
+
+				$price_item['metadata']['name'] = $price['price_data']['label'];
 
 				$price_items[] = $price_item;
 			}
