@@ -1,10 +1,10 @@
 ## Contribute To WP Simple Pay
 
-Community made patches, localisations, bug reports and contributions are always welcome and are crucial to ensure WP Simple Pay remains the simplest way to collect payments on WordPress.
+Community-made patches, localizations, bug reports and contributions are always welcome and are crucial to ensure WP Simple Pay remains the simplest way to collect payments on WordPress.
 
-When contributing please ensure you follow the guidelines below so that we can keep on top of things.
+When contributing, please ensure you follow the guidelines below so that we can keep on top of things.
 
-__Please Note:__ GitHub is for bug reports and contributions only - if you have a support question or a request for a customization don't post here, go to our [Support page](https://wpsimplepay.com/contact/) instead.
+__Please Note:__ GitHub is for bug reports and contributions only - if you have a support question or a request for customization, don't post here, go to our [Support page](https://wpsimplepay.com/contact/) instead.
 
 ## Getting Started
 
@@ -28,7 +28,7 @@ __Please Note:__ GitHub is for bug reports and contributions only - if you have 
 
 * We ensure that every function is documented well and follows the [WordPress PHP Documentation Standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/)
 
-At this point you're waiting on us to merge your pull request. We'll review all pull requests, and make suggestions and changes if necessary.
+At this point you're waiting on us to merge your pull request. We'll review all pull requests and make suggestions and changes if necessary.
 
 ## Developer Certificate of Origin
 By contributing to WP Simple Pay, you agree to the Developer Certificate of Origin.
