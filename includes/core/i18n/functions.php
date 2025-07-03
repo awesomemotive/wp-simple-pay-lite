@@ -156,3 +156,26 @@ function simpay_get_currency_minimum( $currency ) {
 
 	return $minimum;
 }
+
+/**
+ * Returns the maximum amount that can be processed by Stripe for a currency.
+ *
+ * @since 4.13.0
+ *
+ * @param string $currency Currency code.
+ * @return int
+ */
+function simpay_get_currency_maximum( $currency ) {
+	$maximum  = 99999999;
+	$currency = strtolower( $currency );
+	/**
+	 * Filters the maximum amount (in lowest possible decimal) for a specific currency.
+	 *
+	 * @since 4.13.0
+	 *
+	 * @param string $currency Currency code.
+	 */
+	$maximum = apply_filters( 'simpay_get_currency_maximum', $maximum, $currency );
+
+	return $maximum;
+}

@@ -1333,6 +1333,12 @@ function simpay_get_payment_form_setting(
 				$setting = strtotime( $setting );
 
 				break;
+			case 'allow_purchasing_multiple_line_items':
+				$setting = isset( $template['data']['allow_purchasing_multiple_line_items'] )
+					? $template['data']['allow_purchasing_multiple_line_items']
+					: $default;
+
+				break;
 
 			// Lower level settings.
 			default:
@@ -1394,6 +1400,9 @@ function simpay_get_payment_form_setting(
 						),
 					);
 
+				break;
+			case 'allow_purchasing_multiple_line_items':
+				$setting = get_post_meta( $form_id, '_allow_purchasing_multiple_line_items', true );
 				break;
 
 				// Use the value directly.
@@ -1540,26 +1549,25 @@ function __unstable_simpay_get_payment_form_templates() {
 		}
 
 		// Adjust settings for UPE.
-		if ( simpay_is_upe() ) {
-			$data['data']['fields'] = array_map(
-				function ( $field ) {
-					// Remove the card field label.
-					if ( 'card' === $field['type'] ) {
-						$field['label'] = '';
-					}
 
-					// Enable Link in the email field.
-					if ( 'email' === $field['type'] ) {
-						$field['link'] = array(
-							'enabled' => 'yes',
-						);
-					}
+		$data['data']['fields'] = array_map(
+			function ( $field ) {
+				// Remove the card field label.
+				if ( 'card' === $field['type'] ) {
+					$field['label'] = '';
+				}
 
-					return $field;
-				},
-				$data['data']['fields']
-			);
-		}
+				// Enable Link in the email field.
+				if ( 'email' === $field['type'] ) {
+					$field['link'] = array(
+						'enabled' => 'yes',
+					);
+				}
+
+				return $field;
+			},
+			$data['data']['fields']
+		);
 
 		$templates[] = $data;
 	}
@@ -1579,7 +1587,7 @@ function __unstable_simpay_get_payment_form_templates() {
 		usort(
 			$templates,
 			function ( $a, $b ) {
-				return $a['created_at'] < $b['created_at'];
+				return strtotime( $a['created_at'] ) - strtotime( $b['created_at'] );
 			}
 		);
 	}
@@ -1889,21 +1897,13 @@ function simpay_truncate_metadata( $type, $value ) {
  * @return bool
  */
 function simpay_is_upe() {
-	$is_lite = simpay_get_license()->is_lite();
-
-	$is_upe = 'yes' === simpay_get_setting(
-		'is_upe',
-		$is_lite ? 'yes' : 'no'
-	);
-
 	/**
-	 * Filters whether the Universal Payment Element should be used.
+	 * Enable UPE for all users.
 	 *
-	 * @since 4.7.0
-	 *
-	 * @param bool $is_upe Whether the Universal Payment Element should be used.
+	 * @since 4.14.0
 	 */
-	return apply_filters( 'simpay_is_upe', $is_upe );
+
+	return true;
 }
 
 /**

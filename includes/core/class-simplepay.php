@@ -146,8 +146,6 @@ final class SimplePay {
 		require_once SIMPLE_PAY_INC . 'core/forms/class-price-options.php';
 
 		// Payments/Purchase Flow.
-		require_once SIMPLE_PAY_INC . 'core/payments/customer.php';
-		require_once SIMPLE_PAY_INC . 'core/payments/paymentintent.php';
 		require_once SIMPLE_PAY_INC . 'core/payments/payment-confirmation.php';
 		require_once SIMPLE_PAY_INC . 'core/payments/payment-confirmation-template-tags.php';
 

@@ -752,6 +752,9 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					'expand' => array(
 						'customer',
 						'payment_intent',
+						'subscription',
+						'subscription.latest_invoice',
+						'subscription.default_payment_method',
 					),
 				),
 				$form->get_api_request_args()
@@ -760,11 +763,59 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			/** @var \SimplePay\Vendor\Stripe\Customer $customer */
 			$customer = $session->customer;
 
-			/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
-			$payment_intent = $session->payment_intent;
+			// One time payment.
+			if ( 'payment' === $session->mode && null !== $session->payment_intent ) {
+				$object    = 'payment_intent';
+				$object_id = is_object( $session->payment_intent ) ? $session->payment_intent->id : $session->payment_intent;
 
-			$object    = 'payment_intent';
-			$object_id = $payment_intent->id;
+				/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+				$payment_method      = is_object( $session->payment_intent ) && property_exists( $session->payment_intent, 'payment_method' ) ?
+					$session->payment_intent->payment_method : null;
+				$payment_method_type = $payment_method ? $payment_method->type : 'card';
+
+				// Recurring payment, paid today.
+			} elseif (
+					'subscription' === $session->mode &&
+					null !== $session->subscription &&
+					null !== $session->subscription &&
+					is_object( $session->subscription ) &&
+					property_exists( $session->subscription, 'latest_invoice' ) &&
+					null !== $session->subscription->latest_invoice &&
+					null === $session->setup_intent
+				) {
+				/** @var \SimplePay\Vendor\Stripe\Invoice $latest_invoice */
+				$latest_invoice = $session->subscription->latest_invoice;
+				/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
+				$payment_intent = $latest_invoice->payment_intent;
+
+				$object    = 'payment_intent';
+				$object_id = is_string( $payment_intent ) ? $payment_intent : $payment_intent->id;
+
+				/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+				$payment_method      = is_object( $session->subscription ) && property_exists( $session->subscription, 'default_payment_method' ) ?
+					$session->subscription->default_payment_method : null;
+				$payment_method_type = $payment_method ? $payment_method->type : 'card';
+
+				// Recurring payment.
+			} elseif (
+					'subscription' === $session->mode &&
+					null !== $session->subscription &&
+					null !== $session->setup_intent
+				) {
+				$object    = 'setup_intent';
+				$object_id = $session->setup_intent;
+
+				/** @var \SimplePay\Vendor\Stripe\PaymentMethod $payment_method */
+				$payment_method      = is_object( $session->subscription ) && property_exists( $session->subscription, 'default_payment_method' ) ?
+					$session->subscription->default_payment_method : null;
+				$payment_method_type = $payment_method ? $payment_method->type : 'card';
+
+				// Something else.
+			} else {
+				$object_id           = null;
+				$object              = null;
+				$payment_method_type = 'card';
+			}
 
 			/**
 			 * @var \stdClass $default_totals
@@ -797,10 +848,12 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					'amount_shipping'     => $totals->amount_shipping,
 					'amount_discount'     => $totals->amount_discount,
 					'amount_tax'          => $totals->amount_tax,
-					'payment_method_type' => 'card',
+					'payment_method_type' => $payment_method_type,
 					'email'               => $customer->email,
 					'customer_id'         => $customer->id,
+					'subscription_id'     => $session->subscription ? ( is_string( $session->subscription ) ? $session->subscription : $session->subscription->id ) : null,
 					'status'              => 'succeeded',
+					'application_fee'     => $this->application_fee->has_application_fee(),
 				)
 			);
 		} catch ( Exception $e ) {

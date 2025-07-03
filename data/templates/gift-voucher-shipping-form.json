@@ -1,0 +1,91 @@
+{
+	"id": "550e8400-e29b-41d4-a716-446655440000",
+	"created_at": "2025-04-22 00:00:00",
+	"updated_at": "2025-04-22 00:00:00",
+	"license": [ "plus", "professional", "ultimate", "elite" ],
+	"categories": [ "payment", "shipping" ],
+	"keywords": [ "gift", "voucher", "shipping", "handling", "present" ],
+	"slug": "gift-voucher-shipping-form",
+	"name": "Gift Voucher + Shipping & Handling",
+	"description": "A form for purchasing gift vouchers with shipping options",
+	"url": "",
+	"data": {
+		"title": "Gift Voucher + Shipping & Handling",
+		"description": "Purchase a gift voucher for your loved ones. Select the voucher amount, provide recipient details, and choose your preferred shipping method. The gift voucher will be shipped directly to the recipient's address.",
+		"type": "embedded",
+		"payment_methods": [ "card" ],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": "Select Voucher Amount",
+				"required": true,
+				"options": [
+					{
+						"label": "$25 Gift Voucher",
+						"value": "2500"
+					},
+					{
+						"label": "$50 Gift Voucher",
+						"value": "5000"
+					},
+					{
+						"label": "$100 Gift Voucher",
+						"value": "10000"
+					},
+					{
+						"label": "$250 Gift Voucher",
+						"value": "25000"
+					}
+				]
+			},
+			{
+				"type": "customer_name",
+				"label": "Recipient's Name"
+			},
+			{
+				"type": "email",
+				"label": "Recipient's Email"
+			},
+			{
+				"type": "address",
+				"label": "Recipient's Address"
+			},
+			{
+				"type": "dropdown",
+				"label": "Shipping Method",
+				"options": "Standard Shipping ($5.99), Express Shipping ($12.99), Priority Shipping ($19.99)"
+			},
+			{
+				"type": "textarea",
+				"label": "Personal Message (Optional)"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Purchase for {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 2500,
+				"default": true,
+				"label": "$25 Gift Voucher"
+			},
+			{
+				"unit_amount": 5000,
+				"label": "$50 Gift Voucher"
+			},
+			{
+				"unit_amount": 10000,
+				"label": "$100 Gift Voucher"
+			},
+			{
+				"unit_amount": 25000,
+				"label": "$250 Gift Voucher"
+			}
+		]
+	}
+} 

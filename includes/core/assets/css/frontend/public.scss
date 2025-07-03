@@ -228,10 +228,6 @@ html body.simpay-form-preview {
 }
 
 html body.simpay-payment-page {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
 	.simpay-payment-page-wrap {
 		margin: 0 auto;
 		width: calc(400px + 4rem);
@@ -239,6 +235,10 @@ html body.simpay-payment-page {
 		background: white;
 		border-radius: 4px;
 		box-shadow: 0 25px 50px -12px rgb(0, 0, 0, 0.25);
+
+		&:has(.simpay-receipt) {
+			width: 800px;
+		}
 	}
 
 	.simpay-payment-page-wrap img {
@@ -286,7 +286,7 @@ html body.simpay-payment-page {
 	}
 
 	.simpay-payment-receipt-wrap {
-		max-width: 400px;
+		max-width: 800px;
 
 		p {
 			color: $base-text-color;

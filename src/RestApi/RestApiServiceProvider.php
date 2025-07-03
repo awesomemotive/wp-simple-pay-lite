@@ -57,6 +57,9 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 
 			// Subscriptions Managment.
 			'rest-api-subscription-managment-send-subscriptions',
+
+			// Embedded Components.
+			'rest-api-internal-embedded-components-embedding-secret',
 		);
 	}
 
@@ -69,36 +72,34 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 		$license = $container->get( 'license' );
 
 		// UPE routes.
-		if ( simpay_is_upe() ) {
 
-			// Payment create (depending on which plugin).
+		// Payment create (depending on which plugin).
+		$container->share(
+			'rest-api-internal-payment-create',
+			$license->is_lite()
+				? Internal\Payment\LitePaymentCreateRoute::class
+				: Internal\Payment\ProPaymentCreateRoute::class
+		)
+			->withArgument(
+				$container->get( 'stripe-connect-application-fee' )
+			);
+
+		// Additional payment routes for Pro.
+		if ( false === $license->is_lite() ) {
 			$container->share(
-				'rest-api-internal-payment-create',
-				$license->is_lite()
-					? Internal\Payment\LitePaymentCreateRoute::class
-					: Internal\Payment\ProPaymentCreateRoute::class
-			)
-				->withArgument(
-					$container->get( 'stripe-connect-application-fee' )
-				);
+				'rest-api-internal-payment-update',
+				Internal\Payment\PaymentUpdateRoute::class
+			);
 
-			// Additional payment routes for Pro.
-			if ( false === $license->is_lite() ) {
-				$container->share(
-					'rest-api-internal-payment-update',
-					Internal\Payment\PaymentUpdateRoute::class
-				);
+			$container->share(
+				'rest-api-internal-payment-validate-coupon',
+				Internal\Payment\ValidateCouponRoute::class
+			);
 
-				$container->share(
-					'rest-api-internal-payment-validate-coupon',
-					Internal\Payment\ValidateCouponRoute::class
-				);
-
-				$container->share(
-					'rest-api-internal-payment-calculate-tax',
-					Internal\Payment\TaxCalculationRoute::class
-				);
-			}
+			$container->share(
+				'rest-api-internal-payment-calculate-tax',
+				Internal\Payment\TaxCalculationRoute::class
+			);
 		}
 
 		// Update payment method.
@@ -162,5 +163,11 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 			\SimplePay\Core\RestApi\Internal\SubscriptionsManagement\SendSubscriptions::class
 		)
 			->withArgument( $container->get( 'email-manage-subscriptions' ) );
+
+		// Embedded Components.
+		$container->share(
+			'rest-api-internal-embedded-components-embedding-secret',
+			Internal\EmbeddedComponents\EmbeddingSecret::class
+		);
 	}
 }

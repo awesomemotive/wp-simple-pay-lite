@@ -76,6 +76,29 @@ function register_subsections( $subsections ) {
 			)
 		)
 	);
+
+	// Payment Confirmations/Subscription.
+	$subsections->add(
+		new Settings\Subsection(
+			array(
+				'id'       => 'subscription',
+				'section'  => 'payment-confirmations',
+				'label'    => esc_html_x( 'Subscription', 'settings subsection label', 'stripe' ),
+				'priority' => 30,
+			)
+		)
+	);
+
+	$subsections->add(
+		new Settings\Subsection(
+			array(
+				'id'       => 'subscription-cancelled',
+				'section'  => 'payment-confirmations',
+				'label'    => esc_html_x( 'Subscription Cancelled', 'settings subsection label', 'stripe' ),
+				'priority' => 50,
+			)
+		)
+	);
 }
 add_action( 'simpay_register_settings_subsections', __NAMESPACE__ . '\\register_subsections' );
 
@@ -89,6 +112,7 @@ add_action( 'simpay_register_settings_subsections', __NAMESPACE__ . '\\register_
 function register_settings( $settings ) {
 	register_page_settings( $settings );
 	register_one_time_payment_confirmation_settings( $settings );
+	register_subscription_payment_confirmation_settings( $settings );
 }
 add_action( 'simpay_register_settings', __NAMESPACE__ . '\\register_settings' );
 
@@ -223,7 +247,7 @@ function register_one_time_payment_confirmation_settings( $settings ) {
 					'setting label',
 					'stripe'
 				),
-				'output'     => function() {
+				'output'     => function () {
 					wp_editor(
 						simpay_get_setting(
 							'one_time_payment_details',
@@ -244,7 +268,56 @@ function register_one_time_payment_confirmation_settings( $settings ) {
 						Payment_Confirmation\Template_Tags\__unstable_get_tags_and_descriptions()
 					);
 				},
-				'schema'      => array(
+				'schema'     => array(
+					'type' => 'string',
+				),
+			)
+		)
+	);
+}
+
+/**
+ * Registers subscription payment confirmation settings.
+ *
+ * @since 4.0.0
+ *
+ * @param \SimplePay\Core\Settings\Setting_Collection $settings Settings collection.
+ */
+function register_subscription_payment_confirmation_settings( $settings ) {
+	// Subscription.
+	$settings->add(
+		new Settings\Setting(
+			array(
+				'id'         => 'subscription_details',
+				'section'    => 'payment-confirmations',
+				'subsection' => 'subscription',
+				'label'      => esc_html_x(
+					'Confirmation Message',
+					'setting label',
+					'stripe'
+				),
+				'output'     => function () {
+					wp_editor(
+						simpay_get_setting(
+							'subscription_details',
+							Payment_Confirmation\get_subscription_message_default()
+						),
+						'subscription_details',
+						array(
+							'textarea_name' => 'simpay_settings[subscription_details]',
+							'textarea_rows' => 10,
+						)
+					);
+
+					Payment_Confirmation\Template_Tags\__unstable_print_tag_list(
+						esc_html__(
+							'Enter what your customers will see after a successful subscription.',
+							'stripe'
+						),
+						Payment_Confirmation\Template_Tags\__unstable_get_tags_and_descriptions()
+					);
+				},
+				'schema'     => array(
 					'type' => 'string',
 				),
 			)

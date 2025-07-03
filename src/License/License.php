@@ -357,17 +357,7 @@ class License {
 	 * @return bool
 	 */
 	public function is_subscriptions_enabled() {
-		// Invalid, so no subscriptions.
-		if ( false === $this->is_valid() ) {
-			return false;
-		}
-
-		// Lite, so no subscriptions.
-		if ( true === $this->is_lite() ) {
-			return false;
-		}
-
-		return $this->is_pro( 'plus', '>=' );
+		return true;
 	}
 
 	/**
@@ -502,11 +492,10 @@ class License {
 		$license_data = get_option( 'simpay_license_data', '' );
 
 		if ( empty( $license_data ) ) {
-			return new stdClass;
+			return new stdClass();
 		}
 
 		/** @var object $license_data */
 		return $license_data;
 	}
-
 }

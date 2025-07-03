@@ -66,6 +66,14 @@ class PriceOption {
 	public $default;
 
 	/**
+	 * Determines if the option is required.
+	 *
+	 * @since 4.13.0
+	 * @var bool
+	 */
+	public $required;
+
+	/**
 	 * Optional. User-set label representing the PriceOption.
 	 *
 	 * @since 4.1.0
@@ -112,6 +120,14 @@ class PriceOption {
 	 * @var int
 	 */
 	public $unit_amount_min;
+
+	/**
+	 * Optional. Unit amount maximum in the currency's lowest possible unit.
+	 *
+	 * @since 4.7.0
+	 * @var int|null
+	 */
+	public $unit_amount_max;
 
 	/**
 	 * Determines if a one-time amount can optionally be purchased as a subscription.
@@ -299,6 +315,9 @@ class PriceOption {
 		$this->default = isset( $price_data['default'] ) &&
 			true === $price_data['default'];
 
+		$this->required = isset( $price_data['required'] ) &&
+			true === $price_data['required'];
+
 		$this->can_recur = isset( $price_data['can_recur'] ) &&
 			true === $price_data['can_recur'];
 
@@ -387,6 +406,10 @@ class PriceOption {
 
 			if ( isset( $price_data['unit_amount_min'] ) ) {
 				$this->unit_amount_min = $price_data['unit_amount_min'];
+			}
+
+			if ( isset( $price_data['unit_amount_max'] ) ) {
+				$this->unit_amount_max = $price_data['unit_amount_max'];
 			}
 
 			if (

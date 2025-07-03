@@ -60,7 +60,7 @@ class PluginTelemetryData extends AbstractTelemetryData {
 			'stripe_country'  => strtolower( $country ),
 			'stripe_currency' => $currency,
 			'stripe_webhook'  => $this->is_webhook_working(),
-			'stripe_upe'      => simpay_is_upe(),
+			'stripe_upe'      => true,
 			'fraud_captcha'   => $this->get_antispam_captcha(),
 		);
 

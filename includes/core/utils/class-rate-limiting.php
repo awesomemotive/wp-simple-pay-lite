@@ -172,7 +172,7 @@ class Rate_Limiting {
 		}
 
 		// UPE makes single requests, so it should be lower.
-		$max_rate_count = simpay_is_upe() ? 5 : 18;
+		$max_rate_count = 5;
 
 		/**
 		 * Filters the number of times the endpoint can be hit within the specified time period (1 hour).

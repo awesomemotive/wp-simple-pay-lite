@@ -727,17 +727,21 @@ function bindPriceOptions() {
 		// Default checkbox.
 		const defaultToggle = priceEl.querySelector( '.simpay-price-default' );
 
-		defaultToggle.addEventListener( 'change', () =>
-			onToggleDefault( priceEl )
-		);
+		if ( defaultToggle ) {
+			defaultToggle.addEventListener( 'change', () =>
+				onToggleDefault( priceEl )
+			);
+		}
 
 		// Remove.
 		const removeToggle = priceEl.querySelector( '.simpay-price-remove' );
 
-		removeToggle.addEventListener( 'click', ( e ) => {
-			e.preventDefault();
-			onRemove( priceEl );
-		} );
+		if ( removeToggle ) {
+			removeToggle.addEventListener( 'click', ( e ) => {
+				e.preventDefault();
+				onRemove( priceEl );
+			} );
+		}
 
 		// Configure Button.
 		const configureButtons = priceEl.querySelectorAll(

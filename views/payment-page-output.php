@@ -49,7 +49,6 @@
 	</style>
 </head>
 <body class="simpay-payment-page">
-
 	<div>
 		<div class="simpay-payment-page-wrap">
 			<?php if ( ! empty( $image ) ) : ?>

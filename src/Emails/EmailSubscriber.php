@@ -172,6 +172,8 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			/** @var \SimplePay\Vendor\Stripe\Customer $customer */
 			$customer = $object->customer;
 
+		} elseif ( $object instanceof \SimplePay\Vendor\Stripe\Customer ) {
+			$customer = $object;
 		} else {
 			$form     = simpay_get_form( $form_id );
 			$customer = API\Customers\retrieve(

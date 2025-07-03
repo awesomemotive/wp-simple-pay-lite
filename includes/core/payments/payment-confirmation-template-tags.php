@@ -10,6 +10,8 @@
 
 namespace SimplePay\Core\Payments\Payment_Confirmation\Template_Tags;
 
+use SimplePay\Core\Payments\Stripe_API;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -51,6 +53,8 @@ function get_tags( $payment_confirmation_data ) {
 		'payment-url',
 		'subtotal-amount',
 		'receipt',
+		'recurring-amount',
+		'next-invoice-date',
 	);
 
 	/**
@@ -360,11 +364,12 @@ function receipt( $value, $payment_confirmation_data ) {
 			: 0;
 
 		if ( isset( $payment_confirmation_data['checkout_session'] ) ) {
-			$session  = $payment_confirmation_data['checkout_session'];
-			$discount = $session->total_details->amount_discount;
-			$tax      = $session->total_details->amount_tax;
-			$subtotal = $session->amount_subtotal;
-			$total    = $session->amount_total;
+			$session        = $payment_confirmation_data['checkout_session'];
+			$discount       = $session->total_details->amount_discount;
+			$tax            = $session->total_details->amount_tax;
+			$subtotal       = $session->amount_subtotal;
+			$total          = $session->amount_total;
+			$payment_intent = $session;
 		} else {
 			$discount = isset( $payment_intent->metadata->simpay_discount_unit_amount )
 				? $payment_intent->metadata->simpay_discount_unit_amount
@@ -407,7 +412,7 @@ function receipt( $value, $payment_confirmation_data ) {
 
 			$amount = 0 === $price_instance['amount']
 				? $price_instance['quantity'] * $price_option->unit_amount
-				: $price_instance['amount'];
+				: $price_instance['amount'] * $price_instance['quantity'];
 
 			if ( isset( $price_option->recurring, $price_option->recurring['trial_period_days'] ) ) {
 				$amount   = 0;
@@ -892,9 +897,6 @@ add_filter(
  * @return string
  */
 function subtotal_amount( $value, $payment_confirmation_data ) {
-	if ( ! simpay_is_upe() ) {
-		return $value;
-	}
 
 	if ( $payment_confirmation_data['form']->allows_multiple_line_items() ) {
 		$invoice = $payment_confirmation_data['initial_invoice'];
@@ -928,6 +930,245 @@ add_filter(
 );
 
 /**
+ * Replaces {recurring-amount} smart tag.
+ *
+ * @since 3.6.0
+ *
+ * @param string $value Smart tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function recurring_amount( $value, $payment_confirmation_data ) {
+	if ( isset( $payment_confirmation_data['checkout_session'] ) && isset( $payment_confirmation_data['checkout_session']->subscription ) ) {
+		$subscription_id                            = $payment_confirmation_data['checkout_session']->subscription;
+		$subscription                               = \SimplePay\Core\API\Subscriptions\retrieve( $subscription_id, $payment_confirmation_data['form']->get_api_request_args() );
+		$payment_confirmation_data['subscriptions'] = array( $subscription );
+	}
+
+	if ( empty( $payment_confirmation_data['subscriptions'] ) ) {
+		return $value;
+	}
+
+	$subscription = current( $payment_confirmation_data['subscriptions'] );
+
+	// Subscription is cancelled, show status.
+	if ( $subscription->canceled_at ) {
+		return esc_html_x( 'Cancelled', 'subscription status', 'stripe' );
+	}
+
+	$recurring_nouns = simpay_get_recurring_intervals();
+
+	// Retrieve line item data.
+	$line_item      = current( $subscription->items->data )->price;
+	$interval_count = $line_item->recurring->interval_count;
+	$interval       = $line_item->recurring->interval;
+
+	// If the interval count is singular, do not show it.
+	$interval_string = 1 === $interval_count ? '' : $interval_count;
+
+	// Determine singular or plural day, month, year.
+	$interval_count_string = 1 === $interval_count
+		? $recurring_nouns[ $interval ][0]
+		: $recurring_nouns[ $interval ][1];
+
+	// Determine if a coupon is applied to the Customer.
+	$customer             = $payment_confirmation_data['customer'];
+	$has_discount         = null !== $customer->discount;
+	$has_limited_discount = $has_discount
+		&& 'forever' !== $customer->discount->coupon->duration;
+
+	// Determine if there is an invoice limit.
+	$invoice_limit = isset( $subscription->metadata->simpay_charge_max );
+
+	// Current recurring amount.
+	try {
+		$upcoming_invoice = Stripe_API::request(
+			'Invoice',
+			'upcoming',
+			array(
+				'customer' => $customer->id,
+			),
+			$payment_confirmation_data['form']->get_api_request_args()
+		);
+
+		$current_recurring_amount = simpay_format_currency(
+			$upcoming_invoice->amount_due,
+			$upcoming_invoice->currency
+		);
+	} catch ( Exception $e ) {
+		$current_recurring_amount = simpay_format_currency(
+			0,
+			$line_item->currency
+		);
+	}
+
+	// Special invoice limit handling.
+	if ( true === $invoice_limit ) {
+		if ( true === $has_discount && true === $has_limited_discount ) {
+			return esc_html(
+				sprintf(
+					/* translators: %1$s Invoice limit. %2$s Recurring interval count. %3$s Recurring interval. %4$s Recurring amount limit */
+					_x(
+						'%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s',
+						'recurring interval with invoice limit',
+						'stripe'
+					),
+					absint( $subscription->metadata->simpay_charge_max ),
+					$current_recurring_amount,
+					$interval_string,
+					$interval_count_string
+				)
+			);
+		} else {
+			return esc_html(
+				sprintf(
+					/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit */
+					_x(
+						'%1$d payments of %2$s every %3$s %4$s',
+						'recurring interval with invoice limit',
+						'stripe'
+					),
+					absint( $subscription->metadata->simpay_charge_max ),
+					$current_recurring_amount,
+					$interval_string,
+					$interval_count_string
+				)
+			);
+		}
+	}
+
+	$current_recurring_amount_string = esc_html(
+		sprintf(
+			/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
+			_x(
+				'%1$s every %2$s %3$s',
+				'recurring interval',
+				'stripe'
+			),
+			$current_recurring_amount,
+			$interval_string,
+			$interval_count_string
+		)
+	);
+
+	// No discount, or forever discount.
+	if ( false === $has_discount || false === $has_limited_discount ) {
+		return $current_recurring_amount_string;
+	}
+
+	// Undiscounted recurring amount.
+	$undiscounted_recurring_amount = simpay_format_currency(
+		$line_item->unit_amount,
+		$line_item->currency
+	);
+
+	$undiscounted_recurring_amount_string = esc_html(
+		sprintf(
+			/* translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval. */
+			_x(
+				'%1$s every %2$s %3$s',
+				'recurring interval',
+				'stripe'
+			),
+			$undiscounted_recurring_amount,
+			$interval_string,
+			$interval_count_string
+		)
+	);
+
+	$tax_status = get_post_meta(
+		$payment_confirmation_data['form']->id,
+		'_tax_status',
+		true
+	);
+
+	if ( 'automatic' === $tax_status ) {
+		return esc_html(
+			sprintf(
+				/* translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount. */
+				_x(
+					'%1$s every %2$s %3$s until coupon expires',
+					'recurring interval with automatic tax',
+					'stripe'
+				),
+				$current_recurring_amount,
+				$interval_string,
+				$interval_count_string
+			)
+		);
+	}
+
+	return esc_html(
+		sprintf(
+			/* translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount. */
+			_x(
+				'%1$s every %2$s %3$s for %4$s months then %5$s',
+				'recurring interval',
+				'stripe'
+			),
+			$current_recurring_amount,
+			$interval_string,
+			$interval_count_string,
+			$customer->discount->coupon->duration_in_months,
+			$undiscounted_recurring_amount_string
+		)
+	);
+}
+add_filter( 'simpay_payment_confirmation_template_tag_recurring-amount', __NAMESPACE__ . '\\recurring_amount', 10, 2 );
+
+/**
+ * Replaces {next-invoice-date} with the Subscription's next Invoice date.
+ *
+ * @since 4.0.0
+ *
+ * @param string $value Default value (empty string).
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function next_invoice_date( $value, $payment_confirmation_data ) {
+	if ( isset( $payment_confirmation_data['checkout_session'] ) && isset( $payment_confirmation_data['checkout_session']->subscription ) ) {
+		$subscription_id                            = $payment_confirmation_data['checkout_session']->subscription;
+		$subscription                               = \SimplePay\Core\API\Subscriptions\retrieve( $subscription_id, $payment_confirmation_data['form']->get_api_request_args() );
+		$payment_confirmation_data['subscriptions'] = array( $subscription );
+	}
+
+	if ( empty( $payment_confirmation_data['subscriptions'] ) ) {
+		return $value;
+	}
+
+	$subscription = current( $payment_confirmation_data['subscriptions'] );
+
+	// Localize to current timezone and formatting.
+	$value = get_date_from_gmt(
+		date( 'Y-m-d H:i:s', $subscription->current_period_end ),
+		'U'
+	);
+	$value = date_i18n( get_option( 'date_format' ), $value );
+
+	return esc_html( $value );
+}
+add_filter(
+	'simpay_payment_confirmation_template_tag_next-invoice-date',
+	__NAMESPACE__ . '\\next_invoice_date',
+	10,
+	3
+);
+
+/**
  * Returns a list of available smart tags and their descriptions.
  *
  * @todo Temporary until this can be more easily generated through a tag registry.
@@ -938,38 +1179,44 @@ add_filter(
  */
 function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
 	$tags = array(
-		'form-title'       => esc_html__(
+		'form-title'        => esc_html__(
 			'The form\'s title.',
 			'stripe'
 		),
-		'form-description' => esc_html__(
+		'form-description'  => esc_html__(
 			'The form\'s description.',
 			'stripe'
 		),
-		'total-amount'     => esc_html__(
+		'total-amount'      => esc_html__(
 			'The total price of the payment.',
 			'stripe'
 		),
-		'customer-name'    => esc_html__(
+		'customer-name'     => esc_html__(
 			'The value of the Name form field.',
 			'stripe'
 		),
-		'charge-date'      => esc_html__(
+		'charge-date'       => esc_html__(
 			'The charge date returned from Stripe.',
 			'stripe'
 		),
-		'charge-id'        => esc_html__(
+		'charge-id'         => esc_html__(
 			'The unique charge ID returned from Stripe.',
+			'stripe'
+		),
+		'recurring-amount'  => esc_html__(
+			'The recurring amount to be charged each period of the subscription plan.',
+			'stripe'
+		),
+		'next-invoice-date' => esc_html__(
+			'The date the next invoice is due.',
 			'stripe'
 		),
 	);
 
-	if ( simpay_is_upe() ) {
-		$tags['subtotal-amount'] = esc_html__(
-			'The cumulative cost of selected items.',
-			'stripe'
-		);
-	}
+	$tags['subtotal-amount'] = esc_html__(
+		'The cumulative cost of selected items.',
+		'stripe'
+	);
 
 	if ( class_exists( 'SimplePay\Pro\SimplePayPro' ) ) {
 		$tags['payment-type'] = esc_html__(
@@ -1002,12 +1249,11 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 			'stripe'
 		);
 
-		if ( simpay_is_upe() ) {
-			$tags['coupon-amount'] = esc_html__(
-				'The amount of the coupon applied to the payment.',
-				'stripe'
-			);
-		}
+		$tags['coupon-amount'] = esc_html__(
+			'The amount of the coupon applied to the payment.',
+			'stripe'
+		);
+
 	}
 
 	return $tags;

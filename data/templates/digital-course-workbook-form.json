@@ -1,0 +1,95 @@
+{
+	"id": "550e8400-e29b-41d4-a716-446655440001",
+	"created_at": "2025-04-22 00:00:00",
+	"updated_at": "2025-04-22 00:00:00",
+	"license": [
+		"plus",
+		"professional",
+		"ultimate",
+		"elite"
+	],
+	"categories": [
+		"education",
+		"digital",
+		"physical"
+	],
+	"keywords": [
+		"course",
+		"workbook",
+		"digital",
+		"learning",
+		"education"
+	],
+	"slug": "digital-course-workbook-form",
+	"name": "Digital Course + Physical Workbook Form",
+	"description": "A form for purchasing digital courses with optional physical workbooks",
+	"url": "",
+	"data": {
+		"title": "Digital Course + Physical Workbook",
+		"description": "Enroll in our digital courses and optionally add a physical workbook to enhance your learning experience. Select your preferred course, choose workbook options if desired, and provide your details for digital access and physical delivery.",
+		"type": "embedded",
+		"allow_purchasing_multiple_line_items": "yes",
+		"payment_methods": [
+			"card"
+		],
+		"fields": [
+			{
+				"type": "plan_select",
+				"label": ""
+			},
+			{
+				"type": "customer_name",
+				"label": "Full Name"
+			},
+			{
+				"type": "email",
+				"label": "Email Address"
+			},
+			{
+				"type": "dropdown",
+				"label": "Workbook Language",
+				"options": "English, Spanish, French, German"
+			},
+			{
+				"type": "address",
+				"billing-container-label": "Workbook Delivery Address",
+				"required": "no"
+			},
+			{
+				"type": "dropdown",
+				"label": "Course Start Date",
+				"options": "Next Available Session, Custom Start Date"
+			},
+			{
+				"type": "dropdown",
+				"label": "Study Group Preference",
+				"options": "Morning Group (9AM-12PM), Afternoon Group (1PM-4PM), Evening Group (6PM-9PM), Self-Paced"
+			},
+			{
+				"type": "textarea",
+				"label": "Additional Notes (Optional)"
+			},
+			{
+				"type": "card",
+				"label": "Credit Card"
+			},
+			{
+				"text": "Enroll Now for {{amount}}",
+				"type": "checkout_button"
+			}
+		],
+		"prices": [
+			{
+				"unit_amount": 19900,
+				"default": true,
+				"label": "Digital Course",
+				"required": true
+			},
+			{
+				"unit_amount": 4900,
+				"label": "Physical Workbook",
+				"required": false
+			}
+		]
+	}
+}

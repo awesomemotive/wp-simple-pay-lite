@@ -67,7 +67,7 @@ final class Plugin {
 		}
 
 		// Run slightly early to gain access to legacy registries.
-		add_action( 'plugins_loaded', array( $this, 'register' ), 5 ); // @phpstan-ignore-line
+		add_action( 'init', array( $this, 'register' ), 5 ); // @phpstan-ignore-line
 	}
 
 	/**

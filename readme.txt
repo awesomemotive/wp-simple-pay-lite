@@ -1,9 +1,9 @@
 === Stripe Payment Forms by WP Simple Pay - Accept Credit Card Payments + Subscriptions with Stripe ===
-Contributors: wpsimplepay, am, spencerfinnell, adamjlea, cklosows, smub
+Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
-Tested up to: 6.7
-Stable tag: 4.12.2
+Tested up to: 6.8.1
+Stable tag: 4.14.1
 Requires PHP: 7.2
 License: GPLv2 or later
 
@@ -248,6 +248,25 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 10. Global payment form settings: Payment confirmation details
 
 == Changelog ==
+
+= Stripe Payment Forms v4.14.1 - July 2, 2025 =
+
+* New: Subscription Payments are now available for ALL users! Yes, even those using the Lite version! This makes it easier than ever to set up recurring revenue streams, offer memberships, or sell ongoing services - no matter what plan you are on.
+* New: Added a customizable "Subscription Cancelled" message. Tailor the message to match your brand’s voice!
+* New: Introduced new payment form templates, including options for gift vouchers, digital courses, and physical workbooks.
+* New: Activity & Reports - see Stripe Balance and "action required" Stripe Account notifications.
+* New: Pricing - allow a price option to be required during a multiple item purchase.
+* New: Pricing - allow a maximum amount to be set for custom amounts.
+* New: Payment Methods - SEPA Direct Debit - enabled for Bulgaria.
+* Update: Removed the legacy payment flow to simplify and modernize the payment experience.
+* Fix: Failed payments sometimes do not redirect users to the failure page.
+* Fix: PHP notice due to translations loaded too early.
+* Fix: "Resend Payment Receipt" functionality now works reliably in all scenarios.
+* Fix: Pricing - ensure existing Stripe plan can be imported.
+* Fix: Pricing - payment forms without description.
+* Fix: Legacy payment flow - ensure custom amount is properly captured with Stripe Checkout.
+* Fix: Custom Fields - Date - avoid `z-index` conflicts with other libraries.
+* Fix: Smart Tags - `{receipt}` - ensure quantity is reflected accurately in all scenarios.
 
 = Stripe Payment Forms v4.12.2 - January 9, 2025 =
 

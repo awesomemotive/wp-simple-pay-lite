@@ -41,9 +41,9 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 
 		if ( is_admin() ) {
 			$subscribers[] = 'notification-inbox-ui';
-			$subscribers[] = 'admin-notification-upe';
 			$subscribers[] = 'admin-notification-five-star-rating';
 			$subscribers[] = 'admin-notification-stripe-connect';
+			$subscribers[] = 'admin-notification-upe-migration';
 		}
 
 		return $subscribers;
@@ -106,10 +106,9 @@ class NotificationInboxServiceProvider extends AbstractPluginServiceProvider imp
 			NotificationInboxUi::class
 		);
 
-		// UPE notification.
 		$container->share(
-			'admin-notification-upe',
-			Notifications\UpeNotification::class
+			'admin-notification-upe-migration',
+			Notifications\UpeMigration::class
 		);
 
 		// Five Star Rating notification.

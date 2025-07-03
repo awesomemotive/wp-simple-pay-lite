@@ -30,6 +30,7 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 
 	// Payment helpers.
 	use Traits\CheckoutSessionTrait;
+	use Traits\SubscriptionTrait;
 
 	/**
 	 * {@inheritdoc}
@@ -127,13 +128,26 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 		$quantity = PaymentRequestUtils::get_quantity( $request );
 
 		$session_args = array(
-			'customer_creation' => 'always',
-			'locale'            => $form->locale,
-			'metadata'          => array(
+			'locale'   => $form->locale,
+			'metadata' => array(
 				'simpay_form_id' => $form->id,
 			),
-			'mode'              => 'payment',
+			'mode'     => 'payment',
 		);
+
+		// Check if the price is recurring.
+		if ( PaymentRequestUtils::is_recurring( $request ) ) {
+			$session_args['mode'] = 'subscription';
+		} else {
+			$session_args['customer_creation'] = 'always';
+
+			// Submit type - only for payment mode.
+			if ( ! empty( $form->checkout_submit_type ) ) {
+				$session_args['submit_type'] = $form->checkout_submit_type;
+			}
+		}
+
+		$session_args['metadata'] = PaymentRequestUtils::get_payment_metadata( $request );
 
 		// Collect Billing Address.
 		if ( true === $form->enable_billing_address ) {
@@ -158,11 +172,6 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 
 		// Cancel URL.
 		$session_args['cancel_url'] = PaymentRequestUtils::get_cancel_url( $request );
-
-		// Submit type.
-		if ( ! empty( $form->checkout_submit_type ) ) {
-			$session_args['submit_type'] = $form->checkout_submit_type;
-		}
 
 		// Phone number.
 		$enable_phone = 'yes' === simpay_get_saved_meta(
@@ -229,6 +238,18 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 
 		$session_args['payment_intent_data'] = $payment_intent_data;
 
+		if ( PaymentRequestUtils::is_recurring( $request ) ) {
+			unset( $session_args['payment_intent_data'] );
+
+			$session_args['subscription_data'] = $this->get_subscription_args(
+				$request
+			);
+
+			if ( $this->application_fee->has_application_fee() ) {
+				$session_args['subscription_data']['application_fee_percent'] = $this->application_fee->get_application_fee_percentage();
+			}
+		}
+
 		$session_args['custom_fields'] = $this->get_custom_fields( $request );
 
 		return $session_args;
@@ -248,7 +269,7 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 
 		$fields = array_filter(
 			$fields,
-			function( $field ) {
+			function ( $field ) {
 				return 'payment_button' !== $field['type'];
 			}
 		);
@@ -268,7 +289,7 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 				: sprintf( '%s-%d', $type, $k );
 
 			// Create a key from the label.
-			$key = preg_replace( "/[^a-zA-Z0-9]/", '', $label );
+			$key = preg_replace( '/[^a-zA-Z0-9]/', '', $label );
 
 			$args = array(
 				'key'      => $key,
@@ -288,10 +309,10 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 				$options = array_filter( $options );
 
 				$args['dropdown']['options'] = array_map(
-					function( $option ) {
+					function ( $option ) {
 						return array(
 							'label' => $option,
-							'value' => preg_replace( "/[^a-zA-Z0-9]/", '', $option ),
+							'value' => preg_replace( '/[^a-zA-Z0-9]/', '', $option ),
 						);
 					},
 					$options
@@ -303,5 +324,4 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 
 		return $custom_fields;
 	}
-
 }

@@ -7,7 +7,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { Tooltip } from '@wordpress/components';
-import { __ , sprintf } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { decodeEntities } from '@wordpress/html-entities';
 
 function Payment( payment ) {
@@ -27,12 +27,23 @@ function Payment( payment ) {
 		'is-failed': 'failed' === status,
 	} );
 
+	// Add function to truncate email
+	const truncateEmail = ( email ) => {
+		const [ username ] = email.split( '@' );
+		return username;
+	};
 
+	/**
+	 * Get tooltip text for refund status.
+	 *
+	 * @return {string} Tooltip text.
+	 */
 	const getTooltipText = () => {
 		if ( isPartialRefund() && 'refunded' === status ) {
 			return sprintf(
-				__('%s refund was initiated', 'simple-pay'),
-				decodeEntities(payment.amount_refunded_formatted)
+				/* translators: %s: Refunded amount */
+				__( '%s refund was initiated', 'simple-pay' ),
+				decodeEntities( payment.amount_refunded_formatted )
 			);
 		}
 	};
@@ -68,9 +79,7 @@ function Payment( payment ) {
 			<td className={ `${ rowClassName }__status` }>
 				<Tooltip text={ getTooltipText() }>
 					<div className={ badgeClassNames }>
-						<span>
-							{ statusFormatted }
-						</span>
+						<span>{ statusFormatted }</span>
 
 						<svg
 							aria-hidden="true"
@@ -90,13 +99,13 @@ function Payment( payment ) {
 							) : 'refunded' === status && isPartialRefund() ? (
 								<>
 									<path
-										fill-rule="evenodd"
-										clip-rule="evenodd"
+										fillRule="evenodd"
+										clipRule="evenodd"
 										d="M11 2.5H5A2.5 2.5 0 0 0 2.5 5v6A2.5 2.5 0 0 0 5 13.5h6a2.5 2.5 0 0 0 2.5-2.5V5A2.5 2.5 0 0 0 11 2.5ZM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5Z"
 									></path>
 									<path
-										fill-rule="evenodd"
-										clip-rule="evenodd"
+										fillRule="evenodd"
+										clipRule="evenodd"
 										d="M6.25 8A.75.75 0 0 1 7 7.25h1.25A.75.75 0 0 1 9 8v3.5a.75.75 0 0 1-1.5 0V8.75H7A.75.75 0 0 1 6.25 8Z"
 									></path>
 									<path d="M6.75 5a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0Z"></path>
@@ -126,7 +135,7 @@ function Payment( payment ) {
 						target="_blank"
 						rel="noreferrer noopener"
 					>
-						{ email }
+						{ truncateEmail( email ) }
 					</a>
 				</Tooltip>
 			</td>

@@ -78,7 +78,7 @@ class Assets {
 
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
@@ -90,26 +90,13 @@ class Assets {
 	 * @since 3.0.0
 	 */
 	public function setup() {
-		$public_js   = simpay_is_upe()
-			? SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-upe.js'
-			: SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public.js';
+		$public_js = SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-upe.js';
 
-		$public_deps = simpay_is_upe()
-			? array(
-				'jquery',
-				'wp-a11y',
-				'wp-api-fetch',
-			)
-			: array(
-				'jquery',
-				'underscore',
-				'wp-util',
-				'wp-api',
-				'wp-a11y',
-				'wp-polyfill',
-				'simpay-accounting',
-				'simpay-shared',
-			);
+		$public_deps = array(
+			'jquery',
+			'wp-a11y',
+			'wp-api-fetch',
+		);
 
 		$this->scripts = array(
 			'sandhills-stripe-js-v3' => array(
@@ -132,15 +119,6 @@ class Assets {
 				'footer' => true,
 			),
 		);
-
-		if ( ! simpay_is_upe() ) {
-			$this->scripts['simpay-shared'] = array(
-				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-shared.js',
-				'deps'   => array( 'jquery', 'simpay-accounting' ),
-				'ver'    => SIMPLE_PAY_VERSION,
-				'footer' => true,
-			);
-		}
 
 		$this->styles = array(
 			'stripe-checkout-button' => array(
@@ -247,6 +225,5 @@ class Assets {
 
 		// Do not array_merge here because it will just overwrite all the keys of previous forms. We need to keep them all.
 		self::$script_variables = self::$script_variables + $vars;
-
 	}
 }

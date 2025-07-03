@@ -19,4 +19,5 @@
 	<hr class="wp-header-end">
 
 	<div id="simpay-admin-page-activity-reports"></div>
+	<div id="simpay-admin-page-activity-reports-embedded-error"></div>
 </div>
