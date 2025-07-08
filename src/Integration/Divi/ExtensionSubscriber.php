@@ -38,6 +38,11 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 */
 	public function __construct( EventManager $events ) {
 		$this->events = $events;
+
+		// Check if Divi framework has already loaded and trigger builder_loaded if needed.
+		if ( did_action( 'et_builder_framework_loaded' ) ) {
+			$this->builder_loaded();
+		}
 	}
 
 	/**
@@ -48,7 +53,9 @@ class ExtensionSubscriber implements SubscriberInterface {
 			'et_builder_framework_loaded'       => 'builder_loaded',
 			'et_module_shortcode_output'        => array( 'render', 10, 3 ),
 			'et_pb_module_shortcode_attributes' => array(
-				'et_pb_cta_force_button', 10, 3
+				'et_pb_cta_force_button',
+				10,
+				3,
 			),
 		);
 	}
@@ -85,7 +92,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param array<mixed> $fields Module fields.
 	 * @return array<mixed> $fields
 	 */
-	function register_button_field( $fields ) {
+	public function register_button_field( $fields ) {
 		$fields['simpay_payment_form'] = array_merge(
 			$this->get_default_field_args(),
 			array(
@@ -105,7 +112,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param array<mixed> $fields Module fields.
 	 * @return array<mixed> $fields
 	 */
-	function register_cta_field( $fields ) {
+	public function register_cta_field( $fields ) {
 		$fields['simpay_payment_form'] = array_merge(
 			$this->get_default_field_args(),
 			array(
@@ -125,7 +132,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param array<mixed> $fields Module fields.
 	 * @return array<mixed> $fields
 	 */
-	function register_pricing_table_field( $fields ) {
+	public function register_pricing_table_field( $fields ) {
 		$fields['simpay_payment_form'] = array_merge(
 			$this->get_default_field_args(),
 			array(
@@ -147,7 +154,8 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string|array<mixed>
 	 */
-	public function render( $content, $slug, $module ) { // @phpstan-ignore-line
+	public function render( $content, $slug, $module ) {
+		// @phpstan-ignore-line
 		if ( ! in_array( $slug, $this->get_modules(), true ) ) {
 			return $content;
 		}
@@ -186,7 +194,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 			$output .= call_user_func( $render_func, $module );
 		}
 
-		$content = substr( $content, 0, -6 );
+		$content  = substr( $content, 0, -6 );
 		$content .= $output;
 		$content .= '</div>';
 
@@ -202,10 +210,10 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 *
 	 * @param array<mixed> $props Module properties.
 	 * @param array<mixed> $atts Module attributes.
-	 * @param string $slug Module slug.
+	 * @param string       $slug Module slug.
 	 * @return array<mixed>
 	 */
-	function et_pb_cta_force_button( $props, $atts, $slug ) {
+	public function et_pb_cta_force_button( $props, $atts, $slug ) {
 		if ( ! in_array( $slug, $this->get_modules(), true ) ) {
 			return $props;
 		}
@@ -231,7 +239,8 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string
 	 */
-	private function render_et_pb_button( $module ) { // @phpstan-ignore-line
+	private function render_et_pb_button( $module ) {
+		// @phpstan-ignore-line
 		$settings = $module->props; // @phpstan-ignore-line
 
 		return sprintf(
@@ -264,7 +273,8 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string
 	 */
-	private function render_et_pb_cta( $module ) { // @phpstan-ignore-line
+	private function render_et_pb_cta( $module ) {
+		// @phpstan-ignore-line
 		$settings = $module->props; // @phpstan-ignore-line
 
 		return sprintf(
@@ -296,7 +306,8 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string
 	 */
-	private function render_et_pb_pricing_table( $module ) { // @phpstan-ignore-line
+	private function render_et_pb_pricing_table( $module ) {
+		// @phpstan-ignore-line
 		$settings = $module->props; // @phpstan-ignore-line
 
 		return sprintf(
@@ -330,10 +341,10 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 */
 	private function get_default_field_args() {
 		return array(
-			'label'           => esc_html__( 'WP Simple Pay', 'stripe' ),
-			'type'            => 'select',
-			'options'         => $this->get_payment_form_options(),
-			'description'     => esc_html__(
+			'label'       => esc_html__( 'WP Simple Pay', 'stripe' ),
+			'type'        => 'select',
+			'options'     => $this->get_payment_form_options(),
+			'description' => esc_html__(
 				'WP Simple Pay form ID.',
 				'stripe'
 			),
@@ -347,7 +358,8 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 *
 	 * @param \ET_Builder_Element $module Divi module.
 	 */
-	private function get_module_selector( $module ) { // @phpstan-ignore-line
+	private function get_module_selector( $module ) {
+		// @phpstan-ignore-line
 		return '.' . implode(
 			'.',
 			array_filter(
@@ -403,7 +415,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 				}
 
 				$options[ $form_id ] = get_the_title( $form_id );
-			};
+			}
 		}
 
 		return $options;
@@ -454,5 +466,4 @@ class ExtensionSubscriber implements SubscriberInterface {
 				return count( $_custom_fields ) <= 2;
 		}
 	}
-
 }
