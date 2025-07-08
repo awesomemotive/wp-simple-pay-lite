@@ -164,17 +164,16 @@ function simpay_subscriptions_enabled() {
 /**
  * Checks if REST API is enabled.
  *
- * @link https://github.com/Automattic/jetpack/blob/master/_inc/lib/admin-pages/class.jetpack-admin-page.php#L157-L171
+ * @link https://github.com/Automattic/jetpack/blob/trunk/projects/plugins/jetpack/_inc/lib/admin-pages/class.jetpack-admin-page.php#L154-L159
  *
  * @since 4.0.0
+ * @version {next} Updated link and rest api check.
  *
  * @return bool
  */
 function simpay_is_rest_api_enabled() {
 	return /** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
 		apply_filters( 'rest_enabled', true ) &&
-		/** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
-		apply_filters( 'rest_jsonp_enabled', true ) &&
 		/** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
 		apply_filters( 'rest_authentication_errors', true );
 }
