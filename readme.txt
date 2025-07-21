@@ -262,7 +262,7 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 8. Payment forms listing
 9. Global payment form settings: Currency
 10. Global payment form settings: Connect with Stripe, Test mode
-12. Global payment form settings: Payment confirmation details
+11. Global payment form settings: Payment confirmation details
 12. Global payment form settings: Summary report email
 
 == Changelog ==
