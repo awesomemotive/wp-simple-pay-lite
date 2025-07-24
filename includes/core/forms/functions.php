@@ -660,7 +660,7 @@ function simpay_payment_form_add_missing_custom_fields(
 		if ( isset( $fields['fee_recovery_toggle'] ) ) {
 			unset( $fields['coupon'] );
 			$changes[] = __(
-				'Coupon field has been removed from the payment form.',
+				'Coupon field has been removed from the payment form because it is incompatible with Fee Recovery.',
 				'stripe'
 			);
 		}
@@ -677,7 +677,7 @@ function simpay_payment_form_add_missing_custom_fields(
 				) {
 					unset( $fields['coupon'] );
 					$changes[] = __(
-						'Coupon field has been removed from the payment form.',
+						'Coupon field has been removed from the payment form because it is incompatible with Fee Recovery.',
 						'stripe'
 					);
 					break;

@@ -120,8 +120,10 @@ trait Custom_Amount {
 			? 'simpay-price-locked'
 			: '';
 
-		$custom_amount_id   = $this->unstable_get_input_id( 'unit_amount_min', $instance_id );
-		$custom_amount_name = 'unit_amount_min';
+		$custom_amount_min_id   = $this->unstable_get_input_id( 'unit_amount_min', $instance_id );
+		$custom_amount_max_id   = $this->unstable_get_input_id( 'unit_amount_max', $instance_id );
+		$custom_amount_min_name = 'unit_amount_min';
+		$custom_amount_max_name = 'unit_amount_max';
 
 		$default_min = simpay_is_zero_decimal( $price->currency )
 			? 100
@@ -131,12 +133,16 @@ trait Custom_Amount {
 			? $price->unit_amount_min
 			: $default_min;
 
+		$unit_amount_max = null !== $price->unit_amount_max
+			? $price->unit_amount_max
+			: '';
+
 		$captcha_type = simpay_get_setting( 'captcha_type', '' );
 		?>
 
 		<div class="simpay-price-custom-amount">
 			<label
-				for="<?php echo esc_attr( $custom_amount_id ); ?>"
+				for="<?php echo esc_attr( $custom_amount_min_id ); ?>"
 				class="simpay-dialog-label"
 			>
 				<?php esc_html_e( 'Minimum Amount', 'stripe' ); ?>
@@ -147,7 +153,7 @@ trait Custom_Amount {
 				$price,
 				$instance_id,
 				$unit_amount_min,
-				$custom_amount_name
+				$custom_amount_min_name
 			);
 			?>
 
@@ -160,37 +166,35 @@ trait Custom_Amount {
 				?>
 			</p>
 
-			<?php if ( 'none' === $captcha_type ) : ?>
-				<div class="notice inline notice-warning">
-					<p>
-						<?php
-						$anti_spam_url = Settings\get_url(
-							array(
-								'section'     => 'general',
-								'subscection' => 'recaptcha',
-							)
-						);
-						echo wp_kses(
-							sprintf(
-								/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-								__(
-									'You have not enabled a CAPTCHA solution enabled on your site. %1$sConfigure CAPTCHA anti-spam settings &rarr;%2$s',
-									'stripe'
-								),
-								'<a href="' . esc_url( $anti_spam_url ) . '" target="_blank">',
-								'</a>'
-							),
-							array(
-								'a' => array(
-									'href'   => true,
-									'target' => true,
-								),
-							)
-						);
-						?>
-					</p>
-				</div>
-			<?php endif; ?>
+			<label
+				for="<?php echo esc_attr( $custom_amount_max_id ); ?>"
+				class="simpay-dialog-label"
+				style="margin-top: 20px;"
+			>
+				<?php esc_html_e( 'Maximum Amount', 'stripe' ); ?>
+			</label>
+
+			<?php
+
+			$unit_amount_max = empty( $unit_amount_max ) ? 0 : $unit_amount_max;
+
+			$this->unstable_price_option_amount_control_fixed_currency(
+				$price,
+				$instance_id,
+				$unit_amount_max,
+				$custom_amount_max_name,
+				''
+			);
+			?>
+
+			<p class="description">
+				<?php
+				esc_html_e(
+					'Set a maximum amount limit for custom payments. Leave empty for no upper limit.',
+					'stripe'
+				);
+				?>
+			</p>
 
 			<div class="simpay-dialog-actions">
 				<div>

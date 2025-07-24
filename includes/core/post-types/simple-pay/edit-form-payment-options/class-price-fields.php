@@ -515,7 +515,8 @@ class Price_Fields {
 		$price,
 		$instance_id,
 		$unit_amount,
-		$amount_input_name
+		$amount_input_name,
+		$amount_custom_placeholder = null
 	) {
 		$currency_position = simpay_get_currency_position();
 		$is_zero_decimal   = simpay_is_zero_decimal( $price->currency );
@@ -528,7 +529,7 @@ class Price_Fields {
 
 		$currency_position_right = ! $currency_position_left;
 
-		$amount_placeholder = simpay_format_currency(
+		$amount_placeholder = null !== $amount_custom_placeholder ? $amount_custom_placeholder : simpay_format_currency(
 			simpay_get_currency_minimum( $price->currency ),
 			$price->currency,
 			false
