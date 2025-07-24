@@ -5,7 +5,6 @@
  */
 import { default as hooks, doAction } from '@wpsimplepay/hooks';
 import * as paymentForms from '@wpsimplepay/payment-forms';
-import { default as legacyHelpers } from './utils/legacy.js';
 import './payment-forms';
 
 /**
@@ -26,8 +25,7 @@ window.simpayApp = {
 	formCount: 0,
 	spFormElList: {},
 	spFormData: {},
-	spFormElems: {},
-	...legacyHelpers,
+	spFormElems: {}
 };
 
 /**

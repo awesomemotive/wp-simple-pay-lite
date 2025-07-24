@@ -154,8 +154,8 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string|array<mixed>
 	 */
+	/** @phpstan-ignore-next-line */
 	public function render( $content, $slug, $module ) {
-		// @phpstan-ignore-line
 		if ( ! in_array( $slug, $this->get_modules(), true ) ) {
 			return $content;
 		}
@@ -164,7 +164,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 			return $content;
 		}
 
-		$settings = $module->props; // @phpstan-ignore-line
+		$settings = $module->props;
 
 		if (
 			! isset( $settings['simpay_payment_form'] ) ||
@@ -239,9 +239,9 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string
 	 */
+	/** @phpstan-ignore-next-line */
 	private function render_et_pb_button( $module ) {
-		// @phpstan-ignore-line
-		$settings = $module->props; // @phpstan-ignore-line
+		$settings = $module->props;
 
 		return sprintf(
 			'<script>( function() {
@@ -273,9 +273,9 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string
 	 */
+	/** @phpstan-ignore-next-line */
 	private function render_et_pb_cta( $module ) {
-		// @phpstan-ignore-line
-		$settings = $module->props; // @phpstan-ignore-line
+		$settings = $module->props;
 
 		return sprintf(
 			'<script>( function() {
@@ -306,9 +306,9 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @param \ET_Builder_Element $module Divi module.
 	 * @return string
 	 */
+	/** @phpstan-ignore-next-line */
 	private function render_et_pb_pricing_table( $module ) {
-		// @phpstan-ignore-line
-		$settings = $module->props; // @phpstan-ignore-line
+		$settings = $module->props;
 
 		return sprintf(
 			'<script>( function() {
@@ -357,15 +357,16 @@ class ExtensionSubscriber implements SubscriberInterface {
 	 * @since 4.4.3
 	 *
 	 * @param \ET_Builder_Element $module Divi module.
+	 * @return string
 	 */
+	/** @phpstan-ignore-next-line */
 	private function get_module_selector( $module ) {
-		// @phpstan-ignore-line
 		return '.' . implode(
 			'.',
 			array_filter(
 				array_map(
 					'trim',
-					explode( ' ', $module->module_classname( $module->slug ) ) // @phpstan-ignore-line
+					explode( ' ', $module->module_classname( $module->slug ) )
 				)
 			)
 		);

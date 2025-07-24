@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.14.1\n"
+"Project-Id-Version: WP Simple Pay Lite 4.14.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-08T14:33:56+00:00\n"
+"POT-Creation-Date: 2025-07-24T16:11:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -672,7 +672,7 @@ msgstr ""
 
 #: includes/core/forms/functions.php:662
 #: includes/core/forms/functions.php:679
-msgid "Coupon field has been removed from the payment form."
+msgid "Coupon field has been removed from the payment form because it is incompatible with Fee Recovery."
 msgstr ""
 
 #: includes/core/functions/admin.php:56
@@ -10394,14 +10394,14 @@ msgid ""
 msgstr ""
 
 #: includes/core/payments/payment-confirmation-template-tags.php:871
-#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:630
-#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:633
+#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:631
+#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:634
 msgid "Subscription"
 msgstr ""
 
 #: includes/core/payments/payment-confirmation-template-tags.php:873
-#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:623
-#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:626
+#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:624
+#: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:627
 msgid "One time"
 msgstr ""
 
@@ -11105,21 +11105,23 @@ msgstr ""
 msgid "Configure"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:142
+#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:148
 msgid "Minimum Amount"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:156
+#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:162
 msgid "Set a minimum amount based on the expected payment amounts you will be receiving. Allowing too low of a custom amount can lead to abuse and fraud."
 msgstr ""
 
-#. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:176
-#, php-format
-msgid "You have not enabled a CAPTCHA solution enabled on your site. %1$sConfigure CAPTCHA anti-spam settings &rarr;%2$s"
+#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:174
+msgid "Maximum Amount"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:199
+#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:192
+msgid "Set a maximum amount limit for custom payments. Leave empty for no upper limit."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:203
 #: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-quantity.php:179
 #: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-recurring.php:207
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:7
@@ -13498,7 +13500,7 @@ msgstr ""
 msgid "WP Simple Pay form ID."
 msgstr ""
 
-#: src/Integration/Divi/ExtensionSubscriber.php:409
+#: src/Integration/Divi/ExtensionSubscriber.php:410
 #: src/Integration/Elementor/PaymentFormControl.php:121
 msgid "Select a form&hellip;"
 msgstr ""

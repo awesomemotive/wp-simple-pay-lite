@@ -167,7 +167,7 @@ function simpay_subscriptions_enabled() {
  * @link https://github.com/Automattic/jetpack/blob/trunk/projects/plugins/jetpack/_inc/lib/admin-pages/class.jetpack-admin-page.php#L154-L159
  *
  * @since 4.0.0
- * @version {next} Updated link and rest api check.
+ * @version 4.14.2 Updated link and rest api check.
  *
  * @return bool
  */
