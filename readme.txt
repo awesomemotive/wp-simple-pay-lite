@@ -1,6 +1,6 @@
-=== Stripe Payment Forms by WP Simple Pay - Accept Credit Card + Subscription Payments with Stripe ===
+=== Stripe Payment Forms by WP Simple Pay - Accept Credit Card Payments + Subscriptions with Stripe ===
 Contributors: wpsimplepay, am, benjaminprojas, smub
-Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway, subscriptions, recurring payments
+Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 6.8.1
 Stable tag: 4.14.2
@@ -47,6 +47,13 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Set up membership sites and ongoing services
 - Subscription plan selection in payment forms
 
+If you need more functionality for your Stripe subscriptions, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to get these powerful features:
+
+- User-managed subscriptions with Stripe
+- Send subscription renewal reminders with Stripe
+- Custom subscription periods with Stripe
+- Custom subscription cancellation messages
+
 [View subscription templates](https://wpsimplepay.com/templates/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 === ✨ Advanced Stripe Payment Form Features ===
@@ -71,10 +78,6 @@ If you need more functionality for your Stripe payment forms, you can [upgrade t
 - Create installment plans with Stripe to split payments
 - Charge initial setup fees with Stripe
 - Offer free trials with Stripe
-- User-managed subscriptions with Stripe
-- Send subscription renewal reminders with Stripe
-- Custom subscription periods with Stripe
-- Custom subscription cancellation messages
 
 > **WP Simple Pay Pro - Stripe Payment Forms**
 > This plugin is the lite version of the WP Simple Pay Pro plugin that comes with many payment features including user-managed subscriptions & recurring payments, custom fields, user-entered amounts, coupon codes, tax rates, alternate payment methods, ACH, direct debit, Buy Now Pay Later and tons more. [Click here to purchase the best Stripe payment forms and Stripe payments plugin now!](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
