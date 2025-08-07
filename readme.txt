@@ -7,13 +7,13 @@ Stable tag: 4.14.3
 Requires PHP: 7.2
 License: GPLv2 or later
 
-🤩 Accept Stripe payments on your WordPress using WP Simple Pay, the best Stripe payments plugin! 🚀
+🤩 Accept Stripe payments and recurring subscriptions on your WordPress using WP Simple Pay, the best Stripe payments plugin! 🚀
 
 == Description ==
 
-=== The Best Stripe Payment Forms and Stripe Payments Plugin for WordPress ===
+=== The Best Stripe Payment Forms and Subscription Plugin for WordPress ===
 
-**WP Simple Pay** is the best Stripe payment forms and Stripe payments plugin for WordPress that helps you quickly accept credit card, Apple Pay, iDEAL, and other payment types on your WordPress site.
+**WP Simple Pay** is the best Stripe payment forms and subscription plugin for WordPress that helps you quickly accept credit card payments, recurring subscriptions, Apple Pay, iDEAL, and other payment types on your WordPress site.
 
 WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with WordPress. You don't need a complicated store setup or even need to use an ecommerce platform like WooCommerce. In just a few steps, you can be up and running in no time. Simply create a payment form and start accepting credit cards and other payment types with Stripe on your WordPress site.
 
@@ -39,6 +39,23 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Developer-friendly for building custom integrations
 - Pre-made payment form templates
 
+=== 🔄 Subscription & Recurring Payment Features ===
+
+**NEW: Subscription payments are now available for ALL users - including the LITE version!** 🎉
+
+- Accept recurring payments with Stripe
+- Set up membership sites and ongoing services
+- Subscription plan selection in payment forms
+
+If you need more functionality for your Stripe subscriptions, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to get these powerful features:
+
+- User-managed subscriptions with Stripe
+- Send subscription renewal reminders with Stripe
+- Custom subscription periods with Stripe
+- Custom subscription cancellation messages
+
+[View subscription templates](https://wpsimplepay.com/templates/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+
 === ✨ Advanced Stripe Payment Form Features ===
 
 If you need more functionality for your Stripe payment forms, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to get these powerful features:
@@ -53,21 +70,17 @@ If you need more functionality for your Stripe payment forms, you can [upgrade t
 - Accept Bacs Direct Debit in Stripe from customers in the U.K
 - Accept Bancontact payments in Stripe from customers in Belgium
 - Accept GrabPay payments in Stripe from customers in Malaysia
-- Accept recurring payments with Stripe
 - Buy Now, Pay Later with Klarna & Afterpay/Clearpay
 - Custom payment receipt emails with Stripe
-- Allow users to specificy the amount to pay (great for donations)
+- Allow users to specify the amount to pay (great for donations)
 - Coupon code management for Stripe
 - Tax rate management for Stripe
-- One-time & recurring subscription payments with Stripe
-- User-managed subscriptions with Stripe
-- Send subscription renewal reminders with Stripe
 - Create installment plans with Stripe to split payments
 - Charge initial setup fees with Stripe
 - Offer free trials with Stripe
 
 > **WP Simple Pay Pro - Stripe Payment Forms**
-> This plugin is the lite version of the WP Simple Pay Pro plugin that comes with many payment features including custom fields, user-entered amounts, coupon codes, tax rates, recurring payments (aka subscriptions), alternate payment methods, ACH, direct debit, Buy Now Pay Later and tons more. [Click here to purchase the best Stripe payment forms and Stripe payments plugin now!](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
+> This plugin is the lite version of the WP Simple Pay Pro plugin that comes with many payment features including user-managed subscriptions & recurring payments, custom fields, user-entered amounts, coupon codes, tax rates, alternate payment methods, ACH, direct debit, Buy Now Pay Later and tons more. [Click here to purchase the best Stripe payment forms and Stripe payments plugin now!](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
 By upgrading to WP Simple Pay Pro, you also get access to one-on-one help from our knowledgeable support team and our extensive documentation site.
 
@@ -185,11 +198,17 @@ The easiest way to install WP Simple Pay is to search for it via your site’s D
 5. When installation finishes, click “Activate Plugin”.
 6. A new menu item “WP Simple Pay” should appear in your dashboard.
 
-If you prefer installing manually you can [download the plugin ZIP file here](https://downloads.wordpress.org/plugin/stripe.latest-stable.zip).
+Once activated, you can immediately start creating both one-time and subscription payment forms!
+
+If you prefer installing manually, you can [download the plugin ZIP file here](https://downloads.wordpress.org/plugin/stripe.latest-stable.zip).
 
 Additional documentation at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
 
 == Frequently Asked Questions ==
+
+= Can I accept recurring subscription payments? =
+
+Yes! 🔥 Subscription payments are now available for ALL users - including this lite version! 🔥 You can set up recurring billing, create membership sites, offer ongoing services, and manage subscriptions directly through Stripe. No upgrade required!
 
 = Can I accept credit card payments on mobile? =
 
@@ -240,12 +259,14 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 2. Payment form settings: General
 3. Payment form settings: Set amount, Button text
 4. Payment form settings: Stripe Checkout options
-5. Desktop Stripe Checkout example
-6. Mobile Stripe Checkout example
-7. Payment forms listing
-8. Global payment form settings: Currency
-9. Global payment form settings: Connect with Stripe, Test mode
-10. Global payment form settings: Payment confirmation details
+5. Payment form settings: Subscription options
+6. Desktop Stripe Checkout example
+7. Mobile Stripe Checkout example
+8. Payment forms listing
+9. Global payment form settings: Currency
+10. Global payment form settings: Connect with Stripe, Test mode
+11. Global payment form settings: Payment confirmation details
+12. Global payment form settings: Summary report email
 
 == Changelog ==
 
