@@ -94,7 +94,7 @@ use SimplePay\Core\Utils;
 			<li>
 				<div class="dashicons dashicons-yes"></div>
 				<a href="<?php echo esc_url( simpay_ga_url( 'https://wpsimplepay.com/features/subscriptions/', 'license-settings-upgrade', 'Create Recurring Payments' ) ); ?>" target="_blank" rel="noopener noreferrer">
-					<?php esc_html_e( 'Create Recurring Payments', 'stripe' ); ?>
+					<?php esc_html_e( 'Advanced Recurring Payments', 'stripe' ); ?>
 				</a>
 			</li>
 			<li>

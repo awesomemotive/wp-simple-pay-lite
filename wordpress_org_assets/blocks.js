@@ -2,7 +2,7 @@
  * Since we dynamically load our blocks, wordpress.org cannot pick them up properly.
  * This file solely exists to let WordPress know what blocks we are currently using.
  *
- * @since {next}
+ * @since 4.14.0
  */
 
 /* eslint-disable no-undef */

@@ -546,6 +546,7 @@ function simpay_shared_script_variables() {
 		'decimalSeparator'  => simpay_get_decimal_separator(),
 		'thousandSeparator' => simpay_get_thousand_separator(),
 		'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+		'wpJsonUrl'         => get_rest_url(), // Handles all permalink structures: pretty, ugly, multisite, custom.
 		/* translators: %s: Minimum payment amount. */
 		'customAmountLabel' => esc_html__( 'starting at %s', 'stripe' ),
 		'recurringIntervals' => simpay_get_recurring_intervals(),

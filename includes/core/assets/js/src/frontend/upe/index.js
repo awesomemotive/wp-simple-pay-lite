@@ -77,19 +77,18 @@ function submitPaymentForm( event ) {
 			// Use the global wp.apiFetch so the middlewares are used.
 			// Our current webpack config is not setup to extract the
 			// dependencies automatically.
-			return window.wp
-				.apiFetch( {
-					path: 'wpsp/__internal__/payment/create',
-					method: 'POST',
-					data: {
-						token,
-						form_id: formId,
-						price_id: Object.values(
-							paymentForm.settings.prices
-						)[ 0 ].id,
-						quantity: 1,
-					},
-				} )
+			return window.wp.apiFetch( {
+				url: window.spGeneral.strings.wpJsonUrl + 'wpsp/__internal__/payment/create',
+				method: 'POST',
+				data: {
+					token,
+					form_id: formId,
+					price_id: Object.values(
+						paymentForm.settings.prices
+					)[ 0 ].id,
+					quantity: 1,
+				},
+			} )
 				.then( ( { redirect } ) => {
 					window.location.href = redirect;
 				} );

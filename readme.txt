@@ -3,7 +3,7 @@ Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 6.8.2
-Stable tag: 4.14.3
+Stable tag: 4.15.0
 Requires PHP: 7.2
 License: GPLv2 or later
 
@@ -269,6 +269,12 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 12. Global payment form settings: Summary report email
 
 == Changelog ==
+
+= Stripe Payment Forms v4.15.0 – August 13, 2025 =
+
+Update: Added more details to the System Report.
+Fix: Added support for 4-digit card numbers in the {card-last4} smart tag for Stripe Checkout one-time payments.
+Fix: Fixed incorrect frontend forms API URL when the wp-api script is deferred.
 
 = Stripe Payment Forms v4.14.3 - July 24, 2025 =
 

@@ -67,7 +67,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	 * @param array<string, string> $tabs Site Health tabs.
 	 * @return array<string, string>
 	 */
-	function maybe_remove_auto_update_string( $tabs ) {
+	public function maybe_remove_auto_update_string( $tabs ) {
 		add_filter( 'plugin_auto_update_debug_string', '__return_empty_string' );
 
 		return $tabs;
@@ -82,7 +82,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	 *
 	 * @return void
 	 */
-	function maybe_filter_debug_information() {
+	public function maybe_filter_debug_information() {
 		if ( isset( $_GET['simpay'] ) ) {
 			// @todo EventManager does not support remove_all_*
 			remove_all_filters( 'debug_information' );
@@ -485,6 +485,14 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 					'label' => __( 'Database Tables', 'stripe' ),
 					'value' => $this->get_custom_database_tables(),
 				),
+				'stripe_api_version'       => array(
+					'label' => __( 'Stripe API Version', 'stripe' ),
+					'value' => SIMPLE_PAY_STRIPE_API_VERSION, // @phpstan-ignore-line
+				),
+				'error_notifications'      => array(
+					'label' => __( 'Error Notifications', 'stripe' ),
+					'value' => $this->get_error_notifications(),
+				),
 			),
 		);
 
@@ -575,5 +583,45 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Returns recent error notifications from the database.
+	 *
+	 * @since 4.15.0
+	 *
+	 * @return array<string, string>
+	 */
+	private function get_error_notifications() {
+		global $wpdb;
+
+		$table_name = $wpdb->prefix . 'wpsp_notifications';
+		$exists     = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) );
+
+		if ( empty( $exists ) ) {
+			return array( 'status' => 'Table not found' );
+		}
+
+		$errors = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT title, date_created FROM ' . $wpdb->prefix . 'wpsp_notifications WHERE type = %s ORDER BY date_created DESC LIMIT 5',
+				'error'
+			)
+		);
+
+		if ( empty( $errors ) ) {
+			return array( 'status' => 'No errors found' );
+		}
+
+		/** @var array<string, string> $error_list */
+		$error_list = array();
+		$index      = 1;
+		foreach ( $errors as $error ) {
+			$date                               = gmdate( 'Y-m-d H:i:s', strtotime( $error->date_created ) );
+			$error_list[ '[ ' . $index . ' ]' ] = sprintf( '%s (%s)', $error->title, $date );
+			++$index;
+		}
+
+		return $error_list;
 	}
 }
