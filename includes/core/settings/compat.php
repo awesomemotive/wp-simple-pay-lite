@@ -93,7 +93,7 @@ function register_subsections( $subsections ) {
 			if ( is_wp_error( $subsection ) ) {
 				_doing_it_wrong(
 					__FUNCTION__,
-					$setting->get_error_message(),
+					$subsection->get_error_message(),
 					'4.0.0'
 				);
 			}

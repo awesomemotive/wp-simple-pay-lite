@@ -96,6 +96,7 @@ class Assets {
 			'jquery',
 			'wp-a11y',
 			'wp-api-fetch',
+			'simpay-shared',
 		);
 
 		$this->scripts = array(
@@ -108,6 +109,12 @@ class Assets {
 
 			'simpay-accounting'      => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/accounting.min.js',
+				'deps'   => array(),
+				'ver'    => SIMPLE_PAY_VERSION,
+				'footer' => true,
+			),
+			'simpay-shared'          => array(
+				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-shared.js',
 				'deps'   => array(),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
@@ -211,7 +218,9 @@ class Assets {
 	 * @since 3.0.0
 	 */
 	public function localize_scripts() {
+		// Localize to both core and pro scripts to ensure availability.
 		wp_localize_script( 'simpay-public', 'simplePayForms', self::$script_variables );
+		wp_localize_script( 'simpay-public', 'spGeneral', simpay_shared_script_variables() );
 	}
 
 	/**

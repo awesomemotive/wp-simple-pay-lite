@@ -686,7 +686,7 @@ function simpay_payment_form_add_missing_custom_fields(
 		}
 	}
 
-	// Remove "1-Click Payment Methods" (Payment Request Button)
+	// Remove "1-Click Payment Methods" (Payment Request Button).
 	unset( $fields['payment_request_button'] );
 
 	// General sorting template for auto-added fields.

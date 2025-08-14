@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.14.2\n"
+"Project-Id-Version: WP Simple Pay Lite 4.14.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-24T16:11:39+00:00\n"
+"POT-Creation-Date: 2025-08-13T17:36:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -51,12 +51,12 @@ msgid "Pay %s"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:188
-#: includes/core/functions/shared.php:594
+#: includes/core/functions/shared.php:595
 msgid "Insert Media"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:192
-#: includes/core/functions/shared.php:595
+#: includes/core/functions/shared.php:596
 msgid "Use Image"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 #. translators: %s: Minimum payment amount.
 #: includes/core/admin/class-assets.php:253
 #: includes/core/forms/class-price-option.php:668
-#: includes/core/functions/shared.php:550
+#: includes/core/functions/shared.php:551
 #, php-format
 msgid "starting at %s"
 msgstr ""
@@ -135,9 +135,9 @@ msgstr ""
 #: includes/core/admin/class-assets.php:256
 #: includes/core/forms/class-price-option.php:620
 #: includes/core/forms/class-price-option.php:757
-#: includes/core/functions/shared.php:553
-#: includes/core/payments/payment-confirmation-template-tags.php:1050
-#: includes/core/payments/payment-confirmation-template-tags.php:1075
+#: includes/core/functions/shared.php:554
+#: includes/core/payments/payment-confirmation-template-tags.php:1070
+#: includes/core/payments/payment-confirmation-template-tags.php:1095
 #, php-format
 msgctxt "recurring interval"
 msgid "%1$s every %2$s %3$s"
@@ -740,109 +740,109 @@ msgid "Test Mode"
 msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount.
-#: includes/core/functions/shared.php:559
-#: includes/core/payments/payment-confirmation-template-tags.php:1111
+#: includes/core/functions/shared.php:560
+#: includes/core/payments/payment-confirmation-template-tags.php:1131
 #, php-format
 msgctxt "recurring interval"
 msgid "%1$s every %2$s %3$s for %4$s months then %5$s"
 msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount.
-#: includes/core/functions/shared.php:565
-#: includes/core/payments/payment-confirmation-template-tags.php:1096
+#: includes/core/functions/shared.php:566
+#: includes/core/payments/payment-confirmation-template-tags.php:1116
 #, php-format
 msgctxt "recurring interval with automatic tax"
 msgid "%1$s every %2$s %3$s until coupon expires"
 msgstr ""
 
 #. translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit
-#: includes/core/functions/shared.php:571
-#: includes/core/payments/payment-confirmation-template-tags.php:1033
+#: includes/core/functions/shared.php:572
+#: includes/core/payments/payment-confirmation-template-tags.php:1053
 #, php-format
 msgctxt "recurring interval with invoice limit"
 msgid "%1$d payments of %2$s every %3$s %4$s"
 msgstr ""
 
 #. translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount
-#: includes/core/functions/shared.php:577
+#: includes/core/functions/shared.php:578
 #, php-format
 msgctxt "recurring interval"
 msgid "%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s"
 msgstr ""
 
-#: includes/core/functions/shared.php:582
+#: includes/core/functions/shared.php:583
 msgid "Enter address to calculate"
 msgstr ""
 
-#: includes/core/functions/shared.php:586
+#: includes/core/functions/shared.php:587
 msgid "Please enter a valid address"
-msgstr ""
-
-#: includes/core/functions/shared.php:623
-msgctxt "recurring interval"
-msgid "day"
 msgstr ""
 
 #: includes/core/functions/shared.php:624
 msgctxt "recurring interval"
-msgid "days"
+msgid "day"
 msgstr ""
 
-#: includes/core/functions/shared.php:627
+#: includes/core/functions/shared.php:625
 msgctxt "recurring interval"
-msgid "week"
+msgid "days"
 msgstr ""
 
 #: includes/core/functions/shared.php:628
 msgctxt "recurring interval"
-msgid "weeks"
+msgid "week"
 msgstr ""
 
-#: includes/core/functions/shared.php:631
+#: includes/core/functions/shared.php:629
 msgctxt "recurring interval"
-msgid "month"
+msgid "weeks"
 msgstr ""
 
 #: includes/core/functions/shared.php:632
 msgctxt "recurring interval"
-msgid "months"
+msgid "month"
 msgstr ""
 
-#: includes/core/functions/shared.php:635
+#: includes/core/functions/shared.php:633
 msgctxt "recurring interval"
-msgid "year"
+msgid "months"
 msgstr ""
 
 #: includes/core/functions/shared.php:636
 msgctxt "recurring interval"
+msgid "year"
+msgstr ""
+
+#: includes/core/functions/shared.php:637
+msgctxt "recurring interval"
 msgid "years"
 msgstr ""
 
-#: includes/core/functions/shared.php:1425
+#: includes/core/functions/shared.php:1426
 msgid "Business Operations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1426
+#: includes/core/functions/shared.php:1427
 msgid "Donations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1427
+#: includes/core/functions/shared.php:1428
 msgid "Fundraising"
 msgstr ""
 
-#: includes/core/functions/shared.php:1428
+#: includes/core/functions/shared.php:1429
 msgid "Products & Services"
 msgstr ""
 
-#: includes/core/functions/shared.php:1429
+#: includes/core/functions/shared.php:1430
 msgid "Registrations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1430
+#: includes/core/functions/shared.php:1431
 msgid "Features / Functionality"
 msgstr ""
 
-#: includes/core/functions/shared.php:1436
+#: includes/core/functions/shared.php:1437
 msgid "Recently Added"
 msgstr ""
 
@@ -10393,95 +10393,95 @@ msgid ""
 ""
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:871
+#: includes/core/payments/payment-confirmation-template-tags.php:891
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:631
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:634
 msgid "Subscription"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:873
+#: includes/core/payments/payment-confirmation-template-tags.php:893
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:624
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:627
 msgid "One time"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:963
+#: includes/core/payments/payment-confirmation-template-tags.php:983
 msgctxt "subscription status"
 msgid "Cancelled"
 msgstr ""
 
 #. translators: %1$s Invoice limit. %2$s Recurring interval count. %3$s Recurring interval. %4$s Recurring amount limit
-#: includes/core/payments/payment-confirmation-template-tags.php:1018
+#: includes/core/payments/payment-confirmation-template-tags.php:1038
 #, php-format
 msgctxt "recurring interval with invoice limit"
 msgid "%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1182
+#: includes/core/payments/payment-confirmation-template-tags.php:1202
 msgid "The form's title."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1186
+#: includes/core/payments/payment-confirmation-template-tags.php:1206
 msgid "The form's description."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1190
+#: includes/core/payments/payment-confirmation-template-tags.php:1210
 msgid "The total price of the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1194
+#: includes/core/payments/payment-confirmation-template-tags.php:1214
 msgid "The value of the Name form field."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1198
+#: includes/core/payments/payment-confirmation-template-tags.php:1218
 msgid "The charge date returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1202
+#: includes/core/payments/payment-confirmation-template-tags.php:1222
 msgid "The unique charge ID returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1206
+#: includes/core/payments/payment-confirmation-template-tags.php:1226
 msgid "The recurring amount to be charged each period of the subscription plan."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1210
+#: includes/core/payments/payment-confirmation-template-tags.php:1230
 msgid "The date the next invoice is due."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1216
+#: includes/core/payments/payment-confirmation-template-tags.php:1236
 msgid "The cumulative cost of selected items."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1222
+#: includes/core/payments/payment-confirmation-template-tags.php:1242
 msgid "The type of payment (one-time or recurring)."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1227
+#: includes/core/payments/payment-confirmation-template-tags.php:1247
 msgid "The brand of the card used. Visa, Amex, etc."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1232
+#: includes/core/payments/payment-confirmation-template-tags.php:1252
 msgid "The last four digits of the card used."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1237
+#: includes/core/payments/payment-confirmation-template-tags.php:1257
 msgid "The calculated tax amount based on the total and the tax percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1242
+#: includes/core/payments/payment-confirmation-template-tags.php:1262
 msgid "The calculated fee recovery amount based on the total and the fee recovery percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1247
+#: includes/core/payments/payment-confirmation-template-tags.php:1267
 msgid "The receipt breakdown of the payment including items, adjustments, and totals."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1252
+#: includes/core/payments/payment-confirmation-template-tags.php:1272
 msgid "The amount of the coupon applied to the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1280
+#: includes/core/payments/payment-confirmation-template-tags.php:1300
 msgid "Available smart tags:"
 msgstr ""
 
@@ -12819,7 +12819,15 @@ msgstr ""
 msgid "Database Tables"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:495
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:489
+msgid "Stripe API Version"
+msgstr ""
+
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:493
+msgid "Error Notifications"
+msgstr ""
+
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:503
 msgid "⚠️ Potential Conflicts"
 msgstr ""
 
@@ -14664,7 +14672,7 @@ msgid "Accept Payments On-Site"
 msgstr ""
 
 #: views/admin-setting-lite-license.php:97
-msgid "Create Recurring Payments"
+msgid "Advanced Recurring Payments"
 msgstr ""
 
 #: views/admin-setting-lite-license.php:103

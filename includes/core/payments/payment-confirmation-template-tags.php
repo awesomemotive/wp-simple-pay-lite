@@ -648,6 +648,26 @@ add_filter( 'simpay_payment_confirmation_template_tag_card-brand', __NAMESPACE__
  * @return string
  */
 function card_last4( $value, $payment_confirmation_data ) {
+	// Handle checkout session scenario.
+	if (
+		isset( $payment_confirmation_data['checkout_session'] )
+		&& ! isset( $payment_confirmation_data['subscription'] )
+	) {
+		$paymentintent = \SimplePay\Core\API\PaymentIntents\retrieve(
+			array(
+				'id'     => $payment_confirmation_data['checkout_session']->payment_intent,
+				'expand' => array(
+					'latest_charge',
+				),
+			),
+			$payment_confirmation_data['form']->get_api_request_args()
+		);
+
+		$card = $paymentintent->latest_charge->payment_method_details->card;
+
+		return $card->last4;
+	}
+
 	// Get all cards.
 	$payment_methods = \SimplePay\Core\Payments\Stripe_API::request(
 		'PaymentMethod',
@@ -1154,7 +1174,7 @@ function next_invoice_date( $value, $payment_confirmation_data ) {
 
 	// Localize to current timezone and formatting.
 	$value = get_date_from_gmt(
-		date( 'Y-m-d H:i:s', $subscription->current_period_end ),
+		gmdate( 'Y-m-d H:i:s', $subscription->current_period_end ),
 		'U'
 	);
 	$value = date_i18n( get_option( 'date_format' ), $value );
