@@ -2,7 +2,7 @@
 
 Add high conversion Stripe checkout forms to your WordPress site and start accepting payments in minutes.
 
-[Download](https://wordpress.org/plugins/stripe/) | [Docs](https://docs.wpsimplepay.com/) | [Changelog](https://wordpress.org/plugins/stripe/changelog/)
+[Download](https://wordpress.org/plugins/stripe/) | [Docs](https://wpsimplepay.com/docs/) | [Changelog](https://wordpress.org/plugins/stripe/changelog/)
 
 This repository is for the Lite version of WP Simple Pay. For additional functionality check out our Pro version at [wpsimplepay.com](https://wpsimplepay.com)
 
