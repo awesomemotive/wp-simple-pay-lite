@@ -183,7 +183,7 @@ Stripe currently supports 30+ languages, 45+ countries, and 135+ currencies. WP 
 
 === 📧 Get Help ===
 
-WP Simple Pay is backed by top-notch technical support from our globally distributed full-time support team. We also have an [extensive documentation site available](https://docs.wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link). If you’re looking for faster support via email, we encourage you to [purchase a WP Simple Pay Pro license](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
+WP Simple Pay is backed by top-notch technical support from our globally distributed full-time support team. We also have an [extensive documentation site available](https://wpsimplepay.com/docs/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link). If you’re looking for faster support via email, we encourage you to [purchase a WP Simple Pay Pro license](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
 
 == Installation ==
 
@@ -202,7 +202,7 @@ Once activated, you can immediately start creating both one-time and subscriptio
 
 If you prefer installing manually, you can [download the plugin ZIP file here](https://downloads.wordpress.org/plugin/stripe.latest-stable.zip).
 
-Additional documentation at [docs.wpsimplepay.com](https://docs.wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
+Additional documentation at [wpsimplepay.com/docs](https://wpsimplepay.com/docs/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link).
 
 == Frequently Asked Questions ==
 
