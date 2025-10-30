@@ -4,13 +4,17 @@
 
 namespace SimplePay\Vendor\Stripe\Service\TestHelpers\Issuing;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
      * Allows the user to capture an arbitrary amount, also known as a forced capture.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -25,7 +29,7 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      * Allows the user to refund an arbitrary amount, also known as a unlinked refund.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -41,7 +45,7 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

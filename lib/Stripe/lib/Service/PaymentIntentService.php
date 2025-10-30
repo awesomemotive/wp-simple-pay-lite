@@ -4,13 +4,17 @@
 
 namespace SimplePay\Vendor\Stripe\Service;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
      * Returns a list of PaymentIntents.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -27,7 +31,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -55,7 +59,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -78,7 +82,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -111,13 +115,14 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      * If any actions are required for the payment, the PaymentIntent will return to
      * the <code>requires_confirmation</code> state after those actions are completed.
      * Your server needs to then explicitly re-confirm the PaymentIntent to initiate
-     * the next payment attempt. Read the <a
-     * href="/docs/payments/payment-intents/web-manual">expanded documentation</a> to
-     * learn more about manual confirmation.
+     * the next payment attempt. There is a variable upper limit on how many times a
+     * PaymentIntent can be confirmed. After this limit is reached, any further calls
+     * to this endpoint will transition the PaymentIntent to the <code>canceled</code>
+     * state.
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -142,7 +147,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      * API</a> when you supply <code>confirm=true</code>.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -184,7 +189,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -207,7 +212,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -227,7 +232,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      * during outages. Search functionality is not available to merchants in India.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -249,7 +254,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -265,7 +270,7 @@ class PaymentIntentService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

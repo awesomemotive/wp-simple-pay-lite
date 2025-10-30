@@ -12,7 +12,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property string $object String representing the object's type. Objects of the same type share the same value.
  * @property int $amount_subtotal Total before any discounts or taxes are applied.
  * @property int $amount_total Total after discounts and taxes are applied.
- * @property null|string|\SimplePay\Vendor\Stripe\StripeObject $application ID of the Connect Application that created the quote.
+ * @property null|string|\SimplePay\Vendor\Stripe\Application $application ID of the Connect Application that created the quote.
  * @property null|int $application_fee_amount The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's SimplePay\Vendor\Stripe account. Only applicable if there are no line items with recurring prices on the quote.
  * @property null|float $application_fee_percent A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's SimplePay\Vendor\Stripe account. Only applicable if there are line items with recurring prices on the quote.
  * @property \SimplePay\Vendor\Stripe\StripeObject $automatic_tax
@@ -29,7 +29,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $from_quote Details of the quote that was cloned. See the <a href="https://stripe.com/docs/quotes/clone">cloning documentation</a> for more details.
  * @property null|string $header A header that will be displayed on the quote PDF.
  * @property null|string|\SimplePay\Vendor\Stripe\Invoice $invoice The invoice that was created from this quote.
- * @property null|\SimplePay\Vendor\Stripe\StripeObject $invoice_settings All invoices will be billed using the specified settings.
+ * @property \SimplePay\Vendor\Stripe\StripeObject $invoice_settings
  * @property null|\SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\LineItem> $line_items A list of items the customer is being quoted for.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -48,9 +48,6 @@ class Quote extends ApiResource
 {
     const OBJECT_NAME = 'quote';
 
-    use ApiOperations\All;
-    use ApiOperations\Create;
-    use ApiOperations\Retrieve;
     use ApiOperations\Update;
 
     const COLLECTION_METHOD_CHARGE_AUTOMATICALLY = 'charge_automatically';
@@ -60,6 +57,90 @@ class Quote extends ApiResource
     const STATUS_CANCELED = 'canceled';
     const STATUS_DRAFT = 'draft';
     const STATUS_OPEN = 'open';
+
+    /**
+     * A quote models prices and services for a customer. Default options for
+     * <code>header</code>, <code>description</code>, <code>footer</code>, and
+     * <code>expires_at</code> can be set in the dashboard via the <a
+     * href="https://dashboard.stripe.com/settings/billing/quote">quote template</a>.
+     *
+     * @param null|array $params
+     * @param null|array|string $options
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Quote the created resource
+     */
+    public static function create($params = null, $options = null)
+    {
+        self::_validateParams($params);
+        $url = static::classUrl();
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * Returns a list of your quotes.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Quote> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves the quote with the given ID.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Quote
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
+
+    /**
+     * A quote models prices and services for a customer.
+     *
+     * @param string $id the ID of the resource to update
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Quote the updated resource
+     */
+    public static function update($id, $params = null, $opts = null)
+    {
+        self::_validateParams($params);
+        $url = static::resourceUrl($id);
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
 
     /**
      * @param null|array $params

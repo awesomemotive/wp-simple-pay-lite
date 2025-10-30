@@ -29,8 +29,44 @@ class Secret extends \SimplePay\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'apps.secret';
 
-    use \SimplePay\Vendor\Stripe\ApiOperations\All;
-    use \SimplePay\Vendor\Stripe\ApiOperations\Create;
+    /**
+     * Create or replace a secret in the secret store.
+     *
+     * @param null|array $params
+     * @param null|array|string $options
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Apps\Secret the created resource
+     */
+    public static function create($params = null, $options = null)
+    {
+        self::_validateParams($params);
+        $url = static::classUrl();
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * List all secrets stored on the given scope.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Apps\Secret> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
 
     /**
      * @param null|array $params

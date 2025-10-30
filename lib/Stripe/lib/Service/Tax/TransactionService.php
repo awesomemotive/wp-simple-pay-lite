@@ -4,6 +4,10 @@
 
 namespace SimplePay\Vendor\Stripe\Service\Tax;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
@@ -11,7 +15,7 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -23,10 +27,11 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
     }
 
     /**
-     * Creates a Tax <code>Transaction</code> from a calculation.
+     * Creates a Tax Transaction from a calculation, if that calculation hasn’t
+     * expired. Calculations expire after 90 days.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -41,7 +46,7 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      * Partially or fully reverses a previously created <code>Transaction</code>.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -57,7 +62,7 @@ class TransactionService extends \SimplePay\Vendor\Stripe\Service\AbstractServic
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

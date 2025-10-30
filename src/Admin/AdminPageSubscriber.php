@@ -166,7 +166,7 @@ class AdminPageSubscriber implements SubscriberInterface {
 		$redirect = add_query_arg(
 			array(
 				'post_type' => 'simple-pay',
-				'page'      => $page
+				'page'      => $page,
 			),
 			admin_url( 'edit.php' )
 		);

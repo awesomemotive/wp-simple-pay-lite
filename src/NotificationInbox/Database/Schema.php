@@ -22,6 +22,7 @@ class Schema extends BerlinDBSchema {
 
 	/**
 	 * {@inheritdoc}
+	 *
 	 * @var array<int, array<string, bool|int|string|null>>
 	 */
 	public $columns = array(
@@ -35,7 +36,7 @@ class Schema extends BerlinDBSchema {
 			'extra'    => 'auto_increment',
 			'primary'  => true,
 			'sortable' => true,
-			'validate'   => 'intval',
+			'validate' => 'intval',
 		),
 
 		// remote_id.

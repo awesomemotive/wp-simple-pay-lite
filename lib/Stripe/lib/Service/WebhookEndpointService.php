@@ -4,13 +4,17 @@
 
 namespace SimplePay\Vendor\Stripe\Service;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class WebhookEndpointService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
      * Returns a list of your webhook endpoints.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -33,7 +37,7 @@ class WebhookEndpointService extends \SimplePay\Vendor\Stripe\Service\AbstractSe
      * section of the Dashboard.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -51,7 +55,7 @@ class WebhookEndpointService extends \SimplePay\Vendor\Stripe\Service\AbstractSe
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -67,7 +71,7 @@ class WebhookEndpointService extends \SimplePay\Vendor\Stripe\Service\AbstractSe
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -84,7 +88,7 @@ class WebhookEndpointService extends \SimplePay\Vendor\Stripe\Service\AbstractSe
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

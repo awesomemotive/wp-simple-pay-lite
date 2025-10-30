@@ -100,7 +100,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 						do_action( '__unstable_simpay_license_field' );
 
 						return ob_get_clean();
-					}
+					},
 				)
 			)
 		);
@@ -178,7 +178,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 						'<strong>' . ucfirst( $this->license->get_level() ) . '</strong>'
 					),
 					array(
-						'strong' => array()
+						'strong' => array(),
 					)
 				);
 			case 'expired':

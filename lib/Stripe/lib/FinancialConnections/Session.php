@@ -22,6 +22,46 @@ class Session extends \SimplePay\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'financial_connections.session';
 
-    use \SimplePay\Vendor\Stripe\ApiOperations\Create;
-    use \SimplePay\Vendor\Stripe\ApiOperations\Retrieve;
+    /**
+     * To launch the Financial Connections authorization flow, create a
+     * <code>Session</code>. The session’s <code>client_secret</code> can be used to
+     * launch the flow using Stripe.js.
+     *
+     * @param null|array $params
+     * @param null|array|string $options
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\FinancialConnections\Session the created resource
+     */
+    public static function create($params = null, $options = null)
+    {
+        self::_validateParams($params);
+        $url = static::classUrl();
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * Retrieves the details of a Financial Connections <code>Session</code>.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\FinancialConnections\Session
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
 }

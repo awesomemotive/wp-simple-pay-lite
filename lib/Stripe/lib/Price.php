@@ -38,10 +38,6 @@ class Price extends ApiResource
 {
     const OBJECT_NAME = 'price';
 
-    use ApiOperations\All;
-    use ApiOperations\Create;
-    use ApiOperations\Retrieve;
-    use ApiOperations\Search;
     use ApiOperations\Update;
 
     const BILLING_SCHEME_PER_UNIT = 'per_unit';
@@ -58,6 +54,91 @@ class Price extends ApiResource
     const TYPE_RECURRING = 'recurring';
 
     /**
+     * Creates a new price for an existing product. The price can be recurring or
+     * one-time.
+     *
+     * @param null|array $params
+     * @param null|array|string $options
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Price the created resource
+     */
+    public static function create($params = null, $options = null)
+    {
+        self::_validateParams($params);
+        $url = static::classUrl();
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * Returns a list of your active prices, excluding <a
+     * href="/docs/products-prices/pricing-models#inline-pricing">inline prices</a>.
+     * For the list of inactive prices, set <code>active</code> to false.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Price> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves the price with the given ID.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Price
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
+
+    /**
+     * Updates the specified price by setting the values of the parameters passed. Any
+     * parameters not provided are left unchanged.
+     *
+     * @param string $id the ID of the resource to update
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Price the updated resource
+     */
+    public static function update($id, $params = null, $opts = null)
+    {
+        self::_validateParams($params);
+        $url = static::resourceUrl($id);
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
      * @param null|array $params
      * @param null|array|string $opts
      *
@@ -69,6 +150,6 @@ class Price extends ApiResource
     {
         $url = '/v1/prices/search';
 
-        return self::_searchResource($url, $params, $opts);
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\SearchResult::class, $params, $opts);
     }
 }

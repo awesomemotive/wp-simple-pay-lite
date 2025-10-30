@@ -70,27 +70,27 @@ class __UnstableNotifications implements SubscriberInterface {
 					'callback'            => array( $this, 'get_notifications' ),
 					'permission_callback' => array( $this, 'can_manage_notifications' ),
 					'args'                => array(
-						'limit' => array(
-							'description'       => __(
+						'limit'  => array(
+							'description' => __(
 								'The number of notifications to return.',
 								'stripe'
 							),
-							'type'              => 'number',
-							'default'           => 100,
-							'required'          => false,
+							'type'        => 'number',
+							'default'     => 100,
+							'required'    => false,
 						),
 						'status' => array(
-							'description'       => __(
+							'description' => __(
 								'Notification dismissal status.',
 								'stripe'
 							),
-							'type'              => 'string',
-							'enum'              => array( 'read', 'unread' ),
-							'default'           => 'unread',
-							'required'          => false,
-						)
+							'type'        => 'string',
+							'enum'        => array( 'read', 'unread' ),
+							'default'     => 'unread',
+							'required'    => false,
+						),
 					),
-				)
+				),
 			)
 		);
 
@@ -119,10 +119,10 @@ class __UnstableNotifications implements SubscriberInterface {
 							},
 							'sanitize_callback' => function ( $param ) {
 								return intval( $param );
-							}
-						)
+							},
+						),
 					),
-				)
+				),
 			)
 		);
 	}
@@ -148,9 +148,9 @@ class __UnstableNotifications implements SubscriberInterface {
 	 */
 	public function get_notifications( $request ) {
 		$args = array(
-			'number'    => $request->get_param( 'limit' ),
-			'orderby'   => 'start',
-			'order'     => 'desc',
+			'number'  => $request->get_param( 'limit' ),
+			'orderby' => 'start',
+			'order'   => 'desc',
 		);
 
 		// Use specific helper methods to ensure query arguments are consistent

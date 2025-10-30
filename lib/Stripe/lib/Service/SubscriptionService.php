@@ -4,6 +4,10 @@
 
 namespace SimplePay\Vendor\Stripe\Service;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
@@ -11,7 +15,7 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      * order to list canceled subscriptions, specify <code>status=canceled</code>.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -23,27 +27,26 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
     }
 
     /**
-     * Cancels a customer’s subscription immediately. The customer will not be charged
-     * again for the subscription.
+     * Cancels a customer’s subscription immediately. The customer won’t be charged
+     * again for the subscription. After it’s canceled, you can no longer update the
+     * subscription or its <a href="/metadata">metadata</a>.
      *
-     * Note, however, that any pending invoice items that you’ve created will still be
-     * charged for at the end of the period, unless manually <a
-     * href="#delete_invoiceitem">deleted</a>. If you’ve set the subscription to cancel
-     * at the end of the period, any pending prorations will also be left in place and
-     * collected at the end of the period. But if the subscription is set to cancel
-     * immediately, pending prorations will be removed.
+     * Any pending invoice items that you’ve created are still charged at the end of
+     * the period, unless manually <a href="#delete_invoiceitem">deleted</a>. If you’ve
+     * set the subscription to cancel at the end of the period, any pending prorations
+     * are also left in place and collected at the end of the period. But if the
+     * subscription is set to cancel immediately, pending prorations are removed.
      *
-     * By default, upon subscription cancellation, SimplePay\Vendor\Stripe will stop automatic
-     * collection of all finalized invoices for the customer. This is intended to
-     * prevent unexpected payment attempts after the customer has canceled a
-     * subscription. However, you can resume automatic collection of the invoices
-     * manually after subscription cancellation to have us proceed. Or, you could check
-     * for unpaid invoices before allowing the customer to cancel the subscription at
-     * all.
+     * By default, upon subscription cancellation, SimplePay\Vendor\Stripe stops automatic collection of
+     * all finalized invoices for the customer. This is intended to prevent unexpected
+     * payment attempts after the customer has canceled a subscription. However, you
+     * can resume automatic collection of the invoices manually after subscription
+     * cancellation to have us proceed. Or, you could check for unpaid invoices before
+     * allowing the customer to cancel the subscription at all.
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -70,7 +73,7 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      * billing configurations that change over time.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -86,7 +89,7 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -107,7 +110,7 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -123,7 +126,7 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -143,7 +146,7 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      * during outages. Search functionality is not available to merchants in India.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -158,8 +161,8 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      * Updates an existing subscription to match the specified parameters. When
      * changing prices or quantities, we optionally prorate the price we charge next
      * month to make up for any price changes. To preview how the proration is
-     * calculated, use the <a href="/docs/api/invoices/upcoming">upcoming invoice</a>
-     * endpoint.
+     * calculated, use the <a href="/docs/api/invoices/create_preview">create
+     * preview</a> endpoint.
      *
      * By default, we prorate subscription changes. For example, if a customer signs up
      * on May 1 for a <currency>100</currency> price, they’ll be billed
@@ -175,11 +178,14 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      * immediate charge unless:
      *
      * <ul> <li>The billing interval is changed (for example, from monthly to
-     * yearly).</li> <li>The subscription moves from free to paid, or paid to
-     * free.</li> <li>A trial starts or ends.</li> </ul>
+     * yearly).</li> <li>The subscription moves from free to paid.</li> <li>A trial
+     * starts or ends.</li> </ul>
      *
      * In these cases, we apply a credit for the unused time on the previous price,
      * immediately charge the customer using the new price, and reset the billing date.
+     * Learn about how <a
+     * href="/billing/subscriptions/upgrade-downgrade#immediate-payment">SimplePay\Vendor\Stripe
+     * immediately attempts payment for subscription changes</a>.
      *
      * If you want to charge for an upgrade immediately, pass
      * <code>proration_behavior</code> as <code>always_invoice</code> to create
@@ -204,7 +210,7 @@ class SubscriptionService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

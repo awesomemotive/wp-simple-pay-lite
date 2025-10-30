@@ -4,6 +4,10 @@
 
 namespace SimplePay\Vendor\Stripe\Service\TestHelpers\Issuing;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
@@ -11,7 +15,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -26,7 +30,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      * Create a test-mode authorization.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -42,7 +46,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -54,11 +58,28 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
     }
 
     /**
+     * Finalize the amount on an Authorization prior to capture, when the initial
+     * authorization was for an estimated amount.
+     *
+     * @param string $id
+     * @param null|array $params
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Issuing\Authorization
+     */
+    public function finalizeAmount($id, $params = null, $opts = null)
+    {
+        return $this->request('post', $this->buildPath('/v1/test_helpers/issuing/authorizations/%s/finalize_amount', $id), $params, $opts);
+    }
+
+    /**
      * Increment a test-mode Authorization.
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -74,7 +95,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

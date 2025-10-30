@@ -28,7 +28,8 @@ class PaymentFormControl {
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return void
 	 */
-	public function add_control( $widget ) { // @phpstan-ignore-line
+	public function add_control( $widget ) {
+		// @phpstan-ignore-line
 		$widget->start_controls_section( // @phpstan-ignore-line
 			sprintf( 'simpay-%s', $widget->get_name() ), // @phpstan-ignore-line
 			array(
@@ -61,7 +62,8 @@ class PaymentFormControl {
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return string
 	 */
-	public function render_widget( $content, $widget ) { // @phpstan-ignore-line
+	public function render_widget( $content, $widget ) {
+		// @phpstan-ignore-line
 		$settings = $widget->get_settings(); // @phpstan-ignore-line
 
 		if (

@@ -133,7 +133,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 
 		if ( false !== strpos( $compare_version, '.' ) ) {
 			$compare_version_pieces = explode( '.', $compare_version );
-		} else if ( false !== strpos( $compare_version, '-' ) ) {
+		} elseif ( false !== strpos( $compare_version, '-' ) ) {
 			$compare_version_pieces = explode( '-', $compare_version );
 		} else {
 			return false;

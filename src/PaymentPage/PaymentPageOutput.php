@@ -257,7 +257,8 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 		$redirect_url = add_query_arg(
 			array_merge(
 				array(
-					'redirected' => true,
+					'redirected'  => true,
+					'source_type' => $this->get_source_type( $payment_confirmation_data ),
 				),
 				array_map( 'sanitize_text_field', $_GET )
 			),
@@ -270,6 +271,38 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 
 		wp_redirect( esc_url_raw( $redirect_url ) );
 		exit;
+	}
+
+	/**
+	 * Get the source type from the payment confirmation data.
+	 *
+	 * @param array $payment_confirmation_data {
+	 *   Contextual information about this payment confirmation.
+	 *
+	 *   @type \SimplePay\Vendor\Stripe\Customer                  $customer
+	 *                                                            Stripe Customer
+	 *   @type \SimplePay\Core\Abstracts\Form                     $form
+	 *                                                            Payment form.
+	 *   @type array<\SimplePay\Core\Vendor\Stripe\Subscription>  $subscriptions
+	 *                                                            Subscriptions associated with the Customer.
+	 *   @type array<\SimplePay\Core\Vendor\Stripe\PaymentIntent> $paymentintents
+	 *                                                            PaymentIntents associated with the Customer.
+	 * }
+	 *
+	 * @since 4.16.0
+	 *
+	 * @return string
+	 */
+	private function get_source_type( $payment_confirmation_data ) {
+		$payment_intent = isset( $payment_confirmation_data['paymentintents'] )
+			? current( $payment_confirmation_data['paymentintents'] )
+			: false;
+
+		if ( $payment_intent && isset( $payment_intent->last_payment_error ) ) {
+			return $payment_intent->last_payment_error->payment_method->type;
+		}
+
+		return '';
 	}
 
 	/**

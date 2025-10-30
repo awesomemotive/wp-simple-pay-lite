@@ -19,6 +19,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|float $effective_percentage Actual/effective tax rate percentage out of 100. For tax calculations with automatic_tax[enabled]=true, this percentage reflects the rate actually used to calculate tax based on the product's taxability and whether the user is registered to collect taxes in the corresponding jurisdiction.
  * @property bool $inclusive This specifies if the tax rate is inclusive or exclusive.
  * @property null|string $jurisdiction The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer’s invoice.
+ * @property null|string $jurisdiction_level The level of the jurisdiction that imposes this tax rate. Will be <code>null</code> for manually defined tax rates.
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property float $percentage Tax rate percentage out of 100. For tax calculations with automatic_tax[enabled]=true, this percentage includes the statutory tax rate of non-taxable jurisdictions.
@@ -29,10 +30,14 @@ class TaxRate extends ApiResource
 {
     const OBJECT_NAME = 'tax_rate';
 
-    use ApiOperations\All;
-    use ApiOperations\Create;
-    use ApiOperations\Retrieve;
     use ApiOperations\Update;
+
+    const JURISDICTION_LEVEL_CITY = 'city';
+    const JURISDICTION_LEVEL_COUNTRY = 'country';
+    const JURISDICTION_LEVEL_COUNTY = 'county';
+    const JURISDICTION_LEVEL_DISTRICT = 'district';
+    const JURISDICTION_LEVEL_MULTIPLE = 'multiple';
+    const JURISDICTION_LEVEL_STATE = 'state';
 
     const TAX_TYPE_AMUSEMENT_TAX = 'amusement_tax';
     const TAX_TYPE_COMMUNICATIONS_TAX = 'communications_tax';
@@ -45,6 +50,87 @@ class TaxRate extends ApiResource
     const TAX_TYPE_QST = 'qst';
     const TAX_TYPE_RST = 'rst';
     const TAX_TYPE_SALES_TAX = 'sales_tax';
-    const TAX_TYPE_SERVICE_TAX = 'service_tax';
     const TAX_TYPE_VAT = 'vat';
+
+    /**
+     * Creates a new tax rate.
+     *
+     * @param null|array $params
+     * @param null|array|string $options
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\TaxRate the created resource
+     */
+    public static function create($params = null, $options = null)
+    {
+        self::_validateParams($params);
+        $url = static::classUrl();
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * Returns a list of your tax rates. Tax rates are returned sorted by creation
+     * date, with the most recently created tax rates appearing first.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\TaxRate> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves a tax rate with the given ID.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\TaxRate
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
+
+    /**
+     * Updates an existing tax rate.
+     *
+     * @param string $id the ID of the resource to update
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\TaxRate the updated resource
+     */
+    public static function update($id, $params = null, $opts = null)
+    {
+        self::_validateParams($params);
+        $url = static::resourceUrl($id);
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
 }

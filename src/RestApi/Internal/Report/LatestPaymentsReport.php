@@ -14,7 +14,7 @@ namespace SimplePay\Core\RestApi\Internal\Report;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\Report;
 use SimplePay\Core\Utils;
-use SimplePay\Pro\Payment_Methods\Payment_Method;
+use SimplePay\Core\PaymentMethods\PaymentMethod;
 use WP_REST_Response;
 use WP_REST_Server;
 
@@ -255,7 +255,7 @@ class LatestPaymentsReport implements SubscriberInterface {
 		} else {
 			$payment_method = $payment_methods->get_item( $payment_method_type );
 
-			if ( ! $payment_method instanceof Payment_Method ) {
+			if ( ! $payment_method instanceof PaymentMethod ) {
 				return '';
 			}
 

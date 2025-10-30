@@ -14,7 +14,7 @@ namespace SimplePay\Core\RestApi\Internal\Payment\Utils;
 use SimplePay\Core\PaymentForm\PriceOption;
 use SimplePay\Pro\Coupons\Coupon;
 use SimplePay\Pro\Coupons\Coupon_Query;
-use SimplePay\Pro\Payment_Methods;
+use SimplePay\Core\PaymentMethods;
 
 /**
  * SchemaValidationUtils class.
@@ -90,7 +90,7 @@ class SchemaValidationUtils {
 		}
 
 		// Next, determine if the payment method is enabled.
-		$payment_methods_types = Payment_Methods\get_form_payment_method_ids( $form );
+		$payment_methods_types = PaymentMethods\get_form_payment_method_ids( $form );
 
 		if ( ! in_array( $value, $payment_methods_types, true ) ) {
 			return false;

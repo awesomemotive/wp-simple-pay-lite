@@ -4,6 +4,10 @@
 
 namespace SimplePay\Vendor\Stripe\Service\TestHelpers\Treasury;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class OutboundTransferService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
@@ -13,7 +17,7 @@ class OutboundTransferService extends \SimplePay\Vendor\Stripe\Service\AbstractS
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -31,7 +35,7 @@ class OutboundTransferService extends \SimplePay\Vendor\Stripe\Service\AbstractS
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -49,7 +53,7 @@ class OutboundTransferService extends \SimplePay\Vendor\Stripe\Service\AbstractS
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -58,5 +62,23 @@ class OutboundTransferService extends \SimplePay\Vendor\Stripe\Service\AbstractS
     public function returnOutboundTransfer($id, $params = null, $opts = null)
     {
         return $this->request('post', $this->buildPath('/v1/test_helpers/treasury/outbound_transfers/%s/return', $id), $params, $opts);
+    }
+
+    /**
+     * Updates a test mode created OutboundTransfer with tracking details. The
+     * OutboundTransfer must not be cancelable, and cannot be in the
+     * <code>canceled</code> or <code>failed</code> states.
+     *
+     * @param string $id
+     * @param null|array $params
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Treasury\OutboundTransfer
+     */
+    public function update($id, $params = null, $opts = null)
+    {
+        return $this->request('post', $this->buildPath('/v1/test_helpers/treasury/outbound_transfers/%s', $id), $params, $opts);
     }
 }

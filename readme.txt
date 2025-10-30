@@ -2,8 +2,8 @@
 Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
-Tested up to: 6.8.2
-Stable tag: 4.15.0
+Tested up to: 6.8.3
+Stable tag: 4.16.0
 Requires PHP: 7.2
 License: GPLv2 or later
 
@@ -270,11 +270,19 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms v4.16.0 – October 30, 2025 =
+
+* New: Added support for MobilePay, BECS Direct Debit, PromptPay, and WeChat Pay payment methods.
+* Update: Activity & Reports - Stripe Balance component now supports Test Mode.
+* Fix: Addressed an issue that incorrectly displayed an "invalid webhook" message.
+* Fix: Optimized the application fee removal process for Lite to Pro upgrades to prevent unnecessary API calls.
+* Dev: Updated Stripe integration for enhanced security and reliability.
+
 = Stripe Payment Forms v4.15.0 – August 13, 2025 =
 
-Update: Added more details to the System Report.
-Fix: Added support for 4-digit card numbers in the {card-last4} smart tag for Stripe Checkout one-time payments.
-Fix: Fixed incorrect frontend forms API URL when the wp-api script is deferred.
+* Update: Added more details to the System Report.
+* Fix: Added support for 4-digit card numbers in the {card-last4} smart tag for Stripe Checkout one-time payments.
+* Fix: Fixed incorrect frontend forms API URL when the wp-api script is deferred.
 
 = Stripe Payment Forms v4.14.3 - July 24, 2025 =
 

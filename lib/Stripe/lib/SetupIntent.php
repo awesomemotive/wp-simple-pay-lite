@@ -11,13 +11,13 @@ namespace SimplePay\Vendor\Stripe;
  *
  * Create a SetupIntent when you're ready to collect your customer's payment credentials.
  * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
- * The SetupIntent transitions through multiple <a href="https://stripe.com/docs/payments/intents#intent-statuses">statuses</a> as it guides
+ * The SetupIntent transitions through multiple <a href="https://docs.stripe.com/payments/intents#intent-statuses">statuses</a> as it guides
  * you through the setup process.
  *
  * Successful SetupIntents result in payment credentials that are optimized for future payments.
- * For example, cardholders in <a href="/guides/strong-customer-authentication">certain regions</a> might need to be run through
- * <a href="https://stripe.com/docs/strong-customer-authentication">Strong Customer Authentication</a> during payment method collection
- * to streamline later <a href="https://stripe.com/docs/payments/setup-intents">off-session payments</a>.
+ * For example, cardholders in <a href="https://stripe.com/guides/strong-customer-authentication">certain regions</a> might need to be run through
+ * <a href="https://docs.stripe.com/strong-customer-authentication">Strong Customer Authentication</a> during payment method collection
+ * to streamline later <a href="https://docs.stripe.com/payments/setup-intents">off-session payments</a>.
  * If you use the SetupIntent with a <a href="https://stripe.com/docs/api#setup_intent_object-customer">Customer</a>,
  * it automatically attaches the resulting payment method to that Customer after successful setup.
  * We recommend using SetupIntents or <a href="https://stripe.com/docs/api#payment_intent_object-setup_future_usage">setup_future_usage</a> on
@@ -25,11 +25,11 @@ namespace SimplePay\Vendor\Stripe;
  *
  * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
  *
- * Related guide: <a href="https://stripe.com/docs/payments/setup-intents">Setup Intents API</a>
+ * Related guide: <a href="https://docs.stripe.com/payments/setup-intents">Setup Intents API</a>
  *
  * @property string $id Unique identifier for the object.
  * @property string $object String representing the object's type. Objects of the same type share the same value.
- * @property null|string|\SimplePay\Vendor\Stripe\StripeObject $application ID of the Connect application that created the SetupIntent.
+ * @property null|string|\SimplePay\Vendor\Stripe\Application $application ID of the Connect application that created the SetupIntent.
  * @property null|bool $attach_to_self <p>If present, the SetupIntent's payment method will be attached to the in-context SimplePay\Vendor\Stripe Account.</p><p>It can only be used for this SimplePay\Vendor\Stripe Account’s own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.</p>
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $automatic_payment_methods Settings for dynamic payment methods compatible with this Setup Intent
  * @property null|string $cancellation_reason Reason for cancellation of this SetupIntent, one of <code>abandoned</code>, <code>requested_by_customer</code>, or <code>duplicate</code>.
@@ -45,7 +45,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $next_action If present, this property tells you what actions you need to take in order for your customer to continue payment setup.
  * @property null|string|\SimplePay\Vendor\Stripe\Account $on_behalf_of The account (if any) for which the setup is intended.
- * @property null|string|\SimplePay\Vendor\Stripe\PaymentMethod $payment_method ID of the payment method used with this SetupIntent.
+ * @property null|string|\SimplePay\Vendor\Stripe\PaymentMethod $payment_method ID of the payment method used with this SetupIntent. If the payment method is <code>card_present</code> and isn't a digital wallet, then the <a href="https://docs.stripe.com/api/setup_attempts/object#setup_attempt_object-payment_method_details-card_present-generated_card">generated_card</a> associated with the <code>latest_attempt</code> is attached to the Customer instead.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $payment_method_configuration_details Information about the payment method configuration used for this Setup Intent.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $payment_method_options Payment method-specific configuration for this SetupIntent.
  * @property string[] $payment_method_types The list of payment method types (e.g. card) that this SetupIntent is allowed to set up.
@@ -57,9 +57,6 @@ class SetupIntent extends ApiResource
 {
     const OBJECT_NAME = 'setup_intent';
 
-    use ApiOperations\All;
-    use ApiOperations\Create;
-    use ApiOperations\Retrieve;
     use ApiOperations\Update;
 
     const CANCELLATION_REASON_ABANDONED = 'abandoned';
@@ -72,6 +69,98 @@ class SetupIntent extends ApiResource
     const STATUS_REQUIRES_CONFIRMATION = 'requires_confirmation';
     const STATUS_REQUIRES_PAYMENT_METHOD = 'requires_payment_method';
     const STATUS_SUCCEEDED = 'succeeded';
+
+    /**
+     * Creates a SetupIntent object.
+     *
+     * After you create the SetupIntent, attach a payment method and <a
+     * href="/docs/api/setup_intents/confirm">confirm</a> it to collect any required
+     * permissions to charge the payment method later.
+     *
+     * @param null|array $params
+     * @param null|array|string $options
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SetupIntent the created resource
+     */
+    public static function create($params = null, $options = null)
+    {
+        self::_validateParams($params);
+        $url = static::classUrl();
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * Returns a list of SetupIntents.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\SetupIntent> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves the details of a SetupIntent that has previously been created.
+     *
+     * Client-side retrieval using a publishable key is allowed when the
+     * <code>client_secret</code> is provided in the query string.
+     *
+     * When retrieved with a publishable key, only a subset of properties will be
+     * returned. Please refer to the <a href="#setup_intent_object">SetupIntent</a>
+     * object reference for more details.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SetupIntent
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
+
+    /**
+     * Updates a SetupIntent object.
+     *
+     * @param string $id the ID of the resource to update
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\SetupIntent the updated resource
+     */
+    public static function update($id, $params = null, $opts = null)
+    {
+        self::_validateParams($params);
+        $url = static::resourceUrl($id);
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
 
     /**
      * @param null|array $params
