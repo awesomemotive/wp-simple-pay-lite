@@ -61,7 +61,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_ITEM_NAME' ) ) {
-		define( 'SIMPLE_PAY_ITEM_NAME', SIMPLE_PAY_PLUGIN_NAME );
+		define( 'SIMPLE_PAY_ITEM_NAME', 'WP Simple Pay Lite' );
 	}
 
 	//
