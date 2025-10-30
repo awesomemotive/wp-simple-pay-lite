@@ -23,11 +23,14 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 
 - Integration with Stripe Checkout hosted payment forms
 - Accept credit and debit cards (Visa, Mastercard, American Express, Discover and Diners, and more) from global customers
-- Accept Alipay payments in Stripe from customers in China
+- Accept Alipay & WeChat Pay payments in Stripe from customers in China
+- Accept BECS Direct Debit payments in Stripe from customers in Australia
 - Accept FPX payments in Stripe from customers in Malaysia
 - Accept Giropay payments in Stripe from customers in Germany
 - Accept iDEAL payments in Stripe from customers in The Netherlands
+- Accept MobilePay payments in Stripe from customers in Denmark and Finland
 - Accept Przelewy24 (P24) in Stripe payments from customers in Poland
+- Accept PromptPay payments in Stripe from customers in Thailand
 - Custom branding on Stripe Checkout payment forms
 - Collect customer billing & shipping addresses in Stripe
 - Collect additional custom fields in Stripe Checkout
