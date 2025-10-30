@@ -42,16 +42,18 @@ class Table extends BerlinDBTable {
 
 	/**
 	 * {@inheritdoc}
+	 *
 	 * @var array<string, string>
 	 */
 	protected $upgrades = array();
 
 	/**
 	 * {@inheritdoc}
+	 *
 	 * @return void
 	 */
 	protected function set_schema() {
-		$this->schema = "
+		$this->schema = '
 			id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 			remote_id bigint(20) UNSIGNED NOT NULL DEFAULT 0,
 			source varchar(64) NOT NULL,
@@ -68,7 +70,7 @@ class Table extends BerlinDBTable {
 			date_created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 			date_modified datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 			PRIMARY KEY (id),
-			KEY dismissed_start_end (dismissed, start, end)";
+			KEY dismissed_start_end (dismissed, start, end)';
 	}
 
 }

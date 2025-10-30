@@ -65,9 +65,9 @@
             ),
         ),
         'stripe/stripe-php' => array(
-            'pretty_version' => 'v13.3.0',
-            'version' => '13.3.0.0',
-            'reference' => '58d0e126670d43808ef4a814b40a2864bca788e5',
+            'pretty_version' => 'v16.0.0',
+            'version' => '16.0.0.0',
+            'reference' => '7a0b0283d492b66474ef9aa45a7acc938662b580',
             'type' => 'library',
             'install_path' => __DIR__ . '/../stripe/stripe-php',
             'aliases' => array(),
@@ -83,8 +83,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-php80' => array(
-            'pretty_version' => 'v1.32.0',
-            'version' => '1.32.0.0',
+            'pretty_version' => 'v1.33.0',
+            'version' => '1.33.0.0',
             'reference' => '0cc9dd0f17f61d8131e7df6b84bd344899fe2608',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php80',

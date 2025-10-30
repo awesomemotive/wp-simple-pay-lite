@@ -4,6 +4,10 @@
 
 namespace SimplePay\Vendor\Stripe\Service\Issuing;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
@@ -12,7 +16,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      * object appearing first.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -31,9 +35,11 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      * href="/docs/issuing/controls/real-time-authorizations#authorization-handling">respond
      * directly to the webhook request to approve an authorization</a>.
      *
+     * @deprecated  this method is deprecated, please refer to the description for details
+     *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -52,9 +58,11 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      * href="/docs/issuing/controls/real-time-authorizations#authorization-handling">respond
      * directly to the webhook request to decline an authorization</a>.
      *
+     * @deprecated  this method is deprecated, please refer to the description for details
+     *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -70,7 +78,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -88,7 +96,7 @@ class AuthorizationService extends \SimplePay\Vendor\Stripe\Service\AbstractServ
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

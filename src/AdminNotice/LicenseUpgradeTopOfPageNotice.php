@@ -50,7 +50,7 @@ class LicenseUpgradeTopOfPageNotice extends AbstractAdminNotice {
 	 * {@inheritdoc}
 	 */
 	public function get_dismissal_length() {
-		return DAY_IN_SECONDS *  90;
+		return DAY_IN_SECONDS * 90;
 	}
 
 	/**

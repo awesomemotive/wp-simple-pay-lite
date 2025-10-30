@@ -51,7 +51,8 @@ abstract class AbstractWidget implements WidgetInterface {
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return void
 	 */
-	public function add_control( Widget_Base $widget ) { // @phpstan-ignore-line
+	public function add_control( Widget_Base $widget ) {
+		// @phpstan-ignore-line
 		$this->control->add_control( $widget );
 	}
 
@@ -64,7 +65,8 @@ abstract class AbstractWidget implements WidgetInterface {
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return string
 	 */
-	public function render_widget( $content, $widget ) { // @phpstan-ignore-line
+	public function render_widget( $content, $widget ) {
+		// @phpstan-ignore-line
 		if ( $widget->get_name() !== $this->get_name() ) { // @phpstan-ignore-line
 			return $content;
 		}

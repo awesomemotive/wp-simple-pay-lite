@@ -49,7 +49,7 @@ class NotificationRepository extends BerlinDbRepository {
 	 *
 	 * @since 4.4.5
 	 *
-	 * @param array<mixed> $args Arguments to create the notification with.
+	 * @param array<mixed>  $args Arguments to create the notification with.
 	 * @param null|callable $callback Callback if the notification is actually restored.
 	 * @return null|\SimplePay\Core\Model\ModelInterface
 	 */
@@ -110,6 +110,7 @@ class NotificationRepository extends BerlinDbRepository {
 	 * Adds a notification.
 	 *
 	 * Converts array values to (JSON) strings to avoid a PHP notice in array_diff_assoc.
+	 *
 	 * @link https://github.com/berlindb/core/blob/bdea8cb238b71248d714e9c46bd8596fdbb4c9e7/src/Database/Query.php#L1943
 	 * @link https://bugs.php.net/bug.php?id=62115
 	 *
@@ -133,12 +134,13 @@ class NotificationRepository extends BerlinDbRepository {
 	 * Updates a notification.
 	 *
 	 * Converts array values to (JSON) strings to avoid a PHP notice in array_diff_assoc.
+	 *
 	 * @link https://github.com/berlindb/core/blob/bdea8cb238b71248d714e9c46bd8596fdbb4c9e7/src/Database/Query.php#L1943
 	 * @link https://bugs.php.net/bug.php?id=62115
 	 *
 	 * @since 4.4.5
 	 *
-	 * @param int $notification_id Notification ID.
+	 * @param int          $notification_id Notification ID.
 	 * @param array<mixed> $args Arguments to update the notification with.
 	 */
 	public function update( $notification_id, $args = array() ) {
@@ -175,7 +177,7 @@ class NotificationRepository extends BerlinDbRepository {
 		return $this->update(
 			$notification->id,
 			array(
-				'dismissed' => true
+				'dismissed' => true,
 			)
 		);
 	}
@@ -269,7 +271,7 @@ class NotificationRepository extends BerlinDbRepository {
 	 * @param array<mixed> $args Query arguments.
 	 * @return array<\SimplePay\Core\Model\ModelInterface>
 	 */
-	public function get_read( $args = array()) {
+	public function get_read( $args = array() ) {
 		return $this->query(
 			array_merge( $this->get_read_query_args(), $args )
 		);
@@ -297,7 +299,7 @@ class NotificationRepository extends BerlinDbRepository {
 					'compare' => '>=',
 					'value'   => date( 'Y-m-d H:i:s', time() ),
 				),
-			)
+			),
 		);
 	}
 
@@ -323,7 +325,7 @@ class NotificationRepository extends BerlinDbRepository {
 					'compare' => '>=',
 					'value'   => date( 'Y-m-d H:i:s', time() ),
 				),
-			)
+			),
 		);
 	}
 }

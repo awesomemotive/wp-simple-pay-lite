@@ -46,7 +46,9 @@ class FirstFormEmbed implements SubscriberInterface {
 	public function get_subscribed_events() {
 		return array(
 			'save_post'              => array(
-				'first_form_embed_classic_editor', 10, 2
+				'first_form_embed_classic_editor',
+				10,
+				2,
 			),
 			'rest_after_insert_page' => 'first_form_embed_block_editor',
 			'rest_after_insert_post' => 'first_form_embed_block_editor',

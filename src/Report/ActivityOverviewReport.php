@@ -464,7 +464,7 @@ class ActivityOverviewReport {
 				'text'  => __(
 					'Offer a fixed amount or a percentage discount for a specified duration or forever.',
 					'stripe'
-				)
+				),
 			),
 			array(
 				'title' => __(

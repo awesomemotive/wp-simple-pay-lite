@@ -33,7 +33,7 @@ class UpgradeModal implements SubscriberInterface, LicenseAwareInterface {
 	 */
 	public function get_subscribed_events() {
 		return array(
-			'admin_print_footer_scripts'  => 'maybe_output_upgrade_modal',
+			'admin_print_footer_scripts' => 'maybe_output_upgrade_modal',
 		);
 	}
 

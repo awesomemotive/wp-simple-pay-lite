@@ -27,6 +27,7 @@ namespace SimplePay\Vendor\Stripe\Issuing;
  * @property string $merchant_currency The currency with which the merchant is taking payment.
  * @property \SimplePay\Vendor\Stripe\StripeObject $merchant_data
  * @property \SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $network_data Details about the transaction, such as processing dates, set by the card network.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $purchase_details Additional purchase information that is optionally provided by the merchant.
  * @property null|string|\SimplePay\Vendor\Stripe\Issuing\Token $token <a href="https://stripe.com/docs/api/issuing/tokens/object">Token</a> object used for this transaction. If a network token was not used for this transaction, this field will be null.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $treasury <a href="https://stripe.com/docs/api/treasury">Treasury</a> details related to this transaction if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
@@ -37,8 +38,6 @@ class Transaction extends \SimplePay\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'issuing.transaction';
 
-    use \SimplePay\Vendor\Stripe\ApiOperations\All;
-    use \SimplePay\Vendor\Stripe\ApiOperations\Retrieve;
     use \SimplePay\Vendor\Stripe\ApiOperations\Update;
 
     const TYPE_CAPTURE = 'capture';
@@ -47,4 +46,67 @@ class Transaction extends \SimplePay\Vendor\Stripe\ApiResource
     const WALLET_APPLE_PAY = 'apple_pay';
     const WALLET_GOOGLE_PAY = 'google_pay';
     const WALLET_SAMSUNG_PAY = 'samsung_pay';
+
+    /**
+     * Returns a list of Issuing <code>Transaction</code> objects. The objects are
+     * sorted in descending order by creation date, with the most recently created
+     * object appearing first.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Issuing\Transaction> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves an Issuing <code>Transaction</code> object.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Issuing\Transaction
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
+
+    /**
+     * Updates the specified Issuing <code>Transaction</code> object by setting the
+     * values of the parameters passed. Any parameters not provided will be left
+     * unchanged.
+     *
+     * @param string $id the ID of the resource to update
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Issuing\Transaction the updated resource
+     */
+    public static function update($id, $params = null, $opts = null)
+    {
+        self::_validateParams($params);
+        $url = static::resourceUrl($id);
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
 }

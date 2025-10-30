@@ -22,16 +22,13 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\StripeObject[] $fee_details Detailed breakdown of fees (in cents (or local equivalent)) paid for this transaction.
  * @property int $net Net impact to a SimplePay\Vendor\Stripe balance (in cents (or local equivalent)). A positive value represents incrementing a SimplePay\Vendor\Stripe balance, and a negative value decrementing a SimplePay\Vendor\Stripe balance. You can calculate the net impact of a transaction on a balance by <code>amount</code> - <code>fee</code>
  * @property string $reporting_category Learn more about how <a href="https://stripe.com/docs/reports/reporting-categories">reporting categories</a> can help you understand balance transactions from an accounting perspective.
- * @property null|string|\SimplePay\Vendor\Stripe\ApplicationFee|\SimplePay\Vendor\Stripe\ApplicationFeeRefund|\SimplePay\Vendor\Stripe\Charge|\SimplePay\Vendor\Stripe\CustomerCashBalanceTransaction|\SimplePay\Vendor\Stripe\Dispute|\SimplePay\Vendor\Stripe\Issuing\Authorization|\SimplePay\Vendor\Stripe\Issuing\Dispute|\SimplePay\Vendor\Stripe\Issuing\Transaction|\SimplePay\Vendor\Stripe\Payout|\SimplePay\Vendor\Stripe\Refund|\SimplePay\Vendor\Stripe\StripeObject|\SimplePay\Vendor\Stripe\Topup|\SimplePay\Vendor\Stripe\Transfer|\SimplePay\Vendor\Stripe\TransferReversal $source This transaction relates to the SimplePay\Vendor\Stripe object.
+ * @property null|string|\SimplePay\Vendor\Stripe\ApplicationFee|\SimplePay\Vendor\Stripe\ApplicationFeeRefund|\SimplePay\Vendor\Stripe\Charge|\SimplePay\Vendor\Stripe\ConnectCollectionTransfer|\SimplePay\Vendor\Stripe\CustomerCashBalanceTransaction|\SimplePay\Vendor\Stripe\Dispute|\SimplePay\Vendor\Stripe\Issuing\Authorization|\SimplePay\Vendor\Stripe\Issuing\Dispute|\SimplePay\Vendor\Stripe\Issuing\Transaction|\SimplePay\Vendor\Stripe\Payout|\SimplePay\Vendor\Stripe\Refund|\SimplePay\Vendor\Stripe\ReserveTransaction|\SimplePay\Vendor\Stripe\TaxDeductedAtSource|\SimplePay\Vendor\Stripe\Topup|\SimplePay\Vendor\Stripe\Transfer|\SimplePay\Vendor\Stripe\TransferReversal $source This transaction relates to the SimplePay\Vendor\Stripe object.
  * @property string $status The transaction's net funds status in the SimplePay\Vendor\Stripe balance, which are either <code>available</code> or <code>pending</code>.
- * @property string $type Transaction type: <code>adjustment</code>, <code>advance</code>, <code>advance_funding</code>, <code>anticipation_repayment</code>, <code>application_fee</code>, <code>application_fee_refund</code>, <code>charge</code>, <code>connect_collection_transfer</code>, <code>contribution</code>, <code>issuing_authorization_hold</code>, <code>issuing_authorization_release</code>, <code>issuing_dispute</code>, <code>issuing_transaction</code>, <code>obligation_inbound</code>, <code>obligation_outbound</code>, <code>obligation_reversal_inbound</code>, <code>obligation_reversal_outbound</code>, <code>obligation_payout</code>, <code>obligation_payout_failure</code>, <code>payment</code>, <code>payment_failure_refund</code>, <code>payment_refund</code>, <code>payment_reversal</code>, <code>payment_unreconciled</code>, <code>payout</code>, <code>payout_cancel</code>, <code>payout_failure</code>, <code>refund</code>, <code>refund_failure</code>, <code>reserve_transaction</code>, <code>reserved_funds</code>, <code>stripe_fee</code>, <code>stripe_fx_fee</code>, <code>tax_fee</code>, <code>topup</code>, <code>topup_reversal</code>, <code>transfer</code>, <code>transfer_cancel</code>, <code>transfer_failure</code>, or <code>transfer_refund</code>. Learn more about <a href="https://stripe.com/docs/reports/balance-transaction-types">balance transaction types and what they represent</a>. To classify transactions for accounting purposes, consider <code>reporting_category</code> instead.
+ * @property string $type Transaction type: <code>adjustment</code>, <code>advance</code>, <code>advance_funding</code>, <code>anticipation_repayment</code>, <code>application_fee</code>, <code>application_fee_refund</code>, <code>charge</code>, <code>climate_order_purchase</code>, <code>climate_order_refund</code>, <code>connect_collection_transfer</code>, <code>contribution</code>, <code>issuing_authorization_hold</code>, <code>issuing_authorization_release</code>, <code>issuing_dispute</code>, <code>issuing_transaction</code>, <code>obligation_outbound</code>, <code>obligation_reversal_inbound</code>, <code>payment</code>, <code>payment_failure_refund</code>, <code>payment_network_reserve_hold</code>, <code>payment_network_reserve_release</code>, <code>payment_refund</code>, <code>payment_reversal</code>, <code>payment_unreconciled</code>, <code>payout</code>, <code>payout_cancel</code>, <code>payout_failure</code>, <code>refund</code>, <code>refund_failure</code>, <code>reserve_transaction</code>, <code>reserved_funds</code>, <code>stripe_fee</code>, <code>stripe_fx_fee</code>, <code>tax_fee</code>, <code>topup</code>, <code>topup_reversal</code>, <code>transfer</code>, <code>transfer_cancel</code>, <code>transfer_failure</code>, or <code>transfer_refund</code>. Learn more about <a href="https://stripe.com/docs/reports/balance-transaction-types">balance transaction types and what they represent</a>. To classify transactions for accounting purposes, consider <code>reporting_category</code> instead.
  */
 class BalanceTransaction extends ApiResource
 {
     const OBJECT_NAME = 'balance_transaction';
-
-    use ApiOperations\All;
-    use ApiOperations\Retrieve;
 
     const TYPE_ADJUSTMENT = 'adjustment';
     const TYPE_ADVANCE = 'advance';
@@ -40,20 +37,20 @@ class BalanceTransaction extends ApiResource
     const TYPE_APPLICATION_FEE = 'application_fee';
     const TYPE_APPLICATION_FEE_REFUND = 'application_fee_refund';
     const TYPE_CHARGE = 'charge';
+    const TYPE_CLIMATE_ORDER_PURCHASE = 'climate_order_purchase';
+    const TYPE_CLIMATE_ORDER_REFUND = 'climate_order_refund';
     const TYPE_CONNECT_COLLECTION_TRANSFER = 'connect_collection_transfer';
     const TYPE_CONTRIBUTION = 'contribution';
     const TYPE_ISSUING_AUTHORIZATION_HOLD = 'issuing_authorization_hold';
     const TYPE_ISSUING_AUTHORIZATION_RELEASE = 'issuing_authorization_release';
     const TYPE_ISSUING_DISPUTE = 'issuing_dispute';
     const TYPE_ISSUING_TRANSACTION = 'issuing_transaction';
-    const TYPE_OBLIGATION_INBOUND = 'obligation_inbound';
     const TYPE_OBLIGATION_OUTBOUND = 'obligation_outbound';
-    const TYPE_OBLIGATION_PAYOUT = 'obligation_payout';
-    const TYPE_OBLIGATION_PAYOUT_FAILURE = 'obligation_payout_failure';
     const TYPE_OBLIGATION_REVERSAL_INBOUND = 'obligation_reversal_inbound';
-    const TYPE_OBLIGATION_REVERSAL_OUTBOUND = 'obligation_reversal_outbound';
     const TYPE_PAYMENT = 'payment';
     const TYPE_PAYMENT_FAILURE_REFUND = 'payment_failure_refund';
+    const TYPE_PAYMENT_NETWORK_RESERVE_HOLD = 'payment_network_reserve_hold';
+    const TYPE_PAYMENT_NETWORK_RESERVE_RELEASE = 'payment_network_reserve_release';
     const TYPE_PAYMENT_REFUND = 'payment_refund';
     const TYPE_PAYMENT_REVERSAL = 'payment_reversal';
     const TYPE_PAYMENT_UNRECONCILED = 'payment_unreconciled';
@@ -73,4 +70,48 @@ class BalanceTransaction extends ApiResource
     const TYPE_TRANSFER_CANCEL = 'transfer_cancel';
     const TYPE_TRANSFER_FAILURE = 'transfer_failure';
     const TYPE_TRANSFER_REFUND = 'transfer_refund';
+
+    /**
+     * Returns a list of transactions that have contributed to the SimplePay\Vendor\Stripe account
+     * balance (e.g., charges, transfers, and so forth). The transactions are returned
+     * in sorted order, with the most recent transactions appearing first.
+     *
+     * Note that this endpoint was previously called “Balance history” and used the
+     * path <code>/v1/balance/history</code>.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\BalanceTransaction> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves the balance transaction with the given ID.
+     *
+     * Note that this endpoint previously used the path
+     * <code>/v1/balance/history/:id</code>.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\BalanceTransaction
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
 }

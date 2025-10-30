@@ -55,7 +55,7 @@ trait PaymentIntentTrait {
 		// regardless of what generates them (Subscription, Checkout Session, etc).
 		$payment_intent_args = array_merge(
 			array(
-				'metadata' => PaymentRequestUtils::get_payment_metadata( $request ),
+				'metadata' => PaymentRequestUtils::get_payment_intent_metadata( $request ),
 				'expand'   => array(
 					'customer',
 				),

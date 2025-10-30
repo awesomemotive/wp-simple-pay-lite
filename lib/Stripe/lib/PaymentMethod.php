@@ -17,6 +17,8 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $affirm
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $afterpay_clearpay
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $alipay
+ * @property null|string $allow_redisplay This field indicates whether this payment method can be shown again to its customer in a checkout flow. SimplePay\Vendor\Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to “unspecified”.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $amazon_pay
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $au_becs_debit
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $bacs_debit
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $bancontact
@@ -40,6 +42,8 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $link
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $metadata Set of <a href="https://stripe.com/docs/api/metadata">key-value pairs</a> that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $mobilepay
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $multibanco
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $oxxo
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $p24
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $paynow
@@ -50,6 +54,8 @@ namespace SimplePay\Vendor\Stripe;
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $revolut_pay
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $sepa_debit
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $sofort
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $swish
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $twint
  * @property string $type The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $us_bank_account
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $wechat_pay
@@ -59,15 +65,17 @@ class PaymentMethod extends ApiResource
 {
     const OBJECT_NAME = 'payment_method';
 
-    use ApiOperations\All;
-    use ApiOperations\Create;
-    use ApiOperations\Retrieve;
     use ApiOperations\Update;
+
+    const ALLOW_REDISPLAY_ALWAYS = 'always';
+    const ALLOW_REDISPLAY_LIMITED = 'limited';
+    const ALLOW_REDISPLAY_UNSPECIFIED = 'unspecified';
 
     const TYPE_ACSS_DEBIT = 'acss_debit';
     const TYPE_AFFIRM = 'affirm';
     const TYPE_AFTERPAY_CLEARPAY = 'afterpay_clearpay';
     const TYPE_ALIPAY = 'alipay';
+    const TYPE_AMAZON_PAY = 'amazon_pay';
     const TYPE_AU_BECS_DEBIT = 'au_becs_debit';
     const TYPE_BACS_DEBIT = 'bacs_debit';
     const TYPE_BANCONTACT = 'bancontact';
@@ -86,6 +94,8 @@ class PaymentMethod extends ApiResource
     const TYPE_KLARNA = 'klarna';
     const TYPE_KONBINI = 'konbini';
     const TYPE_LINK = 'link';
+    const TYPE_MOBILEPAY = 'mobilepay';
+    const TYPE_MULTIBANCO = 'multibanco';
     const TYPE_OXXO = 'oxxo';
     const TYPE_P24 = 'p24';
     const TYPE_PAYNOW = 'paynow';
@@ -95,9 +105,107 @@ class PaymentMethod extends ApiResource
     const TYPE_REVOLUT_PAY = 'revolut_pay';
     const TYPE_SEPA_DEBIT = 'sepa_debit';
     const TYPE_SOFORT = 'sofort';
+    const TYPE_SWISH = 'swish';
+    const TYPE_TWINT = 'twint';
     const TYPE_US_BANK_ACCOUNT = 'us_bank_account';
     const TYPE_WECHAT_PAY = 'wechat_pay';
     const TYPE_ZIP = 'zip';
+
+    /**
+     * Creates a PaymentMethod object. Read the <a
+     * href="/docs/stripe-js/reference#stripe-create-payment-method">Stripe.js
+     * reference</a> to learn how to create PaymentMethods via Stripe.js.
+     *
+     * Instead of creating a PaymentMethod directly, we recommend using the <a
+     * href="/docs/payments/accept-a-payment">PaymentIntents</a> API to accept a
+     * payment immediately or the <a
+     * href="/docs/payments/save-and-reuse">SetupIntent</a> API to collect payment
+     * method details ahead of a future payment.
+     *
+     * @param null|array $params
+     * @param null|array|string $options
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\PaymentMethod the created resource
+     */
+    public static function create($params = null, $options = null)
+    {
+        self::_validateParams($params);
+        $url = static::classUrl();
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $options);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
+
+    /**
+     * Returns a list of PaymentMethods for Treasury flows. If you want to list the
+     * PaymentMethods attached to a Customer for payments, you should use the <a
+     * href="/docs/api/payment_methods/customer_list">List a Customer’s
+     * PaymentMethods</a> API instead.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\PaymentMethod> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves a PaymentMethod object attached to the StripeAccount. To retrieve a
+     * payment method attached to a Customer, you should use <a
+     * href="/docs/api/payment_methods/customer">Retrieve a Customer’s
+     * PaymentMethods</a>.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\PaymentMethod
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
+
+    /**
+     * Updates a PaymentMethod object. A PaymentMethod must be attached a customer to
+     * be updated.
+     *
+     * @param string $id the ID of the resource to update
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\PaymentMethod the updated resource
+     */
+    public static function update($id, $params = null, $opts = null)
+    {
+        self::_validateParams($params);
+        $url = static::resourceUrl($id);
+
+        list($response, $opts) = static::_staticRequest('post', $url, $params, $opts);
+        $obj = \SimplePay\Vendor\Stripe\Util\Util::convertToStripeObject($response->json, $opts);
+        $obj->setLastResponse($response);
+
+        return $obj;
+    }
 
     /**
      * @param null|array $params

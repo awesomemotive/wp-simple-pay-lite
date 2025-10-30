@@ -46,9 +46,9 @@ class RemoteNotificationImporter extends AbstractNotificationImporter implements
 	 *
 	 * @since 4.4.5
 	 *
-	 * @param string                                       $api_endpoint_url Remote API endpoint URL.
-	 * @param \SimplePay\Core\Scheduler\SchedulerInterface $scheduler Scheduler.
-	 * @param \SimplePay\Core\NotificationInbox\NotificationRepository $notifications Notification repository.
+	 * @param string                                                      $api_endpoint_url Remote API endpoint URL.
+	 * @param \SimplePay\Core\Scheduler\SchedulerInterface                $scheduler Scheduler.
+	 * @param \SimplePay\Core\NotificationInbox\NotificationRepository    $notifications Notification repository.
 	 * @param \SimplePay\Core\NotificationInbox\NotificationRuleProcessor $rule_processor Notification rule processor.
 	 */
 	public function __construct(
@@ -98,7 +98,7 @@ class RemoteNotificationImporter extends AbstractNotificationImporter implements
 	public function get_source() {
 		$url = parse_url( $this->api_endpoint_url );
 
-		if ( false !== $url && ! empty( $url['host']) ) {
+		if ( false !== $url && ! empty( $url['host'] ) ) {
 			$source = $url['host'];
 		} else {
 			$source = 'unknown';

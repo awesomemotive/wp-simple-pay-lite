@@ -12,7 +12,7 @@
 namespace SimplePay\Core\RestApi\Internal\Payment\Utils;
 
 use SimplePay\Core\PaymentForm\PriceOption;
-use SimplePay\Pro\Payment_Methods;
+use SimplePay\Core\PaymentMethods;
 
 /**
  * FeeRecoveryUtils class.
@@ -187,7 +187,7 @@ class FeeRecoveryUtils {
 			return 0;
 		}
 
-		$payment_method_settings = Payment_Methods\get_form_payment_method_settings(
+		$payment_method_settings = PaymentMethods\get_form_payment_method_settings(
 			$form,
 			PaymentRequestUtils::get_payment_method_type( $request )
 		);

@@ -44,7 +44,7 @@ abstract class AbstractNotificationImporter implements NotificationImporterInter
 	 *
 	 * @since 4.4.5
 	 *
-	 * @param \SimplePay\Core\NotificationInbox\NotificationRepository $notifications Notification repository.
+	 * @param \SimplePay\Core\NotificationInbox\NotificationRepository    $notifications Notification repository.
 	 * @param \SimplePay\Core\NotificationInbox\NotificationRuleProcessor $rule_processor Notification rule processor.
 	 */
 	public function __construct(

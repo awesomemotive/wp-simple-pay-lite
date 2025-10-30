@@ -4,13 +4,17 @@
 
 namespace SimplePay\Vendor\Stripe\Service\Tax;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class RegistrationService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
      * Returns a list of Tax <code>Registration</code> objects.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -25,7 +29,7 @@ class RegistrationService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      * Creates a new Tax <code>Registration</code> object.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -37,6 +41,22 @@ class RegistrationService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
     }
 
     /**
+     * Returns a Tax <code>Registration</code> object.
+     *
+     * @param string $id
+     * @param null|array $params
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Tax\Registration
+     */
+    public function retrieve($id, $params = null, $opts = null)
+    {
+        return $this->request('get', $this->buildPath('/v1/tax/registrations/%s', $id), $params, $opts);
+    }
+
+    /**
      * Updates an existing Tax <code>Registration</code> object.
      *
      * A registration cannot be deleted after it has been created. If you wish to end a
@@ -44,7 +64,7 @@ class RegistrationService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

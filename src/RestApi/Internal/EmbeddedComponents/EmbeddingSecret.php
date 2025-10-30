@@ -39,7 +39,7 @@ class EmbeddingSecret implements SubscriberInterface {
 	 */
 	public function __construct() {
 		if ( ! defined( 'SIMPLE_PAY_PROXY_URL_STRIPE' ) ) {
-			define( 'SIMPLE_PAY_PROXY_URL_STRIPE', 'https://requests.wpsimplepay.com/api/stripe' );
+			define( 'SIMPLE_PAY_PROXY_URL_STRIPE', simpay_is_test_mode() ? 'https://requests.wpsimplepay.com/api/stripe?mode=test' : 'https://requests.wpsimplepay.com/api/stripe?mode=live' );
 		}
 	}
 
@@ -104,15 +104,6 @@ class EmbeddingSecret implements SubscriberInterface {
 
 		/** @var string $license_key */
 		$license_key = get_option( 'simpay_license_key', '' );
-
-		// Return early if in test mode.
-		if ( simpay_is_test_mode() ) {
-			return new WP_Error(
-				'rest_test_mode',
-				'This feature is only available in live mode',
-				array( 'status' => 400 )
-			);
-		}
 
 		// Return early if license key is empty.
 		if ( empty( $license_key ) ) {

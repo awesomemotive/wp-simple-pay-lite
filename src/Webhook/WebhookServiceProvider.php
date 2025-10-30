@@ -78,7 +78,7 @@ class WebhookServiceProvider extends AbstractPluginServiceProvider {
 		$container->share(
 			'webhook-create-tool',
 			CreateWebhookTool::class
-		)->withArgument($container->get('webhook-endpoint-manager'));
+		)->withArgument( $container->get( 'webhook-endpoint-manager' ) );
 	}
 
 }

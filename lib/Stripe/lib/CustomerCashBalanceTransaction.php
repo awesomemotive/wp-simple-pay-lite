@@ -22,15 +22,13 @@ namespace SimplePay\Vendor\Stripe;
  * @property bool $livemode Has the value <code>true</code> if the object exists in live mode or the value <code>false</code> if the object exists in test mode.
  * @property int $net_amount The amount by which the cash balance changed, represented in the <a href="https://stripe.com/docs/currencies#zero-decimal">smallest currency unit</a>. A positive value represents funds being added to the cash balance, a negative value represents funds being removed from the cash balance.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $refunded_from_payment
+ * @property null|\SimplePay\Vendor\Stripe\StripeObject $transferred_to_balance
  * @property string $type The type of the cash balance transaction. New types may be added in future. See <a href="https://stripe.com/docs/payments/customer-balance#types">Customer Balance</a> to learn more about these types.
  * @property null|\SimplePay\Vendor\Stripe\StripeObject $unapplied_from_payment
  */
 class CustomerCashBalanceTransaction extends ApiResource
 {
     const OBJECT_NAME = 'customer_cash_balance_transaction';
-
-    use ApiOperations\All;
-    use ApiOperations\Retrieve;
 
     const TYPE_ADJUSTED_FOR_OVERDRAFT = 'adjusted_for_overdraft';
     const TYPE_APPLIED_TO_PAYMENT = 'applied_to_payment';

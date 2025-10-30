@@ -4,6 +4,10 @@
 
 namespace SimplePay\Vendor\Stripe\Service;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class ExchangeRateService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
@@ -11,7 +15,7 @@ class ExchangeRateService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      * converted to one another. Only shows the currencies for which SimplePay\Vendor\Stripe supports.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -28,7 +32,7 @@ class ExchangeRateService extends \SimplePay\Vendor\Stripe\Service\AbstractServi
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

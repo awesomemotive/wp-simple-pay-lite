@@ -9,6 +9,7 @@ namespace SimplePay\Vendor\Stripe\Service\TestHelpers\Issuing;
  *
  * @property AuthorizationService $authorizations
  * @property CardService $cards
+ * @property PersonalizationDesignService $personalizationDesigns
  * @property TransactionService $transactions
  */
 class IssuingServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractServiceFactory
@@ -19,6 +20,7 @@ class IssuingServiceFactory extends \SimplePay\Vendor\Stripe\Service\AbstractSer
     private static $classMap = [
         'authorizations' => AuthorizationService::class,
         'cards' => CardService::class,
+        'personalizationDesigns' => PersonalizationDesignService::class,
         'transactions' => TransactionService::class,
     ];
 

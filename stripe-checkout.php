@@ -2,18 +2,13 @@
 /**
  * Plugin Name: WP Simple Pay Lite
  * Plugin URI: https://wpsimplepay.com
- * Description: Add high conversion Stripe payment forms to your WordPress site in minutes.
+ * Description: Add high conversion Stripe payment and subscription forms to your WordPress site in minutes.
  * Author: WP Simple Pay
  * Author URI: https://wpsimplepay.com
- * Version: 4.15.0
+ * Version: 4.16.0
  * Text Domain: stripe
  * Domain Path: /languages
  */
-
-namespace SimplePay;
-
-use SimplePay\Core\Plugin;
-use SimplePay\Core\Bootstrap\Compatibility;
 
 /**
  * This program is free software; you can redistribute it and/or
@@ -32,6 +27,11 @@ use SimplePay\Core\Bootstrap\Compatibility;
  *
  * Copyright 2014-2022 Sandhills Development, LLC. All rights reserved.
  */
+
+namespace SimplePay;
+
+use SimplePay\Core\Plugin;
+use SimplePay\Core\Bootstrap\Compatibility;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -54,7 +54,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	//
 	// Lite/Pro-specific.
 	//
-	define( 'SIMPLE_PAY_VERSION', '4.15.0' );
+	define( 'SIMPLE_PAY_VERSION', '4.16.0' );
 
 	if ( ! defined( 'SIMPLE_PAY_PLUGIN_NAME' ) ) {
 		define( 'SIMPLE_PAY_PLUGIN_NAME', 'WP Simple Pay Lite' );
@@ -68,7 +68,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 	// Stripe.
 	//
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_API_VERSION' ) ) {
-		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2023-10-16' );
+		define( 'SIMPLE_PAY_STRIPE_API_VERSION', '2024-06-20' );
 	}
 
 	if ( ! defined( 'SIMPLE_PAY_STRIPE_PARTNER_ID' ) ) {
@@ -106,7 +106,7 @@ if ( ! defined( 'SIMPLE_PAY_VERSION' ) ) {
 		require_once SIMPLE_PAY_DIR . 'vendor/autoload.php';
 		require_once SIMPLE_PAY_DIR . 'includes/core/bootstrap/autoload.php';
 
-		// Plugin files.
+		// Core & Pro main plugin files.
 		require_once SIMPLE_PAY_DIR . 'includes/core/class-simplepay.php';
 
 		// New plugin container.

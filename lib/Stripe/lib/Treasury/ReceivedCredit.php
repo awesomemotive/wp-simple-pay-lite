@@ -28,11 +28,9 @@ class ReceivedCredit extends \SimplePay\Vendor\Stripe\ApiResource
 {
     const OBJECT_NAME = 'treasury.received_credit';
 
-    use \SimplePay\Vendor\Stripe\ApiOperations\All;
-    use \SimplePay\Vendor\Stripe\ApiOperations\Retrieve;
-
     const FAILURE_CODE_ACCOUNT_CLOSED = 'account_closed';
     const FAILURE_CODE_ACCOUNT_FROZEN = 'account_frozen';
+    const FAILURE_CODE_INTERNATIONAL_TRANSACTION = 'international_transaction';
     const FAILURE_CODE_OTHER = 'other';
 
     const NETWORK_ACH = 'ach';
@@ -42,4 +40,41 @@ class ReceivedCredit extends \SimplePay\Vendor\Stripe\ApiResource
 
     const STATUS_FAILED = 'failed';
     const STATUS_SUCCEEDED = 'succeeded';
+
+    /**
+     * Returns a list of ReceivedCredits.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\Treasury\ReceivedCredit> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves the details of an existing ReceivedCredit by passing the unique
+     * ReceivedCredit ID from the ReceivedCredit list.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Treasury\ReceivedCredit
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
 }

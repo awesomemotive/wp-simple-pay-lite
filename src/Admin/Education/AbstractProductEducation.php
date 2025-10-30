@@ -99,7 +99,7 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 						'href'   => true,
 						'target' => true,
 						'rel'    => true,
-					)
+					),
 				)
 			);
 		} else {
@@ -124,7 +124,7 @@ abstract class AbstractProductEducation implements ProductEducationInterface {
 						'href'   => true,
 						'target' => true,
 						'rel'    => true,
-					)
+					),
 				)
 			);
 		}

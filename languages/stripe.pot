@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.14.3\n"
+"Project-Id-Version: WP Simple Pay Lite 4.16.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-13T17:36:45+00:00\n"
+"POT-Creation-Date: 2025-10-30T13:34:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -35,7 +35,7 @@ msgstr ""
 #: src/Admin/SiteHealth/SiteHealthMenuItem.php:131
 #: src/AdminBar/AdminBarSubscriber.php:108
 #: src/Integration/Divi/ExtensionSubscriber.php:344
-#: src/Integration/Elementor/PaymentFormControl.php:35
+#: src/Integration/Elementor/PaymentFormControl.php:36
 #: includes/core/assets/js/dist/simpay-block-button.js:1
 msgid "WP Simple Pay"
 msgstr ""
@@ -11524,7 +11524,7 @@ msgid "Edit"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:165
-#: src/Integration/Elementor/PaymentFormControl.php:43
+#: src/Integration/Elementor/PaymentFormControl.php:44
 #: views/email-internal-summary-report.php:106
 #: includes/core/assets/js/dist/simpay-block-button.js:1
 msgid "Payment Form"
@@ -13509,7 +13509,7 @@ msgid "WP Simple Pay form ID."
 msgstr ""
 
 #: src/Integration/Divi/ExtensionSubscriber.php:410
-#: src/Integration/Elementor/PaymentFormControl.php:121
+#: src/Integration/Elementor/PaymentFormControl.php:123
 msgid "Select a form&hellip;"
 msgstr ""
 
@@ -13633,6 +13633,17 @@ msgid ""
 "Your payments are now faster, safer, and more flexible than ever! 🎉\n"
 "\n"
 "If you have any questions about this update, feel free to contact us. Thank you for choosing us!"
+msgstr ""
+
+#. translators: %s Collection ID that could not be registered.
+#: src/PaymentMethods/Collection.php:41
+#, php-format
+msgid "The %s Payment Method already exists and cannot be added."
+msgstr ""
+
+#. translators: %s Collection ID that could not be registered.
+#: src/PaymentMethods/Collection.php:52
+msgid "The Payment Method is invalid."
 msgstr ""
 
 #: src/Report/ActivityOverviewReport.php:111

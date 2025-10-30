@@ -18,7 +18,7 @@
 namespace SimplePay\Core\RestApi\Internal\Payment\Utils;
 
 use SimplePay\Core\Abstracts\Form;
-use SimplePay\Pro\Payment_Methods;
+use SimplePay\Core\PaymentMethods;
 use function SimplePay\Pro\Post_Types\Simple_Pay\Util\get_custom_fields;
 
 /**
@@ -472,7 +472,7 @@ class PaymentRequestUtils {
 		$form                = self::get_form( $request );
 		$price               = self::get_price( $request );
 		$payment_intent_data = array(
-			'metadata' => self::get_payment_metadata( $request ),
+			'metadata' => self::get_payment_intent_metadata( $request ),
 		);
 
 		// If multiple line items are used, use the form title.
@@ -707,6 +707,23 @@ class PaymentRequestUtils {
 	}
 
 	/**
+	 * Returns payment intent metadata with additional required fields.
+	 *
+	 * @since 4.16.0
+	 *
+	 * @param \WP_REST_Request $request The payment request.
+	 * @return array<string, string>
+	 */
+	public static function get_payment_intent_metadata( $request ) {
+		$metadata = self::get_payment_metadata( $request );
+
+		// Add simpay_payment_receipt_viewed for payment intents.
+		$metadata['simpay_payment_receipt_viewed'] = empty( $metadata['simpay_payment_receipt_viewed'] ) ? '' : $metadata['simpay_payment_receipt_viewed'];
+
+		return $metadata;
+	}
+
+	/**
 	 * Returns the payment method types available for the given request.
 	 *
 	 * @since 4.7.0
@@ -733,8 +750,8 @@ class PaymentRequestUtils {
 			$is_recurring = true;
 		}
 
-		/** @var array<\SimplePay\Pro\Payment_Methods\Payment_Method> */
-		$payment_methods = Payment_Methods\get_form_payment_methods( $form );
+		/** @var array<\SimplePay\Core\PaymentMethods\PaymentMethod> */
+		$payment_methods = PaymentMethods\get_form_payment_methods( $form );
 
 		// Remove Payment Methods that do not support the current currency.
 		$payment_methods = array_filter(
@@ -754,7 +771,7 @@ class PaymentRequestUtils {
 				*
 				* @since unknown
 				*
-				* @param \SimplePay\Pro\Payment_Methods\Payment_Method $payment_method The Payment Method.
+				* @param \SimplePay\Core\PaymentMethods\PaymentMethod $payment_method The Payment Method.
 				* @return bool
 				*/
 				function ( $payment_method ) {
@@ -871,8 +888,8 @@ class PaymentRequestUtils {
 
 		// If ach-debit is enabled, check if the verification_method.instant
 		// flag is set. If it is not, force instant verification.
-		/** @var array<\SimplePay\Pro\Payment_Methods\Payment_Method> */
-		$payment_methods = Payment_Methods\get_form_payment_methods( $form );
+		/** @var array<\SimplePay\Core\PaymentMethods\PaymentMethod> */
+		$payment_methods = PaymentMethods\get_form_payment_methods( $form );
 
 		$ach_direct_debit = array_filter(
 			$payment_methods,

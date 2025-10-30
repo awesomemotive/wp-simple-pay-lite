@@ -216,6 +216,7 @@ final class Plugin {
 			new StripeConnect\StripeConnectServiceProvider(),
 			new Transaction\TransactionServiceProvider(),
 			new Webhook\WebhookServiceProvider(),
+			new PaymentMethods\PaymentMethodsServiceProvider(),
 		);
 
 		if ( is_admin() ) {

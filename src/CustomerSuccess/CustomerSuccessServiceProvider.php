@@ -60,7 +60,7 @@ class CustomerSuccessServiceProvider extends AbstractPluginServiceProvider {
 
 		// Achievements.
 
-		$achievements    = $container->get( 'customer-success-achievements' );
+		$achievements = $container->get( 'customer-success-achievements' );
 		/** @var bool|int $journey_started */
 		$journey_started = get_option( 'simpay_customer_journey_start', false );
 

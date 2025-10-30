@@ -35,7 +35,7 @@ class FormBuilderServiceProvider extends AbstractPluginServiceProvider {
 			'form-builder-license-check',
 			'form-builder-template-explorer',
 			'form-builder-custom-field-subscriber',
-			'form-builder-automator-integrations-importer'
+			'form-builder-automator-integrations-importer',
 		);
 	}
 

@@ -120,7 +120,7 @@ abstract class AbstractAdminNotice implements AdminNoticeInterface, LicenseAware
 		$classes = array(
 			'simpay-notice',
 			'notice',
-			'notice-' . $this->get_type()
+			'notice-' . $this->get_type(),
 		);
 
 		if ( true === $this->is_dismissible() ) {

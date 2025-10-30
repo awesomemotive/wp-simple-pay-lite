@@ -96,7 +96,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 				: '';
 		}
 
-		$settings_url  = Settings\get_url();
+		$settings_url = Settings\get_url();
 
 		// Parent.
 		$wp_admin_bar->add_menu(
@@ -139,7 +139,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 		// All forms.
 		$forms_url = add_query_arg(
 			array(
-				'post_type' => 'simple-pay'
+				'post_type' => 'simple-pay',
 			),
 			admin_url( 'edit.php' )
 		);

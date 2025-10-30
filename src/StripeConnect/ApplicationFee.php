@@ -95,7 +95,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 	public function maybe_show_application_fee( $message ) {
 		$message .= '<br /><br />';
 
-		if ( false === $this->has_application_fee() ) {
+		if ( false === $this->has_application_fee() && $this->license->is_valid() ) {
 			$message .= sprintf(
 				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 				__(
@@ -402,7 +402,29 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 				continue;
 			}
 
-			// Remove the applicaiton fee from each Subscription.
+			// Check if subscription is active before attempting to update.
+			$subscription_status = $this->is_subscription_active( $subscription_id, $api_request_args );
+
+			// If API call failed, keep transaction for retry instead of marking as processed.
+			if ( ! $subscription_status['api_success'] ) {
+				// API call failed, keep transaction for retry in next batch.
+				continue;
+			}
+
+			// If subscription is not active, mark as processed.
+			if ( ! $subscription_status['active'] ) {
+				$this->transactions->update(
+					$txn_id,
+					array(
+						'application_fee' => false,
+					)
+				);
+
+				unset( $transactions[ $k ] );
+				continue;
+			}
+
+			// Remove the application fee from each Subscription.
 			try {
 				// Update in Stripe.
 				API\Subscriptions\update(
@@ -515,7 +537,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 
 	/**
 	 * Returns a list of transactions (with a subset of information) that were
-	 * created with application fees.
+	 * created with application fees and have active subscriptions.
 	 *
 	 * @since 4.4.6
 	 *
@@ -527,6 +549,9 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			array(
 				'application_fee' => true,
 				'number'          => 10,
+				'subscription_id' => array(
+					'compare' => 'EXISTS',
+				),
 			)
 		);
 
@@ -543,5 +568,34 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 			},
 			$transactions
 		);
+	}
+
+	/**
+	 * Checks if a subscription is active and can be updated.
+	 *
+	 * @since 4.16.0
+	 *
+	 * @param string               $subscription_id Stripe subscription ID.
+	 * @param array<string, mixed> $api_request_args API request arguments.
+	 * @return array<string, mixed> Array containing 'active' status, 'api_success' flag, and optional 'error' message.
+	 */
+	private function is_subscription_active( $subscription_id, $api_request_args ) {
+		try {
+			$subscription = API\Subscriptions\retrieve( $subscription_id, $api_request_args );
+
+			// Check if subscription is in an active state.
+			$active_statuses = array( 'active', 'trialing', 'past_due' );
+			return array(
+				'active'      => in_array( $subscription->status, $active_statuses, true ),
+				'api_success' => true,
+			);
+		} catch ( Exception $e ) {
+			// If we can't retrieve the subscription, return failure details.
+			return array(
+				'active'      => false,
+				'api_success' => false,
+				'error'       => $e->getMessage(),
+			);
+		}
 	}
 }

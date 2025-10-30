@@ -33,7 +33,7 @@ class StatTelemetryData extends AbstractTransactionTelemetryData {
 			sprintf( 'transaction_total_%s', $currency )   => array_reduce(
 				$lifetime,
 				function( $carry, $amount ) {
-					return (int) $carry + (int) $amount['amount'];
+					return (int) $carry + (int) $amount['total'];
 				},
 				0
 			),

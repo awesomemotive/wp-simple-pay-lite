@@ -4,6 +4,10 @@
 
 namespace SimplePay\Vendor\Stripe\Service;
 
+/**
+ * @phpstan-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ * @psalm-import-type RequestOptionsArray from \SimplePay\Vendor\Stripe\Util\RequestOptions
+ */
 class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
 {
     /**
@@ -12,7 +16,7 @@ class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      * recently created payouts appearing first.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -24,13 +28,13 @@ class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     }
 
     /**
-     * You can cancel a previously created payout if it hasn’t been paid out yet.
-     * SimplePay\Vendor\Stripe refunds the funds to your available balance. You can’t cancel automatic
-     * SimplePay\Vendor\Stripe payouts.
+     * You can cancel a previously created payout if its status is
+     * <code>pending</code>. SimplePay\Vendor\Stripe refunds the funds to your available balance. You
+     * can’t cancel automatic SimplePay\Vendor\Stripe payouts.
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -55,7 +59,7 @@ class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      * pending amounts by source type.
      *
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -73,7 +77,7 @@ class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -87,7 +91,7 @@ class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
     /**
      * Reverses a payout by debiting the destination bank account. At this time, you
      * can only reverse payouts for connected accounts to US bank accounts. If the
-     * payout is in the <code>pending</code> status, use
+     * payout is manual and in the <code>pending</code> status, use
      * <code>/v1/payouts/:id/cancel</code> instead.
      *
      * By requesting a reversal through <code>/v1/payouts/:id/reverse</code>, you
@@ -96,7 +100,7 @@ class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *
@@ -114,7 +118,7 @@ class PayoutService extends \SimplePay\Vendor\Stripe\Service\AbstractService
      *
      * @param string $id
      * @param null|array $params
-     * @param null|array|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
+     * @param null|RequestOptionsArray|\SimplePay\Vendor\Stripe\Util\RequestOptions $opts
      *
      * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
      *

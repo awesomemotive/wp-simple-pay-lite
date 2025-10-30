@@ -15,22 +15,29 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\Apps\AppsServiceFactory $apps
  * @property \SimplePay\Vendor\Stripe\Service\BalanceService $balance
  * @property \SimplePay\Vendor\Stripe\Service\BalanceTransactionService $balanceTransactions
+ * @property \SimplePay\Vendor\Stripe\Service\Billing\BillingServiceFactory $billing
  * @property \SimplePay\Vendor\Stripe\Service\BillingPortal\BillingPortalServiceFactory $billingPortal
  * @property \SimplePay\Vendor\Stripe\Service\ChargeService $charges
  * @property \SimplePay\Vendor\Stripe\Service\Checkout\CheckoutServiceFactory $checkout
+ * @property \SimplePay\Vendor\Stripe\Service\Climate\ClimateServiceFactory $climate
+ * @property \SimplePay\Vendor\Stripe\Service\ConfirmationTokenService $confirmationTokens
  * @property \SimplePay\Vendor\Stripe\Service\CountrySpecService $countrySpecs
  * @property \SimplePay\Vendor\Stripe\Service\CouponService $coupons
  * @property \SimplePay\Vendor\Stripe\Service\CreditNoteService $creditNotes
  * @property \SimplePay\Vendor\Stripe\Service\CustomerService $customers
+ * @property \SimplePay\Vendor\Stripe\Service\CustomerSessionService $customerSessions
  * @property \SimplePay\Vendor\Stripe\Service\DisputeService $disputes
+ * @property \SimplePay\Vendor\Stripe\Service\Entitlements\EntitlementsServiceFactory $entitlements
  * @property \SimplePay\Vendor\Stripe\Service\EphemeralKeyService $ephemeralKeys
  * @property \SimplePay\Vendor\Stripe\Service\EventService $events
  * @property \SimplePay\Vendor\Stripe\Service\ExchangeRateService $exchangeRates
  * @property \SimplePay\Vendor\Stripe\Service\FileLinkService $fileLinks
  * @property \SimplePay\Vendor\Stripe\Service\FileService $files
  * @property \SimplePay\Vendor\Stripe\Service\FinancialConnections\FinancialConnectionsServiceFactory $financialConnections
+ * @property \SimplePay\Vendor\Stripe\Service\Forwarding\ForwardingServiceFactory $forwarding
  * @property \SimplePay\Vendor\Stripe\Service\Identity\IdentityServiceFactory $identity
  * @property \SimplePay\Vendor\Stripe\Service\InvoiceItemService $invoiceItems
+ * @property \SimplePay\Vendor\Stripe\Service\InvoiceRenderingTemplateService $invoiceRenderingTemplates
  * @property \SimplePay\Vendor\Stripe\Service\InvoiceService $invoices
  * @property \SimplePay\Vendor\Stripe\Service\Issuing\IssuingServiceFactory $issuing
  * @property \SimplePay\Vendor\Stripe\Service\MandateService $mandates
@@ -59,6 +66,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\SubscriptionScheduleService $subscriptionSchedules
  * @property \SimplePay\Vendor\Stripe\Service\Tax\TaxServiceFactory $tax
  * @property \SimplePay\Vendor\Stripe\Service\TaxCodeService $taxCodes
+ * @property \SimplePay\Vendor\Stripe\Service\TaxIdService $taxIds
  * @property \SimplePay\Vendor\Stripe\Service\TaxRateService $taxRates
  * @property \SimplePay\Vendor\Stripe\Service\Terminal\TerminalServiceFactory $terminal
  * @property \SimplePay\Vendor\Stripe\Service\TestHelpers\TestHelpersServiceFactory $testHelpers
@@ -66,6 +74,7 @@ namespace SimplePay\Vendor\Stripe;
  * @property \SimplePay\Vendor\Stripe\Service\TopupService $topups
  * @property \SimplePay\Vendor\Stripe\Service\TransferService $transfers
  * @property \SimplePay\Vendor\Stripe\Service\Treasury\TreasuryServiceFactory $treasury
+ * @property \SimplePay\Vendor\Stripe\Service\V2\V2ServiceFactory $v2
  * @property \SimplePay\Vendor\Stripe\Service\WebhookEndpointService $webhookEndpoints
  * // The end of the section generated from our OpenAPI spec
  */

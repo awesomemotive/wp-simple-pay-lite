@@ -66,11 +66,14 @@ class WebhookEndpointManager {
 		$enabled_events = $endpoint->enabled_events;
 
 		// Enabled events are not * and do not match the defined whitelist.
-		if (
-			! in_array( '*', $enabled_events, true ) &&
-			$enabled_events !== $this->get_event_whitelist()
-		) {
-			return false;
+		if ( ! in_array( '*', $enabled_events, true ) ) {
+			// Check if all events in the whitelist are present in the enabled events.
+			$whitelist = $this->get_event_whitelist();
+			foreach ( $whitelist as $event ) {
+				if ( ! in_array( $event, $enabled_events, true ) ) {
+					return false;
+				}
+			}
 		}
 
 		// URL mismatch.

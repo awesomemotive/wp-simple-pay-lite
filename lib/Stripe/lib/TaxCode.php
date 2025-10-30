@@ -16,6 +16,41 @@ class TaxCode extends ApiResource
 {
     const OBJECT_NAME = 'tax_code';
 
-    use ApiOperations\All;
-    use ApiOperations\Retrieve;
+    /**
+     * A list of <a href="https://stripe.com/docs/tax/tax-categories">all tax codes
+     * available</a> to add to Products in order to allow specific tax calculations.
+     *
+     * @param null|array $params
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\Collection<\SimplePay\Vendor\Stripe\TaxCode> of ApiResources
+     */
+    public static function all($params = null, $opts = null)
+    {
+        $url = static::classUrl();
+
+        return static::_requestPage($url, \SimplePay\Vendor\Stripe\Collection::class, $params, $opts);
+    }
+
+    /**
+     * Retrieves the details of an existing tax code. Supply the unique tax code ID and
+     * SimplePay\Vendor\Stripe will return the corresponding tax code information.
+     *
+     * @param array|string $id the ID of the API resource to retrieve, or an options array containing an `id` key
+     * @param null|array|string $opts
+     *
+     * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException if the request fails
+     *
+     * @return \SimplePay\Vendor\Stripe\TaxCode
+     */
+    public static function retrieve($id, $opts = null)
+    {
+        $opts = \SimplePay\Vendor\Stripe\Util\RequestOptions::parse($opts);
+        $instance = new static($id, $opts);
+        $instance->refresh();
+
+        return $instance;
+    }
 }
