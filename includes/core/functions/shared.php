@@ -82,11 +82,17 @@ function simpay_get_setting( $setting, $default = null, $raw = true ) {
 
 	// Look in legacy options that might be used by extensions.
 	if ( null === $value ) {
-		$legacy = array_merge(
-			get_option( 'simpay_settings_general', array() ),
-			get_option( 'simpay_settings_keys', array() ),
-			get_option( 'simpay_settings_display', array() )
-		);
+		$legacy  = (array) get_option( 'simpay_settings_general', array() );
+		$keys    = get_option( 'simpay_settings_keys', array() );
+		$display = get_option( 'simpay_settings_display', array() );
+
+		if ( is_array( $keys ) ) {
+			$legacy = array_merge( $legacy, $keys );
+		}
+
+		if ( is_array( $display ) ) {
+			$legacy = array_merge( $legacy, $display );
+		}
 
 		if ( isset( $legacy[ $legacy_setting ] ) ) {
 			$value = $legacy[ $legacy_setting ];

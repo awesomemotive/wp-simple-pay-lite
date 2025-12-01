@@ -44,7 +44,7 @@ class PaymentMethodsServiceProvider extends AbstractPluginServiceProvider implem
 			$container->share( 'payment-methods-p24', PaymentMethod\P24PaymentMethod::class );
 			$container->share( 'payment-methods-afterpay-clearpay', PaymentMethod\AfterpayClearpayPaymentMethod::class );
 			$container->share( 'payment-methods-mobilepay', PaymentMethod\MobilepayPaymentMethod::class );
-			$container->share( 'payment-methods-becs', PaymentMethod\BescPaymentMethod::class );
+			$container->share( 'payment-methods-becs', PaymentMethod\BecsPaymentMethod::class );
 			$container->share( 'payment-methods-promptpay', PaymentMethod\PromptPayPaymentMethod::class );
 			$container->share( 'payment-methods-wechat-pay', PaymentMethod\WechatPayPaymentMethod::class );
 		}

@@ -58,6 +58,7 @@ trait InvoiceTrait {
 				'payment_method_types'   => PaymentRequestUtils::get_payment_method_types( $request ),
 				'payment_method_options' => PaymentRequestUtils::get_payment_method_options( $request ),
 			),
+			'currency'         => PaymentRequestUtils::get_currency( $request ),
 		);
 
 		if ( 'fixed-global' === $tax_status ) {
@@ -69,6 +70,25 @@ trait InvoiceTrait {
 				'enabled' => true,
 			);
 		}
+
+		/**
+		 * Filters arguments used to generate an Invoice.
+		 *
+		 * @since 4.16.1
+		 *
+		 * @param array<string, mixed>           $invoice_args Invoice arguments.
+		 * @param \SimplePay\Core\Abstracts\Form $form Form instance.
+		 * @param array<mixed>                   $arg2 Deprecated.
+		 * @param array<string, mixed>           $form_values Form values.
+		 * @return array<string, mixed>
+		 */
+		$invoice_args = apply_filters(
+			'simpay_get_invoice_args_from_payment_form_request',
+			$invoice_args,
+			$form,
+			array(),
+			$form_values
+		);
 
 		$invoice = Invoices\create(
 			$invoice_args,

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-30T13:34:49+00:00\n"
+"POT-Creation-Date: 2025-11-25T17:51:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #. Description of the plugin
 #: stripe-checkout.php
-msgid "Add high conversion Stripe payment forms to your WordPress site in minutes."
+msgid "Add high conversion Stripe payment and subscription forms to your WordPress site in minutes."
 msgstr ""
 
 #. Author of the plugin
@@ -51,12 +51,12 @@ msgid "Pay %s"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:188
-#: includes/core/functions/shared.php:595
+#: includes/core/functions/shared.php:601
 msgid "Insert Media"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:192
-#: includes/core/functions/shared.php:596
+#: includes/core/functions/shared.php:602
 msgid "Use Image"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 #. translators: %s: Minimum payment amount.
 #: includes/core/admin/class-assets.php:253
 #: includes/core/forms/class-price-option.php:668
-#: includes/core/functions/shared.php:551
+#: includes/core/functions/shared.php:557
 #, php-format
 msgid "starting at %s"
 msgstr ""
@@ -135,7 +135,7 @@ msgstr ""
 #: includes/core/admin/class-assets.php:256
 #: includes/core/forms/class-price-option.php:620
 #: includes/core/forms/class-price-option.php:757
-#: includes/core/functions/shared.php:554
+#: includes/core/functions/shared.php:560
 #: includes/core/payments/payment-confirmation-template-tags.php:1070
 #: includes/core/payments/payment-confirmation-template-tags.php:1095
 #, php-format
@@ -604,74 +604,75 @@ msgid "WP Simple Pay - Form %d"
 msgstr ""
 
 #: includes/core/forms/functions.php:302
-#: includes/core/forms/functions.php:507
-#: includes/core/forms/functions.php:541
+#: includes/core/forms/functions.php:523
+#: includes/core/forms/functions.php:557
 msgid "Payment Button field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:312
-msgid "The coupon field has been removed since you selected Off-site Stripe Checkout. "
-msgstr ""
-
-#: includes/core/forms/functions.php:354
-msgid "Customer Name field is required for one or more payment methods, and has been added to the payment form."
-msgstr ""
-
-#: includes/core/forms/functions.php:370
+#: includes/core/forms/functions.php:317
+#: includes/core/forms/functions.php:386
 msgid "Customer Email field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:411
+#: includes/core/forms/functions.php:328
+msgid "The coupon field has been removed since you selected Off-site Stripe Checkout. "
+msgstr ""
+
+#: includes/core/forms/functions.php:370
+msgid "Customer Name field is required for one or more payment methods, and has been added to the payment form."
+msgstr ""
+
+#: includes/core/forms/functions.php:427
 msgid "Address field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:475
+#: includes/core/forms/functions.php:491
 msgid "Payment Methods is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:491
+#: includes/core/forms/functions.php:507
 msgid "Checkout Button field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:516
+#: includes/core/forms/functions.php:532
 msgid "Payment Button has been removed from the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:564
+#: includes/core/forms/functions.php:580
 msgid "Price Selector is required, and has been added to the payment form. "
 msgstr ""
 
-#: includes/core/forms/functions.php:571
+#: includes/core/forms/functions.php:587
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
 msgstr ""
 
-#: includes/core/forms/functions.php:576
+#: includes/core/forms/functions.php:592
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
 msgstr ""
 
-#: includes/core/forms/functions.php:583
-#: includes/core/forms/functions.php:594
+#: includes/core/forms/functions.php:599
+#: includes/core/forms/functions.php:610
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
 msgstr ""
 
-#: includes/core/forms/functions.php:611
+#: includes/core/forms/functions.php:627
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:620
+#: includes/core/forms/functions.php:636
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
 msgstr ""
 
-#: includes/core/forms/functions.php:638
+#: includes/core/forms/functions.php:654
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:650
+#: includes/core/forms/functions.php:666
 msgid "Recurring Amount Toggle has been removed from the payment form. An optionally recurring price option is required."
 msgstr ""
 
-#: includes/core/forms/functions.php:662
-#: includes/core/forms/functions.php:679
+#: includes/core/forms/functions.php:678
+#: includes/core/forms/functions.php:695
 msgid "Coupon field has been removed from the payment form because it is incompatible with Fee Recovery."
 msgstr ""
 
@@ -730,7 +731,7 @@ msgstr ""
 msgid "Legacy setting %1$s should be accessed via %2$s."
 msgstr ""
 
-#: includes/core/functions/shared.php:372
+#: includes/core/functions/shared.php:378
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:86
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:90
 #: includes/core/post-types/simple-pay/list-table.php:237
@@ -740,7 +741,7 @@ msgid "Test Mode"
 msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount.
-#: includes/core/functions/shared.php:560
+#: includes/core/functions/shared.php:566
 #: includes/core/payments/payment-confirmation-template-tags.php:1131
 #, php-format
 msgctxt "recurring interval"
@@ -748,7 +749,7 @@ msgid "%1$s every %2$s %3$s for %4$s months then %5$s"
 msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount.
-#: includes/core/functions/shared.php:566
+#: includes/core/functions/shared.php:572
 #: includes/core/payments/payment-confirmation-template-tags.php:1116
 #, php-format
 msgctxt "recurring interval with automatic tax"
@@ -756,7 +757,7 @@ msgid "%1$s every %2$s %3$s until coupon expires"
 msgstr ""
 
 #. translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit
-#: includes/core/functions/shared.php:572
+#: includes/core/functions/shared.php:578
 #: includes/core/payments/payment-confirmation-template-tags.php:1053
 #, php-format
 msgctxt "recurring interval with invoice limit"
@@ -764,85 +765,85 @@ msgid "%1$d payments of %2$s every %3$s %4$s"
 msgstr ""
 
 #. translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount
-#: includes/core/functions/shared.php:578
+#: includes/core/functions/shared.php:584
 #, php-format
 msgctxt "recurring interval"
 msgid "%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s"
 msgstr ""
 
-#: includes/core/functions/shared.php:583
+#: includes/core/functions/shared.php:589
 msgid "Enter address to calculate"
 msgstr ""
 
-#: includes/core/functions/shared.php:587
+#: includes/core/functions/shared.php:593
 msgid "Please enter a valid address"
 msgstr ""
 
-#: includes/core/functions/shared.php:624
+#: includes/core/functions/shared.php:630
 msgctxt "recurring interval"
 msgid "day"
 msgstr ""
 
-#: includes/core/functions/shared.php:625
+#: includes/core/functions/shared.php:631
 msgctxt "recurring interval"
 msgid "days"
 msgstr ""
 
-#: includes/core/functions/shared.php:628
+#: includes/core/functions/shared.php:634
 msgctxt "recurring interval"
 msgid "week"
 msgstr ""
 
-#: includes/core/functions/shared.php:629
+#: includes/core/functions/shared.php:635
 msgctxt "recurring interval"
 msgid "weeks"
 msgstr ""
 
-#: includes/core/functions/shared.php:632
+#: includes/core/functions/shared.php:638
 msgctxt "recurring interval"
 msgid "month"
 msgstr ""
 
-#: includes/core/functions/shared.php:633
+#: includes/core/functions/shared.php:639
 msgctxt "recurring interval"
 msgid "months"
 msgstr ""
 
-#: includes/core/functions/shared.php:636
+#: includes/core/functions/shared.php:642
 msgctxt "recurring interval"
 msgid "year"
 msgstr ""
 
-#: includes/core/functions/shared.php:637
+#: includes/core/functions/shared.php:643
 msgctxt "recurring interval"
 msgid "years"
 msgstr ""
 
-#: includes/core/functions/shared.php:1426
+#: includes/core/functions/shared.php:1432
 msgid "Business Operations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1427
+#: includes/core/functions/shared.php:1433
 msgid "Donations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1428
+#: includes/core/functions/shared.php:1434
 msgid "Fundraising"
 msgstr ""
 
-#: includes/core/functions/shared.php:1429
+#: includes/core/functions/shared.php:1435
 msgid "Products & Services"
 msgstr ""
 
-#: includes/core/functions/shared.php:1430
+#: includes/core/functions/shared.php:1436
 msgid "Registrations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1431
+#: includes/core/functions/shared.php:1437
 msgid "Features / Functionality"
 msgstr ""
 
-#: includes/core/functions/shared.php:1437
+#: includes/core/functions/shared.php:1443
 msgid "Recently Added"
 msgstr ""
 
@@ -10653,7 +10654,7 @@ msgid "Choose Image"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-confirmation.php:492
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:628
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:627
 #: includes/core/settings/register-emails.php:408
 msgid "Remove"
 msgstr ""
@@ -10742,7 +10743,7 @@ msgid "Checkout Button"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:144
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:563
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:561
 msgid "Payment Button"
 msgstr ""
 
@@ -10778,24 +10779,24 @@ msgstr ""
 msgid "Hidden"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:427
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:425
 msgid "Unlock Additional Custom Fields"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:432
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:430
 msgid "We're sorry, adding additional custom fields is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:455
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:453
 #: includes/core/post-types/simple-pay/edit-form.php:510
 msgid "Form Fields"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:461
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:459
 msgid "Choose a field&hellip;"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:483
+#: includes/core/post-types/simple-pay/edit-form-custom-fields.php:481
 msgid "Add Field"
 msgstr ""
 
@@ -13726,7 +13727,7 @@ msgstr ""
 msgid "Please select a valid Tax ID type."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Traits/InvoiceTrait.php:137
+#: src/RestApi/Internal/Payment/Traits/InvoiceTrait.php:157
 #: views/smart-tag-receipt.php:159
 msgid "Processing fee"
 msgstr ""
