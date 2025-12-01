@@ -112,7 +112,7 @@ function get_custom_field_types() {
 			'active'     => simpay_subscriptions_enabled(),
 			'repeatable' => false,
 		),
-		'fee_recovery_toggle' => array(
+		'fee_recovery_toggle'     => array(
 			'label'      => esc_html__( 'Fee Recovery Toggle', 'stripe' ),
 			'type'       => 'fee_recovery_toggle',
 			'category'   => 'payment',
@@ -205,8 +205,6 @@ function get_custom_field_types() {
 			'repeatable' => true,
 		),
 	);
-
-	
 
 	/**
 	 * Filters available custom fields.
@@ -317,12 +315,12 @@ function get_custom_fields_flat( $custom_fields ) {
 			$sorted_fields[] = $field;
 		}
 
-		$count++;
+		++$count;
 	}
 
 	uasort(
 		$sorted_fields,
-		function( $a, $b ) {
+		function ( $a, $b ) {
 			if ( floatval( $a['order'] ) === floatval( $b['order'] ) ) {
 				return 0;
 			}
@@ -346,7 +344,7 @@ function __unstable_add_custom_fields( $post_id ) {
 	// "Stripe Checkout" tab.
 	add_filter(
 		'simpay_custom_field_group_labels',
-		function( $groups ) {
+		function ( $groups ) {
 			unset( $groups['customer'] );
 			return $groups;
 		}
@@ -355,10 +353,10 @@ function __unstable_add_custom_fields( $post_id ) {
 	// Remove the "Customer" fields and update active/labels for the rest.
 	add_filter(
 		'simpay_custom_field_options',
-		function( $fields ) {
+		function ( $fields ) {
 			$fields = array_filter(
 				$fields,
-				function( $field ) {
+				function ( $field ) {
 					$remove = array(
 						'customer_name',
 						'email',
@@ -374,7 +372,7 @@ function __unstable_add_custom_fields( $post_id ) {
 			);
 
 			$fields = array_map(
-				function( $field ) {
+				function ( $field ) {
 					$lite = array(
 						'text',
 						'dropdown',
@@ -419,7 +417,7 @@ function __unstable_add_custom_fields( $post_id ) {
 	// Remove the "Price Selector" (plan_select) field if it was added by a template.
 	$fields = array_filter(
 		$fields,
-		function( $field ) {
+		function ( $field ) {
 			return 'plan_select' !== $field['type'];
 		}
 	);
@@ -543,7 +541,7 @@ function __unstable_get_custom_field( $type, $counter, $field, $post_id ) {
 	// Remove the "Price Selector" (plan_select) field if it was added by a template.
 	$fields = array_filter(
 		$fields,
-		function( $field ) {
+		function ( $field ) {
 			return 'plan_select' !== $field['type'];
 		}
 	);
@@ -565,6 +563,7 @@ function __unstable_get_custom_field( $type, $counter, $field, $post_id ) {
 		default:
 			$type_label = $field_types[ $type ]['label'];
 	}
+
 	?>
 
 	<div
@@ -589,7 +588,7 @@ function __unstable_get_custom_field( $type, $counter, $field, $post_id ) {
 		<h2 class="simpay-hndle ui-sortable-handle">
 			<span class="custom-field-dashicon dashicons <?php echo 'payment_button' !== $type ? 'dashicons-menu-alt2" style="cursor: move;' : 'dashicons-lock" style="color: #ccc;'; ?>"></span>
 
-			<strong class="simpay-price-label-display">
+			<strong>
 				<?php echo esc_attr( $type_label ); ?>
 			</strong>
 		</h2>

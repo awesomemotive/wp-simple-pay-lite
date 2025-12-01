@@ -305,6 +305,22 @@ function simpay_payment_form_add_missing_custom_fields(
 				);
 				++$count;
 			}
+
+			// Ensure "Customer Email" exists.
+			if ( ! isset( $fields['email'] ) ) {
+				$fields['email'][] = array(
+					'uid'   => $count,
+					'id'    => 'simpay_' . $form_id . '_email',
+					'label' => 'Email Address',
+				);
+
+				$changes[] = __(
+					'Customer Email field is required, and has been added to the payment form.',
+					'stripe'
+				);
+
+				++$count;
+			}
 			break;
 		case 'stripe_checkout':
 			if ( isset( $fields['coupon'] ) ) {

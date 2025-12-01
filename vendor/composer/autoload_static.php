@@ -7,7 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit707a68bb3adffbb420267554a4479a31
 {
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'SimplePay\\Vendor\\Stripe\\' => 24,
             'SimplePay\\Vendor\\' => 17,
@@ -16,15 +16,15 @@ class ComposerStaticInit707a68bb3adffbb420267554a4479a31
     );
 
     public static $prefixDirsPsr4 = array (
-        'SimplePay\\Vendor\\Stripe\\' => 
+        'SimplePay\\Vendor\\Stripe\\' =>
         array (
             0 => __DIR__ . '/../..' . '/lib/Stripe/lib',
         ),
-        'SimplePay\\Vendor\\' => 
+        'SimplePay\\Vendor\\' =>
         array (
             0 => __DIR__ . '/../..' . '/lib',
         ),
-        'SimplePay\\Core\\' => 
+        'SimplePay\\Core\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

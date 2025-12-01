@@ -152,7 +152,13 @@ class PaymentRequestUtils {
 	 * @return string
 	 */
 	public static function get_currency( $request ) {
-		return self::get_price( $request )->currency;
+		$price = self::get_price( $request );
+
+		if ( ! $price ) {
+			return '';
+		}
+
+		return $price->currency;
 	}
 
 	/**
