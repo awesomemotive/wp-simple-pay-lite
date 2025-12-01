@@ -3,7 +3,7 @@ Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 6.8.3
-Stable tag: 4.16.0
+Stable tag: 4.16.1
 Requires PHP: 7.2
 License: GPLv2 or later
 
@@ -168,6 +168,22 @@ Give your European customers the option to pay directly from their bank accounts
 
 [View our SEPA Direct Debit template](https://wpsimplepay.com/template/sepa-direct-debit-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
+=== 💳 Accept MobilePay Payments with Stripe ===
+
+Give your customers in Denmark and Finland the ability to pay with MobilePay, a popular digital wallet that offers a quick and secure way to make payments online.
+
+=== 💳 Accept BECS Direct Debit Payments with Stripe ===
+
+Offer your Australian customers the option to pay directly from their bank accounts. BECS Direct Debit is a popular and trusted payment method in Australia, ideal for recurring payments and subscriptions. 
+
+=== 💳 Accept PromptPay Payments with Stripe ===
+
+Enable customers in Thailand to pay instantly using their local bank app. PromptPay is a real-time payment system that provides a seamless and secure checkout experience.
+
+=== 💳 Accept WeChat Pay Payments with Stripe ===
+
+Tap into the vast market of Chinese consumers by offering WeChat Pay. As one of China's leading payment platforms, it allows customers to pay directly from their WeChat wallet.
+
 === 💳 Customized Payment Confirmation Details with Stripe ===
 
 Easily customize the credit card payment confirmation details your customers see within the post editor using placeholder tags.
@@ -272,6 +288,16 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 12. Global payment form settings: Summary report email
 
 == Changelog ==
+
+= Stripe Payment Forms v4.16.1 – December 01, 2025 =
+
+* New: Added a “Display Type” setting to switch the payment method layout between Tabs and Accordion.
+* Update: Added the `simpay_show_card_field_label` filter to display a label for the Card Element field.
+* Fix: Ensured the email field is required on all payment forms.
+* Fix: Resolved an overlay modal visibility issue on payment forms.
+* Fix: Corrected label visibility for custom text fields in the form builder.
+* Fix: Fixed an issue where selecting multiple line items could trigger an invoice currency error.
+* Fix: Missing styles for datepicker field.
 
 = Stripe Payment Forms v4.16.0 – October 30, 2025 =
 
