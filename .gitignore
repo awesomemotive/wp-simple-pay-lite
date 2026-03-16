@@ -4,6 +4,7 @@
 ehthumbs.db
 Thumbs.db
 *.cache
+.idea
 
 composer.lock
 phpunit.xml
