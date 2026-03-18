@@ -245,10 +245,10 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 
 	// Retrieve the PaymentIntent the Customer is linked to.
 	$paymentintents = API\PaymentIntents\all(
-		array(
+		apply_filters( 'simpay_get_confirmation_data_payment_intent_args', array(
 			'customer' => $customer->id,
-			'limit'    => 1,
-		),
+			'limit'    => 1
+		) ),
 		$form->get_api_request_args(),
 		array(
 			'cached' => $is_cache,

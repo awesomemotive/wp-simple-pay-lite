@@ -43,7 +43,7 @@ class LicenseManager {
 
 		// Call the custom API.
 		$response = wp_remote_post(
-			SIMPLE_PAY_STORE_URL, // @phpstan-ignore-line
+			SIMPLE_PAY_STORE_URL,
 			array(
 				'timeout'   => 15,
 				'sslverify' => false,
@@ -91,7 +91,7 @@ class LicenseManager {
 
 		// Call the custom API.
 		$response = wp_remote_post(
-			SIMPLE_PAY_STORE_URL, // @phpstan-ignore-line
+			SIMPLE_PAY_STORE_URL,
 			array(
 				'timeout'   => 15,
 				'sslverify' => false,

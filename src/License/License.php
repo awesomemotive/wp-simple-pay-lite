@@ -398,7 +398,7 @@ class License {
 	 */
 	public function is_lite() {
 		$is_lite = ! file_exists(
-			trailingslashit( SIMPLE_PAY_INC ) . 'pro/class-simplepaypro.php' // @phpstan-ignore-line
+			trailingslashit( SIMPLE_PAY_INC ) . 'pro/class-simplepaypro.php'
 		);
 
 		/**

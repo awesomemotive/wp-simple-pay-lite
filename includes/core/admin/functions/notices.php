@@ -115,8 +115,8 @@ function stripe_connect() {
  *
  * @return string
  */
-function php_version_72() {
-	$future_required_version = 7.2;
+function php_version_74() {
+	$future_required_version = 7.4;
 
 	if ( ! version_compare( PHP_VERSION, $future_required_version, '<' ) ) {
 		return false;

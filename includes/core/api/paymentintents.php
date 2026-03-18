@@ -94,6 +94,10 @@ function create( $paymentintent_args, $api_request_args = array() ) {
 	$defaults           = array();
 	$paymentintent_args = wp_parse_args( $paymentintent_args, $defaults );
 
+	// Merge capture_method into args.
+	// TODO: Remove this once we have stripe api version 2024-12-18.acacia or higher.
+	$paymentintent_args = array_merge( array( 'capture_method' => 'automatic' ), $paymentintent_args );
+
 	/**
 	 * Filter the arguments used to generate a PaymentIntent.
 	 *

@@ -62,6 +62,6 @@ class PluginCancellationConfirmation extends AbstractProductEducation implements
 		);
 		$already_purchased_text = esc_html__( 'Already purchased?', 'stripe' );
 
-		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-cancelled-payment-confirmation.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-cancelled-payment-confirmation.php';
 	}
 }

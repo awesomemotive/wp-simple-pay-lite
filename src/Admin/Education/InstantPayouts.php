@@ -111,7 +111,7 @@ class InstantPayouts implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-instant-payouts-settings.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-instant-payouts-settings.php';
 	}
 
 	/**
@@ -144,7 +144,7 @@ class InstantPayouts implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-instant-payouts-settings.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-education-payment-form-instant-payouts-settings.php';
 	}
 
 	/**

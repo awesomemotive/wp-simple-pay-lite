@@ -67,9 +67,9 @@ class AdminBarSubscriber implements SubscriberInterface {
 	public function add_menu_item( $wp_admin_bar ) {
 		wp_enqueue_style(
 			'simpay-admin-bar',
-			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-bar.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-bar.min.css',
 			array(),
-			SIMPLE_PAY_VERSION // @phpstan-ignore-line
+			SIMPLE_PAY_VERSION
 		);
 
 		// Show the notification count on the frontend and on non-WPSP admin screens.

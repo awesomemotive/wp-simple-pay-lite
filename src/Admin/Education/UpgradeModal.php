@@ -55,7 +55,7 @@ class UpgradeModal implements SubscriberInterface, LicenseAwareInterface {
 		$license = $this->license;
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-education-upgrade-modal.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-education-upgrade-modal.php';
 	}
 
 }

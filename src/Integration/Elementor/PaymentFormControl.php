@@ -27,22 +27,27 @@ class PaymentFormControl {
 	 *
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return void
+	 * @phpstan-ignore-next-line
 	 */
 	public function add_control( $widget ) {
-		// @phpstan-ignore-line
-		$widget->start_controls_section( // @phpstan-ignore-line
-			sprintf( 'simpay-%s', $widget->get_name() ), // @phpstan-ignore-line
+		/** @phpstan-ignore-next-line */
+		$widget->start_controls_section(
+			/** @phpstan-ignore-next-line */
+			sprintf( 'simpay-%s', $widget->get_name() ),
 			array(
 				'label' => esc_html__( 'WP Simple Pay', 'stripe' ),
-				'tab'   => Elementor\Controls_Manager::TAB_CONTENT, // @phpstan-ignore-line
+				/** @phpstan-ignore-next-line */
+				'tab'   => Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
 
-		$widget->add_control( // @phpstan-ignore-line
+		/** @phpstan-ignore-next-line */
+		$widget->add_control(
 			'simpay_payment_form',
 			array(
 				'label'       => __( 'Payment Form', 'stripe' ),
-				'type'        => Elementor\Controls_Manager::SELECT, // @phpstan-ignore-line
+				/** @phpstan-ignore-next-line */
+				'type'        => Elementor\Controls_Manager::SELECT,
 				'separator'   => 'after',
 				'label_block' => true,
 				'default'     => '0',
@@ -50,7 +55,8 @@ class PaymentFormControl {
 			)
 		);
 
-		$widget->end_controls_section(); // @phpstan-ignore-line
+		/** @phpstan-ignore-next-line */
+		$widget->end_controls_section();
 	}
 
 	/**
@@ -61,10 +67,11 @@ class PaymentFormControl {
 	 * @param string                 $content Widget content.
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return string
+	 * @phpstan-ignore-next-line
 	 */
 	public function render_widget( $content, $widget ) {
-		// @phpstan-ignore-line
-		$settings = $widget->get_settings(); // @phpstan-ignore-line
+		/** @phpstan-ignore-next-line */
+		$settings = $widget->get_settings();
 
 		if (
 			! isset( $settings['simpay_payment_form'] ) ||

@@ -58,7 +58,7 @@ class NotificationRuleProcessor implements LicenseAwareInterface {
 			$version_conditions,
 			function( $condition ) {
 				return $this->is_version_number_match(
-					SIMPLE_PAY_VERSION, // @phpstan-ignore-line
+					SIMPLE_PAY_VERSION,
 					$condition
 				);
 			}

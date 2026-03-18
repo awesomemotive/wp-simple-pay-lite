@@ -29,7 +29,7 @@ class LicenseUpgradeTopOfPageNotice extends AbstractAdminNotice {
 	 * {@inheritdoc}
 	 */
 	public function get_view() {
-		return SIMPLE_PAY_DIR . 'views/admin-notice-license-upgrade-top-of-page.php'; // @phpstan-ignore-line
+		return SIMPLE_PAY_DIR . 'views/admin-notice-license-upgrade-top-of-page.php';
 	}
 
 	/**

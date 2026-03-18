@@ -208,12 +208,12 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 			);
 		}
 
-		$logo_url = SIMPLE_PAY_URL . 'includes/core/assets/images/wp-simple-pay.png'; // @phpstan-ignore-line
+		$logo_url = SIMPLE_PAY_URL . 'includes/core/assets/images/wp-simple-pay.png';
 		$image    = sprintf( '<img src="%1$s" alt="WP Simple Pay" />', $logo_url );
 
 		ob_start();
 
-		require SIMPLE_PAY_DIR . 'views/email-internal-header-content.php'; // @phpstan-ignore-line
+		require SIMPLE_PAY_DIR . 'views/email-internal-header-content.php';
 
 		/** @var string $html */
 		$html = ob_get_clean();
@@ -244,7 +244,7 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 
 		ob_start();
 
-		require SIMPLE_PAY_DIR . 'views/email-external-header-content.php'; // @phpstan-ignore-line
+		require SIMPLE_PAY_DIR . 'views/email-external-header-content.php';
 
 		/** @var string $html */
 		$html = ob_get_clean();
@@ -291,7 +291,7 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 
 		ob_start();
 
-		require SIMPLE_PAY_DIR . 'views/email-internal-footer-content.php'; // @phpstan-ignore-line
+		require SIMPLE_PAY_DIR . 'views/email-internal-footer-content.php';
 
 		/** @var string $html */
 		$html = ob_get_clean();
@@ -311,7 +311,7 @@ abstract class AbstractEmail implements EmailInterface, NotificationAwareInterfa
 
 		ob_start();
 
-		require SIMPLE_PAY_DIR . 'views/email-external-footer-content.php'; // @phpstan-ignore-line
+		require SIMPLE_PAY_DIR . 'views/email-external-footer-content.php';
 
 		/** @var string $html */
 		$html = ob_get_clean();

@@ -126,7 +126,7 @@ class TelemetrySubscriber implements SubscriberInterface, LicenseAwareInterface 
 				'httpversion' => '1.1',
 				'blocking'    => false,
 				'body'        => $data,
-				'user-agent'  => 'WPSP/' . SIMPLE_PAY_VERSION . '; ' . $data['id'], // @phpstan-ignore-line
+				'user-agent'  => 'WPSP/' . SIMPLE_PAY_VERSION . '; ' . $data['id'],
 			)
 		);
 

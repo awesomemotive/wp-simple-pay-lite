@@ -54,10 +54,10 @@ class Notice_Manager {
 				'type'        => 'error',
 				'callback'    => 'SimplePay\Core\Admin\Notices\no_ssl',
 			),
-			'php_version_72' => array(
+			'php_version_74' => array(
 				'dismissible' => false,
 				'type'        => 'error',
-				'callback'    => 'SimplePay\Core\Admin\Notices\php_version_72',
+				'callback'    => 'SimplePay\Core\Admin\Notices\php_version_74',
 			),
 			'stripe_connect' => array(
 				'dismissible' => true,

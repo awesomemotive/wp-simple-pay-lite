@@ -40,8 +40,8 @@ add_filter( 'simpay_admin_page_settings_display_submit', '__return_false' );
 	</p>
 	<section class="simpay-landing-zone__screenshot">
 		<div class="simpay-landing-zone__screenshot-img">
-			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/subscription-cancellation-confirmation-thumb.png' ); /** @phpstan-ignore-line. */ ?>" alt="<?php echo esc_attr__( 'Subscription Cancellation Confirmation Message', 'stripe' ); ?>" />
-			<a href="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/subscription-cancellation-confirmation-full.png' ); // @phpstan-ignore-line ?>" class="hover" data-lity></a>
+			<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/subscription-cancellation-confirmation-thumb.png' ); ?>" alt="<?php echo esc_attr__( 'Subscription Cancellation Confirmation Message', 'stripe' ); ?>" />
+			<a href="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/settings/subscription-cancellation-confirmation-full.png' ); ?>" class="hover" data-lity></a>
 		</div>
 	</section>
 	<section>
