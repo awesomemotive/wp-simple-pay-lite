@@ -54,6 +54,9 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 	 * {@inheritdoc}
 	 */
 	public function run( $hook, $args = array() ) {
+		if ( ! is_string( $hook ) || '' === $hook ) {
+			return;
+		}
 		do_action_ref_array( $hook, $args );
 	}
 

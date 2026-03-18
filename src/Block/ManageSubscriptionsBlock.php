@@ -23,7 +23,7 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 	 */
 	public function register() {
 
-		$asset_file = SIMPLE_PAY_INC . 'pro/assets/js/dist/simpay-block-manage-subscriptions.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'pro/assets/js/dist/simpay-block-manage-subscriptions.asset.php';
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -33,7 +33,7 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 
 		wp_register_script(
 			'simpay-manage-subscriptions',
-			SIMPLE_PAY_INC_URL . 'pro/assets/js/dist/simpay-block-manage-subscriptions.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'pro/assets/js/dist/simpay-block-manage-subscriptions.js',
 			$script_data['dependencies'],
 			$script_data['version']
 		);
@@ -41,7 +41,7 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 		// Register the view script.
 		wp_register_script(
 			'simpay-manage-subscriptions-frontend',
-			SIMPLE_PAY_INC_URL . 'pro/assets/js/dist/simpay-public-pro-manage-subscriptions.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'pro/assets/js/dist/simpay-public-pro-manage-subscriptions.js',
 			array( 'wp-api-fetch' ),
 			$script_data['version'],
 			true

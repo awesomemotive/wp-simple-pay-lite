@@ -223,7 +223,7 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 		);
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-webhooks-none-received.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-webhooks-none-received.php';
 	}
 
 	/**

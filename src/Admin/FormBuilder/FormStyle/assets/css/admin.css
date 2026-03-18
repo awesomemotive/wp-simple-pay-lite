@@ -1,0 +1,662 @@
+/* Main Container */
+.wpsp-admin-tabs-container {
+    background: #fff;
+    border-radius: 0px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 0px 0;
+    /* No overflow:hidden to ensure color picker dropdown is visible */
+   
+    position: relative;
+}
+
+/* Tabs Navigation */
+.wpsp-admin-tabs-nav {
+    display: flex;
+    background: #f9f9f9;
+    border-bottom: 1px solid #e2e4e7;
+    position: sticky;
+    top: 32px; /* WP Admin bar height */
+    z-index: 10;
+}
+
+.wpsp-admin-tab-button {
+    padding: 12px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;
+    position: relative;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-right: 1px solid #e2e4e7;
+}
+
+.wpsp-admin-tab-button:hover {
+    background: #f1f1f1;
+    color: #000;
+}
+
+.wpsp-admin-tab-button.active {
+    background: #fff;
+    color: #0073aa;
+    border-bottom: 2px solid #0073aa;
+    margin-bottom: -1px;
+}
+
+.wpsp-admin-tab-button .dashicons {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+}
+
+/* Tab Content */
+.wpsp-admin-tabs-content {
+    padding: 25px;
+}
+
+.wpsp-admin-tab-panel {
+    display: none;
+}
+
+.wpsp-admin-tab-panel.active {
+    display: block;
+}
+
+/* Color Sections */
+.wpsp-admin-color-section {
+    margin-bottom: 40px;
+    padding: 0 0 18px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    border-radius: 0;
+}
+
+.wpsp-admin-color-section:last-child {
+    margin-bottom: 0;
+}
+
+.wpsp-admin-section-title {
+    margin: 0 0 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3C434B;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.wpsp-admin-section-title .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: #3C434B;
+}
+
+/* Form Grid */
+.wpsp-admin-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* Form Fields */
+.wpsp-admin-form-field {
+    margin-bottom: 0px;
+}
+
+.wpsp-admin-form-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #23282d;
+}
+
+.wpsp-admin-field-description {
+    margin-top: 6px;
+    color: #757575;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* Color Picker Customizations */
+.wpsp-admin-color-preview-wrap {
+    position: relative;
+}
+
+.wpsp-admin-color-preview-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #f1f1f1;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    color: #23282d;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.wp-picker-container {
+    position: relative;
+    z-index: 2;
+}
+
+.wp-picker-container.wp-picker-active {
+    z-index: 10;
+}
+
+/* Input with unit */
+.wpsp-admin-input-with-unit {
+    position: relative;
+    max-width: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.wpsp-admin-input-with-unit input {
+    width: 70px;
+    padding-right: 14px;
+}
+
+.wpsp-admin-unit {
+    margin-left: 5px;
+    color: #757575;
+}
+
+/* Border Radius Preview */
+.wpsp-admin-radius-preview {
+    margin-top: 10px;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    background: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+}
+
+.wpsp-admin-form-radius-box {
+    width: 80px;
+    height: 80px;
+    background: #0f8569;
+    transition: border-radius 0.2s ease;
+}
+
+.wpsp-admin-radius-preview--inline {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 220px;
+}
+
+.wpsp-admin-radius-input-preview {
+    max-width: 180px;
+    width: 100%;
+    height: 32px;
+    border: 1px solid #8c8f94;
+    background: #fff;
+    transition: border-radius 0.2s ease;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+.wpsp-admin-radius-input-preview span {
+    color: #8c8f94;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wpsp-admin-radius-button-preview {
+    max-width: 180px;
+    width: 100%;
+    height: 32px;
+    padding: 0 16px;
+    background: #0f8569;
+    color: #fff;
+    font-size: 13px;
+    line-height: 32px;
+    text-align: center;
+    box-sizing: border-box;
+    transition: border-radius 0.2s ease;
+}
+
+/* Button Previews */
+.wpsp-admin-button-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    margin-top: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background: #2271b1;
+    color: #fff;
+    cursor: default;
+}
+
+.wpsp-admin-button-hover:hover {
+    opacity: 0.9;
+}
+
+/* Reset Button and Actions */
+.wpsp-admin-actions {
+    margin-top: 20px;
+    padding: 15px 25px;
+    background: #f9f9f9;
+    border-top: 1px solid #e2e4e7;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+#wpsp-admin-reset-styles {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.wpsp-admin-reset-description {
+    margin: 0;
+    color: #757575;
+    font-style: italic;
+    font-size: 13px;
+}
+
+/* Select Field */
+.wpsp-admin-select {
+    min-width: 200px;
+    padding: 5px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 782px) {
+    .wpsp-admin-form-grid {
+        display: block;
+    }
+
+    .wpsp-admin-tabs-nav {
+        flex-wrap: wrap;
+    }
+
+    .wpsp-admin-tab-button {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .wpsp-admin-theme-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 783px) {
+    .wpsp-admin-theme-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+/* Theme instructions */
+
+/* Preview styling to match actual form */
+.wpsp-admin-preview-wrapper {
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.wpsp-admin-preview-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.wpsp-admin-preview-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.wpsp-admin-preview-input:focus {
+    outline: none;
+    border-color: var(--theme-primary, #0f8569);
+    box-shadow: 0 0 0 1px var(--theme-primary, #0f8569), 0 0 0 3px rgba(15, 133, 105, 0.15);
+}
+
+.wpsp-admin-preview-btn {
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.wpsp-admin-preview-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wpsp-admin-preview-btn:active {
+    transform: translateY(0);
+}
+
+/* Theme selection grid */
+.wpsp-admin-theme-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.wpsp-admin-theme-card {
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    z-index: 1;
+}
+
+.wpsp-admin-theme-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    border-color: #d1d5db;
+}
+
+.wpsp-admin-theme-card.selected {
+    border: none;
+    box-shadow: 0 8px 25px rgba(15, 133, 105, 0.15);
+    transform: translateY(-2px);
+    position: relative;
+}
+
+.wpsp-admin-theme-card.selected::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #0f8569;
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.wpsp-admin-theme-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: #0f8569;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Fade other themes when one is selected */
+.wpsp-admin-theme-grid:has(.wpsp-admin-theme-card.selected) .wpsp-admin-theme-card:not(.selected) {
+    opacity: 0.4;
+    filter: grayscale(0.3);
+    transform: scale(0.98);
+    transition: all 0.3s ease;
+}
+
+.wpsp-admin-theme-grid:has(.wpsp-admin-theme-card.selected) .wpsp-admin-theme-card:not(.selected):hover {
+    opacity: 0.6;
+    filter: grayscale(0.2);
+    transform: scale(0.99);
+}
+
+/* Fade effect for non-selected themes (JavaScript fallback) */
+.wpsp-admin-theme-card.faded {
+    opacity: 0.4;
+    filter: grayscale(0.3);
+    transform: scale(0.98);
+    transition: all 0.3s ease;
+}
+
+.wpsp-admin-theme-card.faded:hover {
+    opacity: 0.6;
+    filter: grayscale(0.2);
+    transform: scale(0.99);
+}
+
+.wpsp-admin-theme-preview {
+    padding: 12px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e2e8f0;
+    position: relative;
+    overflow: visible;
+}
+
+
+.wpsp-admin-theme-colors {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 1;
+}
+
+.wpsp-admin-theme-color {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.wpsp-admin-theme-color:hover {
+    transform: scale(1.1);
+}
+
+.wpsp-admin-theme-color::after {
+    content: attr(data-color-name);
+    position: absolute;
+    bottom: -25px;
+    left: -5px;
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    pointer-events: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.wpsp-admin-theme-color:hover::after {
+    opacity: 1;
+}
+
+/* Mini form preview */
+.wpsp-admin-theme-form-preview {
+    background: var(--theme-background, #ffffff);
+    border: 1px solid var(--theme-border, #e6e6e6);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    pointer-events: none;
+}
+
+.wpsp-admin-theme-form-preview .preview-field {
+    margin-bottom: 8px;
+}
+
+.wpsp-admin-theme-form-preview .preview-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--theme-text, #32325d);
+    margin-bottom: 4px;
+}
+
+.wpsp-admin-theme-form-preview .preview-input {
+    width: 100%;
+    height: 28px;
+    padding: 4px 8px;
+    border: 1px solid var(--theme-border, #e6e6e6);
+    border-radius: 3px;
+    background: var(--theme-input-bg, #ffffff);
+    color: var(--theme-text, #32325d);
+    font-size: 11px;
+    transition: border-color 0.2s ease;
+}
+
+.wpsp-admin-theme-form-preview .preview-input:focus {
+    outline: none;
+    border-color: var(--theme-primary, #0f8569);
+    box-shadow: 0 0 0 2px rgba(15, 133, 105, 0.1);
+}
+
+.wpsp-admin-theme-form-preview .wpsp-admin-theme-button {
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: default;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-top: 2px;
+}
+
+.wpsp-admin-theme-form-preview .wpsp-admin-theme-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.wpsp-admin-preview-button {
+    cursor: not-allowed;
+    pointer-events: none;
+    user-select: none;
+}
+
+.wpsp-admin-preview-button:hover {
+    transform: none !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.wpsp-admin-theme-button {
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: default;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none;
+    width: 100%;
+}
+
+.wpsp-admin-theme-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.wpsp-admin-theme-info {
+    padding: 12px;
+    background: #fff;
+}
+
+.wpsp-admin-theme-info h4 {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.wpsp-admin-theme-info p {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.wpsp-admin-theme-radio {
+    position: absolute;
+    opacity: 0;
+}
+
+
+.wpsp-admin-theme-instructions {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-left-width: 4px;
+    border-left-color: #0f8569;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    padding: 12px 18px;
+    margin-bottom: 24px;
+    border-radius: 0;
+}
+
+.wpsp-admin-theme-instructions p {
+    margin: 0;
+    color: #50575e;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Color name labels */
+.wpsp-admin-theme-color[data-color-name="Primary"]::after {
+    content: "Primary";
+}
+
+.wpsp-admin-theme-color[data-color-name="Secondary"]::after {
+    content: "Secondary";
+}
+
+.wpsp-admin-theme-color[data-color-name="Text"]::after {
+    content: "Text";
+}
+
+.wpspwpsps-theme-color[data-color-name="Background"]::after {
+    content: "Background";
+} 

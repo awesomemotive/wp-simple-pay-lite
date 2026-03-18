@@ -87,7 +87,7 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 				'edd_license_key' => $this->license->get_key(),
 				'discount'        => 'SAVE50',
 			),
-			sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) ) // @phpstan-ignore-line
+			sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) )
 		);
 
 		$renew_url = simpay_ga_url( $renew_url, 'payment-form-license-renewal' );
@@ -99,7 +99,7 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 
 		// License is missing.
 		if ( $is_missing ) {
-			include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-license-missing.php'; // @phpstan-ignore-line
+			include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-license-missing.php';
 			return;
 		}
 
@@ -112,14 +112,14 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 						? _x( 'Editing', 'payment form action', 'stripe' )
 						: _x( 'Creation', 'payment form action', 'stripe' );
 
-					include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-license-expired.php'; // @phpstan-ignore-line
+					include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-license-expired.php';
 					return;
 				}
 				break;
 
 			// License is invalid for some other reason, treat it as missing.
 			case 'invalid':
-				include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-license-missing.php'; // @phpstan-ignore-line
+				include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-license-missing.php';
 				return;
 		}
 	}

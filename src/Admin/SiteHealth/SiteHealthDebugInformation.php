@@ -102,7 +102,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	 * @return string
 	 */
 	private function get_plugin_version() {
-		return (string) SIMPLE_PAY_VERSION; // @phpstan-ignore-line
+		return (string) SIMPLE_PAY_VERSION;
 	}
 
 	/**

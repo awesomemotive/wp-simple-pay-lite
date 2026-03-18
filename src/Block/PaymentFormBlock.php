@@ -11,6 +11,7 @@
 
 namespace SimplePay\Core\Block;
 
+use SimplePay\Core\Admin\FormBuilder\FormStyle\Frontend as FormStyleFrontend;
 use SimplePay\Core\Assets as CoreAssets;
 use SimplePay\Core\Block\AbstractBlock;
 use SimplePay\Core\License\LicenseAwareInterface;
@@ -30,7 +31,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	 * {@inheritdoc}
 	 */
 	public function register() {
-		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-block-payment-form.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-block-payment-form.asset.php';
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -126,14 +127,44 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			)
 		);
 
+		// Include form style CSS for block editor previews, since
+		// wp_print_footer_scripts does not fire during REST requests.
+		if ( ! $is_frontend && class_exists( FormStyleFrontend::class ) ) {
+			$form_style_frontend = FormStyleFrontend::get_instance();
+			$styles             .= $form_style_frontend->get_form_css( $form_id );
+		}
+
+		$form_html = do_shortcode( sprintf( '[simpay id="%d"]', $form_id ) );
+
+		// Inject data-form-id attributes inline for block editor previews,
+		// since the footer JS injection does not run during REST requests.
+		if ( ! $is_frontend ) {
+			$heading_js = sprintf(
+				'<script>
+				(function() {
+					var wrap = document.getElementById("simpay-embedded-form-wrap-%1$d");
+					if (wrap) {
+						wrap.setAttribute("data-form-id", "%1$d");
+						var heading = wrap.previousElementSibling;
+						if (heading && heading.classList && heading.classList.contains("simpay-embedded-heading")) {
+							heading.setAttribute("data-form-id", "%1$d");
+						}
+					}
+				})();
+				</script>',
+				$form_id
+			);
+		}
+
 		return sprintf(
-			'<div %1$s data-form-id="%2$s" data-form-vars=\'%3$s\'>%4$s</div><style>%5$s</style>',
+			'<div %1$s data-form-id="%2$s" data-form-vars=\'%3$s\'>%4$s</div><style>%5$s</style>%6$s',
 			$wrapper_attributes,
 			$form_id,
 			// Only attach form variables in the block editor to prevent possible conflicts on the frontend.
 			$is_frontend ? '' : wp_json_encode( $vars, JSON_HEX_QUOT | JSON_HEX_APOS ),
-			do_shortcode( sprintf( '[simpay id="%d"]', $form_id ) ),
-			$styles
+			$form_html,
+			$styles,
+			! $is_frontend ? $heading_js : ''
 		);
 	}
 
@@ -160,7 +191,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 		// Register block editor payment form assets.
 		wp_register_script(
 			'simpay-block-payment-form',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-block-payment-form.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-block-payment-form.js',
 			array_merge(
 				$script_data['dependencies'],
 				array_keys( $assets->scripts )
@@ -175,15 +206,15 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 				'isUpe'    => true,
 				'isLite'   => $this->license->is_lite() ? 1 : 0,
 				'previews' => array(
-					'pro'  => SIMPLE_PAY_INC_URL . 'core/assets/images/blocks/payment-form-preview-pro.png', // @phpstan-ignore-line
-					'lite' => SIMPLE_PAY_INC_URL . 'core/assets/images/blocks/payment-form-preview-lite.png', // @phpstan-ignore-line
+					'pro'  => SIMPLE_PAY_INC_URL . 'core/assets/images/blocks/payment-form-preview-pro.png',
+					'lite' => SIMPLE_PAY_INC_URL . 'core/assets/images/blocks/payment-form-preview-lite.png',
 				),
 			)
 		);
 
 		wp_register_style(
 			'simpay-block-payment-form',
-			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-block-payment-form.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-block-payment-form.min.css',
 			array_keys( $assets->styles ),
 			$script_data['version']
 		);

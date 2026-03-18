@@ -77,14 +77,14 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 	 * {@inheritdoc}
 	 */
 	public function render() {
-		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-page-setup-wizard.asset.php'; // @phpstan-ignore-line
+		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-page-setup-wizard.asset.php';
 
 		if ( file_exists( $asset ) ) {
 			$asset_data = include_once $asset;
 
 			wp_enqueue_script(
 				'simpay-setup-wizard',
-				SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-setup-wizard.js', // @phpstan-ignore-line
+				SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-setup-wizard.js',
 				$asset_data['dependencies'],
 				$asset_data['version'],
 				true
@@ -171,12 +171,12 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 			wp_set_script_translations(
 				'simpay-setup-wizard',
 				'stripe',
-				SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
+				SIMPLE_PAY_DIR . '/languages'
 			);
 
 			wp_enqueue_style(
 				'simpay-setup-wizard',
-				SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-page-setup-wizard.min.css', // @phpstan-ignore-line
+				SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-page-setup-wizard.min.css',
 				array(
 					'wp-components',
 				),
@@ -185,7 +185,7 @@ class SetupWizardPage extends AbstractAdminPage implements AdminSecondaryPageInt
 		}
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-page-setup-wizard.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-page-setup-wizard.php';
 	}
 
 	/**

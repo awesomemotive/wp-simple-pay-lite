@@ -116,7 +116,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-notice-template-preview.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-notice-template-preview.php';
 	}
 
 	/**
@@ -157,7 +157,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function render() {
-		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-form-template-explorer.asset.php'; // @phpstan-ignore-line
+		$asset_file = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-form-template-explorer.asset.php';
 
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -167,7 +167,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 
 		wp_enqueue_script(
 			'simpay-admin-form-template-explorer',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-form-template-explorer.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-form-template-explorer.js',
 			$asset_data['dependencies'],
 			$asset_data['version'],
 			true
@@ -231,12 +231,12 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 		wp_set_script_translations(
 			'simpay-admin-form-template-explorer',
 			'stripe',
-			SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
+			SIMPLE_PAY_DIR . '/languages'
 		);
 
 		wp_enqueue_style(
 			'simpay-admin-form-template-explorer',
-			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-form-template-explorer.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-form-template-explorer.min.css',
 			array(
 				'wp-components',
 			),
@@ -308,7 +308,6 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 				break;
 			case 'invalid':
 				return false;
-				break; // @phpstan-ignore-line unreachable.
 		}
 
 		return true;

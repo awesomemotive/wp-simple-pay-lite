@@ -50,7 +50,7 @@ class PluginTelemetryData extends AbstractTelemetryData {
 		$currency = strtolower( $currency );
 
 		$data = array(
-			'version'         => SIMPLE_PAY_VERSION, // @phpstan-ignore-line
+			'version'         => SIMPLE_PAY_VERSION,
 			'license_level'   => ucfirst( $this->license->get_level() ),
 			'license_status'  => $this->license->is_lite()
 				? 'valid'

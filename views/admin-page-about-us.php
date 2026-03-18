@@ -41,7 +41,7 @@
 	<div style="margin-top: 20px;">
 		<?php
 		include_once sprintf(
-			SIMPLE_PAY_DIR . '/views/admin-page-about-us-%s.php', // @phpstan-ignore-line
+			SIMPLE_PAY_DIR . '/views/admin-page-about-us-%s.php',
 			$active_tab
 		);
 		?>

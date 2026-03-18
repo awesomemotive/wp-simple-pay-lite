@@ -2,9 +2,9 @@
 Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
-Tested up to: 6.8.3
-Stable tag: 4.16.1
-Requires PHP: 7.2
+Tested up to: 6.9
+Stable tag: 4.17.0.2
+Requires PHP: 7.4
 License: GPLv2 or later
 
 🤩 Accept Stripe payments and recurring subscriptions on your WordPress using WP Simple Pay, the best Stripe payments plugin! 🚀
@@ -184,6 +184,14 @@ Enable customers in Thailand to pay instantly using their local bank app. Prompt
 
 Tap into the vast market of Chinese consumers by offering WeChat Pay. As one of China's leading payment platforms, it allows customers to pay directly from their WeChat wallet.
 
+=== 🎨 Customize Payment Form Styles ===
+
+Make your payment forms match your brand with the powerful Form Style editor. Choose from 8 ready-made theme presets — like Sunset, Ocean, Forest, and Minimal — to instantly apply a coordinated look, or fine-tune every detail with individual color, typography, and layout controls.
+
+Customize 13 color settings including button colors, input fields, labels, error states, and more. Adjust font sizes and weights for titles, descriptions, labels, and inputs. Control border radius and padding for the form container, inputs, and buttons — all from a visual, no-code interface.
+
+Form Styles work with both embedded and overlay on-site payment forms. [Upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to unlock Form Styles and take full control of your payment form design.
+
 === 💳 Customized Payment Confirmation Details with Stripe ===
 
 Easily customize the credit card payment confirmation details your customers see within the post editor using placeholder tags.
@@ -288,6 +296,20 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 12. Global payment form settings: Summary report email
 
 == Changelog ==
+
+= Stripe Payment Forms 4.17.0.2 - March 18, 2026 =
+
+* New: Added Form Style tab with theme presets, colors, typography, and border radius options to customize payment forms.
+* New: Added Tabs and Accordion display options for payment methods.
+* Update: Updated Stripe integration for improved compatibility.
+* Update: Updated minimum PHP version requirement.
+* Fix: Fixed Stripe Connect errors in Activity Reports.
+* Fix: Fixed application fee issues during subscription status checks.
+* Fix: Fixed an error with ACH Debit payment method.
+* Fix: Fixed an issue where the payment form could fail to load in certain conditions.
+* Fix: Made email field required for overlay modal payment forms.
+* Fix: Resolved an issue where fee recovery amounts were incorrectly calculated as zero when no maximum fee cap was configured.
+* Fix: Fee recovery amount not included in payment total when the fee recovery toggle is set to "on by default".
 
 = Stripe Payment Forms v4.16.1 – December 01, 2025 =
 

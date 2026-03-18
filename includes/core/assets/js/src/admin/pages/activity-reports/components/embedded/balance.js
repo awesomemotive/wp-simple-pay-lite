@@ -38,16 +38,43 @@ export default function Balance({ onTestModeChange }) {
 
 	useEffect( () => {
 		async function initializeConnect() {
+			// Don't initialize if still loading
+			if ( isLoading ) {
+				return;
+			}
+
+			// Don't initialize if there's an error
+			if ( error ) {
+				setHasError(true);
+				return;
+			}
+
+			// Check if embeddingSecret exists and is a valid object (not false, null, or undefined)
+			if ( ! embeddingSecret || 
+				 embeddingSecret === false || 
+				 typeof embeddingSecret !== 'object' || 
+				 Array.isArray( embeddingSecret ) ) {
+				setHasError(true);
+				return;
+			}
+
+			const {
+				client_secret: initialClientSecret,
+				publishable_key: publishableKey,
+			} = embeddingSecret || {};
+
+			// Validate that both required fields exist and are valid non-empty strings
+			if ( ! publishableKey || 
+				 ! initialClientSecret || 
+				 typeof publishableKey !== 'string' || 
+				 typeof initialClientSecret !== 'string' ||
+				 publishableKey.trim() === '' || 
+				 initialClientSecret.trim() === '' ) {
+				setHasError(true);
+				return;
+			}
+
 			try {
-				if ( ! embeddingSecret ) {
-					return;
-				}
-
-				const {
-					client_secret: initialClientSecret,
-					publishable_key: publishableKey,
-				} = embeddingSecret;
-
 				// Hide any existing error message
 				const errorElement = document.querySelector(
 					'#simpay-admin-page-activity-reports-embedded-error'
@@ -57,21 +84,15 @@ export default function Balance({ onTestModeChange }) {
 					errorElement.setAttribute('hidden', '');
 				}
 
-				if (!publishableKey || !initialClientSecret) {
-					throw new Error('Missing required Stripe credentials');
-				}
-
 				const instance = await loadConnectAndInitialize({
 					publishableKey,
 					fetchClientSecret: async () => {
-						if (!initialClientSecret) {
-							throw new Error('Client secret is required');
-						}
 						return initialClientSecret;
 					},
 				});
 
 				setConnectInstance(instance);
+				setHasError(false);
 			} catch (error) {
 				console.error('Stripe Connect initialization error:', error);
 				setHasError(true);
@@ -87,7 +108,7 @@ export default function Balance({ onTestModeChange }) {
 		}
 
 		initializeConnect();
-	}, [embeddingSecret] );
+	}, [embeddingSecret, isLoading, error] );
 
 	// Don't render anything if in test mode
 	if (isTestMode) {

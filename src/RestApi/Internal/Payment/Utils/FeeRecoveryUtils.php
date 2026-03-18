@@ -192,19 +192,21 @@ class FeeRecoveryUtils {
 			PaymentRequestUtils::get_payment_method_type( $request )
 		);
 
+		/** @var array<string, mixed> $payment_method_settings */
 		if (
-			! isset(
-				$payment_method_settings['fee_recovery'],
-				$payment_method_settings['fee_recovery']['enabled']
-			) ||
+			! isset( $payment_method_settings['fee_recovery'] ) ||
+			! is_array( $payment_method_settings['fee_recovery'] ) ||
+			! isset( $payment_method_settings['fee_recovery']['enabled'] ) ||
 			'yes' !== $payment_method_settings['fee_recovery']['enabled']
 		) {
 			return 0;
 		}
 
-		$percent                  = $payment_method_settings['fee_recovery']['percent'];
-		$fixed                    = $payment_method_settings['fee_recovery']['amount'];
-		$max_recoverable_fee      = $payment_method_settings['fee_recovery']['max_amount'];
+		/** @var array{enabled: string, percent: float|int, amount: float|int, max_amount: float|int|null} $fee_recovery */
+		$fee_recovery             = $payment_method_settings['fee_recovery'];
+		$percent                  = (float) $fee_recovery['percent'];
+		$fixed                    = (float) $fee_recovery['amount'];
+		$max_recoverable_fee      = isset( $fee_recovery['max_amount'] ) ? (int) $fee_recovery['max_amount'] : null;
 		$fee_recovery_unit_amount = (int) round(
 			( $amount_to_recover_for + $fixed )
 				/
@@ -213,7 +215,7 @@ class FeeRecoveryUtils {
 			$amount_to_recover_for
 		);
 
-		if ( $max_recoverable_fee && $fee_recovery_unit_amount > $max_recoverable_fee ) {
+		if ( 0 < $max_recoverable_fee && $fee_recovery_unit_amount > $max_recoverable_fee ) {
 			return $max_recoverable_fee;
 		}
 

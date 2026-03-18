@@ -33,7 +33,7 @@ class UpdateAvailableNotice extends AbstractAdminNotice {
 
 			// Provide a fallback even though it will not show unless there is an update.
 		} else {
-			$version = SIMPLE_PAY_VERSION; // @phpstan-ignore-line
+			$version = SIMPLE_PAY_VERSION;
 		}
 
 		return 'update-available-' . $version;
@@ -43,7 +43,7 @@ class UpdateAvailableNotice extends AbstractAdminNotice {
 	 * {@inheritdoc}
 	 */
 	public function get_view() {
-		return SIMPLE_PAY_DIR . 'views/admin-notice-update-available.php'; // @phpstan-ignore-line
+		return SIMPLE_PAY_DIR . 'views/admin-notice-update-available.php';
 	}
 
 	/**

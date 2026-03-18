@@ -76,14 +76,14 @@ class ActivityReportsPage extends AbstractAdminPage implements AdminSecondaryPag
 	 * {@inheritdoc}
 	 */
 	public function render() {
-		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-page-activity-reports.asset.php'; // @phpstan-ignore-line
+		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-page-activity-reports.asset.php';
 
 		if ( file_exists( $asset ) ) {
 			$asset_data = include_once $asset;
 
 			wp_enqueue_script(
 				'simpay-admin-page-activity-reports',
-				SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-activity-reports.js', // @phpstan-ignore-line
+				SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-page-activity-reports.js',
 				$asset_data['dependencies'],
 				$asset_data['version'],
 				true
@@ -130,12 +130,12 @@ class ActivityReportsPage extends AbstractAdminPage implements AdminSecondaryPag
 			wp_set_script_translations(
 				'simpay-admin-page-activity-reports',
 				'stripe',
-				SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
+				SIMPLE_PAY_DIR . '/languages'
 			);
 
 			wp_enqueue_style(
 				'simpay-admin-page-activity-reports',
-				SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-page-activity-reports.min.css', // @phpstan-ignore-line
+				SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-page-activity-reports.min.css',
 				array(
 					'wp-components',
 				),
@@ -144,7 +144,7 @@ class ActivityReportsPage extends AbstractAdminPage implements AdminSecondaryPag
 		}
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-page-activity-reports.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-page-activity-reports.php';
 	}
 
 }

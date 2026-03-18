@@ -27,7 +27,12 @@ class PaymentMethodsSubscriber implements SubscriberInterface {
 	 * {@inheritdoc}
 	 */
 	public function get_subscribed_events() {
-		require_once SIMPLE_PAY_DIR . 'src/PaymentMethods/PaymentMethodsFunctions.php';
+		if ( ! defined( 'SIMPLE_PAY_DIR' ) ) {
+			return array();
+		}
+		/** @var string $simple_pay_dir */
+		$simple_pay_dir = SIMPLE_PAY_DIR;
+		require_once $simple_pay_dir . 'src/PaymentMethods/PaymentMethodsFunctions.php';
 		return array(
 			'simpay_register_collections' => 'register_payment_methods',
 		);
