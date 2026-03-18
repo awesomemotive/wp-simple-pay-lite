@@ -50,9 +50,9 @@ abstract class AbstractWidget implements WidgetInterface {
 	 *
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return void
+	 * @phpstan-ignore-next-line
 	 */
 	public function add_control( Widget_Base $widget ) {
-		// @phpstan-ignore-line
 		$this->control->add_control( $widget );
 	}
 
@@ -64,10 +64,11 @@ abstract class AbstractWidget implements WidgetInterface {
 	 * @param string                 $content Widget content.
 	 * @param \Elementor\Widget_Base $widget Widget.
 	 * @return string
+	 * @phpstan-ignore-next-line
 	 */
 	public function render_widget( $content, $widget ) {
-		// @phpstan-ignore-line
-		if ( $widget->get_name() !== $this->get_name() ) { // @phpstan-ignore-line
+		/** @phpstan-ignore-next-line */
+		if ( $widget->get_name() !== $this->get_name() ) {
 			return $content;
 		}
 

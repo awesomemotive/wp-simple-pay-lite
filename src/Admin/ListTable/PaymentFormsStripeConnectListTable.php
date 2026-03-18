@@ -43,7 +43,7 @@ class PaymentFormsStripeConnectListTable extends WP_Posts_List_Table {
 		);
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-page-stripe-connect.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-page-stripe-connect.php';
 	}
 
 }

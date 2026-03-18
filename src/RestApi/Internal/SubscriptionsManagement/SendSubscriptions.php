@@ -147,8 +147,10 @@ class SendSubscriptions implements SubscriberInterface {
 			);
 		}
 
-		if ( isset( $request->get_params()['email'] ) ) {
-			$this->customer_email = sanitize_email( $request->get_params()['email'] );
+		$email = $request->get_param( 'email' );
+
+		if ( is_string( $email ) ) {
+			$this->customer_email = sanitize_email( $email );
 			return true;
 		}
 

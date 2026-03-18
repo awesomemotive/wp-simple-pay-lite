@@ -38,7 +38,7 @@ class PaymentFormsFirstFormListTable extends WP_Posts_List_Table {
 			parent::display();
 		} else {
 			// @todo use a ViewLoader
-			include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-first-form.php'; // @phpstan-ignore-line
+			include_once SIMPLE_PAY_DIR . '/views/admin-payment-forms-first-form.php';
 		}
 	}
 

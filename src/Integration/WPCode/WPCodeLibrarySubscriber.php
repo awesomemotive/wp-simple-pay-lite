@@ -45,7 +45,7 @@ class WPCodeLibrarySubscriber implements SubscriberInterface {
 		wpcode_register_library_username(
 			'wpsimplepay',
 			'WP Simple Pay',
-			SIMPLE_PAY_VERSION // @phpstan-ignore-line
+			SIMPLE_PAY_VERSION
 		);
 	}
 

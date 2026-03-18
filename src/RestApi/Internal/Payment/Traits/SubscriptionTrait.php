@@ -556,6 +556,11 @@ trait SubscriptionTrait {
 				$line_item_args['price_data']['product_data']['tax_code'] = $tax_code;
 			}
 
+			// Add image URL if it exists.
+			if ( ! empty( $form->image_url ) ) {
+				$line_item_args['price_data']['product_data']['images'] = array( $form->image_url );
+			}
+
 			// Otherwise set an existing Product.
 		} else {
 			$line_item_args['price_data']['product'] = $price->product_id;

@@ -20,7 +20,7 @@
 <div class="simpay-card">
 
 	<figure>
-		<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL ); // @phpstan-ignore-line ?>/core/assets/images/about/getting-started.svg" alt="" style="max-width: 300px;" />
+		<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL ); ?>/core/assets/images/about/getting-started.svg" alt="" style="max-width: 300px;" />
 	</figure>
 
 	<h3>

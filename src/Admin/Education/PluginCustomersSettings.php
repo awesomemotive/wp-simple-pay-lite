@@ -106,14 +106,14 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 		// Lightweight, accessible and responsive lightbox.
 		wp_enqueue_style(
 			'simpay-lity',
-			SIMPLE_PAY_INC_URL . 'core/assets/css/vendor/lity/lity.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/vendor/lity/lity.min.css',
 			array(),
 			'3.0.0'
 		);
 
 		wp_enqueue_script(
 			'simpay-lity',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/lity.min.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/vendor/lity.min.js',
 			array( 'jquery' ),
 			'3.0.0',
 			true
@@ -135,7 +135,7 @@ class PluginCustomersSettings extends AbstractProductEducation implements Subscr
 		);
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-customers-settings.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-education-plugin-customers-settings.php';
 	}
 
 }

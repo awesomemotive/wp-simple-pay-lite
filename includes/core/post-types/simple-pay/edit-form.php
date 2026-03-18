@@ -202,6 +202,11 @@ function redirect_post_save_preview( $location, $post_id ) {
 
 		$license = simpay_get_license();
 
+		$style_panel_class = '';
+		if ( ! $license->is_pro( 'plus', '>=' ) ) {
+			$style_panel_class = 'simpay-panel-flex-centered';
+		}
+
 		$data_lite = $license->is_lite() ? 'data-lite' : 'data-pro';
 		?>
 
@@ -389,6 +394,25 @@ function redirect_post_save_preview( $location, $post_id ) {
 			</div>
 
 			<div
+				id="simpay-form-style-settings-panel"
+				class="simpay-panel-hidden <?php echo esc_attr( implode( ' ', $panel_classes ) ); ?> <?php echo esc_attr( $style_panel_class ); ?>"
+			>
+				<?php
+				/**
+				 * Allows output in the "Form Style" form settings tab panel.
+				 *
+				 * @since 4.17.0
+				 *
+				 * @param int $form_id Current Payment Form ID.
+				 */
+				do_action(
+					'simpay_form_settings_form_style_panel',
+					$post->ID
+				);
+				?>
+			</div>
+
+			<div
 				id="automations-settings-panel"
 				class="simpay-panel-hidden <?php echo esc_attr( implode( ' ', $panel_classes ) ); ?>"
 			>
@@ -491,9 +515,6 @@ function redirect_post_save_preview( $location, $post_id ) {
 			true
 		);
 
-		// Icons: https://heroicons.com/
-		// Mini.
-
 		$tabs['form_display_options'] = array(
 			'label'  => esc_html__( 'General', 'stripe' ),
 			'target' => 'form-display-options-settings-panel',
@@ -516,6 +537,19 @@ function redirect_post_save_preview( $location, $post_id ) {
 			'label'  => esc_html__( 'Purchase Restrictions', 'stripe' ),
 			'target' => 'purchase-restrictions-settings-panel',
 			'icon'   => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1zm3 8V5.5a3 3 0 1 0-6 0V9h6z" clip-rule="evenodd"/></svg>',
+		);
+
+		$tabs['form_style'] = array(
+			'label'  => wp_kses(
+				__( 'Form Style', 'stripe' ),
+				array(
+					'span' => array(),
+				)
+			),
+			'target' => 'simpay-form-style-settings-panel',
+			'icon'   => '<svg fill="#3C434B" width="20" height="20" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+    <path d="M392.26 1042.5c137.747-57.67 292.85-15.269 425.873 116.217l4.394 4.833c116.656 146.425 149.5 279.119 97.873 394.237-128.85 287.138-740.692 328.77-810.005 332.504L0 1896.442l61.953-91.83c.989-1.539 105.013-158.728 105.013-427.192 0-141.811 92.6-279.558 225.294-334.92ZM1728.701 23.052c54.923-1.099 99.96 15.268 135.111 49.43 40.643 40.644 58.109 87.877 56.021 140.603C1908.85 474.52 1423.33 953.447 1053.15 1280.79c-24.276-64.81-63.711-136.21-125.335-213.102l-8.787-9.886c-80.078-80.187-169.163-135.11-262.423-161.473C955.276 558.002 1460.677 33.927 1728.701 23.052Z" fill-rule="evenodd"/>
+</svg>',
 		);
 
 		$tabs['stripe_checkout'] = array(
@@ -668,15 +702,17 @@ function redirect_post_save_preview( $location, $post_id ) {
 <li
 	class="simpay-<?php echo esc_attr( $key ); ?>-settings simpay-<?php echo esc_attr( $key ); ?>-tab <?php echo esc_attr( implode( ' ', $class ) ); ?>"
 	data-tab="<?php echo esc_attr( $key ); ?>"
+			<?php if ( 'form_style' !== $key ) : ?>
 	data-if="_form_type"
 	data-is="off-site"
-			<?php if ( 'notifications' === $key && $license->is_lite() ) : ?>
-		data-available="no"
-		data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
-		data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
-		data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
-		data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
 	<?php endif; ?>
+			<?php if ( 'notifications' === $key && $license->is_lite() ) : ?>
+	data-available="no"
+	data-upgrade-title="<?php echo esc_attr( $upgrade_title ); ?>"
+	data-upgrade-description="<?php echo esc_attr( $upgrade_description ); ?>"
+	data-upgrade-url="<?php echo esc_url( $upgrade_url ); ?>"
+	data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+<?php endif; ?>
 >
 			<?php echo $html; // WPCS: XSS okay. ?>
 </li>

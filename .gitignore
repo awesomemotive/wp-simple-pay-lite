@@ -13,9 +13,7 @@ node_modules
 artifacts
 logs
 build
-vendor
+/vendor
 test-results
-!/vendor/autoload.php
-!/vendor/composer/
 
 /.sass-cache

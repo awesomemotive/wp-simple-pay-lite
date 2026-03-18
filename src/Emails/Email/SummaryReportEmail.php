@@ -184,7 +184,7 @@ class SummaryReportEmail extends AbstractEmail {
 
 		ob_start();
 
-		require_once SIMPLE_PAY_DIR . 'views/email-internal-summary-report.php'; // @phpstan-ignore-line
+		require_once SIMPLE_PAY_DIR . 'views/email-internal-summary-report.php';
 
 		$html = ob_get_clean();
 

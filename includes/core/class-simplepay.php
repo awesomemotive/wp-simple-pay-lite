@@ -10,6 +10,8 @@
 
 namespace SimplePay\Core;
 
+use SimplePay\Core\Admin\FormBuilder\FormStyle\AdminUI;
+use SimplePay\Core\Admin\FormBuilder\FormStyle\Frontend;
 use SimplePay\Core\Forms\Preview;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -193,6 +195,7 @@ final class SimplePay {
 			$this->load_admin();
 		} else {
 			Assets::get_instance();
+			Frontend::get_instance();
 			new Cache_Helper();
 		}
 	}
@@ -213,6 +216,7 @@ final class SimplePay {
 		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-custom-fields.php';
 		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-payment-page.php';
 		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-purchase-restrictions.php';
+		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-style.php';
 		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-automations.php';
 		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/edit-form-confirmation.php';
 		require_once SIMPLE_PAY_INC . 'core/post-types/simple-pay/actions.php';
@@ -225,6 +229,7 @@ final class SimplePay {
 		new Admin\Assets();
 		new Admin\Menus();
 		new Admin\Notice_Manager();
+		AdminUI::get_instance();
 	}
 }
 
