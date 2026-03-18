@@ -60,7 +60,7 @@ class AdminBranding implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		// @todo use a ViewLoader
-		include_once SIMPLE_PAY_DIR . '/views/admin-branding-bar.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/admin-branding-bar.php';
 	}
 
 }

@@ -276,8 +276,8 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	/**
 	 * Get the source type from the payment confirmation data.
 	 *
-	 * @param array $payment_confirmation_data {
-	 *   Contextual information about this payment confirmation.
+	 * @param array<string, mixed> $payment_confirmation_data {
+	 *                  Contextual information about this payment confirmation.
 	 *
 	 *   @type \SimplePay\Vendor\Stripe\Customer                  $customer
 	 *                                                            Stripe Customer
@@ -293,12 +293,16 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 *
 	 * @return string
 	 */
-	private function get_source_type( $payment_confirmation_data ) {
-		$payment_intent = isset( $payment_confirmation_data['paymentintents'] )
-			? current( $payment_confirmation_data['paymentintents'] )
-			: false;
+	private function get_source_type( array $payment_confirmation_data ) {
+		if ( ! isset( $payment_confirmation_data['paymentintents'] ) || ! is_array( $payment_confirmation_data['paymentintents'] ) ) {
+			return '';
+		}
+		/** @var array<int, object> $payment_intents */
+		$payment_intents = $payment_confirmation_data['paymentintents'];
+		$payment_intent  = current( $payment_intents );
 
-		if ( $payment_intent && isset( $payment_intent->last_payment_error ) ) {
+		if ( false !== $payment_intent && is_object( $payment_intent ) && isset( $payment_intent->last_payment_error ) ) {
+			/** @var object{last_payment_error: object{payment_method: object{type: string}}} $payment_intent */
 			return $payment_intent->last_payment_error->payment_method->type;
 		}
 
@@ -411,7 +415,7 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 			Payment_Confirmation\get_confirmation_data()
 		);
 
-		include_once SIMPLE_PAY_DIR . '/views/payment-page-output.php'; // @phpstan-ignore-line
+		include_once SIMPLE_PAY_DIR . '/views/payment-page-output.php';
 		exit;
 	}
 

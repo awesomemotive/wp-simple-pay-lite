@@ -390,8 +390,14 @@ class SchemaValidationUtils {
 		}
 
 		// Next, check for required fields.
-		/** @var array<string, array<string, mixed>> $custom_fields */
+		/** @var array<string, array<string, mixed>>|string $custom_fields */
 		$custom_fields = simpay_get_saved_meta( $form->id, '_custom_fields' );
+
+		// If there are no custom fields, there is nothing to validate.
+		if ( ! is_array( $custom_fields ) ) {
+			return true;
+		}
+
 		/** @var array<string, string> $form_values */
 		$form_values     = $value;
 		$always_required = array( 'email', 'address' );
@@ -502,6 +508,10 @@ class SchemaValidationUtils {
 	 */
 	public static function is_valid_price_ids( $request, $form ) {
 		$line_items = PaymentRequestUtils::get_price_ids( $request );
+
+		if ( ! is_array( $line_items ) ) {
+			return false;
+		}
 
 		$valid = array_filter(
 			$line_items,

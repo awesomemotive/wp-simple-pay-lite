@@ -18,6 +18,7 @@
  * @var string $background_color Background color.
  * @var string $darker_background_color Darker background color.
  * @var string $lighter_background_color Lighter background color.
+ * @var string $prefix Payment page or confirmation page prefix.
  * @var bool   $is_confirmation Determines if the payment confirmation should show.
  */
 
@@ -81,8 +82,8 @@
 			<?php endif; ?>
 
 			<?php if ( 'no' === $powered_by ) : ?>
-				<a href="https://wpsimplepay.com/?utm_source=poweredby&utm_medium=link&utm_campaign=<?php echo '_payment' === esc_attr( $prefix ) ? 'paymentpage' : 'confirmationpage'; // @phpstan-ignore-line ?>" class="simpay-payment-page-powered-by">
-					<?php esc_html_e( 'powered by', 'stripe' ); ?> <img src="<?php echo esc_url( SIMPLE_PAY_INC_URL ); // @phpstan-ignore-line ?>core/assets/images/wp-simple-pay-logo-white.svg" />
+				<a href="https://wpsimplepay.com/?utm_source=poweredby&utm_medium=link&utm_campaign=<?php echo '_payment' === esc_attr( $prefix ) ? 'paymentpage' : 'confirmationpage'; ?>" class="simpay-payment-page-powered-by">
+					<?php esc_html_e( 'powered by', 'stripe' ); ?> <img src="<?php echo esc_url( SIMPLE_PAY_INC_URL ); ?>core/assets/images/wp-simple-pay-logo-white.svg" />
 				</a>
 			<?php endif; ?>
 		</div>

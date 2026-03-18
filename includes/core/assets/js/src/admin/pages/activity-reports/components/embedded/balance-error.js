@@ -8,10 +8,7 @@ export default function BalanceError() {
 		>
 			<div>
 				<strong>
-					{ sprintf(
-						__( 'Unable to load Stripe account balance.', 'simple-pay' ),
-						
-					) }
+					{ __( 'Unable to load Stripe account balance.', 'simple-pay' ) }
 				</strong>
 				<div>
 					{ __(

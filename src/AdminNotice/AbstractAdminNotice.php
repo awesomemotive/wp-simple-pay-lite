@@ -86,7 +86,7 @@ abstract class AbstractAdminNotice implements AdminNoticeInterface, LicenseAware
 	public function get_view() {
 		$view_file_name = sprintf( 'admin-notice-%s.php', $this->get_id() );
 
-		return SIMPLE_PAY_DIR . 'views/' . $view_file_name; // @phpstan-ignore-line
+		return SIMPLE_PAY_DIR . 'views/' . $view_file_name;
 	}
 
 	/**

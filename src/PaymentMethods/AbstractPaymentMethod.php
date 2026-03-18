@@ -32,8 +32,9 @@ abstract class AbstractPaymentMethod {
 	 * @since 4.16.0
 	 *
 	 * @param Collection $payment_methods Payment methods collection.
+	 * @return void
 	 */
-	abstract public function register( $payment_methods );
+	abstract public function register( $payment_methods ): void;
 
 	/**
 	 * Validates the Payment Confirmation data.

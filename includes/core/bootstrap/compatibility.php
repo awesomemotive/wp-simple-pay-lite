@@ -38,8 +38,8 @@ function get_requirements_list() {
 		),
 		'php'      => array(
 			'name'     => 'PHP',
-			'requires' => '7.2',
-			'met'      => version_compare( PHP_VERSION, '7.2', '>=' ),
+			'requires' => '7.4',
+			'met'      => version_compare( PHP_VERSION, '7.4', '>=' ),
 		),
 		'curl'     => array(
 			'name' => 'cURL',

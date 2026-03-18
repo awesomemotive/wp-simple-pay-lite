@@ -151,7 +151,7 @@ class ApplicationFee implements SubscriberInterface, LicenseAwareInterface {
 						'edd_license_key' => $this->license->get_key(),
 						'discount'        => 'SAVE50',
 					),
-					sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) ) // @phpstan-ignore-line
+					sprintf( '%s/checkout', untrailingslashit( SIMPLE_PAY_STORE_URL ) )
 				);
 
 				$renew_url = simpay_ga_url( $renew_url, 'stripe-account-settings' );

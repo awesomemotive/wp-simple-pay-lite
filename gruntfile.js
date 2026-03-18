@@ -42,7 +42,7 @@ module.exports = function (grunt) {
       },
       update_stripe_checkout_version: {
         path: "stripe-checkout.php",
-        pattern: "Version: [0-9]+\\.[0-9]+\\.[0-9]+",
+        pattern: "Version: [0-9]+\\.[0-9]+\\.[0-9]+\\.?[0-9]*",
         replacement: `Version: ${updatedVersion}`,
         recursive: false,
       },
@@ -50,19 +50,19 @@ module.exports = function (grunt) {
       update_stripe_checkout_define: {
         path: "stripe-checkout.php",
         pattern:
-          "define\\( 'SIMPLE_PAY_VERSION', '[0-9]+\\.[0-9]+\\.[0-9]+' \\);",
+          "define\\( 'SIMPLE_PAY_VERSION', '[0-9]+\\.[0-9]+\\.[0-9]+\\.?[0-9]*' \\);",
         replacement: `define( 'SIMPLE_PAY_VERSION', '${updatedVersion}' );`,
         recursive: false,
       },
       update_readme: {
         path: "readme.txt",
-        pattern: "Stable tag: [0-9]+\\.[0-9]+\\.[0-9]+",
+        pattern: "Stable tag: [0-9]+\\.[0-9]+\\.[0-9]+\\.?[0-9]*",
         replacement: `Stable tag: ${updatedVersion}`,
         recursive: false,
       },
       update_package_json: {
         path: "package.json",
-        pattern: '"version": "[0-9]+\\.[0-9]+\\.[0-9]+",',
+        pattern: '"version": "[0-9]+\\.[0-9]+\\.[0-9]+\\.?[0-9]*",',
         replacement: `"version": "${updatedVersion}",`,
         recursive: false,
       },

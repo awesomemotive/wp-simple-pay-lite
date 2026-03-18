@@ -55,7 +55,7 @@ $new_url = add_query_arg(
 	</p>
 
 	<section class="simpay-landing-zone__empty-state-graphic">
-		<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/empty-states/no-forms.svg' ); // @phpstan-ignore-line ?>" style="width: 325px;" />
+		<img src="<?php echo esc_url( SIMPLE_PAY_INC_URL . 'core/assets/images/empty-states/no-forms.svg' ); ?>" style="width: 325px;" />
 	</section>
 
 	<section>

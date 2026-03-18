@@ -27,7 +27,8 @@ class PaymentMethodsServiceProvider extends AbstractPluginServiceProvider implem
 	 */
 	public function register() {
 		$container = $this->getContainer();
-		$license   = $container->get( 'license' );
+		/** @var \SimplePay\Core\License\License $license */
+		$license = $container->get( 'license' );
 		if ( ! $license->is_lite() ) {
 			$container->share( 'payment-methods-card', PaymentMethod\CardPaymentMethod::class );
 			$container->share( 'payment-methods-ach-debit', PaymentMethod\ACHDebitPaymentMethod::class );

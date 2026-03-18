@@ -156,7 +156,7 @@ class ConnectSubscriber implements SubscriberInterface, LicenseAwareInterface {
 
 		update_option( 'simpay_connect_token', $oth );
 
-		$version  = SIMPLE_PAY_VERSION; // @phpstan-ignore-line
+		$version  = SIMPLE_PAY_VERSION;
 		$siteurl  = admin_url();
 		$endpoint = admin_url( 'admin-ajax.php' );
 		$redirect = Settings\get_url(

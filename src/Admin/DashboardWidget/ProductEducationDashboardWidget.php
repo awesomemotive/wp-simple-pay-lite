@@ -156,14 +156,14 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 	public function render() {
 		// No Stripe connection.
 		if ( true === $this->should_display_stripe_connect() ) {
-			include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-stripe-connect.php'; // @phpstan-ignore-line
+			include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-stripe-connect.php';
 
 			return;
 		}
 
 		// No payment forms.
 		if ( true === $this->should_display_first_form() ) {
-			include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-first-form.php'; // @phpstan-ignore-line
+			include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-first-form.php';
 
 			return;
 		}
@@ -177,7 +177,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 
 			// .. or show a lite Lite upgrade if on lite.
 		} elseif ( true === $this->should_display_lite_upgrade() ) {
-			include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-lite-upgrade.php'; // @phpstan-ignore-line
+			include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-lite-upgrade.php';
 
 			return;
 		}
@@ -191,7 +191,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 	 * @return void
 	 */
 	private function get_report_view() {
-		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-dashboard-widget-report.asset.php'; // @phpstan-ignore-line
+		$asset = SIMPLE_PAY_INC . 'core/assets/js/dist/simpay-admin-dashboard-widget-report.asset.php';
 
 		if ( ! file_exists( $asset ) ) {
 			return;
@@ -201,7 +201,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 
 		wp_enqueue_script(
 			'simpay-admin-dashboard-widget-report',
-			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-dashboard-widget-report.js', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-admin-dashboard-widget-report.js',
 			array_merge(
 				array(
 					'simpay-accounting',
@@ -249,12 +249,12 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 		wp_set_script_translations(
 			'simpay-admin-dashboard-widget-report',
 			'stripe',
-			SIMPLE_PAY_DIR . '/languages' // @phpstan-ignore-line
+			SIMPLE_PAY_DIR . '/languages'
 		);
 
 		wp_enqueue_style(
 			'simpay-admin-dashboard-widget-report',
-			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-dashboard-widget-report.min.css', // @phpstan-ignore-line
+			SIMPLE_PAY_INC_URL . 'core/assets/css/simpay-admin-dashboard-widget-report.min.css',
 			array(
 				'wp-components',
 			),
@@ -269,7 +269,7 @@ class ProductEducationDashboardWidget extends AbstractDashboardWidget implements
 		);
 
 		// Load view.
-		include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-report.php'; // @phpstan-ignore-line return;
+		include_once SIMPLE_PAY_DIR . 'views/admin-dashboard-widget-report.php';
 	}
 
 	/**

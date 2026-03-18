@@ -25,9 +25,13 @@ class DefaultTemplate extends AbstractTemplate {
 	 * {@inheritdoc}
 	 */
 	public function get_styles() {
-		$styles = file_get_contents(
-			SIMPLE_PAY_DIR . 'includes/core/assets/css/simpay-email-template-default.min.css' // @phpstan-ignore-line
-		);
+		$file = SIMPLE_PAY_DIR . 'includes/core/assets/css/simpay-email-template-default.min.css';
+
+		if ( ! file_exists( $file ) ) {
+			return '';
+		}
+
+		$styles = file_get_contents( $file );
 
 		if ( false === $styles ) {
 			return '';
@@ -42,7 +46,7 @@ class DefaultTemplate extends AbstractTemplate {
 	public function get_header( $content ) {
 		ob_start();
 
-		require SIMPLE_PAY_DIR . 'views/email-template-default-header.php'; // @phpstan-ignore-line
+		require SIMPLE_PAY_DIR . 'views/email-template-default-header.php';
 
 		/** @var string $html */
 		$html = ob_get_clean();
@@ -56,7 +60,7 @@ class DefaultTemplate extends AbstractTemplate {
 	public function get_body( $content ) {
 		ob_start();
 
-		require SIMPLE_PAY_DIR . 'views/email-template-default-body.php'; // @phpstan-ignore-line
+		require SIMPLE_PAY_DIR . 'views/email-template-default-body.php';
 
 		/** @var string $html */
 		$html = ob_get_clean();
@@ -70,7 +74,7 @@ class DefaultTemplate extends AbstractTemplate {
 	public function get_footer( $content ) {
 		ob_start();
 
-		require SIMPLE_PAY_DIR . 'views/email-template-default-footer.php'; // @phpstan-ignore-line
+		require SIMPLE_PAY_DIR . 'views/email-template-default-footer.php';
 
 		/** @var string $html */
 		$html = ob_get_clean();
