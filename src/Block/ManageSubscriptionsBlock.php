@@ -42,7 +42,7 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 		wp_register_script(
 			'simpay-manage-subscriptions-frontend',
 			SIMPLE_PAY_INC_URL . 'pro/assets/js/dist/simpay-public-pro-manage-subscriptions.js',
-			array( 'wp-api-fetch' ),
+			array( 'wp-api-fetch', 'simpay-shared' ),
 			$script_data['version'],
 			true
 		);
@@ -52,9 +52,7 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 			'simpay-manage-subscriptions-frontend',
 			'simpayManageSubscription',
 			array(
-				'rest_url' => esc_url_raw(
-					'/wpsp/__internal__/send/subscriptions'
-				),
+				'rest_url' => 'wpsp/__internal__/send/subscriptions',
 				'messages' => array(
 					'wait_message'          => __( 'Please wait...', 'stripe' ),
 					'valid_email_warning'   => __( 'Please enter a valid email address.', 'stripe' ),

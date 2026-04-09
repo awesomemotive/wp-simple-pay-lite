@@ -178,10 +178,11 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	 */
 	private function register_assets( $asset_file ) {
 		// Register frontend payment form assets.
-		$assets = new CoreAssets();
+		// Use the singleton to avoid adding duplicate wp_footer hooks for localize_scripts.
+		$assets = CoreAssets::get_instance();
 
 		if ( false === $this->license->is_lite() ) {
-			new ProAssets();
+			ProAssets::get_instance();
 		}
 
 		$assets->register();
@@ -218,8 +219,6 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			array_keys( $assets->styles ),
 			$script_data['version']
 		);
-
-		simpay_shared_script_variables();
 	}
 
 	/**

@@ -574,17 +574,11 @@ function simpay_shared_script_variables() {
 			'recurring interval with automatic tax',
 			'stripe'
 		),
-		/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit */
-		'recurringIntervalDisplayInvoiceLimit' => esc_html_x(
-			'%1$d payments of %2$s every %3$s %4$s',
-			'recurring interval with invoice limit',
-			'stripe'
+		'recurringIntervalDisplayInvoiceLimitSingular' => esc_html(
+			simpay_get_global_invoice_limit_format_string( 'singular' )
 		),
-		/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount */
-		'recurringIntervalDisplayInvoiceLimitWithCoupon' => esc_html_x(
-			'%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s',
-			'recurring interval',
-			'stripe'
+		'recurringIntervalDisplayInvoiceLimit' => esc_html(
+			simpay_get_global_invoice_limit_format_string( 'plural' )
 		),
 		'addressRequired' => esc_html__(
 			'Enter address to calculate',
@@ -609,8 +603,6 @@ function simpay_shared_script_variables() {
 
 	$final = apply_filters( 'simpay_shared_script_variables', array_merge( $strings, $bools, $i18n, $integers ) );
 
-	wp_localize_script( 'simpay-shared', 'spGeneral', $final );
-
 	return $final;
 }
 
@@ -622,6 +614,7 @@ function simpay_shared_script_variables() {
  * @return array[] {
  *   @var string Singular interval.
  *   @var string Plural interval.
+ *   @var string Adjective interval.
  * }
  */
 function simpay_get_recurring_intervals() {
@@ -629,18 +622,22 @@ function simpay_get_recurring_intervals() {
 		'day'   => array(
 			esc_html_x( 'day', 'recurring interval', 'stripe' ),
 			esc_html_x( 'days', 'recurring interval', 'stripe' ),
+			esc_html_x( 'daily', 'recurring interval adjective', 'stripe' ),
 		),
 		'week'  => array(
 			esc_html_x( 'week', 'recurring interval', 'stripe' ),
 			esc_html_x( 'weeks', 'recurring interval', 'stripe' ),
+			esc_html_x( 'weekly', 'recurring interval adjective', 'stripe' ),
 		),
 		'month' => array(
 			esc_html_x( 'month', 'recurring interval', 'stripe' ),
 			esc_html_x( 'months', 'recurring interval', 'stripe' ),
+			esc_html_x( 'monthly', 'recurring interval adjective', 'stripe' ),
 		),
 		'year'  => array(
 			esc_html_x( 'year', 'recurring interval', 'stripe' ),
 			esc_html_x( 'years', 'recurring interval', 'stripe' ),
+			esc_html_x( 'yearly', 'recurring interval adjective', 'stripe' ),
 		),
 	);
 }

@@ -404,6 +404,28 @@ function receipt( $value, $payment_confirmation_data ) {
 			$price_instances
 		);
 
+		// Sort price instances to match the form's price option order.
+		$form_prices = simpay_get_payment_form_prices( $form );
+		if ( ! empty( $form_prices ) ) {
+			// Create a mapping of instance_id to order position.
+			$price_order = array();
+			foreach ( $form_prices as $index => $form_price ) {
+				$price_order[ $form_price->instance_id ] = $index;
+			}
+
+			// Build a sortable order column and sort price instances by their order in the form.
+			$order_column = array_map(
+				function ( $price_instance ) use ( $price_order ) {
+					return isset( $price_order[ $price_instance['instance_id'] ] )
+						? $price_order[ $price_instance['instance_id'] ]
+						: 999;
+				},
+				$price_instances
+			);
+
+			array_multisort( $order_column, SORT_ASC, $price_instances );
+		}
+
 		foreach ( $price_instances as $price_instance ) {
 			$price_option = simpay_payment_form_prices_get_price_by_instance_id(
 				$form,
@@ -998,6 +1020,9 @@ function recurring_amount( $value, $payment_confirmation_data ) {
 		? $recurring_nouns[ $interval ][0]
 		: $recurring_nouns[ $interval ][1];
 
+	// Adjective form: "daily", "weekly", "monthly", "yearly".
+	$interval_adjective = $recurring_nouns[ $interval ][2];
+
 	// Determine if a coupon is applied to the Customer.
 	$customer             = $payment_confirmation_data['customer'];
 	$has_discount         = null !== $customer->discount;
@@ -1031,37 +1056,23 @@ function recurring_amount( $value, $payment_confirmation_data ) {
 
 	// Special invoice limit handling.
 	if ( true === $invoice_limit ) {
-		if ( true === $has_discount && true === $has_limited_discount ) {
-			return esc_html(
-				sprintf(
-					/* translators: %1$s Invoice limit. %2$s Recurring interval count. %3$s Recurring interval. %4$s Recurring amount limit */
-					_x(
-						'%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s',
-						'recurring interval with invoice limit',
-						'stripe'
-					),
-					absint( $subscription->metadata->simpay_charge_max ),
-					$current_recurring_amount,
-					$interval_string,
-					$interval_count_string
-				)
-			);
-		} else {
-			return esc_html(
-				sprintf(
-					/* translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit */
-					_x(
-						'%1$d payments of %2$s every %3$s %4$s',
-						'recurring interval with invoice limit',
-						'stripe'
-					),
-					absint( $subscription->metadata->simpay_charge_max ),
-					$current_recurring_amount,
-					$interval_string,
-					$interval_count_string
-				)
-			);
-		}
+		$form       = $payment_confirmation_data['form'];
+		$format_key = simpay_get_recurring_invoice_limit_format_key(
+			$form->id
+		);
+
+		return esc_html(
+			simpay_format_recurring_invoice_limit(
+				$format_key,
+				absint( $subscription->metadata->simpay_charge_max ),
+				$current_recurring_amount,
+				$interval_adjective,
+				$recurring_nouns[ $interval ][0],
+				$recurring_nouns[ $interval ][1],
+				$interval_count,
+				$form->id
+			)
+		);
 	}
 
 	$current_recurring_amount_string = esc_html(

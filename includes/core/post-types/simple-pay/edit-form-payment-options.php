@@ -180,6 +180,77 @@ add_action( 'simpay_form_settings_meta_payment_options_panel', __NAMESPACE__ . '
 
 
 
+/**
+ * Outputs the "Installment Description Format" select for the form.
+ *
+ * @since 4.17.1
+ *
+ * @param int $post_id Current Payment Form ID.
+ */
+function add_recurring_amount_format( $post_id ) {
+	$formats     = simpay_get_recurring_invoice_limit_formats();
+	$format_opts = array(
+		'' => esc_html__( 'Global default', 'stripe' ),
+	);
+
+	foreach ( $formats as $key => $format ) {
+		$format_opts[ $key ] = $format['label'];
+	}
+
+	$current = simpay_get_saved_meta(
+		$post_id,
+		'_recurring_amount_format',
+		''
+	);
+	?>
+
+	<table>
+		<tr class="simpay-panel-field">
+			<th>
+				<label for="_recurring_amount_format">
+					<?php
+					esc_html_e(
+						'Installment Description Format',
+						'stripe'
+					);
+					?>
+				</label>
+			</th>
+			<td>
+				<select
+					name="_recurring_amount_format"
+					id="_recurring_amount_format"
+				>
+					<?php foreach ( $format_opts as $value => $label ) : ?>
+						<option
+							value="<?php echo esc_attr( $value ); ?>"
+							<?php selected( $value, $current ); ?>
+						>
+							<?php echo esc_html( $label ); ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+
+				<p class="description">
+					<?php
+					esc_html_e(
+						'Controls how installment payment descriptions appear on this form and its confirmation page. "Global default" uses the format from Settings > General > Currency & Formatting.',
+						'stripe'
+					);
+					?>
+				</p>
+			</td>
+		</tr>
+	</table>
+
+	<?php
+}
+add_action(
+	'simpay_form_settings_meta_payment_options_panel',
+	__NAMESPACE__ . '\\add_recurring_amount_format',
+	50
+);
+
 $license = new License( '' );
 
 if ( $license->is_lite() ) {
