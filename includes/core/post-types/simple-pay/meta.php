@@ -92,6 +92,30 @@ function register() {
 		)
 	);
 
+	// Transaction description source.
+	register_post_meta(
+		'simple-pay',
+		'_transaction_description_source',
+		array(
+			'type'              => 'string',
+			'description'       => __( 'Transaction description source.', 'stripe' ),
+			'single'            => true,
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+
+	// Transaction description custom text.
+	register_post_meta(
+		'simple-pay',
+		'_transaction_description_custom',
+		array(
+			'type'              => 'string',
+			'description'       => __( 'Custom transaction description.', 'stripe' ),
+			'single'            => true,
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+
 	// Stripe Checkout - Image URL.
 	register_post_meta(
 		'simple-pay',

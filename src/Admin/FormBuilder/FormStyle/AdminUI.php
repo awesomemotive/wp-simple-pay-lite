@@ -684,11 +684,12 @@ class AdminUI {
 									<?php esc_html_e( 'Label Font Size', 'stripe' ); ?>
 								</label>
 								<div class="wpsp-admin-input-with-unit">
-									<input 
-										type="number" 
-										id="wpsps_label_font_size" 
-										name="wpsps[label_font_size]" 
-										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'label_font_size', '14' ) ); ?>" 
+									<input
+										type="number"
+										id="wpsps_label_font_size"
+										name="wpsps[label_font_size]"
+										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'label_font_size' ) ); ?>"
+										placeholder="<?php esc_attr_e( 'Theme default', 'stripe' ); ?>"
 										step="1"
 									/>
 									<span class="wpsp-admin-unit">px</span>
@@ -751,11 +752,12 @@ class AdminUI {
 									<?php esc_html_e( 'Input Font Size', 'stripe' ); ?>
 								</label>
 								<div class="wpsp-admin-input-with-unit">
-									<input 
-										type="number" 
-										id="wpsps_input_font_size" 
-										name="wpsps[input_font_size]" 
-										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'input_font_size', '16' ) ); ?>" 
+									<input
+										type="number"
+										id="wpsps_input_font_size"
+										name="wpsps[input_font_size]"
+										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'input_font_size' ) ); ?>"
+										placeholder="<?php esc_attr_e( 'Theme default', 'stripe' ); ?>"
 										step="1"
 									/>
 									<span class="wpsp-admin-unit">px</span>
@@ -780,11 +782,12 @@ class AdminUI {
 									<?php esc_html_e( 'Title Font Size', 'stripe' ); ?>
 								</label>
 								<div class="wpsp-admin-input-with-unit">
-									<input 
-										type="number" 
-										id="wpsps_title_font_size" 
-										name="wpsps[title_font_size]" 
-										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'title_font_size', '24' ) ); ?>" 
+									<input
+										type="number"
+										id="wpsps_title_font_size"
+										name="wpsps[title_font_size]"
+										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'title_font_size' ) ); ?>"
+										placeholder="<?php esc_attr_e( 'Theme default', 'stripe' ); ?>"
 										step="1"
 									/>
 									<span class="wpsp-admin-unit">px</span>
@@ -838,11 +841,12 @@ class AdminUI {
 									<?php esc_html_e( 'Description Font Size', 'stripe' ); ?>
 								</label>
 								<div class="wpsp-admin-input-with-unit">
-									<input 
-										type="number" 
-										id="wpsps_description_font_size" 
-										name="wpsps[description_font_size]" 
-										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'description_font_size', '16' ) ); ?>" 
+									<input
+										type="number"
+										id="wpsps_description_font_size"
+										name="wpsps[description_font_size]"
+										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'description_font_size' ) ); ?>"
+										placeholder="<?php esc_attr_e( 'Theme default', 'stripe' ); ?>"
 										step="1"
 									/>
 									<span class="wpsp-admin-unit">px</span>
@@ -912,14 +916,14 @@ class AdminUI {
 										type="number"
 										id="wpsps_form_border_radius"
 										name="wpsps[form_border_radius]"
-										value="<?php echo esc_attr( $is_new_form ? '0' : Settings::get_setting( $post_id, 'form_border_radius', '0' ) ); ?>"
+										value="<?php echo esc_attr( Settings::get_setting( $post_id, 'form_border_radius', '0' ) ); ?>"
 										step="1"
 										min="0"
 									/>
 									<span class="wpsp-admin-unit">px</span>
 								</div>
 								<div class="wpsp-admin-radius-preview">
-									<div class="wpsp-admin-form-radius-box" style="border-radius: <?php echo esc_attr( $is_new_form ? '0' : Settings::get_setting( $post_id, 'form_border_radius', '0' ) ); ?>px;"></div>
+									<div class="wpsp-admin-form-radius-box" style="border-radius: <?php echo esc_attr( Settings::get_setting( $post_id, 'form_border_radius', '0' ) ); ?>px;"></div>
 								</div>
 								<p class="wpsp-admin-field-description">
 									<?php esc_html_e( 'Rounded corners for the form container', 'stripe' ); ?>
@@ -993,7 +997,7 @@ class AdminUI {
 										value="<?php echo esc_attr( Settings::get_raw_setting( $post_id, 'button_background_color' ) ); ?>" 
 										class="wpspcolor-picker"
 									/>
-									<div class="wpsp-admin-button-preview" style="background-color: <?php echo esc_attr( $is_new_form ? '#0f8569' : Settings::get_setting( $post_id, 'button_background_color', '#0f8569' ) ); ?>; color: <?php echo esc_attr( $is_new_form ? '#ffffff' : Settings::get_setting( $post_id, 'button_text_color', '#ffffff' ) ); ?>">
+									<div class="wpsp-admin-button-preview" style="background-color: <?php echo esc_attr( Settings::get_setting( $post_id, 'button_background_color', '#0f8569' ) ); ?>; color: <?php echo esc_attr( Settings::get_setting( $post_id, 'button_text_color', '#ffffff' ) ); ?>">
 										<?php esc_html_e( 'Button Preview', 'stripe' ); ?>
 									</div>
 								</div>
@@ -1035,7 +1039,7 @@ class AdminUI {
 										value="<?php echo esc_attr( Settings::get_raw_setting( $post_id, 'button_hover_background_color' ) ); ?>" 
 										class="wpspcolor-picker"
 									/>
-									<div class="wpsp-admin-button-preview wpsp-admin-button-hover" style="background-color: <?php echo esc_attr( $is_new_form ? '#0e7c62' : Settings::get_setting( $post_id, 'button_hover_background_color', '#0e7c62' ) ); ?>; color: <?php echo esc_attr( $is_new_form ? '#ffffff' : Settings::get_setting( $post_id, 'button_text_color', '#ffffff' ) ); ?>">
+									<div class="wpsp-admin-button-preview wpsp-admin-button-hover" style="background-color: <?php echo esc_attr( Settings::get_setting( $post_id, 'button_hover_background_color', '#0e7c62' ) ); ?>; color: <?php echo esc_attr( Settings::get_setting( $post_id, 'button_text_color', '#ffffff' ) ); ?>">
 										<?php esc_html_e( 'Hover Preview', 'stripe' ); ?>
 									</div>
 								</div>

@@ -330,7 +330,7 @@ class Assets {
 			}
 		}
 
-		simpay_shared_script_variables();
+		wp_localize_script( 'simpay-shared', 'spGeneral', simpay_shared_script_variables() );
 
 		wp_enqueue_media();
 	}

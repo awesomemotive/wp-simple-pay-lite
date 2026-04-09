@@ -54,6 +54,14 @@ class Assets {
 	public static $script_variables = array();
 
 	/**
+	 * Whether frontend assets have been enqueued.
+	 *
+	 * @since 4.17.1
+	 * @var bool
+	 */
+	private static $frontend_assets_enqueued = false;
+
+	/**
 	 * Hooks in to WordPress.
 	 *
 	 * @since 3.0.0
@@ -62,7 +70,7 @@ class Assets {
 		$this->setup();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'register' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_stripe_js' ) );
 
 		add_action( 'wp_footer', array( $this, 'localize_scripts' ) );
 	}
@@ -77,7 +85,7 @@ class Assets {
 	public static function get_instance() {
 
 		// If the single instance hasn't been set, set it now.
-		if ( null == self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 
@@ -191,25 +199,45 @@ class Assets {
 	}
 
 	/**
-	 * Enqueue registered scripts & styles
+	 * Enqueue Stripe.js on every page for advanced fraud detection.
+	 *
+	 * Stripe recommends including Stripe.js on every page to leverage
+	 * advanced fraud detection signals across the entire site.
+	 *
+	 * @link https://docs.stripe.com/disputes/prevention/advanced-fraud-detection
+	 *
+	 * @since 4.17.1
+	 */
+	public function enqueue_stripe_js() {
+		wp_enqueue_script( 'sandhills-stripe-js-v3' );
+	}
+
+	/**
+	 * Enqueue registered scripts & styles on demand when a form is rendered.
 	 *
 	 * @since 3.0.0
+	 * @since 4.17.1 Changed to static, on-demand enqueuing only when a form is present.
 	 */
-	public function enqueue() {
+	public static function enqueue_frontend_assets() {
+		if ( self::$frontend_assets_enqueued ) {
+			return;
+		}
 
-		if ( ! empty( $this->styles ) && is_array( $this->styles ) ) {
-			foreach ( $this->styles as $style => $value ) {
+		self::$frontend_assets_enqueued = true;
+
+		$instance = self::get_instance();
+
+		if ( ! empty( $instance->styles ) && is_array( $instance->styles ) ) {
+			foreach ( $instance->styles as $style => $value ) {
 				wp_enqueue_style( $style );
 			}
 		}
 
-		if ( ! empty( $this->scripts ) && is_array( $this->scripts ) ) {
-			foreach ( $this->scripts as $script => $value ) {
+		if ( ! empty( $instance->scripts ) && is_array( $instance->scripts ) ) {
+			foreach ( $instance->scripts as $script => $value ) {
 				wp_enqueue_script( $script );
 			}
 		}
-
-		simpay_shared_script_variables();
 	}
 
 	/**
@@ -218,9 +246,10 @@ class Assets {
 	 * @since 3.0.0
 	 */
 	public function localize_scripts() {
-		// Localize to both core and pro scripts to ensure availability.
+		$shared_vars = simpay_shared_script_variables();
+
 		wp_localize_script( 'simpay-public', 'simplePayForms', self::$script_variables );
-		wp_localize_script( 'simpay-public', 'spGeneral', simpay_shared_script_variables() );
+		wp_localize_script( 'simpay-shared', 'spGeneral', $shared_vars );
 	}
 
 	/**

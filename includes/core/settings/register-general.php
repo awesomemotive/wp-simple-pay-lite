@@ -51,7 +51,7 @@ function register_subsections( $subsections ) {
 			array(
 				'id'       => 'currency',
 				'section'  => 'general',
-				'label'    => esc_html_x( 'Currency', 'settings subsection label', 'stripe' ),
+				'label'    => esc_html_x( 'Currency & Formatting', 'settings subsection label', 'stripe' ),
 				'priority' => 10,
 			)
 		)
@@ -222,6 +222,44 @@ function register_currency_settings( $settings ) {
 			)
 		)
 	);
+
+	// Recurring amount format.
+	$formats     = simpay_get_recurring_invoice_limit_formats();
+	$format_opts = array();
+
+	foreach ( $formats as $key => $format ) {
+		$format_opts[ $key ] = $format['label'];
+	}
+
+	$settings->add(
+		new Settings\Setting_Select(
+			array(
+				'id'          => 'recurring_amount_format',
+				'section'     => 'general',
+				'subsection'  => 'currency',
+				'label'       => esc_html_x(
+					'Installment Description Format',
+					'setting label',
+					'stripe'
+				),
+				'options'     => $format_opts,
+				'value'       => simpay_get_setting(
+					'recurring_amount_format',
+					'count_adj_amount'
+				),
+				'description' => wpautop(
+					esc_html__(
+						'Controls how installment payment descriptions are displayed on forms and confirmation pages.',
+						'stripe'
+					)
+				),
+				'priority'    => 40,
+				'schema'      => array(
+					'type' => 'string',
+				),
+			)
+		)
+	);
 }
 
 /**
@@ -233,7 +271,6 @@ function register_currency_settings( $settings ) {
  */
 function register_advanced_settings( $settings ) {
 	$license = simpay_get_license();
-
 
 	if ( true === $license->is_lite() ) {
 		/**

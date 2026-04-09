@@ -125,12 +125,37 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_image_url', $image_url );
 
+	// Recurring amount format (per-form override).
+	$recurring_amount_format = isset( $_POST['_recurring_amount_format'] )
+		? sanitize_text_field( $_POST['_recurring_amount_format'] )
+		: '';
+
+	update_post_meta(
+		$post_id,
+		'_recurring_amount_format',
+		$recurring_amount_format
+	);
+
 	// Submit type.
 	$checkout_submit_type = isset( $_POST['_checkout_submit_type'] )
 		? sanitize_text_field( $_POST['_checkout_submit_type'] )
 		: 'pay';
 
 	update_post_meta( $post_id, '_checkout_submit_type', $checkout_submit_type );
+
+	// Transaction description source.
+	$transaction_description_source = isset( $_POST['_transaction_description_source'] )
+		? sanitize_text_field( $_POST['_transaction_description_source'] )
+		: '';
+
+	update_post_meta( $post_id, '_transaction_description_source', $transaction_description_source );
+
+	// Transaction description custom text.
+	$transaction_description_custom = isset( $_POST['_transaction_description_custom'] )
+		? sanitize_text_field( $_POST['_transaction_description_custom'] )
+		: '';
+
+	update_post_meta( $post_id, '_transaction_description_custom', $transaction_description_custom );
 
 	// Billing address.
 	$enable_billing_address = isset( $_POST['_enable_billing_address'] )
