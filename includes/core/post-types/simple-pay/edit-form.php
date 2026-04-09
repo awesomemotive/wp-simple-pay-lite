@@ -937,6 +937,94 @@ function redirect_post_save_preview( $location, $post_id ) {
 	add_action( 'simpay_form_settings_display_options_panel', __NAMESPACE__ . '\\add_display_options' );
 
 	/**
+	 * Adds "Transaction Description" setting to the General tab.
+	 *
+	 * @since 4.17.1
+	 *
+	 * @param int $post_id Current Payment Form ID.
+	 */
+	function add_transaction_description( $post_id ) {
+		?>
+
+		<tr class="simpay-panel-field">
+			<th>
+				<label for="_transaction_description_source">
+					<?php esc_html_e( 'Transaction Description', 'stripe' ); ?>
+				</label>
+			</th>
+			<td>
+				<?php
+				$transaction_description_source = simpay_get_payment_form_setting(
+					$post_id,
+					'_transaction_description_source',
+					'auto',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
+				simpay_print_field(
+					array(
+						'type'    => 'select',
+						'name'    => '_transaction_description_source',
+						'id'      => '_transaction_description_source',
+						'value'   => $transaction_description_source,
+						'options' => array(
+							'auto'             => esc_html__( 'Auto (default)', 'stripe' ),
+							'form_title'       => esc_html__( 'Form Title', 'stripe' ),
+							'form_description' => esc_html__( 'Form Description', 'stripe' ),
+							'price_label'      => esc_html__( 'Price Option Label', 'stripe' ),
+							'custom'           => esc_html__( 'Custom', 'stripe' ),
+						),
+					)
+				);
+				?>
+
+				<p class="description">
+					<?php
+					esc_html_e(
+						'Choose what appears as the transaction description in Stripe. Auto uses the price option label if set, otherwise the form title.',
+						'stripe'
+					);
+					?>
+				</p>
+			</td>
+		</tr>
+
+		<tr class="simpay-panel-field simpay-show-if" data-if="_transaction_description_source" data-is="custom">
+			<th>
+				<label for="_transaction_description_custom">
+					<?php esc_html_e( 'Custom Description', 'stripe' ); ?>
+				</label>
+			</th>
+			<td>
+				<?php
+				$transaction_description_custom = simpay_get_payment_form_setting(
+					$post_id,
+					'_transaction_description_custom',
+					'',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
+				simpay_print_field(
+					array(
+						'type'    => 'standard',
+						'subtype' => 'text',
+						'name'    => '_transaction_description_custom',
+						'id'      => '_transaction_description_custom',
+						'value'   => $transaction_description_custom,
+						'class'   => array(
+							'simpay-field-text',
+						),
+					)
+				);
+				?>
+			</td>
+		</tr>
+
+		<?php
+	}
+	add_action( 'simpay_admin_after_form_display_options_rows', __NAMESPACE__ . '\\add_transaction_description' );
+
+	/**
 	 * Outputs markup for the "reCAPTCHA Anti-Spam" setting.
 	 *
 	 * @since 4.4.0

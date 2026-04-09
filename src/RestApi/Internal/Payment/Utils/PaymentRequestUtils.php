@@ -19,7 +19,6 @@ namespace SimplePay\Core\RestApi\Internal\Payment\Utils;
 
 use SimplePay\Core\Abstracts\Form;
 use SimplePay\Core\PaymentMethods;
-use function SimplePay\Pro\Post_Types\Simple_Pay\Util\get_custom_fields;
 
 /**
  * PaymentRequestUtils class.
@@ -475,28 +474,65 @@ class PaymentRequestUtils {
 	 * @return array<string, array<string, string>|string>
 	 */
 	public static function get_payment_intent_data( $request ) {
-		$form                = self::get_form( $request );
-		$price               = self::get_price( $request );
 		$payment_intent_data = array(
 			'metadata' => self::get_payment_intent_metadata( $request ),
 		);
 
-		// If multiple line items are used, use the form title.
-		if ( $form->allows_multiple_line_items() && ! empty( $form->company_name ) ) {
-			$payment_intent_data['description'] = $form->company_name;
+		$description = self::get_transaction_description( $request );
 
-			// Use price option label if one is set.
-		} elseif ( null !== $price->label ) {
-			$payment_intent_data['description'] = $price->get_display_label();
-
-			// Fall back to Payment Form title if set.
-			// This is a change in behavior in 4.1, but matches the Stripe Checkout
-			// usage that falls back to the Product title (Payment Form title).
-		} elseif ( ! empty( $form->company_name ) ) {
-			$payment_intent_data['description'] = $form->company_name;
+		if ( ! empty( $description ) ) {
+			$payment_intent_data['description'] = $description;
 		}
 
 		return $payment_intent_data;
+	}
+
+	/**
+	 * Returns the transaction description for the given request based on
+	 * the form's transaction description source setting.
+	 *
+	 * @since 4.17.1
+	 *
+	 * @param \WP_REST_Request $request The payment request.
+	 * @return string
+	 */
+	public static function get_transaction_description( $request ) {
+		$form  = self::get_form( $request );
+		$price = self::get_price( $request );
+
+		switch ( $form->transaction_description_source ) {
+			case 'form_title':
+				return ! empty( $form->company_name )
+					? $form->company_name
+					: '';
+
+			case 'form_description':
+				return ! empty( $form->item_description )
+					? $form->item_description
+					: '';
+
+			case 'price_label':
+				return false !== $price && null !== $price->label
+					? $price->get_display_label()
+					: '';
+
+			case 'custom':
+				return ! empty( $form->transaction_description_custom )
+					? $form->transaction_description_custom
+					: '';
+
+			default:
+				// Auto: preserve existing behavior.
+				if ( $form->allows_multiple_line_items() && ! empty( $form->company_name ) ) {
+					return $form->company_name;
+				} elseif ( false !== $price && null !== $price->label ) {
+					return $price->get_display_label();
+				} elseif ( ! empty( $form->company_name ) ) {
+					return $form->company_name;
+				}
+
+				return '';
+		}
 	}
 
 	/**
@@ -807,33 +843,12 @@ class PaymentRequestUtils {
 			array_keys( $payment_methods )
 		);
 
-		// Check the Card configuration and enable Link, if needed.
-		// Do not add if using Stripe Checkout.
-		if ( 'stripe_checkout' !== $form->get_display_type() ) {
-			$custom_fields = get_custom_fields( $form->id );
-
-			$emails = array_filter(
-				$custom_fields,
-				function ( $field ) {
-					return 'email' === $field['type'];
-				}
-			);
-
-			if ( ! empty( $emails ) ) {
-				$email = current( $emails );
-
-				$link_enabled = isset(
-					$email['link'],
-					$email['link']['enabled']
-				)
-					? 'yes' === $email['link']['enabled']
-					: false;
-
-				if ( in_array( 'card', $payment_methods, true ) && $link_enabled ) {
-						$payment_methods[] = 'link';
-				}
-			}
-		}
+		// Link is handled via the LinkAuthenticationElement on the frontend
+		// and does not need to be added to payment_method_types.
+		// Adding 'link' to payment_method_types causes Stripe's Payment Element
+		// to display a "Bank" tab (Link's bank funding source) even when only
+		// card payments are enabled on the form.
+		// @see https://github.com/awesomemotive/wp-simple-pay-pro/issues/3319.
 
 		// If using Affirm, ensure the unit_amount is at least $100.
 		if ( in_array( 'affirm', $payment_methods, true ) ) {
@@ -879,9 +894,6 @@ class PaymentRequestUtils {
 
 		$payment_method_options = array(
 			'card'            => array(
-				'setup_future_usage' => 'off_session',
-			),
-			'link'            => array(
 				'setup_future_usage' => 'off_session',
 			),
 			'sepa_debit'      => array(

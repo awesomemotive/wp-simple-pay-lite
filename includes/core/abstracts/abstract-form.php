@@ -205,6 +205,22 @@ abstract class Form {
 	public $item_description = '';
 
 	/**
+	 * Transaction description source setting.
+	 *
+	 * @since 4.17.1
+	 * @var string
+	 */
+	public $transaction_description_source = '';
+
+	/**
+	 * Custom transaction description text.
+	 *
+	 * @since 4.17.1
+	 * @var string
+	 */
+	public $transaction_description_custom = '';
+
+	/**
 	 * Stripe Checkout: Image URL (form logo).
 	 *
 	 * @since 3.0.0
@@ -728,6 +744,20 @@ abstract class Form {
 			$this->id
 		);
 
+		// Transaction description source.
+		$this->transaction_description_source = simpay_get_filtered(
+			'transaction_description_source',
+			simpay_get_saved_meta( $this->id, '_transaction_description_source' ),
+			$this->id
+		);
+
+		// Transaction description custom text.
+		$this->transaction_description_custom = simpay_get_filtered(
+			'transaction_description_custom',
+			simpay_get_saved_meta( $this->id, '_transaction_description_custom' ),
+			$this->id
+		);
+
 		// Image URL.
 		$this->image_url = simpay_get_filtered(
 			'image_url',
@@ -1192,6 +1222,28 @@ abstract class Form {
 	 */
 	public function get_email_notification_message() {
 		return get_post_meta( $this->id, '_email_notification_message', true );
+	}
+
+	/**
+	 * Returns the form's per-form email confirmation subject.
+	 *
+	 * @since 4.17.1
+	 *
+	 * @return string
+	 */
+	public function get_email_confirmation_subject() {
+		return get_post_meta( $this->id, '_email_confirmation_subject', true );
+	}
+
+	/**
+	 * Returns the form's per-form email notification subject.
+	 *
+	 * @since 4.17.1
+	 *
+	 * @return string
+	 */
+	public function get_email_notification_subject() {
+		return get_post_meta( $this->id, '_email_notification_subject', true );
 	}
 
 	/**

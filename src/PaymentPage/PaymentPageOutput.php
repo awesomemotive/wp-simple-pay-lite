@@ -144,6 +144,14 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 		unset( $wp->query_vars['error'] );
 
 		$this->compat_hooks();
+
+		// Enqueue frontend assets early so they are available in wp_head()
+		// before the payment page template renders.
+		$this->events->add_callback(
+			'wp_enqueue_scripts',
+			array( '\SimplePay\Core\Assets', 'enqueue_frontend_assets' )
+		);
+
 		$this->output( $payment_form_obj->ID );
 	}
 

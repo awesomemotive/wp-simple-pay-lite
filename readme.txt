@@ -3,7 +3,7 @@ Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 6.9
-Stable tag: 4.17.0.2
+Stable tag: 4.17.1
 Requires PHP: 7.4
 License: GPLv2 or later
 
@@ -296,6 +296,21 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 12. Global payment form settings: Summary report email
 
 == Changelog ==
+
+= Stripe Payment Forms 4.17.1 - April 9, 2026 =
+
+* New: Installment description format setting. Choose how recurring payment descriptions appear across your forms with three format options, configurable globally and per form.
+* New: Per-form transaction description source. Choose what text appears in Stripe for each form's transactions, including a new "Price Option Label" source.
+* New: Per-form email subject customization. Override global email subject lines on individual forms for both receipts and notifications.
+* New: `{payment-method}` smart tag for displaying the payment method used by the customer in confirmation pages and emails.
+* Update: Plugin styles and scripts are now loaded only on pages that contain a payment form, while Stripe.js remains loaded site-wide for advanced fraud detection.
+* Update: Webhook endpoint now returns a success response for events not created by WP Simple Pay, eliminating Stripe Dashboard warnings.
+* Update: Improved payment charge retrieval for more reliable confirmation pages and receipts.
+* Update: Receipt line items now display in the same order as price options in the form editor.
+* Update: Subscription payment descriptions now use proper grammar for singular and plural billing intervals.
+* Fix: Resolved an issue where a "Bank" tab appeared in the payment form when Stripe Link was enabled.
+* Fix: Font size settings in the form style editor no longer override theme typography when left empty.
+* Fix: Resolved a JavaScript error related to Payment Element updates.
 
 = Stripe Payment Forms 4.17.0.2 - March 18, 2026 =
 

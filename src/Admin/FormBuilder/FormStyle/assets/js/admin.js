@@ -258,9 +258,6 @@
             // Update numeric values
             $('#wpsps_form_border_radius').val(themeSettings.form_border_radius).trigger('change');
             $('#wpsps_border_radius').val(themeSettings.border_radius).trigger('change');
-            $('#wpsps_label_font_size').val(themeSettings.label_font_size);
-            $('#wpsps_input_font_size').val(themeSettings.input_font_size);
-            
             // Update selects
             $('#wpsps_label_font_weight').val(themeSettings.label_font_weight);
             
@@ -344,8 +341,6 @@
             button_hover_background_color: '#0e7c62',
             form_border_radius: 0, // Default form container radius
             border_radius: 3, // Default should be 3px
-            label_font_size: 14,
-            input_font_size: 16,
             label_font_weight: 'normal'
         };
 
@@ -680,12 +675,9 @@
             $('.wpsp-admin-input-with-unit input[type="number"]').each(function() {
                 var $input = $(this);
                 if ($input.val() === '' || isNaN(parseInt($input.val()))) {
-                    // Set to default value if empty or invalid
-                    if ($input.attr('id') === 'wpsps_label_font_size') {
-                        $input.val('14');
-                    } else if ($input.attr('id') === 'wpsps_input_font_size') {
-                        $input.val('16');
-                    } else if ($input.attr('id') === 'wpsps_border_radius') {
+                    // Set to default value if empty or invalid (only for border radius fields).
+                    // Font size fields are left empty intentionally to use theme defaults.
+                    if ($input.attr('id') === 'wpsps_border_radius') {
                         $input.val('3');
                     } else if ($input.attr('id') === 'wpsps_form_border_radius') {
                         $input.val('0');

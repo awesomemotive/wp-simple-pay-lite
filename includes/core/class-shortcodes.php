@@ -151,6 +151,8 @@ class Shortcodes {
 			$form = simpay_get_form( $form_id );
 
 			if ( false !== $form ) {
+				Assets::enqueue_frontend_assets();
+
 				$prices = simpay_get_payment_form_prices( $form );
 
 				if ( empty( $prices ) ) {
@@ -436,7 +438,7 @@ class Shortcodes {
 	 */
 	private function is_allow_content( $payment_confirmation_data ) {
 		$subscription_management = simpay_get_setting( 'subscription_management', 'on-site' );
-		
+
 		// Skip check if not on-site subscription management.
 		if ( 'on-site' !== $subscription_management ) {
 			return true;
