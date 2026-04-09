@@ -267,6 +267,21 @@ class Frontend {
 		}
 		// --- End Apply styles. ---
 
+		// Remove empty appearance sub-keys so they don't serialize as JSON
+		// arrays ([]) instead of objects ({}), and so the JS auto-detection
+		// fallback in elements.js can run when no custom styles are configured.
+		if ( empty( $config['appearance']['variables'] ) ) {
+			unset( $config['appearance']['variables'] );
+		}
+
+		if ( empty( $config['appearance']['rules'] ) ) {
+			unset( $config['appearance']['rules'] );
+		}
+
+		if ( empty( $config['appearance'] ) ) {
+			unset( $config['appearance'] );
+		}
+
 		return $config;
 	}
 
@@ -544,6 +559,7 @@ class Frontend {
 		if ( ! empty( $border_color ) ) {
 			// Native HTML inputs use box-shadow for borders (base CSS sets border: 0).
 			$box_shadow_border = "box-shadow: 0 0 0 1px {$border_color}, 0 1px 2px rgba(0, 0, 0, 0.05) !important;";
+
 			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-form-control { border-color: {$border_color} !important; }\n";
 			$css .= "#simpay-form-{$form_id} .simpay-form-control { border-color: {$border_color} !important; }\n";
 			$css .= "#simpay-form-{$form_id}.simpay-styled .simpay-form-control input[type='text'], #simpay-form-{$form_id}.simpay-styled .simpay-form-control input[type='email'], #simpay-form-{$form_id}.simpay-styled .simpay-form-control input[type='tel'], #simpay-form-{$form_id}.simpay-styled .simpay-form-control input[type='number'], #simpay-form-{$form_id}.simpay-styled .simpay-form-control input[type='password'], #simpay-form-{$form_id}.simpay-styled .simpay-form-control input[type='url'], #simpay-form-{$form_id}.simpay-styled .simpay-form-control input[type='search'], #simpay-form-{$form_id}.simpay-styled .simpay-form-control select, #simpay-form-{$form_id}.simpay-styled .simpay-form-control textarea { {$box_shadow_border} }\n";

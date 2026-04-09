@@ -50,9 +50,11 @@ trait InvoiceTrait {
 			? wp_list_pluck( $tax_rates, 'id' )
 			: array();
 
+		$description = PaymentRequestUtils::get_transaction_description( $request );
+
 		$invoice_args = array(
 			'customer'         => $customer->id,
-			'description'      => $form->item_description,
+			'description'      => ! empty( $description ) ? $description : $form->item_description,
 			'metadata'         => PaymentRequestUtils::get_payment_metadata( $request ),
 			'payment_settings' => array(
 				'payment_method_types'   => PaymentRequestUtils::get_payment_method_types( $request ),
@@ -112,12 +114,28 @@ trait InvoiceTrait {
 
 			$price_data = new PriceOption( $item['price_data'], $form, $item['price_data']['instance_id'] );
 
+			// Use the transaction description setting for invoice items.
+			// For price_label and auto, use each item's own display label.
+			$uses_per_item_label = in_array(
+				$form->transaction_description_source,
+				array( 'price_label', 'auto', '' ),
+				true
+			);
+
+			if ( ! $uses_per_item_label && ! empty( $description ) ) {
+				$item_description = $description;
+			} elseif ( 'price_label' === $form->transaction_description_source ) {
+				$item_description = html_entity_decode( $price_data->get_display_label() );
+			} elseif ( count( $items ) === 1 ) {
+				$item_description = html_entity_decode( $form->company_name );
+			} else {
+				$item_description = html_entity_decode( $price_data->get_display_label() );
+			}
+
 			$invoice_item_args = array(
 				'customer'    => $customer->id,
 				'quantity'    => $item['quantity'],
-				'description' => count( $items ) === 1
-					? html_entity_decode( $form->company_name )
-					: html_entity_decode( $price_data->get_display_label() ),
+				'description' => $item_description,
 				'currency'    => $item['price_data']['currency'],
 				'invoice'     => $invoice->id,
 				'metadata'    => array(

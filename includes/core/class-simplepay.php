@@ -140,6 +140,7 @@ final class SimplePay {
 		require_once SIMPLE_PAY_INC . 'core/utils/collections.php';
 		require_once SIMPLE_PAY_INC . 'core/functions/template.php';
 		require_once SIMPLE_PAY_INC . 'core/functions/shared.php';
+		require_once SIMPLE_PAY_INC . 'core/functions/recurring-description-formats.php';
 		require_once SIMPLE_PAY_INC . 'core/functions/countries.php';
 
 		// Payment form.

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-16T23:39:09+00:00\n"
+"POT-Creation-Date: 2026-04-08T15:06:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -45,18 +45,18 @@ msgid " (optional)"
 msgstr ""
 
 #. translators: %s Amount to pay.
-#: includes/core/abstracts/abstract-form.php:709
+#: includes/core/abstracts/abstract-form.php:725
 #, php-format
 msgid "Pay %s"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:188
-#: includes/core/functions/shared.php:601
+#: includes/core/functions/shared.php:595
 msgid "Insert Media"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:192
-#: includes/core/functions/shared.php:602
+#: includes/core/functions/shared.php:596
 msgid "Use Image"
 msgstr ""
 
@@ -136,8 +136,8 @@ msgstr ""
 #: includes/core/forms/class-price-option.php:620
 #: includes/core/forms/class-price-option.php:757
 #: includes/core/functions/shared.php:560
-#: includes/core/payments/payment-confirmation-template-tags.php:1070
-#: includes/core/payments/payment-confirmation-template-tags.php:1095
+#: includes/core/payments/payment-confirmation-template-tags.php:1081
+#: includes/core/payments/payment-confirmation-template-tags.php:1106
 #, php-format
 msgctxt "recurring interval"
 msgid "%1$s every %2$s %3$s"
@@ -218,10 +218,12 @@ msgid "Form ID"
 msgstr ""
 
 #: includes/core/admin/fields/class-default-value.php:111
+#: includes/core/post-types/simple-pay/edit-form.php:972
 msgid "Form Title"
 msgstr ""
 
 #: includes/core/admin/fields/class-default-value.php:112
+#: includes/core/post-types/simple-pay/edit-form.php:973
 msgid "Form Description"
 msgstr ""
 
@@ -365,19 +367,19 @@ msgid "Please complete your %1$sStripe Setup%2$s to view the payment form."
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/class-shortcodes.php:169
+#: includes/core/class-shortcodes.php:171
 #, php-format
 msgid "Attention: The payment form does not have prices configured. %1$sAdd price options%2$s to collect payments."
 msgstr ""
 
 #. translators: Form title
-#: includes/core/class-shortcodes.php:185
-#: includes/core/class-shortcodes.php:212
+#: includes/core/class-shortcodes.php:187
+#: includes/core/class-shortcodes.php:214
 #, php-format
 msgid "Sorry, \"%s\" is not available for purchase."
 msgstr ""
 
-#: includes/core/class-shortcodes.php:348
+#: includes/core/class-shortcodes.php:350
 msgid "Your payment is still processing. This page will reload in 5 seconds&hellip;"
 msgstr ""
 
@@ -597,7 +599,7 @@ msgstr ""
 
 #. translators: %d: Payment Form ID.
 #: includes/core/forms/class-price-options.php:620
-#: includes/core/post-types/simple-pay/actions.php:282
+#: includes/core/post-types/simple-pay/actions.php:307
 #: includes/core/utils/migrations/routines/class-prices-api.php:126
 #, php-format
 msgid "WP Simple Pay - Form %d"
@@ -725,6 +727,63 @@ msgstr ""
 msgid "Used to identify this field within Stripe payment records. Not displayed on the payment form."
 msgstr ""
 
+#. translators: %1$d Number of payments. %2$s Recurring amount. %3$s Interval adjective (e.g. monthly).
+#: includes/core/functions/recurring-description-formats.php:38
+#, php-format
+msgctxt "recurring invoice limit format"
+msgid "%1$d %3$s payments of %2$s"
+msgstr ""
+
+#. translators: %1$d Number of payments. %2$s Recurring amount. %5$s Interval noun plural (e.g. months). %6$d Interval count.
+#: includes/core/functions/recurring-description-formats.php:44
+#, php-format
+msgctxt "recurring invoice limit format"
+msgid "%1$d payments of %2$s every %6$d %5$s"
+msgstr ""
+
+#. translators: Example label for recurring invoice limit format setting.
+#: includes/core/functions/recurring-description-formats.php:50
+msgid "12 monthly payments of $24"
+msgstr ""
+
+#. translators: %1$d Number of payments. %2$s Recurring amount. %4$s Interval noun singular (e.g. month).
+#: includes/core/functions/recurring-description-formats.php:54
+#, php-format
+msgctxt "recurring invoice limit format"
+msgid "%2$s per %4$s for %1$d payments"
+msgstr ""
+
+#. translators: %1$d Number of payments. %2$s Recurring amount. %5$s Interval noun plural (e.g. months). %6$d Interval count.
+#: includes/core/functions/recurring-description-formats.php:60
+#, php-format
+msgctxt "recurring invoice limit format"
+msgid "%2$s per %6$d %5$s for %1$d payments"
+msgstr ""
+
+#. translators: Example label for recurring invoice limit format setting.
+#: includes/core/functions/recurring-description-formats.php:66
+msgid "$24 per month for 12 payments"
+msgstr ""
+
+#. translators: %1$d Number of payments. %2$s Recurring amount. %4$s Interval noun singular (e.g. month).
+#: includes/core/functions/recurring-description-formats.php:70
+#, php-format
+msgctxt "recurring invoice limit format"
+msgid "%2$s every %4$s, %1$d payments total"
+msgstr ""
+
+#. translators: %1$d Number of payments. %2$s Recurring amount. %5$s Interval noun plural (e.g. months). %6$d Interval count.
+#: includes/core/functions/recurring-description-formats.php:76
+#, php-format
+msgctxt "recurring invoice limit format"
+msgid "%2$s every %6$d %5$s, %1$d payments total"
+msgstr ""
+
+#. translators: Example label for recurring invoice limit format setting.
+#: includes/core/functions/recurring-description-formats.php:82
+msgid "$24 every month, 12 payments total"
+msgstr ""
+
 #. translators: %1$s Legacy setting key. %2$s Migrated setting key.
 #: includes/core/functions/shared.php:54
 #, php-format
@@ -742,7 +801,7 @@ msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount.
 #: includes/core/functions/shared.php:566
-#: includes/core/payments/payment-confirmation-template-tags.php:1131
+#: includes/core/payments/payment-confirmation-template-tags.php:1142
 #, php-format
 msgctxt "recurring interval"
 msgid "%1$s every %2$s %3$s for %4$s months then %5$s"
@@ -750,100 +809,105 @@ msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Limited discount interval count. %5$s Recurring amount without discount.
 #: includes/core/functions/shared.php:572
-#: includes/core/payments/payment-confirmation-template-tags.php:1116
+#: includes/core/payments/payment-confirmation-template-tags.php:1127
 #, php-format
 msgctxt "recurring interval with automatic tax"
 msgid "%1$s every %2$s %3$s until coupon expires"
 msgstr ""
 
-#. translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount limit
-#: includes/core/functions/shared.php:578
-#: includes/core/payments/payment-confirmation-template-tags.php:1053
-#, php-format
-msgctxt "recurring interval with invoice limit"
-msgid "%1$d payments of %2$s every %3$s %4$s"
-msgstr ""
-
-#. translators: %1$s Invoice limit. %2$s Recurring interval count -- not output when 1. %3$s Recurring interval. %4$s Recurring amount
-#: includes/core/functions/shared.php:584
-#, php-format
-msgctxt "recurring interval"
-msgid "%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s"
-msgstr ""
-
-#: includes/core/functions/shared.php:589
+#: includes/core/functions/shared.php:583
 msgid "Enter address to calculate"
 msgstr ""
 
-#: includes/core/functions/shared.php:593
+#: includes/core/functions/shared.php:587
 msgid "Please enter a valid address"
 msgstr ""
 
-#: includes/core/functions/shared.php:630
+#: includes/core/functions/shared.php:623
 msgctxt "recurring interval"
 msgid "day"
 msgstr ""
 
-#: includes/core/functions/shared.php:631
+#: includes/core/functions/shared.php:624
 msgctxt "recurring interval"
 msgid "days"
 msgstr ""
 
-#: includes/core/functions/shared.php:634
+#: includes/core/functions/shared.php:625
+msgctxt "recurring interval adjective"
+msgid "daily"
+msgstr ""
+
+#: includes/core/functions/shared.php:628
 msgctxt "recurring interval"
 msgid "week"
 msgstr ""
 
-#: includes/core/functions/shared.php:635
+#: includes/core/functions/shared.php:629
 msgctxt "recurring interval"
 msgid "weeks"
 msgstr ""
 
-#: includes/core/functions/shared.php:638
+#: includes/core/functions/shared.php:630
+msgctxt "recurring interval adjective"
+msgid "weekly"
+msgstr ""
+
+#: includes/core/functions/shared.php:633
 msgctxt "recurring interval"
 msgid "month"
 msgstr ""
 
-#: includes/core/functions/shared.php:639
+#: includes/core/functions/shared.php:634
 msgctxt "recurring interval"
 msgid "months"
 msgstr ""
 
-#: includes/core/functions/shared.php:642
+#: includes/core/functions/shared.php:635
+msgctxt "recurring interval adjective"
+msgid "monthly"
+msgstr ""
+
+#: includes/core/functions/shared.php:638
 msgctxt "recurring interval"
 msgid "year"
 msgstr ""
 
-#: includes/core/functions/shared.php:643
+#: includes/core/functions/shared.php:639
 msgctxt "recurring interval"
 msgid "years"
 msgstr ""
 
-#: includes/core/functions/shared.php:1432
+#: includes/core/functions/shared.php:640
+msgctxt "recurring interval adjective"
+msgid "yearly"
+msgstr ""
+
+#: includes/core/functions/shared.php:1429
 msgid "Business Operations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1433
+#: includes/core/functions/shared.php:1430
 msgid "Donations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1434
+#: includes/core/functions/shared.php:1431
 msgid "Fundraising"
 msgstr ""
 
-#: includes/core/functions/shared.php:1435
+#: includes/core/functions/shared.php:1432
 msgid "Products & Services"
 msgstr ""
 
-#: includes/core/functions/shared.php:1436
+#: includes/core/functions/shared.php:1433
 msgid "Registrations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1437
+#: includes/core/functions/shared.php:1434
 msgid "Features / Functionality"
 msgstr ""
 
-#: includes/core/functions/shared.php:1443
+#: includes/core/functions/shared.php:1440
 msgid "Recently Added"
 msgstr ""
 
@@ -10394,95 +10458,88 @@ msgid ""
 ""
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:891
+#: includes/core/payments/payment-confirmation-template-tags.php:913
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:631
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:634
 msgid "Subscription"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:893
+#: includes/core/payments/payment-confirmation-template-tags.php:915
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:624
 #: includes/core/post-types/simple-pay/edit-form-payment-options/class-price-fields.php:627
 msgid "One time"
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:983
+#: includes/core/payments/payment-confirmation-template-tags.php:1005
 msgctxt "subscription status"
 msgid "Cancelled"
 msgstr ""
 
-#. translators: %1$s Invoice limit. %2$s Recurring interval count. %3$s Recurring interval. %4$s Recurring amount limit
-#: includes/core/payments/payment-confirmation-template-tags.php:1038
-#, php-format
-msgctxt "recurring interval with invoice limit"
-msgid "%1$d payments of %2$s (for the duration of the coupon) every %3$s %4$s"
-msgstr ""
-
-#: includes/core/payments/payment-confirmation-template-tags.php:1202
+#: includes/core/payments/payment-confirmation-template-tags.php:1213
 msgid "The form's title."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1206
+#: includes/core/payments/payment-confirmation-template-tags.php:1217
 msgid "The form's description."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1210
+#: includes/core/payments/payment-confirmation-template-tags.php:1221
 msgid "The total price of the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1214
+#: includes/core/payments/payment-confirmation-template-tags.php:1225
 msgid "The value of the Name form field."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1218
+#: includes/core/payments/payment-confirmation-template-tags.php:1229
 msgid "The charge date returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1222
+#: includes/core/payments/payment-confirmation-template-tags.php:1233
 msgid "The unique charge ID returned from Stripe."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1226
+#: includes/core/payments/payment-confirmation-template-tags.php:1237
 msgid "The recurring amount to be charged each period of the subscription plan."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1230
+#: includes/core/payments/payment-confirmation-template-tags.php:1241
 msgid "The date the next invoice is due."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1236
+#: includes/core/payments/payment-confirmation-template-tags.php:1247
 msgid "The cumulative cost of selected items."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1242
+#: includes/core/payments/payment-confirmation-template-tags.php:1253
 msgid "The type of payment (one-time or recurring)."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1247
+#: includes/core/payments/payment-confirmation-template-tags.php:1258
 msgid "The brand of the card used. Visa, Amex, etc."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1252
+#: includes/core/payments/payment-confirmation-template-tags.php:1263
 msgid "The last four digits of the card used."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1257
+#: includes/core/payments/payment-confirmation-template-tags.php:1268
 msgid "The calculated tax amount based on the total and the tax percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1262
+#: includes/core/payments/payment-confirmation-template-tags.php:1273
 msgid "The calculated fee recovery amount based on the total and the fee recovery percent setting."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1267
+#: includes/core/payments/payment-confirmation-template-tags.php:1278
 msgid "The receipt breakdown of the payment including items, adjustments, and totals."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1272
+#: includes/core/payments/payment-confirmation-template-tags.php:1283
 msgid "The amount of the coupon applied to the payment."
 msgstr ""
 
-#: includes/core/payments/payment-confirmation-template-tags.php:1300
+#: includes/core/payments/payment-confirmation-template-tags.php:1311
 msgid "Available smart tags:"
 msgstr ""
 
@@ -10515,7 +10572,7 @@ msgid "Thank you. Your payment of %1$s has been received and your subscription h
 msgstr ""
 
 #. translators: %s Payment form name.
-#: includes/core/post-types/simple-pay/actions.php:934
+#: includes/core/post-types/simple-pay/actions.php:959
 #, php-format
 msgid "%s - Duplicate"
 msgstr ""
@@ -10733,7 +10790,7 @@ msgid "Amount Breakdown"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:130
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:416
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:487
 #: src/Help/HelpDocsContext.php:74
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
 msgid "Payment Methods"
@@ -10754,7 +10811,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:159
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:474
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1018
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1022
 msgid "Text"
 msgstr ""
 
@@ -10879,119 +10936,131 @@ msgstr ""
 msgid "While in Test Mode no live payments are processed. Make sure \"Test mode\" is enabled in your %1$sStripe dashboard%2$s to view your test transactions."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:218
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:193
+msgid "Global default"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:212
+msgid "Installment Description Format"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:236
+msgid "Controls how installment payment descriptions appear on this form and its confirmation page. \"Global default\" uses the format from Settings > General > Currency & Formatting."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:289
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:288
 msgid "Card"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:224
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:295
 msgid "ACH Direct Debit"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:229
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:300
 msgid "SEPA Direct Debit"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:234
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:305
 msgid "Alipay"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:285
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:356
 msgid "Bancontact"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:290
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:361
 msgid "FPX"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:302
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:373
 msgid "iDEAL"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:350
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:421
 msgid "Klarna"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:355
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:426
 msgid "Afterpay / Clearpay"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:360
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:431
 msgid "Przelewy24"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:423
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:494
 msgid "Popular"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:426
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:497
 msgid "All"
 msgstr ""
 
 #. translators: %s Payment Method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:447
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:518
 #, php-format
 msgid "Unlock the \"%s\" Payment Method"
 msgstr ""
 
 #. translators: %1$s Payment method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:456
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:527
 #, php-format
 msgid "We're sorry, the %1$s payment method is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
 #. translators: %s Payment Method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:484
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:555
 #, php-format
 msgid "Unlock Fee Recovery for \"%s\" Payments"
 msgstr ""
 
 #. translators: %1$s Payment method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:493
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:564
 msgid "We're sorry, recovering Stripe processing fees is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
 #. translators: %1$s Payment Method name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:578
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:649
 #, php-format
 msgid "%1$s is not available in your %2$sStripe account's country%3$s"
 msgstr ""
 
 #. translators: %1$s Payment Method name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:607
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:678
 #, php-format
 msgid "%1$s is not compatible your %2$swebsite's currency%3$s. %4$sUpgrade to Pro%5$s to sell in multiple currencies."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:656
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:727
 msgid "Fee Recovery"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:669
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:740
 msgid "Learn about Payment Method"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:697
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:768
 msgid "Unlock \"Fixed Rate\" Tax Calculation"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:702
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:773
 msgid "We're sorry, collecting fixed rate taxes is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:719
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:790
 msgid "Unlock Automatically Calculated Tax Amounts"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:724
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:795
 msgid "We're sorry, automatically calculating and collecting taxes is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:746
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:817
 msgid "Tax Collection"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:755
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:826
 #: includes/core/recaptcha/settings.php:500
 #: includes/core/settings/register-emails.php:347
 #: includes/core/settings/register-emails.php:352
@@ -10999,31 +11068,31 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:765
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:836
 msgid "Global tax rates"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:775
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:846
 msgid "Automatically calculated by location"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:799
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:870
 msgid "Unlock \"Purchase Mode\" Setting"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:804
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:875
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:826
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:897
 msgid "Purchase Mode"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:844
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:915
 msgid "Allow purchasing multiple price options"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:853
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:924
 msgid "Purchase multiple price options in a single transaction."
 msgstr ""
 
@@ -11427,7 +11496,7 @@ msgid "Donate"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:112
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:946
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:950
 msgid "Pay"
 msgstr ""
 
@@ -11622,27 +11691,52 @@ msgstr ""
 msgid "Open in an overlay modal"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:966
+#: includes/core/post-types/simple-pay/edit-form.php:952
+msgid "Transaction Description"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:971
+msgid "Auto (default)"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:974
+msgid "Price Option Label"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:975
+#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
+msgid "Custom"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:983
+msgid "Choose what appears as the transaction description in Stripe. Auto uses the price option label if set, otherwise the form title."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:995
+msgid "Custom Description"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:1054
 msgid "Spam & Fraud Protection"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:984
+#: includes/core/post-types/simple-pay/edit-form.php:1072
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:457
 msgid "CAPTCHA"
 msgstr ""
 
 #. translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form.php:992
+#: includes/core/post-types/simple-pay/edit-form.php:1080
 #, php-format
 msgid "%1$sConfigure CAPTCHA settings%2$s to adjust anti-spam protection."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:1016
+#: includes/core/post-types/simple-pay/edit-form.php:1104
 #: src/AntiSpam/EmailVerification.php:322
 msgid "Additional protection enabled!"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:1021
+#: includes/core/post-types/simple-pay/edit-form.php:1109
 #: src/AntiSpam/EmailVerification.php:327
 msgid "Disabled — missing additional protection!"
 msgstr ""
@@ -11684,22 +11778,30 @@ msgid "Payment Form description."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/meta.php:101
-msgid "Payment Form image URL."
+msgid "Transaction description source."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/meta.php:113
-msgid "Payment Form Stripe Checkout submit button type."
+msgid "Custom transaction description."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/meta.php:125
-msgid "Payment Form Stripe Checkout billing address."
+msgid "Payment Form image URL."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/meta.php:137
-msgid "Payment Form Stripe Checkout shipping address."
+msgid "Payment Form Stripe Checkout submit button type."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/meta.php:149
+msgid "Payment Form Stripe Checkout billing address."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/meta.php:161
+msgid "Payment Form Stripe Checkout shipping address."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/meta.php:173
 msgid "Payment Form custom fields."
 msgstr ""
 
@@ -12272,7 +12374,7 @@ msgstr ""
 
 #: includes/core/settings/register-general.php:54
 msgctxt "settings subsection label"
-msgid "Currency"
+msgid "Currency & Formatting"
 msgstr ""
 
 #: includes/core/settings/register-general.php:66
@@ -12332,31 +12434,40 @@ msgstr ""
 msgid "If enabled, amounts will be formatted as \"1.234,56\" instead of \"1,234.56\"."
 msgstr ""
 
-#: includes/core/settings/register-general.php:254
+#: includes/core/settings/register-general.php:240
+msgctxt "setting label"
+msgid "Installment Description Format"
+msgstr ""
+
+#: includes/core/settings/register-general.php:251
+msgid "Controls how installment payment descriptions are displayed on forms and confirmation pages."
+msgstr ""
+
+#: includes/core/settings/register-general.php:291
 msgctxt "setting label"
 msgid "Usage Analytics"
 msgstr ""
 
-#: includes/core/settings/register-general.php:259
+#: includes/core/settings/register-general.php:296
 msgid "Allow usage analytics"
 msgstr ""
 
-#: includes/core/settings/register-general.php:265
+#: includes/core/settings/register-general.php:302
 msgid "Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked."
 msgstr ""
 
-#: includes/core/settings/register-general.php:288
+#: includes/core/settings/register-general.php:325
 msgctxt "setting label"
 msgid "Save Plugin Settings"
 msgstr ""
 
-#: includes/core/settings/register-general.php:293
+#: includes/core/settings/register-general.php:330
 msgctxt "setting input label"
 msgid "Save plugin settings"
 msgstr ""
 
 #. translators: %s Plugin name.
-#: includes/core/settings/register-general.php:303
+#: includes/core/settings/register-general.php:340
 #, php-format
 msgid "If UN-checked, all %s plugin data will be removed when the plugin is deleted. However, your data saved with Stripe will not be deleted."
 msgstr ""
@@ -12688,6 +12799,7 @@ msgid "SeedProd"
 msgstr ""
 
 #: src/Admin/Education/AbstractProductEducation.php:54
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1187
 #: src/AdminPage/AboutUsPage.php:114
 #: views/admin-setting-lite-license.php:151
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
@@ -12832,7 +12944,7 @@ msgid "Select a theme to instantly apply a complete set of coordinated styles. Y
 msgstr ""
 
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:361
-#: src/Block/ManageSubscriptionsBlock.php:90
+#: src/Block/ManageSubscriptionsBlock.php:88
 msgid "Enter your email"
 msgstr ""
 
@@ -12988,190 +13100,193 @@ msgstr ""
 msgid "Label Font Size"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:697
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:692
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:760
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:790
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:849
+msgid "Theme default"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:698
 msgid "Size of form field labels"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:704
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:705
 msgid "Label Font Weight"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:710
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:806
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:864
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:711
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:809
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:868
 msgid "Theme Default"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:711
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:807
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:865
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:712
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:810
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:869
 msgid "Normal"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:712
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:808
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:866
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:713
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:811
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:870
 msgid "Bold"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:735
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:736
 msgid "Font weight for form labels"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:745
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:746
 msgid "Input Typography"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:751
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:752
 msgid "Input Font Size"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:764
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:766
 msgid "Size of text in form inputs"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:774
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:776
 msgid "Form Title & Description Typography"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:780
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:782
 msgid "Title Font Size"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:793
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:796
 msgid "Font size for the form title"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:800
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:803
 msgid "Title Font Weight"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:831
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:834
 msgid "Font weight for the form title"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:838
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:841
 msgid "Description Font Size"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:851
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:855
 msgid "Font size for the form description"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:858
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:862
 msgid "Description Font Weight"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:889
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:893
 msgid "Font weight for the form description"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:902
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:906
 msgid "Layout Settings"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:908
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:912
 msgid "Form Border Radius"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:925
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:929
 msgid "Rounded corners for the form container"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:932
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:936
 msgid "Input & Button Border Radius"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:945
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:949
 msgid "Email address"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:949
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:953
 msgid "Rounded corners for inputs and buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:956
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:960
 msgid "Form Padding"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:970
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:974
 msgid "Padding around the form container"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:980
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:984
 msgid "Button Styling"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:986
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:990
 msgid "Button Background"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:997
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1001
 msgid "Button Preview"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1001
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1005
 msgid "Background color for form buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1008
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1012
 msgid "Button Text Color"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1021
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1025
 msgid "Text color for form buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1028
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1032
 msgid "Button Hover Color"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1039
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1043
 msgid "Hover Preview"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1043
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1047
 msgid "Background color when hovering over buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1055
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1059
 msgid "Reset Styles"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1058
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1062
 msgid "Resets all style settings to default. This action cannot be undone."
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1151
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1155
 msgid "Unlock Payment Form Styles"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1156
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1160
 msgid "We're sorry, payment form styling is not available with your current license. Please upgrade to <strong>WP Simple Pay Pro</strong> or higher to unlock this and other awesome features."
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1165
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1169
 msgid "Professional Color Themes"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1169
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1173
 msgid "Custom Colors & Typography"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1173
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1177
 msgid "Button & Layout Customization"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1177
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1181
 msgid "Match Your Brand Perfectly"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1183
-msgid "Upgrade to WP Simple Pay Pro"
-msgstr ""
-
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1192
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1196
 #, php-format
 msgid "Already purchased? %1$sRetrieve your license key%2$s and enter it in the plugin settings."
 msgstr ""
@@ -13637,29 +13752,29 @@ msgstr ""
 msgid "Please log in to make a payment."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:59
+#: src/Block/ManageSubscriptionsBlock.php:57
 msgid "Please wait..."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:60
+#: src/Block/ManageSubscriptionsBlock.php:58
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:61
+#: src/Block/ManageSubscriptionsBlock.php:59
 msgid "Request failed."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:62
+#: src/Block/ManageSubscriptionsBlock.php:60
 #: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:83
 #: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:146
 msgid "Invalid CAPTCHA. Please try again."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:88
+#: src/Block/ManageSubscriptionsBlock.php:86
 msgid "Purchase Email Address"
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:92
+#: src/Block/ManageSubscriptionsBlock.php:90
 msgid "Manage Subscription"
 msgstr ""
 
@@ -14168,7 +14283,7 @@ msgstr ""
 msgid "Please select a valid Tax ID type."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Traits/InvoiceTrait.php:157
+#: src/RestApi/Internal/Payment/Traits/InvoiceTrait.php:175
 #: views/smart-tag-receipt.php:159
 msgid "Processing fee"
 msgstr ""
@@ -15550,10 +15665,6 @@ msgstr ""
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
 msgid "Report range"
-msgstr ""
-
-#: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
-msgid "Custom"
 msgstr ""
 
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3

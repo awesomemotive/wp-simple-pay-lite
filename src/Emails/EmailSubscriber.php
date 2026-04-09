@@ -175,10 +175,15 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		} elseif ( $object instanceof \SimplePay\Vendor\Stripe\Customer ) {
 			$customer = $object;
 		} else {
-			$form     = simpay_get_form( $form_id );
+			$form = simpay_get_form( $form_id );
+
+			if ( false === $form || null === $object->customer ) {
+				return;
+			}
+
 			$customer = API\Customers\retrieve(
-				$object->customer, // @phpstan-ignore-line
-				$form->get_api_request_args() // @phpstan-ignore-line
+				$object->customer,
+				$form->get_api_request_args()
 			);
 		}
 
@@ -211,7 +216,20 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$mailer->set_to( trim( $to_address ) );
 
 		// ...then set subject.
-		$mailer->set_subject( $email->get_subject() );
+		$subject = $email->get_subject();
+
+		// Per-form subject override.
+		$form = simpay_get_form( $form_id );
+
+		if ( false !== $form ) {
+			$form_subject = $form->get_email_confirmation_subject();
+
+			if ( ! empty( $form_subject ) ) {
+				$subject = $form_subject;
+			}
+		}
+
+		$mailer->set_subject( $subject );
 
 		// ...then set the body content.
 		$type = 'one_time';
@@ -225,9 +243,6 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		$body = '';
-
-		// If there is a per-form custom mesasge, use it.
-		$form = simpay_get_form( $form_id );
 
 		if ( false !== $form ) {
 			$confirmation_message = $form->get_email_confirmation_message();
@@ -274,16 +289,23 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$form_id = $object->metadata->simpay_form_id;
 
 		// Retrieve the payment confirmation data.
+		$form = simpay_get_form( $form_id );
+
+		if ( false === $form ) {
+			return;
+		}
+
 		if ( $object->customer instanceof \SimplePay\Vendor\Stripe\Customer ) {
 			/** @var \SimplePay\Vendor\Stripe\Customer $customer */
 			$customer = $object->customer;
 
-		} else {
-			$form     = simpay_get_form( $form_id );
+		} elseif ( null !== $object->customer ) {
 			$customer = API\Customers\retrieve(
-				$object->customer, // @phpstan-ignore-line
-				$form->get_api_request_args() // @phpstan-ignore-line
+				$object->customer,
+				$form->get_api_request_args()
 			);
+		} else {
+			return;
 		}
 
 		// Ensure we have data before proceeding.
@@ -329,13 +351,22 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		$mailer->set_to( $to );
 
 		// ...then set the subject.
-		$mailer->set_subject( $email->get_subject() );
+		$subject = $email->get_subject();
+
+		// Per-form subject override.
+		if ( false !== $form ) {
+			$form_subject = $form->get_email_notification_subject();
+
+			if ( ! empty( $form_subject ) ) {
+				$subject = $form_subject;
+			}
+		}
+
+		$mailer->set_subject( $subject );
 
 		$body = '';
 
 		// If there is a per-form custom mesasge, use it.
-		$form = simpay_get_form( $form_id );
-
 		if ( false !== $form ) {
 			$notification_message = $form->get_email_notification_message();
 
@@ -597,6 +628,10 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
+		if ( false === $form ) {
+			return;
+		}
+
 		// Ensure we have data before proceeding.
 		$payment_refund_data = Payment_Confirmation\get_confirmation_data(
 			$charge->customer->id, // @phpstan-ignore-line
@@ -701,6 +736,10 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function payment_processing( $event, $payment_intent, $form ) {
+		if ( false === $form ) {
+			return;
+		}
+
 		// Retrieve the payment confirmation data.
 		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
 		$customer = $payment_intent->customer;
