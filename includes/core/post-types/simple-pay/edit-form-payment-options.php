@@ -188,6 +188,8 @@ add_action( 'simpay_form_settings_meta_payment_options_panel', __NAMESPACE__ . '
  * @param int $post_id Current Payment Form ID.
  */
 function add_recurring_amount_format( $post_id ) {
+	$license     = simpay_get_license();
+	$is_lite     = true === $license->is_lite();
 	$formats     = simpay_get_recurring_invoice_limit_formats();
 	$format_opts = array(
 		'' => esc_html__( 'Global default', 'stripe' ),
@@ -202,6 +204,20 @@ function add_recurring_amount_format( $post_id ) {
 		'_recurring_amount_format',
 		''
 	);
+
+	if ( $is_lite ) {
+		$upgrade_url = simpay_pro_upgrade_url(
+			'form-payment-options-settings',
+			'Installment Description Format'
+		);
+
+		$upgrade_purchased_url = simpay_docs_link(
+			'Installment Description Format (already purchased)',
+			'upgrading-wp-simple-pay-lite-to-pro',
+			'form-payment-options-settings',
+			true
+		);
+	}
 	?>
 
 	<table>
@@ -218,13 +234,16 @@ function add_recurring_amount_format( $post_id ) {
 			</th>
 			<td>
 				<select
-					name="_recurring_amount_format"
+					<?php if ( ! $is_lite ) : ?>
+						name="_recurring_amount_format"
+					<?php endif; ?>
 					id="_recurring_amount_format"
+					<?php echo $is_lite ? 'disabled' : ''; ?>
 				>
 					<?php foreach ( $format_opts as $value => $label ) : ?>
 						<option
 							value="<?php echo esc_attr( $value ); ?>"
-							<?php selected( $value, $current ); ?>
+							<?php selected( $value, $is_lite ? '' : $current ); ?>
 						>
 							<?php echo esc_html( $label ); ?>
 						</option>
@@ -239,6 +258,32 @@ function add_recurring_amount_format( $post_id ) {
 					);
 					?>
 				</p>
+
+				<?php if ( $is_lite ) : ?>
+					<p>
+						<a
+							href="<?php echo esc_url( $upgrade_url ); ?>"
+							class="button button-primary simpay-upgrade-btn"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<?php
+							esc_html_e(
+								'Upgrade to WP Simple Pay Pro',
+								'stripe'
+							);
+							?>
+						</a>
+						<a
+							href="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+							target="_blank"
+							rel="noopener noreferrer"
+							style="margin-left: 10px;"
+						>
+							<?php esc_html_e( 'Already purchased?', 'stripe' ); ?>
+						</a>
+					</p>
+				<?php endif; ?>
 			</td>
 		</tr>
 	</table>

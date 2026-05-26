@@ -125,16 +125,18 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_image_url', $image_url );
 
-	// Recurring amount format (per-form override).
-	$recurring_amount_format = isset( $_POST['_recurring_amount_format'] )
-		? sanitize_text_field( $_POST['_recurring_amount_format'] )
-		: '';
+	// Recurring amount format (per-form override). Pro-only feature.
+	if ( false === simpay_get_license()->is_lite() ) {
+		$recurring_amount_format = isset( $_POST['_recurring_amount_format'] )
+			? sanitize_text_field( $_POST['_recurring_amount_format'] )
+			: '';
 
-	update_post_meta(
-		$post_id,
-		'_recurring_amount_format',
-		$recurring_amount_format
-	);
+		update_post_meta(
+			$post_id,
+			'_recurring_amount_format',
+			$recurring_amount_format
+		);
+	}
 
 	// Submit type.
 	$checkout_submit_type = isset( $_POST['_checkout_submit_type'] )
@@ -201,6 +203,25 @@ function save( $post_id, $post, $update ) {
 	$fields = isset( $_POST['_simpay_custom_field'] )
 		? $_POST['_simpay_custom_field']
 		: array();
+
+	$conditional_logic_excluded_types = function_exists( '\SimplePay\Pro\Post_Types\Simple_Pay\Util\get_conditional_logic_excluded_field_types' )
+		? \SimplePay\Pro\Post_Types\Simple_Pay\Util\get_conditional_logic_excluded_field_types()
+		: array();
+
+	foreach ( $fields as $type => $instances ) {
+		if ( ! is_array( $instances ) ) {
+			continue;
+		}
+
+		foreach ( $instances as $index => $instance ) {
+			if (
+				in_array( $type, $conditional_logic_excluded_types, true )
+				&& isset( $fields[ $type ][ $index ]['conditional_logic'] )
+			) {
+				unset( $fields[ $type ][ $index ]['conditional_logic'] );
+			}
+		}
+	}
 	update_post_meta( $post_id, '_custom_fields', $fields );
 
 	// Payment Methods.

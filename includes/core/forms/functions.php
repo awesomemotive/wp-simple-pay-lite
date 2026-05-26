@@ -259,6 +259,96 @@ function simpay_payment_form_prices_has_recurring_price( $prices ) {
 }
 
 /**
+ * Determines whether a Stripe Elements payment method is enabled on a form.
+ *
+ * @since 4.17.2
+ *
+ * @param array  $payment_methods Payment methods meta from `_payment_methods`.
+ * @param string $method_id Stripe Element payment method id (e.g. `klarna`).
+ * @return bool
+ */
+function simpay_payment_form_has_stripe_element_payment_method( $payment_methods, $method_id ) {
+	return isset( $payment_methods['stripe-elements'][ $method_id ]['id'] );
+}
+
+/**
+ * Ensures the Address and Amount Breakdown fields are present and configured
+ * correctly when required by enabled payment methods or location-based taxes.
+ *
+ * Shared between the `overlay` and `embedded` form display types. The Address
+ * field is required for Klarna, Afterpay/Clearpay, and automatic taxes;
+ * Afterpay additionally requires shipping collection. The Amount Breakdown
+ * (`total_amount`) is required when automatic taxes are enabled.
+ *
+ * @since 4.17.2
+ *
+ * @param array  $fields          Current custom fields.
+ * @param int    $form_id         Form ID.
+ * @param array  $payment_methods Payment methods meta.
+ * @param string $tax_status      Tax status meta.
+ * @param int    $count           Field count, mutated when fields are added.
+ * @param array  $changes         Notice strings, mutated when fields are added.
+ * @return array Updated fields.
+ */
+function simpay_payment_form_ensure_address_and_total_fields(
+	$fields,
+	$form_id,
+	$payment_methods,
+	$tax_status,
+	&$count,
+	&$changes
+) {
+	$has_klarna   = simpay_payment_form_has_stripe_element_payment_method( $payment_methods, 'klarna' );
+	$has_afterpay = simpay_payment_form_has_stripe_element_payment_method( $payment_methods, 'afterpay-clearpay' );
+	$is_auto_tax  = 'automatic' === $tax_status;
+
+	$needs_required_address = ( $has_klarna || $has_afterpay || $is_auto_tax );
+
+	if ( $needs_required_address ) {
+		if ( ! isset( $fields['address'] ) ) {
+			$fields['address'][] = array(
+				'uid'              => $count,
+				'id'               => 'simpay_' . $form_id . '_address',
+				'collect-shipping' => $has_afterpay ? 'yes' : 'no',
+				'required'         => 'yes',
+			);
+
+			$changes[] = __(
+				'Address field is required, and has been added to the payment form.',
+				'stripe'
+			);
+
+			++$count;
+		} else {
+			$current_address_field = current( $fields['address'] );
+
+			$args = array(
+				'required' => 'yes',
+			);
+
+			if ( $has_afterpay ) {
+				$args['collect-shipping'] = 'yes';
+			}
+
+			$fields['address'] = array(
+				array_merge(
+					$current_address_field,
+					$args
+				),
+			);
+		}
+	}
+
+	if ( $is_auto_tax && ! isset( $fields['total_amount'] ) ) {
+		$fields['total_amount'][] = array();
+
+		++$count;
+	}
+
+	return $fields;
+}
+
+/**
  * Ensures Payment Forms have required fields and remove unnecessary fields.
  *
  * @since 4.1.0
@@ -321,6 +411,15 @@ function simpay_payment_form_add_missing_custom_fields(
 
 				++$count;
 			}
+
+			$fields = simpay_payment_form_ensure_address_and_total_fields(
+				$fields,
+				$form_id,
+				is_array( $payment_methods ) ? $payment_methods : array(),
+				$tax_status,
+				$count,
+				$changes
+			);
 			break;
 		case 'stripe_checkout':
 			if ( isset( $fields['coupon'] ) ) {
@@ -330,36 +429,28 @@ function simpay_payment_form_add_missing_custom_fields(
 
 			break;
 		case 'embedded':
-			// Ensure "Customer Name" exists if using Bancontact, or p24, or SEPA.
-			if (
-				! isset( $fields['customer_name'] ) &&
-				(
-					(
-						isset( $payment_methods['stripe-elements']['bancontact'] ) &&
-							isset( $payment_methods['stripe-elements']['bancontact']['id'] )
-					) ||
-					(
-						isset( $payment_methods['stripe-elements']['p24'] ) &&
-							isset( $payment_methods['stripe-elements']['p24']['id'] )
-					) ||
-					(
-						isset( $payment_methods['stripe-elements']['sepa-debit'] ) &&
-							isset( $payment_methods['stripe-elements']['sepa-debit']['id'] )
-					) ||
-					(
-						isset( $payment_methods['stripe-elements']['klarna'] ) &&
-							isset( $payment_methods['stripe-elements']['klarna']['id'] )
-					) ||
-					(
-						isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-							isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
-					) ||
-					(
-						isset( $payment_methods['stripe-elements']['ach-debit'] ) &&
-							isset( $payment_methods['stripe-elements']['ach-debit']['id'] )
-					)
-				)
-			) {
+			$pm_methods = is_array( $payment_methods ) ? $payment_methods : array();
+
+			$customer_name_methods = array(
+				'bancontact',
+				'p24',
+				'sepa-debit',
+				'klarna',
+				'afterpay-clearpay',
+				'ach-debit',
+			);
+
+			$needs_customer_name = false;
+
+			foreach ( $customer_name_methods as $_pm ) {
+				if ( simpay_payment_form_has_stripe_element_payment_method( $pm_methods, $_pm ) ) {
+					$needs_customer_name = true;
+					break;
+				}
+			}
+
+			// Ensure "Customer Name" exists if using a payment method that requires it.
+			if ( ! isset( $fields['customer_name'] ) && $needs_customer_name ) {
 				$fields['customer_name'][] = array(
 					'uid'      => $count,
 					'id'       => 'simpay_' . $form_id . '_customer_name',
@@ -391,78 +482,14 @@ function simpay_payment_form_add_missing_custom_fields(
 				++$count;
 			}
 
-			$needs_required_address = (
-				(
-					isset( $payment_methods['stripe-elements']['klarna'] ) &&
-						isset( $payment_methods['stripe-elements']['klarna']['id'] )
-				) ||
-				(
-					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
-				) ||
-				'automatic' === $tax_status
+			$fields = simpay_payment_form_ensure_address_and_total_fields(
+				$fields,
+				$form_id,
+				is_array( $payment_methods ) ? $payment_methods : array(),
+				$tax_status,
+				$count,
+				$changes
 			);
-
-			// Ensure "Address" exists and is required if using Klarna, or automatic taxes.
-			if (
-				! isset( $fields['address'] ) &&
-				true === $needs_required_address
-			) {
-				$args = array(
-					'uid'              => $count,
-					'id'               => 'simpay_' . $form_id . '_address',
-					'collect-shipping' => 'no',
-					'required'         => 'yes',
-				);
-
-				if (
-					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
-				) {
-					$args['collect-shipping'] = 'yes';
-				}
-
-				$fields['address'][] = $args;
-
-				$changes[] = __(
-					'Address field is required, and has been added to the payment form.',
-					'stripe'
-				);
-				++$count;
-
-				// If the address field exists, ensure it is required.
-			} elseif (
-				isset( $fields['address'] ) &&
-				true === $needs_required_address
-			) {
-				$current_address_field = current( $fields['address'] );
-
-				$args['required'] = 'yes';
-
-				if (
-					isset( $payment_methods['stripe-elements']['afterpay-clearpay'] ) &&
-						isset( $payment_methods['stripe-elements']['afterpay-clearpay']['id'] )
-				) {
-					$args['collect-shipping'] = 'yes';
-				}
-
-				$fields['address'] = array(
-					array_merge(
-						$current_address_field,
-						$args
-					),
-				);
-			}
-
-			// Add "Amount Breakdown" if using automatic taxes.
-			if (
-				! isset( $fields['total_amount'] ) &&
-				'automatic' === $tax_status
-			) {
-				$fields['total_amount'][] = array();
-
-				++$count;
-			}
 
 			// Set "Phone" to optional if using Payment Request Button.
 			if (
