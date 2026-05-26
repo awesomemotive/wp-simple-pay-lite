@@ -88,13 +88,95 @@ abstract class Custom_Field {
 	}
 
 	/**
+	 * Returns conditional logic data attributes for a field.
+	 *
+	 * @since 4.17.2
+	 *
+	 * @param array $settings Field settings.
+	 * @return array<string, string>
+	 */
+	public static function get_conditional_logic_data_attributes( $settings ) {
+		$conditional = isset( $settings['conditional_logic'] ) && is_array( $settings['conditional_logic'] )
+			? $settings['conditional_logic']
+			: array();
+
+		$enabled = isset( $conditional['enabled'] ) && 'yes' === $conditional['enabled']
+			? 'yes'
+			: 'no';
+
+		$action = isset( $conditional['action'] ) ? sanitize_text_field( $conditional['action'] ) : 'show';
+		$action = in_array( $action, array( 'show', 'hide' ), true ) ? $action : 'show';
+
+		$logic = isset( $conditional['logic'] ) ? sanitize_text_field( $conditional['logic'] ) : 'all';
+		$logic = in_array( $logic, array( 'all', 'any' ), true ) ? $logic : 'all';
+
+		$allowed_operators = array(
+			'equals',
+			'not_equals',
+			'contains',
+			'is_empty',
+			'is_not_empty',
+			'greater_than',
+			'less_than',
+			'is_checked',
+			'is_not_checked',
+			'price_equals',
+		);
+
+		$rules = array();
+
+		if ( isset( $conditional['rules'] ) && is_array( $conditional['rules'] ) ) {
+			foreach ( $conditional['rules'] as $rule ) {
+				if ( ! is_array( $rule ) ) {
+					continue;
+				}
+
+				$field = isset( $rule['field'] ) ? absint( $rule['field'] ) : 0;
+
+				if ( 0 === $field ) {
+					continue;
+				}
+
+				$operator = isset( $rule['operator'] )
+					? sanitize_text_field( $rule['operator'] )
+					: 'equals';
+				$operator = in_array( $operator, $allowed_operators, true ) ? $operator : 'equals';
+
+				$value = isset( $rule['value'] ) ? sanitize_text_field( $rule['value'] ) : '';
+
+				$rules[] = array(
+					'field'    => (string) $field,
+					'operator' => $operator,
+					'value'    => $value,
+				);
+			}
+		}
+
+		$rules_json = wp_json_encode(
+			$rules,
+			JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_HEX_APOS
+		);
+
+		if ( false === $rules_json ) {
+			$rules_json = '[]';
+		}
+
+		return array(
+			'data-conditional-enabled' => $enabled,
+			'data-conditional-action'  => $action,
+			'data-conditional-logic'   => $logic,
+			'data-conditional-rules'   => $rules_json,
+		);
+	}
+
+	/**
 	 * Returns a filterable default value.
 	 *
 	 * @since 3.7.0
 	 *
-	 * @param string $key Key that stores the default value.
-	 * @param mixed  $fallback Fallback value. Defaults to empty string.
-	 * @param array<string, mixed> $settings Field settings. Overrides current self if set.
+	 * @param string                             $key Key that stores the default value.
+	 * @param mixed                              $fallback Fallback value. Defaults to empty string.
+	 * @param array<string, mixed>               $settings Field settings. Overrides current self if set.
 	 * @param SimplePay\Core\Abstracts\Form|null $form Form. Overrides current self if set.
 	 * @return mixed
 	 */
@@ -249,7 +331,7 @@ abstract class Custom_Field {
 		// Replace all instances of {query var=""} Smart Tag with the query var value.
 		if ( strpos( $default, '{query var="' ) !== false ) {
 			$pattern = '/\{query var="([^"]+)"\}/';
-			$matches = [];
+			$matches = array();
 
 			if ( preg_match_all( $pattern, $default, $matches ) ) {
 				foreach ( $matches[0] as $match ) {
@@ -305,9 +387,9 @@ abstract class Custom_Field {
 
 		if ( $is_query ) {
 			$pattern = '/\{query var="([^"]+)"\}/';
-			$matches = [];
+			$matches = array();
 
-			if ( preg_match($pattern, $smart_tag, $matches ) ) {
+			if ( preg_match( $pattern, $smart_tag, $matches ) ) {
 				$query_var = esc_html( $matches[1] );
 
 				if ( isset( $_GET[ $query_var ] ) ) {

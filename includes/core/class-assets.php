@@ -123,7 +123,7 @@ class Assets {
 			),
 			'simpay-shared'          => array(
 				'src'    => SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-public-shared.js',
-				'deps'   => array(),
+				'deps'   => array( 'jquery' ),
 				'ver'    => SIMPLE_PAY_VERSION,
 				'footer' => true,
 			),

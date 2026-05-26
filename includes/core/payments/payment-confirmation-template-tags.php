@@ -11,6 +11,7 @@
 namespace SimplePay\Core\Payments\Payment_Confirmation\Template_Tags;
 
 use SimplePay\Core\Payments\Stripe_API;
+use SimplePay\Core\API\PaymentMethods;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -55,6 +56,8 @@ function get_tags( $payment_confirmation_data ) {
 		'receipt',
 		'recurring-amount',
 		'next-invoice-date',
+		'billing-country',
+		'billing-zip',
 	);
 
 	/**
@@ -1200,6 +1203,103 @@ add_filter(
 );
 
 /**
+ * Retrieves a property from the billing address of the payment method associated
+ * with the payment confirmation.
+ *
+ * @since 4.17.2
+ *
+ * @param string $property The billing address property to retrieve (e.g. 'country', 'postal_code').
+ * @param string $value Default template tag value if the property cannot be resolved.
+ * @param array  $payment_confirmation_data Payment confirmation data.
+ * @return string
+ */
+function get_billing_address_property( $property, $value, $payment_confirmation_data ) {
+	try {
+		$payment_method_id = null;
+
+		// Handle checkout session scenario.
+		if ( isset( $payment_confirmation_data['checkout_session'] ) ) {
+			$session = $payment_confirmation_data['checkout_session'];
+			if ( ! empty( $session->payment_intent ) ) {
+				$payment_intent    = \SimplePay\Core\API\PaymentIntents\retrieve(
+					array( 'id' => $session->payment_intent ),
+					$payment_confirmation_data['form']->get_api_request_args()
+				);
+				$payment_method_id = $payment_intent->payment_method;
+			} elseif ( ! empty( $session->payment_method ) ) {
+				$payment_method_id = $session->payment_method;
+			}
+		} elseif ( ! empty( $payment_confirmation_data['paymentintents'] ) ) {
+			$payment_intent    = current( $payment_confirmation_data['paymentintents'] );
+			$payment_method_id = $payment_intent->payment_method;
+		}
+
+		if ( empty( $payment_method_id ) ) {
+			return $value;
+		}
+
+		$payment_method = PaymentMethods\retrieve(
+			$payment_method_id,
+			$payment_confirmation_data['form']->get_api_request_args()
+		);
+
+		if (
+			! empty( $payment_method->billing_details ) &&
+			! empty( $payment_method->billing_details->address ) &&
+			! empty( $payment_method->billing_details->address->{$property} )
+		) {
+			return esc_html( $payment_method->billing_details->address->{$property} );
+		}
+	} catch ( \Exception $e ) {
+		return $value;
+	}
+
+	return $value;
+}
+
+/**
+ * Replaces the {billing-country} template tag with the billing country from the payment method.
+ *
+ * @since 4.17.2
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function billing_country( $value, $payment_confirmation_data ) {
+	return get_billing_address_property( 'country', $value, $payment_confirmation_data );
+}
+add_filter( 'simpay_payment_confirmation_template_tag_billing-country', __NAMESPACE__ . '\\billing_country', 10, 2 );
+
+/**
+ * Replaces the {billing-zip} template tag with the billing postal code from the payment method.
+ *
+ * @since 4.17.2
+ *
+ * @param string $value Template tag value.
+ * @param array  $payment_confirmation_data {
+ *   Contextual information about this payment confirmation.
+ *
+ *   @type \SimplePay\Vendor\Stripe\Customer               $customer Stripe Customer
+ *   @type \SimplePay\Core\Abstracts\Form $form Payment form.
+ *   @type object                         $subscriptions Subscriptions associated with the Customer.
+ *   @type object                         $paymentintents PaymentIntents associated with the Customer.
+ * }
+ * @return string
+ */
+function billing_zip( $value, $payment_confirmation_data ) {
+	return get_billing_address_property( 'postal_code', $value, $payment_confirmation_data );
+}
+add_filter( 'simpay_payment_confirmation_template_tag_billing-zip', __NAMESPACE__ . '\\billing_zip', 10, 2 );
+
+/**
  * Returns a list of available smart tags and their descriptions.
  *
  * @todo Temporary until this can be more easily generated through a tag registry.
@@ -1282,6 +1382,16 @@ function __unstable_get_tags_and_descriptions() { // phpcs:ignore PHPCompatibili
 
 		$tags['coupon-amount'] = esc_html__(
 			'The amount of the coupon applied to the payment.',
+			'stripe'
+		);
+
+		$tags['billing-country'] = esc_html__(
+			'The two-letter ISO country code from the payment method\'s billing address (e.g. US, GB, CA).',
+			'stripe'
+		);
+
+		$tags['billing-zip'] = esc_html__(
+			'The postal/ZIP code from the payment method\'s billing address.',
 			'stripe'
 		);
 

@@ -231,35 +231,134 @@ function register_currency_settings( $settings ) {
 		$format_opts[ $key ] = $format['label'];
 	}
 
-	$settings->add(
-		new Settings\Setting_Select(
-			array(
-				'id'          => 'recurring_amount_format',
-				'section'     => 'general',
-				'subsection'  => 'currency',
-				'label'       => esc_html_x(
-					'Installment Description Format',
-					'setting label',
-					'stripe'
-				),
-				'options'     => $format_opts,
-				'value'       => simpay_get_setting(
-					'recurring_amount_format',
-					'count_adj_amount'
-				),
-				'description' => wpautop(
-					esc_html__(
-						'Controls how installment payment descriptions are displayed on forms and confirmation pages.',
+	if ( true === $license->is_lite() ) {
+		$settings->add(
+			new Settings\Setting(
+				array(
+					'id'         => 'recurring_amount_format',
+					'section'    => 'general',
+					'subsection' => 'currency',
+					'label'      => esc_html_x(
+						'Installment Description Format',
+						'setting label',
 						'stripe'
-					)
-				),
-				'priority'    => 40,
-				'schema'      => array(
-					'type' => 'string',
-				),
+					),
+					'priority'   => 40,
+					'output'     => __NAMESPACE__ . '\\recurring_amount_format_upsell_output',
+					'schema'     => array(
+						'type' => 'string',
+					),
+				)
 			)
+		);
+	} else {
+		$settings->add(
+			new Settings\Setting_Select(
+				array(
+					'id'          => 'recurring_amount_format',
+					'section'     => 'general',
+					'subsection'  => 'currency',
+					'label'       => esc_html_x(
+						'Installment Description Format',
+						'setting label',
+						'stripe'
+					),
+					'options'     => $format_opts,
+					'value'       => simpay_get_setting(
+						'recurring_amount_format',
+						'count_adj_amount'
+					),
+					'description' => wpautop(
+						esc_html__(
+							'Controls how installment payment descriptions are displayed on forms and confirmation pages.',
+							'stripe'
+						)
+					),
+					'priority'    => 40,
+					'schema'      => array(
+						'type' => 'string',
+					),
+				)
+			)
+		);
+	}
+}
+
+/**
+ * Outputs an upsell for the "Installment Description Format" setting for Lite users.
+ *
+ * @since 4.17.2
+ *
+ * @return void
+ */
+function recurring_amount_format_upsell_output() {
+	$upgrade_url = simpay_pro_upgrade_url(
+		'general-currency-settings',
+		'Installment Description Format'
+	);
+
+	$upgrade_purchased_url = simpay_docs_link(
+		'Installment Description Format (already purchased)',
+		'upgrading-wp-simple-pay-lite-to-pro',
+		'general-currency-settings',
+		true
+	);
+
+	$formats = simpay_get_recurring_invoice_limit_formats();
+	$value   = simpay_get_setting( 'recurring_amount_format', 'count_adj_amount' );
+	?>
+
+	<input
+		type="hidden"
+		name="simpay_settings[recurring_amount_format]"
+		value="<?php echo esc_attr( $value ); ?>"
+	/>
+
+	<select id="recurring_amount_format" disabled>
+		<?php foreach ( $formats as $key => $format ) : ?>
+			<option
+				value="<?php echo esc_attr( $key ); ?>"
+				<?php selected( $key, $value ); ?>
+			>
+				<?php echo esc_html( $format['label'] ); ?>
+			</option>
+		<?php endforeach; ?>
+	</select>
+
+	<?php
+	echo wpautop(
+		esc_html__(
+			'Controls how installment payment descriptions are displayed on forms and confirmation pages.',
+			'stripe'
 		)
 	);
+	?>
+
+	<p>
+		<a
+			href="<?php echo esc_url( $upgrade_url ); ?>"
+			class="button button-primary simpay-upgrade-btn"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<?php
+			esc_html_e(
+				'Upgrade to WP Simple Pay Pro',
+				'stripe'
+			);
+			?>
+		</a>
+		<a
+			href="<?php echo esc_url( $upgrade_purchased_url ); ?>"
+			target="_blank"
+			rel="noopener noreferrer"
+			style="margin-left: 10px;"
+		>
+			<?php esc_html_e( 'Already purchased?', 'stripe' ); ?>
+		</a>
+	</p>
+
+	<?php
 }
 
 /**
