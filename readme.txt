@@ -297,6 +297,12 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
+= Stripe Payment Forms 4.17.2 - May 20, 2026 =
+
+* New: Conditional logic for form fields. Show or hide fields dynamically based on the values of other fields, with support for multiple rules, all/any matching, and a wide range of operators.
+* New: Added `{billing-country}` and `{billing-zip}` smart tags for use in payment confirmation pages and emails.
+* Fix: Required fields are now automatically added for Overlay forms using Klarna, Afterpay/Clearpay, or automatic taxes.
+
 = Stripe Payment Forms 4.17.1 - April 9, 2026 =
 
 * New: Installment description format setting. Choose how recurring payment descriptions appear across your forms with three format options, configurable globally and per form.
