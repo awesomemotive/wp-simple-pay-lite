@@ -25,10 +25,12 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Accept credit and debit cards (Visa, Mastercard, American Express, Discover and Diners, and more) from global customers
 - Accept Alipay & WeChat Pay payments in Stripe from customers in China
 - Accept BECS Direct Debit payments in Stripe from customers in Australia
+- Accept BLIK payments in Stripe from customers in Poland
 - Accept FPX payments in Stripe from customers in Malaysia
 - Accept Giropay payments in Stripe from customers in Germany
 - Accept iDEAL payments in Stripe from customers in The Netherlands
 - Accept MobilePay payments in Stripe from customers in Denmark and Finland
+- Accept PIX payments in Stripe from customers in Brazil
 - Accept Przelewy24 (P24) in Stripe payments from customers in Poland
 - Accept PromptPay payments in Stripe from customers in Thailand
 - Custom branding on Stripe Checkout payment forms
@@ -183,6 +185,14 @@ Enable customers in Thailand to pay instantly using their local bank app. Prompt
 === 💳 Accept WeChat Pay Payments with Stripe ===
 
 Tap into the vast market of Chinese consumers by offering WeChat Pay. As one of China's leading payment platforms, it allows customers to pay directly from their WeChat wallet.
+
+=== 💳 Accept PIX Payments with Stripe ===
+
+Reach Brazilian customers with PIX, the country's real-time interbank payment system. Customers complete payment instantly from their bank's app and funds settle in seconds.
+
+=== 💳 Accept BLIK Payments with Stripe ===
+
+Give Polish customers the option to pay with BLIK, the country's dominant mobile payment method. Customers confirm payments in real time using a 6-digit code from their bank's mobile app.
 
 === 🎨 Customize Payment Form Styles ===
 
