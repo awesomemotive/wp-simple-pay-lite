@@ -48,6 +48,8 @@ class PaymentMethodsServiceProvider extends AbstractPluginServiceProvider implem
 			$container->share( 'payment-methods-becs', PaymentMethod\BecsPaymentMethod::class );
 			$container->share( 'payment-methods-promptpay', PaymentMethod\PromptPayPaymentMethod::class );
 			$container->share( 'payment-methods-wechat-pay', PaymentMethod\WechatPayPaymentMethod::class );
+			$container->share( 'payment-methods-pix', PaymentMethod\PIXPaymentMethod::class );
+			$container->share( 'payment-methods-blik', PaymentMethod\BLIKPaymentMethod::class );
 		}
 		// Register the payment methods subscriber.
 		$container->share( 'payment-methods-subscriber', PaymentMethodsSubscriber::class );
@@ -83,6 +85,8 @@ class PaymentMethodsServiceProvider extends AbstractPluginServiceProvider implem
 			'payment-methods-becs',
 			'payment-methods-promptpay',
 			'payment-methods-wechat-pay',
+			'payment-methods-pix',
+			'payment-methods-blik',
 			'payment-methods-subscriber',
 		);
 

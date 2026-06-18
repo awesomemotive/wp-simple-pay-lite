@@ -420,6 +420,62 @@ class Frontend {
 	}
 
 	/**
+	 * Build the box-shadow CSS value used to render a border on form inputs.
+	 *
+	 * Native HTML inputs and Stripe Elements both use a `box-shadow` outline
+	 * to paint borders (the base CSS sets `border: 0`). Centralizing the
+	 * shadow tuple here keeps the rendering consistent and prevents drift
+	 * between the regular border, focus, and error states.
+	 *
+	 * @since 4.17.3
+	 * @access private
+	 * @static
+	 *
+	 * @param string $color The (already-sanitized) color value to use for the inner ring.
+	 * @return string The CSS `box-shadow` value (without the `box-shadow:` property name or trailing `!important`).
+	 */
+	private static function build_box_shadow_border( $color ) {
+		return '0 0 0 1px ' . $color . ', 0 1px 2px rgba(0, 0, 0, 0.05)';
+	}
+
+	/**
+	 * Sanitize a color value for safe inclusion in generated CSS.
+	 *
+	 * Defense-in-depth against legacy or imported postmeta that may have
+	 * bypassed save-time sanitization in {@see Settings::sanitize_setting()}.
+	 * Accepts hex colors and `rgb()`/`rgba()`/`hsl()`/`hsla()` notation.
+	 * Anything else (including `javascript:`, escape sequences, or arbitrary
+	 * strings that could break out of the CSS context) is rejected.
+	 *
+	 * @since 4.17.3
+	 * @access private
+	 * @static
+	 *
+	 * @param string $color The raw color value from settings.
+	 * @return string A safe color value, or empty string if the input is unsafe.
+	 */
+	private static function sanitize_color_for_css( $color ) {
+		if ( ! is_string( $color ) || '' === $color ) {
+			return '';
+		}
+
+		// Hex color (#fff, #ffffff). sanitize_hex_color returns null/empty on bad input.
+		$hex = sanitize_hex_color( $color );
+		if ( ! empty( $hex ) ) {
+			return $hex;
+		}
+
+		// Functional notation: rgb(), rgba(), hsl(), hsla(). Match the same
+		// shape Settings::sanitize_setting() accepts.
+		if ( preg_match( '/^(rgba?|hsla?)\(\s*[\d.,\s%]+\)$/', $color ) ) {
+			return $color;
+		}
+
+		// Anything else is rejected to prevent CSS injection.
+		return '';
+	}
+
+	/**
 	 * Generate the custom CSS for a form based on its style settings.
 	 *
 	 * Creates CSS rules for a specific form based on its saved style settings.
@@ -557,8 +613,13 @@ class Frontend {
 		// Add border color.
 		$border_color = Settings::get_setting( $form_id, 'border_color' );
 		if ( ! empty( $border_color ) ) {
+			// Re-sanitize at output time as defense-in-depth against
+			// legacy/imported postmeta that may have bypassed save-time sanitization.
+			$border_color = self::sanitize_color_for_css( $border_color );
+		}
+		if ( ! empty( $border_color ) ) {
 			// Native HTML inputs use box-shadow for borders (base CSS sets border: 0).
-			$box_shadow_border = "box-shadow: 0 0 0 1px {$border_color}, 0 1px 2px rgba(0, 0, 0, 0.05) !important;";
+			$box_shadow_border = 'box-shadow: ' . self::build_box_shadow_border( $border_color ) . ' !important;';
 
 			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-form-control { border-color: {$border_color} !important; }\n";
 			$css .= "#simpay-form-{$form_id} .simpay-form-control { border-color: {$border_color} !important; }\n";
@@ -574,17 +635,48 @@ class Frontend {
 		// Add error border color.
 		$error_border_color = Settings::get_setting( $form_id, 'error_border_color' );
 		if ( ! empty( $error_border_color ) ) {
-			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-form-control.error { border-color: {$error_border_color} !important; }\n";
-			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-form-control.has-error { border-color: {$error_border_color} !important; }\n";
-			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] input.error { border-color: {$error_border_color} !important; }\n";
-			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .StripeElement .Input--invalid { box-shadow: 0 0 0 1px {$error_border_color}, 0 1px 2px rgba(0, 0, 0, 0.05) !important; border-color: {$error_border_color} !important; }\n";
+			// Re-sanitize at output time as defense-in-depth against
+			// legacy/imported postmeta that may have bypassed save-time sanitization.
+			$error_border_color = self::sanitize_color_for_css( $error_border_color );
+		}
+		if ( ! empty( $error_border_color ) ) {
+			$error_box_shadow = 'box-shadow: ' . self::build_box_shadow_border( $error_border_color ) . ' !important;';
+			// Native inputs use box-shadow for border rendering (matches .simpay-input-error in SCSS).
+			// Also emit `border-color` so themes that paint real borders pick up the error color.
+			//
+			// Note on specificity: the base `border_color` rule above emits
+			// `box-shadow !important` under a (1,3,1)-specificity selector
+			// (`#simpay-form-{id}.simpay-styled .simpay-form-control input[type='text'], ...`).
+			// The lower-specificity error variants below would lose the cascade
+			// when `border_color` is also set, so we additionally emit a rule
+			// using the same (1,3,1) chain so the error color reliably wins
+			// (later rule of equal specificity wins under `!important`).
+			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] input.simpay-input-error { {$error_box_shadow} border-color: {$error_border_color} !important; }\n";
+			$css .= "#simpay-form-{$form_id} input.simpay-input-error { {$error_box_shadow} border-color: {$error_border_color} !important; }\n";
+			$css .= "#simpay-form-{$form_id}.simpay-styled .simpay-form-control input.simpay-input-error { {$error_box_shadow} border-color: {$error_border_color} !important; }\n";
+			// Native HTML5 validation fallback. `:user-invalid` is preferred over
+			// `:invalid` because it only matches after user interaction, avoiding
+			// red borders on initial render. Scoped to this form to avoid clobbering
+			// globals or other forms on the page. The third rule matches the base
+			// border specificity (see note above).
+			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] input:user-invalid, .simpay-form-wrap[data-form-id=\"{$form_id}\"] select:user-invalid, .simpay-form-wrap[data-form-id=\"{$form_id}\"] textarea:user-invalid { {$error_box_shadow} border-color: {$error_border_color} !important; }\n";
+			$css .= "#simpay-form-{$form_id} input:user-invalid, #simpay-form-{$form_id} select:user-invalid, #simpay-form-{$form_id} textarea:user-invalid { {$error_box_shadow} border-color: {$error_border_color} !important; }\n";
+			$css .= "#simpay-form-{$form_id}.simpay-styled .simpay-form-control input:user-invalid, #simpay-form-{$form_id}.simpay-styled .simpay-form-control select:user-invalid, #simpay-form-{$form_id}.simpay-styled .simpay-form-control textarea:user-invalid { {$error_box_shadow} border-color: {$error_border_color} !important; }\n";
+			// Stripe Elements invalid state.
+			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .StripeElement .Input--invalid { {$error_box_shadow} border-color: {$error_border_color} !important; }\n";
 		}
 
 		// Add error text color.
 		$error_text_color = Settings::get_setting( $form_id, 'error_text_color' );
 		if ( ! empty( $error_text_color ) ) {
-			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-error { color: {$error_text_color} !important; }\n";
-			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-field-error { color: {$error_text_color} !important; }\n";
+			// Re-sanitize at output time as defense-in-depth against
+			// legacy/imported postmeta that may have bypassed save-time sanitization.
+			$error_text_color = self::sanitize_color_for_css( $error_text_color );
+		}
+		if ( ! empty( $error_text_color ) ) {
+			// .simpay-errors is the class used on all inline field error message elements.
+			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-errors { color: {$error_text_color} !important; }\n";
+			$css .= "#simpay-form-{$form_id} .simpay-errors { color: {$error_text_color} !important; }\n";
 			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .StripeElement .Error { color: {$error_text_color} !important; }\n";
 			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .StripeElement .ErrorMessage { color: {$error_text_color} !important; }\n";
 		}

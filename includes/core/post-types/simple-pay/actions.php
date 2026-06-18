@@ -199,6 +199,16 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_enable_quantity', $enable_quantity );
 
+	// Stripe Link: override-only model. The meta represents the EXCEPTION
+	// to Stripe's default (Link enabled). Write 'yes' only when the seller
+	// has actively asked us to hide Link; write 'no' otherwise so the
+	// stored value mirrors the checkbox state. Default behavior (Link on)
+	// matches absent meta + this 'no' value via simpay_get_saved_meta()
+	// default in PaymentRequestUtils::maybe_remove_stripe_link().
+	$disable_stripe_link = isset( $_POST['_disable_stripe_link'] ) ? 'yes' : 'no';
+
+	update_post_meta( $post_id, '_disable_stripe_link', $disable_stripe_link );
+
 	// Custom fields.
 	$fields = isset( $_POST['_simpay_custom_field'] )
 		? $_POST['_simpay_custom_field']
@@ -966,10 +976,44 @@ function duplicate() {
 		)
 	);
 
-	// Remove the linked container Product. Existing Prices will still be linked to
-	// the Payment Form that was originally duplicated, but new ones will not.
+	// Remove the linked container Product so a fresh Stripe Product is created
+	// on first save for the duplicate.
 	delete_post_meta( $duplicate, '_simpay_product_live' );
 	delete_post_meta( $duplicate, '_simpay_product_test' );
+
+	// Clear only the Stripe Price IDs from each price entry, preserving the
+	// price configuration (label, amount, currency, recurring interval, etc.).
+	// New Stripe Prices will be created under the new Product on first save.
+	foreach ( array( '_simpay_prices_live', '_simpay_prices_test' ) as $prices_key ) {
+		$prices = get_post_meta( $duplicate, $prices_key, true );
+
+		if ( empty( $prices ) || ! is_array( $prices ) ) {
+			continue;
+		}
+
+		foreach ( $prices as $price_uuid => $price ) {
+			if ( ! is_array( $price ) ) {
+				continue;
+			}
+
+			// Drop the Stripe Price ID so a new one is created on save.
+			unset( $price['id'] );
+
+			// Drop the Stripe Price ID for the linked recurring price (if any).
+			if ( isset( $price['recurring'] ) && is_array( $price['recurring'] ) ) {
+				unset( $price['recurring']['id'] );
+			}
+
+			$prices[ $price_uuid ] = $price;
+		}
+
+		update_post_meta( $duplicate, $prices_key, $prices );
+	}
+
+	// Delete the prices "modified" timestamps so sync re-creates Stripe Prices
+	// on the next save of the duplicate.
+	delete_post_meta( $duplicate, '_simpay_prices_live_modified' );
+	delete_post_meta( $duplicate, '_simpay_prices_test_modified' );
 
 	// Update form title to append - Duplicate.
 	$form_name = get_post_meta( $duplicate, '_company_name', true );

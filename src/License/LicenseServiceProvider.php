@@ -76,7 +76,8 @@ class LicenseServiceProvider extends AbstractPluginServiceProvider implements Bo
 			'license-validator-subscriber',
 			LicenseValidatorSubscriber::class
 		)
-			->withArgument( $container->get( 'license-manager' ) );
+			->withArgument( $container->get( 'license-manager' ) )
+			->withArgument( $container->get( 'scheduler' ) );
 
 		// AJAX activate/deactivate subscriber.
 		$container->share(

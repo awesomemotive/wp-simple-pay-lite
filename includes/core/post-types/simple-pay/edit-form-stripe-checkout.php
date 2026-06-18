@@ -359,6 +359,39 @@ function add_stripe_checkout( $post_id ) {
 						data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
 					/><?php esc_html_e( 'Allow coupons', 'stripe' ); ?>
 				</label>
+
+				<?php
+				// Override-only model: the meta key represents the *exception* to
+				// Stripe's default behavior (Link is enabled by default on every
+				// Checkout Session). Absence of meta means "no override" → Link
+				// stays enabled. The checkbox is only set when the seller actively
+				// wants to override and hide Link.
+				$disable_stripe_link = simpay_get_payment_form_setting(
+					$post_id,
+					'_disable_stripe_link',
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+				?>
+				<div
+					class="simpay-show-if"
+					data-if="_form_type"
+					data-is="off-site"
+				>
+					<label for="_disable_stripe_link" class="simpay-field-bool">
+						<input
+							name="_disable_stripe_link"
+							type="checkbox"
+							id="_disable_stripe_link"
+							class="simpay-field simpay-field-checkbox simpay-field-checkboxes"
+							value="yes"
+							<?php checked( true, 'yes' === $disable_stripe_link ); ?>
+						/><?php esc_html_e( 'Disable Stripe Link', 'stripe' ); ?>
+					</label>
+					<p class="description">
+						<?php esc_html_e( 'When checked, Stripe Link is hidden from the off-site Stripe Checkout payment-method list. Stripe Link is enabled by default; leave this unchecked to keep the default behavior.', 'stripe' ); ?>
+					</p>
+				</div>
 			</td>
 		</tr>
 
