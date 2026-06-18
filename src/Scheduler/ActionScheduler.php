@@ -2,7 +2,7 @@
 /**
  * Scheduler: Action Scheduler
  *
- * https://actionscheduler.org/
+ * @link https://actionscheduler.org/
  *
  * @package SimplePay
  * @subpackage Core
@@ -30,6 +30,12 @@ class ActionScheduler implements SchedulerInterface {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * Relies on has_next() for fast-path deduplication by hook + args. We do
+	 * NOT pass $unique=true here because Action Scheduler's uniqueness check
+	 * matches by hook + group only (ignoring $args), which would silently
+	 * drop legitimate chained schedule_once() calls that reuse a single hook
+	 * to process different batches of data (see ApplicationFee::remove_application_fees).
 	 */
 	public function run( $hook, $args = array() ) {
 		if ( false !== $this->has_next( $hook, $args ) ) {
@@ -41,6 +47,12 @@ class ActionScheduler implements SchedulerInterface {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * Relies on has_next() for fast-path deduplication by hook + args. We do
+	 * NOT pass $unique=true here because Action Scheduler's uniqueness check
+	 * matches by hook + group only (ignoring $args), which would silently
+	 * drop legitimate chained schedule_once() calls that reuse a single hook
+	 * to process different batches of data (see ApplicationFee::remove_application_fees).
 	 */
 	public function schedule_once( $timestamp, $hook, $args = array() ) {
 		if ( false !== $this->has_next( $hook, $args ) ) {
@@ -52,6 +64,13 @@ class ActionScheduler implements SchedulerInterface {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * Passes $unique=true to Action Scheduler so duplicate pending/running
+	 * rows cannot be inserted even if has_next() is bypassed by a concurrent
+	 * request (e.g. multiple init-hook firings on a multi-process server
+	 * trying to install the same recurring task). Safe here because recurring
+	 * tasks in this codebase are scheduled with the same args every time
+	 * (typically empty), so the hook+group dedup matches the intent.
 	 */
 	public function schedule_recurring( $timestamp, $interval, $hook, $args = array() ) {
 		if ( false !== $this->has_next( $hook, $args ) ) {
@@ -63,7 +82,8 @@ class ActionScheduler implements SchedulerInterface {
 			$interval,
 			$hook,
 			$args,
-			self::GROUP
+			self::GROUP,
+			true
 		);
 	}
 

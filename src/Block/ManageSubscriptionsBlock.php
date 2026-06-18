@@ -70,6 +70,68 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 				'render_callback' => array( $this, 'render' ),
 			)
 		);
+
+		add_shortcode( 'simpay_manage_subscriptions', array( $this, 'render_shortcode' ) );
+	}
+
+	/**
+	 * Returns the default attribute strings shared by the block render
+	 * callback and the shortcode handler.
+	 *
+	 * Keeping a single source of truth prevents the two entry points from
+	 * drifting out of sync over time.
+	 *
+	 * @since 4.17.3
+	 *
+	 * @return array<string, string> Associative array of default strings keyed by
+	 *                               attribute identifier (`label`,
+	 *                               `email_placeholder`, `button_text`).
+	 */
+	private function get_defaults() {
+		return array(
+			'label'             => __( 'Purchase Email Address', 'stripe' ),
+			'email_placeholder' => __( 'Enter your email', 'stripe' ),
+			'button_text'       => __( 'Manage Subscription', 'stripe' ),
+		);
+	}
+
+	/**
+	 * Renders the [simpay_manage_subscriptions] shortcode output.
+	 *
+	 * Supports the same optional attributes as the block:
+	 *   label             — email field label text
+	 *   email_placeholder — email input placeholder
+	 *   button_text       — submit button label
+	 *
+	 * @since 4.17.3
+	 *
+	 * @param array<string, string>|string $atts Shortcode attributes.
+	 * @return string Shortcode HTML output.
+	 */
+	public function render_shortcode( $atts ) {
+		$defaults = $this->get_defaults();
+
+		// WordPress passes an empty string for shortcodes used without
+		// attributes; normalize to an array for shortcode_atts().
+		if ( ! is_array( $atts ) ) {
+			$atts = array();
+		}
+
+		$atts = shortcode_atts(
+			$defaults,
+			$atts,
+			'simpay_manage_subscriptions'
+		);
+
+		wp_enqueue_script( 'simpay-manage-subscriptions-frontend' );
+
+		return $this->render(
+			array(
+				'label'            => $atts['label'],
+				'emailPlaceholder' => $atts['email_placeholder'],
+				'buttonText'       => $atts['button_text'],
+			)
+		);
 	}
 
 	/**
@@ -81,13 +143,14 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 	 * @return string Block content.
 	 */
 	public function render( $attributes ) {
+		$defaults = $this->get_defaults();
 
 		/** @var string $label */
-		$label = isset( $attributes['label'] ) ? $attributes['label'] : __( 'Purchase Email Address', 'stripe' );
+		$label = isset( $attributes['label'] ) ? $attributes['label'] : $defaults['label'];
 		/** @var string $email_placeholder */
-		$email_placeholder = isset( $attributes['emailPlaceholder'] ) ? $attributes['emailPlaceholder'] : __( 'Enter your email', 'stripe' );
+		$email_placeholder = isset( $attributes['emailPlaceholder'] ) ? $attributes['emailPlaceholder'] : $defaults['email_placeholder'];
 		/** @var string $button_text */
-		$button_text = isset( $attributes['buttonText'] ) ? $attributes['buttonText'] : __( 'Manage Subscription', 'stripe' );
+		$button_text = isset( $attributes['buttonText'] ) ? $attributes['buttonText'] : $defaults['button_text'];
 
 		// Enqueue captcha scripts.
 
@@ -112,7 +175,7 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 
 		return sprintf(
 			$form_format,
-			esc_attr( $label ),
+			esc_html( $label ),
 			esc_attr( $email_placeholder ),
 			esc_html( $button_text )
 		);

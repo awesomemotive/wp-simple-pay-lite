@@ -164,6 +164,20 @@ function register() {
 		)
 	);
 
+	// Stripe Checkout - Disable Stripe Link (override-only: present means
+	// the seller is asking us to hide Link from off-site Stripe Checkout;
+	// absence means Stripe's default behavior — Link enabled — applies).
+	register_post_meta(
+		'simple-pay',
+		'_disable_stripe_link',
+		array(
+			'type'              => 'string',
+			'description'       => __( 'Payment Form Stripe Checkout Disable Stripe Link.', 'stripe' ),
+			'single'            => true,
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+
 	// Custom fields.
 	register_post_meta(
 		'simple-pay',

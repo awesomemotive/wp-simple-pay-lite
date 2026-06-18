@@ -14,6 +14,7 @@
 namespace SimplePay\Core\License;
 
 use SimplePay\Core\EventManagement\SubscriberInterface;
+use SimplePay\Core\Scheduler\SchedulerInterface;
 
 /**
  * LicenseValidatorSubscriber class.
@@ -25,6 +26,13 @@ class LicenseValidatorSubscriber implements SubscriberInterface, LicenseAwareInt
 	use LicenseAwareTrait;
 
 	/**
+	 * Hook used by the scheduled, non-admin license check.
+	 *
+	 * @since 4.17.3
+	 */
+	const SCHEDULED_HOOK = '__unstable_simpay_validate_license';
+
+	/**
 	 * License management.
 	 *
 	 * @since 4.4.5
@@ -33,15 +41,26 @@ class LicenseValidatorSubscriber implements SubscriberInterface, LicenseAwareInt
 	private $manager;
 
 	/**
+	 * Scheduler.
+	 *
+	 * @since 4.17.3
+	 * @var \SimplePay\Core\Scheduler\SchedulerInterface
+	 */
+	private $scheduler;
+
+	/**
 	 * LicenseValidatorSubscriber.
 	 *
 	 * @since 4.4.5
+	 * @since 4.17.3 Added the `$scheduler` argument.
 	 *
-	 * @param \SimplePay\Core\License\LicenseManager $manager License manager.
+	 * @param \SimplePay\Core\License\LicenseManager       $manager License manager.
+	 * @param \SimplePay\Core\Scheduler\SchedulerInterface $scheduler Scheduler.
 	 * @return void
 	 */
-	public function __construct( $manager ) {
-		$this->manager = $manager;
+	public function __construct( $manager, SchedulerInterface $scheduler ) {
+		$this->manager   = $manager;
+		$this->scheduler = $scheduler;
 	}
 
 	/**
@@ -53,7 +72,32 @@ class LicenseValidatorSubscriber implements SubscriberInterface, LicenseAwareInt
 		}
 
 		return array(
-			'admin_init' => 'validate_license',
+			'admin_init'           => 'validate_license',
+			'init'                 => 'schedule_validation_check',
+			self::SCHEDULED_HOOK   => 'validate_license',
+		);
+	}
+
+	/**
+	 * Schedules a recurring license validation check.
+	 *
+	 * The license cache is otherwise only refreshed on `admin_init`. If the site
+	 * admin never loads wp-admin (e.g. on sites managed entirely via email),
+	 * `simpay_license_data` can stay stuck on an old `expired` value after a
+	 * renewal, which then bleeds into outbound emails. Scheduling a daily
+	 * Action Scheduler job keeps the cache fresh independent of wp-admin
+	 * traffic. The job is a no-op when `simpay_license_next_check` is still
+	 * in the future, so this does not bypass the existing rate limit.
+	 *
+	 * @since 4.17.3
+	 *
+	 * @return void
+	 */
+	public function schedule_validation_check() {
+		$this->scheduler->schedule_recurring(
+			time() + DAY_IN_SECONDS,
+			DAY_IN_SECONDS,
+			self::SCHEDULED_HOOK
 		);
 	}
 

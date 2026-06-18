@@ -872,6 +872,45 @@ class PaymentRequestUtils {
 	}
 
 	/**
+	 * Removes `link` from the given payment method types when the form has
+	 * Stripe Link explicitly disabled via the `_disable_stripe_link` meta.
+	 * Used for Stripe Checkout (off-site) forms whose Stripe Connect payment
+	 * method configuration includes Link by default.
+	 *
+	 * The meta follows an override-only model: it is only set to `'yes'` when
+	 * the seller has actively chosen to hide Link. Absence of meta (or `'no'`)
+	 * means "no override" — Link stays enabled, matching Stripe's default.
+	 *
+	 * @since 4.17.3
+	 *
+	 * @param array<string>                  $payment_method_types Payment method type ids.
+	 * @param \SimplePay\Core\Abstracts\Form $form Form instance.
+	 * @return array<string>
+	 */
+	public static function maybe_remove_stripe_link( array $payment_method_types, $form ) {
+		// Defensive guard: bail with the input list unchanged if the form
+		// is not a valid Form instance (e.g. an unexpected filter returned
+		// something else).
+		if ( ! $form instanceof Form ) {
+			return $payment_method_types;
+		}
+
+		$disable_stripe_link = simpay_get_saved_meta(
+			$form->id,
+			'_disable_stripe_link',
+			'no'
+		);
+
+		if ( 'yes' !== $disable_stripe_link ) {
+			return $payment_method_types;
+		}
+
+		return array_values(
+			array_diff( $payment_method_types, array( 'link' ) )
+		);
+	}
+
+	/**
 	 * Returns the configuration for available payment method types for the given request.
 	 *
 	 * @since 4.7.0

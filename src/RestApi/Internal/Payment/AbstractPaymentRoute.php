@@ -25,7 +25,7 @@ abstract class AbstractPaymentRoute implements SubscriberInterface {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @var string
+	 * @var non-falsy-string
 	 */
 	protected $namespace = 'wpsp/__internal__';
 

@@ -25,7 +25,7 @@ abstract class AbstractPaymentCreateRoute extends AbstractPaymentRoute {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @var string
+	 * @var non-falsy-string
 	 */
 	protected $route = 'payment/create';
 

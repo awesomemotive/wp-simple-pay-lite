@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-21T19:43:19+00:00\n"
+"POT-Creation-Date: 2026-06-16T13:21:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -50,81 +50,81 @@ msgstr ""
 msgid "Pay %s"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:188
+#: includes/core/admin/class-assets.php:190
 #: includes/core/functions/shared.php:595
 msgid "Insert Media"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:192
+#: includes/core/admin/class-assets.php:194
 #: includes/core/functions/shared.php:596
 msgid "Use Image"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:196
+#: includes/core/admin/class-assets.php:198
 msgid "The changes you made will be lost if you navigate away from this page."
 msgstr ""
 
-#: includes/core/admin/class-assets.php:200
+#: includes/core/admin/class-assets.php:202
 msgid "Disconnect"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:204
+#: includes/core/admin/class-assets.php:206
 #: includes/core/functions/admin.php:108
 #: includes/core/functions/admin.php:117
 #: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-recurring.php:202
 msgid "Cancel"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:208
-#: includes/core/admin/class-assets.php:244
+#: includes/core/admin/class-assets.php:210
+#: includes/core/admin/class-assets.php:246
 #: src/AdminPage/AboutUsPage.php:459
 #: views/admin-setting-license.php:79
 msgid "Activate"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:212
+#: includes/core/admin/class-assets.php:214
 #: src/AdminPage/AboutUsPage.php:450
 msgid "Activated"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:216
+#: includes/core/admin/class-assets.php:218
 #: src/AdminPage/AboutUsPage.php:446
 msgid "Active"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:220
+#: includes/core/admin/class-assets.php:222
 #: views/admin-setting-license.php:87
 msgid "Deactivate"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:224
+#: includes/core/admin/class-assets.php:226
 #: src/AdminPage/AboutUsPage.php:455
 msgid "Inactive"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:228
+#: includes/core/admin/class-assets.php:230
 msgid "Install Addon"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:232
+#: includes/core/admin/class-assets.php:234
 #: src/Admin/Addon/AddonInstaller.php:180
 msgid "Could not install the addon. Please download it from wpforms.com and install it manually."
 msgstr ""
 
-#: includes/core/admin/class-assets.php:236
+#: includes/core/admin/class-assets.php:238
 msgid "Could not install the plugin automatically. Please download and install it manually."
 msgstr ""
 
-#: includes/core/admin/class-assets.php:240
+#: includes/core/admin/class-assets.php:242
 msgid "Install and Activate"
 msgstr ""
 
-#: includes/core/admin/class-assets.php:248
+#: includes/core/admin/class-assets.php:250
 msgid "Warning: Removing a payment form will prevent active subscriptions from sending upcoming invoice and invoice receipt emails. It is recommended to leave payment forms that have accepted Live Mode payments published."
 msgstr ""
 
 #. translators: %s: Minimum payment amount.
-#: includes/core/admin/class-assets.php:253
+#: includes/core/admin/class-assets.php:255
 #: includes/core/forms/class-price-option.php:668
 #: includes/core/functions/shared.php:557
 #, php-format
@@ -132,7 +132,7 @@ msgid "starting at %s"
 msgstr ""
 
 #. translators: %1$s Recurring amount. %2$s Recurring interval count. %3$s Recurring interval.
-#: includes/core/admin/class-assets.php:256
+#: includes/core/admin/class-assets.php:258
 #: includes/core/forms/class-price-option.php:620
 #: includes/core/forms/class-price-option.php:757
 #: includes/core/functions/shared.php:560
@@ -144,13 +144,13 @@ msgid "%1$s every %2$s %3$s"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/admin/class-assets.php:264
+#: includes/core/admin/class-assets.php:266
 #, php-format
 msgid "Allow price to optionally be purchased as a subscription. %1$sLearn more%2$s"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/admin/class-assets.php:286
+#: includes/core/admin/class-assets.php:288
 #, php-format
 msgid "Automatically activate a recurring subscription. %1$sLearn more%2$s"
 msgstr ""
@@ -599,7 +599,7 @@ msgstr ""
 
 #. translators: %d: Payment Form ID.
 #: includes/core/forms/class-price-options.php:620
-#: includes/core/post-types/simple-pay/actions.php:328
+#: includes/core/post-types/simple-pay/actions.php:338
 #: includes/core/utils/migrations/routines/class-prices-api.php:126
 #, php-format
 msgid "WP Simple Pay - Form %d"
@@ -10580,7 +10580,7 @@ msgid "Thank you. Your payment of %1$s has been received and your subscription h
 msgstr ""
 
 #. translators: %s Payment form name.
-#: includes/core/post-types/simple-pay/actions.php:980
+#: includes/core/post-types/simple-pay/actions.php:1024
 #, php-format
 msgid "%s - Duplicate"
 msgstr ""
@@ -11598,6 +11598,14 @@ msgstr ""
 msgid "Allow coupons"
 msgstr ""
 
+#: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:389
+msgid "Disable Stripe Link"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:392
+msgid "When checked, Stripe Link is hidden from the off-site Stripe Checkout payment-method list. Stripe Link is enabled by default; leave this unchecked to keep the default behavior."
+msgstr ""
+
 #: includes/core/post-types/simple-pay/edit-form.php:42
 #: includes/core/post-types/simple-pay/list-table.php:114
 #: includes/core/recaptcha/settings.php:527
@@ -11832,7 +11840,11 @@ msgstr ""
 msgid "Payment Form Stripe Checkout shipping address."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/meta.php:173
+#: includes/core/post-types/simple-pay/meta.php:175
+msgid "Payment Form Stripe Checkout Disable Stripe Link."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/meta.php:187
 msgid "Payment Form custom fields."
 msgstr ""
 
@@ -12958,7 +12970,7 @@ msgid "Select a theme to instantly apply a complete set of coordinated styles. Y
 msgstr ""
 
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:361
-#: src/Block/ManageSubscriptionsBlock.php:88
+#: src/Block/ManageSubscriptionsBlock.php:93
 msgid "Enter your email"
 msgstr ""
 
@@ -13784,11 +13796,11 @@ msgstr ""
 msgid "Invalid CAPTCHA. Please try again."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:86
+#: src/Block/ManageSubscriptionsBlock.php:92
 msgid "Purchase Email Address"
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:90
+#: src/Block/ManageSubscriptionsBlock.php:94
 msgid "Manage Subscription"
 msgstr ""
 

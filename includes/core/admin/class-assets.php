@@ -45,6 +45,8 @@ class Assets {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'register' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+		// Priority 20: after register/enqueue (priority 10) but before scripts are printed.
+		add_action( 'admin_enqueue_scripts', array( $this, 'localize_scripts' ), 20 );
 
 		// Load admin scripts & styles on all admin pages.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_on_all_admin_pages' ) );
@@ -330,8 +332,27 @@ class Assets {
 			}
 		}
 
-		wp_localize_script( 'simpay-shared', 'spGeneral', simpay_shared_script_variables() );
-
 		wp_enqueue_media();
+	}
+
+	/**
+	 * Localize admin scripts.
+	 *
+	 * @since 4.17.3
+	 *
+	 * @return void
+	 */
+	public function localize_scripts() {
+		if ( false === simpay_is_admin_screen() ) {
+			return;
+		}
+
+		// Guard against the `simpay_before_register_admin_scripts` filter
+		// removing the handle before localization runs.
+		if ( ! isset( $this->scripts['simpay-shared'] ) ) {
+			return;
+		}
+
+		wp_localize_script( 'simpay-shared', 'spGeneral', simpay_shared_script_variables() );
 	}
 }

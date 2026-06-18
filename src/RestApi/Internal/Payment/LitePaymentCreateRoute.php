@@ -223,6 +223,11 @@ class LitePaymentCreateRoute extends AbstractPaymentCreateRoute {
 			);
 		}
 
+		$session_args['payment_method_types'] = PaymentRequestUtils::maybe_remove_stripe_link(
+			$session_args['payment_method_types'],
+			$form
+		);
+
 		// Build additional data used to create the underlying Payment Intent.
 		$payment_intent_data = PaymentRequestUtils::get_payment_intent_data(
 			$request
