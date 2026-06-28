@@ -25,7 +25,7 @@
 	<div class="simpay-landing-zone">
 
 		<h2 class="simpay-landing-zone__title">
-			<?php echo esc_html_e( '🏷 Offer Coupon Codes to Customers', 'stripe' ); ?>
+			<?php esc_html_e( '🏷 Offer Coupon Codes to Customers', 'stripe' ); ?>
 		</h2>
 
 		<p class="simpay-landing-zone__subtitle">

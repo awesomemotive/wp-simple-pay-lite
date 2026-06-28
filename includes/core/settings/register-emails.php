@@ -324,9 +324,9 @@ function get_email_template_output() {
 			/>
 
 			<span class="simpay-settings-visual-toggles__toggle-label">
-				<?php echo esc_html_e( 'Default', 'stripe' ); ?>
+				<?php esc_html_e( 'Default', 'stripe' ); ?>
 				<small>
-					<?php echo esc_html_e( 'Styled', 'stripe' ); ?>
+					<?php esc_html_e( 'Styled', 'stripe' ); ?>
 				</small>
 			</span>
 		</label>
@@ -536,7 +536,7 @@ function add_email_selector() {
 			<?php endforeach; ?>
 		</select>
 		<button type="submit" class="button button-secondary">
-			<?php echo esc_html_e( 'Configure', 'stripe' ); ?>
+			<?php esc_html_e( 'Configure', 'stripe' ); ?>
 		</button>
 		<input type="hidden" name="post_type" value="simple-pay" />
 		<input type="hidden" name="page" value="simpay_settings" />
