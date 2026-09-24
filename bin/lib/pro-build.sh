@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Helpers for pulling the Lite build artifact out of the Pro repo.
 # Sourced, not executed.
 #
@@ -127,6 +128,9 @@ pb_download() {
 	local run_id="$1" version="$2" dest="$3" name expired
 	name="stripe-$version"
 
+	# The single quotes are deliberate: $ENV.PB_NAME is jq's own syntax for
+	# reading the environment, so the shell must not expand it.
+	# shellcheck disable=SC2016
 	expired=$(PB_NAME="$name" gh api \
 		"repos/$PRO_REPO/actions/runs/$run_id/artifacts" \
 		--jq '[.artifacts[] | select(.name == $ENV.PB_NAME)] | .[0].expired') || {

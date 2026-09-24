@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Operations on the Lite working tree. Sourced, not executed.
 # Requires bin/lib/pro-build.sh for pb_npm_version.
 #

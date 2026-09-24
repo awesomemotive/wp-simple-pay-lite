@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Minimal assertion helpers for the release scripts' tests.
 # Sourced by bin/tests/test-*.sh.
 
