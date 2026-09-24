@@ -6,8 +6,10 @@ module.exports = function (grunt) {
   // Set files to include/exclude in a release.
   var distFiles = [
     "**",
+    "!bin/**",
     "!bower_components/**",
     "!build/**",
+    "!docs/**",
     "!node_modules/**",
     "!vendor/bin/**",
     "!wordpress_org_assets/**",
