@@ -17,3 +17,5 @@ build
 test-results
 
 /.sass-cache
+
+.superpowers
