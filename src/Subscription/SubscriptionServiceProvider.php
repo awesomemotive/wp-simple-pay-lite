@@ -1,32 +1,32 @@
 <?php
 /**
- * Transactions: Service provider
+ * Subscriptions: Service provider
  *
  * @package SimplePay
  * @subpackage Core
- * @copyright Copyright (c) 2022, Sandhills Development, LLC
+ * @copyright Copyright (c) 2026, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.4.6
+ * @since 4.17.4
  */
 
-namespace SimplePay\Core\Transaction;
+namespace SimplePay\Core\Subscription;
 
 use SimplePay\Core\AbstractPluginServiceProvider;
 use SimplePay\Vendor\League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 /**
- * TransactionsServiceProvider class.
+ * SubscriptionServiceProvider class.
  *
- * @since 4.4.6
+ * @since 4.17.4
  */
-class TransactionServiceProvider extends AbstractPluginServiceProvider implements BootableServiceProviderInterface {
+class SubscriptionServiceProvider extends AbstractPluginServiceProvider implements BootableServiceProviderInterface {
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function get_services() {
 		return array(
-			'transaction-repository',
+			'subscription-repository',
 		);
 	}
 
@@ -35,8 +35,8 @@ class TransactionServiceProvider extends AbstractPluginServiceProvider implement
 	 */
 	public function get_subscribers() {
 		return array(
-			'transaction-observer',
-			'transaction-reconciler',
+			'subscription-observer',
+			'subscription-backfiller',
 		);
 	}
 
@@ -46,16 +46,15 @@ class TransactionServiceProvider extends AbstractPluginServiceProvider implement
 	public function boot() {
 		$container = $this->getContainer();
 
-		// Install repository table.
-		// Create the table with BerlinDB.
+		// Install repository table with BerlinDB.
 		// Call maybe_upgrade() immediately instead of waiting for admin_init.
 		$table = new Database\Table();
 		$table->maybe_upgrade();
 
 		// Repository.
 		$container->share(
-			'transaction-repository',
-			TransactionRepository::class
+			'subscription-repository',
+			SubscriptionRepository::class
 		);
 	}
 
@@ -67,18 +66,17 @@ class TransactionServiceProvider extends AbstractPluginServiceProvider implement
 
 		// Observer.
 		$container->share(
-			'transaction-observer',
-			TransactionObserver::class
+			'subscription-observer',
+			SubscriptionObserver::class
 		)
-			->withArgument( $container->get( 'transaction-repository' ) )
+			->withArgument( $container->get( 'subscription-repository' ) )
 			->withArgument( $container->get( 'stripe-connect-application-fee' ) );
 
-		// Reconciler.
+		// Backfiller.
 		$container->share(
-			'transaction-reconciler',
-			TransactionReconciler::class
+			'subscription-backfiller',
+			SubscriptionBackfiller::class
 		)
-			->withArgument( $container->get( 'transaction-repository' ) )
-			->withArgument( $container->get( 'transaction-observer' ) );
+			->withArgument( $container->get( 'subscription-observer' ) );
 	}
 }

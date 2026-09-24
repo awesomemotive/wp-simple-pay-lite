@@ -46,26 +46,11 @@ function append_form_title( $title, $post_id = false ) {
 		$post_id = get_the_ID();
 	}
 
-	$form_name = wptexturize(
-		simpay_get_saved_meta( $post_id, '_company_name', false )
+	// `the_title` is texturized by core before this callback runs, so the
+	// composed title is texturized here to cover the substituted form name.
+	return wptexturize(
+		simpay_get_payment_form_title( $post_id, $title )
 	);
-
-	// Legacy title equals form name, use form name only.
-	if ( $title === $form_name ) {
-		return $form_name;
-	}
-
-	// Append legacy title to form name.
-	if ( ! empty( $title ) && ! empty( $form_name ) ) {
-		return sprintf( '%s (%s)', $form_name, $title );
-	}
-
-	// Show just the form name.
-	if ( ! empty( $form_name ) ) {
-		return $form_name;
-	}
-
-	return $title;
 }
 add_filter( 'the_title', __NAMESPACE__ . '\\append_form_title', 10, 2 );
 

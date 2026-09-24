@@ -35,6 +35,8 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 			'admin-page-about-us',
 			'admin-page-setup-wizard',
 			'admin-page-form-templates',
+			'admin-page-transactions',
+			'admin-page-subscriptions',
 			'admin-notice-update-available',
 			'admin-notice-license-upgrade-top-of-page',
 			'admin-notice-license-missing',
@@ -138,6 +140,22 @@ class AdminServiceProvider extends AbstractPluginServiceProvider {
 
 			$pages[] = $container->get( 'admin-page-activity-reports' );
 		}
+
+		// Transactions.
+		$container->share(
+			'admin-page-transactions',
+			AdminPage\TransactionsPage::class
+		);
+
+		$pages[] = $container->get( 'admin-page-transactions' );
+
+		// Subscriptions.
+		$container->share(
+			'admin-page-subscriptions',
+			AdminPage\SubscriptionsPage::class
+		);
+
+		$pages[] = $container->get( 'admin-page-subscriptions' );
 
 		// Add notification inbox page if notifications are being used.
 		try {

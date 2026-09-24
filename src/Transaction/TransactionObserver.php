@@ -116,6 +116,10 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 					array( 'maybe_increment_stock', 10, 2 ),
 				),
 			'simpay_webhook_charge_refunded'            => array( 'add_refund_log', 10, 3 ),
+
+			// A dispute (chargeback) was opened or closed.
+			'simpay_webhook_charge_dispute_created'     => array( 'dispute_created', 10, 2 ),
+			'simpay_webhook_charge_dispute_closed'      => array( 'dispute_closed', 10, 2 ),
 		);
 
 		// Update Checkout Session in Lite when viewing confirmation.
@@ -179,6 +183,116 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				)
 			);
 		}
+	}
+
+	/**
+	 * Marks a transaction as disputed when a chargeback is opened.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Event   $event   Stripe webhook event. Unused.
+	 * @param \SimplePay\Vendor\Stripe\Dispute $dispute Stripe Dispute.
+	 * @return void
+	 */
+	public function dispute_created( $event, $dispute ) {
+		$transaction = $this->get_disputed_transaction( $dispute );
+
+		if ( $transaction instanceof Transaction ) {
+			$this->transactions->update(
+				$transaction->id,
+				array( 'status' => 'disputed' )
+			);
+		}
+	}
+
+	/**
+	 * Updates a transaction when a chargeback is closed.
+	 *
+	 * A dispute that closes in our favour restores the payment to succeeded --
+	 * `won`, an inquiry closed without becoming a formal dispute
+	 * (`warning_closed`), or one Stripe prevented from becoming a chargeback
+	 * (`prevented`). A lost dispute leaves the transaction disputed, since the
+	 * funds have been withdrawn and there is no more accurate local state.
+	 *
+	 * The same split drives TransactionReconciler's safety net, which reads
+	 * these statuses from TransactionReconciler::UNRESOLVED_DISPUTE_STATUSES
+	 * rather than the charge's `disputed` flag -- that flag stays true after a
+	 * dispute closes, so it cannot tell a won dispute from an open one.
+	 *
+	 * "Restores" is deliberate: `disputed` overwrote whatever the row said
+	 * before, so closing one has to put back the status the row's own amounts
+	 * describe, not assume `succeeded`. A partially refunded payment that is
+	 * later disputed and won is still partially refunded, and this page reads
+	 * that as status `refunded` plus `amount_refunded` < `amount_total` -- so
+	 * writing `succeeded` here would drop the row out of the Partially
+	 * Refunded view and its count while the refund still stands.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Event   $event   Stripe webhook event. Unused.
+	 * @param \SimplePay\Vendor\Stripe\Dispute $dispute Stripe Dispute.
+	 * @return void
+	 */
+	public function dispute_closed( $event, $dispute ) {
+		$transaction = $this->get_disputed_transaction( $dispute );
+
+		if ( ! $transaction instanceof Transaction || ! isset( $dispute->status ) ) {
+			return;
+		}
+
+		$unresolved = in_array(
+			(string) $dispute->status,
+			TransactionReconciler::UNRESOLVED_DISPUTE_STATUSES,
+			true
+		);
+
+		if ( $unresolved ) {
+			return;
+		}
+
+		$this->transactions->update(
+			$transaction->id,
+			array( 'status' => self::get_undisputed_status( $transaction->amount_refunded ) )
+		);
+	}
+
+	/**
+	 * Returns the status a row should carry once a dispute against it no
+	 * longer stands, given how much of it has been refunded.
+	 *
+	 * Shared with TransactionReconciler, which mirrors this handler when the
+	 * `charge.dispute.closed` webhook is the one that goes missing, so both
+	 * paths restore the same status for the same row.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @param int|null $amount_refunded Amount refunded, in cents.
+	 * @return string Either 'refunded' or 'succeeded'.
+	 */
+	public static function get_undisputed_status( $amount_refunded ) {
+		return (int) $amount_refunded > 0 ? 'refunded' : 'succeeded';
+	}
+
+	/**
+	 * Resolves the local transaction a dispute refers to, via its PaymentIntent.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Dispute $dispute Stripe Dispute.
+	 * @return \SimplePay\Core\Model\ModelInterface|null
+	 */
+	private function get_disputed_transaction( $dispute ) {
+		if ( ! isset( $dispute->payment_intent ) || empty( $dispute->payment_intent ) ) {
+			return null;
+		}
+
+		$payment_intent = $dispute->payment_intent;
+
+		$object_id = is_object( $payment_intent ) && isset( $payment_intent->id )
+			? $payment_intent->id
+			: (string) $payment_intent;
+
+		return $this->transactions->get_by_object_id( $object_id );
 	}
 
 	/**
@@ -620,6 +734,33 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			return;
 		}
 
+		$this->rewrite_from_checkout_session(
+			$transaction,
+			$checkout_session,
+			$customer,
+			$payment_intent,
+			$subscription
+		);
+	}
+
+	/**
+	 * Rewrites a `checkout_session` placeholder transaction to the resulting
+	 * PaymentIntent/SetupIntent and marks it succeeded.
+	 *
+	 * Shared by the `checkout.session.completed` webhook and the reconciler so
+	 * a completed Checkout Session that never delivered a webhook (or whose
+	 * receipt was never viewed in Lite) is still recorded correctly.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @param \SimplePay\Core\Transaction\Transaction     $transaction Local transaction record.
+	 * @param \SimplePay\Vendor\Stripe\Checkout\Session   $checkout_session Checkout Session object.
+	 * @param \SimplePay\Vendor\Stripe\Customer           $customer Customer object.
+	 * @param \SimplePay\Vendor\Stripe\PaymentIntent|null $payment_intent PaymentIntent object, if available.
+	 * @param \SimplePay\Vendor\Stripe\Subscription|null  $subscription Subscription object, if available.
+	 * @return void
+	 */
+	public function rewrite_from_checkout_session( $transaction, $checkout_session, $customer, $payment_intent, $subscription ) {
 		// One time payment.
 		if (
 			'payment' === $checkout_session->mode &&

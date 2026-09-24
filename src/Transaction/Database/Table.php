@@ -42,7 +42,7 @@ class Table extends BerlinDBTable {
 	 *
 	 * @var int
 	 */
-	protected $version = 202404230001;
+	protected $version = 202608180001;
 
 	/**
 	 * {@inheritdoc}
@@ -60,6 +60,7 @@ class Table extends BerlinDBTable {
 		'202206170001' => 202206170001,
 		'202301090001' => 202301090001,
 		'202404230001' => 202404230001,
+		'202608180001' => 202608180001,
 	);
 
 	/**
@@ -85,6 +86,7 @@ class Table extends BerlinDBTable {
 			email varchar(255) DEFAULT NULL,
 			customer_id varchar(255) DEFAULT NULL,
 			subscription_id varchar(255) DEFAULT NULL,
+			stripe_account_id varchar(255) DEFAULT NULL,
 			status varchar(50) NOT NULL,
 			application_fee tinyint(1) NOT NULL DEFAULT false,
 			ip_address varchar(128) NOT NULL,
@@ -99,6 +101,7 @@ class Table extends BerlinDBTable {
 			KEY customer_id (customer_id),
 			KEY email (email),
 			KEY subscription_id (subscription_id),
+			KEY stripe_account_id (stripe_account_id),
 			KEY object_status (object(100),status(50))
 			';
 	}
@@ -166,6 +169,44 @@ class Table extends BerlinDBTable {
 		$this->get_db()->query(
 			"ALTER TABLE {$this->table_name} ADD COLUMN `amount_refunded` bigint(20) NOT NULL DEFAULT 0 AFTER `amount_discount`"
 		);
+
+		return $this->is_success( true );
+	}
+
+	/**
+	 * Upgrade to version 202608180001.
+	 *  - Add a `stripe_account_id` column so records can be scoped to the
+	 *    connected Stripe account (#3533).
+	 *  - Backfill existing rows with the currently connected account, since all
+	 *    pre-existing records belong to it.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @return bool
+	 */
+	protected function __202608180001() {
+		$this->get_db()->query(
+			"ALTER TABLE {$this->table_name} ADD COLUMN `stripe_account_id` varchar(255) DEFAULT NULL AFTER `subscription_id`"
+		);
+
+		$this->get_db()->query(
+			"ALTER TABLE {$this->table_name} ADD INDEX stripe_account_id (`stripe_account_id`)"
+		);
+
+		// Backfill: every existing row predates multi-account support, so it
+		// belongs to whichever account is connected now. The account ID is a
+		// Stripe `acct_...` identifier from a trusted option; esc_sql() guards
+		// the interpolation, consistent with the ALTER statements above.
+		$account_id = get_option( 'simpay_stripe_connect_account_id', '' );
+
+		if ( is_string( $account_id ) && '' !== trim( $account_id ) ) {
+			$account_id = esc_sql( trim( $account_id ) );
+
+			$this->get_db()->query(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
+				"UPDATE {$this->table_name} SET stripe_account_id = '{$account_id}' WHERE stripe_account_id IS NULL OR stripe_account_id = ''"
+			);
+		}
 
 		return $this->is_success( true );
 	}
