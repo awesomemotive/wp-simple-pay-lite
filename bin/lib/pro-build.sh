@@ -27,21 +27,34 @@ pb_npm_version() {
 # Echoes "<run_id> <head_sha> <head_branch>" for the newest successful
 # build-and-export run on release/<version> or hotfix/<version>.
 #
-# PB_V is passed through the environment because gh's --jq takes no --arg.
+# Scoped with --branch rather than a --limit window over recent runs: the
+# workflow also fires on pull_request, so a busy week can push a legitimate
+# release run past any fixed limit and produce a misleading "no successful
+# run" with advice to redispatch a build that already exists.
 pb_resolve_run() {
-	local version="$1" out
-	out=$(PB_V="$version" gh run list \
-		--repo "$PRO_REPO" \
-		--workflow "$PRO_WORKFLOW" \
-		--limit 100 \
-		--json databaseId,headBranch,headSha,conclusion \
-		--jq '[ .[]
-			| select(.conclusion == "success")
-			| select(.headBranch == "release/" + $ENV.PB_V
-			      or .headBranch == "hotfix/" + $ENV.PB_V)
-			] | .[0] | select(. != null)
-			  | "\(.databaseId) \(.headSha) \(.headBranch)"') || {
-		pb_die "could not list $PRO_WORKFLOW runs on $PRO_REPO"
+	local version="$1" branch out all=""
+
+	for branch in "release/$version" "hotfix/$version"; do
+		out=$(gh run list \
+			--repo "$PRO_REPO" \
+			--workflow "$PRO_WORKFLOW" \
+			--branch "$branch" \
+			--limit 50 \
+			--json databaseId,headBranch,headSha,conclusion,createdAt) || {
+			pb_die "could not list $PRO_WORKFLOW runs for $branch on $PRO_REPO"
+			return 1
+		}
+		all="$all$out"
+	done
+
+	out=$(printf '%s' "$all" | jq -rs 'add
+		| map(select(.conclusion == "success"))
+		| sort_by(.createdAt)
+		| reverse
+		| .[0]
+		| select(. != null)
+		| "\(.databaseId) \(.headSha) \(.headBranch)"') || {
+		pb_die "could not read the run list for $version"
 		return 1
 	}
 
@@ -53,22 +66,47 @@ pb_resolve_run() {
 	printf '%s\n' "$out"
 }
 
-# Echoes the current tip SHA of a branch on the Pro repo, or nothing when
-# the branch is gone.
+# Echoes the current tip SHA of a branch on the Pro repo.
+#
+# Exit status carries the distinction the caller needs: 0 with the SHA, 2
+# when the branch is genuinely gone (404), 1 for anything else. Collapsing
+# the last two into "empty output" would turn a lost token or a 5xx into
+# "the branch was merged", silently disabling the staleness guard.
 pb_branch_tip() {
-	gh api "repos/$PRO_REPO/git/ref/heads/$1" --jq '.object.sha' 2>/dev/null
+	local branch="$1" out code
+	out=$(gh api "repos/$PRO_REPO/git/ref/heads/$branch" --jq '.object.sha' 2>&1)
+	code=$?
+
+	if [ "$code" -eq 0 ]; then
+		printf '%s\n' "$out"
+		return 0
+	fi
+
+	case "$out" in
+		*404*|*"Not Found"*) return 2 ;;
+		*)
+			printf '%s\n' "$out" >&2
+			return 1
+			;;
+	esac
 }
 
 # Refuses a build whose branch has moved since it ran, so a release never
 # ships a tree that predates the last commit on its release branch.
 pb_assert_fresh() {
-	local run_sha="$1" branch="$2" tip
+	local run_sha="$1" branch="$2" tip code
 	tip=$(pb_branch_tip "$branch")
+	code=$?
 
-	if [ -z "$tip" ]; then
+	if [ "$code" -eq 2 ]; then
 		printf 'note: %s no longer exists on %s, skipping the staleness check\n' \
 			"$branch" "$PRO_REPO" >&2
 		return 0
+	fi
+
+	if [ "$code" -ne 0 ]; then
+		pb_die "could not read $branch on $PRO_REPO, so the staleness check cannot run. Refusing to skip it; pass --run <id> to proceed deliberately."
+		return 1
 	fi
 
 	[ "$tip" = "$run_sha" ] && return 0
@@ -76,7 +114,12 @@ pb_assert_fresh() {
 	pb_die "build is stale: $branch is now at $(printf '%s' "$tip" | cut -c1-7) but the run built $(printf '%s' "$run_sha" | cut -c1-7). Redispatch the build on Pro, or pass --run <id> to use it anyway."
 }
 
-PB_PAYLOAD_DIRS="data includes lib src views languages"
+PB_PAYLOAD_DIRS="data includes lib src views languages vendor"
+
+# Files that must be present before anything is written. uninstall.php and
+# license.txt are here because lt_apply copies them after the rsyncs: a
+# payload missing one would fail halfway and leave a partly applied tree.
+PB_PAYLOAD_FILES="stripe-checkout.php readme.txt uninstall.php license.txt"
 
 # Downloads artifact stripe-<version> from <run_id> into <dest> and echoes
 # the payload root. The artifact is uploaded unzipped with a stripe/ root.
@@ -121,7 +164,7 @@ pb_download() {
 # working tree is touched. This is what catches a --run pointing at the
 # wrong build.
 pb_validate_payload() {
-	local p="$1" version="$2" d
+	local p="$1" version="$2" d f
 
 	for d in $PB_PAYLOAD_DIRS; do
 		if [ ! -d "$p/$d" ]; then
@@ -133,6 +176,21 @@ pb_validate_payload() {
 			return 1
 		fi
 	done
+
+	for f in $PB_PAYLOAD_FILES; do
+		if [ ! -f "$p/$f" ]; then
+			pb_die "payload is missing $f"
+			return 1
+		fi
+	done
+
+	# stripe-checkout.php requires this at runtime, and vendor/ ships in the
+	# zip while the sync never touches it, so a missing autoloader would
+	# reach users as a fatal on activation.
+	if [ ! -f "$p/vendor/autoload.php" ]; then
+		pb_die "payload has no vendor/autoload.php, so the plugin would fatal on activation"
+		return 1
+	fi
 
 	if [ -d "$p/includes/pro" ]; then
 		pb_die "payload contains includes/pro, so it is a Pro build rather than a Lite build"

@@ -1616,6 +1616,6 @@ git commit -m "Document the sync-based release process"
 ## Done when
 
 - `bash bin/tests/run.sh` passes with no network access
-- `bin/sync-from-pro.sh 4.17.4 --dry-run` against the real Pro run reports the 4.17.4 changes and zero unexpected deletions
+- `bin/sync-from-pro.sh 4.17.4 --run 36035629943 --dry-run` against the real Pro build reports the 4.17.4 changes and zero deletions. The plain `--dry-run` form correctly aborts as stale, because `release/4.17.4` moved after run 36017634822 built it
 - `npx grunt copy:main` produces a `build/stripe/` with no `bin/`, `docs/` or `.claude/`
 - `.claude/commands/wpsp-prep-release.md` is gone

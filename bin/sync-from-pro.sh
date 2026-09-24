@@ -18,12 +18,16 @@ repo="${LITE_REPO:-$(cd "$here/.." && pwd)}"
 usage() {
 	cat >&2 <<'USAGE'
 usage: bin/sync-from-pro.sh <version> [--run ID] [--dry-run] [--force]
+                            [--allow-deletions]
 
-  <version>   X.Y.Z or X.Y.Z.N, for example 4.17.4
-  --run ID    use this Pro run instead of resolving one, and skip the
-              staleness check
-  --dry-run   print what would change, then exit without writing
-  --force     apply even when the sync set has uncommitted changes
+  <version>          X.Y.Z or X.Y.Z.N, for example 4.17.4
+  --run ID           use this Pro run instead of resolving one, and skip
+                     the staleness check
+  --dry-run          print what would change, then exit without writing
+  --force            apply even when the sync set has uncommitted changes
+  --allow-deletions  apply even though the sync removes files. Review the
+                     reported paths first: a path that looks Lite-only
+                     means the build is wrong, not that you should proceed
 USAGE
 	exit 2
 }
@@ -32,6 +36,7 @@ version=""
 run_id=""
 dry_run=0
 force=0
+allow_deletions=0
 
 while [ $# -gt 0 ]; do
 	case "$1" in
@@ -42,6 +47,7 @@ while [ $# -gt 0 ]; do
 			;;
 		--dry-run) dry_run=1; shift ;;
 		--force) force=1; shift ;;
+		--allow-deletions) allow_deletions=1; shift ;;
 		-h|--help) usage ;;
 		-*) printf 'error: unknown option %s\n' "$1" >&2; usage ;;
 		*)
@@ -102,6 +108,15 @@ if [ "$dry_run" -eq 1 ]; then
 	done
 	printf '\ndry run, nothing written\n'
 	exit 0
+fi
+
+# Deletions are the one change the sync cannot self-check: dropping a file
+# is correct when Pro removed it and wrong when the path is Lite-only, and
+# only a person can tell those apart. So it is a gate in code, not advice.
+if [ -n "$deletions" ] && [ "$allow_deletions" -eq 0 ]; then
+	printf '\nerror: refusing to apply a sync that deletes files.\n' >&2
+	printf 'review the paths above. If Pro really dropped them, re-run with --allow-deletions.\n' >&2
+	exit 1
 fi
 
 lt_apply "$payload" "$repo"

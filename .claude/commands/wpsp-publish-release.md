@@ -4,13 +4,20 @@ Publish the GitHub Release for version `$ARGUMENTS`. Run this after the `release
 
 - The version is `$ARGUMENTS`. If none was given, ask the user for one before proceeding.
 - `git checkout master && git pull origin master`
-- Confirm `master` states the version:
+- Confirm `master` states the version. Use `grep -qxF` with an explicit
+  branch: `grep -c` exits non-zero on zero matches, which reads as a tool
+  failure rather than an answer, and `$ARGUMENTS` in a pattern would treat
+  the dots as wildcards.
 
   ```bash
-  grep -c "^ \* Version: $ARGUMENTS\$" stripe-checkout.php
+  if grep -qxF " * Version: $ARGUMENTS" stripe-checkout.php; then
+    echo "merged"
+  else
+    echo "NOT merged"
+  fi
   ```
 
-  If it is not `1`, the PR has not merged. Stop and tell the user.
+  If it prints `NOT merged`, stop and tell the user the PR has not landed.
 
 - Confirm the tag is free:
 
@@ -22,11 +29,27 @@ Publish the GitHub Release for version `$ARGUMENTS`. Run this after the `release
 
 ## Step 2: Build the zip
 
+Pass the Pro run ID that `/wpsp-sync-release` used, which is recorded in the
+release PR body. Without `--run`, this script resolves a run of its own,
+which can be a redispatch built after the sync.
+
 ```bash
-bin/release-zip.sh $ARGUMENTS
+bin/release-zip.sh $ARGUMENTS --run <id>
 ```
 
-This downloads the same artifact the sync used and rezips it. It does not rebuild anything locally. The last line of output is the zip path.
+It rezips that artifact and does not rebuild anything locally, so the
+released zip is the one Pro built.
+
+Before zipping, it compares the artifact against the working tree across the
+sync set and refuses on any difference, so the published zip cannot contain
+code that was never synced. If it refuses:
+
+- the run ID is probably wrong. Get the right one from the PR body.
+- `--allow-tree-mismatch` overrides the check. Only use it to rebuild an
+  older release's zip from a checkout that has moved on, and tell the user
+  that is what you are doing.
+
+The last line of output is the zip path.
 
 ## Step 3: Get the release description
 
@@ -46,4 +69,4 @@ This creates the tag on `master` as a side effect, so there is no separate taggi
 
 ## Step 5: Summary
 
-Report the release URL, the tagged commit, and the attached zip's name and size.
+Report the release URL, the tagged commit, the Pro run ID the zip came from, and the attached zip's name and size.

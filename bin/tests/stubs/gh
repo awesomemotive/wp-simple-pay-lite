@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Fake `gh` for the release-script tests. Answers from $GH_STUB_DIR:
-#   run-list.json   for `gh run list`
+#   run-list.json   for `gh run list`, filtered by --branch
 #   artifacts.json  for `gh api .../artifacts`
 #   ref.json        for `gh api .../git/ref/heads/...`
-#   payload/stripe  copied out by `gh run download`
+#   payload/stripe  copied out by `gh run download`, gated on --name
+#   api-fail        if present, every `gh api` call fails as HTTP 503
+# Every invocation is logged to $GH_STUB_DIR/calls.log so tests can assert
+# which repo, workflow and artifact the scripts actually asked for.
 set -uo pipefail
 
 [ -n "${GH_STUB_DIR:-}" ] || { echo "gh stub: GH_STUB_DIR unset" >&2; exit 1; }
@@ -27,15 +30,38 @@ subcommand="${1:-} ${2:-}"
 case "$subcommand" in
 	"run list")
 		expr=$(flag_value --jq "$@")
-		jq -r "${expr:-.}" <"$GH_STUB_DIR/run-list.json"
+		branch=$(flag_value --branch "$@")
+		if [ -n "$branch" ]; then
+			filtered=$(BR="$branch" jq '[.[] | select(.headBranch == $ENV.BR)]' \
+				<"$GH_STUB_DIR/run-list.json")
+		else
+			filtered=$(cat "$GH_STUB_DIR/run-list.json")
+		fi
+		if [ -n "$expr" ]; then
+			printf '%s' "$filtered" | jq -r "$expr"
+		else
+			printf '%s' "$filtered"
+		fi
 		;;
 	"run download")
 		dest=$(flag_value --dir "$@")
+		name=$(flag_value --name "$@")
 		[ -n "$dest" ] || { echo "gh stub: run download without --dir" >&2; exit 1; }
+		# Real gh fails when the named artifact is not on the run.
+		if [ -n "$name" ] && [ -f "$GH_STUB_DIR/artifact-name" ]; then
+			if [ "$name" != "$(cat "$GH_STUB_DIR/artifact-name")" ]; then
+				echo "gh stub: no artifact named $name" >&2
+				exit 1
+			fi
+		fi
 		mkdir -p "$dest"
 		cp -R "$GH_STUB_DIR/payload/stripe" "$dest/stripe"
 		;;
 	"api "*)
+		if [ -f "$GH_STUB_DIR/api-fail" ]; then
+			echo "gh: HTTP 503: Service Unavailable" >&2
+			exit 1
+		fi
 		path="$2"
 		expr=$(flag_value --jq "$@")
 		case "$path" in
@@ -43,7 +69,10 @@ case "$subcommand" in
 			*/git/ref/heads/*) src="$GH_STUB_DIR/ref.json" ;;
 			*) echo "gh stub: unknown api path $path" >&2; exit 1 ;;
 		esac
-		[ -f "$src" ] || exit 1
+		if [ ! -f "$src" ]; then
+			echo "gh: Not Found (HTTP 404)" >&2
+			exit 1
+		fi
 		jq -r "${expr:-.}" <"$src"
 		;;
 	*)

@@ -1,7 +1,7 @@
 # Syncing Lite from the Pro build
 
 Date: 2026-09-24
-Status: approved design, not yet implemented
+Status: implemented on crossi/add/lite-sync-from-pro
 
 ## Problem
 
@@ -50,7 +50,7 @@ Lite only consumes its output, so the committed tree is the tree that was
 built and tested rather than a re-derivation of it.
 
 Applying the artifact uses per-directory `rsync -a --delete` over the five
-directories the artifact fully owns, plus explicit copies of the loose
+directories the artifact owns in this repo, plus explicit copies of the loose
 files. Deletions are therefore confined to Pro-owned paths: a file removed
 in Pro disappears from Lite, and nothing Lite-only is ever at risk.
 
@@ -99,10 +99,19 @@ Given a version, the newest successful `build-and-export.yml` run on
 or `hotfix/<version>` and which has a non-expired `stripe-<version>`
 artifact.
 
+Resolution is scoped with `gh run list --branch`, not a fixed `--limit`
+window over recent runs: the workflow also fires on `pull_request`, so a
+busy week can push a legitimate release run past any limit and produce a
+misleading "no successful run" alongside advice to redispatch a build that
+already exists.
+
 The run's head SHA is compared against that branch's current tip. A
 mismatch means the branch moved after the build, so the artifact is stale
 and the script refuses to proceed, naming both SHAs and telling the user to
-redispatch the build or pass `--run <id>`.
+redispatch the build or pass `--run <id>`. Reading the tip distinguishes a
+genuine 404 from every other failure and fails closed on the latter: a lost
+token or a 5xx must not read as "the branch was merged" and quietly disable
+the guard.
 
 `--run <id>` overrides resolution entirely. This covers builds dispatched
 from a differently-named branch, such as the `release/4.17.4-verify` run.
@@ -112,7 +121,12 @@ from a differently-named branch, such as the `release/4.17.4-verify` run.
 The payload is checked before the working tree is touched, so a bad
 artifact leaves the repo untouched:
 
-- all five directories present and non-empty
+- all six directories present and non-empty (the five synced ones plus
+  `vendor/`, which ships in the zip even though the sync never touches it)
+- `vendor/autoload.php` present, since `stripe-checkout.php` requires it and
+  a missing one is a fatal on activation
+- `stripe-checkout.php`, `readme.txt`, `uninstall.php` and `license.txt`
+  present, so the apply step cannot fail partway through
 - `includes/pro` absent
 - `stripe-checkout.php` `Version:` header equals the requested version
 - `stripe-checkout.php` `SIMPLE_PAY_VERSION` equals the requested version
@@ -134,14 +148,24 @@ four-part version. The assertion compares the normalized forms.
 downloads the artifact to a temp directory, validates the payload. Both
 entry points share it so run resolution has exactly one implementation.
 
-`bin/sync-from-pro.sh <version> [--run ID] [--dry-run] [--force]`. Sources
-the helper, applies the sync set, stamps `package.json`, runs the version
-assertion, prints a change summary. `--dry-run` prints the itemized rsync
+`bin/sync-from-pro.sh <version> [--run ID] [--dry-run] [--force]
+[--allow-deletions]`. Sources the helper, applies the sync set, stamps
+`package.json`, runs the version assertion, prints a change summary.
+Deletions are a gate rather than a warning: dropping a file is right when
+Pro removed it and wrong when the path is Lite-only, only a person can tell
+those apart, so the apply refuses without `--allow-deletions`. `--dry-run` prints the itemized rsync
 changes and exits without writing. Aborts if the working tree is dirty
 within the sync set unless `--force`.
 
-`bin/release-zip.sh <version> [--run ID]`. Sources the helper, rezips the
-artifact's `stripe/` root to `build/stripe-<version>.zip`.
+`bin/release-zip.sh <version> [--run ID] [--allow-tree-mismatch]`. Sources
+the helper, rezips the artifact's `stripe/` root to
+`build/stripe-<version>.zip`. Refuses when the payload's contents differ
+from the working tree's sync set, unless overridden.
+
+`bin/lib/lite-tree.sh`, sourced. Holds the tree operations: the deletion
+preview, the apply, the `package.json` stamp, the version assertion, and the
+payload-versus-tree comparison. Split out from the entry points so the tests
+can source these functions without executing a CLI's main body.
 
 `/wpsp-sync-release <version>`. Checks out `release/<version>`, creating it
 from `origin/master` if absent (after confirming with the user). Runs
@@ -163,7 +187,11 @@ The PR body carries three things:
 `/wpsp-publish-release <version>`. Run after the PR merges. Confirms
 `master` carries the release commit, that `stripe-checkout.php` on `master`
 states the version, and that no `<version>` tag exists yet. Runs
-`bin/release-zip.sh`. Asks for the release description, defaulting to the
+`bin/release-zip.sh --run <id>` with the run ID recorded in the sync PR
+body, and that script refuses to zip a payload whose contents differ from
+the working tree's sync set: it resolves its own run when not given one, and
+a redispatch would otherwise publish code that was never synced while every
+version string still agreed. Asks for the release description, defaulting to the
 Lite release PR URL. Then one `gh release create <version> --target master
 --title <version>` call, which creates the tag on `master` as a side effect,
 with `build/stripe-<version>.zip` attached. Prints the release URL.
@@ -190,9 +218,15 @@ directories match the artifact regardless of prior state, and
 artifact produces no second diff, and the command reports the tree as
 already in sync.
 
-A failed validation aborts before any write. A failure partway through the
-rsyncs leaves a partial tree, recoverable by re-running the sync or by
-`git checkout -- .`, which is why the dirty-tree guard exists.
+A failed validation aborts before any write, which is why validation covers
+every path the apply step touches, `vendor/autoload.php`, `uninstall.php`
+and `license.txt` included.
+
+If an apply still fails partway through, recovery is
+`git checkout -- . && git clean -fd`: the checkout alone restores modified
+files but leaves behind whatever rsync added. Re-running the sync also
+works, but only with `--force`, because the partial apply has made the sync
+set dirty and the dirty-tree guard will otherwise refuse.
 
 ## Out of scope
 

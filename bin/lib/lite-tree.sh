@@ -24,13 +24,55 @@ lt_dirty() {
 }
 
 # Echoes the paths that applying <payload> would delete from <repo>.
+#
+# Fails rather than under-reporting: this list is the only thing that can
+# stop a release from dropping files, so an rsync error here must be loud.
 lt_deletions() {
-	local payload="$1" repo="$2" d
+	local payload="$1" repo="$2" d out
 	for d in $LT_DIRS; do
-		rsync -a --delete --dry-run --itemize-changes \
-			"$payload/$d/" "$repo/$d/" 2>/dev/null \
-			| sed -n "s|^\*deleting  *|$d/|p"
+		out=$(rsync -a --delete --dry-run --itemize-changes \
+			"$payload/$d/" "$repo/$d/" 2>&1) || {
+			printf 'error: could not enumerate deletions for %s/: %s\n' \
+				"$d" "$out" >&2
+			return 1
+		}
+		printf '%s\n' "$out" | sed -n "s|^\*deleting  *|$d/|p"
 	done
+	return 0
+}
+
+# Echoes "<sha>  <path>" for every file in the sync set, so two trees can be
+# compared without walking anything the sync does not own. vendor/ is left
+# out because it is gitignored here and only ever exists in the payload.
+lt_sync_manifest() {
+	local root="$1" d f
+	for d in $LT_DIRS; do
+		( cd "$root" && find "$d" -type f -exec shasum {} + ) 2>/dev/null
+	done
+	for f in $LT_FILES $LT_POT; do
+		( cd "$root" && shasum "$f" ) 2>/dev/null
+	done
+}
+
+# Refuses when <payload> is not the build the tree was synced from.
+#
+# bin/release-zip.sh resolves a run of its own, which can be a redispatch
+# built after the sync. Every version string would still agree, so this
+# content comparison is what keeps the published zip and the merged tree
+# from diverging silently.
+lt_assert_matches() {
+	local payload="$1" repo="$2" a b
+	a=$(lt_sync_manifest "$payload" | sort -k2)
+	b=$(lt_sync_manifest "$repo" | sort -k2)
+
+	[ "$a" = "$b" ] && return 0
+
+	printf 'error: the build payload does not match this working tree.\n' >&2
+	printf 'the zip would ship code that was never synced here.\n' >&2
+	printf 'differing paths (< payload, > tree):\n' >&2
+	diff <(printf '%s\n' "$a") <(printf '%s\n' "$b") \
+		| sed -n 's/^[<>] *[0-9a-f]\{40\}  */  /p' | sort -u | head -40 >&2
+	return 1
 }
 
 # Makes <repo> match <payload> across the sync set. vendor/ is untouched.

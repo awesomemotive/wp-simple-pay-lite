@@ -15,7 +15,8 @@ mkdir -p "$GH_STUB_DIR/payload"
 : >"$GH_STUB_DIR/calls.log"
 
 payload="$GH_STUB_DIR/payload/stripe"
-mkdir -p "$payload"/{data,includes,lib,src,views,languages}
+mkdir -p "$payload"/{data,includes,lib,src,views,languages,vendor}
+printf '<?php // autoload\n' >"$payload/vendor/autoload.php"
 for d in data includes lib views; do printf 'x\n' >"$payload/$d/.keep"; done
 printf 'from pro\n' >"$payload/src/App.php"
 cat >"$payload/stripe-checkout.php" <<'PHP'
@@ -31,7 +32,7 @@ printf 'uninstall\n' >"$payload/uninstall.php"
 printf 'license\n' >"$payload/license.txt"
 
 cat >"$GH_STUB_DIR/run-list.json" <<'JSON'
-[{"databaseId": 900, "headBranch": "release/4.17.4", "headSha": "tipsha0000000000000000000000000000000", "conclusion": "success"}]
+[{"databaseId": 900, "headBranch": "release/4.17.4", "headSha": "tipsha0000000000000000000000000000000", "conclusion": "success", "createdAt": "2026-09-24T17:00:00Z"}]
 JSON
 printf '{"object":{"sha":"tipsha0000000000000000000000000000000"}}\n' >"$GH_STUB_DIR/ref.json"
 printf '{"artifacts":[{"name":"stripe-4.17.4","expired":false}]}\n' >"$GH_STUB_DIR/artifacts.json"
@@ -98,5 +99,46 @@ LITE_REPO="$work/stale" bash "$script" 4.17.4 >/dev/null 2>&1
 assert_eq "stale build is refused" "1" "$?"
 LITE_REPO="$work/stale" bash "$script" 4.17.4 --run 900 >/dev/null 2>&1
 assert_eq "--run bypasses staleness" "0" "$?"
+
+# --- deletions are a hard gate --------------------------------------------
+
+# Finding 7: the deletion report used to be advisory, so nothing in code
+# stopped a release that silently dropped Lite files.
+#
+# The staleness tests above left ref.json on a moved SHA; restore it so a
+# failure here can only come from the deletion gate.
+printf '{"object":{"sha":"tipsha0000000000000000000000000000000"}}\n' >"$GH_STUB_DIR/ref.json"
+
+make_repo "$work/del"
+printf 'lite only\n' >"$work/del/src/LiteOnly.php"
+git -C "$work/del" add -A
+git -C "$work/del" -c user.email=t@t -c user.name=t commit -qm add-lite-only
+LITE_REPO="$work/del" bash "$script" 4.17.4 >/dev/null 2>&1
+assert_eq "deletions block the sync" "1" "$?"
+assert_ok "the file survives a blocked sync" test -f "$work/del/src/LiteOnly.php"
+del_msg=$(LITE_REPO="$work/del" bash "$script" 4.17.4 2>&1 || true)
+assert_contains "blocked sync names the flag" "--allow-deletions" "$del_msg"
+LITE_REPO="$work/del" bash "$script" 4.17.4 --allow-deletions >/dev/null 2>&1
+assert_eq "--allow-deletions lets it through" "0" "$?"
+assert_fails "the file is gone once allowed" test -f "$work/del/src/LiteOnly.php"
+
+# A dry run reports deletions without needing the flag.
+make_repo "$work/deldry"
+printf 'lite only\n' >"$work/deldry/src/LiteOnly.php"
+dry_out=$(LITE_REPO="$work/deldry" bash "$script" 4.17.4 --dry-run 2>&1)
+assert_contains "dry run still reports deletions" "src/LiteOnly.php" "$dry_out"
+assert_ok "dry run leaves the file alone" test -f "$work/deldry/src/LiteOnly.php"
+
+# --- resolution coordinates ------------------------------------------------
+
+# Finding 8: --run must not consult the branch tip at all.
+make_repo "$work/norun"
+: >"$GH_STUB_DIR/calls.log"
+LITE_REPO="$work/norun" bash "$script" 4.17.4 --run 900 >/dev/null 2>&1
+calls=$(cat "$GH_STUB_DIR/calls.log")
+case "$calls" in
+	*git/ref*) fail "--run skips the branch lookup" "it called git/ref anyway" ;;
+	*) ok "--run skips the branch lookup" ;;
+esac
 
 summary

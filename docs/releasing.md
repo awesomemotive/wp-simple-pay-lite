@@ -37,13 +37,39 @@ then asserts that all four version locations agree before you commit.
 - `--run <id>` uses a specific Pro run and skips the staleness check, for
   when the build was dispatched from a branch not named `release/X.Y.Z`
 - `--force` applies over uncommitted changes in the sync set
+- `--allow-deletions` is required when the sync would remove files. Read the
+  reported paths first: a Lite-only path means the build is wrong
 
-`bin/release-zip.sh X.Y.Z` rezips the artifact into
+`bin/release-zip.sh X.Y.Z --run <id>` rezips that run's artifact into
 `build/stripe-X.Y.Z.zip` for the GitHub Release. It does not rebuild
 anything, so the released zip is the one the Pro build produced.
 
+Pass the run ID the sync used, which is in the release PR body. Without it
+the script resolves its own run, which may be a redispatch built after the
+sync. It compares the artifact against the working tree and refuses on any
+difference, so the published zip cannot contain code that was never synced.
+`--allow-tree-mismatch` overrides that, and is only for rebuilding an older
+release's zip from a checkout that has moved on.
+
 By default both refuse a build whose release branch has moved since the run,
 because that artifact no longer matches the branch.
+
+## If a sync fails partway through
+
+Validation runs before anything is written, so a bad artifact leaves the
+tree untouched. If an apply still fails mid-way:
+
+```bash
+git checkout -- . && git clean -fd
+```
+
+The checkout restores modified files; `git clean -fd` is what removes the
+files the partial apply added. Re-running the sync also works, but needs
+`--force`, because the partial apply has made the sync set dirty.
+
+## Requirements
+
+`gh` (authenticated, `repo` scope), `jq`, `rsync`, `zip`, `node` and `npm`.
 
 ## Tests
 

@@ -12,7 +12,8 @@ trap 'rm -rf "$work"' EXIT
 # A payload carrying one new file, one changed file, and no copy of the
 # repo's Lite-only extras.
 payload="$work/payload/stripe"
-mkdir -p "$payload"/{data,includes,lib,src,views,languages}
+mkdir -p "$payload"/{data,includes,lib,src,views,languages,vendor}
+printf '<?php // autoload\n' >"$payload/vendor/autoload.php"
 printf 'placeholder\n' >"$payload/data/.keep"
 printf 'placeholder\n' >"$payload/includes/.keep"
 printf 'placeholder\n' >"$payload/lib/.keep"
@@ -99,5 +100,41 @@ before=$(find "$repo" -type f -exec shasum {} \; | sort | shasum)
 lt_apply "$payload" "$repo"
 after=$(find "$repo" -type f -exec shasum {} \; | sort | shasum)
 assert_eq "apply is idempotent" "$before" "$after"
+
+# --- deletions must not fail silently -------------------------------------
+
+# Finding 4: an rsync error during enumeration previously returned 0 with
+# that directory's deletions missing, under-reporting the one signal that is
+# supposed to be able to stop a release.
+# An unreadable source is what openrsync actually errors on (rc 23); a
+# destination that is a file it tolerates during --dry-run.
+broken="$work/broken-payload"
+mkdir -p "$broken"/{includes,lib,src,views}
+assert_fails "deletion enumeration fails loudly" lt_deletions "$broken" "$repo"
+broke_msg=$(lt_deletions "$broken" "$repo" 2>&1 || true)
+assert_contains "names the directory it could not read" "data/" "$broke_msg"
+
+# --- the payload must match the tree it is zipped from --------------------
+
+# Finding 1: the release zip is built from a freshly resolved run, so
+# without this the published bytes can be a build that was never synced.
+assert_ok "matches right after a sync" lt_assert_matches "$payload" "$repo"
+
+printf 'drifted\n' >"$repo/src/Changed.php"
+assert_fails "catches a drifted file" lt_assert_matches "$payload" "$repo"
+drift_msg=$(lt_assert_matches "$payload" "$repo" 2>&1 || true)
+assert_contains "drift message names the file" "src/Changed.php" "$drift_msg"
+
+printf 'changed by pro\n' >"$repo/src/Changed.php"
+printf 'extra\n' >"$repo/src/Extra.php"
+assert_fails "catches an extra file" lt_assert_matches "$payload" "$repo"
+rm -f "$repo/src/Extra.php"
+assert_ok "matches again once the tree is restored" lt_assert_matches "$payload" "$repo"
+
+# A Crowdin .po in the tree is outside the sync set, so it must not count as
+# drift.
+printf 'crowdin\n' >"$repo/languages/de_DE.po"
+assert_ok "a Crowdin po is not drift" lt_assert_matches "$payload" "$repo"
+rm -f "$repo/languages/de_DE.po"
 
 summary
