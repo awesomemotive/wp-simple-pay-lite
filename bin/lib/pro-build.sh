@@ -75,3 +75,104 @@ pb_assert_fresh() {
 
 	pb_die "build is stale: $branch is now at $(printf '%s' "$tip" | cut -c1-7) but the run built $(printf '%s' "$run_sha" | cut -c1-7). Redispatch the build on Pro, or pass --run <id> to use it anyway."
 }
+
+PB_PAYLOAD_DIRS="data includes lib src views languages"
+
+# Downloads artifact stripe-<version> from <run_id> into <dest> and echoes
+# the payload root. The artifact is uploaded unzipped with a stripe/ root.
+pb_download() {
+	local run_id="$1" version="$2" dest="$3" name expired
+	name="stripe-$version"
+
+	expired=$(PB_NAME="$name" gh api \
+		"repos/$PRO_REPO/actions/runs/$run_id/artifacts" \
+		--jq '[.artifacts[] | select(.name == $ENV.PB_NAME)] | .[0].expired') || {
+		pb_die "could not list artifacts for run $run_id on $PRO_REPO"
+		return 1
+	}
+
+	case "$expired" in
+		false) : ;;
+		true)
+			pb_die "artifact $name on run $run_id has expired. Redispatch the build on Pro."
+			return 1
+			;;
+		*)
+			pb_die "run $run_id has no artifact named $name."
+			return 1
+			;;
+	esac
+
+	mkdir -p "$dest"
+	gh run download "$run_id" --repo "$PRO_REPO" --name "$name" --dir "$dest" >/dev/null || {
+		pb_die "downloading $name from run $run_id failed"
+		return 1
+	}
+
+	if [ ! -d "$dest/stripe" ]; then
+		pb_die "artifact $name did not unpack to a stripe/ root"
+		return 1
+	fi
+
+	printf '%s\n' "$dest/stripe"
+}
+
+# Rejects anything that is not the Lite tree at <version>, before the
+# working tree is touched. This is what catches a --run pointing at the
+# wrong build.
+pb_validate_payload() {
+	local p="$1" version="$2" d
+
+	for d in $PB_PAYLOAD_DIRS; do
+		if [ ! -d "$p/$d" ]; then
+			pb_die "payload is missing $d/"
+			return 1
+		fi
+		if [ -z "$(ls -A "$p/$d")" ]; then
+			pb_die "payload directory $d/ is empty"
+			return 1
+		fi
+	done
+
+	if [ -d "$p/includes/pro" ]; then
+		pb_die "payload contains includes/pro, so it is a Pro build rather than a Lite build"
+		return 1
+	fi
+
+	if ! grep -qxF " * Version: $version" "$p/stripe-checkout.php"; then
+		pb_die "payload stripe-checkout.php header is not 'Version: $version'"
+		return 1
+	fi
+
+	if ! grep -qF "define( 'SIMPLE_PAY_VERSION', '$version' );" "$p/stripe-checkout.php"; then
+		pb_die "payload SIMPLE_PAY_VERSION is not '$version'"
+		return 1
+	fi
+
+	if ! grep -qxF "Stable tag: $version" "$p/readme.txt"; then
+		pb_die "payload readme.txt stable tag is not '$version'"
+		return 1
+	fi
+
+	if ! grep -qF "Project-Id-Version: WP Simple Pay Lite $version" "$p/languages/stripe.pot"; then
+		pb_die "payload stripe.pot was generated against a different version than $version"
+		return 1
+	fi
+
+	return 0
+}
+
+# Echoes the changelog block for <version> from a Lite readme.txt. Headings
+# look like "= Stripe Payment Forms 4.17.4 - September 24, 2026 =", so the
+# version is matched as a substring rather than anchored.
+pb_changelog_block() {
+	local readme="$1" version="$2"
+	awk -v needle=" $version - " '
+		substr($0, 1, 2) == "= " {
+			if (inb) { exit }
+			if (index($0, needle) > 0) { inb = 1; print; next }
+			next
+		}
+		inb { print }
+	' "$readme"
+}
