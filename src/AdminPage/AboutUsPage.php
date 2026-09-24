@@ -391,6 +391,15 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 					'act'  => 'go-to-url',
 				),
 			),
+
+			// LedgerPort.
+			'ledgerport/ledgerport.php'                   => array(
+				'icon'  => $images_url . 'plugin-ledgerport.png',
+				'name'  => esc_html__( 'LedgerPort', 'stripe' ),
+				'desc'  => esc_html__( 'Automate your e-commerce accounting. LedgerPort connects your store to QuickBooks Online and syncs orders, refunds, and payouts in real time, so your books stay accurate without manual data entry.', 'stripe' ),
+				'wporg' => 'https://wordpress.org/plugins/ledgerport/',
+				'url'   => 'https://downloads.wordpress.org/plugin/ledgerport.zip',
+			),
 		);
 
 		foreach ( $am_plugins as $plugin_name => $details ) {

@@ -225,10 +225,19 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 	 * Redirects back to the payment page if needed.
 	 *
 	 * @since 4.7.10
+	 * @since 4.17.4 Never redirect administration requests.
 	 *
 	 * @return void
 	 */
 	public function maybe_redirect_back() {
+		// This runs on `init`, which also fires in the administration area.
+		// Payment confirmations are always front-end requests, and the target
+		// is a front-end permalink, so an admin screen that happens to carry a
+		// `form_id` query variable must never be redirected away.
+		if ( is_admin() ) {
+			return;
+		}
+
 		// Do nothing if it is cancle request.
 		if ( isset( $_GET['cancel'] ) ) {
 			return;
