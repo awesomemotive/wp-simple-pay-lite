@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Fake `gh` for the release-script tests. Answers from $GH_STUB_DIR:
+#   run-list.json   for `gh run list`
+#   artifacts.json  for `gh api .../artifacts`
+#   ref.json        for `gh api .../git/ref/heads/...`
+#   payload/stripe  copied out by `gh run download`
+set -uo pipefail
+
+[ -n "${GH_STUB_DIR:-}" ] || { echo "gh stub: GH_STUB_DIR unset" >&2; exit 1; }
+printf '%s\n' "$*" >>"$GH_STUB_DIR/calls.log"
+
+# Echoes the value of a named flag from the remaining arguments.
+flag_value() {
+	local want="$1"
+	shift
+	while [ $# -gt 0 ]; do
+		if [ "$1" = "$want" ]; then
+			printf '%s' "${2-}"
+			return 0
+		fi
+		shift
+	done
+}
+
+subcommand="${1:-} ${2:-}"
+
+case "$subcommand" in
+	"run list")
+		expr=$(flag_value --jq "$@")
+		jq -r "${expr:-.}" <"$GH_STUB_DIR/run-list.json"
+		;;
+	"run download")
+		dest=$(flag_value --dir "$@")
+		[ -n "$dest" ] || { echo "gh stub: run download without --dir" >&2; exit 1; }
+		mkdir -p "$dest"
+		cp -R "$GH_STUB_DIR/payload/stripe" "$dest/stripe"
+		;;
+	"api "*)
+		path="$2"
+		expr=$(flag_value --jq "$@")
+		case "$path" in
+			*/artifacts) src="$GH_STUB_DIR/artifacts.json" ;;
+			*/git/ref/heads/*) src="$GH_STUB_DIR/ref.json" ;;
+			*) echo "gh stub: unknown api path $path" >&2; exit 1 ;;
+		esac
+		[ -f "$src" ] || exit 1
+		jq -r "${expr:-.}" <"$src"
+		;;
+	*)
+		echo "gh stub: unhandled '$*'" >&2
+		exit 1
+		;;
+esac
