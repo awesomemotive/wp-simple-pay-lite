@@ -18,12 +18,15 @@ use SimplePay\Core\API\Customers;
 use WP_REST_Response;
 use WP_REST_Server;
 use SimplePay\Core\RestApi\Internal\Utils\TokenValidationUtils;
+use SimplePay\Core\RestApi\Internal\Utils\RateLimitValidationUtils;
 /**
  * SendSubscriptions class.
  *
  * @since 4.8.0
  */
 class SendSubscriptions implements SubscriberInterface {
+
+	use RateLimitValidationUtils;
 
 	/**
 	 * Email address of the customer associated with the class instance.
@@ -88,12 +91,16 @@ class SendSubscriptions implements SubscriberInterface {
 	/**
 	 * Determines if the current user can request for subscription managment.
 	 *
+	 * This route is intentionally public so that customers can request their own
+	 * management links without authenticating. Abuse is mitigated inside
+	 * `send_data()` via CAPTCHA token validation, IP rate limiting, and a
+	 * constant (non-enumerable) response.
+	 *
 	 * @since 4.8.0
 	 *
 	 * @return bool
 	 */
 	public function can_request_for_data() {
-		// TODO: A discussion needs to determine whether this API will be made public.
 		return true;
 	}
 
@@ -110,6 +117,21 @@ class SendSubscriptions implements SubscriberInterface {
 
 		// Initialize the result array.
 		$result = array();
+
+		// Throttle abuse of this public endpoint (email enumeration / outbound
+		// email relay) before doing any work or contacting Stripe.
+		if ( ! $this->validate_rate_limit( $request ) ) {
+			return new WP_REST_Response(
+				array(
+					'status'  => 'error',
+					'message' => __(
+						'Too many requests. Please try again later.',
+						'stripe'
+					),
+				),
+				429
+			);
+		}
 
 		// Check if all requirements are met before proceeding.
 		$requirements = $this->check_requirements( $request );
@@ -305,22 +327,28 @@ class SendSubscriptions implements SubscriberInterface {
 	 */
 	public function send_email() {
 
+		// A single, constant response is returned regardless of whether any
+		// purchases were found. This prevents the endpoint from being used to
+		// enumerate which email addresses have an associated Stripe customer.
+		$response = array(
+			'status'  => 'success',
+			'message' => sprintf(
+				// Translators: %s is a placeholder for the customer's email.
+				__( 'If any past purchases are associated with %s, secure password-free links to manage them have been sent to that inbox.', 'stripe' ),
+				$this->customer_email
+			),
+		);
+
 		$customers = $this->get_customers();
 		if ( ! $customers ) {
-			return array(
-				'status'  => 'error',
-				'message' => __( 'No purchases were found for the supplied email address.', 'stripe' ),
-			);
+			return $response;
 		}
 
 		// Check if there are subscription links to send.
 		$subscriptions = $this->get_subscriptions( $customers );
 
 		if ( empty( $subscriptions ) ) {
-			return array(
-				'status'  => 'error',
-				'message' => __( 'No purchases were found for the supplied email address.', 'stripe' ),
-			);
+			return $response;
 		}
 
 		/** @var \SimplePay\Core\Emails\Email\ManageSubscriptionsEmail $email */
@@ -329,11 +357,9 @@ class SendSubscriptions implements SubscriberInterface {
 		// Subscriptions links.
 		$subscription_links = $this->get_subscription_links( $subscriptions );
 		if ( empty( $subscription_links ) ) {
-			return array(
-				'status'  => 'error',
-				'message' => __( 'No purchases were found for the supplied email address.', 'stripe' ),
-			);
+			return $response;
 		}
+
 		// Format the email content with subscription links.
 		$message = $this->format_email_content( $subscription_links );
 		$mailer  = new Mailer( $email );
@@ -342,14 +368,7 @@ class SendSubscriptions implements SubscriberInterface {
 		$mailer->set_body( $email->get_body( $message ) );
 		$mailer->send();
 
-		return array(
-			'status'  => 'success',
-			'message' => sprintf(
-				// Translators: %s is a placeholder for the customer's email.
-				__( 'Secure password-free links to manage your past purchases for %s have been sent to your inbox. ', 'stripe' ),
-				$this->customer_email
-			),
-		);
+		return $response;
 	}
 
 	/**

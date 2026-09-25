@@ -1,0 +1,577 @@
+/**
+ * Transactions admin page styles
+ *
+ * @package SimplePay
+ * @since 4.17.4
+ */
+
+/* Status badges */
+.simpay-txn-status {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.5;
+	white-space: nowrap;
+}
+
+.simpay-txn-status--succeeded {
+	background-color: #d1fae5;
+	color: #065f46;
+}
+
+.simpay-txn-status--failed,
+.simpay-txn-status--requires_payment_method {
+	background-color: #fee2e2;
+	color: #991b1b;
+}
+
+/* Money returned: its own hue, so it never reads as pending or ended. */
+.simpay-txn-status--refunded,
+.simpay-txn-status--partial_refund {
+	background-color: #ede9fe;
+	color: #5b21b6;
+}
+
+/* Ended for good: neutral, distinct from the amber "in progress" family. */
+.simpay-txn-status--canceled,
+.simpay-txn-status--incomplete_expired {
+	background-color: #e5e7eb;
+	color: #374151;
+}
+
+.simpay-txn-status--processing,
+.simpay-txn-status--requires_confirmation,
+.simpay-txn-status--requires_action {
+	background-color: #fef3c7;
+	color: #92400e;
+}
+
+/* A chargeback: the same family as a failure, but deliberately stronger. */
+.simpay-txn-status--disputed {
+	background-color: #fecaca;
+	color: #7f1d1d;
+}
+
+/*
+ * Subscription statuses. The Subscriptions list table reuses this badge
+ * (SubscriptionsListTable::column_status) and enqueues this stylesheet, so its
+ * statuses need modifiers here too -- `canceled` is shared with transactions
+ * above. Without these the badges render as unstyled text.
+ */
+.simpay-txn-status--active {
+	background-color: #d1fae5;
+	color: #065f46;
+}
+
+.simpay-txn-status--trialing {
+	background-color: #dbeafe;
+	color: #1e40af;
+}
+
+.simpay-txn-status--past_due,
+.simpay-txn-status--incomplete {
+	background-color: #fef3c7;
+	color: #92400e;
+}
+
+.simpay-txn-status--unpaid {
+	background-color: #fee2e2;
+	color: #991b1b;
+}
+
+.simpay-txn-status--paused {
+	background-color: #ccfbf1;
+	color: #115e59;
+}
+
+/* Refunded amount (inline, red) */
+.simpay-txn-refunded-amount {
+	color: #dc2626;
+	font-weight: 600;
+}
+
+/* Test mode badge */
+.simpay-txn-test-badge {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 8px;
+	padding: 2px 8px;
+	background-color: #fef3c7;
+	color: #92400e;
+	font-size: 12px;
+	font-weight: 600;
+	border-radius: 3px;
+	line-height: 1.5;
+}
+
+/* Detail view - back link */
+.simpay-txn-detail-back {
+	display: inline-block;
+	margin-bottom: 12px;
+	text-decoration: none;
+}
+
+/* Two-column grid layout */
+.simpay-txn-detail-grid {
+	display: grid;
+	grid-template-columns: 1fr 300px;
+	gap: 16px;
+	margin-top: 16px;
+}
+
+.simpay-txn-detail-left,
+.simpay-txn-detail-right {
+	min-width: 0;
+}
+
+/* Card styles */
+.simpay-txn-card.postbox {
+	margin-top: 0;
+	margin-bottom: 16px;
+	/* Match the @wordpress/components Card on Activity & Reports (8px - 1px). */
+	border-radius: 7px;
+}
+
+.simpay-txn-card-header {
+	border-bottom: 1px solid #c3c4c7;
+	background: #f6f7f7;
+	/* Inset by the 1px card border so the header fill follows the curve. */
+	border-radius: 6px 6px 0 0;
+}
+
+.simpay-txn-card-header .hndle {
+	padding: 10px 12px;
+	margin: 0;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: default;
+}
+
+.simpay-txn-card .inside {
+	padding: 12px;
+	margin: 0;
+}
+
+/* The card padding already spaces the first line; drop its own margin. */
+.simpay-txn-card .inside > :first-child {
+	margin-top: 0;
+}
+
+/* Collapsible card: a native <details>, collapsed until opened. */
+.simpay-txn-card--collapsible > summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	list-style: none;
+}
+
+.simpay-txn-card--collapsible > summary::-webkit-details-marker {
+	display: none;
+}
+
+.simpay-txn-card--collapsible > summary .hndle {
+	cursor: pointer;
+}
+
+.simpay-txn-card--collapsible > summary:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: -2px;
+}
+
+.simpay-txn-card--collapsible:not([open]) > summary {
+	border-bottom: 0;
+	/* Closed, the header is the whole card, so round all four corners. */
+	border-radius: 6px;
+}
+
+.simpay-txn-card-toggle {
+	margin-right: 12px;
+	color: #50575e;
+	transition: transform 0.15s ease-in-out;
+}
+
+.simpay-txn-card--collapsible[open] .simpay-txn-card-toggle {
+	transform: rotate(180deg);
+}
+
+/* Transaction table in cards */
+.simpay-txn-card .simpay-txn-table.widefat {
+	border: 0;
+	box-shadow: none;
+}
+
+.simpay-txn-table th,
+.simpay-txn-table td {
+	padding: 8px 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.simpay-txn-table tbody tr:last-child th,
+.simpay-txn-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.simpay-txn-detail .widefat th {
+	width: 160px;
+	font-weight: 600;
+}
+
+/* Currency badge */
+.simpay-txn-currency-badge {
+	display: inline-block;
+	margin-left: 4px;
+	padding: 1px 5px;
+	background-color: #f0f0f1;
+	color: #50575e;
+	font-size: 11px;
+	font-weight: 600;
+	border-radius: 2px;
+	vertical-align: middle;
+}
+
+/* Meta rows in sidebar cards */
+.simpay-txn-meta-row {
+	margin: 0 0 12px;
+	line-height: 1.5;
+}
+
+.simpay-txn-meta-row:last-child {
+	margin-bottom: 0;
+}
+
+.simpay-txn-meta-label {
+	font-weight: 600;
+	font-size: 12px;
+	color: #50575e;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Actions card */
+.simpay-txn-actions-description {
+	margin: 0 0 12px;
+}
+
+/* Responsive: collapse to single column */
+@media screen and (max-width: 960px) {
+	.simpay-txn-detail-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* =============================================
+   Refund Modal
+   ============================================= */
+
+.simpay-refund-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.simpay-refund-modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.simpay-refund-modal-dialog {
+	position: relative;
+	width: 480px;
+	max-width: 90%;
+	max-height: 80vh;
+	background: #fff;
+	border-radius: 7px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+	overflow: auto;
+}
+
+.simpay-refund-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px 20px;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.simpay-refund-modal-header h3 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.simpay-refund-modal-close {
+	background: none;
+	border: none;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	color: #50575e;
+	padding: 0;
+}
+
+.simpay-refund-modal-close:hover {
+	color: #1d2327;
+}
+
+.simpay-refund-modal-body {
+	padding: 20px;
+}
+
+.simpay-refund-modal-body fieldset {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+.simpay-refund-modal-body fieldset p {
+	margin: 0 0 8px;
+}
+
+.simpay-refund-modal-body label {
+	cursor: pointer;
+}
+
+.simpay-refund-partial-amount {
+	margin-top: 12px;
+	padding: 12px;
+	background: #f6f7f7;
+	border-radius: 4px;
+}
+
+.simpay-refund-partial-amount label {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 6px;
+}
+
+.simpay-refund-partial-amount input[type="number"] {
+	width: 100%;
+	max-width: 200px;
+}
+
+.simpay-refund-partial-amount .description {
+	margin-top: 4px;
+	color: #646970;
+	font-style: italic;
+}
+
+.simpay-refund-modal-footer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 8px;
+	padding: 16px 20px;
+	border-top: 1px solid #dcdcde;
+	background: #f6f7f7;
+}
+
+/* Refund modal messages */
+.simpay-refund-modal-message {
+	padding: 10px 14px;
+	border-radius: 3px;
+	margin-bottom: 16px;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.simpay-refund-modal-message--success {
+	background-color: #d1fae5;
+	color: #065f46;
+	border-left: 4px solid #065f46;
+}
+
+.simpay-refund-modal-message--error {
+	background-color: #fee2e2;
+	color: #991b1b;
+	border-left: 4px solid #991b1b;
+}
+
+/* Object ID code in list table */
+.wp-list-table .column-id code {
+	font-size: 11px;
+	color: #666;
+	background: none;
+	padding: 0;
+}
+
+/* =============================================
+   Detail view polish
+   ============================================= */
+
+/* Allow long IDs / metadata values to wrap instead of overflowing the card. */
+.simpay-txn-table td,
+.simpay-txn-detail-right .inside {
+	word-break: break-word;
+}
+
+.simpay-txn-detail-right a {
+	word-break: break-all;
+}
+
+/* Metadata card: compact monospace keys. */
+.simpay-txn-table--metadata th {
+	width: 50%;
+	vertical-align: top;
+}
+
+.simpay-txn-table--metadata th code {
+	font-size: 11px;
+	background: none;
+	padding: 0;
+	color: #50575e;
+	word-break: break-all;
+}
+
+/* Copy-to-clipboard button */
+.simpay-txn-copy {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	margin-left: 2px;
+	padding: 0;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	background: none;
+	color: #787c82;
+	cursor: pointer;
+	vertical-align: middle;
+	position: relative;
+}
+
+.simpay-txn-copy:hover,
+.simpay-txn-copy:focus {
+	color: #2271b1;
+	border-color: #c3c4c7;
+	background: #f6f7f7;
+}
+
+.simpay-txn-copy .dashicons {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+}
+
+.simpay-txn-copy--copied {
+	color: #007017;
+	border-color: #007017;
+}
+
+/* "Copied!" tooltip feedback */
+.simpay-txn-copy--copied::after {
+	content: attr(data-copied-label);
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 4px;
+	padding: 2px 6px;
+	background: #1d2327;
+	color: #fff;
+	font-size: 11px;
+	line-height: 1.4;
+	white-space: nowrap;
+	border-radius: 3px;
+	pointer-events: none;
+}
+
+/* Receipt / file links share the external-link affordance. */
+.simpay-txn-table a,
+.simpay-txn-meta-row a {
+	text-decoration: none;
+}
+
+.simpay-txn-table a:hover,
+.simpay-txn-meta-row a:hover {
+	text-decoration: underline;
+}
+
+/* Responsive: stack table rows on small screens. */
+@media screen and (max-width: 782px) {
+	.simpay-txn-detail .widefat th {
+		width: auto;
+	}
+
+	.simpay-txn-table--metadata th {
+		width: auto;
+	}
+
+	.simpay-txn-table th,
+	.simpay-txn-table td {
+		display: block;
+		width: 100%;
+	}
+
+	.simpay-txn-table th {
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+}
+
+/* Column widths. Customer takes whatever is left, so emails stay whole. */
+.wp-list-table .column-id {
+	width: 220px;
+}
+
+.wp-list-table .column-date_created {
+	width: 150px;
+}
+
+/* Usually a short form title or a dash. */
+.wp-list-table .column-form_id {
+	width: 12%;
+}
+
+.wp-list-table .column-amount_total,
+.wp-list-table .column-amount {
+	width: 130px;
+}
+
+.wp-list-table .column-status {
+	width: 150px;
+}
+
+.wp-list-table .column-current_period_end {
+	width: 170px;
+}
+
+.wp-list-table .column-cb {
+	width: 30px;
+}
+
+/*
+ * Core hides every top tablenav action except bulk actions at this width.
+ * The mode and form filters are the only way to switch between Test and
+ * Live, so keep them reachable on small screens.
+ */
+@media screen and (max-width: 782px) {
+	.tablenav.top .actions.simpay-list-filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		float: none;
+		margin: 0 0 8px;
+		padding: 0;
+	}
+
+	.tablenav.top .actions.simpay-list-filters select {
+		flex: 1 1 140px;
+		max-width: none;
+		margin: 0;
+	}
+}

@@ -33,14 +33,39 @@ function simpay_get_stripe_connect_url( $redirect_url = '' ) {
 		);
 	}
 
+	$state = simpay_generate_stripe_connect_state();
+
 	return add_query_arg(
 		array(
 			'live_mode'         => (int) ! simpay_is_test_mode(),
-			'state'             => str_pad( wp_rand( wp_rand(), PHP_INT_MAX ), 100, wp_rand(), STR_PAD_BOTH ),
+			'state'             => $state,
 			'customer_site_url' => urlencode( $redirect_url ),
 		),
 		'https://wpsimplepay.com/?wpsp_gateway_connect_init=stripe_connect'
 	);
+}
+
+/**
+ * Generates and stores a single-use CSRF "state" token for the Stripe Connect flow.
+ *
+ * The token is persisted as a short-lived transient tied to the current user so
+ * it can be verified when the OAuth flow returns to the site, preventing the
+ * credential-writing completion endpoint from being triggered via CSRF.
+ *
+ * @since 4.17.4
+ *
+ * @return string The generated state token.
+ */
+function simpay_generate_stripe_connect_state() {
+	$state = wp_generate_password( 64, false );
+
+	set_transient(
+		'simpay_stripe_connect_state_' . get_current_user_id(),
+		$state,
+		15 * MINUTE_IN_SECONDS
+	);
+
+	return $state;
 }
 
 /**

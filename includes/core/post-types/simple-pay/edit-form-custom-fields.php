@@ -204,6 +204,13 @@ function get_custom_field_types() {
 			'active'     => true,
 			'repeatable' => true,
 		),
+		'file_upload'             => array(
+			'label'      => esc_html__( 'File Upload', 'stripe' ),
+			'type'       => 'file_upload',
+			'category'   => 'standard',
+			'active'     => true,
+			'repeatable' => true,
+		),
 	);
 
 	/**

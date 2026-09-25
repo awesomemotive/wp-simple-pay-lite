@@ -1,44 +1,37 @@
 <?php
 /**
- * Transactions: Transaction repository
+ * Subscriptions: Subscription repository
  *
- * These records, while they may be used to generate simple reports, are not
- * meant to be used for financial reporting or other purposes as it is possible
- * the data is not fully updated if a webhook event is not received.
- *
- * The primary advantage of this table is that it can be used to store _some_
- * sort of reference to transactions that were created with an application fee.
- *
- * When querying for items with an application fee the `object` column should
- * be evaluated to find a relevant Subscription if the `subscription_id` column
- * is null (this can occur with Stripe Checkout and no webhooks).
+ * Like the Transaction records, these are a convenience log of subscriptions
+ * created through the plugin. They are kept current going forward via
+ * subscription lifecycle webhooks and are not intended for financial
+ * reconciliation -- data may be incomplete if a webhook event is not received.
  *
  * @package SimplePay
  * @subpackage Core
- * @copyright Copyright (c) 2022, Sandhills Development, LLC
+ * @copyright Copyright (c) 2026, Sandhills Development, LLC
  * @license http://opensource.org/licenses/gpl-2.0.php GNU Public License
- * @since 4.4.6
+ * @since 4.17.4
  */
 
-namespace SimplePay\Core\Transaction;
+namespace SimplePay\Core\Subscription;
 
 use SimplePay\Core\Repository\BerlinDbRepository;
-use SimplePay\Core\Utils;
 
 /**
- * TransactionRepository class.
+ * SubscriptionRepository class.
  *
- * @since 4.4.6
+ * @since 4.17.4
  */
-class TransactionRepository extends BerlinDbRepository {
+class SubscriptionRepository extends BerlinDbRepository {
 
 	/**
-	 * TransactionRepository.
+	 * SubscriptionRepository.
 	 *
-	 * @since 4.4.6
+	 * @since 4.17.4
 	 */
 	public function __construct() {
-		parent::__construct( Transaction::class, Database\Query::class );
+		parent::__construct( Subscription::class, Database\Query::class );
 	}
 
 	/**
@@ -50,9 +43,6 @@ class TransactionRepository extends BerlinDbRepository {
 			$data['_object_id'] = $data['object_id'];
 			unset( $data['object_id'] );
 		}
-
-		// Always log IP address.
-		$data['ip_address'] = Utils\get_current_ip_address();
 
 		// Scope the record to the connected Stripe account so switching
 		// accounts does not surface another account's data (#3533). Respect an
@@ -78,11 +68,11 @@ class TransactionRepository extends BerlinDbRepository {
 	}
 
 	/**
-	 * Retrieves a transaction by the Stripe object ID.
+	 * Retrieves a subscription by the Stripe Subscription ID.
 	 *
-	 * @since 4.4.6
+	 * @since 4.17.4
 	 *
-	 * @param string $object_id Stripe object ID.
+	 * @param string $object_id Stripe Subscription ID.
 	 * @return \SimplePay\Core\Model\ModelInterface|null
 	 */
 	public function get_by_object_id( $object_id ) {

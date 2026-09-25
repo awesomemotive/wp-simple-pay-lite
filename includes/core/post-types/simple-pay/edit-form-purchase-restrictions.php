@@ -324,6 +324,14 @@ function add_purchase_restrictions( $post_id ) {
 									$prices = simpay_get_payment_form_prices( $form );
 
 									foreach ( $inventory_individual as $instance_id => $inventory ) :
+										// A stored inventory count can reference a price option
+										// instance ID that no longer exists on the form, for
+										// example a price option removed while per price limits
+										// were enabled. Skip the stale entry instead of fataling
+										// on the missing price option lookup below.
+										if ( ! isset( $prices[ $instance_id ] ) ) {
+											continue;
+										}
 										?>
 
 								<div

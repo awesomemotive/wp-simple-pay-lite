@@ -70,6 +70,24 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 			return;
 		}
 
+		// Validate the single-use CSRF "state" token that was stored before
+		// redirecting to Stripe. Without this the credential-writing completion
+		// endpoint could be triggered via CSRF.
+		$state_key    = 'simpay_stripe_connect_state_' . get_current_user_id();
+		$stored_state = get_transient( $state_key );
+		$state        = sanitize_text_field( wp_unslash( $_GET['state'] ) );
+
+		if (
+			empty( $stored_state ) ||
+			! is_string( $stored_state ) ||
+			! hash_equals( $stored_state, $state )
+		) {
+			return;
+		}
+
+		// State is valid; consume it so it cannot be replayed.
+		delete_transient( $state_key );
+
 		if ( isset( $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'] ) ) {
 			$current_url = ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		} else {
@@ -87,7 +105,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		$wpsp_credentials_url = add_query_arg(
 			array(
 				'live_mode'         => (int) ! simpay_is_test_mode(),
-				'state'             => sanitize_text_field( $_GET['state'] ),
+				'state'             => $state,
 				'customer_site_url' => urlencode( $customer_site_url ),
 			),
 			'https://wpsimplepay.com/?wpsp_gateway_connect_credentials=stripe_connect'

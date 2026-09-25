@@ -215,6 +215,7 @@ final class Plugin {
 			new RestApi\RestApiServiceProvider(),
 			new StripeConnect\StripeConnectServiceProvider(),
 			new Transaction\TransactionServiceProvider(),
+			new Subscription\SubscriptionServiceProvider(),
 			new Webhook\WebhookServiceProvider(),
 			new PaymentMethods\PaymentMethodsServiceProvider(),
 		);
