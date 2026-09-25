@@ -1657,6 +1657,55 @@ function __unstable_simpay_has_new_form_templates() {
 }
 
 /**
+ * Returns the display title for a payment form.
+ *
+ * Payment form names are stored in the `_company_name` post meta, so a form's
+ * `post_title` is empty unless it predates that change. When a form has both,
+ * the legacy post title is appended in parentheses.
+ *
+ * The returned string is not texturized or escaped -- callers escape it for
+ * their own context.
+ *
+ * @since 4.17.4
+ *
+ * @param int         $form_id    Payment form ID.
+ * @param string|null $post_title Optional. Known post title, to avoid a lookup.
+ *                                Default null (looked up from $form_id).
+ * @return string
+ */
+function simpay_get_payment_form_title( $form_id, $post_title = null ) {
+	$form_id = absint( $form_id );
+
+	if ( empty( $form_id ) ) {
+		return (string) $post_title;
+	}
+
+	if ( null === $post_title ) {
+		$post_title = (string) get_post_field( 'post_title', $form_id );
+	}
+
+	$post_title = (string) $post_title;
+	$form_name  = (string) simpay_get_saved_meta( $form_id, '_company_name', '' );
+
+	// Legacy post title equals the form name, use the form name only.
+	if ( $post_title === $form_name ) {
+		return $form_name;
+	}
+
+	// Append the legacy post title to the form name.
+	if ( '' !== $post_title && '' !== $form_name ) {
+		return sprintf( '%s (%s)', $form_name, $post_title );
+	}
+
+	// Show just the form name.
+	if ( '' !== $form_name ) {
+		return $form_name;
+	}
+
+	return $post_title;
+}
+
+/**
  * Returns an list of payment form titles keyed by ID.
  *
  * @since 4.4.3
@@ -1971,4 +2020,66 @@ function simpay_format_date( $timestamp, $format = '' ) {
 		$format = get_option( 'date_format' );
 	}
 	return wp_date( $format, $timestamp );
+}
+
+/**
+ * Validates a plugin/addon installation package URL against a trusted host allowlist.
+ *
+ * The plugin/addon installers download and install a package from a URL supplied
+ * via an AJAX request. To prevent a confused-deputy / SSRF-via-upgrader where an
+ * arbitrary package could be installed, the host is restricted to a small set of
+ * trusted update domains.
+ *
+ * @since 4.17.4
+ *
+ * @param string $url Package URL to validate.
+ * @return string The sanitized URL if it is allowed, or an empty string otherwise.
+ */
+function simpay_get_allowed_plugin_install_url( $url ) {
+	$url = esc_url_raw( (string) $url, array( 'https' ) );
+
+	if ( empty( $url ) ) {
+		return '';
+	}
+
+	$host = wp_parse_url( $url, PHP_URL_HOST );
+
+	if ( ! is_string( $host ) || '' === $host ) {
+		return '';
+	}
+
+	$host = strtolower( $host );
+
+	/**
+	 * Filters the list of hosts allowed to serve plugin/addon installation packages.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @param array<string> $allowed_hosts Allowed hostnames.
+	 */
+	$allowed_hosts = apply_filters(
+		'simpay_allowed_plugin_install_hosts',
+		array(
+			'downloads.wordpress.org',
+			'wpsimplepay.com',
+			'www.wpsimplepay.com',
+		)
+	);
+
+	foreach ( $allowed_hosts as $allowed_host ) {
+		$allowed_host = strtolower( $allowed_host );
+
+		// Exact host match, or a subdomain of an allowed host.
+		if (
+			$host === $allowed_host ||
+			(
+				strlen( $host ) > strlen( $allowed_host ) &&
+				substr( $host, -( strlen( $allowed_host ) + 1 ) ) === '.' . $allowed_host
+			)
+		) {
+			return $url;
+		}
+	}
+
+	return '';
 }

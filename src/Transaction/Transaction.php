@@ -101,6 +101,14 @@ class Transaction extends AbstractModel {
 	public $amount_tax;
 
 	/**
+	 * Transaction amount refunded.
+	 *
+	 * @since 4.17.4
+	 * @var int
+	 */
+	public $amount_refunded;
+
+	/**
 	 * Transaction currency.
 	 *
 	 * @since 4.4.6
@@ -229,6 +237,10 @@ class Transaction extends AbstractModel {
 			$this->amount_tax = (int) $this->amount_tax;
 		}
 
+		if ( ! empty( $this->amount_refunded ) ) {
+			$this->amount_refunded = (int) $this->amount_refunded;
+		}
+
 		if ( isset( $this->application_fee ) ) {
 			$this->application_fee = (bool) $this->application_fee;
 		}
@@ -247,5 +259,4 @@ class Transaction extends AbstractModel {
 			$this->date_modified = strtotime( $date_modified );
 		}
 	}
-
 }

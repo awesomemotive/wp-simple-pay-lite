@@ -2,8 +2,8 @@
 Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
-Tested up to: 7.0
-Stable tag: 4.17.3
+Tested up to: 7.1
+Stable tag: 4.17.4
 Requires PHP: 7.4
 License: GPLv2 or later
 
@@ -43,6 +43,15 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Page builder integrations (Divi, Elementor)
 - Developer-friendly for building custom integrations
 - Pre-made payment form templates
+- Browse, search, filter, and export every payment from your WordPress dashboard
+
+=== 💳 See Every Payment Without Leaving WordPress ===
+
+The **Transactions** page lists every one-time payment your site has taken, with the date, the customer, the form they used, the amount, and the status. Filter by status with live counts, narrow the list to a single payment form, switch between live and test payments, search by customer email, and export what you are looking at to a spreadsheet.
+
+Click any payment to see the full amount breakdown (including tax, shipping, and discounts), the payment method used, a link to the receipt, and everything the customer entered into your form.
+
+Recurring payments get their own **Subscriptions** page, with the same search, filters, and status counts, plus a Next Renewal column that tells you when each subscription bills again. Subscriptions you already have in Stripe are imported in the background, so the page fills itself in.
 
 === 🔄 Subscription & Recurring Payment Features ===
 
@@ -51,6 +60,7 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Accept recurring payments with Stripe
 - Set up membership sites and ongoing services
 - Subscription plan selection in payment forms
+- Track every subscription and its next renewal date from your WordPress dashboard
 
 If you need more functionality for your Stripe subscriptions, you can [upgrade to WP Simple Pay Pro](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link) to get these powerful features:
 
@@ -83,6 +93,9 @@ If you need more functionality for your Stripe payment forms, you can [upgrade t
 - Create installment plans with Stripe to split payments
 - Charge initial setup fees with Stripe
 - Offer free trials with Stripe
+- Issue full and partial refunds without opening the Stripe Dashboard
+- Collect file uploads with your payment forms
+- See which payments are under dispute after a chargeback
 
 > **WP Simple Pay Pro - Stripe Payment Forms**
 > This plugin is the lite version of the WP Simple Pay Pro plugin that comes with many payment features including user-managed subscriptions & recurring payments, custom fields, user-entered amounts, coupon codes, tax rates, alternate payment methods, ACH, direct debit, Buy Now Pay Later and tons more. [Click here to purchase the best Stripe payment forms and Stripe payments plugin now!](https://wpsimplepay.com/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
@@ -176,7 +189,7 @@ Give your customers in Denmark and Finland the ability to pay with MobilePay, a 
 
 === 💳 Accept BECS Direct Debit Payments with Stripe ===
 
-Offer your Australian customers the option to pay directly from their bank accounts. BECS Direct Debit is a popular and trusted payment method in Australia, ideal for recurring payments and subscriptions. 
+Offer your Australian customers the option to pay directly from their bank accounts. BECS Direct Debit is a popular and trusted payment method in Australia, ideal for recurring payments and subscriptions.
 
 === 💳 Accept PromptPay Payments with Stripe ===
 
@@ -306,6 +319,18 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 12. Global payment form settings: Summary report email
 
 == Changelog ==
+
+= Stripe Payment Forms 4.17.4 - September 24, 2026 =
+
+* New: Transactions page to browse, search, filter, and export one-time payments.
+* New: Issue full or partial refunds from a transaction's detail view.
+* New: Subscriptions page to browse, search, and filter recurring payments, including ones that already existed in Stripe.
+* New: File Upload form field, with allowed file types, a maximum file size, and required validation.
+* New: Chargebacks opened in Stripe now show on the Transactions page as disputed.
+* Update: Payments and subscriptions missed by a webhook are now recovered from Stripe on an hourly check.
+* Fix: The form editor could fail to load after a price option was removed while per-price inventory limits were enabled.
+* Fix: Admin screens could redirect to a payment form's Payment Page instead of loading.
+* Fix: Improved security around the Stripe Connect flow, webhook processing, the manage subscriptions request, the receipt resend tool, and plugin installs.
 
 = Stripe Payment Forms 4.17.3 - June 16, 2026 =
 

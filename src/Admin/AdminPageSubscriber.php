@@ -52,10 +52,35 @@ class AdminPageSubscriber implements SubscriberInterface {
 	 */
 	public function get_subscribed_events() {
 		return array(
-			'admin_menu' => array( 'add_menu_pages', 20 ),
-			'admin_head' => 'set_block_editor_body_class',
-			'admin_init' => 'maybe_redirect_pages',
+			'admin_menu'                    => array( 'add_menu_pages', 20 ),
+			'admin_head'                    => 'set_block_editor_body_class',
+			'admin_init'                    => array( 'handle_admin_init', 10 ),
+			'wp_ajax_simpay_process_refund' => 'handle_refund_ajax',
 		);
+	}
+
+	/**
+	 * Handles admin_init tasks: redirects and CSV exports.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @return void
+	 */
+	public function handle_admin_init() {
+		$this->maybe_redirect_pages();
+
+		\SimplePay\Core\AdminPage\TransactionsPage::maybe_handle_csv_export();
+	}
+
+	/**
+	 * Handles the Transactions page refund AJAX request.
+	 *
+	 * @since 4.17.4
+	 *
+	 * @return void
+	 */
+	public function handle_refund_ajax() {
+		\SimplePay\Core\AdminPage\TransactionsPage::handle_refund_ajax();
 	}
 
 	/**
@@ -157,6 +182,8 @@ class AdminPageSubscriber implements SubscriberInterface {
 		// Possible page slugs that need to be fixed.
 		$candidates = array(
 			'simpay-activity-reports',
+			'simpay-transactions',
+			'simpay-subscriptions',
 		);
 
 		if ( ! in_array( $page, $candidates, true ) ) {
@@ -174,5 +201,4 @@ class AdminPageSubscriber implements SubscriberInterface {
 		wp_safe_redirect( $redirect );
 		exit;
 	}
-
 }

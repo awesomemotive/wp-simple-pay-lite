@@ -12,6 +12,7 @@
 namespace SimplePay\Core\RestApi\Internal\Payment;
 
 use SimplePay\Core\EventManagement\SubscriberInterface;
+use SimplePay\Core\RestApi\Internal\Utils\RateLimitValidationUtils;
 
 /**
  * AbstractPaymentCreateRoute class.
@@ -19,6 +20,8 @@ use SimplePay\Core\EventManagement\SubscriberInterface;
  * @since 4.7.0
  */
 abstract class AbstractPaymentRoute implements SubscriberInterface {
+
+	use RateLimitValidationUtils;
 
 	/**
 	 * The REST API namespace.
@@ -46,38 +49,5 @@ abstract class AbstractPaymentRoute implements SubscriberInterface {
 	 * @return void
 	 */
 	abstract public function register_route();
-
-	/**
-	 * Determines if the REST API request is valid based on the current rate limit.
-	 *
-	 * @since 4.7.0
-	 *
-	 * @param \WP_REST_Request $request The payment request.
-	 * @return bool
-	 */
-	protected function validate_rate_limit( $request ) {
-		if ( current_user_can( 'manage_options' ) ) {
-			return true;
-		}
-
-		$has_exceeded_rate_limit = false;
-
-		/**
-		 * Filters if the current IP address has exceeded the rate limit.
-		 *
-		 * @since 3.9.5
-		 * @since 4.7.0 Added $request parameter.
-		 *
-		 * @param bool $has_exceeded_rate_limit
-		 * @param \WP_REST_Request $request The payment request.
-		 */
-		$has_exceeded_rate_limit = apply_filters(
-			'simpay_has_exceeded_rate_limit',
-			$has_exceeded_rate_limit,
-			$request
-		);
-
-		return ! $has_exceeded_rate_limit;
-	}
 
 }

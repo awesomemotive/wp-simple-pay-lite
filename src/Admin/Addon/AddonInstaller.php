@@ -188,7 +188,7 @@ class AddonInstaller implements SubscriberInterface {
 			: '';
 
 		$plugin_url = ! empty( $plugin )
-			? esc_url_raw( $plugin )
+			? simpay_get_allowed_plugin_install_url( $plugin )
 			: '';
 
 		if ( empty( $plugin_url ) ) {
@@ -240,11 +240,11 @@ class AddonInstaller implements SubscriberInterface {
 		$installer = new Plugin_Upgrader( new WP_Ajax_Upgrader_Skin() );
 
 		// Error check.
-		if ( ! method_exists( $installer, 'install' ) || empty( $_POST['plugin'] ) ) {
+		if ( ! method_exists( $installer, 'install' ) ) {
 			wp_send_json_error( $error );
 		}
 
-		$installer->install( $_POST['plugin'] ); // phpcs:ignore
+		$installer->install( $plugin_url );
 
 		// Flush the cache and return the newly installed plugin basename.
 		wp_cache_flush();

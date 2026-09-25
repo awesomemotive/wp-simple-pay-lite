@@ -180,6 +180,17 @@ class Schema extends BerlinDBSchema {
 			'validate'   => 'sanitize_text_field',
 		),
 
+		// stripe_account_id - the connected Stripe account this record belongs
+		// to, so switching accounts does not surface another account's data.
+		array(
+			'name'       => 'stripe_account_id',
+			'type'       => 'varchar',
+			'length'     => '255',
+			'default'    => null,
+			'allow_null' => true,
+			'validate'   => 'sanitize_text_field',
+		),
+
 		// status.
 		array(
 			'name'       => 'status',

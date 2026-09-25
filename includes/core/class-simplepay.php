@@ -168,6 +168,8 @@ final class SimplePay {
 		require_once SIMPLE_PAY_INC . 'core/api/invoices.php';
 		require_once SIMPLE_PAY_INC . 'core/api/invoiceitems.php';
 		require_once SIMPLE_PAY_INC . 'core/api/tax-rates.php';
+		require_once SIMPLE_PAY_INC . 'core/api/refunds.php';
+		require_once SIMPLE_PAY_INC . 'core/api/disputes.php';
 
 		// REST API.
 		new REST_API();
