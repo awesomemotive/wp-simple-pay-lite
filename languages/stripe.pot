@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.17.4\n"
+"Project-Id-Version: WP Simple Pay Lite 4.17.4.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-24T17:41:18+00:00\n"
+"POT-Creation-Date: 2026-09-28T18:07:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -12634,13 +12634,13 @@ msgstr ""
 
 #: includes/core/settings/register-stripe.php:118
 #: src/AdminPage/TransactionsPage.php:952
-#: src/StripeConnect/ConnectionSubscriber.php:244
+#: src/StripeConnect/ConnectionSubscriber.php:300
 msgid "test"
 msgstr ""
 
 #: includes/core/settings/register-stripe.php:119
 #: src/AdminPage/TransactionsPage.php:952
-#: src/StripeConnect/ConnectionSubscriber.php:245
+#: src/StripeConnect/ConnectionSubscriber.php:301
 msgid "live"
 msgstr ""
 
@@ -12747,12 +12747,12 @@ msgstr ""
 msgid "Specify \"Auto-detect\" to display Stripe Checkout in the user's preferred language, if available."
 msgstr ""
 
-#: includes/core/stripe-connect/functions.php:155
+#: includes/core/stripe-connect/functions.php:310
 msgid "Connect with Stripe"
 msgstr ""
 
 #. translators: Text before Stripe logo for "Connect with Stripe" button.
-#: includes/core/stripe-connect/functions.php:159
+#: includes/core/stripe-connect/functions.php:314
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Connect with"
 msgstr ""
@@ -14929,75 +14929,79 @@ msgid "%1$sPay as you go pricing%2$s: 3%% fee per-transaction + Stripe fees. %3$
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/StripeConnect/ConnectionSubscriber.php:130
+#: src/StripeConnect/ConnectionSubscriber.php:193
 #, php-format
 msgid "There was an error getting your Stripe credentials. Please %1$stry again%2$s. If you continue to have this problem, please contact support."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:232
+#: src/StripeConnect/ConnectionSubscriber.php:288
 msgid "Unable to retrieve account information."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:253
+#: src/StripeConnect/ConnectionSubscriber.php:304
 msgid "You cannot manage this account in Stripe to configure features such as Subscriptions, Webhooks, or Coupons."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:257
+#: src/StripeConnect/ConnectionSubscriber.php:308
 msgid "You cannot manage this account in Stripe."
 msgstr ""
 
 #. translators: %1$s Opening strong tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/StripeConnect/ConnectionSubscriber.php:266
+#: src/StripeConnect/ConnectionSubscriber.php:317
 #, php-format
 msgid "You are currently connected to a %1$stemporary%2$s Stripe account, which can only be used for testing purposes."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:288
+#: src/StripeConnect/ConnectionSubscriber.php:339
 msgid "Invalid Secret Key. Secret Key should begin with <code>sk_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:299
+#: src/StripeConnect/ConnectionSubscriber.php:350
 msgid "Invalid Publishable Key. Publishable Key should begin with <code>pk_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:311
+#: src/StripeConnect/ConnectionSubscriber.php:362
 msgid "Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_test_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:322
+#: src/StripeConnect/ConnectionSubscriber.php:373
 msgid "Invalid Secret Key for current mode. Secret Key should begin with <code>sk_test_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:333
+#: src/StripeConnect/ConnectionSubscriber.php:384
 msgid "Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_live_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:344
+#: src/StripeConnect/ConnectionSubscriber.php:395
 msgid "Invalid Secret Key for current mode. Secret Key should begin with <code>sk_live_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:358
+#: src/StripeConnect/ConnectionSubscriber.php:409
 msgid "If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:418
+#: src/StripeConnect/ConnectionSubscriber.php:469
 msgid "Administrator (Owner)"
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:442
+#: src/StripeConnect/ConnectionSubscriber.php:493
 msgid "Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually."
 msgstr ""
 
 #. translators: %1$s Stripe payment mode.
-#: src/StripeConnect/ConnectionSubscriber.php:470
+#: src/StripeConnect/ConnectionSubscriber.php:521
 #, php-format
 msgid "Your manually managed %1$s mode API keys are valid."
 msgstr ""
 
 #. translators: %1$s Stripe payment mode.
-#: src/StripeConnect/ConnectionSubscriber.php:483
+#: src/StripeConnect/ConnectionSubscriber.php:534
 #, php-format
 msgid "Your manually managed %1$s mode API keys are invalid."
+msgstr ""
+
+#: src/StripeConnect/ConnectionSubscriber.php:565
+msgid "Your Stripe connection could not be completed because the security check expired. Please click \"Connect with Stripe\" again."
 msgstr ""
 
 #: src/Subscription/SubscriptionStatus.php:61

@@ -34,13 +34,79 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 	 */
 	public function get_subscribed_events() {
 		return array(
-			'admin_init' => array(
+			'admin_init'    => array(
+				array( 'start' ),
 				array( 'connect' ),
 				array( 'disconnect' ),
 			),
 			'wp_ajax_simpay_stripe_connect_account_information' =>
 				'get_account_information_json',
+			'admin_notices' => 'maybe_render_connect_error_notice',
 		);
+	}
+
+	/**
+	 * Starts the Stripe Connect flow by redirecting to the Connect gateway.
+	 *
+	 * The CSRF "state" token is generated here, when the user actually clicks
+	 * a Connect link, rather than whenever a link is rendered. Links are built
+	 * on every admin request (the notification inbox, the global notice, the
+	 * account information AJAX request), so generating a token per render
+	 * evicted the token of the link the user was about to click.
+	 *
+	 * @since 4.17.4.1
+	 *
+	 * @return void
+	 */
+	public function start() {
+		// Do not need to handle this request, bail.
+		if ( ! isset( $_GET['simpay-stripe-connect-start'] ) ) {
+			return;
+		}
+
+		// Current user cannot handle this request.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		// Unable to redirect, bail.
+		if ( headers_sent() ) {
+			return;
+		}
+
+		$redirect_url = isset( $_GET['redirect_url'] )
+			? wp_unslash( $_GET['redirect_url'] )
+			: '';
+
+		// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- The Connect gateway is an external host.
+		wp_redirect( $this->get_start_redirect_url( $redirect_url ) );
+		exit;
+	}
+
+	/**
+	 * Returns the Connect gateway URL to send the user to when starting the flow.
+	 *
+	 * Generates a new CSRF "state" token.
+	 *
+	 * @since 4.17.4.1
+	 *
+	 * @param mixed $redirect_url Encoded URL to return to once the flow completes.
+	 *                            Anything that is not a URL on this site falls back
+	 *                            to the Stripe account settings.
+	 * @return string
+	 */
+	public function get_start_redirect_url( $redirect_url ) {
+		$validated = '';
+
+		if ( is_string( $redirect_url ) && '' !== $redirect_url ) {
+			// Only return to this site once the flow completes.
+			$validated = wp_validate_redirect(
+				esc_url_raw( rawurldecode( $redirect_url ) ),
+				''
+			);
+		}
+
+		return esc_url_raw( simpay_get_stripe_connect_init_url( $validated ) );
 	}
 
 	/**
@@ -72,21 +138,23 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 
 		// Validate the single-use CSRF "state" token that was stored before
 		// redirecting to Stripe. Without this the credential-writing completion
-		// endpoint could be triggered via CSRF.
-		$state_key    = 'simpay_stripe_connect_state_' . get_current_user_id();
-		$stored_state = get_transient( $state_key );
-		$state        = sanitize_text_field( wp_unslash( $_GET['state'] ) );
+		// endpoint could be triggered via CSRF. The matched token is consumed so
+		// it cannot be replayed.
+		$state = sanitize_text_field( wp_unslash( $_GET['state'] ) );
 
-		if (
-			empty( $stored_state ) ||
-			! is_string( $stored_state ) ||
-			! hash_equals( $stored_state, $state )
-		) {
-			return;
+		if ( ! simpay_verify_stripe_connect_state( $state ) ) {
+			// Send the user back with an explanation. Failing silently here is
+			// indistinguishable from a broken install.
+			wp_safe_redirect(
+				add_query_arg(
+					'simpay-stripe-connect-error',
+					'state',
+					$this->get_account_settings_url()
+				)
+			);
+
+			exit;
 		}
-
-		// State is valid; consume it so it cannot be replayed.
-		delete_transient( $state_key );
 
 		if ( isset( $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'] ) ) {
 			$current_url = ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -117,12 +185,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 			is_wp_error( $response ) ||
 			200 !== wp_remote_retrieve_response_code( $response )
 		) {
-			$stripe_account_settings_url = Settings\get_url(
-				array(
-					'section'    => 'stripe',
-					'subsection' => 'account',
-				)
-			);
+			$stripe_account_settings_url = $this->get_account_settings_url();
 
 			$message = wpautop(
 				sprintf(
@@ -209,14 +272,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_simpay\_stripe\_%'" );
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_simpay\_stripe\_%'" );
 
-		$redirect = Settings\get_url(
-			array(
-				'section'    => 'stripe',
-				'subsection' => 'account',
-			)
-		);
-
-		wp_safe_redirect( $redirect );
+		wp_safe_redirect( $this->get_account_settings_url() );
 		exit;
 	}
 
@@ -243,11 +299,6 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		$mode = simpay_is_test_mode()
 			? __( 'test', 'stripe' )
 			: __( 'live', 'stripe' );
-
-		$connect = sprintf(
-			'<div style="margin-top: 8px;">%s</div>',
-			simpay_get_stripe_connect_button()
-		);
 
 		$access_string = class_exists( 'SimplePay\Pro\SimplePayPro', false )
 			? __(
@@ -359,7 +410,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 							'If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually.',
 							'stripe'
 						),
-						$connect
+						$this->get_connect_button_html()
 					),
 				)
 			);
@@ -442,7 +493,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 						'message' => esc_html__(
 							'Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually.',
 							'stripe'
-						) . $connect,
+						) . $this->get_connect_button_html(),
 					)
 				);
 			} catch ( \Exception $e ) {
@@ -488,6 +539,64 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 				)
 			);
 		}
+	}
+
+	/**
+	 * Outputs a notice when the Stripe Connect flow could not be completed.
+	 *
+	 * @since 4.17.4.1
+	 *
+	 * @return void
+	 */
+	public function maybe_render_connect_error_notice() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if (
+			! isset( $_GET['simpay-stripe-connect-error'] ) ||
+			'state' !== $_GET['simpay-stripe-connect-error']
+		) {
+			return;
+		}
+
+		printf(
+			'<div class="notice notice-error"><p>%s</p></div>',
+			esc_html__(
+				'Your Stripe connection could not be completed because the security check expired. Please click "Connect with Stripe" again.',
+				'stripe'
+			)
+		);
+	}
+
+	/**
+	 * Returns the URL of the Stripe account settings screen.
+	 *
+	 * @since 4.17.4.1
+	 *
+	 * @return string
+	 */
+	private function get_account_settings_url() {
+		return Settings\get_url(
+			array(
+				'section'    => 'stripe',
+				'subsection' => 'account',
+			)
+		);
+	}
+
+	/**
+	 * Returns the markup for a "Connect with Stripe" button.
+	 *
+	 * @since 4.17.4.1
+	 *
+	 * @return string
+	 */
+	private function get_connect_button_html() {
+		return sprintf(
+			'<div style="margin-top: 8px;">%s</div>',
+			simpay_get_stripe_connect_button()
+		);
 	}
 
 	/**
@@ -537,6 +646,4 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 			// Do nothing.
 		}
 	}
-
 }
-
