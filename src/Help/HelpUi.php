@@ -63,7 +63,7 @@ class HelpUi implements SubscriberInterface, LicenseAwareInterface {
 		if ( is_admin() ) {
 			global $pagenow;
 
-			if ( 'edit.php' === $pagenow && isset( $_GET['page'] ) && 'simpay-setup-wizard' === $_GET['page'] ) {
+			if ( 'edit.php' === $pagenow && isset( $_GET['page'] ) && 'simpay-setup-wizard' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				return;
 			}
 		}

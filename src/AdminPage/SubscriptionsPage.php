@@ -85,7 +85,7 @@ class SubscriptionsPage extends AbstractAdminPage implements AdminSecondaryPageI
 		);
 
 		// Detail view.
-		if ( ! empty( $_GET['subscription_id'] ) ) {
+		if ( ! empty( $_GET['subscription_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$this->render_detail_view();
 			return;
 		}
@@ -132,10 +132,10 @@ class SubscriptionsPage extends AbstractAdminPage implements AdminSecondaryPageI
 	private function render_detail_view() {
 		global $wpdb;
 
-		$subscription_id = absint( $_GET['subscription_id'] );
+		$subscription_id = absint( $_GET['subscription_id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 		$account_scope   = AccountScope::get_where_fragment();
 
-		$row = $wpdb->get_row(
+		$row = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $account_scope is itself a prepared fragment; only the table name is interpolated.
 				"SELECT * FROM {$wpdb->prefix}wpsp_subscriptions WHERE id = %d{$account_scope}",

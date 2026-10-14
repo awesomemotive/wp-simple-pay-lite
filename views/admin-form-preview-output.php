@@ -12,6 +12,10 @@
  * @var string $edit_form_url URL of the edit form page
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?><html>
 <head>
 	<title>

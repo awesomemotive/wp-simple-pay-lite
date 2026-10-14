@@ -15,6 +15,10 @@ use SimplePay\Core\Subscription\SubscriptionStatus;
 use SimplePay\Core\Utils\AccountScope;
 use WP_List_Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
@@ -119,7 +123,7 @@ class SubscriptionsListTable extends WP_List_Table {
 	 * @return int
 	 */
 	private function get_current_form_id() {
-		return isset( $_GET['sub_form_id'] ) ? absint( $_GET['sub_form_id'] ) : 0;
+		return isset( $_GET['sub_form_id'] ) ? absint( $_GET['sub_form_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -130,8 +134,8 @@ class SubscriptionsListTable extends WP_List_Table {
 	 * @return string Either 'live' or 'test'.
 	 */
 	private function get_current_mode() {
-		$requested = isset( $_GET['sub_livemode'] )
-			? sanitize_text_field( $_GET['sub_livemode'] )
+		$requested = isset( $_GET['sub_livemode'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['sub_livemode'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: '';
 
 		if ( in_array( $requested, array( 'live', 'test' ), true ) ) {
@@ -171,8 +175,8 @@ class SubscriptionsListTable extends WP_List_Table {
 	 * @return string
 	 */
 	private function get_current_status() {
-		$status = isset( $_GET['sub_status'] )
-			? sanitize_text_field( $_GET['sub_status'] )
+		$status = isset( $_GET['sub_status'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['sub_status'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: '';
 
 		return array_key_exists( $status, $this->get_status_views() )
@@ -188,7 +192,7 @@ class SubscriptionsListTable extends WP_List_Table {
 	 * @return string
 	 */
 	private function get_current_search() {
-		return isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
+		return isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -268,7 +272,7 @@ class SubscriptionsListTable extends WP_List_Table {
 
 		// One grouped query for every status, rather than one per view.
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $where is built from $wpdb->prepare() fragments.
-		$rows = $wpdb->get_results(
+		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			"SELECT status, COUNT(*) AS total
 			FROM {$wpdb->prefix}wpsp_subscriptions {$where}
 			GROUP BY status"
@@ -527,18 +531,18 @@ class SubscriptionsListTable extends WP_List_Table {
 
 		$where = $this->get_where_clause();
 
-		$total_items = (int) $wpdb->get_var(
+		$total_items = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			"SELECT COUNT(*) FROM {$wpdb->prefix}wpsp_subscriptions {$where}"
 		);
 
 		$allowed_orderby = array( 'id', 'date_created', 'amount', 'current_period_end' );
-		$orderby         = isset( $_GET['orderby'] ) && in_array( $_GET['orderby'], $allowed_orderby, true )
-			? sanitize_text_field( $_GET['orderby'] )
+		$orderby         = isset( $_GET['orderby'] ) && in_array( $_GET['orderby'], $allowed_orderby, true ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: 'id';
 
-		$order = isset( $_GET['order'] ) && in_array( strtoupper( $_GET['order'] ), array( 'ASC', 'DESC' ), true )
-			? strtoupper( sanitize_text_field( $_GET['order'] ) )
+		$order = isset( $_GET['order'] ) && in_array( strtoupper( $_GET['order'] ), array( 'ASC', 'DESC' ), true ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? strtoupper( sanitize_text_field( wp_unslash( $_GET['order'] ) ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: 'DESC';
 
 		$current_page = $this->get_pagenum();
@@ -546,7 +550,7 @@ class SubscriptionsListTable extends WP_List_Table {
 
 		// $where is composed of $wpdb->prepare() fragments and $orderby/$order
 		// are validated against allowlists above, so the query is safe.
-		$this->items = $wpdb->get_results(
+		$this->items = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				"SELECT * FROM {$wpdb->prefix}wpsp_subscriptions {$where} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",

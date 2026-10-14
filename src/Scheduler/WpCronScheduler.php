@@ -57,7 +57,7 @@ class WpCronScheduler implements SchedulerInterface, SubscriberInterface {
 		if ( ! is_string( $hook ) || '' === $hook ) {
 			return;
 		}
-		do_action_ref_array( $hook, $args );
+		do_action_ref_array( $hook, $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
 	}
 
 	/**

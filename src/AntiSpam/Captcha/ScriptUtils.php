@@ -38,10 +38,8 @@ class ScriptUtils {
 		switch ( $type ) {
 			case 'hcaptcha':
 				// Enqueue hCaptcha script.
-				wp_enqueue_script(
-					'simpay-hcaptcha',
-					'https://js.hcaptcha.com/1/api.js'
-				);
+				wp_enqueue_script( 'simpay-hcaptcha', 'https://js.hcaptcha.com/1/api.js', array(), null, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+
 				break;
 			case 'recaptcha-v3':
 				// Generate the URL for reCAPTCHA script with the site key.
@@ -72,10 +70,8 @@ class ScriptUtils {
 				break;
 			case 'cloudflare-turnstile':
 				// Enqueue Cloudflare Turnstile script.
-				wp_enqueue_script(
-					'simpay-cloudflare-turnstile',
-					'https://challenges.cloudflare.com/turnstile/v0/api.js'
-				);
+				wp_enqueue_script( 'simpay-cloudflare-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion, PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- Cloudflare requires api.js to be loaded from its CDN.
+
 				break;
 		}
 	}

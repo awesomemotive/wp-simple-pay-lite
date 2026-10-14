@@ -9,6 +9,10 @@
  * @since 4.4.2
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <style>

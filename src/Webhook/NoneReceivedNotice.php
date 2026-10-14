@@ -297,13 +297,13 @@ class NoneReceivedNotice implements SubscriberInterface, LicenseAwareInterface, 
 
 		if (
 			! isset( $_GET['action'] ) ||
-			'simpay_dismiss_webhook' !== sanitize_text_field( $_GET['action'] )
+			'simpay_dismiss_webhook' !== sanitize_text_field( wp_unslash( $_GET['action'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
 			return;
 		}
 
 		$nonce = isset( $_GET['nonce'] )
-			? sanitize_text_field( $_GET['nonce'] )
+			? sanitize_text_field( wp_unslash( $_GET['nonce'] ) )
 			: '';
 
 		if ( ! wp_verify_nonce( $nonce, 'simpay_dismiss_webhook' ) ) {

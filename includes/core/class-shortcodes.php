@@ -105,7 +105,7 @@ class Shortcodes {
 			);
 		}
 
-		if ( ! isset( $_GET['simpay-preview'] ) && 'publish' !== get_post_status( $form_id ) ) {
+		if ( ! isset( $_GET['simpay-preview'] ) && 'publish' !== get_post_status( $form_id ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( current_user_can( 'manage_options' ) ) {
 				return wp_kses_post(
 					wpautop(
@@ -294,8 +294,8 @@ class Shortcodes {
 
 			// If we have a form, and there is custom content, use it.
 			// Use a late priority to override content pulled from Pro.
-			$form_id = isset( $_GET['form_id'] )
-				? absint( $_GET['form_id'] )
+			$form_id = isset( $_GET['form_id'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				? absint( $_GET['form_id'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				: 0;
 
 			$form = simpay_get_form( $form_id );
@@ -445,7 +445,7 @@ class Shortcodes {
 		}
 
 		// Skip check if no subscription key in URL.
-		if ( ! isset( $_GET['subscription_key'] ) ) {
+		if ( ! isset( $_GET['subscription_key'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return true;
 		}
 

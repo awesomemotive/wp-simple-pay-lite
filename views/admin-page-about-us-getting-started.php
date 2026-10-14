@@ -15,6 +15,10 @@
  * @var bool   $is_lite If the current license is Lite.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="simpay-card">

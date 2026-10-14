@@ -118,7 +118,7 @@ class PluginTelemetryData extends AbstractTelemetryData {
 			return true;
 		}
 
-		$latest_transaction = $wpdb->get_var(
+		$latest_transaction = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			"SELECT date_created FROM {$wpdb->prefix}wpsp_transactions ORDER BY date_created DESC LIMIT 1"
 		);
 
@@ -127,7 +127,7 @@ class PluginTelemetryData extends AbstractTelemetryData {
 			return true;
 		}
 
-		$latest_webhook = $wpdb->get_var(
+		$latest_webhook = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			"SELECT date_created FROM {$wpdb->prefix}wpsp_webhooks ORDER BY date_created DESC LIMIT 1"
 		);
 

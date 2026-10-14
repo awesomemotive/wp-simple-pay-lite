@@ -60,6 +60,7 @@ class Standard extends Field {
 	 */
 	public function html() {
 		if ( true === $this->multiline ) {
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor
 			echo '<textarea
 				rows="8"
 				name="' . esc_attr( $this->name ) . '"
@@ -68,7 +69,9 @@ class Standard extends Field {
 				' . ( $this->style ? 'style="' . $this->style . '" ' : ' ' ) . '
 				' . ( $this->placeholder ? 'placeholder="' . $this->placeholder . '"' : ' ' ) . '
 				' . ( $this->attributes ) . '>' . esc_attr( $this->value ) . '</textarea>';
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor
 			echo '<input
 				type="' . esc_attr( $this->subtype ) . '"
 				name="' . esc_attr( $this->name ) . '"
@@ -80,14 +83,15 @@ class Standard extends Field {
 				' . ( $this->placeholder ? 'placeholder="' . $this->placeholder . '"' : ' ' ) . '
 				' . ( $this->attributes ) . '
 			/>';
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		if ( ! empty( $this->description ) ) {
-			echo '<p class="description">' . $this->description . '</p>';
+			echo '<p class="description">' . $this->description . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor
 		}
 
 		if ( is_string( $this->validation ) && ! empty( $this->validation ) ) {
-			echo $this->validation;
+			echo $this->validation; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor
 		}
 	}
 

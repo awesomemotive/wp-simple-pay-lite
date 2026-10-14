@@ -16,6 +16,10 @@
  * @var bool                            $is_upgraded If the plugin was upgraded via the in-plugin flow.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use SimplePay\Core\Utils;
 
 ?>

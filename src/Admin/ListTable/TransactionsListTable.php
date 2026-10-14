@@ -14,6 +14,10 @@ namespace SimplePay\Core\Admin\ListTable;
 use SimplePay\Core\Utils\AccountScope;
 use WP_List_Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
@@ -171,7 +175,7 @@ class TransactionsListTable extends WP_List_Table {
 	 * @return int
 	 */
 	private function get_current_form_id() {
-		return isset( $_GET['txn_form_id'] ) ? absint( $_GET['txn_form_id'] ) : 0;
+		return isset( $_GET['txn_form_id'] ) ? absint( $_GET['txn_form_id'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -192,8 +196,8 @@ class TransactionsListTable extends WP_List_Table {
 	 * @return string Either 'live' or 'test'.
 	 */
 	private function get_current_mode() {
-		$requested = isset( $_GET['txn_livemode'] )
-			? sanitize_text_field( $_GET['txn_livemode'] )
+		$requested = isset( $_GET['txn_livemode'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['txn_livemode'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: '';
 
 		if ( in_array( $requested, array( 'live', 'test' ), true ) ) {
@@ -234,8 +238,8 @@ class TransactionsListTable extends WP_List_Table {
 	 * @return string
 	 */
 	private function get_current_status() {
-		$status = isset( $_GET['txn_status'] )
-			? sanitize_text_field( $_GET['txn_status'] )
+		$status = isset( $_GET['txn_status'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['txn_status'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: '';
 
 		// Only recognized view keys are valid filters; anything else falls back
@@ -253,7 +257,7 @@ class TransactionsListTable extends WP_List_Table {
 	 * @return string
 	 */
 	private function get_current_search() {
-		return isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
+		return isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -347,7 +351,7 @@ class TransactionsListTable extends WP_List_Table {
 		$where = $this->get_where_clause( false );
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $where is built from $wpdb->prepare() fragments; the CASE expressions are constant SQL with no user input.
-		$row = $wpdb->get_row(
+		$row = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			"SELECT
 				COUNT(*) AS total,
 				SUM( status = 'succeeded' ) AS succeeded,
@@ -659,19 +663,19 @@ class TransactionsListTable extends WP_List_Table {
 
 		// Total items. The {$where} clause is built exclusively from
 		// $wpdb->prepare() fragments, so it is already escaped.
-		$total_items = (int) $wpdb->get_var(
+		$total_items = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			"SELECT COUNT(*) FROM {$wpdb->prefix}wpsp_transactions {$where}"
 		);
 
 		// Sorting.
 		$allowed_orderby = array( 'id', 'date_created', 'amount_total' );
-		$orderby         = isset( $_GET['orderby'] ) && in_array( $_GET['orderby'], $allowed_orderby, true )
-			? sanitize_text_field( $_GET['orderby'] )
+		$orderby         = isset( $_GET['orderby'] ) && in_array( $_GET['orderby'], $allowed_orderby, true ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: 'id';
 
-		$order = isset( $_GET['order'] ) && in_array( strtoupper( $_GET['order'] ), array( 'ASC', 'DESC' ), true )
-			? strtoupper( sanitize_text_field( $_GET['order'] ) )
+		$order = isset( $_GET['order'] ) && in_array( strtoupper( $_GET['order'] ), array( 'ASC', 'DESC' ), true ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? strtoupper( sanitize_text_field( wp_unslash( $_GET['order'] ) ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: 'DESC';
 
 		// Pagination.
@@ -685,7 +689,7 @@ class TransactionsListTable extends WP_List_Table {
 		// prepared fragment must not be fed back in as a format string.
 		$limit = sprintf( 'LIMIT %d OFFSET %d', absint( $per_page ), absint( $offset ) );
 
-		$this->items = $wpdb->get_results(
+		$this->items = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared
 			"SELECT * FROM {$wpdb->prefix}wpsp_transactions {$where} ORDER BY {$orderby} {$order} {$limit}"
 		);
@@ -1063,7 +1067,7 @@ class TransactionsListTable extends WP_List_Table {
 		// $where is composed of $wpdb->prepare() fragments, so it is already
 		// escaped, and it carries no LIKE wildcards to be re-interpreted here.
 		/** @var array<int, Transaction_Row> $results */
-		$results = $wpdb->get_results(
+		$results = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 				"SELECT * FROM {$wpdb->prefix}wpsp_transactions {$where} AND id IN ({$placeholders})",

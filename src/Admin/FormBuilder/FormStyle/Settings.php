@@ -40,7 +40,7 @@ class Settings {
 	 * @param string $default Optional. The default value if the setting is not found.
 	 * @return string The setting value.
 	 */
-	public static function get_setting( $form_id, $key, $default = '' ) {
+	public static function get_setting( $form_id, $key, $default = '' ) { // phpcs:ignore Universal.NamingConventions.NoReservedKeywordParameterNames.defaultFound -- Public API since 4.17.0; renaming would break named-argument callers.
 		$meta_key = self::$meta_prefix . sanitize_key( $key );
 		$value    = get_post_meta( $form_id, $meta_key, true );
 
@@ -123,6 +123,9 @@ class Settings {
 			'input_font_size',
 			'error_border_color',
 			'error_text_color',
+			'checkbox_border_color',
+			'checkbox_checked_fill_color',
+			'checkbox_checkmark_color',
 			'title_color',
 			'title_font_size',
 			'title_font_weight',
@@ -192,6 +195,9 @@ class Settings {
 			case 'button_hover_background_color':
 			case 'error_border_color':
 			case 'error_text_color':
+			case 'checkbox_border_color':
+			case 'checkbox_checked_fill_color':
+			case 'checkbox_checkmark_color':
 			case 'title_color':
 			case 'description_color':
 				// Handle empty values.

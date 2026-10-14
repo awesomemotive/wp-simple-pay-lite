@@ -51,7 +51,7 @@ function add_preview_action( $post ) {
 			target="wp-preview-<?php echo esc_attr( (int) $post->ID ); ?>"
 			id="post-preview"
 		>
-			<?php echo $preview_button; // WPCS: XSS okay. ?>
+			<?php echo $preview_button; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</a>
 		<input type="hidden" name="wp-preview" id="wp-preview" value="" />
 	</div>
@@ -94,8 +94,8 @@ function add_shortcode_action( $post ) {
 				data-show-tab="simpay-payment_page"
 				class="simpay-tab-link edit-post-status"
 			>
-				<span aria-hidden="true"><?php echo __( 'Edit', 'stripe' ); ?></span>
-				<span class="screen-reader-text"><?php echo __( 'Edit', 'stripe' ); ?></span>
+				<span aria-hidden="true"><?php esc_html_e( 'Edit', 'stripe' ); ?></span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Edit', 'stripe' ); ?></span>
 			</a>
 		</label>
 		<?php
@@ -125,8 +125,8 @@ function add_shortcode_action( $post ) {
 	 */
 function redirect_post_save_preview( $location, $post_id ) {
 	if (
-	! isset( $_POST['simpay_save_preview'] ) ||
-	'preview' !== sanitize_text_field( $_POST['simpay_save_preview'] )
+	! isset( $_POST['simpay_save_preview'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	'preview' !== sanitize_text_field( wp_unslash( $_POST['simpay_save_preview'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	) {
 		return $location;
 	}
@@ -714,7 +714,7 @@ function redirect_post_save_preview( $location, $post_id ) {
 	data-upgrade-purchased-url="<?php echo esc_url( $upgrade_purchased_url ); ?>"
 <?php endif; ?>
 >
-			<?php echo $html; // WPCS: XSS okay. ?>
+			<?php echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </li>
 
 			<?php
@@ -1119,7 +1119,7 @@ function redirect_post_save_preview( $location, $post_id ) {
 				 *
 				 * @since 4.6.0
 				 */
-				do_action( '__unstable_simpay_after_form_anti_spam_settings' );
+				do_action( '__unstable_simpay_after_form_anti_spam_settings' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				?>
 		</td>
 	</tr>

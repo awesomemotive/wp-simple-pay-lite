@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Return to the list showing this transaction's own mode, which is not
 // necessarily the global one -- a payment form can override it.
-$back_url = add_query_arg(
+$back_url = add_query_arg( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	array(
 		'post_type'    => 'simple-pay',
 		'page'         => 'simpay-transactions',
@@ -58,19 +58,19 @@ $back_url = add_query_arg(
 );
 
 // Use per-transaction livemode for Stripe URLs (not global test mode).
-$stripe_prefix = $transaction->livemode ? '' : 'test/';
+$stripe_prefix = $transaction->livemode ? '' : 'test/'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 // Determine display status (partial refund detection).
-$display_status = $transaction->status;
+$display_status = $transaction->status; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if (
 	'refunded' === $transaction->status &&
 	absint( $transaction->amount_refunded ) > 0 &&
 	absint( $transaction->amount_refunded ) < absint( $transaction->amount_total )
 ) {
-	$display_status = 'partial_refund';
+	$display_status = 'partial_refund'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 
-$status_labels = array(
+$status_labels = array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	'succeeded'               => __( 'Succeeded', 'stripe' ),
 	'failed'                  => __( 'Failed', 'stripe' ),
 	'refunded'                => __( 'Refunded', 'stripe' ),
@@ -82,14 +82,14 @@ $status_labels = array(
 	'processing'              => __( 'Processing', 'stripe' ),
 );
 
-$status_label = isset( $status_labels[ $display_status ] )
+$status_label = isset( $status_labels[ $display_status ] ) // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	? $status_labels[ $display_status ]
 	: ucfirst( $display_status );
 
 // Build customer URL.
-$customer_url = '';
+$customer_url = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( ! empty( $transaction->customer_id ) ) {
-	$customer_url = sprintf(
+	$customer_url = sprintf( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		'https://dashboard.stripe.com/%scustomers/%s',
 		$stripe_prefix,
 		$transaction->customer_id
@@ -97,9 +97,9 @@ if ( ! empty( $transaction->customer_id ) ) {
 }
 
 // Build subscription URL.
-$subscription_url = '';
+$subscription_url = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( ! empty( $transaction->subscription_id ) ) {
-	$subscription_url = sprintf(
+	$subscription_url = sprintf( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		'https://dashboard.stripe.com/%ssubscriptions/%s',
 		$stripe_prefix,
 		$transaction->subscription_id
@@ -107,25 +107,25 @@ if ( ! empty( $transaction->subscription_id ) ) {
 }
 
 // Form title.
-$form_title = '';
-$form_url   = '';
+$form_title = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$form_url   = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( ! empty( $transaction->form_id ) ) {
-	$form_id    = absint( $transaction->form_id );
-	$form_title = get_the_title( $form_id );
-	$form_url   = get_edit_post_link( $form_id );
+	$form_id    = absint( $transaction->form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$form_title = get_the_title( $form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$form_url   = get_edit_post_link( $form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 	if ( empty( $form_title ) ) {
-		$form_title = sprintf( '#%d', $form_id );
+		$form_title = sprintf( '#%d', $form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	}
 }
 
-$date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+$date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 // Refund display values.
-$is_zero_decimal        = simpay_is_zero_decimal( $transaction->currency );
-$max_refundable_raw     = absint( $transaction->amount_total ) - absint( $transaction->amount_refunded );
-$max_refundable_display = $is_zero_decimal ? $max_refundable_raw : round( $max_refundable_raw / 100, 2 );
-$step_value             = $is_zero_decimal ? '1' : '0.01';
+$is_zero_decimal        = simpay_is_zero_decimal( $transaction->currency ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$max_refundable_raw     = absint( $transaction->amount_total ) - absint( $transaction->amount_refunded ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$max_refundable_display = $is_zero_decimal ? $max_refundable_raw : round( $max_refundable_raw / 100, 2 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$step_value             = $is_zero_decimal ? '1' : '0.01'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <div class="wrap simpay-txn-detail">
@@ -270,7 +270,7 @@ $step_value             = $is_zero_decimal ? '1' : '0.01';
 				<div class="inside">
 					<table class="widefat simpay-txn-table">
 						<tbody>
-							<?php foreach ( $file_uploads as $file_upload ) : ?>
+							<?php foreach ( $file_uploads as $file_upload ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 							<tr>
 								<th scope="row"><?php echo esc_html( $file_upload['label'] ); ?></th>
 								<td>
@@ -295,7 +295,7 @@ $step_value             = $is_zero_decimal ? '1' : '0.01';
 				<div class="inside">
 					<table class="widefat simpay-txn-table">
 						<tbody>
-							<?php foreach ( $custom_fields as $custom_field ) : ?>
+							<?php foreach ( $custom_fields as $custom_field ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 							<tr>
 								<th scope="row"><?php echo esc_html( $custom_field['label'] ); ?></th>
 								<td><?php echo esc_html( $custom_field['value'] ); ?></td>
@@ -317,7 +317,7 @@ $step_value             = $is_zero_decimal ? '1' : '0.01';
 				<div class="inside">
 					<table class="widefat simpay-txn-table simpay-txn-table--metadata">
 						<tbody>
-							<?php foreach ( $metadata_rows as $metadata_row ) : ?>
+							<?php foreach ( $metadata_rows as $metadata_row ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 							<tr>
 								<th scope="row"><code><?php echo esc_html( $metadata_row['key'] ); ?></code></th>
 								<td><?php echo esc_html( $metadata_row['value'] ); ?></td>

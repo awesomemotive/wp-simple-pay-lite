@@ -69,9 +69,10 @@ class Default_Form extends Form {
 	 * @link https://github.com/wpsimplepay/WP-Simple-Pay-Pro-3/issues/617
 	 *
 	 * @since 3.0.0
+	 * @since 4.17.5 No longer collects script variables on `wp_footer`; form
+	 *               data is served by the form-data REST route instead.
 	 */
 	public function register_hooks() {
-		add_action( 'wp_footer', array( $this, 'set_script_variables' ), 0 );
 		add_filter( 'simpay_form_' . $this->id . '_custom_fields', array( $this, 'get_custom_fields_html' ), 10, 2 );
 	}
 
@@ -146,8 +147,16 @@ class Default_Form extends Form {
 	 * Set the JS script variables specifically for this form
 	 *
 	 * @since 3.0.0
+	 * @deprecated 4.17.5 Form data is no longer localized inline. It is served
+	 *                    by the form-data REST route, which applies the same
+	 *                    filters.
 	 */
 	public function set_script_variables() {
+		_deprecated_function(
+			__METHOD__,
+			'4.17.5',
+			'\SimplePay\Core\RestApi\Internal\Form\FormDataRoute::get_form_data'
+		);
 
 		$temp[ $this->id ] = $this->get_upe_script_variables();
 
@@ -163,8 +172,8 @@ class Default_Form extends Form {
 		 */
 		$temp = apply_filters( 'simpay_form_script_variables', $temp, $this->id );
 
-		// Add this temp script variables to our assets so if multiple forms are on the page they will all be loaded at once and be specific to each form.
-		Assets::get_instance()->script_variables( $temp );
+		// Kept for backwards compatibility only; nothing outputs these any more.
+		Assets::$script_variables = Assets::$script_variables + $temp;
 	}
 
 	/**
@@ -186,8 +195,8 @@ class Default_Form extends Form {
 
 		printf(
 			'<div id="simpay-%1$s-form-wrap-%2$s" data-id="simpay-form-%2$s-wrap" class="%3$s">',
-			$form_display_type,
-			$this->id,
+			$form_display_type, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$this->id, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			esc_attr( implode( ' ', $classes ) )
 		);
 
@@ -196,7 +205,7 @@ class Default_Form extends Form {
 			// Can add additional form tag attributes here using a filter.
 			$more_form_atts = apply_filters( 'simpay_more_form_attributes', '' );
 
-			echo '<form action="" method="post" class="' . $this->get_form_classes( $this->id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '" ' . esc_attr( $more_form_atts ) . '>';
+			echo '<form action="" method="post" class="' . $this->get_form_classes( $this->id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '" ' . esc_attr( $more_form_atts ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML built from escaped parts
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_top', $this );
 
@@ -211,7 +220,7 @@ class Default_Form extends Form {
 				do_action( 'simpay_form_before_form_top', $this->id, $this );
 
 		if ( ! empty( $this->custom_fields ) && is_array( $this->custom_fields ) ) {
-			echo $this->print_custom_fields();
+			echo $this->print_custom_fields(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 				// Form validation error message container.
@@ -222,7 +231,7 @@ class Default_Form extends Form {
 				echo '<input type="hidden" name="simpay_amount" value="" class="simpay-amount" />';
 
 		if ( true === $this->test_mode ) {
-			echo simpay_get_test_mode_badge();
+			echo simpay_get_test_mode_badge(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_bottom', $this );
@@ -237,7 +246,11 @@ class Default_Form extends Form {
 				 */
 				do_action( 'simpay_form_before_form_bottom', $this->id, $this );
 
-				wp_nonce_field( 'simpay_payment_form' );
+				// Per-form nonce (matches the action emitted by FormDataRoute).
+				// AbstractPaymentRoute::check_form_nonce() accepts both the
+				// per-form action and the legacy generic action for backward
+				// compatibility with older cached HTML / third-party integrations.
+				wp_nonce_field( \SimplePay\Core\Utils\PaymentFormNonce::get_action( $this->id ) );
 
 			echo '</form>';
 
@@ -338,7 +351,7 @@ class Default_Form extends Form {
 			$html .= '<input type="hidden" name="simpay_shipping_address_city" class="simpay-shipping-city" />';
 		}
 
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML built from escaped parts
 	}
 
 	/**

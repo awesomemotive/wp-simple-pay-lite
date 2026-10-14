@@ -59,8 +59,8 @@ class Radio extends Field {
 			?>
 
 				<fieldset
-					id="<?php echo $this->id; ?>"
-					<?php echo $this->style ? 'style="' . $this->style . '"' : ''; ?>
+					id="<?php echo $this->id;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
+					<?php echo $this->style ? 'style="' . $this->style . '"' : '';  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>
 				>
 				<?php
 
@@ -68,7 +68,7 @@ class Radio extends Field {
 
 					?>
 					<legend class="screen-reader-text">
-						<span><?php echo $this->title; ?></span>
+						<span><?php echo $this->title;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?></span>
 					</legend>
 					<?php
 
@@ -79,14 +79,14 @@ class Radio extends Field {
 				<ul <?php echo $this->inline === true ? 'class="simpay-field-radios-inline"' : ''; ?>>
 					<?php foreach ( $this->options as $option => $name ) : ?>
 						<li>
-							<label for="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>">
+							<label for="<?php echo esc_attr( $this->id . '-' . trim( strval( $option ) ) ); ?>">
 								<input
-									name="<?php echo $this->name; ?>"
-									id="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>"
-									class="simpay-field simpay-field-radio <?php echo $this->class; ?>"
+									name="<?php echo $this->name;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
+									id="<?php echo esc_attr( $this->id . '-' . trim( strval( $option ) ) ); ?>"
+									class="simpay-field simpay-field-radio <?php echo $this->class;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
 									type="radio"
-									value="<?php echo trim( strval( $option ) ); ?>"
-									<?php echo $this->attributes; ?>
+									value="<?php echo esc_attr( trim( strval( $option ) ) ); ?>"
+									<?php echo $this->attributes;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>
 									<?php checked( $option, $this->value, true ); ?>
 								/>
 								<?php echo esc_attr( $name ); ?>

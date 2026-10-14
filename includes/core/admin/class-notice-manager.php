@@ -206,8 +206,8 @@ class Notice_Manager {
 	 * @since 4.2.0 Support temporary dismissals.
 	 */
 	public static function ajax_dismiss_notice() {
-		$notice_id = isset( $_POST['notice_id'] ) ? sanitize_text_field( $_POST['notice_id'] ) : false;
-		$nonce     = isset( $_POST['nonce'] ) ? sanitize_text_field( $_POST['nonce'] ) : false;
+		$notice_id = isset( $_POST['notice_id'] ) ? sanitize_text_field( wp_unslash( $_POST['notice_id'] ) ) : false; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$nonce     = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : false; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return wp_send_json_error();
@@ -218,7 +218,7 @@ class Notice_Manager {
 		}
 
 		$lifespan = isset( $_POST['lifespan'] )
-			? sanitize_text_field( $_POST['lifespan'] )
+			? sanitize_text_field( wp_unslash( $_POST['lifespan'] ) )
 			: '';
 
 		self::dismiss_notice( $notice_id, $lifespan );
@@ -233,11 +233,11 @@ class Notice_Manager {
 	 */
 	public static function link_dismiss_notice() {
 		$notice_id = isset( $_GET['simpay_dismiss_notice_id'] )
-			? sanitize_text_field( $_GET['simpay_dismiss_notice_id'] )
+			? sanitize_text_field( wp_unslash( $_GET['simpay_dismiss_notice_id'] ) )
 			: false;
 
 		$nonce = isset( $_GET['simpay_dismiss_notice_nonce'] )
-			? sanitize_text_field( $_GET['simpay_dismiss_notice_nonce'] )
+			? sanitize_text_field( wp_unslash( $_GET['simpay_dismiss_notice_nonce'] ) )
 			: false;
 
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -253,7 +253,7 @@ class Notice_Manager {
 		}
 
 		$lifespan = isset( $_GET['simpay_dismiss_notice_lifespan'] )
-			? sanitize_text_field( $_GET['simpay_dismiss_notice_lifespan'] )
+			? sanitize_text_field( wp_unslash( $_GET['simpay_dismiss_notice_lifespan'] ) )
 			: '';
 
 		self::dismiss_notice( $notice_id, $lifespan );
@@ -299,10 +299,10 @@ class Notice_Manager {
 	data-nonce="<?php echo esc_attr( wp_create_nonce( 'simpay-dismiss-notice-' . $notice_id ) ); ?>"
 	<?php endif; ?>
 >
-		<?php echo $notice; ?>
+		<?php echo $notice; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 
 		<?php
-		echo ob_get_clean();
+		echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

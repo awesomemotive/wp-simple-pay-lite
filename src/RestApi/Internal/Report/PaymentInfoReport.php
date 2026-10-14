@@ -138,7 +138,7 @@ class PaymentInfoReport implements SubscriberInterface {
 
 		$status = 'status' === $column ? '' : "AND status = 'succeeded'";
 
-		return $wpdb->get_results(
+		return $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				"SELECT $column, COUNT(IFNULL($column, 1)) as count FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s $status AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY $column", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				simpay_is_test_mode() ? 0 : 1,

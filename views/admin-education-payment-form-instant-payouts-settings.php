@@ -11,6 +11,10 @@
  * @var string $enroll_url URL to enroll in instant payouts.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use SimplePay\Core\Utils;
 
 ?>

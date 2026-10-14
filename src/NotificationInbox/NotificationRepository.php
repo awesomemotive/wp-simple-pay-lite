@@ -70,15 +70,16 @@ class NotificationRepository extends BerlinDbRepository {
 				return $notification;
 			}
 
-			// Reset start time.
+			// Reset start time. Stored as UTC; date_query values below also use
+			// UTC so windows stay consistent across sites and across deploys.
 			$start = isset( $args['start'] )
 				? $args['start']
-				: date( 'Y-m-d H:i:s', time() );
+				: gmdate( 'Y-m-d H:i:s', time() );
 
 			// Move end time forward the same amount as the previous difference.
 			$end = isset( $args['end'] )
 				? $args['end']
-				: date(
+				: gmdate(
 					'Y-m-d H:i:s',
 					time() + ( $notification->end - $notification->start )
 				);
@@ -292,12 +293,12 @@ class NotificationRepository extends BerlinDbRepository {
 				array(
 					'column'  => 'start',
 					'compare' => '<=',
-					'value'   => date( 'Y-m-d H:i:s', time() ),
+					'value'   => gmdate( 'Y-m-d H:i:s', time() ),
 				),
 				array(
 					'column'  => 'end',
 					'compare' => '>=',
-					'value'   => date( 'Y-m-d H:i:s', time() ),
+					'value'   => gmdate( 'Y-m-d H:i:s', time() ),
 				),
 			),
 		);
@@ -318,12 +319,12 @@ class NotificationRepository extends BerlinDbRepository {
 				array(
 					'column'  => 'start',
 					'compare' => '<=',
-					'value'   => date( 'Y-m-d H:i:s', time() ),
+					'value'   => gmdate( 'Y-m-d H:i:s', time() ),
 				),
 				array(
 					'column'  => 'end',
 					'compare' => '>=',
-					'value'   => date( 'Y-m-d H:i:s', time() ),
+					'value'   => gmdate( 'Y-m-d H:i:s', time() ),
 				),
 			),
 		);

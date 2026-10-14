@@ -12,12 +12,16 @@
  * @var array<string, array<string, string>> $links Promotional links.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="simpay-footer-promotion">
 	<p><?php echo esc_html( $title ); ?></p>
 	<ul class="simpay-footer-promotion-links">
-		<?php foreach ( $links as $key => $item ) : ?>
+		<?php foreach ( $links as $key => $item ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 			<li>
 				<?php
 				printf(

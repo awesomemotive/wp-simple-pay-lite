@@ -46,7 +46,7 @@ function save( $post_id, $post, $update ) {
 	// Bail if we cannot verify our nonce.
 	if (
 		empty( $_POST['simpay_meta_nonce'] ) ||
-		! wp_verify_nonce( $_POST['simpay_meta_nonce'], 'simpay_save_data' )
+		! wp_verify_nonce( wp_unslash( $_POST['simpay_meta_nonce'] ), 'simpay_save_data' ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	) {
 		return;
 	}
@@ -77,50 +77,50 @@ function save( $post_id, $post, $update ) {
 
 	// Success redirect type.
 	$success_redirect_type = isset( $_POST['_success_redirect_type'] )
-		? esc_attr( $_POST['_success_redirect_type'] )
+		? esc_attr( wp_unslash( $_POST['_success_redirect_type'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		: 'dedicated';
 
 	update_post_meta( $post_id, '_success_redirect_type', $success_redirect_type );
 
 	// Success message.
 	if ( isset( $_POST['_success_message'] ) && ! empty( $_POST['_success_message'] ) ) {
-		$success_message = wp_kses_post( $_POST['_success_message'] );
-		update_post_meta( $post_id, '_success_message', $success_message );
+		$success_message = wp_kses_post( wp_unslash( $_POST['_success_message'] ) );
+		update_post_meta( $post_id, '_success_message', wp_slash( $success_message ) );
 	} else {
 		delete_post_meta( $post_id, '_success_message' );
 	}
 
 	// Success redirect page.
 	$success_redirect_page = isset( $_POST['_success_redirect_page'] )
-		? esc_attr( $_POST['_success_redirect_page'] )
+		? esc_attr( wp_unslash( $_POST['_success_redirect_page'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		: '';
 
 	update_post_meta( $post_id, '_success_redirect_page', $success_redirect_page );
 
 	// Success redirect URL.
 	$success_redirect_url = isset( $_POST['_success_redirect_url'] )
-		? esc_url( $_POST['_success_redirect_url'] )
+		? esc_url( wp_unslash( $_POST['_success_redirect_url'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		: '';
 
 	update_post_meta( $post_id, '_success_redirect_url', $success_redirect_url );
 
 	// Company name.
 	$company_name = isset( $_POST['_company_name'] )
-		? sanitize_text_field( $_POST['_company_name'] )
+		? sanitize_text_field( wp_unslash( $_POST['_company_name'] ) )
 		: '';
 
-	update_post_meta( $post_id, '_company_name', $company_name );
+	update_post_meta( $post_id, '_company_name', wp_slash( $company_name ) );
 
 	// Item description.
 	$item_description = isset( $_POST['_item_description'] )
-		? sanitize_text_field( $_POST['_item_description'] )
+		? sanitize_text_field( wp_unslash( $_POST['_item_description'] ) )
 		: '';
 
-	update_post_meta( $post_id, '_item_description', $item_description );
+	update_post_meta( $post_id, '_item_description', wp_slash( $item_description ) );
 
 	// Image URL.
 	$image_url = isset( $_POST['_image_url'] )
-		? sanitize_text_field( $_POST['_image_url'] )
+		? sanitize_text_field( wp_unslash( $_POST['_image_url'] ) )
 		: '';
 
 	update_post_meta( $post_id, '_image_url', $image_url );
@@ -128,7 +128,7 @@ function save( $post_id, $post, $update ) {
 	// Recurring amount format (per-form override). Pro-only feature.
 	if ( false === simpay_get_license()->is_lite() ) {
 		$recurring_amount_format = isset( $_POST['_recurring_amount_format'] )
-			? sanitize_text_field( $_POST['_recurring_amount_format'] )
+			? sanitize_text_field( wp_unslash( $_POST['_recurring_amount_format'] ) )
 			: '';
 
 		update_post_meta(
@@ -140,24 +140,26 @@ function save( $post_id, $post, $update ) {
 
 	// Submit type.
 	$checkout_submit_type = isset( $_POST['_checkout_submit_type'] )
-		? sanitize_text_field( $_POST['_checkout_submit_type'] )
+		? sanitize_text_field( wp_unslash( $_POST['_checkout_submit_type'] ) )
 		: 'pay';
 
 	update_post_meta( $post_id, '_checkout_submit_type', $checkout_submit_type );
 
 	// Transaction description source.
 	$transaction_description_source = isset( $_POST['_transaction_description_source'] )
-		? sanitize_text_field( $_POST['_transaction_description_source'] )
+		? sanitize_text_field( wp_unslash( $_POST['_transaction_description_source'] ) )
 		: '';
 
 	update_post_meta( $post_id, '_transaction_description_source', $transaction_description_source );
 
 	// Transaction description custom text.
 	$transaction_description_custom = isset( $_POST['_transaction_description_custom'] )
-		? sanitize_text_field( $_POST['_transaction_description_custom'] )
+		? sanitize_text_field( wp_unslash( $_POST['_transaction_description_custom'] ) )
 		: '';
 
-	update_post_meta( $post_id, '_transaction_description_custom', $transaction_description_custom );
+	// `update_post_meta()` unslashes its value, so re-slash the already
+	// unslashed text to keep literal backslashes.
+	update_post_meta( $post_id, '_transaction_description_custom', wp_slash( $transaction_description_custom ) );
 
 	// Billing address.
 	$enable_billing_address = isset( $_POST['_enable_billing_address'] )
@@ -211,7 +213,7 @@ function save( $post_id, $post, $update ) {
 
 	// Custom fields.
 	$fields = isset( $_POST['_simpay_custom_field'] )
-		? $_POST['_simpay_custom_field']
+		? wp_unslash( $_POST['_simpay_custom_field'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		: array();
 
 	$conditional_logic_excluded_types = function_exists( '\SimplePay\Pro\Post_Types\Simple_Pay\Util\get_conditional_logic_excluded_field_types' )
@@ -232,7 +234,7 @@ function save( $post_id, $post, $update ) {
 			}
 		}
 	}
-	update_post_meta( $post_id, '_custom_fields', $fields );
+	update_post_meta( $post_id, '_custom_fields', wp_slash( $fields ) );
 
 	// Payment Methods.
 	// Gets superseded by the Pro save routine.
@@ -249,7 +251,7 @@ function save( $post_id, $post, $update ) {
 	);
 
 	$payment_methods = isset( $_POST['_simpay_payment_methods'] )
-		? array_map( 'sanitize_text_field', $_POST['_simpay_payment_methods'] )
+		? array_map( 'sanitize_text_field', wp_unslash( $_POST['_simpay_payment_methods'] ) )
 		: $default_payment_methods;
 
 	// Remove any payment methods that are not allowed.
@@ -495,8 +497,8 @@ function save_prices( $post_id, $post, $form ) {
 	$error   = new WP_Error();
 	$product = save_product( $post_id, $post, $form );
 
-	$prices = isset( $_POST['_simpay_prices'] )
-		? $_POST['_simpay_prices']
+	$prices = isset( $_POST['_simpay_prices'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		? wp_unslash( $_POST['_simpay_prices'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		: array();
 
 	$_prices = array();
@@ -886,7 +888,7 @@ function save_prices( $post_id, $post, $form ) {
 		$_prices[ $instance_id ] = $price_args;
 	}
 
-	update_post_meta( $post_id, $prices_key, $_prices );
+	update_post_meta( $post_id, $prices_key, wp_slash( $_prices ) );
 	update_post_meta( $post_id, sprintf( '%s_modified', $prices_key ), time() );
 }
 add_action(
@@ -912,8 +914,8 @@ function save_redirect( $location, $post_id ) {
 		return $location;
 	}
 
-	$hash = isset( $_REQUEST['simpay_form_settings_tab'] )
-		? sanitize_text_field( $_REQUEST['simpay_form_settings_tab'] )
+	$hash = isset( $_REQUEST['simpay_form_settings_tab'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_text_field( wp_unslash( $_REQUEST['simpay_form_settings_tab'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: '#form-display-options-settings-panel';
 
 	$location .= $hash;
@@ -941,7 +943,7 @@ function duplicate() {
 	// Bail if the request is invalid.
 	check_admin_referer( 'simpay-duplicate-payment-form' );
 
-	$post = get_post( absint( $_GET['form'] ) );
+	$post = get_post( absint( $_GET['form'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
 	// Bail if post cannot be found.
 	if ( empty( $post ) ) {
@@ -968,7 +970,7 @@ function duplicate() {
 	// Duplicate metadata.
 	global $wpdb;
 
-	$wpdb->query(
+	$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$wpdb->prepare(
 			"INSERT INTO {$wpdb->prefix}postmeta (post_id, meta_key, meta_value) SELECT %d, meta_key, meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = %d",
 			$duplicate,
@@ -1038,6 +1040,37 @@ function duplicate() {
 add_action( 'admin_init', __NAMESPACE__ . '\\duplicate' );
 
 /**
+ * Saves a submitted Payment Page or Confirmation Page background color.
+ *
+ * The `$_POST` key matches the meta key. A missing, empty, malformed or
+ * non-string value keeps the saved color (`sanitize_hex_color()` returns
+ * `null` or an empty string for those). The `#428bca` default is stored only
+ * when no color has been saved yet, because the page output reads the meta
+ * without a fallback.
+ *
+ * @since 4.17.5
+ *
+ * @param int    $post_id  Payment Form ID.
+ * @param string $meta_key Meta key, and `$_POST` key, of the color.
+ * @return void
+ */
+function save_background_color_setting( $post_id, $meta_key ) {
+	$background_color = isset( $_POST[ $meta_key ] ) && is_string( $_POST[ $meta_key ] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		? sanitize_hex_color( wp_unslash( $_POST[ $meta_key ] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		: null;
+
+	if ( empty( $background_color ) ) {
+		if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
+			return;
+		}
+
+		$background_color = '#428bca';
+	}
+
+	update_post_meta( $post_id, $meta_key, $background_color );
+}
+
+/**
  * Saves the Payment Form's Confirmation Page settings.
  *
  * @since 4.5.0
@@ -1048,14 +1081,14 @@ add_action( 'admin_init', __NAMESPACE__ . '\\duplicate' );
  */
 function save_confirmation_page( $post_id, $post, $form ) {
 	// Import customization config from payment page.
-	$enable_confirmation_page = isset( $_POST['_confirmation_page_use_payment_page_config'] )
+	$enable_confirmation_page = isset( $_POST['_confirmation_page_use_payment_page_config'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		? 'yes'
 		: 'no';
 
 	update_post_meta( $post_id, '_confirmation_page_use_payment_page_config', $enable_confirmation_page );
 
 	// Show Title/Description.
-	$confirmation_page_title_description = isset( $_POST['_confirmation_page_title_description'] )
+	$confirmation_page_title_description = isset( $_POST['_confirmation_page_title_description'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		? 'yes'
 		: 'no';
 
@@ -1066,29 +1099,23 @@ function save_confirmation_page( $post_id, $post, $form ) {
 	);
 
 	// Color scheme.
-	$background_color = sanitize_hex_color(
-		$_POST['_confirmation_page_background_color']
-	);
-
-	update_post_meta(
-		$post_id,
-		'_confirmation_page_background_color',
-		$background_color
-	);
+	save_background_color_setting( $post_id, '_confirmation_page_background_color' );
 
 	// Footer text.
-	$footer_text = sanitize_text_field(
-		$_POST['_confirmation_page_footer_text']
-	);
+	$footer_text = isset( $_POST['_confirmation_page_footer_text'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		? sanitize_text_field( wp_unslash( $_POST['_confirmation_page_footer_text'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		: '';
 
 	update_post_meta(
 		$post_id,
 		'_confirmation_page_footer_text',
-		$footer_text
+		// `update_post_meta()` unslashes its value, so re-slash the already
+		// unslashed text to keep literal backslashes.
+		wp_slash( $footer_text )
 	);
 
 	// Powered by.
-	$confirmation_page_powered_by = isset( $_POST['_confirmation_page_powered_by'] )
+	$confirmation_page_powered_by = isset( $_POST['_confirmation_page_powered_by'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		? 'yes'
 		: 'no';
 
@@ -1099,16 +1126,19 @@ function save_confirmation_page( $post_id, $post, $form ) {
 	);
 
 	// Image URL.
-	$confirmation_page_image = esc_url( $_POST['_confirmation_page_image_url'] );
+	// `esc_url_raw()` (not `esc_url()`) since the value is stored, not output.
+	$confirmation_page_image = isset( $_POST['_confirmation_page_image_url'] ) && is_string( $_POST['_confirmation_page_image_url'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		? esc_url_raw( wp_unslash( $_POST['_confirmation_page_image_url'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		: '';
 
 	update_post_meta(
 		$post_id,
 		'_confirmation_page_image_url',
-		$confirmation_page_image
+		wp_slash( $confirmation_page_image )
 	);
 
 	// Self confirmation.
-	$confirmation_page_self_confirmation = isset( $_POST['_confirmation_page_self_confirmation'] )
+	$confirmation_page_self_confirmation = isset( $_POST['_confirmation_page_self_confirmation'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		? 'yes'
 		: 'no';
 

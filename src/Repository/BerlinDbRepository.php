@@ -163,7 +163,7 @@ class BerlinDbRepository extends BerlinDbQuery implements RepositoryInterface {
 
 			_doing_it_wrong(
 				__METHOD__,
-				__( 'Counting results via a query is not allowed. Use the ::count() method.', 'stripe' ),
+				__( 'Counting results via a query is not allowed. Use the ::count() method.', 'stripe' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				'4.4.5'
 			);
 		}

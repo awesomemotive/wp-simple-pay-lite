@@ -56,12 +56,13 @@ abstract class AbstractPaymentCreateRoute extends AbstractPaymentRoute {
 	 * user authentication permission checks are done.
 	 *
 	 * @since 4.7.0
+	 * @since 4.17.5 Verifies the payment-form nonce on the incoming request.
 	 *
-	 * @param \WP_REST_Request $request The payment request.
-	 * @return bool
+	 * @param \WP_REST_Request<array<string, mixed>> $request The payment request.
+	 * @return bool|\WP_Error
 	 */
 	public function create_payment_permissions_check( $request ) {
-		return true;
+		return $this->check_form_nonce( $request );
 	}
 
 	/**

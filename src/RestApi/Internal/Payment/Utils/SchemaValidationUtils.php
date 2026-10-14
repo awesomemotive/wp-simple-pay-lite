@@ -302,6 +302,7 @@ class SchemaValidationUtils {
 	 * Validates that a `coupon_code` parameter is valid.
 	 *
 	 * @since 4.7.0
+	 * @since 4.17.5 Matches the coupon name case-insensitively or the Stripe Coupon ID.
 	 *
 	 * @param string           $value The `coupon_code` parameter value.
 	 * @param \WP_REST_Request $request The payment request.
@@ -342,7 +343,10 @@ class SchemaValidationUtils {
 			$api_args['api_key']
 		);
 
-		$coupon = $coupons->get_by_name( $value );
+		// Match the name (in any case) or the Stripe Coupon ID, the same way
+		// the coupon is later resolved for redemption, so restrictions can't be
+		// bypassed by entering the Stripe Coupon ID instead of the name.
+		$coupon = $coupons->get_by_code( $value );
 
 		// ...the coupon was not created within WP Simple Pay, so it is valid,
 		// since it cannot have form restrictions if it was created outside of WP Simple Pay.

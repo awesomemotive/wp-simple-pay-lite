@@ -12,11 +12,15 @@
  * @var string                     $learn_more_url "Learn More" URL.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /** @var string $renew_url */
-$renew_url = $data['renew_url'];
+$renew_url = $data['renew_url']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 /** @var string $learn_more_url */
-$learn_more_url = $data['learn_more_url'];
+$learn_more_url = $data['learn_more_url']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <p>

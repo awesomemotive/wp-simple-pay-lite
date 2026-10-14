@@ -67,7 +67,8 @@ class ButtonBlock extends AbstractBlock {
 			'simpay-block-button',
 			SIMPLE_PAY_INC_URL . 'core/assets/js/dist/simpay-block-button.js',
 			$script_data['dependencies'],
-			$script_data['version']
+			$script_data['version'],
+			false
 		);
 
 		wp_localize_script(

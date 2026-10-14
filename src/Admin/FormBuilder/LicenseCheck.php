@@ -55,11 +55,11 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 	 */
 	public function maybe_show_license_notice() {
 		$adding = (
-			isset( $_GET['post_type'] ) &&
-			'simple-pay' === sanitize_text_field( $_GET['post_type'] )
+			isset( $_GET['post_type'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'simple-pay' === sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
 
-		$post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
+		$post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$editing = 'simple-pay' === get_post_type( $post_id );
 
 		// Not adding or editing.
@@ -108,7 +108,7 @@ class LicenseCheck implements SubscriberInterface, LicenseAwareInterface {
 			case 'expired':
 				// ...and not in the grace period.
 				if ( ! $this->license->is_in_grace_period() ) {
-					$action = isset( $_GET['action'] ) && 'edit' === $_GET['action']
+					$action = isset( $_GET['action'] ) && 'edit' === $_GET['action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 						? _x( 'Editing', 'payment form action', 'stripe' )
 						: _x( 'Creation', 'payment form action', 'stripe' );
 

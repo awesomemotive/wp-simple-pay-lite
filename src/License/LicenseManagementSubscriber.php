@@ -78,19 +78,19 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 			return;
 		}
 
-		$action = sanitize_text_field( $_REQUEST['simpay-action'] );
+		$action = sanitize_text_field( wp_unslash( $_REQUEST['simpay-action'] ) );
 
 		if ( 'simpay-activate-license' !== $action ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( $_REQUEST['simpay-license-nonce'], 'simpay-manage-license' ) ) {
+		if ( ! wp_verify_nonce( wp_unslash( $_REQUEST['simpay-license-nonce'] ), 'simpay-manage-license' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			return;
 		}
 
 		$this->manager->activate(
 			trim(
-				sanitize_text_field( $_REQUEST['simpay-license-key'] )
+				sanitize_text_field( wp_unslash( $_REQUEST['simpay-license-key'] ) )
 			)
 		);
 
@@ -121,19 +121,19 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 			return;
 		}
 
-		$action = sanitize_text_field( $_REQUEST['simpay-action'] );
+		$action = sanitize_text_field( wp_unslash( $_REQUEST['simpay-action'] ) );
 
 		if ( 'simpay-deactivate-license' !== $action ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( $_REQUEST['simpay-license-nonce'], 'simpay-manage-license' ) ) {
+		if ( ! wp_verify_nonce( wp_unslash( $_REQUEST['simpay-license-nonce'] ), 'simpay-manage-license' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			return;
 		}
 
 		$this->manager->deactivate(
 			trim(
-				sanitize_text_field( $_REQUEST['simpay-license-key'] )
+				sanitize_text_field( wp_unslash( $_REQUEST['simpay-license-key'] ) )
 			)
 		);
 	}
@@ -159,12 +159,12 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 
 		if (
 			! isset( $_POST['nonce'] ) ||
-			! wp_verify_nonce( $_POST['nonce'], 'simpay-manage-license' )
+			! wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'simpay-manage-license' ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		) {
 			wp_send_json_error( $unknown_error );
 		}
 
-		$license = sanitize_text_field( $_POST['license'] );
+		$license = sanitize_text_field( wp_unslash( $_POST['license'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 		$license = $this->manager->activate( $license );
 
 		if ( false === $license ) {
@@ -217,12 +217,12 @@ class LicenseManagementSubscriber implements SubscriberInterface {
 
 		if (
 			! isset( $_POST['nonce'] ) ||
-			! wp_verify_nonce( $_POST['nonce'], 'simpay-manage-license' )
+			! wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'simpay-manage-license' ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		) {
 			wp_send_json_error( $unknown_error );
 		}
 
-		$license = sanitize_text_field( $_POST['license'] );
+		$license = sanitize_text_field( wp_unslash( $_POST['license'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 		$license = $this->manager->deactivate( $license );
 
 		if ( false === $license ) {

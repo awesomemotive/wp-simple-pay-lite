@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Return to the list showing this subscription's own mode.
-$back_url = add_query_arg(
+$back_url = add_query_arg( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	array(
 		'post_type'    => 'simple-pay',
 		'page'         => 'simpay-subscriptions',
@@ -26,33 +26,33 @@ $back_url = add_query_arg(
 );
 
 // Use per-subscription livemode for Stripe URLs (not global test mode).
-$stripe_prefix = $subscription->livemode ? '' : 'test/';
+$stripe_prefix = $subscription->livemode ? '' : 'test/'; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-$status_label = SimplePay\Core\Subscription\SubscriptionStatus::get_label( (string) $subscription->status );
+$status_label = SimplePay\Core\Subscription\SubscriptionStatus::get_label( (string) $subscription->status ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 // Whether the period end is a renewal, an end date, or not worth showing.
-$period_end_type = SimplePay\Core\Subscription\SubscriptionStatus::get_period_end_type(
+$period_end_type = SimplePay\Core\Subscription\SubscriptionStatus::get_period_end_type( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	(string) $subscription->status,
 	$subscription->cancel_at_period_end
 );
 
-$period_end_label = SimplePay\Core\Subscription\SubscriptionStatus::PERIOD_END_ENDS === $period_end_type
+$period_end_label = SimplePay\Core\Subscription\SubscriptionStatus::PERIOD_END_ENDS === $period_end_type // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	? __( 'Ends', 'stripe' )
 	: __( 'Next Renewal', 'stripe' );
 
 // Stripe dashboard URLs.
-$subscription_url = '';
+$subscription_url = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( ! empty( $subscription->object_id ) ) {
-	$subscription_url = sprintf(
+	$subscription_url = sprintf( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		'https://dashboard.stripe.com/%ssubscriptions/%s',
 		$stripe_prefix,
 		$subscription->object_id
 	);
 }
 
-$customer_url = '';
+$customer_url = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( ! empty( $subscription->customer_id ) ) {
-	$customer_url = sprintf(
+	$customer_url = sprintf( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		'https://dashboard.stripe.com/%scustomers/%s',
 		$stripe_prefix,
 		$subscription->customer_id
@@ -60,38 +60,38 @@ if ( ! empty( $subscription->customer_id ) ) {
 }
 
 // Form title.
-$form_title = '';
-$form_url   = '';
+$form_title = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$form_url   = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( ! empty( $subscription->form_id ) ) {
-	$form_id    = absint( $subscription->form_id );
-	$form_title = get_the_title( $form_id );
-	$form_url   = get_edit_post_link( $form_id );
+	$form_id    = absint( $subscription->form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$form_title = get_the_title( $form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$form_url   = get_edit_post_link( $form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 	if ( empty( $form_title ) ) {
-		$form_title = sprintf( '#%d', $form_id );
+		$form_title = sprintf( '#%d', $form_id ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	}
 }
 
-$date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+$date_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 // Amount + interval label.
-$amount_display = simpay_format_currency( $subscription->amount, $subscription->currency );
+$amount_display = simpay_format_currency( $subscription->amount, $subscription->currency ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-$interval_label = '';
+$interval_label = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 if ( ! empty( $subscription->billing_interval ) ) {
-	$interval_count = max( 1, (int) $subscription->interval_count );
-	$interval_words = array(
+	$interval_count = max( 1, (int) $subscription->interval_count ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+	$interval_words = array( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		'day'   => _n( 'day', 'days', $interval_count, 'stripe' ),
 		'week'  => _n( 'week', 'weeks', $interval_count, 'stripe' ),
 		'month' => _n( 'month', 'months', $interval_count, 'stripe' ),
 		'year'  => _n( 'year', 'years', $interval_count, 'stripe' ),
 	);
 
-	$interval_word = isset( $interval_words[ $subscription->billing_interval ] )
+	$interval_word = isset( $interval_words[ $subscription->billing_interval ] ) // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		? $interval_words[ $subscription->billing_interval ]
 		: (string) $subscription->billing_interval;
 
-	$interval_label = 1 === $interval_count
+	$interval_label = 1 === $interval_count // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		/* translators: %s Billing interval, e.g. "month". */
 		? sprintf( __( '/ %s', 'stripe' ), $interval_word )
 		: sprintf(

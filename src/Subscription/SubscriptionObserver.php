@@ -75,8 +75,14 @@ class SubscriptionObserver implements SubscriberInterface {
 				10,
 				2,
 			),
-			// Fired for BOTH customer.subscription.updated and .deleted, so it
-			// covers renewals, plan changes, and cancellations.
+			// customer.subscription.updated -- renewals, plan changes, and
+			// scheduled (period-end) cancellations.
+			'simpay_webhook_subscription_updated' => array(
+				'sync_on_webhook',
+				10,
+				2,
+			),
+			// customer.subscription.deleted -- the subscription has ended.
 			'simpay_webhook_subscription_cancel'  => array(
 				'sync_on_webhook',
 				10,

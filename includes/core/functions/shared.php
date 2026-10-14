@@ -179,9 +179,9 @@ function simpay_subscriptions_enabled() {
  */
 function simpay_is_rest_api_enabled() {
 	return /** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
-		apply_filters( 'rest_enabled', true ) &&
+		apply_filters( 'rest_enabled', true ) && // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		/** This filter is documented in wp-includes/rest-api/class-wp-rest-server.php */
-		apply_filters( 'rest_authentication_errors', true );
+		apply_filters( 'rest_authentication_errors', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 }
 
 /**
@@ -239,7 +239,7 @@ function simpay_admin_error( $message, $echo = true ) {
 	}
 
 	if ( $echo ) {
-		echo $return;
+		echo $return; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	} else {
 		return $return;
 	}
@@ -592,8 +592,15 @@ function simpay_shared_script_variables() {
 	// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 
 	$i18n['i18n'] = array(
-		'mediaTitle'      => esc_html__( 'Insert Media', 'stripe' ),
-		'mediaButtonText' => esc_html__( 'Use Image', 'stripe' ),
+		'mediaTitle'          => esc_html__( 'Insert Media', 'stripe' ),
+		'mediaButtonText'     => esc_html__( 'Use Image', 'stripe' ),
+		// Shown when a payment form cannot load its data from the REST API.
+		'formLoadError'       => esc_html__(
+			'This payment form could not be loaded. Please refresh the page and try again.',
+			'stripe'
+		),
+		// Payment button label when the payment form cannot load its data.
+		'formLoadErrorButton' => esc_html__( 'Payment unavailable', 'stripe' ),
 	);
 
 	$integers['integers'] = array(
@@ -1424,7 +1431,7 @@ function simpay_get_payment_form_setting(
  *
  * @return array<string, string>
  */
-function __unstable_simpay_get_form_template_categories() {
+function __unstable_simpay_get_form_template_categories() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$categories = array(
 		'business-operations'    => __( 'Business Operations', 'stripe' ),
 		'donations'              => __( 'Donations', 'stripe' ),
@@ -1454,7 +1461,7 @@ function __unstable_simpay_get_form_template_categories() {
  * @param string $category_slug Category slug.
  * @return string
  */
-function __unstable_simpay_get_form_template_category_name( $category_slug ) {
+function __unstable_simpay_get_form_template_category_name( $category_slug ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$categories = __unstable_simpay_get_form_template_categories();
 
 	return isset( $categories[ $category_slug ] )
@@ -1469,7 +1476,7 @@ function __unstable_simpay_get_form_template_category_name( $category_slug ) {
  *
  * @return array<mixed>
  */
-function __unstable_simpay_get_payment_form_templates() {
+function __unstable_simpay_get_payment_form_templates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	static $templates = array();
 
 	if ( ! empty( $templates ) ) {
@@ -1486,7 +1493,7 @@ function __unstable_simpay_get_payment_form_templates() {
 	 * @param array<string> $template_files List of template file paths.
 	 */
 	$template_files = apply_filters(
-		'__unstable__simpay_payment_form_templates',
+		'__unstable__simpay_payment_form_templates', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$template_files
 	);
 
@@ -1576,8 +1583,8 @@ function __unstable_simpay_get_payment_form_templates() {
 	}
 
 	$is_form_templates_page = (
-		isset( $_GET['page'] ) &&
-		'simpay_form_templates' === sanitize_text_field( $_GET['page'] )
+		isset( $_GET['page'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		'simpay_form_templates' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	);
 
 	if ( $has_new && $is_form_templates_page ) {
@@ -1605,9 +1612,9 @@ function __unstable_simpay_get_payment_form_templates() {
  *
  * @return null|array<mixed>
  */
-function __unstable_simpay_get_payment_form_template_from_url() {
-	$id = isset( $_GET['simpay-template'] )
-		? sanitize_text_field( $_GET['simpay-template'] )
+function __unstable_simpay_get_payment_form_template_from_url() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+	$id = isset( $_GET['simpay-template'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_text_field( wp_unslash( $_GET['simpay-template'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: null;
 
 	return __unstable_simpay_get_payment_form_template( $id );
@@ -1621,7 +1628,7 @@ function __unstable_simpay_get_payment_form_template_from_url() {
  * @param string $id Template ID.
  * @return null|array<mixed> Template data, or null if not found.
  */
-function __unstable_simpay_get_payment_form_template( $id ) {
+function __unstable_simpay_get_payment_form_template( $id ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$templates = __unstable_simpay_get_payment_form_templates();
 	$template  = wp_list_filter(
 		$templates,
@@ -1640,7 +1647,7 @@ function __unstable_simpay_get_payment_form_template( $id ) {
  *
  * @return bool True if a template was added within the last two weeks.
  */
-function __unstable_simpay_has_new_form_templates() {
+function __unstable_simpay_has_new_form_templates() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$templates = __unstable_simpay_get_payment_form_templates();
 
 	$new = array_filter(
@@ -1840,7 +1847,7 @@ function simpay_is_dev_url( $url = '' ) {
 		$url = set_url_scheme( $url, 'http' );
 	}
 
-	$url_parts = parse_url( $url );
+	$url_parts = wp_parse_url( $url );
 	$host      = ! empty( $url_parts['host'] ) ? $url_parts['host'] : false;
 
 	if ( ! empty( $url ) && ! empty( $host ) ) {

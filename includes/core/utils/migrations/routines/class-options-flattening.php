@@ -59,16 +59,16 @@ class Options_Flattening extends Migrations\Bulk_Migration {
 			foreach ( $subsection_settings as $key => $value ) {
 				// Rename some keys to be more specific.
 				switch ( $key ) {
-					case 'country';
+					case 'country':
 						$key = 'account_country';
 						break;
-					case 'site';
+					case 'site':
 						$key = 'recaptcha_site_key';
 						break;
-					case 'threshold';
+					case 'threshold':
 						$key = 'recaptcha_score_threshold';
 						break;
-					case 'secret';
+					case 'secret':
 						$key = 'recaptcha_secret_key';
 						break;
 					case 'locale':
@@ -119,5 +119,4 @@ class Options_Flattening extends Migrations\Bulk_Migration {
 
 		return $this->complete();
 	}
-
 }

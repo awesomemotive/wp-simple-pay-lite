@@ -11,6 +11,10 @@
 
 namespace SimplePay\Core\EventManagement;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * EventManager class.
  *

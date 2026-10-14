@@ -131,7 +131,7 @@ function parse_content( $content, $payment_confirmation_data ) {
 					 */
 
 					$value = apply_filters(
-						sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+						sprintf( 'simpay_payment_confirmation_template_tag_%s', $tag ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores, WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
 						$value,
 						$payment_confirmation_data,
 						$tag,
@@ -1425,7 +1425,7 @@ function __unstable_print_tag_list( $description, $tags ) { // phpcs:ignore PHPC
 		printf(
 			'<p><code>{%s}</code> - %s</p>',
 			esc_html( $tag_id ),
-			$description
+			esc_html( $description )
 		);
 	}
 }

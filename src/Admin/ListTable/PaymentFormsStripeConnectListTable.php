@@ -13,6 +13,10 @@ namespace SimplePay\Core\Admin\ListTable;
 
 use WP_Posts_List_Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }

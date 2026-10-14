@@ -63,10 +63,11 @@ class LicenseMissingNotice extends AbstractAdminNotice {
 		}
 
 		// Default settings screen.
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
 		if (
 			isset( $_GET['page'] ) &&
 			! isset( $_GET['tab'] ) &&
-			'simpay_settings' === sanitize_text_field( $_GET['page'] )
+			'simpay_settings' === sanitize_text_field( wp_unslash( $_GET['page'] ) )
 		) {
 			return false;
 		}
@@ -74,12 +75,13 @@ class LicenseMissingNotice extends AbstractAdminNotice {
 		// License settings screen.
 		if (
 			isset( $_GET['page'], $_GET['tab'], $_GET['subsection'] ) &&
-			'general' === sanitize_text_field( $_GET['tab'] ) &&
-			'license' === sanitize_text_field( $_GET['subsection'] ) &&
-			'simpay_settings' === sanitize_text_field( $_GET['page'] )
+			'general' === sanitize_text_field( wp_unslash( $_GET['tab'] ) ) &&
+			'license' === sanitize_text_field( wp_unslash( $_GET['subsection'] ) ) &&
+			'simpay_settings' === sanitize_text_field( wp_unslash( $_GET['page'] ) )
 		) {
 			return false;
 		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		// Add or edit payment form (full page notice is shown instead).
 		$screen = get_current_screen();

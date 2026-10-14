@@ -63,7 +63,7 @@ class Bulk_Migration extends Migration {
 	public function run() {
 		_doing_it_wrong(
 			__METHOD__,
-			__( 'Migrations must implement their own <code>run</code> task', 'stripe' ),
+			__( 'Migrations must implement their own <code>run</code> task', 'stripe' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			''
 		);
 	}

@@ -60,6 +60,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 	 */
 	public function start() {
 		// Do not need to handle this request, bail.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only routing flag; the request is gated by `manage_options` and only redirects to the Connect gateway.
 		if ( ! isset( $_GET['simpay-stripe-connect-start'] ) ) {
 			return;
 		}
@@ -74,9 +75,11 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 			return;
 		}
 
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Validated as a same-site URL in get_start_redirect_url().
 		$redirect_url = isset( $_GET['redirect_url'] )
 			? wp_unslash( $_GET['redirect_url'] )
 			: '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- The Connect gateway is an external host.
 		wp_redirect( $this->get_start_redirect_url( $redirect_url ) );
@@ -124,9 +127,9 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 
 		// Do not need to handle this request, bail.
 		if (
-			! isset( $_GET['wpsp_gateway_connect_completion'] ) ||
-			'stripe_connect' !== $_GET['wpsp_gateway_connect_completion'] ||
-			! isset( $_GET['state'] )
+			! isset( $_GET['wpsp_gateway_connect_completion'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'stripe_connect' !== $_GET['wpsp_gateway_connect_completion'] || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			! isset( $_GET['state'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
 			return;
 		}
@@ -140,7 +143,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		// redirecting to Stripe. Without this the credential-writing completion
 		// endpoint could be triggered via CSRF. The matched token is consumed so
 		// it cannot be replayed.
-		$state = sanitize_text_field( wp_unslash( $_GET['state'] ) );
+		$state = sanitize_text_field( wp_unslash( $_GET['state'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- The state token is the CSRF check.
 
 		if ( ! simpay_verify_stripe_connect_state( $state ) ) {
 			// Send the user back with an explanation. Failing silently here is
@@ -157,7 +160,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		}
 
 		if ( isset( $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'] ) ) {
-			$current_url = ( is_ssl() ? 'https' : 'http' ) . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			$current_url = ( is_ssl() ? 'https' : 'http' ) . '://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		} else {
 			$current_url = '';
 		}
@@ -199,7 +202,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 				)
 			);
 
-			wp_die( $message );
+			wp_die( $message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		$body = wp_remote_retrieve_body( $response );
@@ -221,7 +224,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		 */
 		do_action( 'simpay_stripe_account_connected', $account_data );
 
-		wp_redirect( esc_url_raw( $customer_site_url ) );
+		wp_redirect( esc_url_raw( $customer_site_url ) ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 		exit;
 	}
 
@@ -253,7 +256,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		}
 
 		// Invalid nonce, bail.
-		if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'simpay-stripe-connect-disconnect' ) ) {
+		if ( ! wp_verify_nonce( wp_unslash( $_GET['_wpnonce'] ), 'simpay-stripe-connect-disconnect' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			return;
 		}
 
@@ -269,8 +272,8 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 
 		// Clear cached objects.
 		global $wpdb;
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_simpay\_stripe\_%'" );
-		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_simpay\_stripe\_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_simpay\_stripe\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_simpay\_stripe\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		wp_safe_redirect( $this->get_account_settings_url() );
 		exit;
@@ -292,7 +295,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 			wp_send_json_error( $unknown_error );
 		}
 
-		if ( ! wp_verify_nonce( $_POST['nonce'], 'simpay-stripe-connect-information' ) ) {
+		if ( ! wp_verify_nonce( wp_unslash( $_POST['nonce'] ), 'simpay-stripe-connect-information' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			wp_send_json_error( $unknown_error );
 		}
 
@@ -477,7 +480,7 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 				 * @param string $message The message to display.
 				 */
 				$message = apply_filters(
-					'__unstable_simpay_stripe_connect_account_message',
+					'__unstable_simpay_stripe_connect_account_message', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 					$message
 				);
 
@@ -554,8 +557,8 @@ class ConnectionSubscriber implements SubscriberInterface, LicenseAwareInterface
 		}
 
 		if (
-			! isset( $_GET['simpay-stripe-connect-error'] ) ||
-			'state' !== $_GET['simpay-stripe-connect-error']
+			! isset( $_GET['simpay-stripe-connect-error'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; only decides whether to show a notice.
+			'state' !== $_GET['simpay-stripe-connect-error'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only; only decides whether to show a notice.
 		) {
 			return;
 		}

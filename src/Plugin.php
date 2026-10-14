@@ -15,6 +15,10 @@ use Exception;
 use SimplePay\Core\EventManagement\EventManager;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Plugin class.
  *

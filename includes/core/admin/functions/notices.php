@@ -39,9 +39,11 @@ function no_ssl() {
 	 *
 	 * @param string $message
 	 */
-	echo apply_filters(
-		'simpay_ssl_admin_notice_message',
-		__( 'SSL (HTTPS) is not enabled. You will not be able to process live Stripe transactions until SSL is enabled.', 'stripe' )
+	echo wp_kses_post(
+		apply_filters(
+			'simpay_ssl_admin_notice_message',
+			__( 'SSL (HTTPS) is not enabled. You will not be able to process live Stripe transactions until SSL is enabled.', 'stripe' )
+		)
 	);
 	?>
 </p>
@@ -75,8 +77,8 @@ function no_rest_api() {
 function stripe_connect() {
 	if (
 		simpay_is_admin_screen() &&
-		isset( $_GET['post_type'] ) &&
-		'simple-pay' === sanitize_key( $_GET['post_type'] )
+		isset( $_GET['post_type'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		'simple-pay' === sanitize_key( $_GET['post_type'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	) {
 		return false;
 	}
@@ -160,18 +162,20 @@ function php_version_74() {
 </p>
 
 	<?php
-	echo wpautop(
-		wp_kses(
-			sprintf(
-			/* translators: %1$s Future PHP version requirement. */
-				__(
-					'In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required.',
-					'stripe'
+	echo wp_kses_post(
+		wpautop(
+			wp_kses(
+				sprintf(
+				/* translators: %1$s Future PHP version requirement. */
+					__(
+						'In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required.',
+						'stripe'
+					),
+					'<code>' . $future_required_version . '</code>'
 				),
-				'<code>' . $future_required_version . '</code>'
-			),
-			array(
-				'code' => true,
+				array(
+					'code' => true,
+				)
 			)
 		)
 	);
@@ -182,23 +186,25 @@ function php_version_74() {
 </p>
 
 	<?php
-	echo wpautop(
-		wp_kses(
-			sprintf(
-			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
-				__(
-					'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s.',
-					'stripe'
+	echo wp_kses_post(
+		wpautop(
+			wp_kses(
+				sprintf(
+				/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
+					__(
+						'Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s.',
+						'stripe'
+					),
+					'<a href="https://www.wpbeginner.com/wordpress-hosting/" target="_blank" rel="noopener noreferrer">',
+					'</a>'
 				),
-				'<a href="https://www.wpbeginner.com/wordpress-hosting/" target="_blank" rel="noopener noreferrer">',
-				'</a>'
-			),
-			array(
-				'a' => array(
-					'href'   => true,
-					'target' => true,
-					'rel'    => true,
-				),
+				array(
+					'a' => array(
+						'href'   => true,
+						'target' => true,
+						'rel'    => true,
+					),
+				)
 			)
 		)
 	);

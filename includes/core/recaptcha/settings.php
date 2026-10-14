@@ -560,7 +560,7 @@ function hcaptcha_setup_description() {
 		return ob_get_clean();
 	}
 
-	wp_enqueue_script( 'simpay-hcaptcha', 'https://js.hcaptcha.com/1/api.js' );
+	wp_enqueue_script( 'simpay-hcaptcha', 'https://js.hcaptcha.com/1/api.js', array(), null, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	return ob_get_clean();
 }
@@ -705,7 +705,7 @@ function cloudflare_turnstile_setup_description() {
 		sprintf(
 			/* translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate. */
 			__( 'Cloudflare Turnstile delivers frustration-free, CAPTCHA-free web experiences to website visitors. To enable Cloudflare Turnstile %1$ssign up at Cloudflare (free)%2$s to retrieve the necessary credentials.', 'stripe' ),
-			'<a href="https://www.cloudflare.com/products/turnstile/" target="_blank" rel="noopener noreferrer" class="simpay-external-link">',
+			'<a href="https://www.cloudflare.com/products/turnstile/" target="_blank" rel="noopener noreferrer" class="simpay-external-link">', // phpcs:ignore PluginCheck.CodeAnalysis.Offloading.OffloadedContent -- Sign-up link, not an offloaded asset.
 			Utils\get_external_link_markup() . '</a>'
 		)
 	);
@@ -715,6 +715,7 @@ function cloudflare_turnstile_setup_description() {
 	<br />
 
 	<p>
+		<?php // phpcs:ignore PluginCheck.CodeAnalysis.Offloading.OffloadedContent -- Sign-up link, not an offloaded asset. ?>
 		<a href="https://www.cloudflare.com/products/turnstile/" target="_blank" rel="noopener noreferrer"  class="button button-secondary">
 			<?php
 			esc_html_e( 'Sign Up for Cloudflare Turnstile (Free)', 'stripe' );

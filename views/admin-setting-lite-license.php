@@ -11,6 +11,10 @@
  * @var string $nonce License management nonce.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use SimplePay\Core\Utils;
 
 ?>

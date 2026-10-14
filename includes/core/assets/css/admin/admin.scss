@@ -8,6 +8,19 @@
 @import './settings.scss';
 @import './charts.scss';
 
+// Spinner rotation. Defined locally so spinners do not depend on a
+// WordPress core keyframe being loaded on the current screen.
+@keyframes simpay-rotation {
+
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 .button.button-large.simpay-button-large {
 	font-size: 14px;
 	line-height: 30px;
@@ -1371,6 +1384,16 @@
 		flex: 1 0 auto;
 	}
 
+	// Button state icons (Dashicons, bundled with WordPress core).
+	button .dashicons {
+		vertical-align: text-bottom;
+		margin-right: 4px;
+	}
+
+	&__spinner {
+		animation: simpay-rotation 2s infinite linear;
+	}
+
 	&__actions {
 		display: flex;
 		align-items: center;
@@ -2138,7 +2161,7 @@ select.simpay-currency-symbol {
 	}
 
 	.dashicons-update-alt {
-		animation: rotation 2s infinite linear;
+		animation: simpay-rotation 2s infinite linear;
 	}
 }
 

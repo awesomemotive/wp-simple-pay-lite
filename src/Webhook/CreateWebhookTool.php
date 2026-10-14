@@ -115,7 +115,7 @@ class CreateWebhookTool implements SubscriberInterface {
 			wp_send_json_error( array( 'message' => __( 'Unauthorized', 'stripe' ) ) );
 		}
 
-		if ( ! isset( $_POST['simpay_recreate_webhook_nonce'] ) || ! wp_verify_nonce( $_POST['simpay_recreate_webhook_nonce'], 'simpay_recreate_webhook' ) ) {
+		if ( ! isset( $_POST['simpay_recreate_webhook_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['simpay_recreate_webhook_nonce'] ) ), 'simpay_recreate_webhook' ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			wp_send_json_error( array( 'message' => __( 'Nonce check failed. Please reload the page and try again.', 'stripe' ) ) );
 		}
 

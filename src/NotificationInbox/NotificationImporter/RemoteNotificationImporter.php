@@ -96,7 +96,7 @@ class RemoteNotificationImporter extends AbstractNotificationImporter implements
 	 * {@inheritdoc}
 	 */
 	public function get_source() {
-		$url = parse_url( $this->api_endpoint_url );
+		$url = wp_parse_url( $this->api_endpoint_url );
 
 		if ( false !== $url && ! empty( $url['host'] ) ) {
 			$source = $url['host'];
@@ -119,7 +119,7 @@ class RemoteNotificationImporter extends AbstractNotificationImporter implements
 		);
 
 		if ( is_wp_error( $request ) ) {
-			throw new Exception( $request->get_error_message() );
+			throw new Exception( $request->get_error_message() ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		}
 
 		$response      = wp_remote_retrieve_body( $request );

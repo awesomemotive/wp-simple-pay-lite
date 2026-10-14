@@ -52,7 +52,7 @@ class CustomFieldSubscriber implements SubscriberInterface, LicenseAwareInterfac
 
 		ob_start();
 
-		$type = isset( $_POST['fieldType'] ) ? sanitize_key( strtolower( $_POST['fieldType'] ) ) : '';
+		$type = isset( $_POST['fieldType'] ) ? sanitize_key( strtolower( $_POST['fieldType'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		$counter = isset( $_POST['counter'] ) ? intval( $_POST['counter'] ) : 0;
 		$uid     = isset( $_POST['nextUid'] ) ? intval( $_POST['nextUid'] ) : $counter;
@@ -62,7 +62,7 @@ class CustomFieldSubscriber implements SubscriberInterface, LicenseAwareInterfac
 			try {
 				global $post;
 
-				$post = get_post( absint( $_POST['post_id'] ) );
+				$post = get_post( absint( $_POST['post_id'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
 				if ( ! $post instanceof WP_Post ) {
 					wp_send_json_error();
@@ -71,22 +71,22 @@ class CustomFieldSubscriber implements SubscriberInterface, LicenseAwareInterfac
 				/** @var $post WP_Post */
 
 				if ( $this->license->is_lite() ) {
-					echo Lite_Edit_Form\__unstable_get_custom_field(
+					echo Lite_Edit_Form\__unstable_get_custom_field( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						$type,
-						$counter,
+						$counter, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						array(
-							'uid' => $uid,
+							'uid' => $uid, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						),
-						$post->ID
+						$post->ID // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					);
 				} else {
-					echo Pro_Edit_Form\get_custom_field(
+					echo Pro_Edit_Form\get_custom_field( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						$type,
-						$counter,
+						$counter, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						array(
-							'uid' => $uid,
+							'uid' => $uid, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						),
-						$post->ID
+						$post->ID // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					);
 				}
 			} catch ( \Exception $e ) {

@@ -49,6 +49,8 @@ class Assets {
 	 * Script variables.
 	 *
 	 * @since 3.0.0
+	 * @deprecated 4.17.5 No longer output. Form data is served by the
+	 *                    form-data REST route.
 	 * @var array
 	 */
 	public static $script_variables = array();
@@ -246,20 +248,25 @@ class Assets {
 	 * @since 3.0.0
 	 */
 	public function localize_scripts() {
-		$shared_vars = simpay_shared_script_variables();
-
-		wp_localize_script( 'simpay-public', 'simplePayForms', self::$script_variables );
-		wp_localize_script( 'simpay-shared', 'spGeneral', $shared_vars );
+		// simplePayForms removed: form data is now fetched via REST API.
+		wp_localize_script( 'simpay-shared', 'spGeneral', simpay_shared_script_variables() );
 	}
 
 	/**
 	 * Use this function to add to our script variables to localize later
 	 *
 	 * @since 3.0.0
+	 * @deprecated 4.17.5 Script variables are no longer localized. Form data
+	 *                    is served by the form-data REST route.
 	 *
 	 * @param array $vars Script variables.
 	 */
 	public static function script_variables( $vars ) {
+		_deprecated_function(
+			__METHOD__,
+			'4.17.5',
+			'\SimplePay\Core\RestApi\Internal\Form\FormDataRoute::get_form_data'
+		);
 
 		// Do not array_merge here because it will just overwrite all the keys of previous forms. We need to keep them all.
 		self::$script_variables = self::$script_variables + $vars;

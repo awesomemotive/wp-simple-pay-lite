@@ -147,7 +147,7 @@ class HelpDocsContext implements LicenseAwareInterface {
 					$context = 'form-builder/list';
 					break;
 				case 'simple-pay':
-					$context = isset( $_GET['action'] ) && 'edit' === $_GET['action']
+					$context = isset( $_GET['action'] ) && 'edit' === $_GET['action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 						? 'form-builder/edit'
 						: 'form-builder/add';
 					break;
@@ -166,8 +166,8 @@ class HelpDocsContext implements LicenseAwareInterface {
 		$context = 'coupons';
 
 		if (
-			isset( $_GET['simpay-action'] ) &&
-			'add-coupon' === $_GET['simpay-action']
+			isset( $_GET['simpay-action'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'add-coupon' === $_GET['simpay-action'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
 			$context = 'coupons/add';
 		}
@@ -184,16 +184,16 @@ class HelpDocsContext implements LicenseAwareInterface {
 		$context = 'settings';
 
 		// Default tab.
-		if ( ! isset( $_GET['tab'] ) ) {
+		if ( ! isset( $_GET['tab'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( $this->license->is_lite() ) {
 				$context = 'settings/general/currency';
 			} else {
 				$context = 'settings/general/license';
 			}
 		} else {
-			$section    = sanitize_text_field( $_GET['tab'] );
-			$subsection = isset( $_GET['subsection'] )
-				? sanitize_text_field( $_GET['subsection'] )
+			$section    = sanitize_text_field( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$subsection = isset( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				? sanitize_text_field( wp_unslash( $_GET['subsection'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				: '';
 
 			if ( empty( $subsection ) ) {

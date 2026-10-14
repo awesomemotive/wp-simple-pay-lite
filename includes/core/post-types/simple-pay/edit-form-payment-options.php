@@ -296,7 +296,7 @@ add_action(
 	50
 );
 
-$license = new License( '' );
+$license = new License( '' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 if ( $license->is_lite() ) {
 	new Price_Fields();
@@ -654,7 +654,7 @@ function __unstable_add_payment_methods( $post_id ) {
 						<label for="payment-method-<?php echo esc_attr( $payment_method_id ); ?>">
 							<div style="display: flex; align-items: center;">
 								<div class="simpay-panel-field-payment-method__icon">
-									<?php echo $payment_method['icon']; // WPCS: XSS ok. ?>
+									<?php echo $payment_method['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
 
 								<input

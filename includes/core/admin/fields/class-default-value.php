@@ -91,7 +91,7 @@ class Default_Value extends Standard {
 			</div>
 
 			<div data-smart-tag-receiver="<?php echo esc_attr( $this->id ); ?>">
-				<?php echo parent::html(); ?>
+				<?php parent::html(); ?>
 			</div>
 		</td>
 		<?php
@@ -120,5 +120,4 @@ class Default_Value extends Standard {
 			'{user-ip}'          => __( 'User IP', 'stripe' ),
 		);
 	}
-
 }

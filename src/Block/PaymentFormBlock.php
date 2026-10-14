@@ -16,6 +16,7 @@ use SimplePay\Core\Assets as CoreAssets;
 use SimplePay\Core\Block\AbstractBlock;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
+use SimplePay\Core\RestApi\Internal\Form\FormDataRoute;
 use SimplePay\Pro\Assets as ProAssets;
 
 /**
@@ -197,7 +198,8 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 				$script_data['dependencies'],
 				array_keys( $assets->scripts )
 			),
-			$script_data['version']
+			$script_data['version'],
+			false
 		);
 
 		wp_localize_script(
@@ -240,6 +242,12 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 		/** @var \SimplePay\Core\Forms\Default_Form $form */
 
 		$vars = $form->get_upe_script_variables();
+
+		// Include a fresh per-form nonce so editor-preview interactions
+		// (coupon apply, price/payment updates) pass the payment routes'
+		// `check_form_nonce()` permission check — this inline config skips
+		// the form-data REST fetch that normally supplies the nonce.
+		$vars['nonce'] = FormDataRoute::create_form_nonce( $form->id );
 
 		return $vars;
 	}

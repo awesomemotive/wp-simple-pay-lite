@@ -82,7 +82,7 @@ abstract class AbstractNotificationImporter implements NotificationImporterInter
 				}
 			}
 		} catch ( Exception $e ) {
-			error_log( $e->getMessage() );
+			error_log( $e->getMessage() ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 	}
 
@@ -179,14 +179,18 @@ abstract class AbstractNotificationImporter implements NotificationImporterInter
 		/** @var string $start */
 		$start = ! empty( $notification_data['start'] )
 			? $notification_data['start']
-			: date( 'Y-m-d H:i:s', time() ); // @todo why are some startless?
+			// Stored as UTC; query-time comparisons in NotificationRepository
+			// also use UTC. Using wp_date() here would shift defaults by the
+			// site's timezone offset and break visibility windows on non-UTC sites.
+			: gmdate( 'Y-m-d H:i:s', time() ); // @todo why are some startless?
 
 		$notification['start'] = sanitize_text_field( $start );
 
 		/** @var string $end */
 		$end = ! empty( $notification_data['end'] )
 			? $notification_data['end']
-			: date( 'Y-m-d H:i:s', time() + ( YEAR_IN_SECONDS * 1 ) ); // @todo why are some endless?
+			// Stored as UTC; see note on $start above.
+			: gmdate( 'Y-m-d H:i:s', time() + ( YEAR_IN_SECONDS * 1 ) ); // @todo why are some endless?
 
 		$notification['end'] = $end;
 

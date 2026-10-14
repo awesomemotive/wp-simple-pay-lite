@@ -34,10 +34,10 @@ if ( ! empty( $alert ) ) :
 	$title = $alert['title'];
 
 	/** @var string $content */
-	$content = $alert['content'];
+	$content = $alert['content']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 	/** @var array<array<string, string>> $links */
-	$links = $alert['links'];
+	$links = $alert['links']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	?>
 <table class="header__alert">
 	<tbody>

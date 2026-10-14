@@ -92,7 +92,7 @@ class TelemetrySubscriber implements SubscriberInterface, LicenseAwareInterface 
 		}
 
 		$this->scheduler->schedule_recurring(
-			time() + rand( 0, WEEK_IN_SECONDS ),
+			time() + wp_rand( 0, WEEK_IN_SECONDS ),
 			WEEK_IN_SECONDS,
 			'simpay_send_telemetry'
 		);

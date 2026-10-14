@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <tr class="simpay-panel-field">
 	<th>
-		<label for="<?php echo 'simpay-dropdown-label-' . $counter; ?>">
+		<label for="<?php echo esc_attr( 'simpay-dropdown-label-' . $counter ); ?>">
 			<?php esc_html_e( 'Label', 'stripe' ); ?>
 		</label>
 	</th>
@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <tr class="simpay-panel-field">
 	<th>
-		<label for="<?php echo 'simpay-dropdown-options-' . $counter; ?>">
+		<label for="<?php echo esc_attr( 'simpay-dropdown-options-' . $counter ); ?>">
 			<?php esc_html_e( 'Options', 'stripe' ); ?>
 		</label>
 	</th>
@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <tr class="simpay-panel-field">
 	<th>
-		<label for="<?php echo 'simpay-dropdown-required-' . $counter; ?>">
+		<label for="<?php echo esc_attr( 'simpay-dropdown-required-' . $counter ); ?>">
 			<?php esc_html_e( 'Required', 'stripe' ); ?>
 		</label>
 	</th>

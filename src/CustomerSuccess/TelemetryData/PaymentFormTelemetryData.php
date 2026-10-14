@@ -43,7 +43,7 @@ class PaymentFormTelemetryData extends AbstractTelemetryData {
 	private function get_form_types() {
 		global $wpdb;
 
-		$display_types = $wpdb->get_col(
+		$display_types = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = %s",
 				'_form_display_type'
@@ -82,7 +82,7 @@ class PaymentFormTelemetryData extends AbstractTelemetryData {
 	private function get_inventory() {
 		global $wpdb;
 
-		$enabled = $wpdb->get_var(
+		$enabled = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			"SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key = '_inventory' AND meta_value = 'yes'"
 		);
 
@@ -99,7 +99,7 @@ class PaymentFormTelemetryData extends AbstractTelemetryData {
 	private function get_scheduling() {
 		global $wpdb;
 
-		$enabled = $wpdb->get_var(
+		$enabled = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			"SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key IN('_schedule_start', '_schedule_end') AND meta_value = 'yes'"
 		);
 
@@ -116,7 +116,7 @@ class PaymentFormTelemetryData extends AbstractTelemetryData {
 	private function get_tax_types() {
 		global $wpdb;
 
-		$tax_meta = $wpdb->get_col(
+		$tax_meta = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			"SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = '_tax_status'"
 		);
 
@@ -152,7 +152,7 @@ class PaymentFormTelemetryData extends AbstractTelemetryData {
 	private function get_payment_pages() {
 		global $wpdb;
 
-		$enabled = $wpdb->get_var(
+		$enabled = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			"SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key = '_enable_payment_page' AND meta_value = 'yes'"
 		);
 

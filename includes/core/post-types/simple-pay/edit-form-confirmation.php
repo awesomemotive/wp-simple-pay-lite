@@ -124,7 +124,7 @@ function _add_payment_success_page( $post_id ) {
 								)
 							);
 
-							echo __(
+							echo esc_html__(
 								'Use a distraction-free payment confirmation page without adding a new page in WordPress.',
 								'stripe'
 							);
@@ -401,7 +401,7 @@ function _add_dedicated_confirmation_page_customization_options( $post_id ) {
 									value="<?php echo esc_attr( $hex ); ?>"
 									<?php checked( true, $background_color === $hex ); ?>
 								/>
-								<label for="confirmation-page-background-color-<?php echo esc_attr( $hex ); ?>" style="background-color: <?php echo $hex; ?>; border-color: <?php echo $hex; ?>">
+								<label for="confirmation-page-background-color-<?php echo esc_attr( $hex ); ?>" style="background-color: <?php echo esc_attr( $hex ); ?>; border-color: <?php echo esc_attr( $hex ); ?>">
 									<span class="screen-reader-text">
 										<?php echo esc_html( $name ); ?>
 									</span>
@@ -419,9 +419,17 @@ function _add_dedicated_confirmation_page_customization_options( $post_id ) {
 							<input
 								type="radio"
 								name="_confirmation_page_background_color"
-								id="confirmation-page-background-color-custom"
+								id="confirmation-page-background-color-custom-radio"
+								aria-label="<?php esc_attr_e( 'Custom color', 'stripe' ); ?>"
 								<?php checked( false, array_key_exists( $background_color, $colors ) ); ?>
 								value="<?php echo esc_attr( $custom_color ); ?>"
+							/>
+							<input
+								type="text"
+								id="confirmation-page-background-color-custom"
+								aria-label="<?php esc_attr_e( 'Custom color value', 'stripe' ); ?>"
+								value="<?php echo esc_attr( $custom_color ); ?>"
+								data-default-color="<?php echo esc_attr( $custom_color ); ?>"
 							/>
 						</div>
 					</div>

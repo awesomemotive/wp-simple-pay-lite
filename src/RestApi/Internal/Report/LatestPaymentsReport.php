@@ -111,7 +111,7 @@ class LatestPaymentsReport implements SubscriberInterface {
 		global $wpdb;
 
 		// @todo add helper to TransactionRepository.
-		$results = $wpdb->get_results(
+		$results = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->prepare(
 				"SELECT * FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status IN ( 'succeeded', 'failed', 'requires_payment_method', 'refunded') AND object IN ('payment_intent', 'setup_intent') ORDER BY date_created DESC LIMIT 0, 10",

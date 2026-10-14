@@ -619,6 +619,78 @@ class AdminUI {
 						</div>
 					</div>
 
+					<!-- Checkbox & Radio Colors Section -->
+					<div class="wpsp-admin-color-section">
+						<h3 class="wpsp-admin-section-title">
+							<span class="dashicons dashicons-yes"></span>
+							<?php esc_html_e( 'Checkbox & Radio Colors', 'stripe' ); ?>
+						</h3>
+						<div class="wpsp-admin-form-grid">
+							<!-- Checkbox Border Color -->
+							<div class="wpsp-admin-form-field">
+								<label for="wpsps_checkbox_border_color">
+									<?php esc_html_e( 'Checkbox Border Color', 'stripe' ); ?>
+								</label>
+								<div class="wpsp-admin-color-preview-wrap">
+									<input
+										type="text"
+										id="wpsps_checkbox_border_color"
+										name="wpsps[checkbox_border_color]"
+										value="<?php echo esc_attr( Settings::get_raw_setting( $post_id, 'checkbox_border_color' ) ); ?>"
+										class="wpspcolor-picker"
+										data-alpha-enabled="true"
+									/>
+									<div class="wpsp-admin-color-preview-label"><?php esc_html_e( 'Outline', 'stripe' ); ?></div>
+								</div>
+								<p class="wpsp-admin-field-description">
+									<?php esc_html_e( 'Outline color of unchecked checkboxes and of radio buttons', 'stripe' ); ?>
+								</p>
+							</div>
+
+							<!-- Checkbox Checked Fill Color -->
+							<div class="wpsp-admin-form-field">
+								<label for="wpsps_checkbox_checked_fill_color">
+									<?php esc_html_e( 'Checked Fill Color', 'stripe' ); ?>
+								</label>
+								<div class="wpsp-admin-color-preview-wrap">
+									<input
+										type="text"
+										id="wpsps_checkbox_checked_fill_color"
+										name="wpsps[checkbox_checked_fill_color]"
+										value="<?php echo esc_attr( Settings::get_raw_setting( $post_id, 'checkbox_checked_fill_color' ) ); ?>"
+										class="wpspcolor-picker"
+										data-alpha-enabled="true"
+									/>
+									<div class="wpsp-admin-color-preview-label"><?php esc_html_e( 'Fill', 'stripe' ); ?></div>
+								</div>
+								<p class="wpsp-admin-field-description">
+									<?php esc_html_e( 'Background color of checked checkboxes and the dot of selected radio buttons', 'stripe' ); ?>
+								</p>
+							</div>
+
+							<!-- Checkbox Checkmark Color -->
+							<div class="wpsp-admin-form-field">
+								<label for="wpsps_checkbox_checkmark_color">
+									<?php esc_html_e( 'Checkbox Checkmark Color', 'stripe' ); ?>
+								</label>
+								<div class="wpsp-admin-color-preview-wrap">
+									<input
+										type="text"
+										id="wpsps_checkbox_checkmark_color"
+										name="wpsps[checkbox_checkmark_color]"
+										value="<?php echo esc_attr( Settings::get_raw_setting( $post_id, 'checkbox_checkmark_color' ) ); ?>"
+										class="wpspcolor-picker"
+										data-alpha-enabled="true"
+									/>
+									<div class="wpsp-admin-color-preview-label"><?php esc_html_e( 'Checkmark', 'stripe' ); ?></div>
+								</div>
+								<p class="wpsp-admin-field-description">
+									<?php esc_html_e( 'Color of the checkmark inside checked checkboxes (not used by radio buttons)', 'stripe' ); ?>
+								</p>
+							</div>
+						</div>
+					</div>
+
 					<!-- Form Title & Description Colors Section -->
 					<div class="wpsp-admin-color-section">
 						<h3 class="wpsp-admin-section-title">
@@ -1086,7 +1158,7 @@ class AdminUI {
 		}
 
 		// Verify that the nonce is valid.
-		if ( ! wp_verify_nonce( $_POST['wpsps_styles_nonce'], 'wpsps_save_styles' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpsps_styles_nonce'] ) ), 'wpsps_save_styles' ) ) {
 			return;
 		}
 
@@ -1117,7 +1189,8 @@ class AdminUI {
 			return;
 		}
 
-		$settings_data = isset( $_POST['wpsps'] ) && is_array( $_POST['wpsps'] ) ? $_POST['wpsps'] : array();
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Each value is sanitized per key by Settings::save_setting().
+		$settings_data = isset( $_POST['wpsps'] ) && is_array( $_POST['wpsps'] ) ? wp_unslash( $_POST['wpsps'] ) : array();
 		$style_keys    = Settings::get_style_keys();
 
 		foreach ( $style_keys as $key ) {
@@ -1217,5 +1290,4 @@ class AdminUI {
 		</div>
 		<?php
 	}
-
 }

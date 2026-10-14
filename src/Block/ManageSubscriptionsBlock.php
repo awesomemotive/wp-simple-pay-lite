@@ -35,7 +35,8 @@ class ManageSubscriptionsBlock extends AbstractBlock {
 			'simpay-manage-subscriptions',
 			SIMPLE_PAY_INC_URL . 'pro/assets/js/dist/simpay-block-manage-subscriptions.js',
 			$script_data['dependencies'],
-			$script_data['version']
+			$script_data['version'],
+			false
 		);
 
 		// Register the view script.

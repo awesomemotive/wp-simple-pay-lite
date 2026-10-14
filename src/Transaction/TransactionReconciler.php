@@ -252,7 +252,7 @@ class TransactionReconciler implements SubscriberInterface {
 		$query .= $wpdb->prepare( ' ORDER BY id ASC LIMIT %d', $limit );
 
 		/** @var array<int, \stdClass> $rows */
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Assembled above from $wpdb->prepare() fragments.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Assembled above from $wpdb->prepare() fragments.
 		$rows = $wpdb->get_results( $query );
 
 		return is_array( $rows ) ? $rows : array();
@@ -604,7 +604,7 @@ class TransactionReconciler implements SubscriberInterface {
 		$query .= $wpdb->prepare( ' ORDER BY id ASC LIMIT %d', $limit );
 
 		/** @var array<int, \stdClass> $rows */
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Assembled above from $wpdb->prepare() fragments.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Assembled above from $wpdb->prepare() fragments.
 		$rows = $wpdb->get_results( $query );
 
 		if ( ! is_array( $rows ) ) {
@@ -752,7 +752,7 @@ class TransactionReconciler implements SubscriberInterface {
 		$query .= $wpdb->prepare( ' ORDER BY id ASC LIMIT %d', $limit );
 
 		/** @var array<int, \stdClass> $rows */
-		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Assembled above from $wpdb->prepare() fragments.
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- Assembled above from $wpdb->prepare() fragments.
 		$rows = $wpdb->get_results( $query );
 
 		if ( ! is_array( $rows ) ) {

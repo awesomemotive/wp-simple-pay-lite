@@ -84,7 +84,7 @@ class TransactionsPage extends AbstractAdminPage implements AdminSecondaryPageIn
 		);
 
 		// Detail view.
-		if ( ! empty( $_GET['transaction_id'] ) ) {
+		if ( ! empty( $_GET['transaction_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$this->render_detail_view();
 			return;
 		}
@@ -131,11 +131,11 @@ class TransactionsPage extends AbstractAdminPage implements AdminSecondaryPageIn
 	private function render_detail_view() {
 		global $wpdb;
 
-		$transaction_id = absint( $_GET['transaction_id'] );
+		$transaction_id = absint( $_GET['transaction_id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 		$account_scope  = AccountScope::get_where_fragment();
 
 		/** @var Transaction_Row|null $transaction */
-		$transaction = $wpdb->get_row(
+		$transaction = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $account_scope is itself a prepared fragment; only the table name is interpolated.
 				"SELECT * FROM {$wpdb->prefix}wpsp_transactions WHERE id = %d{$account_scope}",
@@ -705,7 +705,7 @@ class TransactionsPage extends AbstractAdminPage implements AdminSecondaryPageIn
 
 		if (
 			! isset( $_GET['_wpnonce'] ) ||
-			! wp_verify_nonce( $_GET['_wpnonce'], 'bulk-transactions' )
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'bulk-transactions' )
 		) {
 			return;
 		}
@@ -796,7 +796,7 @@ class TransactionsPage extends AbstractAdminPage implements AdminSecondaryPageIn
 			);
 		}
 
-		fclose( $output );
+		fclose( $output ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		exit;
 	}
 
@@ -850,7 +850,7 @@ class TransactionsPage extends AbstractAdminPage implements AdminSecondaryPageIn
 		// Verify nonce.
 		if (
 			! isset( $_POST['nonce'] ) ||
-			! wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ), 'simpay-refund-transaction' )
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'simpay-refund-transaction' )
 		) {
 			wp_send_json_error(
 				array( 'message' => __( 'Security check failed.', 'stripe' ) )
@@ -889,7 +889,7 @@ class TransactionsPage extends AbstractAdminPage implements AdminSecondaryPageIn
 		$account_scope = AccountScope::get_where_fragment();
 
 		/** @var Transaction_Row|null $transaction */
-		$transaction = $wpdb->get_row(
+		$transaction = $wpdb->get_row( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $account_scope is itself a prepared fragment; only the table name is interpolated.
 				"SELECT * FROM {$wpdb->prefix}wpsp_transactions WHERE id = %d{$account_scope}",
@@ -985,7 +985,7 @@ class TransactionsPage extends AbstractAdminPage implements AdminSecondaryPageIn
 		$new_amount_refunded = $amount_refunded + $refund_amount;
 		$new_status          = 'refunded';
 
-		$wpdb->update(
+		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prefix . 'wpsp_transactions',
 			array(
 				'amount_refunded' => $new_amount_refunded,

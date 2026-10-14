@@ -9,16 +9,20 @@
  * @since 4.4.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use SimplePay\Core\Utils;
 
-$docs_url = simpay_docs_link(
+$docs_url = simpay_docs_link( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	'comprehensive guide',
 	'first-payment-form',
 	'no-forms-first',
 	true
 );
 
-$new_url = add_query_arg(
+$new_url = add_query_arg( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	array(
 		'post_type' => 'simple-pay',
 	),

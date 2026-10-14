@@ -37,7 +37,7 @@ class FormPreviewOutput implements SubscriberInterface {
 	 * @return void
 	 */
 	public function maybe_output_preview() {
-		if ( ! isset( $_GET['simpay-preview'] ) ) {
+		if ( ! isset( $_GET['simpay-preview'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
@@ -50,7 +50,7 @@ class FormPreviewOutput implements SubscriberInterface {
 			);
 		}
 
-		$id   = absint( $_GET['simpay-preview'] );
+		$id   = absint( $_GET['simpay-preview'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$form = simpay_get_form( $id );
 
 		if ( false === $form ) {

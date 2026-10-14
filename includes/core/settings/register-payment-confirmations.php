@@ -126,7 +126,7 @@ add_action( 'simpay_register_settings', __NAMESPACE__ . '\\register_settings' );
 function register_page_settings( $settings ) {
 	global $wpdb;
 
-	$pages = $wpdb->get_results(
+	$pages = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		"SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish' ORDER BY ID"
 	);
 

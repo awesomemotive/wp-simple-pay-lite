@@ -1,6 +1,17 @@
 /* global grecaptcha */
 
-const forms = window.simplePayForms;
+/**
+ * Internal dependencies
+ */
+import {
+	applyFormConfig,
+	fetchFormData,
+	initPaymentFormsConcurrently,
+	markFormReady,
+	preventSubmitUntilReady,
+	showFormLoadError,
+	withFormNonce,
+} from './form-data.js';
 
 /**
  * Returns a Promise that resolves to the token for the given payment form.
@@ -77,21 +88,29 @@ function submitPaymentForm( event ) {
 			// Use the global wp.apiFetch so the middlewares are used.
 			// Our current webpack config is not setup to extract the
 			// dependencies automatically.
-			return window.wp.apiFetch( {
-				url: window.spGeneral.strings.wpJsonUrl + 'wpsp/__internal__/payment/create',
-				method: 'POST',
-				data: {
-					token,
-					form_id: formId,
-					price_id: Object.values(
-						paymentForm.settings.prices
-					)[ 0 ].id,
-					quantity: 1,
-				},
-			} )
-				.then( ( { redirect } ) => {
-					window.location.href = redirect;
-				} );
+			//
+			// Send the per-form nonce from the form-data response so the
+			// route's permission_callback can verify it, refreshing it once
+			// if it has expired.
+			return withFormNonce( paymentForm, ( nonce ) =>
+				window.wp.apiFetch( {
+					url:
+						window.spGeneral.strings.wpJsonUrl +
+						'wpsp/__internal__/payment/create',
+					method: 'POST',
+					data: {
+						token,
+						form_id: formId,
+						price_id: Object.values(
+							paymentForm.settings.prices
+						)[ 0 ].id,
+						quantity: 1,
+						_wpnonce: nonce,
+					},
+				} )
+			).then( ( { redirect } ) => {
+				window.location.href = redirect;
+			} );
 		} )
 		.catch( ( { message } ) => {
 			submitButtonEl.disabled = false;
@@ -105,22 +124,50 @@ function submitPaymentForm( event ) {
  * Initializes a payment form.
  *
  * @since 4.7.0
+ * @since 4.17.5 Fetches the configuration from the form-data REST route, and
+ *               blocks native submission until the form is initialized. A
+ *               form that fails to load or initialize shows an error.
  *
  * @param {Object} paymentForm Payment form.
  * @param {Object} config Payment form configuration.
+ * @return {Promise<void>} Resolves once the form is initialized, or could not be.
  */
-function initPaymentForm( paymentForm, config = false ) {
+export async function initPaymentForm( paymentForm, config = false ) {
 	paymentForm.formId = parseInt( paymentForm.dataset.simpayFormId );
 
-	// Bootstrap the config from the page if not provided.
+	// The payment button is usable before the form data arrives. Keep it
+	// from posting the page back until the form is ready.
+	preventSubmitUntilReady( paymentForm );
+
+	// Bootstrap the config from REST API if not provided.
 	if ( ! config ) {
-		config = forms[ paymentForm.formId ];
+		try {
+			config = await fetchFormData( paymentForm.formId );
+		} catch ( error ) {
+			// eslint-disable-next-line no-console
+			console.error( 'Error fetching form data:', error );
+			showFormLoadError( paymentForm );
+			return;
+		}
 	}
 
-	paymentForm = Object.assign( paymentForm, config );
+	try {
+		// Merge config into paymentForm, without overwriting native element
+		// properties such as `id`.
+		applyFormConfig( paymentForm, config );
+	} catch ( error ) {
+		// A throw leaves the form blocked, so tell the visitor rather than
+		// leaving a payment button that silently does nothing.
+		// eslint-disable-next-line no-console
+		console.error( 'Error initializing payment form:', error );
+		showFormLoadError( paymentForm );
+		return;
+	}
 
 	// Bind submission event.
 	paymentForm.addEventListener( 'submit', submitPaymentForm );
+
+	markFormReady( paymentForm );
 }
 
 /**
@@ -128,7 +175,7 @@ function initPaymentForm( paymentForm, config = false ) {
  *
  * @since 4.7.0
  */
-function initPaymentForms() {
+async function initPaymentForms() {
 	// Find all payment forms on the page.
 	const paymentFormEls = document.querySelectorAll( '.simpay-checkout-form' );
 
@@ -136,10 +183,11 @@ function initPaymentForms() {
 		return;
 	}
 
-	// Setup each payment form.
-	paymentFormEls.forEach( ( paymentForm ) => {
-		initPaymentForm( paymentForm );
-	} );
+	// Setup every payment form at once, so their form-data requests run in
+	// parallel.
+	await initPaymentFormsConcurrently( paymentFormEls, ( paymentForm ) =>
+		initPaymentForm( paymentForm )
+	);
 }
 
 window.document.addEventListener( 'DOMContentLoaded', initPaymentForms );

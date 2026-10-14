@@ -10,6 +10,10 @@
  *
  * @var string $license_url URL to activate license.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <style>.notice { display: none; }</style>

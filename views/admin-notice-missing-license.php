@@ -10,6 +10,10 @@
  *
  * @var array<string> $data Notice data.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <p>

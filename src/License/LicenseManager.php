@@ -11,6 +11,10 @@
 
 namespace SimplePay\Core\License;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * LicenseManager class.
  *

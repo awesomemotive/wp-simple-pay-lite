@@ -11,6 +11,10 @@
  * @var \SimplePay\Core\License\License $license Plugin license.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="simpay-upgrade-modal" style="display: none;">

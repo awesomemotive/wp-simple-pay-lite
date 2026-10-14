@@ -11,6 +11,10 @@
  * @var string $logo_url Logo URL. Empty string to not link.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="simpay-branding-bar">

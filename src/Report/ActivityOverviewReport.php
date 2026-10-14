@@ -295,7 +295,7 @@ class ActivityOverviewReport {
 		$periods = array( 'current', 'previous' );
 
 		foreach ( $periods as $period ) {
-			$forms[ $period ] = $wpdb->get_results(
+			$forms[ $period ] = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare(
 					"SELECT DISTINCT form_id as id, SUM(amount_total) as gross_volume FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY form_id ORDER BY gross_volume DESC LIMIT 0, 5",
 					simpay_is_test_mode() ? 0 : 1,
@@ -325,7 +325,7 @@ class ActivityOverviewReport {
 			? 'SUM(amount_total)'
 			: 'SUM(amount_total / 100)';
 
-		$volume = $wpdb->get_var(
+		$volume = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				"SELECT {$select_value} FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				simpay_is_test_mode() ? 0 : 1,
@@ -365,7 +365,7 @@ class ActivityOverviewReport {
 			);
 		}
 
-		$payments = $wpdb->get_var(
+		$payments = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				"SELECT {$select} FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND date_created BETWEEN %s AND %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				simpay_is_test_mode() ? 0 : 1,
@@ -389,7 +389,7 @@ class ActivityOverviewReport {
 	private function get_customers( $period ) {
 		global $wpdb;
 
-		$customers = $wpdb->get_var(
+		$customers = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"SELECT COUNT(DISTINCT email) FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				simpay_is_test_mode() ? 0 : 1,

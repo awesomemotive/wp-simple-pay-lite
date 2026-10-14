@@ -28,7 +28,7 @@ function simpay_get_stripe_checkout_locales() {
  */
 function simpay_insert_form_button() {
 	// Do not run if in Elementor context.
-	if ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) {
+	if ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return;
 	}
 
@@ -54,8 +54,8 @@ function simpay_insert_form_button() {
 	printf(
 		'<a href="#TB_inline?height=300&inlineId=simpay-insert-form" title="%1$s" class="thickbox button simpay-thickbox">%2$s</a>',
 		esc_attr__( 'Insert Payment Form', 'stripe' ),
-		$icon . esc_html__( 'Insert Payment Form', 'stripe' )
-	); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		$icon . esc_html__( 'Insert Payment Form', 'stripe' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	);
 }
 add_action( 'media_buttons', 'simpay_insert_form_button', 11 );
 
@@ -64,7 +64,7 @@ add_action( 'media_buttons', 'simpay_insert_form_button', 11 );
  */
 function simpay_admin_footer_insert_form() {
 	// Do not run if in Elementor context.
-	if ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) {
+	if ( isset( $_GET['action'] ) && 'elementor' === $_GET['action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return;
 	}
 
@@ -110,10 +110,10 @@ function simpay_admin_footer_insert_form() {
 				<?php else : ?>
 				<p><?php esc_html_e( 'Select a payment form to add to your post or page.', 'stripe' ); ?></p>
 				<div>
-					<?php echo simpay_get_forms_list(); ?>
+					<?php echo simpay_get_forms_list(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 				<p class="submit">
-					<input type="button" id="simpay-insert-form" class="button-primary" value="<?php esc_attr_e( 'Insert Payment Form', 'stripe' ); ?>" onclick="insertSimpayForm();" />
+					<input type="button" id="simpay-insert-form" class="button-primary" value="<?php esc_attr_e( 'Insert Payment Form', 'simple-pay' ); ?>" onclick="insertSimpayForm();" />
 					<a id="simpay-cancel-insert-form" class="button-secondary" onclick="tb_remove();"><?php esc_html_e( 'Cancel', 'stripe' ); ?></a>
 				</p>
 				<?php endif; ?>
@@ -243,21 +243,21 @@ function simpay_is_admin_screen() {
 	// Check if we are on the "Site Health" page with the "WP Simple Pay" tab active.
 	if (
 		'site-health' === $screen->base &&
-		isset( $_GET['simpay'] )
+		isset( $_GET['simpay'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	) {
 		return true;
 	}
 
-	if ( isset( $_GET['page'] ) ) {
-		if ( 'simpay' == $_GET['page'] ) {
+	if ( isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'simpay' == $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return 'simpay';
 		}
 
-		if ( 'simpay_settings' == $_GET['page'] ) {
+		if ( 'simpay_settings' == $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return 'simpay_settings';
 		}
 
-		if ( 'simpay_system_status' == $_GET['page'] ) {
+		if ( 'simpay_system_status' == $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return 'simpay_system_status';
 		}
 	}
@@ -293,7 +293,7 @@ function simpay_print_shortcode_tip( $post_id, $copy_button_text = '' ) {
 		printf(
 			'<button type="button" class="button button-secondary simpay-copy-button" data-copied="%1$s" data-clipboard-target="%2$s">%3$s</button>',
 			esc_attr__( 'Copied!', 'stripe' ),
-			sprintf( '#simpay-shortcode-%d', $post_id ),
+			sprintf( '#simpay-shortcode-%d', $post_id ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			wp_kses(
 				$copy_button_text,
 				array(
@@ -303,7 +303,7 @@ function simpay_print_shortcode_tip( $post_id, $copy_button_text = '' ) {
 					),
 				)
 			)
-		);
+		); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 

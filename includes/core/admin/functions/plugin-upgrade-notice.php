@@ -36,10 +36,10 @@ function in_plugin_update_message( $args, $response ) {
 	 *
 	 * @param string $message
 	 */
-	echo apply_filters(
+	echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		'simpay_in_plugin_update_message',
 		$upgrade_notice ? '</p>' . wp_kses_post( $upgrade_notice ) . '<p class="dummmy" style="display: none;">' : ''
-	); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+	);
 }
 add_action(
 	'in_plugin_update_message-' . plugin_basename( SIMPLE_PAY_MAIN_FILE ),

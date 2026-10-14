@@ -42,7 +42,9 @@ trait PaymentIntentTrait {
 	 *
 	 * @param \WP_REST_Request                  $request The payment request.
 	 * @param \SimplePay\Vendor\Stripe\Customer $customer The customer.
-	 * @throws \Exception If automatic tax is used and no calculation is available.
+	 * @throws \Exception If automatic tax is used and no calculation is available, or
+	 *                    if the payment amount is outside the amount limits of the
+	 *                    payment method types.
 	 * @return \SimplePay\Vendor\Stripe\PaymentIntent
 	 */
 	private function create_payment_intent( $request, $customer ) {
@@ -82,13 +84,16 @@ trait PaymentIntentTrait {
 		$payment_intent_args['currency'] = $price->currency;
 
 		// Add the allowed payment method types.
+		// Pass the amount calculated above so it isn't calculated again.
 		$payment_intent_args['payment_method_types'] = PaymentRequestUtils::get_payment_method_types(
-			$request
+			$request,
+			$unit_amount
 		);
 
 		// Add the payment method options.
 		$payment_intent_args['payment_method_options'] = PaymentRequestUtils::get_payment_method_options(
-			$request
+			$request,
+			$payment_intent_args['payment_method_types']
 		);
 
 		/**
@@ -138,8 +143,8 @@ trait PaymentIntentTrait {
 		$tax_calc_id = PaymentRequestUtils::get_tax_calc_id( $request );
 
 		if ( 'automatic' === $tax_status && empty( $tax_calc_id ) ) {
-			throw new Exception(
-				__( 'Invalid request. Please try again.', 'stripe' )
+			throw new Exception( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				__( 'Invalid request. Please try again.', 'stripe' ) // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			);
 		}
 
@@ -184,5 +189,4 @@ trait PaymentIntentTrait {
 
 		return $payment_intent;
 	}
-
 }

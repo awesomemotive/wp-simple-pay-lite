@@ -21,16 +21,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php
 if ( ! empty( $blurb ) ) :
 	/** @var string $image */
-	$image = $blurb['image'];
+	$image = $blurb['image']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 	/** @var string $title */
 	$title = $blurb['title'];
 
 	/** @var string $content */
-	$content = $blurb['content'];
+	$content = $blurb['content']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 	/** @var array<array<string, string>> $links */
-	$links = $blurb['links'];
+	$links = $blurb['links']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	?>
 <table class="footer__blurb">
 	<tbody>

@@ -134,8 +134,8 @@ class RequireAuthentication implements SubscriberInterface, LicenseAwareInterfac
 			return;
 		}
 
-		throw new Exception(
-			__( 'Please log in to make a payment.', 'stripe' )
+		throw new Exception( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+			__( 'Please log in to make a payment.', 'stripe' ) // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 		);
 	}
 

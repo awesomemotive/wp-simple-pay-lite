@@ -182,7 +182,7 @@ class TokenValidationUtils {
 	 */
 	private static function validate_cloudflare_turnstile_token( $token, $payment_request ) {
 		$request = wp_remote_post(
-			'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+			'https://challenges.cloudflare.com/turnstile/v0/siteverify', // phpcs:ignore PluginCheck.CodeAnalysis.Offloading.OffloadedContent -- Server-side token verification API, not an offloaded asset.
 			array(
 				'body' => array(
 					'secret'   => simpay_get_setting(

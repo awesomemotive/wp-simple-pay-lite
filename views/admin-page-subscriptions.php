@@ -35,16 +35,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<input type="hidden" name="post_type" value="simple-pay" />
 		<input type="hidden" name="page" value="simpay-subscriptions" />
 
-		<?php if ( ! empty( $_GET['sub_status'] ) ) : ?>
-			<input type="hidden" name="sub_status" value="<?php echo esc_attr( sanitize_text_field( $_GET['sub_status'] ) ); ?>" />
+		<?php if ( ! empty( $_GET['sub_status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list filter. ?>
+			<input type="hidden" name="sub_status" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_GET['sub_status'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list filter. ?>" />
 		<?php endif; ?>
 
-		<?php if ( ! empty( $_GET['orderby'] ) ) : ?>
-			<input type="hidden" name="orderby" value="<?php echo esc_attr( sanitize_text_field( $_GET['orderby'] ) ); ?>" />
+		<?php if ( ! empty( $_GET['orderby'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list filter. ?>
+			<input type="hidden" name="orderby" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_GET['orderby'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list filter. ?>" />
 		<?php endif; ?>
 
-		<?php if ( ! empty( $_GET['order'] ) ) : ?>
-			<input type="hidden" name="order" value="<?php echo esc_attr( sanitize_text_field( $_GET['order'] ) ); ?>" />
+		<?php if ( ! empty( $_GET['order'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list filter. ?>
+			<input type="hidden" name="order" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_GET['order'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only list filter. ?>" />
 		<?php endif; ?>
 
 		<?php $list_table->views(); ?>

@@ -46,8 +46,8 @@ class EnvironmentTelemetryData extends AbstractTelemetryData {
 	 * @return array<string, string>
 	 */
 	private function parse_server() {
-		$server = ( isset( $_SERVER['SERVER_SOFTWARE'] )
-			? $_SERVER['SERVER_SOFTWARE']
+		$server = ( isset( $_SERVER['SERVER_SOFTWARE'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+			? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			: 'unknown' );
 
 		$server = explode( '/', $server );
@@ -88,7 +88,7 @@ class EnvironmentTelemetryData extends AbstractTelemetryData {
 		global $wpdb;
 
 		$type    = $wpdb->db_server_info();
-		$version = $wpdb->get_var( 'SELECT VERSION()' );
+		$version = $wpdb->get_var( 'SELECT VERSION()' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		if ( stristr( $type, 'mariadb' ) ) {
 			$type = 'MariaDB';

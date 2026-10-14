@@ -493,7 +493,7 @@ trait Recurring {
 							'stripe'
 						);
 
-						echo Utils\get_external_link_markup();
+						echo Utils\get_external_link_markup(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 					</a>
 				</p>
@@ -515,7 +515,7 @@ trait Recurring {
 							'stripe'
 						);
 
-						echo Utils\get_external_link_markup();
+						echo Utils\get_external_link_markup(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 					</a>
 				</p>

@@ -1,10 +1,13 @@
-/* global $ */
-
 /**
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready';
 import { maybeBlockCheckboxWithUpgradeModal } from '@wpsimplepay/utils';
+
+/**
+ * Internal dependencies
+ */
+import { bindBackgroundColorPicker } from './background-color-picker.js';
 
 /**
  * Promopts for upgrade if enabling Payment Pages with an incorrect license.
@@ -44,38 +47,7 @@ function bindHideBranding() {
  * @since 4.5.0
  */
 function bindColorPicker() {
-	const customColorEl = document.getElementById(
-		'payment-page-background-color-custom'
-	);
-
-	if ( ! customColorEl ) {
-		return;
-	}
-
-	$( '#payment-page-background-color-custom' ).wpColorPicker();
-
-	const customButtonEl = document.querySelector(
-		'.simpay-payment-page-background-color .wp-color-result'
-	);
-
-	const colorButtonEls = document.querySelectorAll(
-		'.simpay-payment-page-background-color'
-	);
-
-	customButtonEl.addEventListener( 'click', ( e ) => {
-		colorButtonEls.forEach( ( el ) => {
-			el.querySelector( 'input' ).checked = false;
-		} );
-
-		e.target.classList.add( 'is-selected' );
-		$( e.target ).parent().find( 'input' ).prop( 'checked', true );
-	} );
-
-	colorButtonEls.forEach( ( el ) => {
-		el.querySelector( 'input' ).addEventListener( 'change', () => {
-			customButtonEl.classList.remove( 'is-selected' );
-		} );
-	} );
+	bindBackgroundColorPicker( 'payment-page-background-color' );
 }
 
 /**

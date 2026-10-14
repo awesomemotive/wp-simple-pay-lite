@@ -8,6 +8,10 @@
  * @since 4.1.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use SimplePay\Core\PaymentForm\PriceOptions;
 
 /**
@@ -143,7 +147,7 @@ function simpay_payment_form_prices_has_subscription_price( $prices ) {
  * @param \SimplePay\Core\PaymentForm\PriceOption[] $prices Price options.
  * @return \SimplePay\Core\PaymentForm\PriceOption[]|array
  */
-function __unstable_simpay_get_payment_form_prices_subscription_price( $prices ) {
+function __unstable_simpay_get_payment_form_prices_subscription_price( $prices ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$has_subscription = simpay_payment_form_prices_has_subscription_price( $prices );
 
 	if ( false === $has_subscription ) {
@@ -218,7 +222,7 @@ function simpay_payment_form_prices_has_custom_price( $prices ) {
  * @return \SimplePay\Core\PaymentForm\PriceOption[]|false Price option or false if no custom
  *                                                         amounts are allowed.
  */
-function __unstable_simpay_get_payment_form_custom_price( $prices ) {
+function __unstable_simpay_get_payment_form_custom_price( $prices ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	$has_custom_price = simpay_payment_form_prices_has_custom_price( $prices );
 
 	if ( false === $has_custom_price ) {
@@ -272,6 +276,72 @@ function simpay_payment_form_has_stripe_element_payment_method( $payment_methods
 }
 
 /**
+ * Determines if a form's payment methods force the Address field to collect a
+ * shipping address.
+ *
+ * Afterpay/Clearpay requires a shipping address, so the Address Type is locked
+ * to Shipping in the form builder and force-set on save while it is enabled.
+ *
+ * "Enabled" matches how the builder renders the Afterpay/Clearpay toggle: the
+ * saved entry only counts while the payment method is registered, available
+ * and supported in the Stripe account's country. A stale entry (for example
+ * after the account country changed) renders the toggle unchecked, so it must
+ * not lock the Address Type or force Shipping either.
+ *
+ * @since 4.17.5
+ *
+ * @param mixed $payment_methods Payment methods meta (`_payment_methods`).
+ * @return bool
+ */
+function simpay_payment_form_requires_shipping_address( $payment_methods ) {
+	if ( ! is_array( $payment_methods ) ) {
+		return false;
+	}
+
+	if (
+		! simpay_payment_form_has_stripe_element_payment_method(
+			$payment_methods,
+			'afterpay-clearpay'
+		)
+	) {
+		return false;
+	}
+
+	if ( ! function_exists( '\SimplePay\Core\PaymentMethods\get_payment_method' ) ) {
+		return false;
+	}
+
+	$payment_method = \SimplePay\Core\PaymentMethods\get_payment_method( 'afterpay-clearpay' );
+
+	if ( false === $payment_method ) {
+		return false;
+	}
+
+	return $payment_method->is_available() && $payment_method->is_country_supported();
+}
+
+/**
+ * Determines if a form's Address field collects a shipping address.
+ *
+ * @since 4.17.5
+ *
+ * @param mixed $fields  Custom fields (`_custom_fields`).
+ * @param bool  $fallback Returned when there are no fields or no Address field.
+ * @return bool
+ */
+function simpay_payment_form_address_collects_shipping( $fields, $fallback = false ) {
+	if ( ! is_array( $fields ) || empty( $fields['address'] ) || ! is_array( $fields['address'] ) ) {
+		return $fallback;
+	}
+
+	$address_field = current( $fields['address'] );
+
+	return is_array( $address_field )
+		&& isset( $address_field['collect-shipping'] )
+		&& 'yes' === $address_field['collect-shipping'];
+}
+
+/**
  * Ensures the Address and Amount Breakdown fields are present and configured
  * correctly when required by enabled payment methods or location-based taxes.
  *
@@ -288,6 +358,10 @@ function simpay_payment_form_has_stripe_element_payment_method( $payment_methods
  * @param string $tax_status      Tax status meta.
  * @param int    $count           Field count, mutated when fields are added.
  * @param array  $changes         Notice strings, mutated when fields are added.
+ * @param mixed  $saved_fields    Optional. Custom fields saved before the current
+ *                                request, used to tell when the Address Type
+ *                                actually changes. Default null (compare against
+ *                                `$fields` only).
  * @return array Updated fields.
  */
 function simpay_payment_form_ensure_address_and_total_fields(
@@ -296,13 +370,24 @@ function simpay_payment_form_ensure_address_and_total_fields(
 	$payment_methods,
 	$tax_status,
 	&$count,
-	&$changes
+	&$changes,
+	$saved_fields = null
 ) {
-	$has_klarna   = simpay_payment_form_has_stripe_element_payment_method( $payment_methods, 'klarna' );
-	$has_afterpay = simpay_payment_form_has_stripe_element_payment_method( $payment_methods, 'afterpay-clearpay' );
-	$is_auto_tax  = 'automatic' === $tax_status;
+	$has_klarna         = simpay_payment_form_has_stripe_element_payment_method( $payment_methods, 'klarna' );
+	$has_afterpay_entry = simpay_payment_form_has_stripe_element_payment_method( $payment_methods, 'afterpay-clearpay' );
+	$is_auto_tax        = 'automatic' === $tax_status;
 
-	$needs_required_address = ( $has_klarna || $has_afterpay || $is_auto_tax );
+	// Shipping is only forced while Afterpay/Clearpay can actually be used,
+	// matching the builder's lock. A saved entry still requires the Address
+	// field, as it did before the lock was introduced.
+	$has_afterpay = simpay_payment_form_requires_shipping_address( $payment_methods );
+
+	$needs_required_address = ( $has_klarna || $has_afterpay_entry || $is_auto_tax );
+
+	$shipping_notice = __(
+		'The Address field has been set to collect a Shipping Address, which is required by Afterpay/Clearpay.',
+		'stripe'
+	);
 
 	if ( $needs_required_address ) {
 		if ( ! isset( $fields['address'] ) ) {
@@ -318,6 +403,12 @@ function simpay_payment_form_ensure_address_and_total_fields(
 				'stripe'
 			);
 
+			// Explain why the new field is a Shipping Address rather than
+			// leaving the merchant to discover it in the builder.
+			if ( $has_afterpay ) {
+				$changes[] = $shipping_notice;
+			}
+
 			++$count;
 		} else {
 			$current_address_field = current( $fields['address'] );
@@ -327,6 +418,18 @@ function simpay_payment_form_ensure_address_and_total_fields(
 			);
 
 			if ( $has_afterpay ) {
+				$already_shipping = simpay_payment_form_address_collects_shipping( $fields )
+					&& simpay_payment_form_address_collects_shipping( $saved_fields, true );
+
+				// Only notify when the value actually changes, so the notice
+				// does not repeat on every save once shipping is enabled. The
+				// builder locks the control to Shipping before it submits, so
+				// the submitted value alone cannot show a Billing -> Shipping
+				// switch; the value saved before this request can.
+				if ( ! $already_shipping ) {
+					$changes[] = $shipping_notice;
+				}
+
 				$args['collect-shipping'] = 'yes';
 			}
 
@@ -356,12 +459,15 @@ function simpay_payment_form_ensure_address_and_total_fields(
  * @param array  $fields Payment Form custom fields.
  * @param int    $form_id Payment Form ID.
  * @param string $form_display_type Payment Form display type.
+ * @param mixed  $saved_fields Optional. Custom fields saved before the current
+ *                             request. Since 4.17.5. Default null.
  * @return array{fields: array<string, mixed>, changes: array<string>}
  */
 function simpay_payment_form_add_missing_custom_fields(
 	$fields,
 	$form_id,
-	$form_display_type = 'embedded'
+	$form_display_type = 'embedded',
+	$saved_fields = null
 ) {
 	$form = simpay_get_form( $form_id );
 
@@ -418,7 +524,8 @@ function simpay_payment_form_add_missing_custom_fields(
 				is_array( $payment_methods ) ? $payment_methods : array(),
 				$tax_status,
 				$count,
-				$changes
+				$changes,
+				$saved_fields
 			);
 			break;
 		case 'stripe_checkout':
@@ -488,7 +595,8 @@ function simpay_payment_form_add_missing_custom_fields(
 				is_array( $payment_methods ) ? $payment_methods : array(),
 				$tax_status,
 				$count,
-				$changes
+				$changes,
+				$saved_fields
 			);
 
 			// Set "Phone" to optional if using Payment Request Button.

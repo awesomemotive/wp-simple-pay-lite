@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <tr class="simpay-panel-field">
 	<th>
-		<label for="<?php echo 'simpay-number-label-' . $counter; ?>">
+		<label for="<?php echo esc_attr( 'simpay-number-label-' . $counter ); ?>">
 			<?php esc_html_e( 'Label', 'stripe' ); ?>
 		</label>
 	</th>
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <tr class="simpay-panel-field">
 	<th>
-		<label for="<?php echo 'simpay-number-required-' . $counter; ?>">
+		<label for="<?php echo esc_attr( 'simpay-number-required-' . $counter ); ?>">
 			<?php esc_html_e( 'Required', 'stripe' ); ?>
 		</label>
 	</th>

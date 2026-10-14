@@ -4,43 +4,17 @@
 import domReady from '@wordpress/dom-ready';
 
 /**
+ * Internal dependencies
+ */
+import { bindBackgroundColorPicker } from './background-color-picker.js';
+
+/**
  * Bind color picker.
  *
  * @since 4.12.0
  */
 function bindColorPicker() {
-	const customColorEl = document.getElementById(
-		'confirmation-page-background-color-custom'
-	);
-
-	if ( ! customColorEl ) {
-		return;
-	}
-
-	$( '#confirmation-page-background-color-custom' ).wpColorPicker();
-
-	const customButtonEl = document.querySelector(
-		'.simpay-payment-page-background-color .wp-color-result'
-	);
-
-	const colorButtonEls = document.querySelectorAll(
-		'.simpay-payment-page-background-color'
-	);
-
-	customButtonEl.addEventListener( 'click', ( e ) => {
-		colorButtonEls.forEach( ( el ) => {
-			el.querySelector( 'input' ).checked = false;
-		} );
-
-		e.target.classList.add( 'is-selected' );
-		$( e.target ).parent().find( 'input' ).prop( 'checked', true );
-	} );
-
-	colorButtonEls.forEach( ( el ) => {
-		el.querySelector( 'input' ).addEventListener( 'change', () => {
-			customButtonEl.classList.remove( 'is-selected' );
-		} );
-	} );
+	bindBackgroundColorPicker( 'confirmation-page-background-color' );
 }
 
 /**

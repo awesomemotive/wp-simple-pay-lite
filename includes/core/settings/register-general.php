@@ -326,10 +326,12 @@ function recurring_amount_format_upsell_output() {
 	</select>
 
 	<?php
-	echo wpautop(
-		esc_html__(
-			'Controls how installment payment descriptions are displayed on forms and confirmation pages.',
-			'stripe'
+	echo wp_kses_post(
+		wpautop(
+			esc_html__(
+				'Controls how installment payment descriptions are displayed on forms and confirmation pages.',
+				'stripe'
+			)
 		)
 	);
 	?>
