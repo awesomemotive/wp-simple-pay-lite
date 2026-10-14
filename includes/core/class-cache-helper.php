@@ -10,6 +10,10 @@
 
 namespace SimplePay\Core;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Cache_Helper class
  *
@@ -49,7 +53,7 @@ class Cache_Helper {
 
 		if ( is_array( $excluded_uris ) && ! empty( $excluded_uris ) ) {
 			foreach ( $excluded_uris as $uri ) {
-				if ( stristr( trailingslashit( $_SERVER['REQUEST_URI'] ), $uri ) ) {
+				if ( stristr( trailingslashit( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ), $uri ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 					$this->set_nocache();
 				}
 			}
@@ -63,15 +67,15 @@ class Cache_Helper {
 	 */
 	public function set_nocache() {
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
-			define( 'DONOTCACHEPAGE', true );
+			define( 'DONOTCACHEPAGE', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		if ( ! defined( 'DONOTCACHEOBJECT' ) ) {
-			define( 'DONOTCACHEOBJECT', true );
+			define( 'DONOTCACHEOBJECT', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		if ( ! defined( 'DONOTCACHEDB' ) ) {
-			define( 'DONOTCACHEDB', true );
+			define( 'DONOTCACHEDB', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 		}
 
 		nocache_headers();

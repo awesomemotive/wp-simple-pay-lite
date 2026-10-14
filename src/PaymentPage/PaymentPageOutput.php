@@ -239,11 +239,11 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 		}
 
 		// Do nothing if it is cancle request.
-		if ( isset( $_GET['cancel'] ) ) {
+		if ( isset( $_GET['cancel'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 		// Avoid redirect loops.
-		if ( isset( $_GET['redirected'] ) ) {
+		if ( isset( $_GET['redirected'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
@@ -277,7 +277,7 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 					'redirected'  => true,
 					'source_type' => $this->get_source_type( $payment_confirmation_data ),
 				),
-				array_map( 'sanitize_text_field', $_GET )
+				array_map( 'sanitize_text_field', $_GET ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			),
 			get_permalink( $form->id )
 		);
@@ -286,7 +286,7 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
-		wp_redirect( esc_url_raw( $redirect_url ) );
+		wp_redirect( esc_url_raw( $redirect_url ) ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 		exit;
 	}
 
@@ -370,9 +370,9 @@ class PaymentPageOutput implements SubscriberInterface, LicenseAwareInterface {
 			__unstable_simpay_get_payment_form_template_from_url()
 		);
 
-		if ( $is_dedicated_confirmation_page &&
-		isset( $_GET['redirected'] ) &&
-		isset( $_GET['form_id'] ) ) {
+		if ( $is_dedicated_confirmation_page && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		isset( $_GET['redirected'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		isset( $_GET['form_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$prefix = '_confirmation';
 		}
 

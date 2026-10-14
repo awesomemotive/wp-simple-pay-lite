@@ -678,10 +678,8 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
-		if ( 'customer.subscription.deleted' === $event->type
-		&& $subscription->cancel_at_period_end ) {
-			return;
-		}
+		// Fired only on `customer.subscription.deleted`, so this sends exactly
+		// once for both immediate and period-end cancellations.
 
 		/** @var \SimplePay\Core\Emails\Email\SubscriptionCancellationNotification $subscription_cancel_confirmation_email */
 		$subscription_cancel_confirmation_email = $this->emails['subscription-cancel-confirmation'];

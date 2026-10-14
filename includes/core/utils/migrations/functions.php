@@ -93,7 +93,7 @@ function run( $migration_id ) {
 
 	_doing_it_wrong(
 		__FUNCTION__,
-		__( 'Retrieve a migration object and use the `run()` method directly.', 'stripe' ),
+		__( 'Retrieve a migration object and use the `run()` method directly.', 'stripe' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		'4.1.0'
 	);
 }

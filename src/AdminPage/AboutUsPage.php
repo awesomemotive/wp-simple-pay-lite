@@ -78,10 +78,10 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 	public function render() {
 		$available_tabs = array( 'about-us', 'getting-started', 'lite-vs-pro' );
 		$active_tab     = (
-			isset( $_GET['view'] ) &&
-			in_array( $_GET['view'], $available_tabs, true )
+			isset( $_GET['view'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			in_array( $_GET['view'], $available_tabs, true ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		)
-			? sanitize_text_field( $_GET['view'] )
+			? sanitize_text_field( wp_unslash( $_GET['view'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: 'about-us';
 
 		$base_url = add_query_arg(
@@ -95,12 +95,6 @@ class AboutUsPage extends AbstractAdminPage implements AdminSecondaryPageInterfa
 		$tabs = array(
 			'about-us'        => __( 'About Us', 'stripe' ),
 			'getting-started' => __( 'Getting Started', 'stripe' ),
-		);
-
-		// Assets.
-		wp_enqueue_style(
-			'simpay-fontawesome',
-			'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
 		);
 
 		switch ( $active_tab ) {

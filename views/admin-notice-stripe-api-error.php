@@ -11,4 +11,8 @@
  * @var array<string> $data Notice data.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 echo wp_kses_post( wpautop( $data['error'] ) );

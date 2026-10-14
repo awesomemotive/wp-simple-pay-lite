@@ -169,15 +169,15 @@ class AdminPageSubscriber implements SubscriberInterface {
 	 * @return void
 	 */
 	public function maybe_redirect_pages() {
-		if ( ! isset( $_GET['page'] ) ) {
+		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
-		if ( isset( $_GET['post_type'] ) ) {
+		if ( isset( $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
-		$page = sanitize_text_field( $_GET['page'] );
+		$page = sanitize_text_field( wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
 		// Possible page slugs that need to be fixed.
 		$candidates = array(

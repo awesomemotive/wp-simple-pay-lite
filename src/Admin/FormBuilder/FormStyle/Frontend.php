@@ -359,7 +359,7 @@ class Frontend {
 		if ( ! empty( $final_css ) ) {
 			// Directly print the CSS in the footer.
 			echo "\n<style id=\"wpsp-admin-inline-styles-late\">\n";
-			echo $final_css; // WPCS: XSS okay.
+			echo $final_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS assembled from values sanitized by Settings::sanitize_setting().
 			echo "</style>\n";
 		}
 	}
@@ -681,6 +681,15 @@ class Frontend {
 			$css .= ".simpay-form-wrap[data-form-id=\"{$form_id}\"] .StripeElement .ErrorMessage { color: {$error_text_color} !important; }\n";
 		}
 
+		// Add checkbox colors.
+		//
+		// Checkboxes are opinionatedly styled in SCSS with a hardcoded outline,
+		// checked fill, and white tick. These keys expose those three values so
+		// they can be matched to the form's palette (#3453). Each is emitted
+		// independently and only when set, so unconfigured forms keep the
+		// existing default checkbox appearance.
+		$css .= $this->generate_checkbox_css( $form_id );
+
 		// Add primary color (accent color - used for focus states, links, etc.).
 		$primary_color = Settings::get_setting( $form_id, 'primary_color' );
 		if ( ! empty( $primary_color ) ) {
@@ -921,6 +930,181 @@ class Frontend {
 	}
 
 	/**
+	 * Generates the checkbox and radio button custom CSS for a form.
+	 *
+	 * The plugin's opinionated checkbox and radio styling hardcodes the resting
+	 * outline, the checked-state fill (the checkbox background and the radio
+	 * dot), and the white checkbox tick. These three Form Style keys expose
+	 * each value. Each rule is only emitted when its key is set, so a form with
+	 * no checkbox colors configured keeps the default appearance.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param int $form_id The form ID.
+	 * @return string The generated checkbox and radio CSS.
+	 */
+	private function generate_checkbox_css( $form_id ) {
+		$css = '';
+
+		// Every color is re-validated before interpolation, like the other
+		// color keys, as defense-in-depth against postmeta that bypassed
+		// save-time sanitization.
+		$border_color    = self::sanitize_color_for_css(
+			Settings::get_setting( $form_id, 'checkbox_border_color' )
+		);
+		$fill_color      = self::sanitize_color_for_css(
+			Settings::get_setting( $form_id, 'checkbox_checked_fill_color' )
+		);
+		$checkmark_color = self::sanitize_color_for_css(
+			Settings::get_setting( $form_id, 'checkbox_checkmark_color' )
+		);
+
+		// Resting outline (rendered as a box-shadow ring; base CSS sets
+		// border: 0). It is scoped to the unfocused state so its `!important`
+		// does not clobber the SCSS keyboard-focus ring. Checkboxes also skip
+		// `:checked`, which has its own ring; checked radios keep the resting
+		// ring in the default styles, so they get the outline too.
+		if ( '' !== $border_color ) {
+			$css .= self::get_checkbox_selectors( $form_id, "input[type='checkbox']:not(:checked):not(:focus)" )
+				. ', ' . self::get_checkbox_selectors( $form_id, "input[type='radio']:not(:focus)" )
+				. ' { box-shadow: ' . self::build_box_shadow_border( $border_color ) . " !important; }\n";
+
+			// The outline selectors out-rank the generic `input:user-invalid`
+			// error rule, so an invalid required checkbox or radio would show
+			// the outline instead of the error color. Re-apply the error color
+			// with the same selectors plus `:user-invalid` (higher specificity,
+			// emitted later). Kept as its own rule so browsers without
+			// `:user-invalid` support only drop this rule, not the outline.
+			$error_border_color = self::sanitize_color_for_css(
+				Settings::get_setting( $form_id, 'error_border_color' )
+			);
+
+			if ( '' !== $error_border_color ) {
+				$css .= self::get_checkbox_selectors( $form_id, "input[type='checkbox']:not(:checked):not(:focus):user-invalid" )
+					. ', ' . self::get_checkbox_selectors( $form_id, "input[type='radio']:not(:focus):user-invalid" )
+					. ' { box-shadow: ' . self::build_box_shadow_border( $error_border_color ) . " !important; }\n";
+			}
+		}
+
+		// Checked-state checkbox declarations share one selector, so collect
+		// them into a single rule.
+		$checked_declarations = array();
+
+		if ( '' !== $fill_color ) {
+			$checked_declarations[] = "background-color: {$fill_color} !important;";
+			$checked_declarations[] = 'box-shadow: ' . self::build_box_shadow_border( $fill_color ) . ' !important;';
+		}
+
+		// The tick is an SVG embedded in a data URI; the chosen color is
+		// URL-encoded into the SVG's fill attribute.
+		if ( '' !== $checkmark_color ) {
+			$checked_declarations[] = 'background-image: ' . self::get_checkbox_tick_data_uri( $checkmark_color ) . ' !important;';
+		}
+
+		if ( ! empty( $checked_declarations ) ) {
+			$css .= self::get_checkbox_selectors( $form_id, "input[type='checkbox']:checked" )
+				. ' { ' . implode( ' ', $checked_declarations ) . " }\n";
+		}
+
+		// The selected radio's dot uses the same default blue as the checked
+		// checkbox fill, so it follows the fill color.
+		if ( '' !== $fill_color ) {
+			$css .= self::get_checkbox_selectors( $form_id, "input[type='radio']:checked::after" )
+				. " { background: {$fill_color} !important; }\n";
+		}
+
+		return $css;
+	}
+
+	/**
+	 * Scopes a checkbox or radio selector to a form's styled form controls.
+	 *
+	 * Targets both the form element itself and the embedded/overlay wrap,
+	 * matching the specificity the opinionated SCSS uses.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param int    $form_id The form ID.
+	 * @param string $input   The input selector, e.g. `input[type='radio']:checked`.
+	 * @return string Comma-separated selector list.
+	 */
+	private static function get_checkbox_selectors( $form_id, $input ) {
+		return implode(
+			', ',
+			array(
+				"#simpay-form-{$form_id}.simpay-styled .simpay-form-control {$input}",
+				".simpay-form-wrap[data-form-id=\"{$form_id}\"] .simpay-styled .simpay-form-control {$input}",
+			)
+		);
+	}
+
+	/**
+	 * Builds the SVG checkmark `background-image` data URI for a given color.
+	 *
+	 * SVG 1.1 does not honor `rgba()`/`hsla()` in the `fill` attribute, so a
+	 * color that carries an alpha channel would fall back to solid black in
+	 * Firefox/Safari. Any alpha is split out into a separate `fill-opacity`
+	 * attribute and the color is emitted in its alpha-less `rgb()`/`hsl()`
+	 * form so the tick renders correctly across browsers.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param string $color The tick color (hex, rgb(a) or hsl(a)).
+	 * @return string The `url("data:image/svg+xml,...")` value.
+	 */
+	private static function get_checkbox_tick_data_uri( $color ) {
+		list( $fill_color, $fill_opacity ) = self::split_color_alpha( $color );
+
+		$encoded_color = rawurlencode( $fill_color );
+
+		$opacity_attr = null === $fill_opacity
+			? ''
+			: " fill-opacity='" . rawurlencode( $fill_opacity ) . "'";
+
+		$svg = "data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='{$encoded_color}'{$opacity_attr} xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e";
+
+		return "url(\"{$svg}\")";
+	}
+
+	/**
+	 * Splits an `rgba()`/`hsla()` color into an alpha-less color plus its alpha
+	 * value so the alpha can be applied via SVG `fill-opacity`.
+	 *
+	 * Colors without an alpha channel (hex, `rgb()`, `hsl()`) are returned
+	 * unchanged with a `null` opacity. An `rgba()`/`hsla()` value that is
+	 * missing its alpha component (e.g. `rgba(0, 0, 0)`) is normalized to its
+	 * `rgb()`/`hsl()` form, since SVG 1.1 does not understand it either.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param string $color The sanitized color value.
+	 * @return array{0:string,1:string|null} The color to use in `fill` and the
+	 *                                        alpha for `fill-opacity` (or null).
+	 */
+	private static function split_color_alpha( $color ) {
+		$color = trim( $color );
+
+		// rgba(r, g, b[, a]) -> rgb(r, g, b) + alpha; hsla(h, s, l[, a]) -> hsl(h, s, l) + alpha.
+		if ( ! preg_match( '/^(rgb|hsl)a\(\s*([^,]+),\s*([^,]+),\s*([^,)]+?)\s*(?:,\s*([\d.]+%?)\s*)?\)$/i', $color, $matches ) ) {
+			return array( $color, null );
+		}
+
+		$fill_color = sprintf(
+			'%s(%s, %s, %s)',
+			strtolower( $matches[1] ),
+			trim( $matches[2] ),
+			trim( $matches[3] ),
+			trim( $matches[4] )
+		);
+
+		$alpha = isset( $matches[5] ) && '' !== $matches[5]
+			? trim( $matches[5] )
+			: null;
+
+		return array( $fill_color, $alpha );
+	}
+
+	/**
 	 * Injects JavaScript to add data-form-id attribute to embedded headings and form wraps.
 	 *
 	 * This allows CSS selectors to target the heading and form wrap by form ID.
@@ -980,6 +1164,6 @@ class Frontend {
 		$js .= '})();';
 		$js .= '</script>';
 
-		echo $js; // WPCS: XSS okay.
+		echo $js; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static script; only integer form IDs are interpolated (%d).
 	}
 }

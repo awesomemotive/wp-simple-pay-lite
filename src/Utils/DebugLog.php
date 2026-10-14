@@ -41,6 +41,6 @@ class DebugLog {
 			return;
 		}
 
-		error_log( 'WP Simple Pay: ' . $message );
+		error_log( 'WP Simple Pay: ' . $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 	}
 }

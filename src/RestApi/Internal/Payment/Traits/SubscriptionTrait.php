@@ -582,7 +582,7 @@ trait SubscriptionTrait {
 		 * @param string                         $customer_id Stripe Customer ID.
 		 */
 		$line_item_args = apply_filters(
-			$filter_name,
+			$filter_name, // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
 			$line_item_args,
 			$form,
 			array(),

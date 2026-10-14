@@ -14,6 +14,10 @@
  * @var string $end End date.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="summary-report">
@@ -44,20 +48,20 @@
 	<table class="summary-report__stats">
 		<tr>
 			<?php
-			foreach ( $stats as $k => $stat ) :
+			foreach ( $stats as $k => $stat ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				/** @var string $icon */
-				$icon = $stat['icon'];
+				$icon = $stat['icon']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 				/** @var string $label */
-				$label = $stat['label'];
+				$label = $stat['label']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 				/** @var array<string, string|int> $value */
-				$value = $stat['value'];
+				$value = $stat['value']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				/** @var string $formatted_value */
-				$formatted_value = $value['rendered'];
+				$formatted_value = $value['rendered']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 				/** @var int $delta */
-				$delta = $stat['delta'];
+				$delta = $stat['delta']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				?>
 				<td class="summary-report__stat">
 					<div class="summary-report__stat-icon">
@@ -116,20 +120,20 @@
 				</tr>
 			<?php else : ?>
 				<?php
-				foreach ( $top_forms as $form ) :
+				foreach ( $top_forms as $form ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					/** @var string $href */
-					$href = $form['href'];
+					$href = $form['href']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 					/** @var string $title */
 					$title = $form['title'];
 
 					/** @var array<string, string|int> $gross_volume */
-					$gross_volume = $form['gross_volume'];
+					$gross_volume = $form['gross_volume']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					/** @var string $formatted_gross_volume */
-					$formatted_gross_volume = $gross_volume['rendered'];
+					$formatted_gross_volume = $gross_volume['rendered']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 					/** @var int $delta */
-					$delta = $form['delta'];
+					$delta = $form['delta']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					?>
 				<tr>
 					<td>

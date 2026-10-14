@@ -9,7 +9,11 @@
  * @since 4.4.0
  */
 
-$upgrade_url = simpay_pro_upgrade_url( 'dashboard-widget' );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$upgrade_url = simpay_pro_upgrade_url( 'dashboard-widget' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <div class="simpay-dashboard-widget-product-education">

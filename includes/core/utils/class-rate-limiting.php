@@ -92,7 +92,7 @@ class Rate_Limiting {
 		$this->filename = wp_hash( home_url( '/' ) ) . '-wpsp-rate-limiting.log';
 		$this->file     = trailingslashit( $upload_dir['basedir'] ) . $this->filename;
 
-		if ( ! is_writeable( $upload_dir['basedir'] ) ) {
+		if ( ! is_writeable( $upload_dir['basedir'] ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writeable
 			$this->is_writable = false;
 		}
 	}
@@ -391,15 +391,15 @@ class Rate_Limiting {
 
 		if ( @file_exists( $this->file ) ) {
 
-			if ( ! is_writeable( $this->file ) ) {
+			if ( ! is_writeable( $this->file ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writeable
 				$this->is_writable = false;
 			}
 
-			$file = @file_get_contents( $this->file );
+			$file = @file_get_contents( $this->file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		} else {
 
-			@file_put_contents( $this->file, $file );
-			@chmod( $this->file, 0664 );
+			@file_put_contents( $this->file, $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+			@chmod( $this->file, 0664 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_chmod
 		}
 
 		return $file;

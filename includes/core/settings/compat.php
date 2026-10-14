@@ -26,12 +26,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 4.0.0
  */
 function redirect() {
-	if ( ! isset( $_GET['page'] ) || 'simpay_settings' !== $_GET['page'] ) {
+	if ( ! isset( $_GET['page'] ) || 'simpay_settings' !== $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return;
 	}
 
-	if ( isset( $_GET['tab'] ) ) {
-		$tab     = sanitize_text_field( $_GET['tab'] );
+	if ( isset( $_GET['tab'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$tab     = sanitize_text_field( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$section = $tab;
 
 		switch ( $tab ) {
@@ -93,7 +93,7 @@ function register_subsections( $subsections ) {
 			if ( is_wp_error( $subsection ) ) {
 				_doing_it_wrong(
 					__FUNCTION__,
-					$subsection->get_error_message(),
+					$subsection->get_error_message(), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					'4.0.0'
 				);
 			}
@@ -175,7 +175,7 @@ function register_settings( $settings ) {
 							'output'      => function() {
 								_doing_it_wrong(
 									__FUNCTION__,
-									__(
+									__( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 										'Ambiguous legacy setting found. Please reregister with Settings API.',
 										'stripe'
 									),
@@ -189,7 +189,7 @@ function register_settings( $settings ) {
 				if ( is_wp_error( $setting ) ) {
 					_doing_it_wrong(
 						__FUNCTION__,
-						$setting->get_error_message(),
+						$setting->get_error_message(), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						'4.0.0'
 					);
 				}
@@ -209,16 +209,16 @@ add_action( 'simpay_register_settings', __NAMESPACE__ . '\\register_settings' );
  */
 function get_setting_key( $legacy_setting ) {
 	switch ( $legacy_setting ) {
-		case 'country';
+		case 'country':
 			$legacy_setting = 'account_country';
 			break;
-		case 'site';
+		case 'site':
 			$legacy_setting = 'recaptcha_site_key';
 			break;
-		case 'secret';
+		case 'secret':
 			$legacy_setting = 'recaptcha_secret_key';
 			break;
-		case 'threshold';
+		case 'threshold':
 			$legacy_setting = 'recaptcha_score_threshold';
 			break;
 		case 'locale':

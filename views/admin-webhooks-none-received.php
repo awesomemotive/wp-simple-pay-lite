@@ -13,6 +13,10 @@
  * @var string $dismiss_url URL To dismiss this notice permanently.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="notice inline notice-error">

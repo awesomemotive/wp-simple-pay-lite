@@ -142,7 +142,7 @@ trait Amount {
 				class="simpay-price-currency-symbol simpay-currency-symbol simpay-currency-symbol-left"
 				style="<?php echo esc_attr( $currency_symbol_style ); ?> border-top-right-radius: 0; border-bottom-right-radius: 0;"
 			>
-				<?php echo simpay_get_saved_currency_symbol(); ?>
+				<?php echo simpay_get_saved_currency_symbol(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 			<select
 				name="<?php echo esc_attr( $currency_name ); ?>"
@@ -174,7 +174,7 @@ trait Amount {
 				class="simpay-price-currency-symbol simpay-currency-symbol simpay-currency-symbol-left"
 				style="<?php echo esc_attr( $currency_symbol_style ); ?> border-top-right-radius: 0; border-bottom-right-radius: 0;"
 			>
-				<?php echo simpay_get_saved_currency_symbol(); ?>
+				<?php echo simpay_get_saved_currency_symbol(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 			<select
 				name="<?php echo esc_attr( $currency_name ); ?>"

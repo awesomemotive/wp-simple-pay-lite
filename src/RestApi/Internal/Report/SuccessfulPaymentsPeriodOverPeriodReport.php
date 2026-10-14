@@ -198,7 +198,7 @@ class SuccessfulPaymentsPeriodOverPeriodReport implements SubscriberInterface {
 		// Query for results.
 		global $wpdb;
 
-		return $wpdb->get_results(
+		return $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$wpdb->prepare(
 				"SELECT {$select_date} as date, COUNT(*) as value FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY date", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				simpay_is_test_mode() ? 0 : 1,

@@ -62,7 +62,7 @@ class AddonInstaller implements SubscriberInterface {
 			}
 
 			/** @var string $plugin */
-			$plugin   = wp_unslash( $_POST['plugin'] );
+			$plugin   = wp_unslash( $_POST['plugin'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$plugin   = sanitize_text_field( $plugin );
 			$activate = activate_plugins( $plugin );
 
@@ -123,7 +123,7 @@ class AddonInstaller implements SubscriberInterface {
 
 		if ( isset( $_POST['plugin'] ) ) {
 			/** @var string $plugin */
-			$plugin = wp_unslash( $_POST['plugin'] );
+			$plugin = wp_unslash( $_POST['plugin'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$plugin = sanitize_text_field( $plugin );
 
 			deactivate_plugins( $plugin );
@@ -184,7 +184,7 @@ class AddonInstaller implements SubscriberInterface {
 
 		/** @var string $plugin */
 		$plugin = ! empty( $_POST['plugin'] )
-			? wp_unslash( $_POST['plugin'] )
+			? wp_unslash( $_POST['plugin'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			: '';
 
 		$plugin_url = ! empty( $plugin )

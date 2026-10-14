@@ -97,14 +97,14 @@ class ActivityReportsPage extends AbstractAdminPage implements AdminSecondaryPag
 				true
 			);
 
-			if ( ! isset( $_GET['currency'] ) ) {
+			if ( ! isset( $_GET['currency'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				$default_currency = get_user_meta(
 					$user_id,
 					'simpay_activity_reports_currency',
 					true
 				);
 			} else {
-				$default_currency = sanitize_text_field( $_GET['currency'] );
+				$default_currency = sanitize_text_field( wp_unslash( $_GET['currency'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			}
 
 			/** @var string $default_currency */

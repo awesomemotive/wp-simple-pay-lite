@@ -182,12 +182,12 @@ class Setting {
 		if ( ! is_callable( $this->output ) ) {
 			return _doing_it_wrong(
 				__METHOD__,
-				__( 'Output must be callable or overriden in a subclass.', 'stripe' ),
+				__( 'Output must be callable or overriden in a subclass.', 'stripe' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				''
 			);
 		}
 
-		echo call_user_func( $this->output, $this );
+		echo call_user_func( $this->output, $this ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 }

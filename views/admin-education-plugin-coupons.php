@@ -14,6 +14,10 @@
  * @var string $already_purchased_url The already purchased URL.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="wrap">
@@ -76,7 +80,7 @@
 					<path d="M16.7 7.1l-6.3 8.5-3.3-2.5-.9 1.2 4.5 3.4L17.9 8z"></path>
 				</svg>
 
-				<?php echo $upgrade_subtext; ?>
+				<?php echo $upgrade_subtext; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</div>
 			<?php endif; ?>
 		</section>

@@ -12,6 +12,10 @@
  *                                                  If the recommended plugin has been dismissed.
  * @var array<string, string|array<string, string>> $recommended_plugin Recommended plugin data.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
 <div id="simpay-admin-dashboard-widget-report" class="simpay-admin-dashboard-widget-report"></div>
@@ -23,13 +27,13 @@ if (
 	! empty( $recommended_plugin )
 ) :
 	/** @var string $plugin_name */
-	$plugin_name = $recommended_plugin['name'];
+	$plugin_name = $recommended_plugin['name']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 	/** @var string $install_url */
-	$install_url = $recommended_plugin['install_url'];
+	$install_url = $recommended_plugin['install_url']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
 	/** @var string $more_url */
-	$more_url = $recommended_plugin['more'];
+	$more_url = $recommended_plugin['more']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 <div
 	class="simpay-notice simpay-admin-dashboard-widget-report-recommended-plugin"

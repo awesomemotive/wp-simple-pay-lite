@@ -59,10 +59,10 @@ function do_confirmation_actions( $payment_confirmation_data ) {
 	 * @param array<string, mixed>                                $_GET $_GET data.
 	 */
 	do_action(
-		'_simpay_payment_confirmation',
+		'_simpay_payment_confirmation', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 		$payment_confirmation_data,
 		$payment_confirmation_data['form'],
-		$_GET
+		$_GET // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	);
 
 	if ( ! empty( $payment_confirmation_data['paymentintents'] ) ) {
@@ -135,7 +135,7 @@ function do_confirmation_actions( $payment_confirmation_data ) {
 	 *                                                            PaymentIntents associated with the Customer.
 	 * }
 	 */
-	do_action( $flag, $payment_confirmation_data );
+	do_action( $flag, $payment_confirmation_data ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
 }
 
 /**
@@ -165,8 +165,8 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 	$payment_confirmation_data = array();
 
 	// Find the used Payment Form via the URL.
-	$form_id = isset( $_GET['form_id'] )
-		? absint( $_GET['form_id'] )
+	$form_id = isset( $_GET['form_id'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? absint( $_GET['form_id'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: $form_id;
 
 	if ( false === $form_id ) {
@@ -198,15 +198,15 @@ function get_confirmation_data( $customer_id = false, $session_id = false, $form
 
 	// Check for a Checkout Session ID or Customer ID.
 	// This area blurs the lines between Lite/Pro code since Lite can only use Checkout Session.
-	$session_id  = isset( $_GET['session_id'] ) ? esc_attr( $_GET['session_id'] ) : $session_id;
-	$customer_id = isset( $_GET['customer_id'] ) ? esc_attr( $_GET['customer_id'] ) : $customer_id;
+	$session_id  = isset( $_GET['session_id'] ) ? sanitize_text_field( wp_unslash( $_GET['session_id'] ) ) : $session_id; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$customer_id = isset( $_GET['customer_id'] ) ? sanitize_text_field( wp_unslash( $_GET['customer_id'] ) ) : $customer_id; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	// Do nothing if we can't find a Checkout Session or Customer to reference.
 	if ( ! ( $session_id || $customer_id ) ) {
 		return $payment_confirmation_data;
 	}
 
-	$is_cache = ! isset( $_GET['subscription_key'] );
+	$is_cache = ! isset( $_GET['subscription_key'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	// Using the available identifier, find the relevant customer.
 	if ( $session_id ) {

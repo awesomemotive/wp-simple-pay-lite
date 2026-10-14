@@ -132,7 +132,7 @@ class DashboardWidgetReport extends GrossVolumePeriodOverPeriodReport implements
 		$livemode = simpay_is_test_mode() ? 0 : 1;
 		$forms    = array();
 
-		$forms = $wpdb->get_results(
+		$forms = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->prepare(
 				"SELECT DISTINCT form_id, SUM(amount_total) as amount_total FROM {$wpdb->prefix}wpsp_transactions WHERE livemode = %d AND currency = %s AND status = 'succeeded' AND object IN ('payment_intent', 'setup_intent') AND date_created BETWEEN %s AND %s GROUP BY form_id ORDER BY amount_total DESC",

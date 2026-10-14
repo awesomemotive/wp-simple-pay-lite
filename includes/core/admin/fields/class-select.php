@@ -138,10 +138,10 @@ class Select extends Field {
 
 		<select
 			name="<?php echo esc_attr( $this->name . ( $this->multiselect === true ? '[]' : '' ) ); ?>"
-			id="<?php echo $this->id; ?>"
-			style="<?php echo $this->style; ?>"
-			class="<?php echo $this->class; ?>"
-			<?php echo $this->attributes; ?>
+			id="<?php echo $this->id;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
+			style="<?php echo $this->style;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
+			class="<?php echo $this->class;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
+			<?php echo $this->attributes;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>
 			<?php echo ( $this->multiselect === true ) ? ' multiple="multiple"' : ''; ?>
 		>
 
@@ -157,7 +157,7 @@ class Select extends Field {
 					} else {
 						$selected = selected( $this->value, trim( strval( esc_html( $option ) ) ), false );
 					}
-					echo '<option value="' . $option . '" ' . $selected . '>' . esc_html( $name ) . '</option>';
+					echo '<option value="' . esc_attr( $option ) . '" ' . $selected . '>' . esc_html( $name ) . '</option>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $option/$name escaped inline; $selected is selected() output.
 				}
 			}
 
@@ -192,9 +192,9 @@ class Select extends Field {
 			'option_none_value'     => null,
 		);
 
-		wp_dropdown_pages( $args );
+		wp_dropdown_pages( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		echo '<p class="description">' . $this->description . '</p>';
+		echo '<p class="description">' . $this->description . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 }

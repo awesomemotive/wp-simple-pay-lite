@@ -9,9 +9,13 @@
  * @since 4.4.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use SimplePay\Core\Utils;
 
-$docs_url = simpay_docs_link(
+$docs_url = simpay_docs_link( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	'View the Stripe Connect documentation',
 	'stripe-setup',
 	'no-forms-connect',
@@ -20,7 +24,7 @@ $docs_url = simpay_docs_link(
 
 // Help avoid errors if URL is not passed to the view.
 if ( ! isset( $redirect_url ) ) {
-	$redirect_url = '';
+	$redirect_url = ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 }
 ?>
 

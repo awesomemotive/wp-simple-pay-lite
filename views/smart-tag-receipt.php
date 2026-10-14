@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ( $line_items as $line_item ) : ?>
+			<?php foreach ( $line_items as $line_item ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 			<tr>
 				<td>
 					<?php echo esc_html( $line_item['description'] ); ?>
@@ -100,9 +100,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php
 			if ( $subtotal !== $total ) :
-				$fields = $form->custom_fields;
+				$fields = $form->custom_fields; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-				$total_amount_field = array_filter(
+				$total_amount_field = array_filter( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					$fields,
 					function ( $field ) {
 						return 'total_amount' === $field['type'];
@@ -110,10 +110,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				);
 
 				if ( ! empty( $total_amount_field ) ) {
-					$total_amount_field = reset( $total_amount_field );
-					$label              = isset( $total_amount_field['subtotal_label'] ) ? $total_amount_field['subtotal_label'] : __( 'Subtotal', 'stripe' );
+					$total_amount_field = reset( $total_amount_field ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+					$label              = isset( $total_amount_field['subtotal_label'] ) ? $total_amount_field['subtotal_label'] : __( 'Subtotal', 'stripe' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				} else {
-					$label = __( 'Subtotal', 'stripe' );
+					$label = __( 'Subtotal', 'stripe' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				}
 				?>
 			<tr>
@@ -143,9 +143,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php
 			if ( $form->has_fee_recovery() ) :
-				$fields = $form->custom_fields;
+				$fields = $form->custom_fields; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-				$total_amount_field = array_filter(
+				$total_amount_field = array_filter( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					$fields,
 					function ( $field ) {
 						return 'total_amount' === $field['type'];
@@ -153,10 +153,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 				);
 
 				if ( ! empty( $total_amount_field ) ) {
-					$total_amount_field = reset( $total_amount_field );
-					$label              = $total_amount_field['fee_recovery_label'];
+					$total_amount_field = reset( $total_amount_field ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+					$label              = $total_amount_field['fee_recovery_label']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				} else {
-					$label = __( 'Processing fee', 'stripe' );
+					$label = __( 'Processing fee', 'stripe' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 				}
 				?>
 			<tr>
@@ -191,9 +191,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<tr class="total-row">
 				<td colspan="3" class="text-right">
 					<?php
-					$fields = $form->custom_fields;
+					$fields = $form->custom_fields; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-					$total_amount_field = array_filter(
+					$total_amount_field = array_filter( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						$fields,
 						function ( $field ) {
 							return 'total_amount' === $field['type'];
@@ -201,10 +201,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 					);
 
 					if ( ! empty( $total_amount_field ) ) {
-						$total_amount_field = reset( $total_amount_field );
-						$label              = isset( $total_amount_field['label'] ) ? $total_amount_field['label'] : __( 'Total due', 'stripe' );
+						$total_amount_field = reset( $total_amount_field ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+						$label              = isset( $total_amount_field['label'] ) ? $total_amount_field['label'] : __( 'Total due', 'stripe' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					} else {
-						$label = __( 'Total', 'stripe' );
+						$label = __( 'Total', 'stripe' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					}
 
 					echo esc_html( $label );
@@ -223,9 +223,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<tr class="text-right">
 				<td colspan="3" class="text-right">
 					<?php
-					$fields = $form->custom_fields;
+					$fields = $form->custom_fields; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 
-					$total_amount_field = array_filter(
+					$total_amount_field = array_filter( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						$fields,
 						function ( $field ) {
 							return 'total_amount' === $field['type'];
@@ -233,12 +233,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					);
 
 					if ( ! empty( $total_amount_field ) ) {
-						$total_amount_field = reset( $total_amount_field );
-						$label              = isset( $total_amount_field['recurring_label'] )
+						$total_amount_field = reset( $total_amount_field ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+						$label              = isset( $total_amount_field['recurring_label'] ) // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 							? $total_amount_field['label']
 							: __( 'Recurring payment', 'stripe' );
 					} else {
-						$label = __( 'Recurring payment', 'stripe' );
+						$label = __( 'Recurring payment', 'stripe' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 					}
 
 					echo esc_html( $label );

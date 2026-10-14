@@ -279,3 +279,203 @@ function get_form_payment_method_fee_recovery_amount(
 
 	return (int) round( ( $amount + $fixed ) / ( 1 - ( $percent / 100 ) ) - $amount );
 }
+
+/**
+ * Returns the per-currency transaction amount limits for payment method types
+ * that Stripe only accepts within a specific amount range.
+ *
+ * WP Simple Pay sends an explicit `payment_method_types` list to Stripe, so a
+ * payment method whose amount range does not include the payment amount must
+ * be removed before the intent is created. Otherwise Stripe rejects the
+ * entire intent, which blocks every payment method on the form.
+ *
+ * Keys are Stripe payment method types (e.g. `afterpay_clearpay`). Each entry
+ * contains:
+ *
+ * - `limits`: Limits keyed by lowercase currency code. The `*` key applies to
+ *   any currency without its own entry. Each limit may define an inclusive
+ *   `min` and/or `max`, in the currency's smallest unit (cents for two-decimal
+ *   currencies, whole units for zero-decimal currencies).
+ * - `basis`: Optional. The server-side amount that is compared: `amount` (the
+ *   total charged, default) or `unit_amount` (the price option's unit amount).
+ *   The frontend always compares the total due today.
+ *
+ * @link https://docs.stripe.com/payments/afterpay-clearpay#payment-options
+ * @since 4.17.5
+ *
+ * @return array<string, array<string, mixed>>
+ */
+function get_payment_method_amount_limits(): array {
+	$limits = array(
+		// Affirm has historically required a unit amount of at least 100.00.
+		'affirm'            => array(
+			'basis'  => 'unit_amount',
+			'limits' => array(
+				'*' => array(
+					'min' => 10000,
+				),
+			),
+		),
+		// Afterpay/Clearpay transaction ranges, as published by Stripe.
+		'afterpay_clearpay' => array(
+			'basis'  => 'amount',
+			'limits' => array(
+				'aud' => array(
+					'min' => 100,
+					'max' => 400000,
+				),
+				'cad' => array(
+					'min' => 100,
+					'max' => 200000,
+				),
+				'gbp' => array(
+					'min' => 100,
+					'max' => 120000,
+				),
+				'nzd' => array(
+					'min' => 100,
+					'max' => 400000,
+				),
+				'usd' => array(
+					'min' => 100,
+					'max' => 400000,
+				),
+			),
+		),
+	);
+
+	/**
+	 * Filters the per-currency transaction amount limits of payment method types.
+	 *
+	 * Amounts are in the currency's smallest unit.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param array<string, array<string, mixed>> $limits Amount limits, keyed by Stripe payment method type.
+	 */
+	$limits = apply_filters( 'simpay_payment_method_amount_limits', $limits );
+
+	return is_array( $limits ) ? $limits : array();
+}
+
+/**
+ * Returns a payment method type's amount limit for a currency, falling back
+ * to the `*` (any currency) limit.
+ *
+ * @since 4.17.5
+ *
+ * @param string                                   $payment_method_type Stripe payment method type, e.g. `afterpay_clearpay`.
+ * @param string                                   $currency Currency code.
+ * @param array<string, array<string, mixed>>|null $limits Optional. The limits table returned by
+ *                                                         `get_payment_method_amount_limits()`, to
+ *                                                         avoid running its filter again. Read if
+ *                                                         not an array. Default null.
+ * @return array<string, int> Limit with optional `min` and `max` keys. Empty if there is no limit.
+ */
+function get_payment_method_currency_amount_limit( $payment_method_type, $currency, $limits = null ): array {
+	if ( ! is_array( $limits ) ) {
+		$limits = get_payment_method_amount_limits();
+	}
+
+	if (
+		! isset( $limits[ $payment_method_type ] ) ||
+		! is_array( $limits[ $payment_method_type ] ) ||
+		! isset( $limits[ $payment_method_type ]['limits'] ) ||
+		! is_array( $limits[ $payment_method_type ]['limits'] )
+	) {
+		return array();
+	}
+
+	$currency_limits = $limits[ $payment_method_type ]['limits'];
+	$currency        = strtolower( $currency );
+
+	if ( isset( $currency_limits[ $currency ] ) && is_array( $currency_limits[ $currency ] ) ) {
+		$limit = $currency_limits[ $currency ];
+	} elseif ( isset( $currency_limits['*'] ) && is_array( $currency_limits['*'] ) ) {
+		$limit = $currency_limits['*'];
+	} else {
+		return array();
+	}
+
+	$sanitized = array();
+
+	foreach ( array( 'min', 'max' ) as $bound ) {
+		if ( isset( $limit[ $bound ] ) && is_numeric( $limit[ $bound ] ) ) {
+			$sanitized[ $bound ] = (int) $limit[ $bound ];
+		}
+	}
+
+	return $sanitized;
+}
+
+/**
+ * Returns the server-side amount basis used to compare a payment method type
+ * against its amount limits.
+ *
+ * @since 4.17.5
+ *
+ * @param string                                   $payment_method_type Stripe payment method type, e.g. `afterpay_clearpay`.
+ * @param array<string, array<string, mixed>>|null $limits Optional. The limits table returned by
+ *                                                         `get_payment_method_amount_limits()`, to
+ *                                                         avoid running its filter again. Read if
+ *                                                         not an array. Default null.
+ * @return string `amount` (the total charged) or `unit_amount`.
+ */
+function get_payment_method_amount_limit_basis( $payment_method_type, $limits = null ): string {
+	if ( ! is_array( $limits ) ) {
+		$limits = get_payment_method_amount_limits();
+	}
+
+	if (
+		isset( $limits[ $payment_method_type ] ) &&
+		is_array( $limits[ $payment_method_type ] ) &&
+		isset( $limits[ $payment_method_type ]['basis'] ) &&
+		'unit_amount' === $limits[ $payment_method_type ]['basis']
+	) {
+		return 'unit_amount';
+	}
+
+	return 'amount';
+}
+
+/**
+ * Determines if an amount is within a payment method type's amount limits
+ * for a currency.
+ *
+ * Payment method types without limits (or without limits for the currency)
+ * are always considered within limits. Bounds are inclusive.
+ *
+ * @since 4.17.5
+ *
+ * @param string                                   $payment_method_type Stripe payment method type, e.g. `afterpay_clearpay`.
+ * @param string                                   $currency Currency code.
+ * @param int                                      $amount Amount in the currency's smallest unit.
+ * @param array<string, array<string, mixed>>|null $limits Optional. The limits table returned by
+ *                                                         `get_payment_method_amount_limits()`, to
+ *                                                         avoid running its filter again. Read if
+ *                                                         not an array. Default null.
+ * @return bool
+ */
+function is_amount_within_payment_method_limits( $payment_method_type, $currency, $amount, $limits = null ): bool {
+	$limit = get_payment_method_currency_amount_limit(
+		$payment_method_type,
+		$currency,
+		$limits
+	);
+
+	if ( empty( $limit ) ) {
+		return true;
+	}
+
+	$amount = (int) $amount;
+
+	if ( isset( $limit['min'] ) && $amount < $limit['min'] ) {
+		return false;
+	}
+
+	if ( isset( $limit['max'] ) && $amount > $limit['max'] ) {
+		return false;
+	}
+
+	return true;
+}

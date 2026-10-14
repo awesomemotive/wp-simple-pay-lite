@@ -9,7 +9,11 @@
  * @since 4.4.0
  */
 
-$docs_url = simpay_docs_link(
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$docs_url = simpay_docs_link( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	'Learn More',
 	'stripe-setup',
 	'dashboard-widget-connect',

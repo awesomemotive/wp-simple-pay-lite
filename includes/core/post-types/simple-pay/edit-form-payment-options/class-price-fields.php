@@ -239,7 +239,7 @@ class Price_Fields {
 						 *
 						 * @since 4.4.0
 						 */
-						do_action( 'unstable_simpay_form_settings_pro_after_price_options' )
+						do_action( 'unstable_simpay_form_settings_pro_after_price_options' ) // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 						?>
 				</td>
 			</tr>
@@ -663,6 +663,6 @@ class Price_Fields {
 
 		$options = implode( '', $options );
 
-		echo $options;
+		echo $options; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

@@ -15,6 +15,10 @@ use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * TemplateExplorer class.
  *
@@ -53,11 +57,11 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function maybe_restrict_template() {
-		if ( ! isset( $_GET['simpay-template'] ) ) {
+		if ( ! isset( $_GET['simpay-template'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
-		$template_id = sanitize_text_field( $_GET['simpay-template'] );
+		$template_id = sanitize_text_field( wp_unslash( $_GET['simpay-template'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$template    = __unstable_simpay_get_payment_form_template(
 			$template_id
 		);
@@ -95,11 +99,11 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
-		if ( ! isset( $_GET['simpay-template'] ) ) {
+		if ( ! isset( $_GET['simpay-template'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
-		$template_id = sanitize_text_field( $_GET['simpay-template'] );
+		$template_id = sanitize_text_field( wp_unslash( $_GET['simpay-template'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$template    = __unstable_simpay_get_payment_form_template(
 			$template_id
 		);
@@ -130,14 +134,14 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 	public function maybe_show_template_explorer( $post ) {
 		// We are not adding a payment form, do not show the explorer.
 		if (
-			! isset( $_GET['post_type'] ) ||
-			'simple-pay' !== sanitize_text_field( $_GET['post_type'] )
+			! isset( $_GET['post_type'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'simple-pay' !== sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) {
 			return;
 		}
 
 		// A payment form template is in the URL, do not show the explorer.
-		if ( isset( $_GET['simpay-template'] ) ) {
+		if ( isset( $_GET['simpay-template'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
@@ -212,7 +216,7 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 					true
 				),
 				'hasNew'              => (
-					isset( $_GET['page'] ) &&
+					isset( $_GET['page'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					__unstable_simpay_has_new_form_templates()
 				),
 				'categories'          => array_merge(
@@ -256,11 +260,11 @@ class TemplateExplorer implements SubscriberInterface, LicenseAwareInterface {
 	 * @return void
 	 */
 	public function maybe_set_post_type_queryable() {
-		if ( ! isset( $_GET['simpay-template'], $_GET['post_type'] ) ) {
+		if ( ! isset( $_GET['simpay-template'], $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
-		if ( 'simple-pay' !== sanitize_text_field( $_GET['post_type'] ) ) {
+		if ( 'simple-pay' !== sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 

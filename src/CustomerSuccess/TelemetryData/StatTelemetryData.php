@@ -62,6 +62,7 @@ class StatTelemetryData extends AbstractTransactionTelemetryData {
 	private function get_form_count() {
 		global $wpdb;
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		return (int) $wpdb->get_var(
 			$wpdb->prepare(
 				"SELECT COUNT( ID ) FROM $wpdb->posts WHERE post_type = %s AND post_status != %s",
@@ -89,6 +90,7 @@ class StatTelemetryData extends AbstractTransactionTelemetryData {
 			? 'AVG(amount_total)'
 			: 'AVG(amount_total / 100)';
 
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$average = $wpdb->get_var(
 			// @phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->prepare(
@@ -116,7 +118,7 @@ class StatTelemetryData extends AbstractTransactionTelemetryData {
 
 		$payment_mode = simpay_is_test_mode() ? 'test' : 'live';
 
-		$price_option_meta = $wpdb->get_col(
+		$price_option_meta = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = %s",
 				sprintf( '_simpay_prices_%s', $payment_mode )
@@ -149,7 +151,7 @@ class StatTelemetryData extends AbstractTransactionTelemetryData {
 	private function get_payment_methods_average() {
 		global $wpdb;
 
-		$payment_methods_meta = $wpdb->get_col(
+		$payment_methods_meta = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = %s",
 				'_payment_methods'
@@ -192,7 +194,7 @@ class StatTelemetryData extends AbstractTransactionTelemetryData {
 	private function get_custom_fields_average() {
 		global $wpdb;
 
-		$custom_fields_meta = $wpdb->get_col(
+		$custom_fields_meta = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = %s",
 				'_custom_fields'

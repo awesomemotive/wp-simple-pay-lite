@@ -214,12 +214,12 @@ class ConnectSubscriber implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		// Verify params are present (oth & download link).
-		$post_oth = ! empty( $_REQUEST['oth'] )
-			? sanitize_text_field( $_REQUEST['oth'] )
+		$post_oth = ! empty( $_REQUEST['oth'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_REQUEST['oth'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: '';
 
-		$post_url = ! empty( $_REQUEST['file'] )
-			? $_REQUEST['file']
+		$post_url = ! empty( $_REQUEST['file'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? wp_unslash( $_REQUEST['file'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			: '';
 
 		/** @var string $license */

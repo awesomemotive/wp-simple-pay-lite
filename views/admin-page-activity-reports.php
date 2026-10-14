@@ -9,6 +9,10 @@
  * @since 4.6.7
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="wrap">

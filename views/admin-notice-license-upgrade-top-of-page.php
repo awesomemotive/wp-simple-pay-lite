@@ -10,9 +10,13 @@
  *
  * @var array<string> $data Notice data.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 ?>
 
-<?php echo $data['message']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped ?>
+<?php echo $data['message']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 <button type="button" class="button-link simpay-notice-dismiss">
 	&times;

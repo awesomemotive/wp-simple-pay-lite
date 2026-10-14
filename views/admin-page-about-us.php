@@ -16,6 +16,10 @@
  * @var \SimplePay\Core\License\License $license Plugin license.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="wrap">
@@ -25,7 +29,7 @@
 	<hr class="wp-header-end">
 
 	<h2 class="nav-tab-wrapper simpay-nav-tab-wrapper">
-		<?php foreach ( $tabs as $tab_id => $tab_title ) : ?>
+		<?php foreach ( $tabs as $tab_id => $tab_title ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 		<a href="<?php echo esc_url( add_query_arg( 'view', $tab_id, $base_url ) ); ?>" class="nav-tab <?php echo esc_attr( $tab_id === $active_tab ? 'nav-tab-active' : '' ); ?>">
 			<?php echo esc_html( $tab_title ); ?>
 		</a>

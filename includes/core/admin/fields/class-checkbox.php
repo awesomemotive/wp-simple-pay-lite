@@ -51,25 +51,25 @@ class Checkbox extends Field {
 			}
 
 			?>
-			<fieldset <?php echo ! empty( $this->style ) ? 'style="' . $this->style . '"' : ''; ?>>
+			<fieldset <?php echo ! empty( $this->style ) ? 'style="' . $this->style . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>>
 				<?php
 
 				if ( ! empty( $this->title ) ) {
-					echo '<legend class="screen-reader-text"><span>' . $this->title . '</span></legend>';
+					echo '<legend class="screen-reader-text"><span>' . $this->title . '</span></legend>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor
 				}
 
 				?>
 				<ul>
 					<?php foreach ( $this->options as $option => $name ) : ?>
 						<li>
-							<label for="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>">
-								<input name="<?php echo $this->name; ?>"
-									   id="<?php echo $this->id . '-' . trim( strval( $option ) ); ?>"
-									   class="simpay-field simpay-field-checkbox <?php echo $this->class; ?>"
+							<label for="<?php echo esc_attr( $this->id . '-' . trim( strval( $option ) ) ); ?>">
+								<input name="<?php echo $this->name; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
+									   id="<?php echo esc_attr( $this->id . '-' . trim( strval( $option ) ) ); ?>"
+									   class="simpay-field simpay-field-checkbox <?php echo $this->class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
 									   type="checkbox"
-									   value="<?php echo trim( strval( $option ) ); ?>"
+									   value="<?php echo esc_attr( trim( strval( $option ) ) ); ?>"
 									<?php checked( $this->value, 'yes', true ); ?>
-									<?php echo $this->attributes; ?>
+									<?php echo $this->attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>
 								/><?php echo esc_attr( $name ); ?>
 							</label>
 						</li>
@@ -81,17 +81,17 @@ class Checkbox extends Field {
 		} else {
 
 			?>
-			<label for="<?php echo esc_attr( $this->id ); ?>" class="simpay-field-bool" <?php echo $this->style ? 'style="' . $this->style . '"' : ''; ?>>
+			<label for="<?php echo esc_attr( $this->id ); ?>" class="simpay-field-bool" <?php echo $this->style ? 'style="' . $this->style . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>>
 				<?php if ( ! empty( $this->title ) ) : ?>
-					<span class="screen-reader-text"><?php echo $this->title; ?></span>
+					<span class="screen-reader-text"><?php echo $this->title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?></span>
 				<?php endif; ?>
-				<input name="<?php echo $this->name; ?>"
+				<input name="<?php echo $this->name; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
 					   type="checkbox"
-					   id="<?php echo $this->id; ?>"
-					   class="simpay-field simpay-field-checkbox <?php echo $this->class; ?>"
+					   id="<?php echo $this->id; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
+					   class="simpay-field simpay-field-checkbox <?php echo $this->class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- pre-escaped in constructor ?>"
 					   value="yes"
 					<?php checked( $this->value, 'yes', true ); ?>
-					<?php echo $this->attributes; ?>/><?php echo( ! empty( $this->text ) ? $this->text : esc_html__( 'Yes', 'stripe' ) ); ?>
+					<?php echo $this->attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>/><?php echo( ! empty( $this->text ) ? wp_kses_post( $this->text ) : esc_html__( 'Yes', 'simple-pay' ) ); ?>
 			</label>
 			<?php
 

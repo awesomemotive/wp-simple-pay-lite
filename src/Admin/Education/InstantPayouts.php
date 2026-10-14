@@ -17,6 +17,10 @@ use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * InstantPayouts class.
  *
@@ -84,8 +88,8 @@ class InstantPayouts implements SubscriberInterface, LicenseAwareInterface {
 			return;
 		}
 
-		$subsection = isset( $_GET['subsection'] )
-			? sanitize_text_field( $_GET['subsection'] )
+		$subsection = isset( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['subsection'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: false;
 
 		if ( false === $subsection || 'instant-payouts' !== $subsection ) {

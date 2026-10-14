@@ -84,7 +84,7 @@ class Prices_API extends Migrations\Single_Migration {
 
 			$this->add_missing_custom_fields( $form );
 		} catch ( \Exception $e ) {
-			wp_die( $e->getMessage() );
+			wp_die( esc_html( $e->getMessage() ) );
 		}
 	}
 
@@ -160,13 +160,13 @@ class Prices_API extends Migrations\Single_Migration {
 	 */
 	public function migrate_prices( $form, $product ) {
 		if ( false === $product ) {
-			throw new \Exception(
+			throw new \Exception( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 				/* translators: %s Payment Form ID. */
-				__(
+				__( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 					'Unable to create Stripe Product container for %s.',
 					'stripe'
 				),
-				$form->ID
+				$form->ID // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			);
 		}
 
@@ -1156,5 +1156,4 @@ class Prices_API extends Migrations\Single_Migration {
 
 		return ( ! empty( $test_prices ) || ! empty( $live_prices ) );
 	}
-
 }

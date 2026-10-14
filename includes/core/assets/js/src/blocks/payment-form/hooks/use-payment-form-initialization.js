@@ -65,10 +65,17 @@ export function usePaymentFormInitialization( attributes ) {
 					? JSON.parse( paymentFormInstance.dataset.formVars )
 					: paymentFormInstance.data( 'form-vars' );
 
-				window.wpsp.initPaymentForm(
-					paymentFormInstance,
-					paymentFormVars
-				);
+				// The UPE initializer is asynchronous; contain its errors
+				// to the preview.
+				Promise.resolve(
+					window.wpsp.initPaymentForm(
+						paymentFormInstance,
+						paymentFormVars
+					)
+				).catch( ( error ) => {
+					// eslint-disable-next-line no-console
+					console.error( 'Error initializing payment form:', error );
+				} );
 
 				setFormInitialized( true );
 			}, 1500 );

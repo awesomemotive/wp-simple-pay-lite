@@ -12,6 +12,10 @@
  * @var bool                         $can_install_plugins If the current user can install plugins.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="simpay-card">
@@ -70,9 +74,9 @@
 
 <div class="simpay-addons">
 	<?php
-	foreach ( $am_plugins as $plugin => $plugin_data ) :
+	foreach ( $am_plugins as $plugin => $plugin_data ) : // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		/** @var array<string> $details */
-		$details = $plugin_data['details'];
+		$details = $plugin_data['details']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 		?>
 		<div class="simpay-addon">
 			<div class="simpay-addon__details">

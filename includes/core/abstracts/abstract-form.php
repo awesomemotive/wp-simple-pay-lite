@@ -1256,4 +1256,15 @@ abstract class Form {
 	public function allows_multiple_line_items() {
 		return 'yes' === get_post_meta( $this->id, '_allow_purchasing_multiple_line_items', true );
 	}
+
+	/**
+	 * Returns the UPE script variables for this form.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @return array<string, array<string, mixed>>
+	 */
+	public function get_upe_script_variables() {
+		return array();
+	}
 }

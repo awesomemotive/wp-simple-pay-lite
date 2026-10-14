@@ -91,7 +91,7 @@ trait Quantity {
 
 		<div class="simpay-dialog-section">
 			<label
-				for="<?php echo 'simpay-number-label-' . $instance_id; ?>"
+				for="<?php echo esc_attr( 'simpay-number-label-' . $instance_id ); ?>"
 				class="simpay-dialog-label"
 			>
 				<?php esc_html_e( 'Label', 'stripe' ); ?>
@@ -120,7 +120,7 @@ trait Quantity {
 
 		<div class="simpay-dialog-section">
 			<label
-				for="<?php echo 'simpay-number-minimum-' . $instance_id; ?>"
+				for="<?php echo esc_attr( 'simpay-number-minimum-' . $instance_id ); ?>"
 				class="simpay-dialog-label"
 			>
 				<?php esc_html_e( 'Minimum', 'stripe' ); ?>
@@ -147,7 +147,7 @@ trait Quantity {
 
 		<div>
 			<label
-				for="<?php echo 'simpay-number-maximum-' . $instance_id; ?>"
+				for="<?php echo esc_attr( 'simpay-number-maximum-' . $instance_id ); ?>"
 				class="simpay-dialog-label"
 			>
 				<?php esc_html_e( 'Maximum', 'stripe' ); ?>

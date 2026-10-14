@@ -22,12 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 3.8.0
  */
 function redirect() {
-	if ( ! isset( $_GET['page'] ) || 'simpay' !== $_GET['page'] ) {
+	if ( ! isset( $_GET['page'] ) || 'simpay' !== $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return;
 	}
 
-	$action = isset( $_GET['action'] )
-		? sanitize_text_field( $_GET['action'] )
+	$action = isset( $_GET['action'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_text_field( wp_unslash( $_GET['action'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: false;
 
 	switch ( $action ) {
@@ -45,8 +45,8 @@ function redirect() {
 			break;
 		// Edit.
 		case 'edit':
-			$form = isset( $_GET['form_id'] )
-				? absint( $_GET['form_id'] )
+			$form = isset( $_GET['form_id'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				? absint( $_GET['form_id'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				: 0;
 
 			wp_safe_redirect(
@@ -62,8 +62,8 @@ function redirect() {
 			break;
 		// Duplicate.
 		case 'duplicate':
-			$form = isset( $_GET['simpay_form'] )
-				? absint( $_GET['simpay_form'] )
+			$form = isset( $_GET['simpay_form'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				? absint( $_GET['simpay_form'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				: 0;
 
 			wp_safe_redirect(

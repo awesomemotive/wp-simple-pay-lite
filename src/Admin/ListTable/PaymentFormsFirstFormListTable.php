@@ -13,6 +13,10 @@ namespace SimplePay\Core\Admin\ListTable;
 
 use WP_Posts_List_Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
@@ -34,7 +38,7 @@ class PaymentFormsFirstFormListTable extends WP_Posts_List_Table {
 	 * @return void
 	 */
 	public function display() {
-		if ( $this->has_items() || isset( $_GET['s'] ) ) {
+		if ( $this->has_items() || isset( $_GET['s'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			parent::display();
 		} else {
 			// @todo use a ViewLoader

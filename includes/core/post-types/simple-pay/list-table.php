@@ -247,11 +247,11 @@ function join_metadata_for_search( $join ) {
 		return $join;
 	}
 
-	if ( ! ( isset( $_GET['post_type'] ) && 'simple-pay' === $_GET['post_type'] ) ) {
+	if ( ! ( isset( $_GET['post_type'] ) && 'simple-pay' === $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return $join;
 	}
 
-	if ( ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) {
+	if ( ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return $join;
 	}
 
@@ -283,11 +283,11 @@ function search_metadata( $where ) {
 		return $where;
 	}
 
-	if ( ! ( isset( $_GET['post_type'] ) && 'simple-pay' === $_GET['post_type'] ) ) {
+	if ( ! ( isset( $_GET['post_type'] ) && 'simple-pay' === $_GET['post_type'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return $where;
 	}
 
-	if ( ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) {
+	if ( ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return $where;
 	}
 

@@ -12,8 +12,12 @@
  * @var string       $new_url URL to the new template.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /** @var string $template_name */
-$template_name = isset( $template['name'] ) ? $template['name'] : '';
+$template_name = isset( $template['name'] ) ? $template['name'] : ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <div class="notice notice-info is-dismissible">

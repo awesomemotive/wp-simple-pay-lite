@@ -43,14 +43,14 @@ class SiteHealthMenuItem implements SubscriberInterface {
 	 */
 	public function redirect_menu_item() {
 		if ( ! isset(
-			$_GET['post_type'],
-			$_GET['page']
+			$_GET['post_type'], // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$_GET['page'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) ) {
 			return;
 		}
 
-		$post_type = sanitize_text_field( $_GET['post_type'] );
-		$page      = sanitize_text_field( $_GET['page'] );
+		$post_type = sanitize_text_field( wp_unslash( $_GET['post_type'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page      = sanitize_text_field( wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if ( 'simple-pay' !== $post_type || 'system-report' !== $page ) {
 			return;
@@ -84,7 +84,7 @@ class SiteHealthMenuItem implements SubscriberInterface {
 			return $file;
 		}
 
-		if ( 'site-health' === $screen->base && isset( $_GET['simpay'] ) ) {
+		if ( 'site-health' === $screen->base && isset( $_GET['simpay'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$file = 'edit.php?post_type=simple-pay';
 		}
 
@@ -107,7 +107,7 @@ class SiteHealthMenuItem implements SubscriberInterface {
 			return $file;
 		}
 
-		if ( 'site-health' === $screen->base && isset( $_GET['simpay'] ) ) {
+		if ( 'site-health' === $screen->base && isset( $_GET['simpay'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$file = 'system-report';
 		}
 
@@ -124,7 +124,7 @@ class SiteHealthMenuItem implements SubscriberInterface {
 	 * @return array<string, string>
 	 */
 	public function maybe_rename_tab( $tabs ) {
-		if ( ! isset( $_GET['simpay'] ) ) {
+		if ( ! isset( $_GET['simpay'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $tabs;
 		}
 

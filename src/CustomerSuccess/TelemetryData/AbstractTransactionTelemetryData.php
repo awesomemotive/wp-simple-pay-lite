@@ -46,7 +46,7 @@ abstract class AbstractTransactionTelemetryData extends AbstractTelemetryData {
 			$date_condition = 'date_created >= DATE_SUB(NOW(), INTERVAL 30 DAY)';
 		}
 
-		$transactions = $wpdb->get_results(
+		$transactions = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			// @phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->prepare(
 				"SELECT payment_method_type, {$select_value},

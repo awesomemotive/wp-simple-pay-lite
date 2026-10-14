@@ -52,15 +52,15 @@ class StripeApiErrorNotice extends AbstractAdminNotice {
 	 * {@inheritdoc}
 	 */
 	public function should_display() {
-		return isset( $_GET['simpay-stripe-api-error'] );
+		return isset( $_GET['simpay-stripe-api-error'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function get_notice_data() {
-		$error = isset( $_GET['simpay-stripe-api-error'] )
-			? $_GET['simpay-stripe-api-error'] // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$error = isset( $_GET['simpay-stripe-api-error'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['simpay-stripe-api-error'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: '';
 
 		return array(

@@ -16,6 +16,10 @@ namespace SimplePay\Core\License;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * LicenseSettingSubscriber class.
  *
@@ -97,7 +101,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 						 *
 						 * @since 4.4.0
 						 */
-						do_action( '__unstable_simpay_license_field' );
+						do_action( '__unstable_simpay_license_field' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 						return ob_get_clean();
 					},
@@ -137,7 +141,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 			)
 		);
 
-		$is_upgraded = isset( $_GET['is_upgraded'] );
+		$is_upgraded = isset( $_GET['is_upgraded'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		// @todo use a ViewLoader
 		include_once SIMPLE_PAY_DIR . '/views/admin-setting-license.php'; // @phpstan-ignore-line
@@ -193,7 +197,7 @@ class LicenseSettingSubscriber implements SubscriberInterface, LicenseAwareInter
 				return sprintf(
 					/* translators: License expiration date. */
 					__( 'Your license key expired on %1$s', 'stripe' ),
-					date( $date_format, $expiration )
+					date_i18n( $date_format, $expiration )
 				);
 			case 'inactive':
 			case 'deactivated':

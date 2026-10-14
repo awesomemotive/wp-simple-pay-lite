@@ -47,7 +47,7 @@ class Editor extends Field {
 	public function html() {
 		wp_editor( $this->value, $this->id, array( 'textarea_name' => $this->name ) );
 
-		echo $this->description;
+		echo $this->description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 }

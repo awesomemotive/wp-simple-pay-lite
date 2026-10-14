@@ -54,8 +54,8 @@ function remove_extra_media_buttons() {
 		'tiny_mce_before_init',
 		function ( $settings ) {
 			if (
-				! isset( $_GET['subsection'] ) ||
-				'general' === sanitize_text_field( $_GET['subsection'] )
+				! isset( $_GET['subsection'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'general' === sanitize_text_field( wp_unslash( $_GET['subsection'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			) {
 				return $settings;
 			}
@@ -453,8 +453,8 @@ function add_email_selector() {
 		),
 	);
 
-	$subsection = isset( $_GET['subsection'] )
-		? sanitize_text_field( $_GET['subsection'] )
+	$subsection = isset( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_text_field( wp_unslash( $_GET['subsection'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: '';
 
 	$license = simpay_get_license();

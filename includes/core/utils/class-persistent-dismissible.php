@@ -5,7 +5,7 @@
  * @package SandhillsDev
  * @subpackage Utilities
  */
-namespace Sandhills\Utils;
+namespace Sandhills\Utils; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound -- Shared Sandhills library, deduplicated via class_exists() below.
 
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;

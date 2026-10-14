@@ -3,7 +3,7 @@ Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 4.17.4.1
+Stable tag: 4.17.5
 Requires PHP: 7.4
 License: GPLv2 or later
 
@@ -319,6 +319,35 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 12. Global payment form settings: Summary report email
 
 == Changelog ==
+
+= Stripe Payment Forms 4.17.5 - October 13, 2026 =
+
+* New: Form Style settings to customize checkbox and radio button border, checked fill, and checkmark colors.
+* New: When a new coupon's code already exists in Stripe and was created by your site, offer to import it.
+* Update: Payment forms now load their settings separately from the page, so they keep working with page caching plugins.
+* Update: Payment forms show a clear message when they cannot load, instead of reloading the page.
+* Update: Strengthened security checks on payment, tax, and coupon requests.
+* Update: Cancellation emails for subscriptions set to cancel at period end are now sent when the subscription ends.
+* Update: The Address Type help text now explains how billing details are collected with a Shipping Address.
+* Update: Site Health now checks every plugin database table.
+* Update: The About Us page no longer loads icons from an external service.
+* Fix: Subscription renewals and invoice payments are recorded again on Stripe accounts using newer API versions.
+* Fix: Afterpay/Clearpay is no longer offered above its maximum amount, which blocked every payment method on the form.
+* Fix: Klarna no longer locks the billing address country to the US when the Address field is used.
+* Fix: Coupon codes are now accepted in any capitalization at checkout.
+* Fix: The Address Type no longer silently switches to Shipping when Afterpay/Clearpay is enabled.
+* Fix: On-site payment forms no longer fail with an "Invalid URL" error when no confirmation page is selected.
+* Fix: Custom colors now save on the Payment Page and dedicated Confirmation Page settings.
+* Fix: Stripe field placeholder text now matches the color of other form field placeholders.
+* Fix: Selecting all payment forms on the Payment Forms list now works.
+* Fix: Enabling conditional logic on a newly added field no longer hides its rule settings.
+* Fix: An unchanged payment form no longer shows a "Leave site?" prompt in the form builder.
+* Fix: A file chosen in a File Upload field before the form finished loading is now uploaded.
+* Fix: Copy buttons on transaction and subscription pages now work when the browser blocks clipboard access.
+* Fix: Deleting the plugin with "Save Settings" turned off now removes all of its data.
+* Fix: Corrected the wording of the invalid coupon message.
+* Fix: Resolved a deprecation notice on PHP 8.5.
+* Fix: Improved escaping, input handling, and timezone handling throughout the plugin.
 
 = Stripe Payment Forms 4.17.4.1 - September 28, 2026 =
 

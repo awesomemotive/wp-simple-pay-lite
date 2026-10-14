@@ -72,10 +72,8 @@ function add_script( $form_id, $form ) {
 
 	switch ( $type ) {
 		case 'hcaptcha':
-			wp_enqueue_script(
-				'simpay-hcaptcha',
-				'https://js.hcaptcha.com/1/api.js'
-			);
+			wp_enqueue_script( 'simpay-hcaptcha', 'https://js.hcaptcha.com/1/api.js', array(), null, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+
 			break;
 		case 'recaptcha-v3':
 			$url = add_query_arg(
@@ -102,10 +100,8 @@ function add_script( $form_id, $form ) {
 			);
 			break;
 		case 'cloudflare-turnstile':
-			wp_enqueue_script(
-				'simpay-cloudflare-turnstile',
-				'https://challenges.cloudflare.com/turnstile/v0/api.js'
-			);
+			wp_enqueue_script( 'simpay-cloudflare-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js', array(), null, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion, PluginCheck.CodeAnalysis.EnqueuedResourceOffloading.OffloadedContent -- Cloudflare requires api.js to be loaded from its CDN.
+
 			break;
 
 	}
@@ -257,12 +253,12 @@ function validate_recaptcha_source() {
 		return;
 	}
 
-	$token = isset( $_POST['token'] )
-		? sanitize_text_field( $_POST['token'] )
+	$token = isset( $_POST['token'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		? sanitize_text_field( wp_unslash( $_POST['token'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		: false;
 
-	$recaptcha_action = isset( $_POST['recaptcha_action'] )
-		? sanitize_text_field( $_POST['recaptcha_action'] )
+	$recaptcha_action = isset( $_POST['recaptcha_action'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		? sanitize_text_field( wp_unslash( $_POST['recaptcha_action'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		: false;
 
 	$data = array(

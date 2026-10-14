@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.17.4.1\n"
+"Project-Id-Version: WP Simple Pay Lite 4.17.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T18:07:23+00:00\n"
+"POT-Creation-Date: 2026-10-13T14:15:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -78,29 +78,29 @@ msgstr ""
 
 #: includes/core/admin/class-assets.php:210
 #: includes/core/admin/class-assets.php:246
-#: src/AdminPage/AboutUsPage.php:468
-#: views/admin-setting-license.php:79
+#: src/AdminPage/AboutUsPage.php:462
+#: views/admin-setting-license.php:83
 msgid "Activate"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:214
-#: src/AdminPage/AboutUsPage.php:459
+#: src/AdminPage/AboutUsPage.php:453
 msgid "Activated"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:218
-#: src/AdminPage/AboutUsPage.php:455
+#: src/AdminPage/AboutUsPage.php:449
 #: src/Subscription/SubscriptionStatus.php:60
 msgid "Active"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:222
-#: views/admin-setting-license.php:87
+#: views/admin-setting-license.php:91
 msgid "Deactivate"
 msgstr ""
 
 #: includes/core/admin/class-assets.php:226
-#: src/AdminPage/AboutUsPage.php:464
+#: src/AdminPage/AboutUsPage.php:458
 msgid "Inactive"
 msgstr ""
 
@@ -183,7 +183,7 @@ msgstr ""
 
 #: includes/core/admin/class-menus.php:148
 #: includes/core/post-types/simple-pay/menu.php:67
-#: views/admin-education-upgrade-modal.php:25
+#: views/admin-education-upgrade-modal.php:29
 #: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "Upgrade to Pro"
 msgstr ""
@@ -198,13 +198,6 @@ msgstr ""
 
 #: includes/core/admin/class-menus.php:177
 msgid "Documentation"
-msgstr ""
-
-#: includes/core/admin/fields/class-checkbox.php:94
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:136
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:220
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:279
-msgid "Yes"
 msgstr ""
 
 #: includes/core/admin/fields/class-default-value.php:72
@@ -261,62 +254,62 @@ msgstr ""
 msgid "User IP"
 msgstr ""
 
-#: includes/core/admin/functions/notices.php:44
+#: includes/core/admin/functions/notices.php:45
 msgid "SSL (HTTPS) is not enabled. You will not be able to process live Stripe transactions until SSL is enabled."
 msgstr ""
 
-#: includes/core/admin/functions/notices.php:66
+#: includes/core/admin/functions/notices.php:68
 #: includes/core/class-shortcodes.php:101
 msgid "WP Simple Pay requires the WordPress REST API to be enabled to process payments."
 msgstr ""
 
-#: includes/core/admin/functions/notices.php:92
-#: views/admin-page-stripe-connect.php:48
+#: includes/core/admin/functions/notices.php:94
+#: views/admin-page-stripe-connect.php:52
 msgid "WP Simple Pay requires Stripe Connect for the highest reliability and security. Connect now to start accepting payments instantly."
 msgstr ""
 
-#: includes/core/admin/functions/notices.php:99
-#: includes/core/recaptcha/index.php:357
+#: includes/core/admin/functions/notices.php:101
+#: includes/core/recaptcha/index.php:353
 #: src/License/LicenseNotificationSubscriber.php:93
 #: src/License/LicenseNotificationSubscriber.php:180
 #: src/NotificationInbox/Notifications/StripeConnectNotification.php:75
 #: src/Webhook/NoneReceivedNotice.php:167
 #: src/Webhook/NoneReceivedNotice.php:169
-#: views/admin-dashboard-widget-first-form.php:59
-#: views/admin-dashboard-widget-report.php:61
-#: views/admin-dashboard-widget-stripe-connect.php:45
-#: views/admin-notice-expired-license.php:71
-#: views/admin-payment-forms-license-expired.php:78
-#: views/admin-webhooks-none-received.php:66
+#: views/admin-dashboard-widget-first-form.php:63
+#: views/admin-dashboard-widget-report.php:65
+#: views/admin-dashboard-widget-stripe-connect.php:49
+#: views/admin-notice-expired-license.php:75
+#: views/admin-payment-forms-license-expired.php:82
+#: views/admin-webhooks-none-received.php:70
 msgid "Learn More"
 msgstr ""
 
-#: includes/core/admin/functions/notices.php:129
+#: includes/core/admin/functions/notices.php:131
 msgid "WP Simple Pay is increasing its PHP version requirement."
 msgstr ""
 
 #. translators: %1$s Future PHP version requirement. %2$s Current PHP version. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate.
-#: includes/core/admin/functions/notices.php:137
+#: includes/core/admin/functions/notices.php:139
 #, php-format
 msgid "WP Simple Pay will be increasing its PHP requirement to version %1$s or higher in an upcoming release. It looks like you're using version %2$s, which means you will need to upgrade your version of PHP to allow the plugin to continue to function. Newer versions of PHP are both faster and more secure. The version you're using %3$sno longer receives security updates%4$s, which is another great reason to update."
 msgstr ""
 
-#: includes/core/admin/functions/notices.php:159
+#: includes/core/admin/functions/notices.php:161
 msgid "Which version should I upgrade to?"
 msgstr ""
 
 #. translators: %1$s Future PHP version requirement.
-#: includes/core/admin/functions/notices.php:167
+#: includes/core/admin/functions/notices.php:170
 #, php-format
 msgid "In order to be compatible with future versions of WP Simple Pay, you should update your PHP version to %1$s, <code>7.4</code>, or <code>8.0</code>. On a normal WordPress site, switching to PHP <code>%1$s</code> should never cause issues. We would however actually recommend you switch to PHP <code>8.0</code> or higher to receive the full speed and security benefits provided to more modern and fully supported versions of PHP. However, some plugins may not be fully compatible with PHP <code>8.x</code>, so more testing may be required."
 msgstr ""
 
-#: includes/core/admin/functions/notices.php:181
+#: includes/core/admin/functions/notices.php:185
 msgid "Need help upgrading? Ask your web host!"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/admin/functions/notices.php:189
+#: includes/core/admin/functions/notices.php:194
 #, php-format
 msgid "Many web hosts can give you instructions on how/where to upgrade your version of PHP through their control panel, or may even be able to do it for you. If you need to change hosts, please see %1$sour hosting recommendations%2$s."
 msgstr ""
@@ -520,7 +513,7 @@ msgstr ""
 
 #: includes/core/class-smtp.php:607
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:310
-#: src/AdminPage/AboutUsPage.php:164
+#: src/AdminPage/AboutUsPage.php:158
 msgid "WP Mail SMTP"
 msgstr ""
 
@@ -544,26 +537,26 @@ msgstr ""
 msgid "Plugin unavailable."
 msgstr ""
 
-#: includes/core/forms/class-default-form.php:96
-#: includes/core/forms/class-default-form.php:360
+#: includes/core/forms/class-default-form.php:97
+#: includes/core/forms/class-default-form.php:373
 #: includes/core/forms/fields/class-payment-button.php:51
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:40
 msgid "Pay with Card"
 msgstr ""
 
-#: includes/core/forms/class-default-form.php:97
-#: includes/core/forms/class-default-form.php:361
+#: includes/core/forms/class-default-form.php:98
+#: includes/core/forms/class-default-form.php:374
 msgid "Start Trial"
 msgstr ""
 
-#: includes/core/forms/class-default-form.php:98
-#: includes/core/forms/class-default-form.php:362
+#: includes/core/forms/class-default-form.php:99
+#: includes/core/forms/class-default-form.php:375
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:69
 msgid "Please Wait..."
 msgstr ""
 
-#: includes/core/forms/class-default-form.php:137
-#: includes/core/forms/class-default-form.php:401
+#: includes/core/forms/class-default-form.php:138
+#: includes/core/forms/class-default-form.php:414
 #: includes/core/rest-api/class-controller.php:59
 msgid "Unable to complete request. Please try again."
 msgstr ""
@@ -601,88 +594,91 @@ msgstr ""
 
 #. translators: %d: Payment Form ID.
 #: includes/core/forms/class-price-options.php:620
-#: includes/core/post-types/simple-pay/actions.php:338
+#: includes/core/post-types/simple-pay/actions.php:340
 #: includes/core/utils/migrations/routines/class-prices-api.php:126
 #, php-format
 msgid "WP Simple Pay - Form %d"
 msgstr ""
 
-#: includes/core/forms/functions.php:316
+#: includes/core/forms/functions.php:387
+msgid "The Address field has been set to collect a Shipping Address, which is required by Afterpay/Clearpay."
+msgstr ""
+
+#: includes/core/forms/functions.php:401
 msgid "Address field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:392
-#: includes/core/forms/functions.php:550
-#: includes/core/forms/functions.php:584
+#: includes/core/forms/functions.php:498
+#: includes/core/forms/functions.php:658
+#: includes/core/forms/functions.php:692
 msgid "Payment Button field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:407
-#: includes/core/forms/functions.php:477
+#: includes/core/forms/functions.php:513
+#: includes/core/forms/functions.php:584
 msgid "Customer Email field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:427
+#: includes/core/forms/functions.php:534
 msgid "The coupon field has been removed since you selected Off-site Stripe Checkout. "
 msgstr ""
 
-#: includes/core/forms/functions.php:461
+#: includes/core/forms/functions.php:568
 msgid "Customer Name field is required for one or more payment methods, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:518
+#: includes/core/forms/functions.php:626
 msgid "Payment Methods is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:534
+#: includes/core/forms/functions.php:642
 msgid "Checkout Button field is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:559
+#: includes/core/forms/functions.php:667
 msgid "Payment Button has been removed from the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:607
+#: includes/core/forms/functions.php:715
 msgid "Price Selector is required, and has been added to the payment form. "
 msgstr ""
 
-#: includes/core/forms/functions.php:614
+#: includes/core/forms/functions.php:722
 msgid "Custom Amount Input has been removed from the payment form. This field is automatically displayed with multiple line items."
 msgstr ""
 
-#: includes/core/forms/functions.php:619
+#: includes/core/forms/functions.php:727
 msgid "Recurring Amount Toggle has been removed from the payment form. This field is automatically displayed with multiple line items."
 msgstr ""
 
-#: includes/core/forms/functions.php:626
-#: includes/core/forms/functions.php:637
+#: includes/core/forms/functions.php:734
+#: includes/core/forms/functions.php:745
 msgid "Quantity Input has been removed from the payment form. This field is automatically displayed with multiple line items."
 msgstr ""
 
-#: includes/core/forms/functions.php:654
+#: includes/core/forms/functions.php:762
 msgid "The Custom Amount Input field is required because you have set a custom amount on your price list, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:663
+#: includes/core/forms/functions.php:771
 msgid "Custom Amount Input has been removed from the payment form. A price option that allows user-defined amounts is required. "
 msgstr ""
 
-#: includes/core/forms/functions.php:681
+#: includes/core/forms/functions.php:789
 msgid "Recurring Amount Toggle is required, and has been added to the payment form."
 msgstr ""
 
-#: includes/core/forms/functions.php:693
+#: includes/core/forms/functions.php:801
 msgid "Recurring Amount Toggle has been removed from the payment form. An optionally recurring price option is required."
 msgstr ""
 
-#: includes/core/forms/functions.php:705
-#: includes/core/forms/functions.php:722
+#: includes/core/forms/functions.php:813
+#: includes/core/forms/functions.php:830
 msgid "Coupon field has been removed from the payment form because it is incompatible with Fee Recovery."
 msgstr ""
 
 #: includes/core/functions/admin.php:56
 #: includes/core/functions/admin.php:57
-#: includes/core/functions/admin.php:116
 msgid "Insert Payment Form"
 msgstr ""
 
@@ -699,8 +695,8 @@ msgstr ""
 #: includes/core/functions/admin.php:353
 #: includes/core/functions/admin.php:380
 #: src/AdminPage/CopyButton.php:43
-#: views/admin-form-preview-output.php:59
-#: views/admin-form-preview-output.php:67
+#: views/admin-form-preview-output.php:63
+#: views/admin-form-preview-output.php:71
 msgid "Copied!"
 msgstr ""
 
@@ -710,7 +706,7 @@ msgstr ""
 
 #: includes/core/functions/admin.php:382
 #: includes/core/post-types/simple-pay/edit-form.php:108
-#: views/admin-form-preview-output.php:71
+#: views/admin-form-preview-output.php:75
 msgid "Copy Block"
 msgstr ""
 
@@ -797,9 +793,9 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:86
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:90
 #: includes/core/post-types/simple-pay/list-table.php:222
-#: src/Admin/ListTable/SubscriptionsListTable.php:429
-#: src/Admin/ListTable/TransactionsListTable.php:526
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:164
+#: src/Admin/ListTable/SubscriptionsListTable.php:433
+#: src/Admin/ListTable/TransactionsListTable.php:530
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:168
 #: src/AdminBar/AdminBarSubscriber.php:112
 #: views/admin-page-subscription-detail.php:122
 #: views/admin-page-subscriptions.php:29
@@ -832,91 +828,99 @@ msgstr ""
 msgid "Please enter a valid address"
 msgstr ""
 
-#: includes/core/functions/shared.php:623
+#: includes/core/functions/shared.php:598
+msgid "This payment form could not be loaded. Please refresh the page and try again."
+msgstr ""
+
+#: includes/core/functions/shared.php:603
+msgid "Payment unavailable"
+msgstr ""
+
+#: includes/core/functions/shared.php:630
 msgctxt "recurring interval"
 msgid "day"
 msgstr ""
 
-#: includes/core/functions/shared.php:624
+#: includes/core/functions/shared.php:631
 msgctxt "recurring interval"
 msgid "days"
 msgstr ""
 
-#: includes/core/functions/shared.php:625
+#: includes/core/functions/shared.php:632
 msgctxt "recurring interval adjective"
 msgid "daily"
 msgstr ""
 
-#: includes/core/functions/shared.php:628
+#: includes/core/functions/shared.php:635
 msgctxt "recurring interval"
 msgid "week"
 msgstr ""
 
-#: includes/core/functions/shared.php:629
+#: includes/core/functions/shared.php:636
 msgctxt "recurring interval"
 msgid "weeks"
 msgstr ""
 
-#: includes/core/functions/shared.php:630
+#: includes/core/functions/shared.php:637
 msgctxt "recurring interval adjective"
 msgid "weekly"
 msgstr ""
 
-#: includes/core/functions/shared.php:633
+#: includes/core/functions/shared.php:640
 msgctxt "recurring interval"
 msgid "month"
 msgstr ""
 
-#: includes/core/functions/shared.php:634
+#: includes/core/functions/shared.php:641
 msgctxt "recurring interval"
 msgid "months"
 msgstr ""
 
-#: includes/core/functions/shared.php:635
+#: includes/core/functions/shared.php:642
 msgctxt "recurring interval adjective"
 msgid "monthly"
 msgstr ""
 
-#: includes/core/functions/shared.php:638
+#: includes/core/functions/shared.php:645
 msgctxt "recurring interval"
 msgid "year"
 msgstr ""
 
-#: includes/core/functions/shared.php:639
+#: includes/core/functions/shared.php:646
 msgctxt "recurring interval"
 msgid "years"
 msgstr ""
 
-#: includes/core/functions/shared.php:640
+#: includes/core/functions/shared.php:647
 msgctxt "recurring interval adjective"
 msgid "yearly"
 msgstr ""
 
-#: includes/core/functions/shared.php:1429
+#: includes/core/functions/shared.php:1436
 msgid "Business Operations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1430
+#: includes/core/functions/shared.php:1437
 msgid "Donations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1431
+#: includes/core/functions/shared.php:1438
 msgid "Fundraising"
 msgstr ""
 
-#: includes/core/functions/shared.php:1432
+#: includes/core/functions/shared.php:1439
 msgid "Products & Services"
 msgstr ""
 
-#: includes/core/functions/shared.php:1433
+#: includes/core/functions/shared.php:1440
 msgid "Registrations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1434
+#: includes/core/functions/shared.php:1441
 msgid "Features / Functionality"
 msgstr ""
 
-#: includes/core/functions/shared.php:1440
+#: includes/core/functions/shared.php:1447
 msgid "Recently Added"
 msgstr ""
 
@@ -10590,7 +10594,7 @@ msgid "Thank you. Your payment of %1$s has been received and your subscription h
 msgstr ""
 
 #. translators: %s Payment form name.
-#: includes/core/post-types/simple-pay/actions.php:1024
+#: includes/core/post-types/simple-pay/actions.php:1026
 #, php-format
 msgid "%s - Duplicate"
 msgstr ""
@@ -10711,34 +10715,42 @@ msgstr ""
 msgid "Gray"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:433
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:423
+msgid "Custom color"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:430
+msgid "Custom color value"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:441
 msgid "Form Title & Description"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:454
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:462
 msgid "Display the payment form's title and description"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:461
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:469
 msgid "Header Image / Logo"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:489
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:497
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:75
 msgid "Choose Image"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:492
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:500
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:634
 #: includes/core/settings/register-emails.php:408
 msgid "Remove"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:504
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:512
 msgid "Footer Text"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-confirmation.php:547
+#: includes/core/post-types/simple-pay/edit-form-confirmation.php:555
 msgid "Hide WP Simple Pay branding"
 msgstr ""
 
@@ -10830,7 +10842,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:159
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:474
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1022
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1094
 msgid "Text"
 msgstr ""
 
@@ -10843,8 +10855,8 @@ msgid "Radio Select"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields.php:180
-#: src/Admin/ListTable/SubscriptionsListTable.php:85
-#: src/Admin/ListTable/TransactionsListTable.php:122
+#: src/Admin/ListTable/SubscriptionsListTable.php:89
+#: src/Admin/ListTable/TransactionsListTable.php:126
 msgid "Date"
 msgstr ""
 
@@ -10946,9 +10958,9 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:87
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:91
 #: includes/core/post-types/simple-pay/list-table.php:218
-#: src/Admin/ListTable/SubscriptionsListTable.php:426
-#: src/Admin/ListTable/TransactionsListTable.php:523
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:165
+#: src/Admin/ListTable/SubscriptionsListTable.php:430
+#: src/Admin/ListTable/TransactionsListTable.php:527
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:169
 msgid "Live Mode"
 msgstr ""
 
@@ -10977,24 +10989,24 @@ msgid "Controls how installment payment descriptions appear on this form and its
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:271
-#: includes/core/settings/register-general.php:345
+#: includes/core/settings/register-general.php:347
 #: src/Admin/Education/AbstractProductEducation.php:54
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1187
-#: src/AdminPage/AboutUsPage.php:114
-#: views/admin-setting-lite-license.php:151
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1260
+#: src/AdminPage/AboutUsPage.php:108
+#: views/admin-setting-lite-license.php:155
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Upgrade to WP Simple Pay Pro"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:283
-#: includes/core/settings/register-general.php:357
+#: includes/core/settings/register-general.php:359
 #: src/Admin/Education/PluginCancellationConfirmation.php:63
-#: views/admin-education-plugin-cancelled-payment-confirmation.php:53
-#: views/admin-education-plugin-coupons.php:69
-#: views/admin-education-plugin-customers-settings.php:93
-#: views/admin-education-plugin-email-settings.php:64
-#: views/admin-education-plugin-taxes-settings.php:64
-#: views/admin-education-upgrade-modal.php:33
+#: views/admin-education-plugin-cancelled-payment-confirmation.php:57
+#: views/admin-education-plugin-coupons.php:73
+#: views/admin-education-plugin-customers-settings.php:97
+#: views/admin-education-plugin-email-settings.php:68
+#: views/admin-education-plugin-taxes-settings.php:68
+#: views/admin-education-upgrade-modal.php:37
 #: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "Already purchased?"
 msgstr ""
@@ -11045,8 +11057,8 @@ msgid "Popular"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options.php:542
-#: src/Admin/ListTable/SubscriptionsListTable.php:202
-#: src/Admin/ListTable/TransactionsListTable.php:273
+#: src/Admin/ListTable/SubscriptionsListTable.php:206
+#: src/Admin/ListTable/TransactionsListTable.php:277
 msgid "All"
 msgstr ""
 
@@ -11117,7 +11129,7 @@ msgstr ""
 #: includes/core/recaptcha/settings.php:500
 #: includes/core/settings/register-emails.php:347
 #: includes/core/settings/register-emails.php:352
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:244
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:248
 msgid "None"
 msgstr ""
 
@@ -11195,8 +11207,8 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-amount.php:38
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:364
-#: src/Admin/ListTable/SubscriptionsListTable.php:88
-#: src/Admin/ListTable/TransactionsListTable.php:125
+#: src/Admin/ListTable/SubscriptionsListTable.php:92
+#: src/Admin/ListTable/TransactionsListTable.php:129
 #: views/admin-page-subscription-detail.php:141
 #: views/smart-tag-receipt.php:45
 msgid "Amount"
@@ -11552,7 +11564,7 @@ msgid "Donate"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:112
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:950
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1022
 msgid "Pay"
 msgstr ""
 
@@ -11650,7 +11662,7 @@ msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:84
 #: includes/core/post-types/simple-pay/list-table.php:190
-#: views/admin-form-preview-output.php:62
+#: views/admin-form-preview-output.php:66
 msgid "Copy Shortcode"
 msgstr ""
 
@@ -11667,7 +11679,7 @@ msgstr ""
 #: src/Integration/Elementor/PaymentFormControl.php:48
 #: views/admin-page-subscription-detail.php:265
 #: views/admin-page-transaction-detail.php:445
-#: views/email-internal-summary-report.php:106
+#: views/email-internal-summary-report.php:110
 #: includes/core/assets/js/dist/simpay-block-button.js:1
 msgid "Payment Form"
 msgstr ""
@@ -11701,7 +11713,7 @@ msgid "Stripe Checkout"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:562
-#: views/admin-form-preview-output.php:79
+#: views/admin-form-preview-output.php:83
 msgid "Payment Page"
 msgstr ""
 
@@ -11718,7 +11730,7 @@ msgid "Automations"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:752
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:642
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:714
 msgid "Title"
 msgstr ""
 
@@ -11727,7 +11739,7 @@ msgid "A payment form title is required."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:795
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:662
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:734
 #: views/smart-tag-receipt.php:36
 msgid "Description"
 msgstr ""
@@ -11787,7 +11799,7 @@ msgid "Spam & Fraud Protection"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:1072
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:457
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:461
 msgid "CAPTCHA"
 msgstr ""
 
@@ -11798,12 +11810,12 @@ msgid "%1$sConfigure CAPTCHA settings%2$s to adjust anti-spam protection."
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:1104
-#: src/AntiSpam/EmailVerification.php:322
+#: src/AntiSpam/EmailVerification.php:326
 msgid "Additional protection enabled!"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:1109
-#: src/AntiSpam/EmailVerification.php:327
+#: src/AntiSpam/EmailVerification.php:331
 msgid "Disabled — missing additional protection!"
 msgstr ""
 
@@ -12071,25 +12083,25 @@ msgid_plural "%1$s payment forms restored from the Trash."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/core/recaptcha/index.php:96
+#: includes/core/recaptcha/index.php:94
 #: includes/core/recaptcha/settings.php:648
-#: src/AntiSpam/Captcha/ScriptUtils.php:65
+#: src/AntiSpam/Captcha/ScriptUtils.php:63
 msgid "Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys."
 msgstr ""
 
-#: includes/core/recaptcha/index.php:269
+#: includes/core/recaptcha/index.php:265
 msgid "Unable to validate reCAPTCHA token. Please verify your Site and Secret keys."
 msgstr ""
 
-#: includes/core/recaptcha/index.php:335
+#: includes/core/recaptcha/index.php:331
 msgid "🚨 Missing Payment Form Fraud Protection"
 msgstr ""
 
-#: includes/core/recaptcha/index.php:340
+#: includes/core/recaptcha/index.php:336
 msgid "Configure a CAPTCHA solution to protect your payment forms and prevent spam, abuse, and fraudulent payments."
 msgstr ""
 
-#: includes/core/recaptcha/index.php:347
+#: includes/core/recaptcha/index.php:343
 msgid "Configure CAPTCHA"
 msgstr ""
 
@@ -12247,31 +12259,33 @@ msgstr ""
 msgid "Cloudflare Turnstile delivers frustration-free, CAPTCHA-free web experiences to website visitors. To enable Cloudflare Turnstile %1$ssign up at Cloudflare (free)%2$s to retrieve the necessary credentials."
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:720
+#: includes/core/recaptcha/settings.php:721
 msgid "Sign Up for Cloudflare Turnstile (Free)"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:743
+#: includes/core/recaptcha/settings.php:744
 msgid "🚨 Warning"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/recaptcha/settings.php:750
+#: includes/core/recaptcha/settings.php:751
 #, php-format
 msgid "Disabling CAPTCHA will make your site more vulnerable to spam and fraudulent payments which can <strong>cost you money and jeopardize your Stripe account</strong>. We highly recommend using a provided CAPTCHA solution. Learn more about CAPTCHA and how to choose the best option for your website in our %1$sdocumentation%2$s"
 msgstr ""
 
 #: includes/core/rest-api/class-controller.php:104
+#: src/RestApi/Internal/Form/FormDataRoute.php:124
 #: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:73
 msgid "Sorry, you have made too many requests. Please try again later."
 msgstr ""
 
 #: includes/core/rest-api/class-controller.php:138
 #: includes/core/rest-api/class-controller.php:159
-#: src/AntiSpam/EmailVerification.php:574
-#: src/AntiSpam/EmailVerification.php:668
-#: src/RestApi/Internal/Payment/Traits/PaymentIntentTrait.php:142
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:119
+#: src/AntiSpam/EmailVerification.php:578
+#: src/AntiSpam/EmailVerification.php:672
+#: src/RestApi/Internal/Payment/AbstractPaymentRoute.php:127
+#: src/RestApi/Internal/Payment/Traits/PaymentIntentTrait.php:147
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:143
 msgid "Invalid request. Please try again."
 msgstr ""
 
@@ -12350,7 +12364,7 @@ msgid "Emails"
 msgstr ""
 
 #: includes/core/settings/register-emails.php:111
-#: src/Admin/Education/PluginCustomersSettings.php:82
+#: src/Admin/Education/PluginCustomersSettings.php:86
 msgctxt "settings subsection label"
 msgid "General"
 msgstr ""
@@ -12511,35 +12525,35 @@ msgid "Installment Description Format"
 msgstr ""
 
 #: includes/core/settings/register-general.php:272
-#: includes/core/settings/register-general.php:330
+#: includes/core/settings/register-general.php:331
 msgid "Controls how installment payment descriptions are displayed on forms and confirmation pages."
 msgstr ""
 
-#: includes/core/settings/register-general.php:390
+#: includes/core/settings/register-general.php:392
 msgctxt "setting label"
 msgid "Usage Analytics"
 msgstr ""
 
-#: includes/core/settings/register-general.php:395
+#: includes/core/settings/register-general.php:397
 msgid "Allow usage analytics"
 msgstr ""
 
-#: includes/core/settings/register-general.php:401
+#: includes/core/settings/register-general.php:403
 msgid "Your site will be considered as we evaluate new features and determine the best improvements to make. No sensitive data is tracked."
 msgstr ""
 
-#: includes/core/settings/register-general.php:424
+#: includes/core/settings/register-general.php:426
 msgctxt "setting label"
 msgid "Save Plugin Settings"
 msgstr ""
 
-#: includes/core/settings/register-general.php:429
+#: includes/core/settings/register-general.php:431
 msgctxt "setting input label"
 msgid "Save plugin settings"
 msgstr ""
 
 #. translators: %s Plugin name.
-#: includes/core/settings/register-general.php:439
+#: includes/core/settings/register-general.php:441
 #, php-format
 msgid "If UN-checked, all %s plugin data will be removed when the plugin is deleted. However, your data saved with Stripe will not be deleted."
 msgstr ""
@@ -12634,13 +12648,13 @@ msgstr ""
 
 #: includes/core/settings/register-stripe.php:118
 #: src/AdminPage/TransactionsPage.php:952
-#: src/StripeConnect/ConnectionSubscriber.php:300
+#: src/StripeConnect/ConnectionSubscriber.php:303
 msgid "test"
 msgstr ""
 
 #: includes/core/settings/register-stripe.php:119
 #: src/AdminPage/TransactionsPage.php:952
-#: src/StripeConnect/ConnectionSubscriber.php:301
+#: src/StripeConnect/ConnectionSubscriber.php:304
 msgid "live"
 msgstr ""
 
@@ -12858,17 +12872,17 @@ msgid "Addon installed & activated."
 msgstr ""
 
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:286
-#: src/AdminPage/AboutUsPage.php:147
+#: src/AdminPage/AboutUsPage.php:141
 msgid "MonsterInsights"
 msgstr ""
 
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:294
-#: src/AdminPage/AboutUsPage.php:181
+#: src/AdminPage/AboutUsPage.php:175
 msgid "AIOSEO"
 msgstr ""
 
 #: src/Admin/DashboardWidget/ProductEducationDashboardWidget.php:302
-#: src/AdminPage/AboutUsPage.php:198
+#: src/AdminPage/AboutUsPage.php:192
 msgid "SeedProd"
 msgstr ""
 
@@ -12889,23 +12903,23 @@ msgstr ""
 msgid "%1$sBonus%2$s: WP Simple Pay Pro users get %3$s50%% off%4$s upgrade pricing, automatically applied at checkout. %5$sSee upgrade options →%6$s"
 msgstr ""
 
-#: src/Admin/Education/InstantPayouts.php:64
+#: src/Admin/Education/InstantPayouts.php:68
 msgctxt "settings subsection label"
 msgid "Instant Payouts"
 msgstr ""
 
 #: src/Admin/Education/PluginCouponMenuItem.php:46
 #: src/Admin/Education/PluginCouponMenuItem.php:47
-#: views/admin-education-plugin-coupons.php:21
+#: views/admin-education-plugin-coupons.php:25
 msgid "Coupons"
 msgstr ""
 
-#: src/Admin/Education/PluginCustomersSettings.php:56
+#: src/Admin/Education/PluginCustomersSettings.php:60
 msgctxt "settings subsection label"
 msgid "Subscription Management"
 msgstr ""
 
-#: src/Admin/Education/PluginTaxesSettings.php:51
+#: src/Admin/Education/PluginTaxesSettings.php:55
 msgctxt "settings subsection label"
 msgid "Taxes"
 msgstr ""
@@ -12999,7 +13013,7 @@ msgid "Select a theme to instantly apply a complete set of coordinated styles. Y
 msgstr ""
 
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:361
-#: src/Block/ManageSubscriptionsBlock.php:93
+#: src/Block/ManageSubscriptionsBlock.php:94
 msgid "Enter your email"
 msgstr ""
 
@@ -13016,8 +13030,8 @@ msgid "Form Background"
 msgstr ""
 
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:420
-#: src/Admin/ListTable/SubscriptionsListTable.php:87
-#: src/Admin/ListTable/TransactionsListTable.php:124
+#: src/Admin/ListTable/SubscriptionsListTable.php:91
+#: src/Admin/ListTable/TransactionsListTable.php:128
 #: views/admin-page-subscription-detail.php:261
 #: views/admin-page-transaction-detail.php:441
 msgid "Form"
@@ -13132,220 +13146,260 @@ msgid "Text color for error messages"
 msgstr ""
 
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:626
-msgid "Form Title & Description Colors"
+msgid "Checkbox & Radio Colors"
 msgstr ""
 
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:632
-msgid "Title Color"
+msgid "Checkbox Border Color"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:645
-msgid "Color for the form title"
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:643
+msgid "Outline"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:652
-msgid "Description Color"
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:646
+msgid "Outline color of unchecked checkboxes and of radio buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:665
-msgid "Color for the form description"
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:653
+msgid "Checked Fill Color"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:678
-msgid "Label Typography"
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:664
+msgid "Fill"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:684
-msgid "Label Font Size"
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:667
+msgid "Background color of checked checkboxes and the dot of selected radio buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:692
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:760
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:790
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:849
-msgid "Theme default"
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:674
+msgid "Checkbox Checkmark Color"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:685
+msgid "Checkmark"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:688
+msgid "Color of the checkmark inside checked checkboxes (not used by radio buttons)"
 msgstr ""
 
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:698
+msgid "Form Title & Description Colors"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:704
+msgid "Title Color"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:717
+msgid "Color for the form title"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:724
+msgid "Description Color"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:737
+msgid "Color for the form description"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:750
+msgid "Label Typography"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:756
+msgid "Label Font Size"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:764
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:832
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:862
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:921
+msgid "Theme default"
+msgstr ""
+
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:770
 msgid "Size of form field labels"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:705
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:777
 msgid "Label Font Weight"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:711
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:809
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:868
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:783
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:881
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:940
 msgid "Theme Default"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:712
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:810
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:869
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:784
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:882
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:941
 msgid "Normal"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:713
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:811
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:870
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:785
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:883
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:942
 msgid "Bold"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:736
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:808
 msgid "Font weight for form labels"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:746
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:818
 msgid "Input Typography"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:752
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:824
 msgid "Input Font Size"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:766
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:838
 msgid "Size of text in form inputs"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:776
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:848
 msgid "Form Title & Description Typography"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:782
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:854
 msgid "Title Font Size"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:796
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:868
 msgid "Font size for the form title"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:803
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:875
 msgid "Title Font Weight"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:834
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:906
 msgid "Font weight for the form title"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:841
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:913
 msgid "Description Font Size"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:855
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:927
 msgid "Font size for the form description"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:862
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:934
 msgid "Description Font Weight"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:893
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:965
 msgid "Font weight for the form description"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:906
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:978
 msgid "Layout Settings"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:912
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:984
 msgid "Form Border Radius"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:929
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1001
 msgid "Rounded corners for the form container"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:936
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1008
 msgid "Input & Button Border Radius"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:949
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1021
 msgid "Email address"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:953
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1025
 msgid "Rounded corners for inputs and buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:960
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1032
 msgid "Form Padding"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:974
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1046
 msgid "Padding around the form container"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:984
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1056
 msgid "Button Styling"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:990
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1062
 msgid "Button Background"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1001
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1073
 msgid "Button Preview"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1005
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1077
 msgid "Background color for form buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1012
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1084
 msgid "Button Text Color"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1025
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1097
 msgid "Text color for form buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1032
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1104
 msgid "Button Hover Color"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1043
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1115
 msgid "Hover Preview"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1047
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1119
 msgid "Background color when hovering over buttons"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1059
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1131
 msgid "Reset Styles"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1062
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1134
 msgid "Resets all style settings to default. This action cannot be undone."
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1155
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1228
 msgid "Unlock Payment Form Styles"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1160
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1233
 msgid "We're sorry, payment form styling is not available with your current license. Please upgrade to <strong>WP Simple Pay Pro</strong> or higher to unlock this and other awesome features."
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1169
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1242
 msgid "Professional Color Themes"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1173
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1246
 msgid "Custom Colors & Typography"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1177
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1250
 msgid "Button & Layout Customization"
 msgstr ""
 
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1181
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1254
 msgid "Match Your Brand Perfectly"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1196
+#: src/Admin/FormBuilder/FormStyle/AdminUI.php:1269
 #, php-format
 msgid "Already purchased? %1$sRetrieve your license key%2$s and enter it in the plugin settings."
 msgstr ""
@@ -13360,98 +13414,98 @@ msgctxt "payment form action"
 msgid "Creation"
 msgstr ""
 
-#: src/Admin/FormBuilder/TemplateExplorer.php:220
+#: src/Admin/FormBuilder/TemplateExplorer.php:224
 msgid "All Templates"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:84
-#: src/Admin/ListTable/TransactionsListTable.php:121
+#: src/Admin/ListTable/SubscriptionsListTable.php:88
+#: src/Admin/ListTable/TransactionsListTable.php:125
 msgid "ID"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:86
-#: src/Admin/ListTable/TransactionsListTable.php:123
+#: src/Admin/ListTable/SubscriptionsListTable.php:90
+#: src/Admin/ListTable/TransactionsListTable.php:127
 #: views/admin-page-subscription-detail.php:230
 #: views/admin-page-transaction-detail.php:394
 msgid "Customer"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:89
-#: src/Admin/ListTable/TransactionsListTable.php:126
+#: src/Admin/ListTable/SubscriptionsListTable.php:93
+#: src/Admin/ListTable/TransactionsListTable.php:130
 #: views/admin-page-subscription-detail.php:208
 #: views/admin-page-transaction-detail.php:372
 msgid "Status"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:90
+#: src/Admin/ListTable/SubscriptionsListTable.php:94
 #: views/admin-page-subscription-detail.php:41
 msgid "Next Renewal"
 msgstr ""
 
 #. translators: %d Payment form ID.
-#: src/Admin/ListTable/SubscriptionsListTable.php:355
-#: src/Admin/ListTable/SubscriptionsListTable.php:397
-#: src/Admin/ListTable/TransactionsListTable.php:446
-#: src/Admin/ListTable/TransactionsListTable.php:493
+#: src/Admin/ListTable/SubscriptionsListTable.php:359
+#: src/Admin/ListTable/SubscriptionsListTable.php:401
+#: src/Admin/ListTable/TransactionsListTable.php:450
+#: src/Admin/ListTable/TransactionsListTable.php:497
 #, php-format
 msgid "Payment Form #%d"
 msgstr ""
 
 #. translators: %1$s Payment form name. %2$d Payment form ID.
-#: src/Admin/ListTable/SubscriptionsListTable.php:366
-#: src/Admin/ListTable/TransactionsListTable.php:460
+#: src/Admin/ListTable/SubscriptionsListTable.php:370
+#: src/Admin/ListTable/TransactionsListTable.php:464
 #, php-format
 msgid "%1$s (#%2$d)"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:422
-#: src/Admin/ListTable/TransactionsListTable.php:519
+#: src/Admin/ListTable/SubscriptionsListTable.php:426
+#: src/Admin/ListTable/TransactionsListTable.php:523
 msgid "Filter by payment mode"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:435
-#: src/Admin/ListTable/TransactionsListTable.php:532
+#: src/Admin/ListTable/SubscriptionsListTable.php:439
+#: src/Admin/ListTable/TransactionsListTable.php:536
 msgid "Filter by payment form"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:438
-#: src/Admin/ListTable/TransactionsListTable.php:535
+#: src/Admin/ListTable/SubscriptionsListTable.php:442
+#: src/Admin/ListTable/TransactionsListTable.php:539
 #: src/AdminBar/AdminBarSubscriber.php:151
 msgid "All Forms"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:449
-#: src/Admin/ListTable/TransactionsListTable.php:546
+#: src/Admin/ListTable/SubscriptionsListTable.php:453
+#: src/Admin/ListTable/TransactionsListTable.php:550
 msgid "Filter"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:589
-#: src/Admin/ListTable/TransactionsListTable.php:739
+#: src/Admin/ListTable/SubscriptionsListTable.php:593
+#: src/Admin/ListTable/TransactionsListTable.php:743
 msgid "View"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:721
+#: src/Admin/ListTable/SubscriptionsListTable.php:725
 #: views/admin-page-subscription-detail.php:84
 msgid "day"
 msgid_plural "days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:722
+#: src/Admin/ListTable/SubscriptionsListTable.php:726
 #: views/admin-page-subscription-detail.php:85
 msgid "week"
 msgid_plural "weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:723
+#: src/Admin/ListTable/SubscriptionsListTable.php:727
 #: views/admin-page-subscription-detail.php:86
 msgid "month"
 msgid_plural "months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:724
+#: src/Admin/ListTable/SubscriptionsListTable.php:728
 #: views/admin-page-subscription-detail.php:87
 msgid "year"
 msgid_plural "years"
@@ -13459,51 +13513,51 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s Billing interval, e.g. "month".
-#: src/Admin/ListTable/SubscriptionsListTable.php:731
+#: src/Admin/ListTable/SubscriptionsListTable.php:735
 #: views/admin-page-subscription-detail.php:96
 #, php-format
 msgid "/ %s"
 msgstr ""
 
 #. translators: %1$d Interval count. %2$s Billing interval, e.g. "months".
-#: src/Admin/ListTable/SubscriptionsListTable.php:736
+#: src/Admin/ListTable/SubscriptionsListTable.php:740
 #: views/admin-page-subscription-detail.php:99
 #, php-format
 msgid "/ %1$d %2$s"
 msgstr ""
 
 #. translators: %s Date the subscription ends.
-#: src/Admin/ListTable/SubscriptionsListTable.php:806
+#: src/Admin/ListTable/SubscriptionsListTable.php:810
 #, php-format
 msgid "Ends %s"
 msgstr ""
 
-#: src/Admin/ListTable/SubscriptionsListTable.php:823
+#: src/Admin/ListTable/SubscriptionsListTable.php:827
 msgid "No subscriptions found."
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:154
+#: src/Admin/ListTable/TransactionsListTable.php:158
 msgid "Export to CSV"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:274
-#: src/Admin/ListTable/TransactionsListTable.php:910
+#: src/Admin/ListTable/TransactionsListTable.php:278
+#: src/Admin/ListTable/TransactionsListTable.php:914
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:194
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:356
 #: views/admin-page-transaction-detail.php:74
 msgid "Succeeded"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:275
-#: src/Admin/ListTable/TransactionsListTable.php:919
+#: src/Admin/ListTable/TransactionsListTable.php:279
+#: src/Admin/ListTable/TransactionsListTable.php:923
 #: views/admin-page-transaction-detail.php:82
 msgid "Processing"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:276
-#: src/Admin/ListTable/TransactionsListTable.php:916
-#: src/Admin/ListTable/TransactionsListTable.php:917
-#: src/Admin/ListTable/TransactionsListTable.php:918
+#: src/Admin/ListTable/TransactionsListTable.php:280
+#: src/Admin/ListTable/TransactionsListTable.php:920
+#: src/Admin/ListTable/TransactionsListTable.php:921
+#: src/Admin/ListTable/TransactionsListTable.php:922
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:202
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:358
 #: src/Subscription/SubscriptionStatus.php:64
@@ -13513,54 +13567,54 @@ msgstr ""
 msgid "Incomplete"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:277
-#: src/Admin/ListTable/TransactionsListTable.php:911
+#: src/Admin/ListTable/TransactionsListTable.php:281
+#: src/Admin/ListTable/TransactionsListTable.php:915
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:196
 #: src/RestApi/Internal/Report/PaymentInfoReport.php:354
 #: views/admin-page-transaction-detail.php:75
 msgid "Failed"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:278
-#: src/Admin/ListTable/TransactionsListTable.php:912
+#: src/Admin/ListTable/TransactionsListTable.php:282
+#: src/Admin/ListTable/TransactionsListTable.php:916
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:198
 #: views/admin-page-transaction-detail.php:76
 #: views/admin-page-transaction-detail.php:200
 msgid "Refunded"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:279
-#: src/Admin/ListTable/TransactionsListTable.php:913
+#: src/Admin/ListTable/TransactionsListTable.php:283
+#: src/Admin/ListTable/TransactionsListTable.php:917
 #: src/RestApi/Internal/Report/LatestPaymentsReport.php:200
 #: views/admin-page-transaction-detail.php:77
 msgid "Partially Refunded"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:280
-#: src/Admin/ListTable/TransactionsListTable.php:914
+#: src/Admin/ListTable/TransactionsListTable.php:284
+#: src/Admin/ListTable/TransactionsListTable.php:918
 msgid "Disputed"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:281
-#: src/Admin/ListTable/TransactionsListTable.php:915
+#: src/Admin/ListTable/TransactionsListTable.php:285
+#: src/Admin/ListTable/TransactionsListTable.php:919
 #: src/Subscription/SubscriptionStatus.php:63
 #: views/admin-page-subscription-detail.php:164
 #: views/admin-page-transaction-detail.php:78
 msgid "Canceled"
 msgstr ""
 
-#: src/Admin/ListTable/TransactionsListTable.php:933
+#: src/Admin/ListTable/TransactionsListTable.php:937
 msgid "No transactions found."
 msgstr ""
 
 #. translators: %1$s Payment form name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: src/Admin/ListTable/TransactionsListTable.php:987
+#: src/Admin/ListTable/TransactionsListTable.php:991
 #, php-format
 msgid "%1$s runs in Live Mode. %2$sView its live transactions%3$s."
 msgstr ""
 
 #. translators: %1$s Payment form name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: src/Admin/ListTable/TransactionsListTable.php:989
+#: src/Admin/ListTable/TransactionsListTable.php:993
 #, php-format
 msgid "%1$s runs in Test Mode. %2$sView its test transactions%3$s."
 msgstr ""
@@ -13568,7 +13622,7 @@ msgstr ""
 #: src/Admin/SetupWizard/SetupWizardLaunch.php:112
 #: src/AdminPage/SetupWizardPage.php:45
 #: src/AdminPage/SetupWizardPage.php:52
-#: views/admin-page-setup-wizard.php:58
+#: views/admin-page-setup-wizard.php:62
 msgid "Setup Wizard"
 msgstr ""
 
@@ -13577,78 +13631,84 @@ msgstr ""
 msgid "Launch Setup Wizard"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:123
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:127
 msgid "Cannot test TLS 1.2 support until your Stripe Test Secret Key is entered."
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:138
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:221
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:280
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:140
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:224
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:283
+msgid "Yes"
+msgstr ""
+
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:142
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:225
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:284
 msgid "No"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:180
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:184
 msgid "Enabled"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:181
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:185
 msgid "Disabled"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:441
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:445
 msgid "Version"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:445
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:449
 msgid "Stripe TLS"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:449
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:453
 msgid "Stripe Account ID"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:453
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:457
 msgid "Global Payment Mode"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:461
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:465
 msgid "Rate Limit File"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:465
-#: src/AntiSpam/EmailVerification.php:291
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:469
+#: src/AntiSpam/EmailVerification.php:295
 msgid "Email Verification"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:469
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:473
 msgid "Require Authentication"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:473
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:477
 msgid "Most Recent Webhook Event"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:477
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:481
 msgid "Webhook Secret"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:481
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:485
 msgid "Opinionated Styles"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:485
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:489
 msgid "Database Tables"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:489
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:493
 msgid "Stripe API Version"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:493
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:497
 msgid "Error Notifications"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:503
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:507
 msgid "⚠️ Potential Conflicts"
 msgstr ""
 
@@ -13680,7 +13740,7 @@ msgstr ""
 #: src/AdminPage/AboutUsPage.php:44
 #: src/AdminPage/AboutUsPage.php:51
 #: src/AdminPage/AboutUsPage.php:96
-#: views/admin-page-about-us.php:23
+#: views/admin-page-about-us.php:27
 msgid "About Us"
 msgstr ""
 
@@ -13689,216 +13749,216 @@ msgstr ""
 msgid "Getting Started"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:138
+#: src/AdminPage/AboutUsPage.php:132
 msgid "OptinMonster"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:139
+#: src/AdminPage/AboutUsPage.php:133
 msgid "Instantly get more subscribers, leads, and sales with the #1 conversion optimization toolkit. Create high converting popups, announcement bars, spin a wheel, and more with smart targeting and personalization."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:148
-#: src/AdminPage/AboutUsPage.php:155
+#: src/AdminPage/AboutUsPage.php:142
+#: src/AdminPage/AboutUsPage.php:149
 msgid "The leading WordPress analytics plugin that shows you how people find and use your website, so you can make data driven decisions to grow your business. Properly set up Google Analytics without writing code."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:154
+#: src/AdminPage/AboutUsPage.php:148
 msgid "MonsterInsights Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:165
+#: src/AdminPage/AboutUsPage.php:159
 msgid "Improve your WordPress email deliverability and make sure that your website emails reach user's inbox with the #1 SMTP plugin for WordPress. Over 3 million websites use it to fix WordPress email issues."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:171
+#: src/AdminPage/AboutUsPage.php:165
 msgid "WP Mail SMTP Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:172
+#: src/AdminPage/AboutUsPage.php:166
 msgid "Improve your WordPress email deliverability and make sure that your website emails reach user's inbox with the #1 SMTP plugin for WordPress. Over 2 million websites use it to fix WordPress email issues."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:182
+#: src/AdminPage/AboutUsPage.php:176
 msgid "The original WordPress SEO plugin and toolkit that improves your website’s search rankings. Comes with all the SEO features like Local SEO, WooCommerce SEO, sitemaps, SEO optimizer, schema, and more."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:188
+#: src/AdminPage/AboutUsPage.php:182
 msgid "AIOSEO Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:189
+#: src/AdminPage/AboutUsPage.php:183
 msgid "The original WordPress SEO plugin and toolkit that improves your website's search rankings. Comes with all the SEO features like Local SEO, WooCommerce SEO, sitemaps, SEO optimizer, schema, and more."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:199
-#: src/AdminPage/AboutUsPage.php:206
+#: src/AdminPage/AboutUsPage.php:193
+#: src/AdminPage/AboutUsPage.php:200
 msgid "The fastest drag & drop landing page builder for WordPress. Create custom landing pages without writing code, connect them with your CRM, collect subscribers, and grow your audience. Trusted by 1 million sites."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:205
+#: src/AdminPage/AboutUsPage.php:199
 msgid "SeedProd Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:215
+#: src/AdminPage/AboutUsPage.php:209
 msgid "RafflePress"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:216
-#: src/AdminPage/AboutUsPage.php:223
+#: src/AdminPage/AboutUsPage.php:210
+#: src/AdminPage/AboutUsPage.php:217
 msgid "Turn your website visitors into brand ambassadors! Easily grow your email list, website traffic, and social media followers with the most powerful giveaways & contests plugin for WordPress."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:222
+#: src/AdminPage/AboutUsPage.php:216
 msgid "RafflePress Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:232
+#: src/AdminPage/AboutUsPage.php:226
 msgid "SearchWP"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:233
+#: src/AdminPage/AboutUsPage.php:227
 msgid "The most advanced WordPress search plugin. Customize your WordPress search algorithm, reorder search results, track search metrics, and everything you need to leverage search to grow your business."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:242
+#: src/AdminPage/AboutUsPage.php:236
 msgid "AffiliateWP"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:243
+#: src/AdminPage/AboutUsPage.php:237
 msgid "The #1 affiliate management plugin for WordPress. Easily create an affiliate program for your eCommerce store or membership site within minutes and start growing your sales with the power of referral marketing."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:252
+#: src/AdminPage/AboutUsPage.php:246
 msgid "PushEngage"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:253
+#: src/AdminPage/AboutUsPage.php:247
 msgid "Connect with your visitors after they leave your website with the leading web push notification software. Over 10,000+ businesses worldwide use PushEngage to send 15 billion notifications each month."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:261
+#: src/AdminPage/AboutUsPage.php:255
 msgid "Smash Balloon Facebook Feeds"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:262
-#: src/AdminPage/AboutUsPage.php:269
-#: src/AdminPage/AboutUsPage.php:303
+#: src/AdminPage/AboutUsPage.php:256
+#: src/AdminPage/AboutUsPage.php:263
+#: src/AdminPage/AboutUsPage.php:297
 msgid "Easily display Facebook content on your WordPress site without writing any code. Comes with multiple templates, ability to embed albums, group content, reviews, live videos, comments, and reactions."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:268
-#: src/AdminPage/AboutUsPage.php:302
+#: src/AdminPage/AboutUsPage.php:262
+#: src/AdminPage/AboutUsPage.php:296
 msgid "Smash Balloon Facebook Feeds Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:278
+#: src/AdminPage/AboutUsPage.php:272
 msgid "Smash Balloon YouTube Feeds"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:279
-#: src/AdminPage/AboutUsPage.php:286
+#: src/AdminPage/AboutUsPage.php:273
+#: src/AdminPage/AboutUsPage.php:280
 msgid "Easily display YouTube videos on your WordPress site without writing any code. Comes with multiple layouts, ability to embed live streams, video filtering, ability to combine multiple channel videos, and more."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:285
+#: src/AdminPage/AboutUsPage.php:279
 msgid "Smash Balloon YouTube Feeds Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:295
+#: src/AdminPage/AboutUsPage.php:289
 msgid "Smash Balloon Instagram Feeds"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:296
+#: src/AdminPage/AboutUsPage.php:290
 msgid "Easily display Instagram content on your WordPress site without writing any code. Comes with multiple templates, ability to show content from multiple accounts, hashtags, and more. Trusted by 1 million websites."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:312
+#: src/AdminPage/AboutUsPage.php:306
 msgid "Smash Balloon Twitter Feeds"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:313
-#: src/AdminPage/AboutUsPage.php:320
+#: src/AdminPage/AboutUsPage.php:307
+#: src/AdminPage/AboutUsPage.php:314
 msgid "Easily display Twitter content in WordPress without writing any code. Comes with multiple layouts, ability to combine multiple Twitter feeds, Twitter card support, tweet moderation, and more."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:319
+#: src/AdminPage/AboutUsPage.php:313
 msgid "Smash Balloon Twitter Feeds Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:329
+#: src/AdminPage/AboutUsPage.php:323
 msgid "TrustPulse"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:330
+#: src/AdminPage/AboutUsPage.php:324
 msgid "Boost your sales and conversions by up to 15% with real-time social proof notifications. TrustPulse helps you show live user activity and purchases to help convince other users to purchase."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:338
+#: src/AdminPage/AboutUsPage.php:332
 msgid "Easy Digital Downloads"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:339
+#: src/AdminPage/AboutUsPage.php:333
 msgid "The best WordPress eCommerce plugin for selling digital downloads. Start selling eBooks, software, music, digital art, and more within minutes. Accept payments, manage subscriptions, advanced access control, and more."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:347
+#: src/AdminPage/AboutUsPage.php:341
 msgid "Sugar Calendar"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:348
-#: src/AdminPage/AboutUsPage.php:355
+#: src/AdminPage/AboutUsPage.php:342
+#: src/AdminPage/AboutUsPage.php:349
 msgid "A simple & powerful event calendar plugin for WordPress that comes with all the event management features including payments, scheduling, timezones, ticketing, recurring events, and more."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:354
+#: src/AdminPage/AboutUsPage.php:348
 msgid "Sugar Calendar Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:364
+#: src/AdminPage/AboutUsPage.php:358
 msgid "WP Charitable"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:365
-#: src/AdminPage/AboutUsPage.php:372
+#: src/AdminPage/AboutUsPage.php:359
+#: src/AdminPage/AboutUsPage.php:366
 msgid "Top-rated WordPress donation and fundraising plugin. Over 10,000+ non-profit organizations and website owners use Charitable to create fundraising campaigns and raise more money online."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:371
+#: src/AdminPage/AboutUsPage.php:365
 msgid "WP Charitable Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:381
+#: src/AdminPage/AboutUsPage.php:375
 msgid "WP Code"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:382
-#: src/AdminPage/AboutUsPage.php:389
+#: src/AdminPage/AboutUsPage.php:376
+#: src/AdminPage/AboutUsPage.php:383
 msgid "Future proof your WordPress customizations with the most popular code snippet management plugin for WordPress. Trusted by over 2 million websites for easily adding code to WordPress right from the admin area."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:388
+#: src/AdminPage/AboutUsPage.php:382
 msgid "WP Code Pro"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:398
+#: src/AdminPage/AboutUsPage.php:392
 msgid "LedgerPort"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:399
+#: src/AdminPage/AboutUsPage.php:393
 msgid "Automate your e-commerce accounting. LedgerPort connects your store to QuickBooks Online and syncs orders, refunds, and payouts in real time, so your books stay accurate without manual data entry."
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:480
+#: src/AdminPage/AboutUsPage.php:474
 msgid "Not Installed"
 msgstr ""
 
-#: src/AdminPage/AboutUsPage.php:484
+#: src/AdminPage/AboutUsPage.php:478
 msgid "Install Plugin"
 msgstr ""
 
 #: src/AdminPage/ActivityReportsPage.php:44
 #: src/AdminPage/ActivityReportsPage.php:51
-#: views/admin-page-activity-reports.php:16
+#: views/admin-page-activity-reports.php:20
 msgid "Activity & Reports"
 msgstr ""
 
@@ -14015,60 +14075,60 @@ msgstr ""
 msgid "Refund processed successfully."
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:144
+#: src/AntiSpam/EmailVerification.php:148
 msgctxt "setting label"
 msgid "Email Verification"
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:151
+#: src/AntiSpam/EmailVerification.php:155
 msgctxt "setting input label"
 msgid "Enable email verification for on-site payment forms if multiple payment declines occur."
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:156
+#: src/AntiSpam/EmailVerification.php:160
 msgid "Highly recommended."
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:186
+#: src/AntiSpam/EmailVerification.php:190
 msgctxt "setting label"
 msgid "Threshold"
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:199
+#: src/AntiSpam/EmailVerification.php:203
 msgid "fraud declines"
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:203
+#: src/AntiSpam/EmailVerification.php:207
 msgid "Require email verification for on-site payment forms if more than this number of charges fail due to fraud."
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:224
+#: src/AntiSpam/EmailVerification.php:228
 msgctxt "setting label"
 msgid "Timeframe"
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:237
+#: src/AntiSpam/EmailVerification.php:241
 msgid "hours"
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:241
+#: src/AntiSpam/EmailVerification.php:245
 msgid "Require email verification for on-site payment forms until there are no more failed payments due to fraud for this many hours."
 msgstr ""
 
 #. translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/AntiSpam/EmailVerification.php:299
+#: src/AntiSpam/EmailVerification.php:303
 #, php-format
 msgid "%1$sConfigure email verification settings%2$s to require verification when fraud events are detected."
 msgstr ""
 
 #. translators: Website name.
-#: src/AntiSpam/EmailVerification.php:535
+#: src/AntiSpam/EmailVerification.php:539
 #, php-format
 msgid "🔐 Your Verification Code for %s"
 msgstr ""
 
 #. translators: Verification code
-#: src/AntiSpam/EmailVerification.php:540
+#: src/AntiSpam/EmailVerification.php:544
 #, php-format
 msgid ""
 "To verify your identity and complete your payment, please enter the following verification code in the payment form:\n"
@@ -14076,19 +14136,19 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:599
+#: src/AntiSpam/EmailVerification.php:603
 msgid "Invalid verification code. Please try again."
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:913
+#: src/AntiSpam/EmailVerification.php:927
 msgid "Your payment has not been processed!"
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:917
+#: src/AntiSpam/EmailVerification.php:931
 msgid "Additional verification is required. Please enter the verification code sent to your email address and resubmit to complete your payment."
 msgstr ""
 
-#: src/AntiSpam/EmailVerification.php:922
+#: src/AntiSpam/EmailVerification.php:936
 msgid "Verification Code"
 msgstr ""
 
@@ -14110,63 +14170,63 @@ msgstr ""
 msgid "Please log in to make a payment."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:57
+#: src/Block/ManageSubscriptionsBlock.php:58
 msgid "Please wait..."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:58
+#: src/Block/ManageSubscriptionsBlock.php:59
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:59
+#: src/Block/ManageSubscriptionsBlock.php:60
 msgid "Request failed."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:60
+#: src/Block/ManageSubscriptionsBlock.php:61
 #: src/RestApi/Internal/Payment/LitePaymentCreateRoute.php:83
 #: src/RestApi/Internal/SubscriptionsManagement/SendSubscriptions.php:168
 msgid "Invalid CAPTCHA. Please try again."
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:92
+#: src/Block/ManageSubscriptionsBlock.php:93
 msgid "Purchase Email Address"
 msgstr ""
 
-#: src/Block/ManageSubscriptionsBlock.php:94
+#: src/Block/ManageSubscriptionsBlock.php:95
 msgid "Manage Subscription"
 msgstr ""
 
-#: src/Block/PaymentFormBlock.php:45
+#: src/Block/PaymentFormBlock.php:46
 msgctxt "block title"
 msgid "WP Simple Pay - Payment Form"
 msgstr ""
 
-#: src/Block/PaymentFormBlock.php:50
+#: src/Block/PaymentFormBlock.php:51
 msgctxt "block description"
 msgid "Display a WP Simple Pay payment form."
 msgstr ""
 
-#: src/Block/PaymentFormBlock.php:57
+#: src/Block/PaymentFormBlock.php:58
 msgctxt "block keyword"
 msgid "form"
 msgstr ""
 
-#: src/Block/PaymentFormBlock.php:58
+#: src/Block/PaymentFormBlock.php:59
 msgctxt "block keyword"
 msgid "payment"
 msgstr ""
 
-#: src/Block/PaymentFormBlock.php:59
+#: src/Block/PaymentFormBlock.php:60
 msgctxt "block keyword"
 msgid "stripe"
 msgstr ""
 
-#: src/Block/PaymentFormBlock.php:60
+#: src/Block/PaymentFormBlock.php:61
 msgctxt "block keyword"
 msgid "simple pay"
 msgstr ""
 
-#: src/Block/PaymentFormBlock.php:61
+#: src/Block/PaymentFormBlock.php:62
 msgctxt "block keyword"
 msgid "wp simple pay"
 msgstr ""
@@ -14463,13 +14523,13 @@ msgstr ""
 
 #. translators: License extension date.
 #: src/License/LicenseNotificationSubscriber.php:136
-#: views/admin-notice-expired-license.php:37
+#: views/admin-notice-expired-license.php:41
 #, php-format
 msgid "We have extended WP Simple Pay Pro functionality until %s, at which point functionality will become limited. Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality."
 msgstr ""
 
 #: src/License/LicenseNotificationSubscriber.php:146
-#: views/admin-notice-expired-license.php:45
+#: views/admin-notice-expired-license.php:49
 msgid "Renew your license to continue receiving automatic updates, technical support, and access to WP Simple Pay Pro features and functionality."
 msgstr ""
 
@@ -14481,29 +14541,29 @@ msgstr ""
 msgid "Renew License for 50% Off!"
 msgstr ""
 
-#: src/License/LicenseSettingSubscriber.php:53
+#: src/License/LicenseSettingSubscriber.php:57
 msgctxt "settings subsection label"
 msgid "License"
 msgstr ""
 
-#: src/License/LicenseSettingSubscriber.php:79
+#: src/License/LicenseSettingSubscriber.php:83
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "License Key"
 msgstr ""
 
 #. translators: %1$s License level.
-#: src/License/LicenseSettingSubscriber.php:177
+#: src/License/LicenseSettingSubscriber.php:181
 #, php-format
 msgid "Your license level is %1$s."
 msgstr ""
 
 #. translators: License expiration date.
-#: src/License/LicenseSettingSubscriber.php:195
+#: src/License/LicenseSettingSubscriber.php:199
 #, php-format
 msgid "Your license key expired on %1$s"
 msgstr ""
 
-#: src/License/LicenseSettingSubscriber.php:206
+#: src/License/LicenseSettingSubscriber.php:210
 msgid "Please enter a valid license key."
 msgstr ""
 
@@ -14562,7 +14622,7 @@ msgid "The Payment Method is invalid."
 msgstr ""
 
 #: src/Report/ActivityOverviewReport.php:111
-#: views/email-internal-summary-report.php:107
+#: views/email-internal-summary-report.php:111
 #: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
 msgid "Gross Volume"
@@ -14637,7 +14697,15 @@ msgstr ""
 msgid "Counting results via a query is not allowed. Use the ::count() method."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Traits/CustomerTrait.php:219
+#: src/RestApi/Internal/Form/FormDataRoute.php:48
+msgid "Payment form ID."
+msgstr ""
+
+#: src/RestApi/Internal/Form/FormDataRoute.php:141
+msgid "Payment form not found."
+msgstr ""
+
+#: src/RestApi/Internal/Payment/Traits/CustomerTrait.php:222
 msgid "Please select a valid Tax ID type."
 msgstr ""
 
@@ -14654,25 +14722,39 @@ msgstr ""
 msgid "Initial Setup Fee"
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:58
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:68
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:85
-msgid "Sorry, this coupon not valid."
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:82
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:92
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:109
+msgid "Sorry, this coupon is not valid."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:105
-msgid "Sorry, this coupon not valid for the selected currency."
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:129
+msgid "Sorry, this coupon is not valid for the selected currency."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:133
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:143
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:157
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:167
 msgid "Sorry, this coupon puts the total below the required minimum amount."
 msgstr ""
 
 #. translators: %1$s Coupon code. %2$s discount amount.
-#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:155
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:179
 #, php-format
 msgid "%1$s: %2$s off"
+msgstr ""
+
+#. translators: %1$s Coupon code. %2$s Error message.
+#: src/RestApi/Internal/Payment/Utils/CouponUtils.php:300
+#, php-format
+msgid "Unable to resolve coupon code \"%1$s\" to a Stripe Coupon ID, so it was used as entered: %2$s"
+msgstr ""
+
+#: src/RestApi/Internal/Payment/Utils/PaymentRequestUtils.php:966
+msgid "This payment amount is outside the range accepted by the available payment methods. Please change the amount and try again."
+msgstr ""
+
+#: src/RestApi/Internal/Payment/Utils/PaymentRequestUtils.php:996
+msgid "This payment amount is outside the range accepted by the selected payment method. Please choose a different payment method or change the amount and try again."
 msgstr ""
 
 #: src/RestApi/Internal/Payment/Utils/SchemaUtils.php:35
@@ -14795,56 +14877,56 @@ msgstr ""
 msgid "Country/Region code in ISO 3166-1 alpha-2 format."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:389
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:393
 msgid "The provided form ID is invalid."
 msgstr ""
 
 #. translators: %s is replaced with the required field.
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:423
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:427
 #, php-format
 msgid "The required field \"%s\" is missing."
 msgstr ""
 
 #. translators: %s is replaced with the required field.
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:429
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:433
 #, php-format
 msgid "The required field \"%s\" cannot be empty."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:437
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:441
 msgid "Tax ID and Tax ID Type are required fields."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:448
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:452
 msgid "Tax ID and Tax ID Type cannot be empty."
 msgstr ""
 
 #. translators: %s is replaced with the address type (billing or shipping).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:459
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:463
 #, php-format
 msgid "The %s address name is required."
 msgstr ""
 
 #. translators: %s is replaced with the address type (billing or shipping).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:464
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:468
 #, php-format
 msgid "The %s address country is required."
 msgstr ""
 
 #. translators: %s is replaced with the address type (billing or shipping).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:469
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:473
 #, php-format
 msgid "The %s address postal code is required."
 msgstr ""
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:479
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:483
 #, php-format
 msgid "The %s field is required."
 msgstr ""
 
 #. translators: %s is replaced with the field type (email, customer_name, or telephone).
-#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:488
+#: src/RestApi/Internal/Payment/Utils/SchemaValidationUtils.php:492
 #, php-format
 msgid "The %s field can not be empty."
 msgstr ""
@@ -14929,78 +15011,78 @@ msgid "%1$sPay as you go pricing%2$s: 3%% fee per-transaction + Stripe fees. %3$
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/StripeConnect/ConnectionSubscriber.php:193
+#: src/StripeConnect/ConnectionSubscriber.php:196
 #, php-format
 msgid "There was an error getting your Stripe credentials. Please %1$stry again%2$s. If you continue to have this problem, please contact support."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:288
+#: src/StripeConnect/ConnectionSubscriber.php:291
 msgid "Unable to retrieve account information."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:304
+#: src/StripeConnect/ConnectionSubscriber.php:307
 msgid "You cannot manage this account in Stripe to configure features such as Subscriptions, Webhooks, or Coupons."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:308
+#: src/StripeConnect/ConnectionSubscriber.php:311
 msgid "You cannot manage this account in Stripe."
 msgstr ""
 
 #. translators: %1$s Opening strong tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: src/StripeConnect/ConnectionSubscriber.php:317
+#: src/StripeConnect/ConnectionSubscriber.php:320
 #, php-format
 msgid "You are currently connected to a %1$stemporary%2$s Stripe account, which can only be used for testing purposes."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:339
+#: src/StripeConnect/ConnectionSubscriber.php:342
 msgid "Invalid Secret Key. Secret Key should begin with <code>sk_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:350
+#: src/StripeConnect/ConnectionSubscriber.php:353
 msgid "Invalid Publishable Key. Publishable Key should begin with <code>pk_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:362
+#: src/StripeConnect/ConnectionSubscriber.php:365
 msgid "Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_test_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:373
+#: src/StripeConnect/ConnectionSubscriber.php:376
 msgid "Invalid Secret Key for current mode. Secret Key should begin with <code>sk_test_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:384
+#: src/StripeConnect/ConnectionSubscriber.php:387
 msgid "Invalid Publishable Key for current mode. Publishable Key should begin with <code>pk_live_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:395
+#: src/StripeConnect/ConnectionSubscriber.php:398
 msgid "Invalid Secret Key for current mode. Secret Key should begin with <code>sk_live_</code>."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:409
+#: src/StripeConnect/ConnectionSubscriber.php:412
 msgid "If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:469
+#: src/StripeConnect/ConnectionSubscriber.php:472
 msgid "Administrator (Owner)"
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:493
+#: src/StripeConnect/ConnectionSubscriber.php:496
 msgid "Unable to validate your Stripe Account with the API keys provided. If you have manually modified these values after connecting your account, please reconnect below or update your API keys manually."
 msgstr ""
 
 #. translators: %1$s Stripe payment mode.
-#: src/StripeConnect/ConnectionSubscriber.php:521
+#: src/StripeConnect/ConnectionSubscriber.php:524
 #, php-format
 msgid "Your manually managed %1$s mode API keys are valid."
 msgstr ""
 
 #. translators: %1$s Stripe payment mode.
-#: src/StripeConnect/ConnectionSubscriber.php:534
+#: src/StripeConnect/ConnectionSubscriber.php:537
 #, php-format
 msgid "Your manually managed %1$s mode API keys are invalid."
 msgstr ""
 
-#: src/StripeConnect/ConnectionSubscriber.php:565
+#: src/StripeConnect/ConnectionSubscriber.php:568
 msgid "Your Stripe connection could not be completed because the security check expired. Please click \"Connect with Stripe\" again."
 msgstr ""
 
@@ -15075,422 +15157,422 @@ msgstr ""
 msgid "Webhook Settings"
 msgstr ""
 
-#: views/admin-dashboard-widget-first-form.php:31
+#: views/admin-dashboard-widget-first-form.php:35
 msgid "Create Your First Payment Form to Start Collecting Payments"
 msgstr ""
 
-#: views/admin-dashboard-widget-first-form.php:40
+#: views/admin-dashboard-widget-first-form.php:44
 msgid "You can use WP Simple Pay to easily collect payments with just a few clicks."
 msgstr ""
 
-#: views/admin-dashboard-widget-first-form.php:50
-#: views/admin-payment-forms-first-form.php:63
+#: views/admin-dashboard-widget-first-form.php:54
+#: views/admin-payment-forms-first-form.php:67
 msgid "Create Your Payment Form"
 msgstr ""
 
-#: views/admin-dashboard-widget-lite-upgrade.php:19
+#: views/admin-dashboard-widget-lite-upgrade.php:23
 msgid "You are using WP Simple Pay Lite"
 msgstr ""
 
-#: views/admin-dashboard-widget-lite-upgrade.php:28
+#: views/admin-dashboard-widget-lite-upgrade.php:32
 msgid "Upgrade to WP Simple Pay Pro to unlock on-site payment forms, custom fields, subscriptions, tax rates, and more."
 msgstr ""
 
-#: views/admin-dashboard-widget-lite-upgrade.php:38
-#: views/admin-education-upgrade-modal.php:27
+#: views/admin-dashboard-widget-lite-upgrade.php:42
+#: views/admin-education-upgrade-modal.php:31
 #: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "Upgrade Now"
 msgstr ""
 
 #. translators: Plugin name.
-#: views/admin-dashboard-widget-report.php:44
+#: views/admin-dashboard-widget-report.php:48
 #, php-format
 msgid "Recommended Plugin: %s"
 msgstr ""
 
-#: views/admin-dashboard-widget-report.php:57
+#: views/admin-dashboard-widget-report.php:61
 msgid "Install"
 msgstr ""
 
-#: views/admin-dashboard-widget-stripe-connect.php:24
+#: views/admin-dashboard-widget-stripe-connect.php:28
 msgid "Connect with Stripe to use WP Simple Pay"
 msgstr ""
 
-#: views/admin-dashboard-widget-stripe-connect.php:33
+#: views/admin-dashboard-widget-stripe-connect.php:37
 msgid "Stripe Connect is the most secure, safe and reliable way to integrate Stripe with your website. Connect now to start accepting payments with WP Simple Pay."
 msgstr ""
 
-#: views/admin-education-payment-form-confirmation-settings.php:26
+#: views/admin-education-payment-form-confirmation-settings.php:30
 msgid "Custom Confirmation Messages"
 msgstr ""
 
 #. translators: %1$s Opening <a> tag, do not translate. %2$s Closing </a> tag, do not translate.
-#: views/admin-education-payment-form-confirmation-settings.php:34
+#: views/admin-education-payment-form-confirmation-settings.php:38
 #, php-format
 msgid "Per-form payment success confirmation messages allow you to easily create custom payment flows. Enter a message below to use instead of the %1$sglobal confirmation message settings%2$s."
 msgstr ""
 
-#: views/admin-education-payment-form-confirmation-settings.php:59
-#: views/admin-education-payment-form-instant-payouts-settings.php:61
-#: views/admin-education-payment-form-notifications-settings.php:59
+#: views/admin-education-payment-form-confirmation-settings.php:63
+#: views/admin-education-payment-form-instant-payouts-settings.php:65
+#: views/admin-education-payment-form-notifications-settings.php:63
 #: includes/core/assets/js/dist/simpay-admin-notifications.js:2
 msgid "Dismiss"
 msgstr ""
 
-#: views/admin-education-payment-form-instant-payouts-settings.php:28
+#: views/admin-education-payment-form-instant-payouts-settings.php:32
 msgid "Instant Payouts"
 msgstr ""
 
 #. translators: %1$s Opening <a> tag, do not translate. %2$s Closing </a> tag, do not translate.
-#: views/admin-education-payment-form-instant-payouts-settings.php:36
+#: views/admin-education-payment-form-instant-payouts-settings.php:40
 #, php-format
 msgid "%1$sEnable Stripe Instant Payouts%2$s to instantly send funds to your debit card or bank account."
 msgstr ""
 
-#: views/admin-education-payment-form-notifications-settings.php:26
+#: views/admin-education-payment-form-notifications-settings.php:30
 msgid "Custom Email Notification Messages"
 msgstr ""
 
 #. translators: %1$s Opening <a> tag, do not translate. %2$s Closing </a> tag, do not translate.
-#: views/admin-education-payment-form-notifications-settings.php:34
+#: views/admin-education-payment-form-notifications-settings.php:38
 #, php-format
 msgid "Per-form email notification messages allow you to easily create custom payment experiences. Enter messages below to use instead of the %1$sglobal email notification settings%2$s."
 msgstr ""
 
-#: views/admin-education-plugin-cancelled-payment-confirmation.php:27
-#: views/admin-education-plugin-cancelled-payment-confirmation.php:43
+#: views/admin-education-plugin-cancelled-payment-confirmation.php:31
+#: views/admin-education-plugin-cancelled-payment-confirmation.php:47
 msgid "Subscription Cancellation Confirmation Message"
 msgstr ""
 
-#: views/admin-education-plugin-cancelled-payment-confirmation.php:35
+#: views/admin-education-plugin-cancelled-payment-confirmation.php:39
 msgid "Set a personalized confirmation message to display when users initiate a subscription cancellation, ensuring clear communication and a better user experience."
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:28
+#: views/admin-education-plugin-coupons.php:32
 msgid "🏷 Offer Coupon Codes to Customers"
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:33
+#: views/admin-education-plugin-coupons.php:37
 msgid "Allow fixed amount or percentage discounts to one-time or recurring payments with WP Simple Pay Pro. Limit coupon code redemptions by count, date, or specific payment forms."
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:42
+#: views/admin-education-plugin-coupons.php:46
 msgid "Add new coupon"
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:48
+#: views/admin-education-plugin-coupons.php:52
 msgid "Fixed amount or percentage discounts"
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:51
+#: views/admin-education-plugin-coupons.php:55
 msgid "Restrict coupons to specific payment forms"
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:54
+#: views/admin-education-plugin-coupons.php:58
 msgid "Apply to a specific number of invoices"
 msgstr ""
 
-#: views/admin-education-plugin-coupons.php:57
+#: views/admin-education-plugin-coupons.php:61
 msgid "Add unlimited coupon codes"
 msgstr ""
 
-#: views/admin-education-plugin-customers-settings.php:25
+#: views/admin-education-plugin-customers-settings.php:29
 msgid "🙋‍♀️ Allow Customers to Manage Subscriptions"
 msgstr ""
 
-#: views/admin-education-plugin-customers-settings.php:34
+#: views/admin-education-plugin-customers-settings.php:38
 msgid "Remind customers about upcoming invoices and give them an opportunity to update their payment method on file or cancel their subscription. Supports both on-site management or the Stripe Customer portal."
 msgstr ""
 
-#: views/admin-education-plugin-customers-settings.php:43
-#: views/admin-education-plugin-email-settings.php:37
+#: views/admin-education-plugin-customers-settings.php:47
+#: views/admin-education-plugin-email-settings.php:41
 msgid "Payment Receipt settings"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-education-plugin-customers-settings.php:53
+#: views/admin-education-plugin-customers-settings.php:57
 #, php-format
 msgid "%1$sStripe Customer portal%2$s support"
 msgstr ""
 
-#: views/admin-education-plugin-customers-settings.php:75
+#: views/admin-education-plugin-customers-settings.php:79
 msgid "Cancel immediately or at end of cycle"
 msgstr ""
 
-#: views/admin-education-plugin-customers-settings.php:78
+#: views/admin-education-plugin-customers-settings.php:82
 msgid "Upcoming invoice reminders"
 msgstr ""
 
-#: views/admin-education-plugin-customers-settings.php:81
+#: views/admin-education-plugin-customers-settings.php:85
 msgid "Upgrade or downgrade subscriptions"
 msgstr ""
 
-#: views/admin-education-plugin-email-settings.php:28
+#: views/admin-education-plugin-email-settings.php:32
 msgid "Send white-label emails with WP Simple Pay Pro. Gain complete control over emails with payment-specific information, custom content, and enhanced delivery options."
 msgstr ""
 
-#: views/admin-education-plugin-email-settings.php:43
+#: views/admin-education-plugin-email-settings.php:47
 msgid "Dynamic email merge tags"
 msgstr ""
 
-#: views/admin-education-plugin-email-settings.php:46
+#: views/admin-education-plugin-email-settings.php:50
 msgid "Completely customizable content"
 msgstr ""
 
-#: views/admin-education-plugin-email-settings.php:49
+#: views/admin-education-plugin-email-settings.php:53
 msgid "Enhanced delivery options"
 msgstr ""
 
-#: views/admin-education-plugin-email-settings.php:52
+#: views/admin-education-plugin-email-settings.php:56
 msgid "White-label (no Stripe branding)"
 msgstr ""
 
-#: views/admin-education-plugin-instant-payouts-settings.php:23
+#: views/admin-education-plugin-instant-payouts-settings.php:27
 msgid "💰 Send Funds Instantly"
 msgstr ""
 
-#: views/admin-education-plugin-instant-payouts-settings.php:32
+#: views/admin-education-plugin-instant-payouts-settings.php:36
 msgid "With Stripe's Instant Payouts, you can transfer funds immediately to your debit card or bank account. You can request Instant Payouts at any time, including weekends and holidays, and funds typically appear in your bank account within 30 minutes or less."
 msgstr ""
 
-#: views/admin-education-plugin-instant-payouts-settings.php:42
+#: views/admin-education-plugin-instant-payouts-settings.php:46
 msgid "Enable Stripe Instant Payouts"
 msgstr ""
 
-#: views/admin-education-plugin-instant-payouts-settings.php:51
+#: views/admin-education-plugin-instant-payouts-settings.php:55
 msgid "Subject to approval and currently available in the United States, Canada, United Kingdom, and Singapore."
 msgstr ""
 
 #. translators: %1$s Opening <a> tag, do not translate. %2$s Closing </a> tag, do not translate.
-#: views/admin-education-plugin-instant-payouts-settings.php:61
+#: views/admin-education-plugin-instant-payouts-settings.php:65
 #, php-format
 msgid "%1$sRead More%2$s"
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:22
+#: views/admin-education-plugin-taxes-settings.php:26
 msgid "💸 Collect Taxes and Additional Fees"
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:27
+#: views/admin-education-plugin-taxes-settings.php:31
 msgid "Add tax rates to your payment forms or charge an additional amount to help cover processing fees with WP Simple Pay Pro."
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:36
+#: views/admin-education-plugin-taxes-settings.php:40
 msgid "Tax settings"
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:42
+#: views/admin-education-plugin-taxes-settings.php:46
 msgid "Exclusive or inclusive tax rates"
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:45
+#: views/admin-education-plugin-taxes-settings.php:49
 msgid "Supports on-site and Stripe Checkout forms"
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:48
+#: views/admin-education-plugin-taxes-settings.php:52
 msgid "Combine multiple tax rates"
 msgstr ""
 
-#: views/admin-education-plugin-taxes-settings.php:51
+#: views/admin-education-plugin-taxes-settings.php:55
 msgid "Customize labels for added taxes and fees"
 msgstr ""
 
 #. translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. %3$s Opening <u> tag, do not translate. %4$s Closing </u> tag, do not translate. %5$s Opening anchor tag, do not translate. %6$s Closing anchor tag, do not translate.
-#: views/admin-education-upgrade-modal.php:46
+#: views/admin-education-upgrade-modal.php:50
 #, php-format
 msgid "%1$sBonus:%2$s WP Simple Pay Lite users get %3$s50%% off%4$s regular price, automatically applied at checkout. %5$sUpgrade to Pro →%6$s"
 msgstr ""
 
 #. translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate. %3$s Opening <u> tag, do not translate. %4$s Closing </u> tag, do not translate. %5$s Opening anchor tag, do not translate. %6$s Closing anchor tag, do not translate.
-#: views/admin-education-upgrade-modal.php:72
+#: views/admin-education-upgrade-modal.php:76
 #, php-format
 msgid "%1$sBonus:%2$s WP Simple Pay Pro users get %3$s50%% off%4$s upgrade pricing, automatically applied at checkout. %5$sSee upgrade options →%6$s"
 msgstr ""
 
-#: views/admin-education-upgrade-modal.php:103
+#: views/admin-education-upgrade-modal.php:107
 msgid "🛠️ Please Review Your Payment Forms"
 msgstr ""
 
-#: views/admin-education-upgrade-modal.php:108
+#: views/admin-education-upgrade-modal.php:112
 msgid "While we have done our best to ensure the new payment experience is a simple transition, some user-facing and payment processing changes were required."
 msgstr ""
 
-#: views/admin-education-upgrade-modal.php:116
+#: views/admin-education-upgrade-modal.php:120
 msgid "We highly recommend reviewing your existing payment forms after enabling the new payment experience to ensure payments are processing as expected; especially if you have a custom use-case."
 msgstr ""
 
-#: views/admin-education-upgrade-modal.php:124
+#: views/admin-education-upgrade-modal.php:128
 msgid "I understand, I will review my payment forms"
 msgstr ""
 
-#: views/admin-education-upgrade-modal.php:128
+#: views/admin-education-upgrade-modal.php:132
 msgid "Learn How to Test Live Mode Payment Forms →"
 msgstr ""
 
-#: views/admin-footer-promo.php:38
+#: views/admin-footer-promo.php:42
 msgid "Twitter"
 msgstr ""
 
 #. translators: Payment form ID.
-#: views/admin-form-preview-output.php:22
+#: views/admin-form-preview-output.php:26
 #, php-format
 msgid "Previewing Payment Form #%d - WP Simple Pay"
 msgstr ""
 
-#: views/admin-form-preview-output.php:35
+#: views/admin-form-preview-output.php:39
 msgid "This is a preview of your payment form. This page is not publicly accessible. To add your payment form to a page, use the WP Simple Pay block or embed the shortcode."
 msgstr ""
 
-#: views/admin-form-preview-output.php:46
+#: views/admin-form-preview-output.php:50
 msgid "This payment form is currently unpublished and will not be able to accept payments until it is published."
 msgstr ""
 
-#: views/admin-form-preview-output.php:87
+#: views/admin-form-preview-output.php:91
 msgid "Continue Editing"
 msgstr ""
 
-#: views/admin-notice-expired-license.php:25
+#: views/admin-notice-expired-license.php:29
 msgid "Your WP Simple Pay Pro license has expired!"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-notice-expired-license.php:59
-#: views/admin-payment-forms-license-expired.php:64
+#: views/admin-notice-expired-license.php:63
+#: views/admin-payment-forms-license-expired.php:68
 #, php-format
 msgid "Renew License for %1$s50%% Off!%2$s"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-notice-missing-license.php:20
+#: views/admin-notice-missing-license.php:24
 #, php-format
 msgid "Please %1$senter your license key%2$s for WP Simple Pay Pro to complete activation."
 msgstr ""
 
 #. translators: %1$s Payment form template name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: views/admin-notice-template-preview.php:25
+#: views/admin-notice-template-preview.php:29
 #, php-format
 msgid "You are creating a payment form using the \"%1$s\" template. %2$sUse a different template &rarr;%3$s"
 msgstr ""
 
-#: views/admin-notice-update-available.php:29
+#: views/admin-notice-update-available.php:33
 msgid "Did you know you're running an outdated version of WP Simple Pay?"
 msgstr ""
 
-#: views/admin-notice-update-available.php:37
+#: views/admin-notice-update-available.php:41
 msgid "Update WP Simple Pay now for improved security and access to the latest features."
 msgstr ""
 
-#: views/admin-notice-update-available.php:46
+#: views/admin-notice-update-available.php:50
 msgid "Update Now"
 msgstr ""
 
-#: views/admin-page-about-us-about-us.php:20
+#: views/admin-page-about-us-about-us.php:24
 msgid "Hello and welcome to WP Simple Pay, the #1 Stripe payments plugin for WordPress. At WP Simple Pay, we build software that helps you create secure, conversion-optimized payment forms for your website in minutes."
 msgstr ""
 
-#: views/admin-page-about-us-about-us.php:24
+#: views/admin-page-about-us-about-us.php:28
 msgid "Over the years, we found that many website owners just needed a simple, reliable way to accept one-time and recurring payments without setting up a shopping cart or hiring a developer."
 msgstr ""
 
 #. translators: %1$s - Stripe URL.
-#: views/admin-page-about-us-about-us.php:32
+#: views/admin-page-about-us-about-us.php:36
 #, php-format
 msgid "Our goal is to take the pain out of creating payment forms and make it easy. WP Simple Pay connects the best payment processor (<a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">Stripe</a>) with WordPress. No other plugins are required."
 msgstr ""
 
 #. translators: %1$s - WPBeginner URL.
-#: views/admin-page-about-us-about-us.php:51
+#: views/admin-page-about-us-about-us.php:55
 #, php-format
 msgid "WP Simple Pay is brought to you by the same team that’s behind the largest WordPress resource site, <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">WPBeginner</a>, and all of the following best-of-class software."
 msgstr ""
 
-#: views/admin-page-about-us-about-us.php:66
+#: views/admin-page-about-us-about-us.php:70
 msgid "Yup, we know a thing or two about building awesome products that customers love."
 msgstr ""
 
 #. translators: Addon status label.
-#: views/admin-page-about-us-about-us.php:93
+#: views/admin-page-about-us-about-us.php:97
 #, php-format
 msgid "Status: %s"
 msgstr ""
 
-#: views/admin-page-about-us-about-us.php:106
+#: views/admin-page-about-us-about-us.php:110
 msgid "WordPress.org"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:27
-#: views/admin-page-about-us-getting-started.php:46
+#: views/admin-page-about-us-getting-started.php:31
+#: views/admin-page-about-us-getting-started.php:50
 msgid "Creating Your First Payment Form"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:31
+#: views/admin-page-about-us-getting-started.php:35
 msgid "Want to get started creating your first payment form with WP Simple Pay? First, if you haven’t already done so, you’ll want to sign up for a Stripe account and connect it to WP Simple Pay."
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:36
+#: views/admin-page-about-us-getting-started.php:40
 msgid "Connecting your Stripe Account"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:41
+#: views/admin-page-about-us-getting-started.php:45
 msgid "To create a new form, click on the Add New link in the left-hand menu. Then simply follow these step by step instructions to publish your first payment form in minutes."
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:51
+#: views/admin-page-about-us-getting-started.php:55
 msgid "We highly recommend staying in test mode until your payment forms are ready and you’ve looked through test transactions in Stripe."
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:56
+#: views/admin-page-about-us-getting-started.php:60
 msgid "Using Test Mode"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:68
+#: views/admin-page-about-us-getting-started.php:72
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Accept Donations"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:73
+#: views/admin-page-about-us-getting-started.php:77
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Easily fundraise or accept donations online via 135+ supported currencies. Offer one-time or recurring donations of fixed or user-defined amounts."
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:81
-#: views/admin-page-about-us-getting-started.php:102
-#: views/admin-page-about-us-getting-started.php:123
+#: views/admin-page-about-us-getting-started.php:85
+#: views/admin-page-about-us-getting-started.php:106
+#: views/admin-page-about-us-getting-started.php:127
 msgid "Read Documentation"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:89
+#: views/admin-page-about-us-getting-started.php:93
 msgid "Sell Recurring Services"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:94
+#: views/admin-page-about-us-getting-started.php:98
 msgid "Collect payments indefinitely, bill users through installment plans, collect additional setup fees, and offer free trials for recurring services."
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:110
+#: views/admin-page-about-us-getting-started.php:114
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Reconcile Invoices"
 msgstr ""
 
-#: views/admin-page-about-us-getting-started.php:115
+#: views/admin-page-about-us-getting-started.php:119
 #: includes/core/assets/js/dist/simpay-admin-page-setup-wizard.js:1
 msgid "Collect additional custom data on your payment forms such as an Invoice ID to reconcile invoices against your own invoicing system."
 msgstr ""
 
-#: views/admin-page-about-us.php:36
+#: views/admin-page-about-us.php:40
 msgid "Lite vs. Pro"
 msgstr ""
 
-#: views/admin-page-stripe-connect.php:32
+#: views/admin-page-stripe-connect.php:36
 msgid "👋 You're Almost Ready!"
 msgstr ""
 
-#: views/admin-page-stripe-connect.php:38
+#: views/admin-page-stripe-connect.php:42
 msgid "You need to connect your Stripe account before proceeding."
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-page-stripe-connect.php:65
+#: views/admin-page-stripe-connect.php:69
 #, php-format
 msgid "Have questions about connecting with Stripe? %1$sView the Stripe Connect documentation%2$s"
 msgstr ""
@@ -15674,196 +15756,196 @@ msgstr ""
 msgid "Search Transactions"
 msgstr ""
 
-#: views/admin-payment-forms-first-form.php:34
+#: views/admin-payment-forms-first-form.php:38
 msgid "🚀 Create Your First Payment Form"
 msgstr ""
 
-#: views/admin-payment-forms-first-form.php:40
+#: views/admin-payment-forms-first-form.php:44
 msgid "It looks like you haven't created any payment forms yet."
 msgstr ""
 
-#: views/admin-payment-forms-first-form.php:50
+#: views/admin-payment-forms-first-form.php:54
 msgid "You can use WP Simple Pay to build payment forms with just a few clicks."
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-payment-forms-first-form.php:73
+#: views/admin-payment-forms-first-form.php:77
 #, php-format
 msgid "Need some help? Check out our %1$scomprehensive guide%2$s"
 msgstr ""
 
 #. translators: Payment form action. "Creating" or "Editing".
-#: views/admin-payment-forms-license-expired.php:27
+#: views/admin-payment-forms-license-expired.php:31
 #, php-format
 msgid "🔐 Payment Form %s is Disabled!"
 msgstr ""
 
-#: views/admin-payment-forms-license-expired.php:37
+#: views/admin-payment-forms-license-expired.php:41
 msgid "Your WP Simple Pay Pro license has expired."
 msgstr ""
 
-#: views/admin-payment-forms-license-expired.php:47
+#: views/admin-payment-forms-license-expired.php:51
 msgid "Without an active license your payment forms will continue to collect payments, but you will not be able to edit them, or use other WP Simple Pay Pro functionality."
 msgstr ""
 
-#: views/admin-payment-forms-license-missing.php:20
+#: views/admin-payment-forms-license-missing.php:24
 msgid "🔐 WP Simple Pay Pro is Not Fully Activated!"
 msgstr ""
 
-#: views/admin-payment-forms-license-missing.php:26
+#: views/admin-payment-forms-license-missing.php:30
 msgid "Your WP Simple Pay Pro license key is missing."
 msgstr ""
 
-#: views/admin-payment-forms-license-missing.php:36
+#: views/admin-payment-forms-license-missing.php:40
 msgid "Activate WP Simple Pay Pro to start creating payment forms and collecting payments with just a few clicks, no coding required."
 msgstr ""
 
-#: views/admin-payment-forms-license-missing.php:49
+#: views/admin-payment-forms-license-missing.php:53
 msgid "Activate WP Simple Pay Pro"
 msgstr ""
 
-#: views/admin-setting-license.php:27
+#: views/admin-setting-license.php:31
 msgid "Upgrade complete! You're all set to use powerful Pro features."
 msgstr ""
 
-#: views/admin-setting-license.php:38
+#: views/admin-setting-license.php:42
 msgid "A valid license key is required to enable automatic updates and fully activate WP Simple Pay Pro."
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-setting-license.php:50
+#: views/admin-setting-license.php:54
 #, php-format
 msgid "Retrieve your license key from %1$syour WP Simple Pay account%2$s or purchase receipt email."
 msgstr ""
 
-#: views/admin-setting-license.php:99
+#: views/admin-setting-license.php:103
 msgid "Refresh Key"
 msgstr ""
 
-#: views/admin-setting-license.php:107
+#: views/admin-setting-license.php:111
 msgid "Your license key is globally defined via <code>SIMPLE_PAY_LICENSE_KEY</code> set in <code>wp-config.php</code>. It cannot be modified from this screen."
 msgstr ""
 
-#: views/admin-setting-license.php:115
+#: views/admin-setting-license.php:119
 msgid "Refresh license data."
 msgstr ""
 
-#: views/admin-setting-lite-license.php:20
+#: views/admin-setting-lite-license.php:24
 msgid "You're using WP Simple Pay Lite - no license needed. Enjoy! 😊"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-setting-lite-license.php:32
+#: views/admin-setting-lite-license.php:36
 #, php-format
 msgid "Already purchased? Simply %1$sretrieve your license key%2$s and enter it below to connect with WP Simple Pay Pro."
 msgstr ""
 
-#: views/admin-setting-lite-license.php:63
+#: views/admin-setting-lite-license.php:67
 msgid "Connecting..."
 msgstr ""
 
-#: views/admin-setting-lite-license.php:64
-#: views/admin-setting-lite-license.php:66
+#: views/admin-setting-lite-license.php:68
+#: views/admin-setting-lite-license.php:70
 msgid "Unlock Pro Features Now"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:80
+#: views/admin-setting-lite-license.php:84
 msgid "Unlock Powerful Pro Features"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:91
+#: views/admin-setting-lite-license.php:95
 msgid "Accept Payments On-Site"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:97
+#: views/admin-setting-lite-license.php:101
 msgid "Advanced Recurring Payments"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:103
+#: views/admin-setting-lite-license.php:107
 msgid "Collect Custom Data"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:109
+#: views/admin-setting-lite-license.php:113
 msgid "Advanced Form Builder"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:115
+#: views/admin-setting-lite-license.php:119
 msgid "10+ Payment Methods"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:121
+#: views/admin-setting-lite-license.php:125
 msgid "Offer Discount Codes"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:127
+#: views/admin-setting-lite-license.php:131
 msgid "Buy Now, Pay Later"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:133
+#: views/admin-setting-lite-license.php:137
 msgid "Collect Taxes and Fees"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:139
+#: views/admin-setting-lite-license.php:143
 msgid "Additional Form Templates"
 msgstr ""
 
-#: views/admin-setting-lite-license.php:145
+#: views/admin-setting-lite-license.php:149
 msgid "Dedicated Payment Pages"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: views/admin-setting-lite-license.php:164
+#: views/admin-setting-lite-license.php:168
 #, php-format
 msgid "<strong>Bonus</strong>: Loyal WP Simple Pay Lite users get <u>50%% off</u> regular price, automatically applied at checkout. %1$sUpgrade to Pro →%2$s"
 msgstr ""
 
-#: views/admin-webhooks-none-received.php:21
+#: views/admin-webhooks-none-received.php:25
 msgid "WP Simple Pay may not be functioning correctly."
 msgstr ""
 
-#: views/admin-webhooks-none-received.php:32
+#: views/admin-webhooks-none-received.php:36
 msgid "test mode"
 msgstr ""
 
-#: views/admin-webhooks-none-received.php:33
+#: views/admin-webhooks-none-received.php:37
 msgid "live mode"
 msgstr ""
 
 #. translators: %1$s Payment mode. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: views/admin-webhooks-none-received.php:38
+#: views/admin-webhooks-none-received.php:42
 #, php-format
 msgid "Expected %1$s webhook events have not been received. Please ensure you have properly configured your %2$s webhook endpoint in Stripe and signing secrets below to avoid interruption of functionality."
 msgstr ""
 
-#: views/admin-webhooks-none-received.php:70
+#: views/admin-webhooks-none-received.php:74
 msgid "Do not show again"
 msgstr ""
 
-#: views/email-internal-summary-report.php:21
+#: views/email-internal-summary-report.php:25
 msgid "Hi there,"
 msgstr ""
 
 #. translators: %1$s Site domain. %2$s Start date. %3$s End date.
-#: views/email-internal-summary-report.php:29
+#: views/email-internal-summary-report.php:33
 #, php-format
 msgid "Here's an overview of your payment form activity on %1$s from %2$s &mdash; %3$s"
 msgstr ""
 
-#: views/email-internal-summary-report.php:81
+#: views/email-internal-summary-report.php:85
 msgid "vs. previous period"
 msgstr ""
 
-#: views/email-internal-summary-report.php:100
+#: views/email-internal-summary-report.php:104
 #: includes/core/assets/js/dist/simpay-admin-dashboard-widget-report.js:1
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:1
 msgid "Top Forms"
 msgstr ""
 
-#: views/email-internal-summary-report.php:114
+#: views/email-internal-summary-report.php:118
 msgid "N/A."
 msgstr ""
 
-#: views/payment-page-output.php:86
+#: views/payment-page-output.php:90
 msgid "powered by"
 msgstr ""
 

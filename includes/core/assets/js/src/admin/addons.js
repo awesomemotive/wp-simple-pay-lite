@@ -7,10 +7,13 @@ import domReady from '@wordpress/dom-ready';
 
 const s = {
 	iconActivate:
-		'<i class="fa fa-toggle-on fa-flip-horizontal" aria-hidden="true"></i>',
-	iconDeactivate: '<i class="fa fa-toggle-on" aria-hidden="true"></i>',
-	iconInstall: '<i class="fa fa-cloud-download" aria-hidden="true"></i>',
-	iconSpinner: '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>',
+		'<span class="dashicons dashicons-admin-plugins" aria-hidden="true"></span>',
+	iconDeactivate:
+		'<span class="dashicons dashicons-yes-alt" aria-hidden="true"></span>',
+	iconInstall:
+		'<span class="dashicons dashicons-download" aria-hidden="true"></span>',
+	iconSpinner:
+		'<span class="dashicons dashicons-update simpay-addon__spinner" aria-hidden="true"></span>',
 	mediaFrame: false,
 };
 

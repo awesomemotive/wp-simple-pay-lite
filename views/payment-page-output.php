@@ -22,6 +22,10 @@
  * @var bool   $is_confirmation Determines if the payment confirmation should show.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?><html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">

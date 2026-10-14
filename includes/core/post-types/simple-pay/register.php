@@ -217,12 +217,12 @@ function updated_messages( $messages ) {
 	$open  = '<a href="' . get_preview_post_link( $post ) . '" target="_blank" rel="noopener noreferrer">';
 	$close = '</a>';
 
-	if ( isset( $_GET['changes'] ) ) {
+	if ( isset( $_GET['changes'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$changes = array_map(
 			function( $change ) {
 				return ' &bull; ' . esc_html( $change );
 			},
-			$_GET['changes']
+			wp_unslash( $_GET['changes'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		);
 		$message = '<br /><br />' . implode( '<br />', $changes );
 

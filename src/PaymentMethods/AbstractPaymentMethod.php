@@ -46,17 +46,17 @@ abstract class AbstractPaymentMethod {
 	 */
 	public function redirect_failed_payment(): void {
 		// Ensure we can retrieve a PaymentIntent.
-		if ( ! isset( $_GET['payment_intent'] ) ) {
+		if ( ! isset( $_GET['payment_intent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
 		// Ensure we paid with the correct payment method.
-		if ( ! isset( $_GET['source_type'] ) || static::PAYMENT_METHOD_ID !== $_GET['source_type'] ) {
+		if ( ! isset( $_GET['source_type'] ) || static::PAYMENT_METHOD_ID !== $_GET['source_type'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
 		// Ensure we have a customer so `Payment_Confirmation\get_confirmation_data()` doesn't fail.
-		if ( ! isset( $_GET['customer_id'] ) ) {
+		if ( ! isset( $_GET['customer_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 

@@ -42,6 +42,6 @@ class Custom_Html extends Field {
 	 */
 	public function html() {
 
-		echo $this->custom_html;
+		echo $this->custom_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

@@ -138,7 +138,7 @@ function show_admin_notices() {
 			?>
 	</p>
 
-	<p><strong><?php _e( 'Need help with your server? Ask your web host!', 'stripe' ); ?></strong></p>
+	<p><strong><?php esc_html_e( 'Need help with your server? Ask your web host!', 'stripe' ); ?></strong></p>
 	<p>
 				<?php
 				echo wp_kses(

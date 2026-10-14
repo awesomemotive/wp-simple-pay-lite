@@ -107,7 +107,7 @@ class Assets {
 					'clipboard',
 				),
 				'ver'    => SIMPLE_PAY_VERSION,
-				'footer' => false,
+				'footer' => true,
 			),
 		);
 

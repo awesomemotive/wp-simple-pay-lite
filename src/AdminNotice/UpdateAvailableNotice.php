@@ -88,7 +88,7 @@ class UpdateAvailableNotice extends AbstractAdminNotice {
 		}
 
 		// On the plugin update page, show nothing (transient hasn't been cleared yet).
-		if ( isset( $_GET['action'] ) && 'upgrade-plugin' === $_GET['action'] ) {
+		if ( isset( $_GET['action'] ) && 'upgrade-plugin' === sanitize_key( wp_unslash( $_GET['action'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return false;
 		}
 

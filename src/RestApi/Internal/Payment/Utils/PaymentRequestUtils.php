@@ -769,11 +769,19 @@ class PaymentRequestUtils {
 	 * Returns the payment method types available for the given request.
 	 *
 	 * @since 4.7.0
+	 * @since 4.17.5 Accepts the already calculated payment amount, to avoid
+	 *               calculating it (which can require Stripe API requests for
+	 *               coupons and taxes) again.
 	 *
 	 * @param \WP_REST_Request $request The payment request.
+	 * @param int|null         $amount Optional. The total amount returned by `get_amount()`
+	 *                                 for this request. Calculated if needed and not
+	 *                                 numeric. Default null.
 	 * @return array<string>
+	 * @throws \Exception If no payment method type accepts the payment amount, or if
+	 *                    the payment method type submitted with an on-site form does not.
 	 */
-	public static function get_payment_method_types( $request ) {
+	public static function get_payment_method_types( $request, $amount = null ) {
 		$form     = self::get_form( $request );
 		$currency = self::get_currency( $request );
 
@@ -832,14 +840,7 @@ class PaymentRequestUtils {
 		}
 
 		$payment_methods = array_map(
-			function ( $payment_method_id ) {
-				switch ( $payment_method_id ) {
-					case 'ach-debit':
-						return 'us_bank_account';
-					default:
-						return str_replace( '-', '_', $payment_method_id );
-				}
-			},
+			array( self::class, 'get_stripe_payment_method_type' ),
 			array_keys( $payment_methods )
 		);
 
@@ -850,25 +851,157 @@ class PaymentRequestUtils {
 		// card payments are enabled on the form.
 		// @see https://github.com/awesomemotive/wp-simple-pay-pro/issues/3319.
 
-		// If using Affirm, ensure the unit_amount is at least $100.
-		if ( in_array( 'affirm', $payment_methods, true ) ) {
-			$unit_amount = self::get_unit_amount( $request );
-
-			if ( $unit_amount < 10000 ) {
-				$payment_methods = array_diff( $payment_methods, array( 'affirm' ) );
-			}
-		}
-
 		// Remove Alipay, Klarna, Afterpay, and Affirm if using multiple line items.
 		// These are not supported by the Invoices API.
 		if ( $form->allows_multiple_line_items() ) {
 			$payment_methods = array_diff(
 				$payment_methods,
-				array( 'alipay', 'klarna', 'afterpay', 'affirm' )
+				array( 'alipay', 'klarna', 'afterpay_clearpay', 'affirm' )
 			);
 		}
 
+		// Remove Payment Methods whose amount limits (e.g. Affirm's minimum,
+		// Afterpay/Clearpay's maximum) do not include the payment amount.
+		// Stripe rejects the whole intent otherwise.
+		$payment_methods = self::remove_payment_method_types_outside_amount_limits(
+			$request,
+			$payment_methods,
+			$currency,
+			$amount
+		);
+
 		return array_values( $payment_methods );
+	}
+
+	/**
+	 * Returns the Stripe payment method type for a WP Simple Pay payment
+	 * method ID, e.g. `afterpay_clearpay` for `afterpay-clearpay`.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param string $payment_method_id WP Simple Pay payment method ID.
+	 * @return string
+	 */
+	private static function get_stripe_payment_method_type( $payment_method_id ) {
+		switch ( $payment_method_id ) {
+			case 'ach-debit':
+				return 'us_bank_account';
+			default:
+				return str_replace( '-', '_', $payment_method_id );
+		}
+	}
+
+	/**
+	 * Removes payment method types whose per-currency amount limits do not
+	 * include the payment amount of the given request.
+	 *
+	 * Amounts are only calculated when a payment method type with limits is
+	 * present, and at most once per amount basis.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param \WP_REST_Request $request The payment request.
+	 * @param array<string>    $payment_method_types Stripe payment method types.
+	 * @param string           $currency Currency code.
+	 * @param int|null         $amount Optional. The already calculated total amount. Default null.
+	 * @return array<string>
+	 * @throws \Exception If the limits remove every payment method type, or the
+	 *                    payment method type submitted with an on-site form.
+	 */
+	private static function remove_payment_method_types_outside_amount_limits(
+		$request,
+		$payment_method_types,
+		$currency,
+		$amount = null
+	) {
+		// Read (and filter) the limits once for the whole pass.
+		$limits        = PaymentMethods\get_payment_method_amount_limits();
+		$limited_types = array_intersect(
+			$payment_method_types,
+			array_keys( $limits )
+		);
+
+		if ( empty( $limited_types ) ) {
+			return $payment_method_types;
+		}
+
+		/** @var array<string, int> $amounts */
+		$amounts = array();
+
+		if ( is_numeric( $amount ) ) {
+			$amounts['amount'] = (int) $amount;
+		}
+
+		foreach ( $limited_types as $payment_method_type ) {
+			$basis = PaymentMethods\get_payment_method_amount_limit_basis(
+				$payment_method_type,
+				$limits
+			);
+
+			if ( ! isset( $amounts[ $basis ] ) ) {
+				$amounts[ $basis ] = 'unit_amount' === $basis
+					? (int) self::get_unit_amount( $request )
+					: (int) self::get_amount( $request );
+			}
+
+			$is_within_limits = PaymentMethods\is_amount_within_payment_method_limits(
+				$payment_method_type,
+				$currency,
+				$amounts[ $basis ],
+				$limits
+			);
+
+			if ( ! $is_within_limits ) {
+				$payment_method_types = array_diff(
+					$payment_method_types,
+					array( $payment_method_type )
+				);
+			}
+		}
+
+		// Stripe rejects an empty list, so explain why the payment can't be
+		// made instead of returning a generic Stripe error.
+		if ( empty( $payment_method_types ) ) {
+			throw new \Exception(
+				esc_html__(
+					'This payment amount is outside the range accepted by the available payment methods. Please change the amount and try again.',
+					'stripe'
+				)
+			);
+		}
+
+		// On-site forms confirm the payment with the payment method type the
+		// customer selected on the page. If the limits removed it (the page and
+		// the server can calculate different totals, e.g. with fee recovery or
+		// automatic tax), Stripe rejects the payment with a generic error, so
+		// explain why instead. Off-site Checkout forms let the customer choose
+		// from the remaining types on Stripe's page, so they are not affected.
+		$submitted_type = $request->get_param( 'payment_method_type' );
+
+		if (
+			is_string( $submitted_type ) &&
+			'' !== $submitted_type &&
+			'stripe_checkout' !== self::get_form( $request )->get_display_type()
+		) {
+			// The type is validated against the form's Stripe payment method
+			// types, but normalize a WP Simple Pay ID (e.g. `afterpay-clearpay`)
+			// defensively.
+			$submitted_type = self::get_stripe_payment_method_type( $submitted_type );
+
+			if (
+				in_array( $submitted_type, $limited_types, true ) &&
+				! in_array( $submitted_type, $payment_method_types, true )
+			) {
+				throw new \Exception(
+					esc_html__(
+						'This payment amount is outside the range accepted by the selected payment method. Please choose a different payment method or change the amount and try again.',
+						'stripe'
+					)
+				);
+			}
+		}
+
+		return $payment_method_types;
 	}
 
 	/**
@@ -914,13 +1047,24 @@ class PaymentRequestUtils {
 	 * Returns the configuration for available payment method types for the given request.
 	 *
 	 * @since 4.7.0
+	 * @since 4.17.5 Accepts the already calculated payment method types, to
+	 *               avoid calculating the payment amount (which can require
+	 *               Stripe API requests for coupons and taxes) again.
 	 *
-	 * @param \WP_REST_Request $request The payment request.
+	 * @param \WP_REST_Request   $request The payment request.
+	 * @param array<string>|null $payment_method_types Optional. Payment method types returned by
+	 *                                                 `get_payment_method_types()` for this request.
+	 *                                                 Calculated if not an array. Default null.
 	 * @return array<string, array<string, string>>
+	 * @throws \Exception If the payment method types are calculated and no payment
+	 *                    method type accepts the payment amount.
 	 */
-	public static function get_payment_method_options( $request ) {
-		$form                 = self::get_form( $request );
-		$payment_method_types = self::get_payment_method_types( $request );
+	public static function get_payment_method_options( $request, $payment_method_types = null ) {
+		$form = self::get_form( $request );
+
+		if ( ! is_array( $payment_method_types ) ) {
+			$payment_method_types = self::get_payment_method_types( $request );
+		}
 
 		// Determine if the request being made should be considered "recurring"
 		// in the context of how Stripe handles payment methods.
@@ -1011,19 +1155,17 @@ class PaymentRequestUtils {
 	 * @return string
 	 */
 	public static function get_return_url( $request ) {
-		$form       = self::get_form( $request );
-		$return_url = esc_url_raw( $form->payment_success_page );
+		$form = self::get_form( $request );
 
-		if ( ! wp_http_validate_url( $return_url ) ) {
-			$return_url = add_query_arg(
+		return self::get_valid_url_or_fallback(
+			$form->payment_success_page,
+			add_query_arg(
 				array(
 					'form_id' => $form->id,
 				),
 				esc_url_raw( home_url() )
-			);
-		}
-
-		return $return_url;
+			)
+		);
 	}
 
 	/**
@@ -1035,14 +1177,76 @@ class PaymentRequestUtils {
 	 * @return string
 	 */
 	public static function get_cancel_url( $request ) {
-		$form       = self::get_form( $request );
-		$cancel_url = esc_url_raw( $form->payment_cancelled_page );
+		$form = self::get_form( $request );
 
-		if ( empty( $cancel_url ) ) {
-			$cancel_url = esc_url_raw( home_url() );
+		return self::get_valid_url_or_fallback(
+			$form->payment_cancelled_page,
+			esc_url_raw( home_url() )
+		);
+	}
+
+	/**
+	 * Returns the given URL if it is an absolute http(s) URL, otherwise the
+	 * fallback URL.
+	 *
+	 * Shared by the return and cancel URL helpers so an empty, relative, or
+	 * otherwise malformed confirmation page URL is never sent to Stripe.
+	 *
+	 * The check is purely structural. The URL is only ever a browser redirect
+	 * target and the server never requests it, so `wp_http_validate_url()`
+	 * (an outbound-request guard) is not used: it performs a DNS lookup and
+	 * rejects valid redirect targets on non-standard ports or private hosts.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param mixed  $url      The URL to validate.
+	 * @param string $fallback The URL to use when `$url` is not valid.
+	 * @return string
+	 */
+	private static function get_valid_url_or_fallback( $url, $fallback ) {
+		if ( ! is_string( $url ) ) {
+			return $fallback;
 		}
 
-		return $cancel_url;
+		$url   = esc_url_raw( $url );
+		$parts = wp_parse_url( $url );
+
+		if (
+			! is_array( $parts ) ||
+			! isset( $parts['scheme'], $parts['host'] ) ||
+			! in_array( strtolower( $parts['scheme'] ), array( 'http', 'https' ), true )
+		) {
+			return $fallback;
+		}
+
+		// Credentials in a redirect URL are never legitimate here.
+		if ( isset( $parts['user'] ) || isset( $parts['pass'] ) ) {
+			return $fallback;
+		}
+
+		$host = $parts['host'];
+
+		// A bracketed host must be a real IPv6 address, e.g. not `[:::]` or
+		// `[1.2.3.4]`.
+		if ( 0 === strpos( $host, '[' ) ) {
+			if (
+				']' !== substr( $host, -1 ) ||
+				false === filter_var( substr( $host, 1, -1 ), FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 )
+			) {
+				return $fallback;
+			}
+
+			return $url;
+		}
+
+		// Otherwise the host must be a hostname. This rejects values
+		// `esc_url_raw()` turned into a pseudo-host, e.g. the plain text
+		// "thank you page" becomes `http://thank%20you%20page`.
+		if ( 1 !== preg_match( '/^[^\s%\/?#\[\]@:]+$/', $host ) ) {
+			return $fallback;
+		}
+
+		return $url;
 	}
 
 	/**

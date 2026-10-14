@@ -282,8 +282,8 @@ class PriceOption {
 	 */
 	public function __construct( $price_data, $form, $instance_id = null ) {
 		if ( false === $form ) {
-			throw new Exception(
-				__(
+			throw new Exception( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				__( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 					'Unable to create PriceOption. Invalid form.',
 					'stripe'
 				)

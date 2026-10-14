@@ -60,6 +60,10 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 
 			// Embedded Components.
 			'rest-api-internal-embedded-components-embedding-secret',
+
+			// Form Data.
+			'rest-api-internal-form-data',
+			'rest-api-internal-form-stale-guest-rest-nonce',
 		);
 	}
 
@@ -168,6 +172,18 @@ class RestApiServiceProvider extends AbstractPluginServiceProvider implements Li
 		$container->share(
 			'rest-api-internal-embedded-components-embedding-secret',
 			Internal\EmbeddedComponents\EmbeddingSecret::class
+		);
+
+		// Form Data.
+		$container->share(
+			'rest-api-internal-form-data',
+			Internal\Form\FormDataRoute::class
+		);
+
+		// Stale guest REST nonces on cached pages.
+		$container->share(
+			'rest-api-internal-form-stale-guest-rest-nonce',
+			Internal\Form\StaleGuestRestNonce::class
 		);
 	}
 }

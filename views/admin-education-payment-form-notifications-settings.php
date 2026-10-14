@@ -11,6 +11,10 @@
  * @var string $settings_url Global settings URL.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div

@@ -9,14 +9,18 @@
  * @since 4.4.0
  */
 
-$docs_url = simpay_docs_link(
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$docs_url = simpay_docs_link( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	'Learn more',
 	'first-payment-form',
 	'dashboard-widget-first-form',
 	true
 );
 
-$new_url = add_query_arg(
+$new_url = add_query_arg( // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	array(
 		'post_type' => 'simple-pay',
 	),

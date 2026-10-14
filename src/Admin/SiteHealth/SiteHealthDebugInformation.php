@@ -18,6 +18,10 @@ use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\Utils;
 use SimplePay\Pro\Webhooks\Database\Query as WebhookDatabase;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * SiteHealthDebugInformation class.
  *
@@ -83,7 +87,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	 * @return void
 	 */
 	public function maybe_filter_debug_information() {
-		if ( isset( $_GET['simpay'] ) ) {
+		if ( isset( $_GET['simpay'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			// @todo EventManager does not support remove_all_*
 			remove_all_filters( 'debug_information' );
 		}
@@ -506,7 +510,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		}
 
 		// Be respectful and keep ours at the bottom if showing all debug information.
-		if ( ! isset( $_GET['simpay'] ) ) {
+		if ( ! isset( $_GET['simpay'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return array_merge(
 				$debug_info,
 				array(
@@ -557,9 +561,11 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	private function get_custom_database_tables() {
 		global $wpdb;
 
+		// Keep in sync with `simpay_uninstall_get_tables()` in uninstall.php.
 		$tables = array(
 			'wpsp_coupons',
 			'wpsp_notifications',
+			'wpsp_subscriptions',
 			'wpsp_transactions',
 			'wpsp_webhooks',
 		);
@@ -569,7 +575,7 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		foreach ( $tables as $table ) {
 			$table_name = $wpdb->prefix . $table;
 
-			$found = $wpdb->get_var(
+			$found = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name )
 			);
 
@@ -596,13 +602,13 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'wpsp_notifications';
-		$exists     = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) );
+		$exists     = $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		if ( empty( $exists ) ) {
 			return array( 'status' => 'Table not found' );
 		}
 
-		$errors = $wpdb->get_results(
+		$errors = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				'SELECT title, date_created FROM ' . $wpdb->prefix . 'wpsp_notifications WHERE type = %s ORDER BY date_created DESC LIMIT 5',
 				'error'

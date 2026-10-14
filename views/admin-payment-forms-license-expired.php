@@ -13,6 +13,10 @@
  * @var string $action Payment form action.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <style>.notice { display: none; }</style>

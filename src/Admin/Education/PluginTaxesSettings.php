@@ -14,6 +14,10 @@ namespace SimplePay\Core\Admin\Education;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * PluginTaxesSettings class.
  *
@@ -68,8 +72,8 @@ class PluginTaxesSettings extends AbstractProductEducation implements Subscriber
 	 * @return void
 	 */
 	public function upsell() {
-		$subsection = isset( $_GET['subsection'] )
-			? sanitize_text_field( $_GET['subsection'] )
+		$subsection = isset( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			? sanitize_text_field( wp_unslash( $_GET['subsection'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			: false;
 
 		if ( false === $subsection || 'taxes' !== $subsection ) {

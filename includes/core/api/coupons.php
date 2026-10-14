@@ -12,6 +12,7 @@
 namespace SimplePay\Core\API\Coupons;
 
 use SimplePay\Core\Payments\Stripe_API;
+use SimplePay\Vendor\Stripe\Exception\ApiErrorException;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   @type string $api_key API Secret Key to use.
  * }
  * @return \SimplePay\Vendor\Stripe\Coupon
+ * @throws \SimplePay\Vendor\Stripe\Exception\ApiErrorException When the Coupon or its promotion code cannot be created.
  */
 function create( $coupon_args, $api_request_args = array() ) {
 	$defaults    = array();
@@ -43,20 +45,38 @@ function create( $coupon_args, $api_request_args = array() ) {
 		$api_request_args
 	);
 
-	// Also create a promotional code.
-	// Promotional code is never exposed to the user, but is needed to redeem
-	// a coupon with Stripe Checkout.
-	Stripe_API::request(
-		'PromotionCode',
-		'create',
-		array(
-			'coupon'          => $coupon->id,
-			'code'            => $coupon->name,
-			'expires_at'      => $coupon->redeem_by,
-			'max_redemptions' => $coupon->max_redemptions,
-		),
-		$api_request_args
-	);
+	// Also create a promotional code. It is never exposed to the user, but is
+	// needed to redeem a coupon with Stripe Checkout. Stripe treats promotion
+	// codes as case-insensitive for uniqueness, so a code like "Thebreath"
+	// conflicts with an existing "thebreath". That conflict is not
+	// swallowed: the existing promotion code belongs to a *different*
+	// Coupon with its own discount terms, so continuing would leave this
+	// new Coupon behind a promotion code it doesn't own. Instead the Coupon
+	// just created is deleted from Stripe and the exception is rethrown, so
+	// callers (e.g. sync_on_add(), which removes its local record) can
+	// surface the conflict.
+	try {
+		Stripe_API::request(
+			'PromotionCode',
+			'create',
+			array(
+				'coupon'          => $coupon->id,
+				'code'            => $coupon->name,
+				'expires_at'      => $coupon->redeem_by,
+				'max_redemptions' => $coupon->max_redemptions,
+			),
+			$api_request_args
+		);
+	} catch ( ApiErrorException $e ) {
+		try {
+			$coupon->delete();
+		} catch ( ApiErrorException $delete_exception ) {
+			// The original error is more useful to the caller.
+			unset( $delete_exception );
+		}
+
+		throw $e;
+	}
 
 	return $coupon;
 }

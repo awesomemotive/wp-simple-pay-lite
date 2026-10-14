@@ -44,8 +44,8 @@ class PaymentFormsStripeConnect implements SubscriberInterface {
 
 		if (
 			'post-new.php' === $pagenow &&
-			isset( $_GET['post_type'] ) &&
-			'simple-pay' === sanitize_key( $_GET['post_type'] ) &&
+			isset( $_GET['post_type'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'simple-pay' === sanitize_key( $_GET['post_type'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			empty( simpay_get_secret_key() )
 		) {
 			wp_safe_redirect(

@@ -144,15 +144,15 @@ class SMTP {
 	 */
 	private function is_delivery_subtab() {
 		if (
-			! isset( $_GET['page'] ) ||
-			'simpay_settings' !== sanitize_key( wp_unslash( $_GET['page'] ) ) // phpcs:ignore WordPress.CSRF.NonceVerification
+			! isset( $_GET['page'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'simpay_settings' !== sanitize_key( wp_unslash( $_GET['page'] ) ) // phpcs:ignore WordPress.CSRF.NonceVerification, WordPress.Security.NonceVerification.Recommended
 		) {
 			return false;
 		}
 
 		if (
-			! isset( $_GET['subsection'] ) ||
-			'delivery' !== sanitize_key( wp_unslash( $_GET['subsection'] ) ) // phpcs:ignore WordPress.CSRF.NonceVerification
+			! isset( $_GET['subsection'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'delivery' !== sanitize_key( wp_unslash( $_GET['subsection'] ) ) // phpcs:ignore WordPress.CSRF.NonceVerification, WordPress.Security.NonceVerification.Recommended
 		) {
 			return false;
 		}

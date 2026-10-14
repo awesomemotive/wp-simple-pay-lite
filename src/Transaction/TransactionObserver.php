@@ -17,6 +17,8 @@ use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\License\LicenseAwareInterface;
 use SimplePay\Core\License\LicenseAwareTrait;
 use SimplePay\Core\StripeConnect\ApplicationFee;
+use SimplePay\Core\Utils\DebugLog;
+use SimplePay\Core\Webhook\InvoicePayload;
 use stdClass;
 
 /**
@@ -493,7 +495,10 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'payment_method_type' => null,
 				'email'               => $invoice->customer_email,
 				'customer_id'         => $invoice->customer,
-				'subscription_id'     => $invoice->subscription,
+				// This Invoice is created by the plugin at its pinned API
+				// version, so it has the legacy shape. The shape-aware read is
+				// defensive only.
+				'subscription_id'     => InvoicePayload::get_subscription_id( $invoice ),
 				'status'              => $invoice->status,
 				'application_fee'     => $this->application_fee->has_application_fee(),
 			)
@@ -504,39 +509,73 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	 * Updates a transaction's status when a subsequent Invoice is paid.
 	 *
 	 * @since 4.11.0
+	 * @since 4.17.5 Resolves the PaymentIntent from newer Stripe API payload shapes.
 	 *
 	 * @param \SimplePay\Vendor\Stripe\Event   $event Event object.
 	 * @param \SimplePay\Vendor\Stripe\Invoice $invoice Invoice object.
 	 * @return void
 	 */
 	public function update_on_multiple_line_invoice( $event, $invoice ) {
-		if ( ! is_string( $invoice->payment_intent ) ) {
-			return;
+		$payment_intent_id = $this->get_invoice_payment_intent_id( $invoice );
+		$retrieved_invoice = null;
+
+		// Newer-shape webhook payloads omit the PaymentIntent. Retrieve the
+		// Invoice at the plugin's pinned API version to find it.
+		if ( null === $payment_intent_id ) {
+			if ( ! isset( $invoice->metadata->simpay_form_id ) ) {
+				return;
+			}
+
+			$form = simpay_get_form( $invoice->metadata->simpay_form_id );
+
+			if ( false === $form ) {
+				return;
+			}
+
+			$retrieved_invoice = $this->retrieve_invoice_with_payment_method(
+				$invoice,
+				$form
+			);
+
+			if ( ! is_object( $retrieved_invoice->payment_intent ) ) {
+				return;
+			}
+
+			$payment_intent_id = $retrieved_invoice->payment_intent->id;
 		}
 
 		$transaction = $this->transactions->get_by_object_id(
-			$invoice->payment_intent
+			$payment_intent_id
 		);
 
 		if ( ! $transaction instanceof Transaction ) {
 			return;
 		}
 
-		$form = simpay_get_form( $transaction->form_id );
+		if ( null === $retrieved_invoice ) {
+			$form = simpay_get_form( $transaction->form_id );
 
-		if ( false === $form ) {
-			return;
+			if ( false === $form ) {
+				return;
+			}
+
+			$retrieved_invoice = $this->retrieve_invoice_with_payment_method(
+				$invoice,
+				$form
+			);
 		}
 
-		$invoice = API\Invoices\retrieve(
-			array(
-				'id'     => (string) $invoice->id,
-				'expand' => array(
-					'payment_intent.payment_method',
-				),
-			),
-			$form->get_api_request_args()
-		);
+		$invoice = $retrieved_invoice;
+
+		// Both payload shapes read the expanded PaymentIntent and PaymentMethod
+		// from the retrieved Invoice. Leave the transaction untouched if either
+		// is missing.
+		if (
+			! is_object( $invoice->payment_intent ) ||
+			! is_object( $invoice->payment_intent->payment_method )
+		) {
+			return;
+		}
 
 		/** @var \SimplePay\Vendor\Stripe\PaymentIntent $payment_intent */
 		$payment_intent = $invoice->payment_intent;
@@ -572,13 +611,13 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			return;
 		}
 
-		if ( ! is_string( $invoice->payment_intent ) ) {
+		$payment_intent_id = $this->get_invoice_payment_intent_id( $invoice, $subscription );
+
+		if ( null === $payment_intent_id ) {
 			return;
 		}
 
-		$transaction = $this->transactions->get_by_object_id(
-			$invoice->payment_intent
-		);
+		$transaction = $this->transactions->get_by_object_id( $payment_intent_id );
 
 		// Do nothing if the PaymentIntent has already been logged.
 		if ( $transaction instanceof Transaction ) {
@@ -620,7 +659,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			array(
 				'form_id'             => (int) $metadata->simpay_form_id,
 				'object'              => 'payment_intent',
-				'object_id'           => $invoice->payment_intent,
+				'object_id'           => $payment_intent_id,
 				'livemode'            => (bool) $invoice->livemode,
 				'amount_total'        => $invoice->total,
 				'amount_subtotal'     => $invoice->subtotal,
@@ -633,7 +672,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'payment_method_type' => $payment_method_type,
 				'email'               => $invoice->customer_email,
 				'customer_id'         => $invoice->customer,
-				'subscription_id'     => $invoice->subscription,
+				'subscription_id'     => $subscription->id,
 				'status'              => 'paid' === $invoice->status
 					? 'succeeded'
 					: 'canceled',
@@ -867,11 +906,11 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	 */
 	public function update_on_checkout_session_lite( $payment_confirmation_data ) {
 		// Session ID is not available, do nothing.
-		if ( ! isset( $_GET['session_id'] ) ) {
+		if ( ! isset( $_GET['session_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
-		$session_id  = sanitize_text_field( $_GET['session_id'] );
+		$session_id  = sanitize_text_field( wp_unslash( $_GET['session_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		$transaction = $this->transactions->get_by_object_id( $session_id );
 
 		// Transaction cannot be found, do nothing.
@@ -1009,6 +1048,9 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 	 * Subsequent invoices are handled in `self::add_on_invoice()`.
 	 *
 	 * @since 4.4.6
+	 * @since 4.17.5 Resolves the PaymentIntent from newer Stripe API payload
+	 *               shapes, and leaves the transaction unchanged when a charged
+	 *               Invoice's PaymentIntent cannot be resolved.
 	 *
 	 * @param \SimplePay\Vendor\Stripe\Event        $event Event object.
 	 * @param \SimplePay\Vendor\Stripe\Invoice      $invoice Invoice object.
@@ -1030,10 +1072,28 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 			return;
 		}
 
+		$payment_intent_id = $this->get_invoice_payment_intent_id( $invoice, $subscription );
+
+		// A newer-shape payload can omit the PaymentIntent of an Invoice that
+		// was charged. Only a free Invoice is known to have none; otherwise
+		// retrieve the Invoice at the plugin's pinned API version to find it.
+		if ( null === $payment_intent_id && ! $this->is_free_invoice( $invoice ) ) {
+			$payment_intent_id = $this->retrieve_invoice_payment_intent_id(
+				$invoice,
+				$transaction
+			);
+
+			// Leave the transaction as-is rather than unlinking a charged
+			// Invoice from its payment.
+			if ( null === $payment_intent_id ) {
+				return;
+			}
+		}
+
 		// No trial, or there was a setup fee, so there is a charge.
-		if ( null !== $invoice->payment_intent ) {
+		if ( null !== $payment_intent_id ) {
 			$object    = 'payment_intent';
-			$object_id = $invoice->payment_intent;
+			$object_id = $payment_intent_id;
 
 			// Trial and no setup fee.
 			// Stripe doesn't create a SetupIntent or PaymentIntent if the first
@@ -1084,7 +1144,7 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 				'payment_method_type' => $payment_method_type,
 				'email'               => $invoice->customer_email,
 				'customer_id'         => $invoice->customer,
-				'subscription_id'     => $invoice->subscription,
+				'subscription_id'     => $subscription->id,
 				'status'              => in_array(
 					$subscription->status,
 					array( 'active', 'trialing' ),
@@ -1238,5 +1298,141 @@ class TransactionObserver implements SubscriberInterface, LicenseAwareInterface 
 
 			$form->adjust_inventory( 'increment', $quantity, $instance_id );
 		}
+	}
+
+	/**
+	 * Retrieves an Invoice, with its PaymentIntent and PaymentMethod expanded,
+	 * at the plugin's pinned Stripe API version.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Invoice $invoice Invoice object.
+	 * @param \SimplePay\Core\Abstracts\Form   $form Payment form.
+	 * @return \SimplePay\Vendor\Stripe\Invoice
+	 */
+	private function retrieve_invoice_with_payment_method( $invoice, $form ) {
+		return API\Invoices\retrieve(
+			array(
+				'id'     => (string) $invoice->id,
+				'expand' => array(
+					'payment_intent.payment_method',
+				),
+			),
+			$form->get_api_request_args()
+		);
+	}
+
+	/**
+	 * Determines if an Invoice required no payment, so Stripe created no
+	 * PaymentIntent for it (e.g. a trial without a setup fee).
+	 *
+	 * `amount_due` accounts for any customer credit balance applied; `total`
+	 * is used when it is not present.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Invoice $invoice Invoice object.
+	 * @return bool
+	 */
+	private function is_free_invoice( $invoice ) {
+		if ( isset( $invoice->amount_due ) && is_numeric( $invoice->amount_due ) ) {
+			return 0 >= (int) $invoice->amount_due;
+		}
+
+		if ( isset( $invoice->total ) && is_numeric( $invoice->total ) ) {
+			return 0 >= (int) $invoice->total;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns the PaymentIntent ID of a Subscription's first Invoice by
+	 * retrieving the Invoice at the plugin's pinned API version.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Invoice        $invoice Invoice object.
+	 * @param \SimplePay\Core\Transaction\Transaction $transaction Transaction being updated.
+	 * @return string|null PaymentIntent ID, or null if it cannot be resolved.
+	 */
+	private function retrieve_invoice_payment_intent_id( $invoice, $transaction ) {
+		$form = simpay_get_form( $transaction->form_id );
+
+		if ( false === $form ) {
+			DebugLog::log(
+				sprintf(
+					'Could not resolve the PaymentIntent for Invoice %s: form %d not found.',
+					(string) $invoice->id,
+					(int) $transaction->form_id
+				)
+			);
+
+			return null;
+		}
+
+		try {
+			$retrieved_invoice = $this->retrieve_invoice_with_payment_method(
+				$invoice,
+				$form
+			);
+		} catch ( Exception $e ) {
+			DebugLog::log(
+				sprintf(
+					'Could not retrieve Invoice %s to resolve its PaymentIntent: %s',
+					(string) $invoice->id,
+					$e->getMessage()
+				)
+			);
+
+			return null;
+		}
+
+		$payment_intent_id = InvoicePayload::get_payment_intent_id( $retrieved_invoice );
+
+		if ( null === $payment_intent_id ) {
+			DebugLog::log(
+				sprintf(
+					'Invoice %s has an amount due but no PaymentIntent.',
+					(string) $invoice->id
+				)
+			);
+		}
+
+		return $payment_intent_id;
+	}
+
+	/**
+	 * Returns the PaymentIntent ID for an Invoice, supporting both the legacy
+	 * and newer Stripe API payload shapes.
+	 *
+	 * Newer-shape webhook payloads do not include `payments` unless expanded,
+	 * so when the payload carries no PaymentIntent this falls back to the
+	 * Subscription's `latest_invoice`, which is retrieved at the plugin's
+	 * pinned API version (legacy shape) when it is the same Invoice.
+	 *
+	 * @since 4.17.5
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Invoice           $invoice Invoice object.
+	 * @param \SimplePay\Vendor\Stripe\Subscription|null $subscription Subscription object.
+	 * @return string|null
+	 */
+	private function get_invoice_payment_intent_id( $invoice, $subscription = null ) {
+		$payment_intent_id = InvoicePayload::get_payment_intent_id( $invoice );
+
+		if ( null !== $payment_intent_id ) {
+			return $payment_intent_id;
+		}
+
+		if (
+			! isset( $subscription->latest_invoice ) ||
+			! is_object( $subscription->latest_invoice ) ||
+			! isset( $subscription->latest_invoice->id, $invoice->id ) ||
+			$subscription->latest_invoice->id !== $invoice->id
+		) {
+			return null;
+		}
+
+		return InvoicePayload::get_payment_intent_id( $subscription->latest_invoice );
 	}
 }

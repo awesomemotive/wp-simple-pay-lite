@@ -140,12 +140,12 @@ function secondary_nav( $current_subsection ) {
  * @since 4.0.0
  */
 function page() {
-	$section = ! empty( $_GET['tab'] )
-		? sanitize_key( $_GET['tab'] )
+	$section = ! empty( $_GET['tab'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_key( $_GET['tab'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: get_main_section_id();
 
-	$subsection = ! empty( $_GET['subsection'] )
-		? sanitize_key( $_GET['subsection'] )
+	$subsection = ! empty( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_key( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: get_main_subsection_id( $section );
 
 	// Find the legacy "page" value for hook/filter compatibility.
@@ -234,7 +234,7 @@ function page() {
 			 *
 			 * @since 4.4.0
 			 */
-			do_action( '__unstable_simpay_admin_page_settings_end' );
+			do_action( '__unstable_simpay_admin_page_settings_end' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			?>
 		</div>
 	</div>
@@ -248,12 +248,12 @@ function page() {
  * @since 4.0.0
  */
 function register_setting_toggles() {
-	$section = ! empty( $_GET['tab'] )
-		? sanitize_key( $_GET['tab'] )
+	$section = ! empty( $_GET['tab'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_key( $_GET['tab'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: get_main_section_id();
 
-	$subsection = ! empty( $_GET['subsection'] )
-		? sanitize_key( $_GET['subsection'] )
+	$subsection = ! empty( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		? sanitize_key( $_GET['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		: get_main_subsection_id( $section );
 
 	$settings = Utils\get_collection( 'settings' );

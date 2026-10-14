@@ -14,6 +14,7 @@ namespace SimplePay\Core\RestApi\Internal\Payment\Traits;
 use Exception;
 use SimplePay\Core\API;
 use SimplePay\Core\i18n;
+use SimplePay\Core\RestApi\Internal\Payment\Utils\CouponUtils;
 use SimplePay\Core\RestApi\Internal\Payment\Utils\PaymentRequestUtils;
 use SimplePay\Core\Utils;
 
@@ -174,9 +175,11 @@ trait CustomerTrait {
 			),
 		);
 
-		// Attach coupon to metadata.
-		if ( ! empty( $request->get_param( 'coupon_code' ) ) ) {
-			$customer_args['coupon'] = $request->get_param( 'coupon_code' );
+		// Attach the coupon, using the Stripe Coupon ID rather than the typed code.
+		$coupon = CouponUtils::get_stripe_coupon_id( $request );
+
+		if ( ! empty( $coupon ) ) {
+			$customer_args['coupon'] = $coupon;
 
 			// Clear Stripe object cache so dynamic values are available.
 			// @todo implement cache clearing within Stripe_Object_Query_Trait

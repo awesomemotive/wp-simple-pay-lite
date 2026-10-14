@@ -101,7 +101,7 @@ abstract class AbstractAdminNotice implements AdminNoticeInterface, LicenseAware
 
 		$data = $this->get_notice_data();
 
-		echo '<div ' . $this->build_attribute_string( $this->get_attributes() ) . '>';
+		echo '<div ' . $this->build_attribute_string( $this->get_attributes() ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		require $view_file_path;
 		echo '</div>';
 	}

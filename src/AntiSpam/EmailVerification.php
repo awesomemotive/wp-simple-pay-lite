@@ -22,6 +22,10 @@ use SimplePay\Core\RestApi\Internal\Payment\Utils\PaymentRequestUtils;
 use SimplePay\Core\Scheduler\SchedulerInterface;
 use SimplePay\Core\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * EmailVerification class.
  *
@@ -546,7 +550,7 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 		);
 
 		// Return the HTML.
-		throw new Exception( $this->get_email_verification_input() );
+		throw new Exception( $this->get_email_verification_input() ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 	}
 
 	/**
@@ -570,9 +574,9 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	 */
 	public function verify_verification_code_rest( $args, $form, $form_data, $form_values ) {
 		if ( ! isset( $form_values['simpay_email_verification_code'] ) ) {
-			throw new Exception(
-				__( 'Invalid request. Please try again.', 'stripe' ) .
-				$this->get_email_verification_input()
+			throw new Exception( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				__( 'Invalid request. Please try again.', 'stripe' ) . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				$this->get_email_verification_input() // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			);
 		}
 
@@ -595,9 +599,9 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 
 		// If the code is invalid, throw an error.
 		if ( false === $verified ) {
-			throw new Exception(
-				__( 'Invalid verification code. Please try again.', 'stripe' ) .
-				$this->get_email_verification_input()
+			throw new Exception( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				__( 'Invalid verification code. Please try again.', 'stripe' ) . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				$this->get_email_verification_input() // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			);
 		}
 	}
@@ -664,9 +668,9 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 	 */
 	public function remove_verification_code_rest( $args, $form, $form_data, $form_values ) {
 		if ( ! isset( $form_values['simpay_email_verification_code'] ) ) {
-			throw new Exception(
-				__( 'Invalid request. Please try again.', 'stripe' ) .
-				$this->get_email_verification_input()
+			throw new Exception( // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				__( 'Invalid request. Please try again.', 'stripe' ) . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.EscapeOutput.ExceptionNotEscaped
+				$this->get_email_verification_input() // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			);
 		}
 
@@ -727,7 +731,12 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 			/** @var array<string, string> $form_values */
 			$form_values = $request->get_param( 'form_values' );
 
-			if ( ! isset( $form_values['simpay_email_verification_code'] ) ) {
+			if (
+				! isset(
+					$form_values['simpay_email_verification_code'],
+					$form_values['simpay_email']
+				)
+			) {
 				return $id;
 			}
 
@@ -735,14 +744,19 @@ class EmailVerification implements SubscriberInterface, LicenseAwareInterface {
 		} else {
 			if (
 				! isset(
-					$_POST['form_values'],
-					$_POST['form_values']['simpay_email_verification_code']
+					$_POST['form_values'], // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$_POST['form_values']['simpay_email_verification_code'], // phpcs:ignore WordPress.Security.NonceVerification.Missing
+					$_POST['form_values']['simpay_email'] // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				)
 			) {
 				return $id;
 			}
 
-			$email = $_POST['form_values']['simpay_email'];
+			$email = wp_unslash( $_POST['form_values']['simpay_email'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized below.
+		}
+
+		if ( ! is_string( $email ) ) {
+			return $id;
 		}
 
 		return $this->clean_email( sanitize_text_field( $email ) );

@@ -11,8 +11,12 @@
  * @var array<mixed> $data Notice data.
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /** @var string $update_url  */
-$update_url = $data['update_url'];
+$update_url = $data['update_url']; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <div class="simpay-admin-notice-update-plugin">

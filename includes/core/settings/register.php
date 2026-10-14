@@ -319,8 +319,8 @@ add_filter(
  * @return array Setting values to save.
  */
 function save_wp_settings_api( $to_save ) {
-	$subsection = ! empty( $_POST['subsection'] )
-		? sanitize_key( $_POST['subsection'] )
+	$subsection = ! empty( $_POST['subsection'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		? sanitize_key( wp_unslash( $_POST['subsection'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		: false;
 
 	$saved_settings = (array) get_option( 'simpay_settings', array() );

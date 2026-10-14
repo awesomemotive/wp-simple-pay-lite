@@ -255,7 +255,7 @@ abstract class Custom_Field {
 
 		<div class="simpay-<?php echo esc_attr( self::$settings['type'] ); ?>-label simpay-label-wrap">
 			<label for="<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
-				<?php echo $label; // WPCS: XSS okay. ?>
+				<?php echo wp_kses_post( $label ); ?>
 				<?php
 				switch ( self::$type ) :
 					case 'email':
@@ -273,7 +273,7 @@ abstract class Custom_Field {
 				if ( true === $required ) :
 					echo ''; // WPCS: XSS okay.
 				else :
-					echo self::get_optional_indicator(); // WPCS: XSS okay.
+					echo wp_kses_post( self::get_optional_indicator() );
 				endif;
 				?>
 			</label>
@@ -392,8 +392,8 @@ abstract class Custom_Field {
 			if ( preg_match( $pattern, $smart_tag, $matches ) ) {
 				$query_var = esc_html( $matches[1] );
 
-				if ( isset( $_GET[ $query_var ] ) ) {
-					return esc_attr( $_GET[ $query_var ] );
+				if ( isset( $_GET[ $query_var ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					return esc_attr( wp_unslash( $_GET[ $query_var ] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.NonceVerification.Recommended
 				}
 			}
 

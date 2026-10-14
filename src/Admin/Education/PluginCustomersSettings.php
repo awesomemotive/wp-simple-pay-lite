@@ -14,6 +14,10 @@ namespace SimplePay\Core\Admin\Education;
 use SimplePay\Core\EventManagement\SubscriberInterface;
 use SimplePay\Core\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * PluginCustomersSettings class.
  *

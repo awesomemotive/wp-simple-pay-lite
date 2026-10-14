@@ -213,18 +213,15 @@
 		}, 1500 );
 	}
 
-	function copyText( button, text ) {
-		if ( navigator.clipboard && navigator.clipboard.writeText ) {
-			navigator.clipboard.writeText( text ).then(
-				function() {
-					flagCopied( button );
-				},
-				function() {}
-			);
-			return;
-		}
-
-		// Fallback for browsers without the async clipboard API.
+	/**
+	 * Copies through a hidden textarea and execCommand( 'copy' ).
+	 *
+	 * Used when the async clipboard API is missing or refuses the write.
+	 *
+	 * @since 4.17.5
+	 */
+	function fallbackCopy( button, text ) {
+		var copied = false;
 		var textarea = document.createElement( 'textarea' );
 		textarea.value = text;
 		textarea.setAttribute( 'readonly', '' );
@@ -234,11 +231,32 @@
 		textarea.select();
 
 		try {
-			document.execCommand( 'copy' );
-			flagCopied( button );
+			copied = document.execCommand( 'copy' );
 		} catch ( e ) {}
 
 		document.body.removeChild( textarea );
+
+		if ( copied ) {
+			flagCopied( button );
+		}
+	}
+
+	function copyText( button, text ) {
+		if ( navigator.clipboard && navigator.clipboard.writeText ) {
+			navigator.clipboard.writeText( text ).then(
+				function() {
+					flagCopied( button );
+				},
+				// The write can be refused (permission denied, page not
+				// focused), so fall back instead of failing silently.
+				function() {
+					fallbackCopy( button, text );
+				}
+			);
+			return;
+		}
+
+		fallbackCopy( button, text );
 	}
 
 	for ( var i = 0; i < buttons.length; i++ ) {
