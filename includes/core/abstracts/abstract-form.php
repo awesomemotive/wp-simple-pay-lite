@@ -920,13 +920,13 @@ abstract class Form {
 	abstract public function has_fee_recovery();
 
 	/**
-	 * Determines if the payment form forces fee recovery to be paid.
+	 * Returns the settings of the payment form's "Fee Recovery Toggle" field.
 	 *
-	 * @since 4.6.6
+	 * @since 4.17.6
 	 *
-	 * @return bool
+	 * @return array<string, mixed>|null Field settings, or null if the field is not present.
 	 */
-	public function has_forced_fee_recovery() {
+	public function get_fee_recovery_toggle() {
 		$fee_recovery_toggle = array_filter(
 			$this->custom_fields,
 			function ( $field ) {
@@ -934,12 +934,45 @@ abstract class Form {
 			}
 		);
 
-		// No custom field toggle is present. It's forced.
 		if ( empty( $fee_recovery_toggle ) ) {
-			return true;
+			return null;
 		}
 
-		$fee_recovery_toggle = current( $fee_recovery_toggle );
+		return current( $fee_recovery_toggle );
+	}
+
+	/**
+	 * Determines if the payment form forces fee recovery to be paid.
+	 *
+	 * Fee recovery is only forced when there is no "Fee Recovery Toggle" field.
+	 * When the toggle is present the customer can always opt out, even if the
+	 * toggle is checked by default.
+	 *
+	 * @since 4.6.6
+	 * @since 4.17.6 No longer returns true when the toggle is checked by default.
+	 *
+	 * @return bool
+	 */
+	public function has_forced_fee_recovery() {
+		return null === $this->get_fee_recovery_toggle();
+	}
+
+	/**
+	 * Determines if the customer covers the processing fee before they change anything.
+	 *
+	 * This is true when fee recovery is forced, or when the "Fee Recovery Toggle"
+	 * field is checked by default.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @return bool
+	 */
+	public function is_covering_fees_by_default() {
+		$fee_recovery_toggle = $this->get_fee_recovery_toggle();
+
+		if ( null === $fee_recovery_toggle ) {
+			return true;
+		}
 
 		return isset( $fee_recovery_toggle['on_by_default'] );
 	}

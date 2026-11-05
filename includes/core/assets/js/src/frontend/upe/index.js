@@ -6,6 +6,7 @@
 import {
 	applyFormConfig,
 	fetchFormData,
+	getSpGeneral,
 	initPaymentFormsConcurrently,
 	markFormReady,
 	preventSubmitUntilReady,
@@ -127,6 +128,8 @@ function submitPaymentForm( event ) {
  * @since 4.17.5 Fetches the configuration from the form-data REST route, and
  *               blocks native submission until the form is initialized. A
  *               form that fails to load or initialize shows an error.
+ * @since 4.17.6 Uses the form's copy of `spGeneral` when the footer script
+ *               is missing.
  *
  * @param {Object} paymentForm Payment form.
  * @param {Object} config Payment form configuration.
@@ -134,6 +137,9 @@ function submitPaymentForm( event ) {
  */
 export async function initPaymentForm( paymentForm, config = false ) {
 	paymentForm.formId = parseInt( paymentForm.dataset.simpayFormId );
+
+	// Fill `spGeneral` from this form if the footer script is missing.
+	getSpGeneral( paymentForm );
 
 	// The payment button is usable before the form data arrives. Keep it
 	// from posting the page back until the form is ready.

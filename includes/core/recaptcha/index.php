@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\reCAPTCHA;
 
+use SimplePay\Core\AntiSpam\Captcha\ScriptUtils;
 use SimplePay\Core\Settings;
 use SimplePay\Core\NotificationInbox\NotificationRepository;
 use SimplePay\Core\NotificationInbox\NotificationRuleProcessor;
@@ -88,15 +89,7 @@ function add_script( $form_id, $form ) {
 			wp_localize_script(
 				'simpay-public',
 				'simpayGoogleRecaptcha',
-				array(
-					'siteKey' => get_key( 'site' ),
-					'i18n'    => array(
-						'invalid' => esc_html__(
-							'Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys.',
-							'stripe'
-						),
-					),
-				)
+				ScriptUtils::get_recaptcha_v3_config()
 			);
 			break;
 		case 'cloudflare-turnstile':

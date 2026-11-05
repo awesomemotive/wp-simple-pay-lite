@@ -545,6 +545,7 @@ function __unstable_add_payment_methods( $post_id ) {
 				</div>
 			</th>
 			<td>
+				<?php __unstable_optimized_checkout_override_notice( 'payment-methods', $post_id ); ?>
 				<div class="simpay-payment-methods">
 				<?php
 				foreach ( $available_payment_methods as $payment_method_id => $payment_method ) :

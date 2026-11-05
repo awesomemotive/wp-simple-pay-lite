@@ -180,6 +180,8 @@ class Default_Form extends Form {
 	 * Output for the form.
 	 *
 	 * @since 3.0.0
+	 * @since 4.17.6 Prints the shared script variables in the form's
+	 *               `data-simpay-general` attribute.
 	 */
 	public function html() {
 
@@ -205,7 +207,9 @@ class Default_Form extends Form {
 			// Can add additional form tag attributes here using a filter.
 			$more_form_atts = apply_filters( 'simpay_more_form_attributes', '' );
 
-			echo '<form action="" method="post" class="' . $this->get_form_classes( $this->id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '" ' . esc_attr( $more_form_atts ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML built from escaped parts
+			// data-simpay-general: the shared script variables, so the form can
+			// load without the footer-printed `spGeneral` script.
+			echo '<form action="" method="post" class="' . $this->get_form_classes( $this->id ) . '" id="' . esc_attr( $id ) . '" data-simpay-form-id="' . esc_attr( $this->id ) . '" data-simpay-general="' . esc_attr( simpay_shared_script_variables_json() ) . '" ' . esc_attr( $more_form_atts ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML built from escaped parts
 
 				do_action( 'simpay_form_' . absint( $this->id ) . '_before_form_top', $this );
 

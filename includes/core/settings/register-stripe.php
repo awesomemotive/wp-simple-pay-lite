@@ -299,6 +299,42 @@ function register_account_settings( $settings ) {
 			)
 		)
 	);
+
+	// Optimized Checkout Suite (automatic payment methods). Added in 4.17.6.
+	$settings->add(
+		new Settings\Setting_Checkbox(
+			array(
+				'id'          => 'stripe_checkout_automatic_payment_methods',
+				'section'     => 'stripe',
+				'subsection'  => 'account',
+				'label'       => esc_html_x(
+					'Optimized Checkout',
+					'setting label',
+					'stripe'
+				),
+				'input_label' => esc_html__(
+					'Let Stripe automatically select and order payment methods',
+					'stripe'
+				),
+				'value'       => simpay_get_setting(
+					'stripe_checkout_automatic_payment_methods',
+					'no'
+				),
+				'description' => wpautop(
+					esc_html__(
+						'When enabled, off-site Stripe Checkout forms use Stripe\'s Optimized Checkout Suite to determine which payment methods to display based on the customer\'s location, device, and likelihood to convert. While enabled, this setting overrides the payment methods selected on individual Stripe Checkout payment forms and each form\'s "Disable Stripe Link" setting.',
+						'stripe'
+					)
+				),
+				'priority'    => 70,
+				'schema'      => array(
+					'type'    => 'string',
+					'enum'    => array( 'yes', 'no' ),
+					'default' => 'no',
+				),
+			)
+		)
+	);
 }
 
 /**

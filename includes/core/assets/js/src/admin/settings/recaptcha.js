@@ -18,6 +18,8 @@ const settingsToToggle = [
 	'.simpay-settings-cloudflare_turnstile_setup',
 	'.simpay-settings-cloudflare_turnstile_site_key',
 	'.simpay-settings-cloudflare_turnstile_secret_key',
+	'.simpay-settings-cloudflare_turnstile_theme',
+	'.simpay-settings-cloudflare_turnstile_size',
 
 	'.simpay-settings-no_captcha_warning',
 ];

@@ -180,7 +180,7 @@ class FeeRecoveryUtils {
 			return 0;
 		}
 
-		$is_covering_fees = $request->get_param( 'is_covering_fees' );
+		$is_covering_fees = PaymentRequestUtils::is_covering_fees( $request );
 		$form             = PaymentRequestUtils::get_form( $request );
 
 		if ( ! $form->has_forced_fee_recovery() && ! $is_covering_fees ) {

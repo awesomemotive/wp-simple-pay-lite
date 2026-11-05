@@ -272,14 +272,17 @@ class Mailer {
 	public function send() {
 		$this->send_before();
 
-		$sent = wp_mail(
-			$this->get_to(),
-			$this->get_subject(),
-			$this->get_body(),
-			$this->get_headers()
-		);
-
-		$this->send_after();
+		// Always remove the temporary mail filters, even if sending throws.
+		try {
+			$sent = wp_mail(
+				$this->get_to(),
+				$this->get_subject(),
+				$this->get_body(),
+				$this->get_headers()
+			);
+		} finally {
+			$this->send_after();
+		}
 
 		return $sent;
 	}

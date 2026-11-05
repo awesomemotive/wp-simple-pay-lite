@@ -343,6 +343,29 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 	}
 
 	/**
+	 * Returns the Stripe Checkout "Optimized Checkout" status.
+	 *
+	 * Reports the effective value (the setting passed through the
+	 * `simpay_checkout_session_use_automatic_payment_methods` filter, without
+	 * form context), and notes when a filter overrides the saved setting.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @return string
+	 */
+	private function get_optimized_checkout() {
+		$setting   = API\CheckoutSessions\is_automatic_payment_methods_setting_enabled();
+		$effective = API\CheckoutSessions\use_automatic_payment_methods();
+		$value     = $effective ? 'Yes' : 'No';
+
+		if ( $effective !== $setting ) {
+			$value .= ' (overridden by filter)';
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Returns a list of plugin slugs that may conflict with WP Simple Pay.
 	 *
 	 * @since 4.6.4
@@ -481,6 +504,10 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 					'label' => __( 'Webhook Secret', 'stripe' ),
 					'value' => $this->get_webhook_secret(),
 				),
+				'optimized_checkout'       => array(
+					'label' => __( 'Optimized Checkout', 'stripe' ),
+					'value' => $this->get_optimized_checkout(),
+				),
 				'opinionated_styles'       => array(
 					'label' => __( 'Opinionated Styles', 'stripe' ),
 					'value' => $this->get_opinionated_styles_enabled(),
@@ -570,7 +597,19 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			'wpsp_webhooks',
 		);
 
-		$ret = '';
+		// Columns added by upgrades. A table that exists but lacks one of these
+		// had an upgrade recorded as done without its ALTER applying, and
+		// inserts into it fail (#3582).
+		$upgrade_columns = array(
+			'wpsp_subscriptions' => array( 'stripe_account_id' ),
+			'wpsp_transactions'  => array(
+				'payment_method_type',
+				'amount_refunded',
+				'stripe_account_id',
+			),
+		);
+
+		$problems = array();
 
 		foreach ( $tables as $table ) {
 			$table_name = $wpdb->prefix . $table;
@@ -580,15 +619,29 @@ class SiteHealthDebugInformation implements SubscriberInterface, LicenseAwareInt
 			);
 
 			if ( empty( $found ) ) {
-				$ret .= '⚠️ ' . $table . ' table not found';
+				$problems[] = '⚠️ ' . $table . ' table not found';
+				continue;
+			}
+
+			$columns = isset( $upgrade_columns[ $table ] ) ? $upgrade_columns[ $table ] : array();
+
+			foreach ( $columns as $column ) {
+				$has_column = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+					// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name is the site prefix plus a fixed name.
+					$wpdb->prepare( "SHOW COLUMNS FROM `{$table_name}` LIKE %s", $column )
+				);
+
+				if ( empty( $has_column ) ) {
+					$problems[] = '⚠️ ' . $table . ' table is missing column ' . $column;
+				}
 			}
 		}
 
-		if ( '' === $ret ) {
-			$ret = 'All tables found';
+		if ( empty( $problems ) ) {
+			return 'All tables found';
 		}
 
-		return $ret;
+		return implode( ', ', $problems );
 	}
 
 	/**

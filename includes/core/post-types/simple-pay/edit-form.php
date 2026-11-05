@@ -937,6 +937,60 @@ function redirect_post_save_preview( $location, $post_id ) {
 	add_action( 'simpay_form_settings_display_options_panel', __NAMESPACE__ . '\\add_display_options' );
 
 	/**
+	 * Adds the "Trust Badge" setting to the Form Display Options panel.
+	 *
+	 * The meta is a hide-only override: the badge is shown by default, and
+	 * `_simpay_hide_trust_badge` is `yes` only when the seller has actively
+	 * chosen to hide it.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @param int $post_id Current Payment Form ID.
+	 * @return void
+	 */
+	function add_trust_badge_setting( $post_id ) {
+		?>
+
+		<tr class="simpay-panel-field">
+			<th>
+				<label for="_simpay_hide_trust_badge">
+					<?php esc_html_e( 'Trust Badge', 'stripe' ); ?>
+				</label>
+			</th>
+			<td>
+				<?php
+				$hide_trust_badge = simpay_get_payment_form_setting(
+					$post_id,
+					'_simpay_hide_trust_badge',
+					'no',
+					__unstable_simpay_get_payment_form_template_from_url()
+				);
+
+				simpay_print_field(
+					array(
+						'type'        => 'checkbox',
+						'name'        => '_simpay_hide_trust_badge',
+						'id'          => '_simpay_hide_trust_badge',
+						'value'       => $hide_trust_badge,
+						'text'        => esc_html__(
+							'Hide trust badge',
+							'stripe'
+						),
+						'description' => esc_html__(
+							'When checked, the "Secure payment via Stripe" badge below the submit button is hidden. The badge is displayed by default.',
+							'stripe'
+						),
+					)
+				);
+				?>
+			</td>
+		</tr>
+
+		<?php
+	}
+	add_action( 'simpay_admin_after_form_display_options_rows', __NAMESPACE__ . '\\add_trust_badge_setting' );
+
+	/**
 	 * Adds "Transaction Description" setting to the General tab.
 	 *
 	 * @since 4.17.1

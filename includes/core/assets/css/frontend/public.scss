@@ -104,6 +104,36 @@ $error-text-color: #eb1c26;
 	}
 }
 
+// Trust badge.
+// Line up with the submit button: centered under the full-width button of
+// embedded and overlay forms, left-aligned under the inline button of
+// off-site Stripe Checkout forms (same as the test mode badge).
+.simpay-trust-badge {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 6px;
+
+	.simpay-checkout-form--embedded &,
+	.simpay-modal__content & {
+		justify-content: center;
+	}
+	margin-top: 10px;
+	font-size: 12px;
+	color: inherit;
+	opacity: 0.7;
+
+	&__lock {
+		display: inline-flex;
+		align-items: center;
+
+		svg {
+			width: 12px;
+			height: 12px;
+		}
+	}
+}
+
 // Test mode badge.
 .simpay-test-mode-badge-container {
 	.simpay-checkout-form--embedded &,

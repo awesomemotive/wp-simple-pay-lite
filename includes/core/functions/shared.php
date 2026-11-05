@@ -614,6 +614,31 @@ function simpay_shared_script_variables() {
 }
 
 /**
+ * Returns the shared script variables as JSON for a payment form's
+ * `data-simpay-general` attribute.
+ *
+ * `spGeneral` is printed in the footer. A copy printed with each payment form
+ * lets the form load even when that footer script is missing, for example
+ * when an optimization plugin strips it or the form scripts run before it.
+ *
+ * Characters that are special in HTML are hex-escaped, so the JSON never
+ * contains entities that the browser would decode when it reads the
+ * attribute: the parsed value is identical to `spGeneral`.
+ *
+ * @since 4.17.6
+ *
+ * @return string JSON, or an empty string if the variables cannot be encoded.
+ */
+function simpay_shared_script_variables_json() {
+	$json = wp_json_encode(
+		simpay_shared_script_variables(),
+		JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+	);
+
+	return false === $json ? '' : $json;
+}
+
+/**
  * Returns a list of recurring billing intervals.
  *
  * @since 4.1.0
@@ -2027,6 +2052,60 @@ function simpay_format_date( $timestamp, $format = '' ) {
 		$format = get_option( 'date_format' );
 	}
 	return wp_date( $format, $timestamp );
+}
+
+/**
+ * Outputs the "Secure payment via Stripe" trust badge below the submit button.
+ *
+ * The badge is shown by default. The `_simpay_hide_trust_badge` meta is an
+ * override-only value: it is `yes` only when the seller has actively chosen
+ * to hide the badge, so absent meta means the badge is displayed.
+ *
+ * @since 4.17.6
+ *
+ * @param int $form_id Payment Form ID.
+ * @return void
+ */
+function simpay_trust_badge( $form_id ) {
+	$show_badge = 'yes' !== simpay_get_saved_meta(
+		$form_id,
+		'_simpay_hide_trust_badge',
+		'no'
+	);
+
+	/**
+	 * Filters whether the "Secure payment via Stripe" trust badge is shown
+	 * below a payment form's submit button.
+	 *
+	 * Return `false` to hide the badge site-wide, or `true` to show it even
+	 * when a form's "Hide trust badge" setting is checked.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @param bool $show_badge Whether to show the trust badge. Default true,
+	 *                         false if the form's "Hide trust badge" setting
+	 *                         is checked.
+	 * @param int  $form_id    Payment Form ID.
+	 */
+	$show_badge = (bool) apply_filters(
+		'simpay_show_trust_badge',
+		$show_badge,
+		$form_id
+	);
+
+	if ( false === $show_badge ) {
+		return;
+	}
+	?>
+	<div class="simpay-trust-badge">
+		<span class="simpay-trust-badge__lock">
+			<svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+		</span>
+		<span class="simpay-trust-badge__text">
+			<?php esc_html_e( 'Secure payment via Stripe', 'stripe' ); ?>
+		</span>
+	</div>
+	<?php
 }
 
 /**

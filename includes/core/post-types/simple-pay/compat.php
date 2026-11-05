@@ -61,18 +61,15 @@ function redirect() {
 
 			break;
 		// Duplicate.
+		//
+		// Legacy duplicate URLs carry no nonce, so minting one here would let
+		// any link trigger a duplication. Send them to the Payment Forms list,
+		// where the per-form Duplicate action has its own nonce.
 		case 'duplicate':
-			$form = isset( $_GET['simpay_form'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				? absint( $_GET['simpay_form'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				: 0;
-
 			wp_safe_redirect(
 				add_query_arg(
 					array(
-						'post_type'     => 'simple-pay',
-						'simpay-action' => 'duplicate',
-						'form'          => $form,
-						'_wpnonce'      => wp_create_nonce( 'simpay-duplicate-payment-form' ),
+						'post_type' => 'simple-pay',
 					),
 					admin_url( 'edit.php' )
 				)

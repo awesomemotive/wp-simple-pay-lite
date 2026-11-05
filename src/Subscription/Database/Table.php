@@ -14,6 +14,7 @@
 
 namespace SimplePay\Core\Subscription\Database;
 
+use SimplePay\Core\Database\TableUpgradeTrait;
 use SimplePay\Vendor\BerlinDB\Database\Table as BerlinDBTable;
 
 /**
@@ -22,6 +23,8 @@ use SimplePay\Vendor\BerlinDB\Database\Table as BerlinDBTable;
  * @since 4.17.4
  */
 class Table extends BerlinDBTable {
+
+	use TableUpgradeTrait;
 
 	/**
 	 * {@inheritdoc}
@@ -42,7 +45,7 @@ class Table extends BerlinDBTable {
 	 *
 	 * @var int
 	 */
-	protected $version = 202608180002;
+	protected $version = 202610160002;
 
 	/**
 	 * {@inheritdoc}
@@ -58,6 +61,7 @@ class Table extends BerlinDBTable {
 	 */
 	protected $upgrades = array( // @phpstan-ignore-line
 		'202608180002' => 202608180002,
+		'202610160002' => 202610160002,
 	);
 
 	/**
@@ -109,14 +113,25 @@ class Table extends BerlinDBTable {
 	 * @return bool
 	 */
 	protected function __202608180002() {
-		$this->get_db()->query(
-			"ALTER TABLE {$this->table_name} ADD COLUMN `stripe_account_id` varchar(255) DEFAULT NULL AFTER `customer_id`"
+		return (
+			$this->add_column_if_missing(
+				'stripe_account_id',
+				'varchar(255) DEFAULT NULL AFTER `customer_id`'
+			) &&
+			$this->add_index_if_missing( 'stripe_account_id', '(`stripe_account_id`)' )
 		);
+	}
 
-		$this->get_db()->query(
-			"ALTER TABLE {$this->table_name} ADD INDEX stripe_account_id (`stripe_account_id`)"
-		);
-
-		return $this->is_success( true );
+	/**
+	 * Upgrade to version 202610160002.
+	 *  - Repair sites where the 202608180002 upgrade was recorded as done even
+	 *    though its ALTER failed, leaving no `stripe_account_id` column (#3582).
+	 *
+	 * @since 4.17.6
+	 *
+	 * @return bool
+	 */
+	protected function __202610160002() {
+		return $this->__202608180002();
 	}
 }

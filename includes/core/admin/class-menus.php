@@ -48,6 +48,7 @@ class Menus {
 
 		// Footer promotion.
 		add_action( 'in_admin_footer', array( $this, 'in_footer_text' ) );
+		add_filter( 'admin_body_class', array( $this, 'add_footer_promotion_body_class' ) );
 
 		// Footer review request.
 		add_filter( 'admin_footer_text', array( $this, 'add_footer_text' ) );
@@ -99,6 +100,32 @@ class Menus {
 		$title = __( 'Made with ♥ by the WP Simple Pay Team', 'stripe' );
 
 		include_once SIMPLE_PAY_DIR . 'views/admin-footer-promo.php'; // @phpstan-ignore-line
+	}
+
+	/**
+	 * Adds a body class on screens that output the footer promotion.
+	 *
+	 * The promotion makes the absolutely positioned footer taller, so the
+	 * content area needs extra bottom padding to keep the footer from covering
+	 * the last element on the page (such as the settings "Save Changes" button).
+	 * The `post-type-simple-pay` class is not enough: screens opened through
+	 * admin.php (like the top-level menu item) do not have it.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @param string $classes Space-separated admin body classes.
+	 * @return string
+	 */
+	public function add_footer_promotion_body_class( $classes ) {
+		if ( ! function_exists( 'get_current_screen' ) || ! get_current_screen() ) {
+			return $classes;
+		}
+
+		if ( ! simpay_is_admin_screen() ) {
+			return $classes;
+		}
+
+		return $classes . ' simpay-has-footer-promotion';
 	}
 
 	/**

@@ -11,6 +11,7 @@
 namespace SimplePay\Core\Forms\Fields;
 
 use SimplePay\Core\Abstracts\Custom_Field;
+use SimplePay\Core\AntiSpam\Captcha\ScriptUtils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -27,6 +28,7 @@ class Payment_Button extends Custom_Field {
 	 * Print the HTML for the payment button on the frontend.
 	 *
 	 * @since 3.0.0
+	 * @since 4.17.6 Captcha markup is rendered via ScriptUtils::render_captcha().
 	 *
 	 * @param array $settings Field settings.
 	 * @return string
@@ -64,24 +66,8 @@ class Payment_Button extends Custom_Field {
 			esc_html( $text )
 		);
 
-		$captcha_type = simpay_get_setting( 'captcha_type', '' );
-
 		if ( 'stripe_checkout' === self::$form->get_display_type() ) {
-			switch ( $captcha_type ) {
-				case 'hcaptcha':
-					$html .= sprintf(
-						'<div class="simpay-form-control h-captcha" data-sitekey="%s"></div>',
-						esc_attr( simpay_get_setting( 'hcaptcha_site_key', '' ) )
-					);
-					break;
-				case 'cloudflare-turnstile':
-					$html .= sprintf(
-						'<div class="simpay-form-control cf-turnstile" data-sitekey="%s" data-action="simpay-form-%d"></div>',
-						esc_attr( simpay_get_setting( 'cloudflare_turnstile_site_key', '' ) ),
-						self::$form->id
-					);
-					break;
-			}
+			$html .= ScriptUtils::render_captcha( (string) self::$form->id );
 		}
 
 		$html .= '<div class="simpay-form-control">';
@@ -94,6 +80,14 @@ class Payment_Button extends Custom_Field {
 		);
 
 		$html .= '</div>';
+
+		// Overlay forms use this button only to open the modal. The trust badge
+		// is output below the modal's Checkout Button instead.
+		if ( 'overlay' !== self::$form->get_display_type() ) {
+			ob_start();
+			simpay_trust_badge( self::$form->id );
+			$html .= ob_get_clean();
+		}
 
 		return $html;
 	}
