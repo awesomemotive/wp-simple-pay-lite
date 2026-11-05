@@ -171,6 +171,54 @@ function get_form_payment_method_ids( $form ) {
 }
 
 /**
+ * Determines if Link by Stripe is enabled for an on-site payment form.
+ *
+ * Link is enabled per form via the Email field's "Enable Link" setting. It
+ * only applies to on-site (Payment Element) forms; Stripe Checkout manages
+ * Link itself.
+ *
+ * @since 4.17.6
+ *
+ * @param \SimplePay\Core\Abstracts\Form $form Payment Form.
+ * @return bool
+ */
+function is_form_link_enabled( $form ) {
+	if ( 'stripe_checkout' === $form->get_display_type() ) {
+		return false;
+	}
+
+	/** @var array<string, array<int|string, array<string, mixed>>> $custom_fields */
+	$custom_fields = simpay_get_saved_meta( $form->id, '_custom_fields', array() );
+
+	if ( ! isset( $custom_fields['email'] ) || ! is_array( $custom_fields['email'] ) ) {
+		return false;
+	}
+
+	foreach ( $custom_fields['email'] as $field ) {
+		if ( is_array( $field ) && is_email_field_link_enabled( $field ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Determines if an Email field's settings have Link by Stripe enabled.
+ *
+ * @since 4.17.6
+ *
+ * @param array<string, mixed> $settings Email field settings.
+ * @return bool
+ */
+function is_email_field_link_enabled( $settings ) {
+	return isset( $settings['link'] ) &&
+		is_array( $settings['link'] ) &&
+		isset( $settings['link']['enabled'] ) &&
+		'yes' === $settings['link']['enabled'];
+}
+
+/**
  * Retrieves saved Payment Method settings for a specific form.
  *
  * @since 3.9.0
@@ -301,6 +349,8 @@ function get_form_payment_method_fee_recovery_amount(
  *   The frontend always compares the total due today.
  *
  * @link https://docs.stripe.com/payments/afterpay-clearpay#payment-options
+ * @link https://docs.stripe.com/payments/zip
+ * @link https://docs.stripe.com/payments/alma
  * @since 4.17.5
  *
  * @return array<string, array<string, mixed>>
@@ -342,6 +392,30 @@ function get_payment_method_amount_limits(): array {
 				),
 			),
 		),
+		// Zip transaction ranges, as published by Stripe.
+		'zip'               => array(
+			'basis'  => 'amount',
+			'limits' => array(
+				'aud' => array(
+					'min' => 100,
+					'max' => 5000000,
+				),
+				'usd' => array(
+					'min' => 3500,
+					'max' => 150000,
+				),
+			),
+		),
+		// Alma transaction range, as published by Stripe.
+		'alma'              => array(
+			'basis'  => 'amount',
+			'limits' => array(
+				'eur' => array(
+					'min' => 5000,
+					'max' => 500000,
+				),
+			),
+		),
 	);
 
 	/**
@@ -355,7 +429,145 @@ function get_payment_method_amount_limits(): array {
 	 */
 	$limits = apply_filters( 'simpay_payment_method_amount_limits', $limits );
 
-	return is_array( $limits ) ? $limits : array();
+	return normalize_payment_method_amount_limits( $limits );
+}
+
+/**
+ * Validates and normalizes a payment method amount limits table.
+ *
+ * This is the single source of truth for the shape of the limits used by the
+ * payment form builder notices, server-side enforcement, and the Payment
+ * Element (frontend) enforcement, so a (filtered) limit is displayed if, and
+ * only if, it is enforced.
+ *
+ * - Payment method type keys must be non-empty strings.
+ * - Currency keys are trimmed and lowercased (e.g. `USD` becomes `usd`). The
+ *   `*` (any currency) key is kept. If two keys normalize to the same
+ *   currency, the last one wins.
+ * - `min` and `max` bounds must be numeric, and are cast to integers. Other
+ *   bounds are dropped, as are currencies without a valid bound and payment
+ *   method types without a valid currency limit.
+ * - `basis` is `unit_amount` or `amount` (default).
+ *
+ * @since 4.17.6
+ *
+ * @param mixed $limits Amount limits, keyed by Stripe payment method type.
+ * @return array<string, array{basis: string, limits: array<string, array<string, int>>}>
+ */
+function normalize_payment_method_amount_limits( $limits ): array {
+	if ( ! is_array( $limits ) ) {
+		return array();
+	}
+
+	$normalized = array();
+
+	foreach ( $limits as $payment_method_type => $payment_method_limits ) {
+		if (
+			! is_string( $payment_method_type ) ||
+			'' === $payment_method_type ||
+			! is_array( $payment_method_limits ) ||
+			! isset( $payment_method_limits['limits'] )
+		) {
+			continue;
+		}
+
+		$currency_limits = normalize_payment_method_currency_amount_limits(
+			$payment_method_limits['limits']
+		);
+
+		if ( empty( $currency_limits ) ) {
+			continue;
+		}
+
+		$normalized[ $payment_method_type ] = array(
+			'basis'  => isset( $payment_method_limits['basis'] ) &&
+				'unit_amount' === $payment_method_limits['basis']
+				? 'unit_amount'
+				: 'amount',
+			'limits' => $currency_limits,
+		);
+	}
+
+	return $normalized;
+}
+
+/**
+ * Validates and normalizes the per-currency limits of a single payment method
+ * type. See `normalize_payment_method_amount_limits()`.
+ *
+ * @since 4.17.6
+ *
+ * @param mixed $currency_limits Limits keyed by currency code.
+ * @return array<string, array<string, int>> Limits keyed by lowercase currency
+ *                                           code (or `*`), each with optional
+ *                                           `min` and `max` keys.
+ */
+function normalize_payment_method_currency_amount_limits( $currency_limits ): array {
+	if ( ! is_array( $currency_limits ) ) {
+		return array();
+	}
+
+	$normalized = array();
+
+	foreach ( $currency_limits as $currency => $limit ) {
+		if ( ! is_string( $currency ) || ! is_array( $limit ) ) {
+			continue;
+		}
+
+		$currency = strtolower( trim( $currency ) );
+
+		if ( '' === $currency ) {
+			continue;
+		}
+
+		$bounds = array();
+
+		foreach ( array( 'min', 'max' ) as $bound ) {
+			if ( isset( $limit[ $bound ] ) && is_numeric( $limit[ $bound ] ) ) {
+				$bounds[ $bound ] = (int) $limit[ $bound ];
+			}
+		}
+
+		if ( empty( $bounds ) ) {
+			continue;
+		}
+
+		$normalized[ $currency ] = $bounds;
+	}
+
+	return $normalized;
+}
+
+/**
+ * Returns the normalized per-currency limits of a payment method type.
+ *
+ * @since 4.17.6
+ *
+ * @param string                                   $payment_method_type Stripe payment method type, e.g. `afterpay_clearpay`.
+ * @param array<string, array<string, mixed>>|null $limits Optional. The limits table returned by
+ *                                                         `get_payment_method_amount_limits()`, to
+ *                                                         avoid running its filter again. Read if
+ *                                                         not an array. Default null.
+ * @return array<string, array<string, int>> Limits keyed by lowercase currency code (or `*`).
+ */
+function get_payment_method_currency_amount_limits( $payment_method_type, $limits = null ): array {
+	if ( ! is_array( $limits ) ) {
+		$limits = get_payment_method_amount_limits();
+	}
+
+	if (
+		! isset( $limits[ $payment_method_type ] ) ||
+		! is_array( $limits[ $payment_method_type ] ) ||
+		! isset( $limits[ $payment_method_type ]['limits'] )
+	) {
+		return array();
+	}
+
+	// Normalizing an already normalized table is a no-op, but a table passed
+	// by a caller may not have come from `get_payment_method_amount_limits()`.
+	return normalize_payment_method_currency_amount_limits(
+		$limits[ $payment_method_type ]['limits']
+	);
 }
 
 /**
@@ -373,39 +585,17 @@ function get_payment_method_amount_limits(): array {
  * @return array<string, int> Limit with optional `min` and `max` keys. Empty if there is no limit.
  */
 function get_payment_method_currency_amount_limit( $payment_method_type, $currency, $limits = null ): array {
-	if ( ! is_array( $limits ) ) {
-		$limits = get_payment_method_amount_limits();
+	$currency_limits = get_payment_method_currency_amount_limits(
+		$payment_method_type,
+		$limits
+	);
+	$currency        = strtolower( trim( (string) $currency ) );
+
+	if ( '' !== $currency && isset( $currency_limits[ $currency ] ) ) {
+		return $currency_limits[ $currency ];
 	}
 
-	if (
-		! isset( $limits[ $payment_method_type ] ) ||
-		! is_array( $limits[ $payment_method_type ] ) ||
-		! isset( $limits[ $payment_method_type ]['limits'] ) ||
-		! is_array( $limits[ $payment_method_type ]['limits'] )
-	) {
-		return array();
-	}
-
-	$currency_limits = $limits[ $payment_method_type ]['limits'];
-	$currency        = strtolower( $currency );
-
-	if ( isset( $currency_limits[ $currency ] ) && is_array( $currency_limits[ $currency ] ) ) {
-		$limit = $currency_limits[ $currency ];
-	} elseif ( isset( $currency_limits['*'] ) && is_array( $currency_limits['*'] ) ) {
-		$limit = $currency_limits['*'];
-	} else {
-		return array();
-	}
-
-	$sanitized = array();
-
-	foreach ( array( 'min', 'max' ) as $bound ) {
-		if ( isset( $limit[ $bound ] ) && is_numeric( $limit[ $bound ] ) ) {
-			$sanitized[ $bound ] = (int) $limit[ $bound ];
-		}
-	}
-
-	return $sanitized;
+	return isset( $currency_limits['*'] ) ? $currency_limits['*'] : array();
 }
 
 /**
@@ -478,4 +668,44 @@ function is_amount_within_payment_method_limits( $payment_method_type, $currency
 	}
 
 	return true;
+}
+
+/**
+ * Returns the per-currency amount ranges of a payment method type that
+ * define both a minimum and a maximum, for display.
+ *
+ * The `*` (any currency) limit and limits that only define one bound are
+ * skipped. Reads the same normalized limits that are enforced (see
+ * `normalize_payment_method_amount_limits()`), so malformed (e.g. filtered)
+ * entries are ignored and currency codes are lowercased.
+ *
+ * @since 4.17.6
+ *
+ * @param string                                   $payment_method_type Stripe payment method type, e.g. `afterpay_clearpay`.
+ * @param array<string, array<string, mixed>>|null $limits Optional. The limits table returned by
+ *                                                         `get_payment_method_amount_limits()`, to
+ *                                                         avoid running its filter again. Read if
+ *                                                         not an array. Default null.
+ * @return array<string, array{min: int, max: int}> Ranges keyed by lowercase currency code.
+ */
+function get_payment_method_amount_ranges( $payment_method_type, $limits = null ): array {
+	$ranges = array();
+
+	$currency_limits = get_payment_method_currency_amount_limits(
+		$payment_method_type,
+		$limits
+	);
+
+	foreach ( $currency_limits as $currency => $limit ) {
+		if ( '*' === $currency || ! isset( $limit['min'], $limit['max'] ) ) {
+			continue;
+		}
+
+		$ranges[ $currency ] = array(
+			'min' => $limit['min'],
+			'max' => $limit['max'],
+		);
+	}
+
+	return $ranges;
 }

@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\reCAPTCHA;
 
+use SimplePay\Core\AntiSpam\Captcha\ScriptUtils;
 use SimplePay\Core\Utils;
 use SimplePay\Core\Settings\Subsection;
 use SimplePay\Core\Settings\Setting;
@@ -303,6 +304,64 @@ function register_settings( $settings ) {
 				'priority'   => 32,
 				'schema'     => array(
 					'type' => 'string',
+				),
+			)
+		)
+	);
+
+	// Cloudflare Turnstile Theme.
+	$settings->add(
+		new Setting_Select(
+			array(
+				'id'          => 'cloudflare_turnstile_theme',
+				'section'     => 'general',
+				'subsection'  => 'recaptcha',
+				'label'       => esc_html_x(
+					'Theme',
+					'captcha setting label',
+					'stripe'
+				),
+				'value'       => ScriptUtils::get_turnstile_theme(),
+				'options'     => ScriptUtils::get_turnstile_theme_options(),
+				'description' => wpautop(
+					esc_html__(
+						'Color scheme of the Turnstile widget. "Auto" follows the visitor\'s system preference.',
+						'stripe'
+					)
+				),
+				'priority'    => 33,
+				'schema'      => array(
+					'type' => 'string',
+					'enum' => array_keys( ScriptUtils::get_turnstile_theme_options() ),
+				),
+			)
+		)
+	);
+
+	// Cloudflare Turnstile Size.
+	$settings->add(
+		new Setting_Select(
+			array(
+				'id'          => 'cloudflare_turnstile_size',
+				'section'     => 'general',
+				'subsection'  => 'recaptcha',
+				'label'       => esc_html_x(
+					'Size',
+					'captcha setting label',
+					'stripe'
+				),
+				'value'       => ScriptUtils::get_turnstile_size(),
+				'options'     => ScriptUtils::get_turnstile_size_options(),
+				'description' => wpautop(
+					esc_html__(
+						'Size of the Turnstile widget. "Flexible" fills the width of its container.',
+						'stripe'
+					)
+				),
+				'priority'    => 34,
+				'schema'      => array(
+					'type' => 'string',
+					'enum' => array_keys( ScriptUtils::get_turnstile_size_options() ),
 				),
 			)
 		)

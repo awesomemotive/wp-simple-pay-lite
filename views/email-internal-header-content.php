@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
+<?php if ( ! empty( $image ) ) : ?>
 <table class="header__image">
 	<tbody>
 		<tr>
@@ -27,6 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tr>
 	</tbody>
 </table>
+<?php endif; ?>
 
 <?php
 if ( ! empty( $alert ) ) :

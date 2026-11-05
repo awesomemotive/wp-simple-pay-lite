@@ -201,6 +201,14 @@ function save( $post_id, $post, $update ) {
 
 	update_post_meta( $post_id, '_enable_quantity', $enable_quantity );
 
+	// Trust badge: hide-only model. The meta represents the EXCEPTION to the
+	// default (badge shown). Write 'yes' only when the seller has actively
+	// asked us to hide the badge; write 'no' otherwise so the stored value
+	// mirrors the checkbox state. Absent meta means the badge is shown.
+	$hide_trust_badge = isset( $_POST['_simpay_hide_trust_badge'] ) ? 'yes' : 'no';
+
+	update_post_meta( $post_id, '_simpay_hide_trust_badge', $hide_trust_badge );
+
 	// Stripe Link: override-only model. The meta represents the EXCEPTION
 	// to Stripe's default (Link enabled). Write 'yes' only when the seller
 	// has actively asked us to hide Link; write 'no' otherwise so the
@@ -940,14 +948,28 @@ function duplicate() {
 		return;
 	}
 
-	// Bail if the request is invalid.
-	check_admin_referer( 'simpay-duplicate-payment-form' );
+	$form_id = absint( $_REQUEST['form'] );
 
-	$post = get_post( absint( $_GET['form'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+	// Bail if the request is invalid. The nonce is tied to the form ID so it
+	// cannot be reused to duplicate a different post.
+	check_admin_referer( 'simpay-duplicate-payment-form_' . $form_id );
 
-	// Bail if post cannot be found.
-	if ( empty( $post ) ) {
+	$post = get_post( $form_id );
+
+	// Bail if post cannot be found, or is not a payment form.
+	if ( empty( $post ) || 'simple-pay' !== $post->post_type ) {
 		return;
+	}
+
+	// Bail if the current user cannot edit the payment form being duplicated.
+	if ( ! current_user_can( 'edit_post', $post->ID ) ) {
+		wp_die(
+			esc_html__( 'Sorry, you are not allowed to duplicate this payment form.', 'stripe' ),
+			'',
+			array(
+				'response' => 403,
+			)
+		);
 	}
 
 	// Allow empty post.

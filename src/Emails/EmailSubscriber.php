@@ -139,6 +139,13 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			3,
 		);
 
+		// Payment failure.
+		$subscribers['simpay_webhook_charge_failed'] = array(
+			'payment_failure',
+			10,
+			2,
+		);
+
 		return $subscribers;
 	}
 
@@ -779,5 +786,203 @@ class EmailSubscriber implements SubscriberInterface, LicenseAwareInterface {
 			$notification_mailer->set_body( $payment_processing_notification_email->get_body() );
 			$notification_mailer->send();
 		}
+	}
+
+	/**
+	 * Mails the "Payment Failure" emails (notification to admin, confirmation to customer).
+	 *
+	 * @since 4.17.6
+	 *
+	 * @param \SimplePay\Vendor\Stripe\Event  $event  Stripe Event object.
+	 * @param \SimplePay\Vendor\Stripe\Charge $charge Stripe Charge object (with customer,
+	 *                                                payment_intent, and invoice.subscription expanded).
+	 * @return void
+	 */
+	public function payment_failure( $event, $charge ) {
+		/** @var \SimplePay\Core\Emails\Email\PaymentFailureNotificationEmail $notification_email */
+		$notification_email = $this->emails['payment-failure-notification'];
+
+		/** @var \SimplePay\Core\Emails\Email\PaymentFailureConfirmationEmail $confirmation_email */
+		$confirmation_email = $this->emails['payment-failure-confirmation'];
+
+		// Determine the form ID from the charge metadata.
+		$form_id = null;
+
+		if ( isset( $charge->metadata->simpay_form_id ) ) {
+			$form_id = $charge->metadata->simpay_form_id;
+		} elseif (
+			// Recurring payments store the form ID on the Subscription, which
+			// the webhook expands on the Charge via `invoice.subscription`.
+			isset(
+				$charge->invoice,
+				$charge->invoice->subscription,
+				$charge->invoice->subscription->metadata->simpay_form_id
+			) &&
+			$charge->invoice->subscription instanceof \SimplePay\Vendor\Stripe\Subscription
+		) {
+			$form_id = $charge->invoice->subscription->metadata->simpay_form_id;
+		}
+
+		// If no form ID, this charge wasn't created by WP Simple Pay.
+		if ( empty( $form_id ) ) {
+			return;
+		}
+
+		// Get the customer from the expanded charge.
+		/** @var \SimplePay\Vendor\Stripe\Customer $customer */
+		$customer = $charge->customer;
+
+		if ( ! $customer instanceof \SimplePay\Vendor\Stripe\Customer ) {
+			return;
+		}
+
+		// Determine which emails should be sent before making any additional
+		// Stripe API requests. Both emails are throttled per form so a burst
+		// of declines (e.g. card testing) cannot flood the site admin, or use
+		// the site to send email to arbitrary customer addresses.
+		$send_notification = $notification_email->is_enabled() &&
+			! $notification_email->is_rate_limited( $form_id );
+
+		$send_confirmation = $confirmation_email->is_enabled() &&
+			! empty( $customer->email ) &&
+			! $confirmation_email->is_rate_limited( $form_id );
+
+		if ( ! $send_notification && ! $send_confirmation ) {
+			return;
+		}
+
+		// Retrieve payment confirmation data for smart tag resolution.
+		//
+		// This makes live Stripe API requests. A failure here must never
+		// break the rest of the `charge.failed` webhook processing (e.g.
+		// inventory or fraud tracking), so errors are caught and logged.
+		try {
+			$payment_confirmation_data = Payment_Confirmation\get_confirmation_data(
+				$customer->id,
+				false,
+				$form_id
+			);
+		} catch ( \Exception $e ) {
+			$this->log_payment_failure_email_error( $e );
+
+			return;
+		}
+
+		if ( empty( $payment_confirmation_data ) ) {
+			return;
+		}
+
+		// Add the charge to the data for smart tag access.
+		$payment_confirmation_data['charge'] = $charge;
+
+		// Resolve smart tags against the failed payment itself — the
+		// customer lookup above may return no (or unrelated) transactions,
+		// and tag callbacks like {total-amount} expect these to be set.
+		if ( $charge->payment_intent instanceof \SimplePay\Vendor\Stripe\PaymentIntent ) {
+			$payment_confirmation_data['paymentintents'] = array(
+				$charge->payment_intent,
+			);
+		}
+
+		if (
+			isset( $charge->invoice->subscription ) &&
+			$charge->invoice->subscription instanceof \SimplePay\Vendor\Stripe\Subscription
+		) {
+			$payment_confirmation_data['subscriptions'] = array(
+				$charge->invoice->subscription,
+			);
+		}
+
+		// Send notification email to admin.
+		if ( $send_notification ) {
+			// Count the attempt before sending so a failing transport still
+			// counts towards the limit.
+			$notification_email->record_rate_limited_send( $form_id );
+
+			$this->send_payment_failure_email(
+				$notification_email,
+				$payment_confirmation_data,
+				$notification_email->get_to()
+			);
+		}
+
+		// Send confirmation email to customer.
+		if ( $send_confirmation ) {
+			$confirmation_email->record_rate_limited_send( $form_id );
+
+			$this->send_payment_failure_email(
+				$confirmation_email,
+				$payment_confirmation_data,
+				trim( (string) $customer->email )
+			);
+		}
+	}
+
+	/**
+	 * Sends a single "Payment Failure" email.
+	 *
+	 * The email's failure smart tags are registered only for the duration of
+	 * the send, and are always removed afterwards (even if sending fails) so
+	 * they cannot affect other emails parsed later in the same request.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @param Email\PaymentFailureNotificationEmail|Email\PaymentFailureConfirmationEmail $email Email.
+	 * @param array<mixed>                                                                $payment_confirmation_data Payment confirmation data.
+	 * @param string                                                                      $to Email recipient(s).
+	 * @return void
+	 */
+	private function send_payment_failure_email( $email, $payment_confirmation_data, $to ) {
+		try {
+			$mailer = new Mailer( $email );
+			$mailer->set_data( $payment_confirmation_data );
+
+			if (
+				isset( $payment_confirmation_data['form'] ) &&
+				$payment_confirmation_data['form'] instanceof \SimplePay\Core\Abstracts\Form
+			) {
+				$mailer->set_livemode(
+					$payment_confirmation_data['form']->is_livemode()
+				);
+			}
+
+			// Register smart tags for failure context.
+			$email->register_smart_tags();
+
+			try {
+				$mailer->set_to( $to );
+				$mailer->set_subject( $email->get_subject() );
+				$mailer->set_body( $email->get_body() );
+				$mailer->send();
+			} finally {
+				// Remove this email's smart tag callbacks so they cannot
+				// affect other emails parsed later in the same request.
+				$email->unregister_smart_tags();
+			}
+		} catch ( \Exception $e ) {
+			$this->log_payment_failure_email_error( $e );
+		}
+	}
+
+	/**
+	 * Logs an error that occurred while preparing or sending a
+	 * "Payment Failure" email.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @param \Exception $e Exception.
+	 * @return void
+	 */
+	private function log_payment_failure_email_error( $e ) {
+		if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
+			return;
+		}
+
+		error_log( // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			sprintf(
+				'WP Simple Pay: Unable to send payment failure email. %s',
+				$e->getMessage()
+			)
+		);
 	}
 }

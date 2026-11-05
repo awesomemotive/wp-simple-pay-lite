@@ -44,20 +44,87 @@ function getFormId( paymentForm ) {
 }
 
 /**
+ * Returns the shared payment form variables (`spGeneral`).
+ *
+ * `spGeneral` is printed in the footer. Each payment form also carries a copy
+ * in its `data-simpay-general` attribute, so a form still loads when the
+ * footer script is missing: stripped by an optimization plugin, or not printed
+ * yet because the form scripts were moved earlier in the page. The copy then
+ * becomes `window.spGeneral`, so every other reader finds it too.
+ *
+ * @since 4.17.6
+ *
+ * @param {HTMLElement|null} paymentForm Payment form to read the copy from.
+ *                                       Defaults to the first form on the page.
+ * @return {Object|null} Shared variables, or null if none are available.
+ */
+export function getSpGeneral( paymentForm = null ) {
+	if ( isPlainObject( window.spGeneral ) ) {
+		return window.spGeneral;
+	}
+
+	const source = paymentForm?.dataset?.simpayGeneral
+		? paymentForm
+		: document.querySelector( '[data-simpay-general]' );
+
+	if ( ! source ) {
+		return null;
+	}
+
+	let spGeneral;
+
+	try {
+		spGeneral = JSON.parse( source.dataset.simpayGeneral );
+	} catch ( error ) {
+		return null;
+	}
+
+	if ( ! isPlainObject( spGeneral ) ) {
+		return null;
+	}
+
+	window.spGeneral = spGeneral;
+
+	return spGeneral;
+}
+
+/**
+ * Returns the REST API root URL, e.g. `https://example.com/wp-json/`.
+ *
+ * @since 4.17.6
+ *
+ * @param {HTMLElement|null} paymentForm Payment form, see getSpGeneral().
+ * @return {string} REST API root URL, or an empty string if unknown.
+ */
+export function getRestUrl( paymentForm = null ) {
+	return getSpGeneral( paymentForm )?.strings?.wpJsonUrl || '';
+}
+
+/**
  * Fetches a payment form's data from the form-data REST endpoint.
  *
  * Uses `wp.apiFetch` (not a bare fetch) so the request runs in the same
  * authentication context that later verifies the returned per-form nonce.
  *
  * @since 4.17.5
+ * @since 4.17.6 Rejects when the REST API URL is unknown, instead of
+ *               requesting a relative `undefined…` URL.
  *
  * @param {number} formId Payment form ID.
  * @return {Promise<Object>} Form data.
  */
 export function fetchFormData( formId ) {
+	const restUrl = getRestUrl();
+
+	if ( ! restUrl ) {
+		return Promise.reject(
+			new Error( 'The REST API URL for payment forms is not available.' )
+		);
+	}
+
 	return window.wp
 		.apiFetch( {
-			url: `${ window.spGeneral.strings.wpJsonUrl }wpsp/__internal__/form-data/${ formId }`,
+			url: `${ restUrl }wpsp/__internal__/form-data/${ formId }`,
 		} )
 		.then( ( data ) => exposeLegacyFormData( formId, data ) );
 }
@@ -81,7 +148,7 @@ export function exposeLegacyFormData( formId, data ) {
 		return data;
 	}
 
-	if ( ! isLegacyFormsObject( window.simplePayForms ) ) {
+	if ( ! isPlainObject( window.simplePayForms ) ) {
 		window.simplePayForms = {};
 	}
 
@@ -91,20 +158,25 @@ export function exposeLegacyFormData( formId, data ) {
 }
 
 /**
- * Determines if a value can hold the legacy `simplePayForms` entries.
+ * Determines if a value is a plain object, such as the legacy
+ * `simplePayForms` entries or `spGeneral`.
  *
  * @since 4.17.5
  *
  * @param {*} value Value to check.
  * @return {boolean} True if the value is a plain object.
  */
-function isLegacyFormsObject( value ) {
+function isPlainObject( value ) {
 	return !! value && 'object' === typeof value && ! Array.isArray( value );
 }
 
-if ( ! isLegacyFormsObject( window.simplePayForms ) ) {
+if ( ! isPlainObject( window.simplePayForms ) ) {
 	window.simplePayForms = {};
 }
+
+// Make `spGeneral` available as soon as the script loads, for code that reads
+// it before the forms are initialized.
+getSpGeneral();
 
 /**
  * Copies a payment form's configuration onto its form element.
@@ -317,6 +389,8 @@ export function markFormReady( paymentForm ) {
  * the form's own strings are part of the form data that failed to load.
  *
  * @since 4.17.5
+ * @since 4.17.6 Reads the message from the form's copy of `spGeneral` when
+ *               the footer script is missing.
  *
  * @param {HTMLFormElement} paymentForm Payment form element.
  * @return {boolean} True if the message was shown.
@@ -327,7 +401,7 @@ export function showFormLoadError( paymentForm ) {
 	const errorEl =
 		paymentForm.querySelector( '.simpay-generic-error' ) ||
 		paymentForm.querySelector( '.simpay-errors' );
-	const message = window.spGeneral?.i18n?.formLoadError;
+	const message = getSpGeneral( paymentForm )?.i18n?.formLoadError;
 
 	if ( ! errorEl || ! message ) {
 		return false;
@@ -363,7 +437,7 @@ export function showFormLoadError( paymentForm ) {
  * @param {HTMLElement} errorEl Element holding the load error message.
  */
 function disablePaymentButtons( paymentForm, errorEl ) {
-	const label = window.spGeneral?.i18n?.formLoadErrorButton;
+	const label = getSpGeneral( paymentForm )?.i18n?.formLoadErrorButton;
 	const buttons = paymentForm.querySelectorAll(
 		'.simpay-checkout-btn, .simpay-payment-btn'
 	);

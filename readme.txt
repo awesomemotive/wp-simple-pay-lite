@@ -3,7 +3,7 @@ Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 4.17.5
+Stable tag: 4.17.6
 Requires PHP: 7.4
 License: GPLv2 or later
 
@@ -319,6 +319,25 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 12. Global payment form settings: Summary report email
 
 == Changelog ==
+
+= Stripe Payment Forms 4.17.6 - October 29, 2026 =
+
+* New: Send payment failure emails to the site admin and, optionally, the customer when a one-time or subscription payment fails.
+* New: Accept Zip and Alma buy now, pay later payments.
+* New: Show a "Secure payment via Stripe" trust badge below the submit button, with an option to hide it per form.
+* New: Add an Optimized Checkout setting that lets Stripe choose and order payment methods on Stripe Checkout forms.
+* New: Add Cloudflare Turnstile theme and size settings.
+* Update: Offer Link by Stripe in the Payment Element when Link is enabled on the Email field.
+* Update: Remove the WP Simple Pay logo from Pro admin notification emails.
+* Update: Show the accepted payment amount range for each payment method in the form builder.
+* Update: Load payment forms even when an optimization plugin removes or delays the footer script.
+* Update: Check user permissions before duplicating a payment form.
+* Fix: Stop charging the processing fee when a customer unchecks a Fee Recovery Toggle that is checked by default.
+* Fix: Repair the database on sites where a previous upgrade failed, so payments are recorded again.
+* Fix: Manage Subscriptions form no longer shows "Invalid CAPTCHA" with reCAPTCHA v3 on pages without a payment form.
+* Fix: Email "Configure" button no longer fails when Settings is opened from the top-level menu.
+* Fix: Footer promotion no longer covers the "Save Changes" button on settings pages.
+* Fix: Prevent PHP warnings when Cloudflare Turnstile returns an incomplete response.
 
 = Stripe Payment Forms 4.17.5 - October 13, 2026 =
 

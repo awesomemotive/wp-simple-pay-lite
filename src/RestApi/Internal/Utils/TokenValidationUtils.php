@@ -200,11 +200,13 @@ trait TokenValidationUtils {
 			return false;
 		}
 
+		// A response without an action (for example from Cloudflare's test
+		// keys) cannot be matched to this form, so it is rejected.
 		$action = 'simpay-form-' . $action;
-		if ( $response->action !== $action ) {
+		if ( ! isset( $response->action ) || $response->action !== $action ) {
 			return false;
 		}
 
-		return $response->success;
+		return isset( $response->success ) && true === $response->success;
 	}
 }

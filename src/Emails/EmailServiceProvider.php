@@ -36,6 +36,8 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 			'email-payment-processing-notification',
 			'email-payment-refunded-confirmation',
 			'email-subscription-cancel',
+			'email-payment-failure-notification',
+			'email-payment-failure-confirmation',
 		);
 	}
 
@@ -114,6 +116,16 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 			Email\SubscriptionCancellationNotification::class
 		);
 
+		$container->add(
+			'email-payment-failure-notification',
+			Email\PaymentFailureNotificationEmail::class
+		);
+
+		$container->add(
+			'email-payment-failure-confirmation',
+			Email\PaymentFailureConfirmationEmail::class
+		);
+
 		// Summary report scheduler.
 		$container->add(
 			'email-summary-report-scheduler',
@@ -141,6 +153,8 @@ class EmailServiceProvider extends AbstractPluginServiceProvider {
 					'payment-processing-confirmation'  => $container->get( 'email-payment-processing-confirmation' ),
 					'payment-processing-notification'  => $container->get( 'email-payment-processing-notification' ),
 					'payment-refunded-confirmation'    => $container->get( 'email-payment-refunded-confirmation' ),
+					'payment-failure-notification'     => $container->get( 'email-payment-failure-notification' ),
+					'payment-failure-confirmation'     => $container->get( 'email-payment-failure-confirmation' ),
 				)
 			);
 	}

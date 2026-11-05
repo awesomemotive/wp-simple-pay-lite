@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Simple Pay Lite plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Simple Pay Lite 4.17.5\n"
+"Project-Id-Version: WP Simple Pay Lite 4.17.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-simple-pay-lite\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-13T14:15:57+00:00\n"
+"POT-Creation-Date: 2026-10-29T12:59:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: stripe\n"
@@ -157,38 +157,38 @@ msgstr ""
 msgid "Automatically activate a recurring subscription. %1$sLearn more%2$s"
 msgstr ""
 
-#: includes/core/admin/class-menus.php:79
-#: includes/core/admin/class-menus.php:190
+#: includes/core/admin/class-menus.php:80
+#: includes/core/admin/class-menus.php:217
 #: src/AdminBar/AdminBarSubscriber.php:177
 msgid "Support"
 msgstr ""
 
-#: includes/core/admin/class-menus.php:88
+#: includes/core/admin/class-menus.php:89
 msgid "Docs"
 msgstr ""
 
-#: includes/core/admin/class-menus.php:95
+#: includes/core/admin/class-menus.php:96
 msgid "Free Plugins"
 msgstr ""
 
-#: includes/core/admin/class-menus.php:99
+#: includes/core/admin/class-menus.php:100
 msgid "Made with ♥ by the WP Simple Pay Team"
 msgstr ""
 
 #. translators: %1$s Opening strong tag, do not translate. %2$s Closing strong tag, do not translate. %3$s Opening anchor tag, do not translate. %4$s Closing anchor tag, do not translate.
-#: includes/core/admin/class-menus.php:119
+#: includes/core/admin/class-menus.php:146
 #, php-format
 msgid "Please rate %1$sWP Simple Pay%2$s %3$s★★★★★%4$s on %3$sWordPress.org%4$s to help us spread the word."
 msgstr ""
 
-#: includes/core/admin/class-menus.php:148
+#: includes/core/admin/class-menus.php:175
 #: includes/core/post-types/simple-pay/menu.php:67
 #: views/admin-education-upgrade-modal.php:29
 #: includes/core/assets/js/dist/simpay-admin-form-template-explorer.js:3
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: includes/core/admin/class-menus.php:162
+#: includes/core/admin/class-menus.php:189
 #: includes/core/post-types/simple-pay/menu.php:25
 #: includes/core/settings/display.php:166
 #: src/AdminBar/AdminBarSubscriber.php:161
@@ -196,7 +196,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: includes/core/admin/class-menus.php:177
+#: includes/core/admin/class-menus.php:204
 msgid "Documentation"
 msgstr ""
 
@@ -213,12 +213,12 @@ msgid "Form ID"
 msgstr ""
 
 #: includes/core/admin/fields/class-default-value.php:111
-#: includes/core/post-types/simple-pay/edit-form.php:972
+#: includes/core/post-types/simple-pay/edit-form.php:1026
 msgid "Form Title"
 msgstr ""
 
 #: includes/core/admin/fields/class-default-value.php:112
-#: includes/core/post-types/simple-pay/edit-form.php:973
+#: includes/core/post-types/simple-pay/edit-form.php:1027
 msgid "Form Description"
 msgstr ""
 
@@ -269,7 +269,7 @@ msgid "WP Simple Pay requires Stripe Connect for the highest reliability and sec
 msgstr ""
 
 #: includes/core/admin/functions/notices.php:101
-#: includes/core/recaptcha/index.php:353
+#: includes/core/recaptcha/index.php:346
 #: src/License/LicenseNotificationSubscriber.php:93
 #: src/License/LicenseNotificationSubscriber.php:180
 #: src/NotificationInbox/Notifications/StripeConnectNotification.php:75
@@ -538,25 +538,25 @@ msgid "Plugin unavailable."
 msgstr ""
 
 #: includes/core/forms/class-default-form.php:97
-#: includes/core/forms/class-default-form.php:373
-#: includes/core/forms/fields/class-payment-button.php:51
+#: includes/core/forms/class-default-form.php:377
+#: includes/core/forms/fields/class-payment-button.php:53
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:40
 msgid "Pay with Card"
 msgstr ""
 
 #: includes/core/forms/class-default-form.php:98
-#: includes/core/forms/class-default-form.php:374
+#: includes/core/forms/class-default-form.php:378
 msgid "Start Trial"
 msgstr ""
 
 #: includes/core/forms/class-default-form.php:99
-#: includes/core/forms/class-default-form.php:375
+#: includes/core/forms/class-default-form.php:379
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:69
 msgid "Please Wait..."
 msgstr ""
 
 #: includes/core/forms/class-default-form.php:138
-#: includes/core/forms/class-default-form.php:414
+#: includes/core/forms/class-default-form.php:418
 #: includes/core/rest-api/class-controller.php:59
 msgid "Unable to complete request. Please try again."
 msgstr ""
@@ -594,7 +594,7 @@ msgstr ""
 
 #. translators: %d: Payment Form ID.
 #: includes/core/forms/class-price-options.php:620
-#: includes/core/post-types/simple-pay/actions.php:340
+#: includes/core/post-types/simple-pay/actions.php:348
 #: includes/core/utils/migrations/routines/class-prices-api.php:126
 #, php-format
 msgid "WP Simple Pay - Form %d"
@@ -836,92 +836,96 @@ msgstr ""
 msgid "Payment unavailable"
 msgstr ""
 
-#: includes/core/functions/shared.php:630
+#: includes/core/functions/shared.php:655
 msgctxt "recurring interval"
 msgid "day"
 msgstr ""
 
-#: includes/core/functions/shared.php:631
+#: includes/core/functions/shared.php:656
 msgctxt "recurring interval"
 msgid "days"
 msgstr ""
 
-#: includes/core/functions/shared.php:632
+#: includes/core/functions/shared.php:657
 msgctxt "recurring interval adjective"
 msgid "daily"
 msgstr ""
 
-#: includes/core/functions/shared.php:635
+#: includes/core/functions/shared.php:660
 msgctxt "recurring interval"
 msgid "week"
 msgstr ""
 
-#: includes/core/functions/shared.php:636
+#: includes/core/functions/shared.php:661
 msgctxt "recurring interval"
 msgid "weeks"
 msgstr ""
 
-#: includes/core/functions/shared.php:637
+#: includes/core/functions/shared.php:662
 msgctxt "recurring interval adjective"
 msgid "weekly"
 msgstr ""
 
-#: includes/core/functions/shared.php:640
+#: includes/core/functions/shared.php:665
 msgctxt "recurring interval"
 msgid "month"
 msgstr ""
 
-#: includes/core/functions/shared.php:641
+#: includes/core/functions/shared.php:666
 msgctxt "recurring interval"
 msgid "months"
 msgstr ""
 
-#: includes/core/functions/shared.php:642
+#: includes/core/functions/shared.php:667
 msgctxt "recurring interval adjective"
 msgid "monthly"
 msgstr ""
 
-#: includes/core/functions/shared.php:645
+#: includes/core/functions/shared.php:670
 msgctxt "recurring interval"
 msgid "year"
 msgstr ""
 
-#: includes/core/functions/shared.php:646
+#: includes/core/functions/shared.php:671
 msgctxt "recurring interval"
 msgid "years"
 msgstr ""
 
-#: includes/core/functions/shared.php:647
+#: includes/core/functions/shared.php:672
 msgctxt "recurring interval adjective"
 msgid "yearly"
 msgstr ""
 
-#: includes/core/functions/shared.php:1436
+#: includes/core/functions/shared.php:1461
 msgid "Business Operations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1437
+#: includes/core/functions/shared.php:1462
 msgid "Donations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1438
+#: includes/core/functions/shared.php:1463
 msgid "Fundraising"
 msgstr ""
 
-#: includes/core/functions/shared.php:1439
+#: includes/core/functions/shared.php:1464
 msgid "Products & Services"
 msgstr ""
 
-#: includes/core/functions/shared.php:1440
+#: includes/core/functions/shared.php:1465
 msgid "Registrations"
 msgstr ""
 
-#: includes/core/functions/shared.php:1441
+#: includes/core/functions/shared.php:1466
 msgid "Features / Functionality"
 msgstr ""
 
-#: includes/core/functions/shared.php:1447
+#: includes/core/functions/shared.php:1472
 msgid "Recently Added"
+msgstr ""
+
+#: includes/core/functions/shared.php:2105
+msgid "Secure payment via Stripe"
 msgstr ""
 
 #: includes/core/i18n/countries.php:27
@@ -10593,8 +10597,12 @@ msgstr ""
 msgid "Thank you. Your payment of %1$s has been received and your subscription has been activated. You will be charged %2$s from %3$s."
 msgstr ""
 
+#: includes/core/post-types/simple-pay/actions.php:967
+msgid "Sorry, you are not allowed to duplicate this payment form."
+msgstr ""
+
 #. translators: %s Payment form name.
-#: includes/core/post-types/simple-pay/actions.php:1026
+#: includes/core/post-types/simple-pay/actions.php:1048
 #, php-format
 msgid "%s - Duplicate"
 msgstr ""
@@ -10938,7 +10946,7 @@ msgid "Stripe blue"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-custom-fields/custom-fields-payment-button-html.php:95
-#: includes/core/recaptcha/settings.php:161
+#: includes/core/recaptcha/settings.php:162
 #: includes/core/settings/register-emails.php:327
 #: src/Admin/FormBuilder/FormStyle/AdminUI.php:172
 msgid "Default"
@@ -11063,101 +11071,101 @@ msgid "All"
 msgstr ""
 
 #. translators: %s Payment Method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:563
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:564
 #, php-format
 msgid "Unlock the \"%s\" Payment Method"
 msgstr ""
 
 #. translators: %1$s Payment method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:572
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:573
 #, php-format
 msgid "We're sorry, the %1$s payment method is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
 #. translators: %s Payment Method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:600
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:601
 #, php-format
 msgid "Unlock Fee Recovery for \"%s\" Payments"
 msgstr ""
 
 #. translators: %1$s Payment method name.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:609
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:610
 msgid "We're sorry, recovering Stripe processing fees is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
 #. translators: %1$s Payment Method name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:694
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:695
 #, php-format
 msgid "%1$s is not available in your %2$sStripe account's country%3$s"
 msgstr ""
 
 #. translators: %1$s Payment Method name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:723
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:724
 #, php-format
 msgid "%1$s is not compatible your %2$swebsite's currency%3$s. %4$sUpgrade to Pro%5$s to sell in multiple currencies."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:772
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:773
 msgid "Fee Recovery"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:785
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:786
 msgid "Learn about Payment Method"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:813
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:814
 msgid "Unlock \"Fixed Rate\" Tax Calculation"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:818
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:819
 msgid "We're sorry, collecting fixed rate taxes is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:835
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:836
 msgid "Unlock Automatically Calculated Tax Amounts"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:840
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:841
 msgid "We're sorry, automatically calculating and collecting taxes is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:862
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:863
 msgid "Tax Collection"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:871
-#: includes/core/recaptcha/settings.php:500
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:872
+#: includes/core/recaptcha/settings.php:559
 #: includes/core/settings/register-emails.php:347
 #: includes/core/settings/register-emails.php:352
 #: src/Admin/SiteHealth/SiteHealthDebugInformation.php:248
 msgid "None"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:881
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:882
 msgid "Global tax rates"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:891
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:892
 msgid "Automatically calculated by location"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:915
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:916
 msgid "Unlock \"Purchase Mode\" Setting"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:920
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:921
 msgid "We're sorry, the Purchase Mode setting is not available in WP Simple Pay Lite. Please upgrade to <strong>WP Simple Pay Pro</strong> to unlock this and other awesome features."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:942
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:943
 msgid "Purchase Mode"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:960
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:961
 msgid "Allow purchasing multiple price options"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form-payment-options.php:969
+#: includes/core/post-types/simple-pay/edit-form-payment-options.php:970
 msgid "Purchase multiple price options in a single transaction."
 msgstr ""
 
@@ -11244,7 +11252,7 @@ msgstr ""
 #: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-custom-amount.php:99
 #: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-quantity.php:63
 #: includes/core/post-types/simple-pay/edit-form-payment-options/price-option/trait-recurring.php:168
-#: includes/core/settings/register-emails.php:539
+#: includes/core/settings/register-emails.php:546
 msgid "Configure"
 msgstr ""
 
@@ -11615,7 +11623,7 @@ msgid "Learn more"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:288
-#: includes/core/settings/register-emails.php:449
+#: includes/core/settings/register-emails.php:451
 msgid "Other"
 msgstr ""
 
@@ -11643,9 +11651,21 @@ msgstr ""
 msgid "When checked, Stripe Link is hidden from the off-site Stripe Checkout payment-method list. Stripe Link is enabled by default; leave this unchecked to keep the default behavior."
 msgstr ""
 
+#: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:457
+msgid "Optimized Checkout is enabled, so Stripe decides whether to show Stripe Link and this setting is ignored for Stripe Checkout forms."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:462
+msgid "Optimized Checkout is enabled, so Stripe decides which payment methods to show and the selections below are ignored for Stripe Checkout forms."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form-stripe-checkout.php:486
+msgid "Manage Optimized Checkout"
+msgstr ""
+
 #: includes/core/post-types/simple-pay/edit-form.php:42
 #: includes/core/post-types/simple-pay/list-table.php:99
-#: includes/core/recaptcha/settings.php:527
+#: includes/core/recaptcha/settings.php:586
 msgid "Preview"
 msgstr ""
 
@@ -11769,52 +11789,64 @@ msgstr ""
 msgid "Open in an overlay modal"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:952
-msgid "Transaction Description"
-msgstr ""
-
-#: includes/core/post-types/simple-pay/edit-form.php:971
-msgid "Auto (default)"
-msgstr ""
-
-#: includes/core/post-types/simple-pay/edit-form.php:974
-msgid "Price Option Label"
+#: includes/core/post-types/simple-pay/edit-form.php:957
+msgid "Trust Badge"
 msgstr ""
 
 #: includes/core/post-types/simple-pay/edit-form.php:975
+msgid "Hide trust badge"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:979
+msgid "When checked, the \"Secure payment via Stripe\" badge below the submit button is hidden. The badge is displayed by default."
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:1006
+msgid "Transaction Description"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:1025
+msgid "Auto (default)"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:1028
+msgid "Price Option Label"
+msgstr ""
+
+#: includes/core/post-types/simple-pay/edit-form.php:1029
 #: includes/core/assets/js/dist/simpay-admin-page-activity-reports.js:3
 msgid "Custom"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:983
+#: includes/core/post-types/simple-pay/edit-form.php:1037
 msgid "Choose what appears as the transaction description in Stripe. Auto uses the price option label if set, otherwise the form title."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:995
+#: includes/core/post-types/simple-pay/edit-form.php:1049
 msgid "Custom Description"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:1054
+#: includes/core/post-types/simple-pay/edit-form.php:1108
 msgid "Spam & Fraud Protection"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:1072
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:461
+#: includes/core/post-types/simple-pay/edit-form.php:1126
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:484
 msgid "CAPTCHA"
 msgstr ""
 
 #. translators: %1$s opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/post-types/simple-pay/edit-form.php:1080
+#: includes/core/post-types/simple-pay/edit-form.php:1134
 #, php-format
 msgid "%1$sConfigure CAPTCHA settings%2$s to adjust anti-spam protection."
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:1104
+#: includes/core/post-types/simple-pay/edit-form.php:1158
 #: src/AntiSpam/EmailVerification.php:326
 msgid "Additional protection enabled!"
 msgstr ""
 
-#: includes/core/post-types/simple-pay/edit-form.php:1109
+#: includes/core/post-types/simple-pay/edit-form.php:1163
 #: src/AntiSpam/EmailVerification.php:331
 msgid "Disabled — missing additional protection!"
 msgstr ""
@@ -12083,192 +12115,209 @@ msgid_plural "%1$s payment forms restored from the Trash."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/core/recaptcha/index.php:94
-#: includes/core/recaptcha/settings.php:648
-#: src/AntiSpam/Captcha/ScriptUtils.php:63
-msgid "Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys."
-msgstr ""
-
-#: includes/core/recaptcha/index.php:265
+#: includes/core/recaptcha/index.php:258
 msgid "Unable to validate reCAPTCHA token. Please verify your Site and Secret keys."
 msgstr ""
 
-#: includes/core/recaptcha/index.php:331
+#: includes/core/recaptcha/index.php:324
 msgid "🚨 Missing Payment Form Fraud Protection"
 msgstr ""
 
-#: includes/core/recaptcha/index.php:336
+#: includes/core/recaptcha/index.php:329
 msgid "Configure a CAPTCHA solution to protect your payment forms and prevent spam, abuse, and fraudulent payments."
 msgstr ""
 
-#: includes/core/recaptcha/index.php:343
+#: includes/core/recaptcha/index.php:336
 msgid "Configure CAPTCHA"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:37
+#: includes/core/recaptcha/settings.php:38
 msgctxt "settings subsection label"
 msgid "🛡️ Anti-Spam"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:67
+#: includes/core/recaptcha/settings.php:68
 msgctxt "captcha setup setting label"
 msgid "CAPTCHA"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:85
+#: includes/core/recaptcha/settings.php:86
 msgctxt "recaptcha setup setting label"
 msgid "Google reCAPTCHA v3"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:103
-#: includes/core/recaptcha/settings.php:203
-#: includes/core/recaptcha/settings.php:270
+#: includes/core/recaptcha/settings.php:104
+#: includes/core/recaptcha/settings.php:204
+#: includes/core/recaptcha/settings.php:271
 msgctxt "captcha setting label"
 msgid "Site Key"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:127
-#: includes/core/recaptcha/settings.php:227
-#: includes/core/recaptcha/settings.php:294
+#: includes/core/recaptcha/settings.php:128
+#: includes/core/recaptcha/settings.php:228
+#: includes/core/recaptcha/settings.php:295
 msgctxt "captcha setting label"
 msgid "Secret Key"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:151
+#: includes/core/recaptcha/settings.php:152
 msgctxt "recaptcha setting label"
 msgid "Score Threshold"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:162
+#: includes/core/recaptcha/settings.php:163
 msgid "Aggressive"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:165
+#: includes/core/recaptcha/settings.php:166
 msgid "Determines how lenient judgement should be on suspected bot usage."
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:185
+#: includes/core/recaptcha/settings.php:186
 msgctxt "captcha setup setting label"
 msgid "hCaptcha"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:252
+#: includes/core/recaptcha/settings.php:253
 msgctxt "captcha setup setting label"
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:347
+#: includes/core/recaptcha/settings.php:319
+msgctxt "captcha setting label"
+msgid "Theme"
+msgstr ""
+
+#: includes/core/recaptcha/settings.php:327
+msgid "Color scheme of the Turnstile widget. \"Auto\" follows the visitor's system preference."
+msgstr ""
+
+#: includes/core/recaptcha/settings.php:348
+msgctxt "captcha setting label"
+msgid "Size"
+msgstr ""
+
+#: includes/core/recaptcha/settings.php:356
+msgid "Size of the Turnstile widget. \"Flexible\" fills the width of its container."
+msgstr ""
+
+#: includes/core/recaptcha/settings.php:406
 msgid "A CAPTCHA is an anti-spam technique which helps to protect your website from spam and abuse while letting real people pass through with ease. WP Simple Pay supports two popular services."
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/recaptcha/settings.php:357
+#: includes/core/recaptcha/settings.php:416
 #, php-format
 msgid "Learn more about CAPTCHA and how to choose the best option for your website in our %1$sdocumentation%2$s"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:381
+#: includes/core/recaptcha/settings.php:440
 msgid "CAPTCHA Type"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:397
-#: includes/core/recaptcha/settings.php:427
-#: includes/core/recaptcha/settings.php:459
+#: includes/core/recaptcha/settings.php:456
+#: includes/core/recaptcha/settings.php:486
+#: includes/core/recaptcha/settings.php:518
 msgid "Recommended"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:402
-#: includes/core/recaptcha/settings.php:407
+#: includes/core/recaptcha/settings.php:461
+#: includes/core/recaptcha/settings.php:466
 msgid "hCaptcha"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:409
+#: includes/core/recaptcha/settings.php:468
 msgid "Challenge"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:432
+#: includes/core/recaptcha/settings.php:491
 msgid "reCAPTCHA"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:437
+#: includes/core/recaptcha/settings.php:496
 msgid "Google reCAPTCHA"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:439
+#: includes/core/recaptcha/settings.php:498
 msgid "Invisible"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:464
-#: includes/core/recaptcha/settings.php:469
+#: includes/core/recaptcha/settings.php:523
+#: includes/core/recaptcha/settings.php:528
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:471
+#: includes/core/recaptcha/settings.php:530
 msgid "Adaptive"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:490
+#: includes/core/recaptcha/settings.php:549
 msgid "Not Recommended"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:495
+#: includes/core/recaptcha/settings.php:554
 msgid "No CAPTCHA"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/recaptcha/settings.php:539
+#: includes/core/recaptcha/settings.php:598
 #, php-format
 msgid "hCaptcha is an anti-bot solution that protects user privacy. It is the most popular Google reCAPTCHA alternative. To enable hCaptcha %1$ssign up for hCaptcha (free)%2$s to retrieve the necessary credentials."
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:552
+#: includes/core/recaptcha/settings.php:611
 msgid "Sign Up for hCaptcha (Free)"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:589
+#: includes/core/recaptcha/settings.php:648
 msgid "Badge Preview"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:594
+#: includes/core/recaptcha/settings.php:653
 msgid "reCAPTCHA badge"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/recaptcha/settings.php:605
+#: includes/core/recaptcha/settings.php:664
 #, php-format
 msgid "Google reCAPTCHA is a free anti-spam service from Google which helps to protect your website from spam and abuse while letting real people pass through with ease. To enable reCAPTCHA %1$sregister your site with Google (free)%2$s with reCAPTCHA v3 to retrieve the necessary credentials."
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:618
+#: includes/core/recaptcha/settings.php:677
 msgid "Sign Up for reCAPTCHA v3 (Free)"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:677
+#: includes/core/recaptcha/settings.php:707
+#: src/AntiSpam/Captcha/ScriptUtils.php:106
+msgid "Unable to generate and validate reCAPTCHA token. Please verify your Site and Secret keys."
+msgstr ""
+
+#: includes/core/recaptcha/settings.php:736
 msgid "Cloudflare Turnstile badge"
 msgstr ""
 
 #. translators: %1$s Opening <strong> tag, do not translate. %2$s Closing </strong> tag, do not translate.
-#: includes/core/recaptcha/settings.php:686
+#: includes/core/recaptcha/settings.php:745
 #, php-format
 msgid "%1$sNote:%2$s Cloudflare Turnstile is not compatible with overlay payment forms. Please use a different CAPTCHA solution if you are displaying your forms in an overlay."
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/recaptcha/settings.php:707
+#: includes/core/recaptcha/settings.php:766
 #, php-format
 msgid "Cloudflare Turnstile delivers frustration-free, CAPTCHA-free web experiences to website visitors. To enable Cloudflare Turnstile %1$ssign up at Cloudflare (free)%2$s to retrieve the necessary credentials."
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:721
+#: includes/core/recaptcha/settings.php:780
 msgid "Sign Up for Cloudflare Turnstile (Free)"
 msgstr ""
 
-#: includes/core/recaptcha/settings.php:744
+#: includes/core/recaptcha/settings.php:803
 msgid "🚨 Warning"
 msgstr ""
 
 #. translators: %1$s Opening anchor tag, do not translate. %2$s Closing anchor tag, do not translate.
-#: includes/core/recaptcha/settings.php:751
+#: includes/core/recaptcha/settings.php:810
 #, php-format
 msgid "Disabling CAPTCHA will make your site more vulnerable to spam and fraudulent payments which can <strong>cost you money and jeopardize your Stripe account</strong>. We highly recommend using a provided CAPTCHA solution. Learn more about CAPTCHA and how to choose the best option for your website in our %1$sdocumentation%2$s"
 msgstr ""
@@ -12435,18 +12484,18 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
-#: includes/core/settings/register-emails.php:466
+#: includes/core/settings/register-emails.php:473
 msgid "Select an email to configure&hellip;"
 msgstr ""
 
 #. translators: Email label.
-#: includes/core/settings/register-emails.php:476
+#: includes/core/settings/register-emails.php:483
 #, php-format
 msgid "Unlock \"%s\" Email"
 msgstr ""
 
 #. translators: %1$s Email label. %2$s License level required.
-#: includes/core/settings/register-emails.php:485
+#: includes/core/settings/register-emails.php:492
 #, php-format
 msgid "We're sorry, sending and customizing the \"%1$s\" email is not available on your plan. Please upgrade to the <strong>%2$s</strong> plan or higher to unlock this and other awesome features."
 msgstr ""
@@ -12752,12 +12801,25 @@ msgstr ""
 msgid "The country associated with the connected Stripe account."
 msgstr ""
 
-#: includes/core/settings/register-stripe.php:326
+#: includes/core/settings/register-stripe.php:310
+msgctxt "setting label"
+msgid "Optimized Checkout"
+msgstr ""
+
+#: includes/core/settings/register-stripe.php:315
+msgid "Let Stripe automatically select and order payment methods"
+msgstr ""
+
+#: includes/core/settings/register-stripe.php:324
+msgid "When enabled, off-site Stripe Checkout forms use Stripe's Optimized Checkout Suite to determine which payment methods to display based on the customer's location, device, and likelihood to convert. While enabled, this setting overrides the payment methods selected on individual Stripe Checkout payment forms and each form's \"Disable Stripe Link\" setting."
+msgstr ""
+
+#: includes/core/settings/register-stripe.php:362
 msgctxt "setting label"
 msgid "Stripe Checkout"
 msgstr ""
 
-#: includes/core/settings/register-stripe.php:330
+#: includes/core/settings/register-stripe.php:366
 msgid "Specify \"Auto-detect\" to display Stripe Checkout in the user's preferred language, if available."
 msgstr ""
 
@@ -13655,60 +13717,64 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:445
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:468
 msgid "Version"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:449
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:472
 msgid "Stripe TLS"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:453
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:476
 msgid "Stripe Account ID"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:457
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:480
 msgid "Global Payment Mode"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:465
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:488
 msgid "Rate Limit File"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:469
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:492
 #: src/AntiSpam/EmailVerification.php:295
 msgid "Email Verification"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:473
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:496
 msgid "Require Authentication"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:477
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:500
 msgid "Most Recent Webhook Event"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:481
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:504
 msgid "Webhook Secret"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:485
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:508
+msgid "Optimized Checkout"
+msgstr ""
+
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:512
 msgid "Opinionated Styles"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:489
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:516
 msgid "Database Tables"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:493
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:520
 msgid "Stripe API Version"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:497
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:524
 msgid "Error Notifications"
 msgstr ""
 
-#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:507
+#: src/Admin/SiteHealth/SiteHealthDebugInformation.php:534
 msgid "⚠️ Potential Conflicts"
 msgstr ""
 
@@ -14075,6 +14141,36 @@ msgstr ""
 msgid "Refund processed successfully."
 msgstr ""
 
+#: src/AntiSpam/Captcha/ScriptUtils.php:166
+msgctxt "captcha theme option"
+msgid "Auto"
+msgstr ""
+
+#: src/AntiSpam/Captcha/ScriptUtils.php:167
+msgctxt "captcha theme option"
+msgid "Light"
+msgstr ""
+
+#: src/AntiSpam/Captcha/ScriptUtils.php:168
+msgctxt "captcha theme option"
+msgid "Dark"
+msgstr ""
+
+#: src/AntiSpam/Captcha/ScriptUtils.php:184
+msgctxt "captcha size option"
+msgid "Normal"
+msgstr ""
+
+#: src/AntiSpam/Captcha/ScriptUtils.php:185
+msgctxt "captcha size option"
+msgid "Flexible"
+msgstr ""
+
+#: src/AntiSpam/Captcha/ScriptUtils.php:186
+msgctxt "captcha size option"
+msgid "Compact"
+msgstr ""
+
 #: src/AntiSpam/EmailVerification.php:148
 msgctxt "setting label"
 msgid "Email Verification"
@@ -14258,9 +14354,21 @@ msgid "Please activate WP Simple Pay Pro from your WordPress plugins page."
 msgstr ""
 
 #. translators: %1$s Website name. %2$s Opening anchor tag, do not translate. %3$s Closing anchor tag, do not translate.
-#: src/Emails/Email/AbstractEmail.php:272
+#: src/Emails/Email/AbstractEmail.php:278
 #, php-format
 msgid "This email was automatically generated and sent from your website %1$s.<br />Manage %2$semail settings%3$s."
+msgstr ""
+
+#: src/Emails/Email/FailureSmartTagsTrait.php:65
+msgid "The reason the payment failed (e.g. \"Your card was declined.\")"
+msgstr ""
+
+#: src/Emails/Email/FailureSmartTagsTrait.php:69
+msgid "The Stripe failure code (e.g. \"card_declined\")"
+msgstr ""
+
+#: src/Emails/Email/FailureSmartTagsTrait.php:174
+msgid "unknown"
 msgstr ""
 
 #: src/Emails/Email/InvoiceConfirmationEmail.php:66
@@ -14299,6 +14407,40 @@ msgstr ""
 #: src/Emails/Email/PaymentConfirmationEmail.php:71
 #, php-format
 msgid "Payment Receipt for %s"
+msgstr ""
+
+#: src/Emails/Email/PaymentFailureConfirmationEmail.php:48
+msgid "Payment Failure Confirmation"
+msgstr ""
+
+#: src/Emails/Email/PaymentFailureConfirmationEmail.php:55
+msgid "Send a confirmation email to the customer when a payment fails"
+msgstr ""
+
+#: src/Emails/Email/PaymentFailureConfirmationEmail.php:95
+msgid "Your payment could not be processed"
+msgstr ""
+
+#: src/Emails/Email/PaymentFailureConfirmationEmail.php:116
+msgid "Your payment could not be processed."
+msgstr ""
+
+#: src/Emails/Email/PaymentFailureNotificationEmail.php:48
+msgid "Payment Failure Notification"
+msgstr ""
+
+#: src/Emails/Email/PaymentFailureNotificationEmail.php:55
+msgid "Send a notification email to the site admin when a payment fails"
+msgstr ""
+
+#. translators: %s Site name
+#: src/Emails/Email/PaymentFailureNotificationEmail.php:91
+#, php-format
+msgid "Payment Failed on %s"
+msgstr ""
+
+#: src/Emails/Email/PaymentFailureNotificationEmail.php:114
+msgid "Unknown"
 msgstr ""
 
 #: src/Emails/Email/PaymentNotificationEmail.php:44
@@ -14749,11 +14891,11 @@ msgstr ""
 msgid "Unable to resolve coupon code \"%1$s\" to a Stripe Coupon ID, so it was used as entered: %2$s"
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/PaymentRequestUtils.php:966
+#: src/RestApi/Internal/Payment/Utils/PaymentRequestUtils.php:984
 msgid "This payment amount is outside the range accepted by the available payment methods. Please change the amount and try again."
 msgstr ""
 
-#: src/RestApi/Internal/Payment/Utils/PaymentRequestUtils.php:996
+#: src/RestApi/Internal/Payment/Utils/PaymentRequestUtils.php:1014
 msgid "This payment amount is outside the range accepted by the selected payment method. Please choose a different payment method or change the amount and try again."
 msgstr ""
 

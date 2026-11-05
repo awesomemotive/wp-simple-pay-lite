@@ -45,7 +45,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * Names are returned without the site table prefix (e.g. `wpsp_transactions`).
 	 * Also listed in `SiteHealthDebugInformation::get_custom_database_tables()`.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return string[]
 	 */
@@ -67,7 +67,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * directories are scanned directly (instead of using `get_plugins()`) so a
 	 * plugin deleted earlier in the same request is not served from a cache.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @param string      $plugin_dir   Directory name of the plugin being uninstalled.
 	 * @param string|null $plugins_root Optional. Plugins directory to scan.
@@ -115,7 +115,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	/**
 	 * Deletes the pages created by the plugin (success, failure, cancelled).
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @param array $settings Plugin settings.
 	 * @return void
@@ -141,7 +141,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * Only meta belonging to `simple-pay` posts is removed. Orphaned meta left
 	 * behind by other plugins is intentionally left untouched.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return void
 	 */
@@ -165,7 +165,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * keys are computed instead of deleting by prefix. Must run before the
 	 * `simpay_license_key` option is deleted.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return void
 	 */
@@ -195,7 +195,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	/**
 	 * Deletes all plugin options, BerlinDB table versions, and transients.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return void
 	 */
@@ -238,7 +238,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * in this site's own uploads directory is removed. `glob()` does not search
 	 * subdirectories, so a multisite subsite's `sites/{id}/` logs are untouched.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return void
 	 */
@@ -283,7 +283,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * `wp_simpay-form-settings-confirmation-education`), as a dismissible
 	 * created with `'global' => false` would be.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return void
 	 */
@@ -321,7 +321,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * (which other plugins sharing `Persistent_Dismissible` may use) are left
 	 * alone.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return void
 	 */
@@ -335,7 +335,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	/**
 	 * Drops the custom BerlinDB database tables created by the plugin.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @param string[]|null $tables Optional. Table names (without prefix) to drop.
 	 *                              Defaults to the plugin's tables.
@@ -362,7 +362,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * Removes both Action Scheduler actions (group `simpay`) and any WP-Cron
 	 * events registered under a `simpay_`/`__unstable_simpay_` hook.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return void
 	 */
@@ -455,7 +455,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * site without a `simpay_settings` option is left untouched too, but is
 	 * reported separately so it doesn't block the network-wide cleanup.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @return string `removed` if the site's data was removed, `preserved` if
 	 *                "Save Settings" kept it, or `unconfigured` if the site has
@@ -494,7 +494,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 *
 	 * Batching keeps memory bounded on large networks.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @param int $batch_size Optional. Number of sites fetched per query. Values
 	 *                        below 1 fall back to 100. Default 100.
@@ -560,7 +560,7 @@ if ( ! function_exists( 'simpay_uninstall' ) ) {
 	 * resumed once the plugin files are deleted, so it should run to
 	 * completion in this request.
 	 *
-	 * @since {next}
+	 * @since 4.17.5
 	 *
 	 * @param string|null $plugin_dir   Optional. Directory name of the plugin
 	 *                                  being uninstalled. Default the directory

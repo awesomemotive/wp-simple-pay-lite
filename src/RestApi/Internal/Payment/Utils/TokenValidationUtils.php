@@ -206,7 +206,7 @@ class TokenValidationUtils {
 			return false;
 		}
 
-		/** @var object{action: string, success: bool}|null */
+		/** @var object{action?: string, success?: bool}|null */
 		$response = json_decode( $body );
 
 		if ( null === $response ) {
@@ -216,10 +216,12 @@ class TokenValidationUtils {
 		$form   = PaymentRequestUtils::get_form( $payment_request );
 		$action = sprintf( 'simpay-form-%d', $form->id );
 
-		if ( $response->action !== $action ) {
+		// A response without an action (for example from Cloudflare's test
+		// keys) cannot be matched to this form, so it is rejected.
+		if ( ! isset( $response->action ) || $response->action !== $action ) {
 			return false;
 		}
 
-		return $response->success;
+		return isset( $response->success ) && true === $response->success;
 	}
 }

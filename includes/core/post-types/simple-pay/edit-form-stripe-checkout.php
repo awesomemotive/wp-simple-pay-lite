@@ -391,6 +391,8 @@ function add_stripe_checkout( $post_id ) {
 					<p class="description">
 						<?php esc_html_e( 'When checked, Stripe Link is hidden from the off-site Stripe Checkout payment-method list. Stripe Link is enabled by default; leave this unchecked to keep the default behavior.', 'stripe' ); ?>
 					</p>
+
+					<?php __unstable_optimized_checkout_override_notice( 'stripe-link', $post_id ); ?>
 				</div>
 			</td>
 		</tr>
@@ -418,3 +420,72 @@ function add_stripe_checkout( $post_id ) {
 	do_action( 'simpay_admin_after_stripe_checkout' );
 }
 add_action( 'simpay_form_settings_meta_stripe_checkout_panel', __NAMESPACE__ . '\\add_stripe_checkout' );
+
+/**
+ * Outputs an inline notice explaining that the global "Optimized Checkout"
+ * setting overrides a per-form Stripe Checkout setting.
+ *
+ * Nothing is output when Checkout Sessions will not use automatic payment
+ * methods. This reflects the effective value (the "Optimized Checkout"
+ * setting passed through the
+ * `simpay_checkout_session_use_automatic_payment_methods` filter), so the
+ * notice matches runtime behavior when a site forces the filter.
+ *
+ * @since 4.17.6
+ *
+ * @param string $context The overridden control. Accepts "payment-methods"
+ *                        or "stripe-link". Default "payment-methods".
+ * @param int    $post_id The payment form ID, passed to the filter as
+ *                        `metadata.simpay_form_id`. Default 0 (no form context).
+ * @return void
+ */
+function __unstable_optimized_checkout_override_notice( $context = 'payment-methods', $post_id = 0 ) {
+	$post_id      = is_numeric( $post_id ) ? (int) $post_id : 0;
+	$session_args = array();
+
+	if ( $post_id > 0 ) {
+		$session_args['metadata'] = array(
+			'simpay_form_id' => $post_id,
+		);
+	}
+
+	if ( ! \SimplePay\Core\API\CheckoutSessions\use_automatic_payment_methods( $session_args ) ) {
+		return;
+	}
+
+	if ( 'stripe-link' === $context ) {
+		$message = __(
+			'Optimized Checkout is enabled, so Stripe decides whether to show Stripe Link and this setting is ignored for Stripe Checkout forms.',
+			'stripe'
+		);
+	} else {
+		$message = __(
+			'Optimized Checkout is enabled, so Stripe decides which payment methods to show and the selections below are ignored for Stripe Checkout forms.',
+			'stripe'
+		);
+	}
+
+	$settings_url = \SimplePay\Core\Settings\get_url(
+		array(
+			'section'    => 'stripe',
+			'subsection' => 'account',
+			'setting'    => 'stripe_checkout_automatic_payment_methods',
+		)
+	);
+	?>
+	<div
+		class="notice inline notice-info simpay-optimized-checkout-notice simpay-show-if"
+		data-if="_form_type"
+		data-is="off-site"
+		data-context="<?php echo esc_attr( $context ); ?>"
+		style="margin: <?php echo 'stripe-link' === $context ? '10px 0 0' : '0 0 10px'; ?>;"
+	>
+		<p>
+			<?php echo esc_html( $message ); ?>
+			<a href="<?php echo esc_url( $settings_url ); ?>">
+				<?php esc_html_e( 'Manage Optimized Checkout', 'stripe' ); ?>
+			</a>
+		</p>
+	</div>
+	<?php
+}

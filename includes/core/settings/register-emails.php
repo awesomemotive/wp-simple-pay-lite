@@ -441,6 +441,8 @@ function add_email_selector() {
 				Emails\Email\PaymentProcessingConfirmationEmail::class,
 				Emails\Email\PaymentProcessingNotificationEmail::class,
 				Emails\Email\PaymentRefundedConfirmationEmail::class,
+				Emails\Email\PaymentFailureNotificationEmail::class,
+				Emails\Email\PaymentFailureConfirmationEmail::class,
 				Emails\Email\SubscriptionCancellationConfirmation::class,
 				Emails\Email\SubscriptionCancellationNotification::class,
 			),
@@ -460,7 +462,12 @@ function add_email_selector() {
 	$license = simpay_get_license();
 	?>
 
-	<form action="" method="GET" class="simpay-settings-emails-configure">
+	<?php
+	// Always submit to edit.php. Settings can also be opened from admin.php
+	// (the top-level menu item), where the `post_type` query arg below makes
+	// WordPress fail with "Cannot load simpay_settings".
+	?>
+	<form action="<?php echo esc_url( admin_url( 'edit.php' ) ); ?>" method="GET" class="simpay-settings-emails-configure">
 		<select name="subsection">
 			<option value="">
 				<?php esc_html_e( 'Select an email to configure&hellip;', 'stripe' ); ?>

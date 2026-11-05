@@ -109,7 +109,7 @@ function row_actions( $actions, $post ) {
 			'post_type'     => 'simple-pay',
 			'form'          => $post->ID,
 			'simpay-action' => 'duplicate',
-			'_wpnonce'      => wp_create_nonce( 'simpay-duplicate-payment-form' ),
+			'_wpnonce'      => wp_create_nonce( 'simpay-duplicate-payment-form_' . $post->ID ),
 		),
 		admin_url( 'edit.php' )
 	);

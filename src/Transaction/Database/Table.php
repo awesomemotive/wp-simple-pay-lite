@@ -14,6 +14,7 @@
 
 namespace SimplePay\Core\Transaction\Database;
 
+use SimplePay\Core\Database\TableUpgradeTrait;
 use SimplePay\Vendor\BerlinDB\Database\Table as BerlinDBTable;
 
 /**
@@ -22,6 +23,8 @@ use SimplePay\Vendor\BerlinDB\Database\Table as BerlinDBTable;
  * @since 4.4.6
  */
 class Table extends BerlinDBTable {
+
+	use TableUpgradeTrait;
 
 	/**
 	 * {@inheritdoc}
@@ -42,7 +45,7 @@ class Table extends BerlinDBTable {
 	 *
 	 * @var int
 	 */
-	protected $version = 202608180001;
+	protected $version = 202610160001;
 
 	/**
 	 * {@inheritdoc}
@@ -61,6 +64,7 @@ class Table extends BerlinDBTable {
 		'202301090001' => 202301090001,
 		'202404230001' => 202404230001,
 		'202608180001' => 202608180001,
+		'202610160001' => 202610160001,
 	);
 
 	/**
@@ -118,25 +122,31 @@ class Table extends BerlinDBTable {
 	 */
 	protected function __202206170001() {
 		// Set column `object` length.
-		$this->get_db()->query(
+		$object = $this->get_db()->query(
 			"ALTER TABLE {$this->table_name} MODIFY COLUMN `object` varchar(100) NOT NULL"
 		);
 
 		// Set column `status` length.
-		$this->get_db()->query(
+		$status = $this->get_db()->query(
 			"ALTER TABLE {$this->table_name} MODIFY COLUMN `status` varchar(50) NOT NULL"
 		);
 
+		if ( false === $object || false === $status ) {
+			return false;
+		}
+
 		// Update the `object_status` index.
-		$this->get_db()->query(
-			"DROP INDEX object_status ON {$this->table_name}"
-		);
+		if ( $this->index_exists( 'object_status' ) ) {
+			$dropped = $this->get_db()->query(
+				"DROP INDEX object_status ON {$this->table_name}"
+			);
 
-		$this->get_db()->query(
-			"ALTER TABLE {$this->table_name} ADD INDEX object_status (`object`(100), `status`(50))"
-		);
+			if ( false === $dropped ) {
+				return false;
+			}
+		}
 
-		return $this->is_success( true );
+		return $this->add_index_if_missing( 'object_status', '(`object`(100), `status`(50))' );
 	}
 
 	/**
@@ -148,12 +158,10 @@ class Table extends BerlinDBTable {
 	 * @return bool
 	 */
 	protected function __202301090001() {
-		// Add the `payment_method_type` column after `currency`.
-		$this->get_db()->query(
-			"ALTER TABLE {$this->table_name} ADD COLUMN `payment_method_type` varchar(50) DEFAULT NULL AFTER `currency`"
+		return $this->add_column_if_missing(
+			'payment_method_type',
+			'varchar(50) DEFAULT NULL AFTER `currency`'
 		);
-
-		return $this->is_success( true );
 	}
 
 	/**
@@ -165,12 +173,10 @@ class Table extends BerlinDBTable {
 	 * @return bool
 	 */
 	protected function __202404230001() {
-		// Add the `amount_refunded` column after `amount_discount`.
-		$this->get_db()->query(
-			"ALTER TABLE {$this->table_name} ADD COLUMN `amount_refunded` bigint(20) NOT NULL DEFAULT 0 AFTER `amount_discount`"
+		return $this->add_column_if_missing(
+			'amount_refunded',
+			'bigint(20) NOT NULL DEFAULT 0 AFTER `amount_discount`'
 		);
-
-		return $this->is_success( true );
 	}
 
 	/**
@@ -185,29 +191,78 @@ class Table extends BerlinDBTable {
 	 * @return bool
 	 */
 	protected function __202608180001() {
-		$this->get_db()->query(
-			"ALTER TABLE {$this->table_name} ADD COLUMN `stripe_account_id` varchar(255) DEFAULT NULL AFTER `subscription_id`"
-		);
-
-		$this->get_db()->query(
-			"ALTER TABLE {$this->table_name} ADD INDEX stripe_account_id (`stripe_account_id`)"
-		);
-
-		// Backfill: every existing row predates multi-account support, so it
-		// belongs to whichever account is connected now. The account ID is a
-		// Stripe `acct_...` identifier from a trusted option; esc_sql() guards
-		// the interpolation, consistent with the ALTER statements above.
-		$account_id = get_option( 'simpay_stripe_connect_account_id', '' );
-
-		if ( is_string( $account_id ) && '' !== trim( $account_id ) ) {
-			$account_id = esc_sql( trim( $account_id ) );
-
-			$this->get_db()->query(
-				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
-				"UPDATE {$this->table_name} SET stripe_account_id = '{$account_id}' WHERE stripe_account_id IS NULL OR stripe_account_id = ''"
-			);
+		if ( ! $this->add_stripe_account_id_column() ) {
+			return false;
 		}
 
-		return $this->is_success( true );
+		return $this->backfill_stripe_account_id();
+	}
+
+	/**
+	 * Upgrade to version 202610160001.
+	 *  - Repair sites where the 202608180001 upgrade was recorded as done even
+	 *    though its ALTER failed, leaving no `stripe_account_id` column and
+	 *    breaking every transaction insert (#3582).
+	 *
+	 * @since 4.17.6
+	 *
+	 * @return bool
+	 */
+	protected function __202610160001() {
+		if ( $this->column_exists( 'stripe_account_id' ) ) {
+			// Healthy table: only make sure the index is there. Rows are left
+			// alone, since they may legitimately belong to other accounts.
+			return $this->add_index_if_missing( 'stripe_account_id', '(`stripe_account_id`)' );
+		}
+
+		// The column never existed, so every row predates it.
+		return $this->__202608180001();
+	}
+
+	/**
+	 * Adds the `stripe_account_id` column and index, if missing.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @return bool True if both exist afterwards.
+	 */
+	private function add_stripe_account_id_column() {
+		return (
+			$this->add_column_if_missing(
+				'stripe_account_id',
+				'varchar(255) DEFAULT NULL AFTER `subscription_id`'
+			) &&
+			$this->add_index_if_missing( 'stripe_account_id', '(`stripe_account_id`)' )
+		);
+	}
+
+	/**
+	 * Assigns rows without a `stripe_account_id` to the connected account.
+	 *
+	 * Every such row predates multi-account support, so it belongs to
+	 * whichever account is connected now.
+	 *
+	 * @since 4.17.6
+	 *
+	 * @return bool False if the update failed.
+	 */
+	private function backfill_stripe_account_id() {
+		$account_id = get_option( 'simpay_stripe_connect_account_id', '' );
+
+		if ( ! is_string( $account_id ) || '' === trim( $account_id ) ) {
+			return true;
+		}
+
+		// The account ID is a Stripe `acct_...` identifier from a trusted
+		// option; esc_sql() guards the interpolation, consistent with the
+		// ALTER statements above.
+		$account_id = esc_sql( trim( $account_id ) );
+
+		$result = $this->get_db()->query(
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
+			"UPDATE {$this->table_name} SET stripe_account_id = '{$account_id}' WHERE stripe_account_id IS NULL OR stripe_account_id = ''"
+		);
+
+		return false !== $result;
 	}
 }

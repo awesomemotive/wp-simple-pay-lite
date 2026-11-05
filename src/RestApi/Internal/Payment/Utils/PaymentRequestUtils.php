@@ -240,16 +240,25 @@ class PaymentRequestUtils {
 	/**
 	 * Determines if the payment is opted-in to covering processing fees.
 	 *
+	 * Uses the customer's choice when the request sends one. If it does not, the
+	 * payment form's default is used, so a request without the parameter is
+	 * charged what the form shows before the customer changes anything.
+	 *
 	 * @since 4.7.0
+	 * @since 4.17.6 Falls back to the payment form's default when the request does not send a choice.
 	 *
 	 * @param \WP_REST_Request $request The payment request.
 	 * @return bool
 	 */
 	public static function is_covering_fees( $request ) {
-		/** @var bool $is_covering_fees This has already been validated by the schema. IDE helper. */
+		/** @var bool|null $is_covering_fees This has already been validated by the schema. IDE helper. */
 		$is_covering_fees = $request->get_param( 'is_covering_fees' );
 
-		return $is_covering_fees;
+		if ( null === $is_covering_fees ) {
+			return self::get_form( $request )->is_covering_fees_by_default();
+		}
+
+		return (bool) $is_covering_fees;
 	}
 
 	/**
@@ -844,19 +853,12 @@ class PaymentRequestUtils {
 			array_keys( $payment_methods )
 		);
 
-		// Link is handled via the LinkAuthenticationElement on the frontend
-		// and does not need to be added to payment_method_types.
-		// Adding 'link' to payment_method_types causes Stripe's Payment Element
-		// to display a "Bank" tab (Link's bank funding source) even when only
-		// card payments are enabled on the form.
-		// @see https://github.com/awesomemotive/wp-simple-pay-pro/issues/3319.
-
-		// Remove Alipay, Klarna, Afterpay, and Affirm if using multiple line items.
-		// These are not supported by the Invoices API.
+		// Remove Alipay, Klarna, Afterpay, Affirm, Zip, and Alma if using
+		// multiple line items. These are not supported by the Invoices API.
 		if ( $form->allows_multiple_line_items() ) {
 			$payment_methods = array_diff(
 				$payment_methods,
-				array( 'alipay', 'klarna', 'afterpay_clearpay', 'affirm' )
+				array( 'alipay', 'klarna', 'afterpay_clearpay', 'affirm', 'zip', 'alma' )
 			);
 		}
 
@@ -869,6 +871,22 @@ class PaymentRequestUtils {
 			$currency,
 			$amount
 		);
+
+		// Add Link by Stripe when the form's Email field has Link enabled and
+		// card is available. Link must be in payment_method_types for the
+		// Payment Element to offer Link sign-up/autofill, and for the
+		// PaymentIntent to accept a Link payment method. This also lets Link
+		// offer its bank funding source ("Bank" tab), which merchants can
+		// disable in their Stripe Dashboard Link settings.
+		// @see https://github.com/awesomemotive/wp-simple-pay-pro/issues/3402.
+		// @see https://github.com/awesomemotive/wp-simple-pay-pro/issues/3319.
+		if (
+			in_array( 'card', $payment_methods, true ) &&
+			! in_array( 'link', $payment_methods, true ) &&
+			PaymentMethods\is_form_link_enabled( $form )
+		) {
+			$payment_methods[] = 'link';
+		}
 
 		return array_values( $payment_methods );
 	}
@@ -1077,6 +1095,10 @@ class PaymentRequestUtils {
 
 		$payment_method_options = array(
 			'card'            => array(
+				'setup_future_usage' => 'off_session',
+			),
+			// Only applied when Link is in the payment method types.
+			'link'            => array(
 				'setup_future_usage' => 'off_session',
 			),
 			'sepa_debit'      => array(
