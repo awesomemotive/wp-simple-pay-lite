@@ -99,7 +99,7 @@ class PaymentFormControl {
 		wp_enqueue_script( 'jquery' );
 
 		$content .= sprintf(
-			'<script>( function( $ ) { $( \'%1$s .elementor-button\' ).click( function( e ) { e.preventDefault(); $( \'%1$s .simpay-payment-btn\' ).click(); $( \'%1$s #simpay-modal-control-%2$d\' ).click(); } ); } )( jQuery );</script>',
+			'<script>( function( $ ) { $( \'%1$s .elementor-button\' ).click( function( e ) { e.preventDefault(); $( \'%1$s .simpay-payment-btn\' ).click(); $( \'%1$s .simpay-modal-control[data-form-id="%2$d"]\' ).click(); } ); } )( jQuery );</script>',
 			$widget->get_unique_selector(), // @phpstan-ignore-line
 			(int) $settings['simpay_payment_form']
 		);
@@ -136,7 +136,7 @@ class PaymentFormControl {
 				}
 
 				$options[ $form_id ] = get_the_title( $form_id );
-			};
+			}
 		}
 
 		return $options;
@@ -187,5 +187,4 @@ class PaymentFormControl {
 				return count( $_custom_fields ) <= 2;
 		}
 	}
-
 }

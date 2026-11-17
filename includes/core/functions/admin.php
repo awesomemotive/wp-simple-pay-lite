@@ -231,7 +231,15 @@ function simpay_sanitize_input( $var, $func = 'sanitize_text_field' ) {
  * @return string|bool
  */
 function simpay_is_admin_screen() {
+	if ( ! function_exists( 'get_current_screen' ) ) {
+		return false;
+	}
+
 	$screen = \get_current_screen();
+
+	if ( ! $screen instanceof \WP_Screen ) {
+		return false;
+	}
 
 	if (
 		'simple-pay' === $screen->post_type ||

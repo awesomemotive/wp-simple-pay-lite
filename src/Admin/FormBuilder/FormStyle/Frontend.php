@@ -7,6 +7,8 @@
 
 namespace SimplePay\Core\Admin\FormBuilder\FormStyle;
 
+use SimplePay\Core\Abstracts\Custom_Field;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -336,11 +338,15 @@ class Frontend {
 			// --- Form Container Background Color & Padding
 			$form_bg_color = Settings::get_setting( $form_id, 'form_container_background_color' );
 			if ( $form_bg_color ) {
-				// Apply background to the specific live wrapper ID (no padding).
-				$css .= "{$live_wrapper_selector} {
+				// Apply background to the specific live wrapper ID (no padding),
+				// on every output of the form.
+				$css .= $this->scope_to_form_outputs(
+					"{$live_wrapper_selector} {
 					background-color: " . esc_attr( $form_bg_color ) . " !important;
 					margin: 0 auto !important;
-				}\n";
+				}\n",
+					$form_id
+				);
 				// Apply background only to preview wrapper.
 				$preview_css .= 'body.simpay-form-preview .simpay-form-preview-wrap { background: ' . esc_attr( $form_bg_color ) . " !important; }\n";
 			}
@@ -926,7 +932,73 @@ class Frontend {
 			$css .= ".simpay-modal[data-form-id=\"{$form_id}\"] .simpay-modal__body .simpay-modal__content .simpay-form-description { font-weight: {$description_font_weight} !important; }\n";
 		}
 
-		return $css;
+		return $this->scope_to_form_outputs( $css, $form_id );
+	}
+
+	/**
+	 * Extends ID-scoped rules to every output of a form on the page.
+	 *
+	 * The second and later outputs of the same form get suffixed HTML IDs
+	 * (`simpay-form-{id}-2`, `simpay-embedded-form-wrap-{id}-2`, …) so the
+	 * document has no duplicate IDs. Rules scoped to the first output's IDs
+	 * would leave those copies unstyled, so each such selector gets a twin per
+	 * later output. Twins are ID selectors too, so every copy is styled with
+	 * the same specificity. A page with one output of the form gets the CSS
+	 * unchanged.
+	 *
+	 * @since 4.17.7
+	 *
+	 * @param string $css     Form Style CSS.
+	 * @param int    $form_id Payment form ID.
+	 * @return string
+	 */
+	private function scope_to_form_outputs( $css, $form_id ) {
+		$outputs = Custom_Field::get_form_instance( $form_id );
+
+		if ( $outputs < 2 || '' === $css ) {
+			return $css;
+		}
+
+		// The first output's form and wrapper IDs, not longer IDs that start
+		// with them (`simpay-form-1` must not match `simpay-form-12`).
+		$id_pattern = '/#(simpay-form|simpay-embedded-form-wrap)-' . absint( $form_id ) . '(?![\w-])/';
+
+		$scoped = preg_replace_callback(
+			'/([^{}]+)\{/',
+			function ( $rule ) use ( $id_pattern, $form_id, $outputs ) {
+				$prelude = $rule[1];
+
+				if ( ! preg_match( $id_pattern, $prelude ) ) {
+					return $rule[0];
+				}
+
+				$selectors = array();
+
+				foreach ( explode( ',', $prelude ) as $selector ) {
+					$selectors[] = $selector;
+
+					if ( ! preg_match( $id_pattern, $selector ) ) {
+						continue;
+					}
+
+					// Comments stay with the original selector only.
+					$bare = trim( (string) preg_replace( '#/\*.*?\*/#s', '', $selector ) );
+
+					for ( $output = 2; $output <= $outputs; $output++ ) {
+						$selectors[] = ' ' . preg_replace(
+							$id_pattern,
+							'#$1-' . absint( $form_id ) . '-' . $output,
+							$bare
+						);
+					}
+				}
+
+				return implode( ',', $selectors ) . '{';
+			},
+			$css
+		);
+
+		return is_string( $scoped ) ? $scoped : $css;
 	}
 
 	/**
@@ -1110,6 +1182,8 @@ class Frontend {
 	 * This allows CSS selectors to target the heading and form wrap by form ID.
 	 *
 	 * @since 1.0.0
+	 * @since 4.17.7 Tags the wrap and heading of every output of a form, not
+	 *               only the first (later outputs have suffixed wrap IDs).
 	 * @return void
 	 */
 	public function inject_heading_data_attributes() {
@@ -1122,42 +1196,29 @@ class Frontend {
 		$js      .= '(function() {';
 
 		foreach ( $form_ids as $form_id ) {
-			// Add data-form-id to the form wrap.
+			// Add data-form-id to every output's wrap: `-{id}`, then `-{id}-2`, ….
 			$js .= sprintf(
 				'
-				var formWrap%d = document.getElementById("simpay-embedded-form-wrap-%d");
-				if (formWrap%d) {
-					formWrap%d.setAttribute("data-form-id", "%d");
-					var heading%d = formWrap%d.previousElementSibling;
-					if (heading%d && heading%d.classList && heading%d.classList.contains("simpay-embedded-heading")) {
-						heading%d.setAttribute("data-form-id", "%d");
+				var formWrapPattern%1$d = /^simpay-embedded-form-wrap-%1$d(-\d+)?$/;
+				document.querySelectorAll("[id^=\"simpay-embedded-form-wrap-%1$d\"]").forEach(function(formWrap) {
+					if (!formWrapPattern%1$d.test(formWrap.id)) {
+						return;
 					}
-				}
+					formWrap.setAttribute("data-form-id", "%1$d");
+					var heading = formWrap.previousElementSibling;
+					if (heading && heading.classList && heading.classList.contains("simpay-embedded-heading")) {
+						heading.setAttribute("data-form-id", "%1$d");
+					}
+				});
 				// Also add to form wrap by class selector for other display types.
-				var formWraps%d = document.querySelectorAll(".simpay-form-wrap");
-				formWraps%d.forEach(function(wrap) {
+				document.querySelectorAll(".simpay-form-wrap").forEach(function(wrap) {
 					var formId = wrap.getAttribute("data-id");
-					if (formId && formId.indexOf("simpay-form-%d-wrap") !== -1) {
-						wrap.setAttribute("data-form-id", "%d");
+					if (formId && formId.indexOf("simpay-form-%1$d-wrap") !== -1) {
+						wrap.setAttribute("data-form-id", "%1$d");
 					}
 				});
 				',
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id,
-				$form_id
+				absint( $form_id )
 			);
 		}
 

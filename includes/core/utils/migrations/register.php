@@ -38,6 +38,16 @@ function register( $registry ) {
 		)
 	);
 
+	// Remove integer-keyed entries duplicated into simpay_settings.
+	$migrations->add(
+		new Routines\Settings_Integer_Keys(
+			array(
+				'id'        => 'settings-integer-keys',
+				'automatic' => true,
+			)
+		)
+	);
+
 	// Payment Form amounts to Prices API.
 	$migrations->add(
 		new Routines\Prices_API(

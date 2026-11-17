@@ -420,7 +420,7 @@ class Shortcodes {
 						$( this ).addClass( \'is-busy\' );
 						$( \'#simpay-block-button-%1$s .simpay-payment-btn\' )
 							.click();
-						$( \'#simpay-block-button-%1$s #simpay-modal-control-%2$d\' )
+						$( \'#simpay-block-button-%1$s .simpay-modal-control[data-form-id="%2$d"]\' )
 							.click();
 					} );
 				} )( jQuery );

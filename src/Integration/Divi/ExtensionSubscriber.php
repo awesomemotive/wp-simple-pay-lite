@@ -251,7 +251,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 
 				document.querySelector( "%1$s" ).addEventListener( "click", function( event ) {
 					event.preventDefault();
-					var buttons = form.querySelectorAll( \'.simpay-payment-btn, #simpay-modal-control-%2$s\' );
+					var buttons = form.querySelectorAll( \'.simpay-payment-btn, .simpay-modal-control[data-form-id="%2$s"]\' );
 
 					if ( buttons ) {
 						buttons.forEach( function( button ) {
@@ -284,7 +284,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 
 				document.querySelector( "%1$s .et_pb_button" ).addEventListener( "click", function( event ) {
 					event.preventDefault();
-					var buttons = form.querySelectorAll( \'.simpay-payment-btn, #simpay-modal-control-%2$s\' );
+					var buttons = form.querySelectorAll( \'.simpay-payment-btn, .simpay-modal-control[data-form-id="%2$s"]\' );
 
 					if ( buttons ) {
 						buttons.forEach( function( button ) {
@@ -318,7 +318,7 @@ class ExtensionSubscriber implements SubscriberInterface {
 
 				document.querySelector( "%1$s .et_pb_button" ).addEventListener( "click", function( event ) {
 					event.preventDefault();
-					var buttons = form.querySelectorAll( \'.simpay-payment-btn, #simpay-modal-control-%2$s\' );
+					var buttons = form.querySelectorAll( \'.simpay-payment-btn, .simpay-modal-control[data-form-id="%2$s"]\' );
 
 					if ( buttons ) {
 						buttons.forEach( function( button ) {

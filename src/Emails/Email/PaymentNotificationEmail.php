@@ -109,6 +109,8 @@ class PaymentNotificationEmail extends AbstractEmail {
 	 * @see https://github.com/awesomemotive/wp-simple-pay-pro/issues/2578
 	 *
 	 * @since 4.7.3
+	 * @since 4.17.7 Keeps the `<strong>` tags in the summary sentence instead
+	 *               of HTML-encoding them.
 	 *
 	 * @return string
 	 */
@@ -117,8 +119,15 @@ class PaymentNotificationEmail extends AbstractEmail {
 			'<h1>%s</h1>%s<ul>%s%s</ul>%s',
 			esc_html__( '🎉 Congrats! You just received {total-amount}', 'stripe' ),
 			sprintf(
-				/* translators: %1$s: Customer email, %2$s: Form title, %3$s: Charge date */
-				esc_html__( 'A payment from <strong>%1$s</strong> for <strong>%2$s</strong> has been received on <strong>%3$s</strong>.', 'stripe' ),
+				// The sentence carries markup, so esc_html__() would encode it.
+				// Allow only `<strong>`, without attributes, from translations.
+				wp_kses(
+					/* translators: %1$s: Customer email, %2$s: Form title, %3$s: Charge date */
+					__( 'A payment from <strong>%1$s</strong> for <strong>%2$s</strong> has been received on <strong>%3$s</strong>.', 'stripe' ),
+					array(
+						'strong' => array(),
+					)
+				),
 				'{customer-email}',
 				'{form-title}',
 				'{charge-date}'

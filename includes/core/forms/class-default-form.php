@@ -10,6 +10,7 @@
 
 namespace SimplePay\Core\Forms;
 
+use SimplePay\Core\Abstracts\Custom_Field;
 use SimplePay\Core\Abstracts\Form;
 use SimplePay\Core\Forms\Fields;
 use SimplePay\Core\Assets;
@@ -185,7 +186,15 @@ class Default_Form extends Form {
 	 */
 	public function html() {
 
-		$id                = 'simpay-form-' . $this->id;
+		// Track how many times this form has been output on the page so the
+		// `id` attributes below — and the custom fields' — stay unique across
+		// the document. Empty for the first output, so a single-instance page
+		// renders exactly the IDs it always has.
+		Custom_Field::start_form_instance( $this->id );
+
+		$instance_suffix = Custom_Field::get_form_instance_suffix( $this->id );
+
+		$id                = 'simpay-form-' . $this->id . $instance_suffix;
 		$form_display_type = simpay_get_saved_meta( $this->id, '_form_display_type', 'stripe_checkout' );
 
 		do_action( 'simpay_before_form_display', $this );
@@ -195,11 +204,15 @@ class Default_Form extends Form {
 			"simpay-{$form_display_type}-form-wrap",
 		);
 
+		// Only the `id` carries the instance suffix. `data-id` stays keyed to
+		// the Payment Form ID, since it identifies the form rather than this
+		// particular output of it.
 		printf(
-			'<div id="simpay-%1$s-form-wrap-%2$s" data-id="simpay-form-%2$s-wrap" class="%3$s">',
+			'<div id="simpay-%1$s-form-wrap-%2$s%4$s" data-id="simpay-form-%2$s-wrap" class="%3$s">',
 			$form_display_type, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$this->id, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			esc_attr( implode( ' ', $classes ) )
+			esc_attr( implode( ' ', $classes ) ),
+			esc_attr( $instance_suffix )
 		);
 
 			do_action( 'simpay_form_' . absint( $this->id ) . '_before_payment_form', $this );

@@ -57,6 +57,25 @@ class AdminBarSubscriber implements SubscriberInterface {
 	}
 
 	/**
+	 * Determines if the current screen is a WP Simple Pay admin screen.
+	 *
+	 * `simpay_is_admin_screen()` is only loaded during admin requests, but
+	 * `is_admin()` can become true mid-request when something calls
+	 * `set_current_screen()` (e.g. Jetpack's /wpcom/v2/admin-bar endpoint).
+	 *
+	 * @since 4.17.7
+	 *
+	 * @return bool
+	 */
+	private function is_simpay_admin_screen() {
+		if ( ! is_admin() || ! function_exists( 'simpay_is_admin_screen' ) ) {
+			return false;
+		}
+
+		return (bool) simpay_is_admin_screen();
+	}
+
+	/**
 	 * Adds a menu bar item and chidlren.
 	 *
 	 * @since 4.4.5
@@ -75,10 +94,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 		// Show the notification count on the frontend and on non-WPSP admin screens.
 		$use_notification_inbox = (
 			$this->notifications instanceof NotificationRepository &&
-			(
-				! is_admin() ||
-				( is_admin() && ! simpay_is_admin_screen() ) // @phpstan-ignore-line
-			)
+			! $this->is_simpay_admin_screen()
 		);
 		$notifications_string   = '';
 		$notifications          = 0;
@@ -119,7 +135,7 @@ class AdminBarSubscriber implements SubscriberInterface {
 
 		// Notifications.
 		if ( false !== $use_notification_inbox && $notifications > 0 ) {
-			$notifications_url = is_admin() && simpay_is_admin_screen()
+			$notifications_url = $this->is_simpay_admin_screen()
 				? '#notifications'
 				: $settings_url . '#notifications';
 
