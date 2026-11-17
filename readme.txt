@@ -325,7 +325,7 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
-= Stripe Payment Forms 4.17.7 - November 12, 2026 =
+= Stripe Payment Forms 4.17.7 - November 17, 2026 =
 
 * Fix: The custom amount field shows a decimal keypad on iPhone, and amounts typed with either decimal separator are read correctly.
 * Fix: Choosing a price option no longer makes the page jump toward the submit button.
