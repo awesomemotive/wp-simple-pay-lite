@@ -452,6 +452,47 @@ function simpay_payment_form_ensure_address_and_total_fields(
 }
 
 /**
+ * Returns the next free field ID for a field added to a payment form.
+ *
+ * Fields are keyed by type, so the number of field types is not the number
+ * of fields, and a field added with that count could reuse an existing
+ * field's ID (e.g. the Checkout Button's). Fields with the same ID render
+ * elements with the same HTML `id`, which breaks their labels and scripts.
+ *
+ * @since 4.17.7
+ *
+ * @param mixed $fields Payment form custom fields, keyed by field type.
+ * @return int Next free field ID.
+ */
+function simpay_payment_form_get_next_field_uid( $fields ) {
+	if ( ! is_array( $fields ) ) {
+		return 0;
+	}
+
+	$next = count( $fields );
+
+	foreach ( $fields as $type_fields ) {
+		if ( ! is_array( $type_fields ) ) {
+			continue;
+		}
+
+		foreach ( $type_fields as $field ) {
+			if ( ! is_array( $field ) || ! isset( $field['uid'] ) ) {
+				continue;
+			}
+
+			if ( ! is_numeric( $field['uid'] ) ) {
+				continue;
+			}
+
+			$next = max( $next, (int) $field['uid'] + 1 );
+		}
+	}
+
+	return $next;
+}
+
+/**
  * Ensures Payment Forms have required fields and remove unnecessary fields.
  *
  * @since 4.1.0
@@ -477,7 +518,7 @@ function simpay_payment_form_add_missing_custom_fields(
 
 	$prices = simpay_get_payment_form_prices( $form );
 
-	$count = count( $fields );
+	$count = simpay_payment_form_get_next_field_uid( $fields );
 
 	$payment_methods  = get_post_meta( $form_id, '_payment_methods', true );
 	$tax_status       = get_post_meta( $form_id, '_tax_status', true );

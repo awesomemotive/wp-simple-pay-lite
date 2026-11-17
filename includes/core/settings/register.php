@@ -282,6 +282,25 @@ add_action( 'admin_init', __NAMESPACE__ . '\\register_wp_setting', 99 );
 add_action( 'rest_api_init', __NAMESPACE__ . '\\register_wp_setting', 99 );
 
 /**
+ * Removes integer-keyed entries from the settings array.
+ *
+ * Every registered setting uses a string key. Integer keys can only come from a
+ * stray value (such as `(array) ''`) and were previously duplicated on each save.
+ *
+ * @since 4.17.7
+ *
+ * @param array<mixed> $settings Settings.
+ * @return array<mixed>
+ */
+function remove_integer_keys( $settings ) {
+	return array_filter(
+		$settings,
+		'is_string',
+		ARRAY_FILTER_USE_KEY
+	);
+}
+
+/**
  * Merges settings sent by the REST API with the existing settings.
  *
  * We do not expose some settings (like API keys) to the REST API so we need to ensure
@@ -298,9 +317,16 @@ function merge_rest_api_updates( $new_value, $old_value ) {
 		return $new_value;
 	}
 
-	return array_merge(
-		$old_value,
-		$new_value
+	if ( ! is_array( $old_value ) || ! is_array( $new_value ) ) {
+		return $new_value;
+	}
+
+	// array_replace() keeps keys; array_merge() would append (and double) any integer keys.
+	return remove_integer_keys(
+		array_replace(
+			$old_value,
+			$new_value
+		)
 	);
 }
 add_filter(
@@ -323,7 +349,7 @@ function save_wp_settings_api( $to_save ) {
 		? sanitize_key( wp_unslash( $_POST['subsection'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		: false;
 
-	$saved_settings = (array) get_option( 'simpay_settings', array() );
+	$saved_settings = remove_integer_keys( (array) get_option( 'simpay_settings', array() ) );
 
 	// Current user cannot manage options, return current value.
 	if ( true !== current_user_can( 'manage_options' ) ) {
@@ -332,11 +358,13 @@ function save_wp_settings_api( $to_save ) {
 
 	// If this is a REST API request, sanitize via API schema.
 	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-		return rest_sanitize_value_from_schema(
+		$sanitized = rest_sanitize_value_from_schema(
 			$to_save,
 			get_api_schema(),
 			'simpay_settings'
 		);
+
+		return is_array( $sanitized ) ? remove_integer_keys( $sanitized ) : $sanitized;
 	}
 
 	$settings = Utils\get_collection( 'settings' );
@@ -346,7 +374,7 @@ function save_wp_settings_api( $to_save ) {
 		return $saved_settings;
 	}
 
-	$to_save = (array) $to_save;
+	$to_save = remove_integer_keys( (array) $to_save );
 
 	// Saving via the Settings form.
 	//
@@ -368,7 +396,9 @@ function save_wp_settings_api( $to_save ) {
 	}
 
 	// Merge new settings with previously saved.
-	$new_settings = array_merge(
+	//
+	// array_replace() keeps keys; array_merge() would append (and double) any integer keys.
+	$new_settings = array_replace(
 		$saved_settings,
 		$to_save
 	);

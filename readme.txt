@@ -3,7 +3,7 @@ Contributors: wpsimplepay, am, benjaminprojas, smub
 Tags: stripe, stripe checkout, stripe payments, credit card payments, stripe gateway
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 4.17.6
+Stable tag: 4.17.7
 Requires PHP: 7.4
 License: GPLv2 or later
 
@@ -38,6 +38,8 @@ WP Simple Pay is a _standalone_ Stripe payments plugin that connects Stripe with
 - Collect additional custom fields in Stripe Checkout
 - Support for 30+ languages, 45+ countries, and 135+ currencies
 - PCI compliant & SCA-ready payment forms for secure payments
+- "Secure payment via Stripe" trust badge below every payment button
+- Optimized Checkout lets Stripe choose and order the best payment methods for each customer
 - Smart fraud protection & spam prevention with Stripe Radar
 - [AffiliateWP](https://affiliatewp.com/) integration
 - Page builder integrations (Divi, Elementor)
@@ -85,8 +87,9 @@ If you need more functionality for your Stripe payment forms, you can [upgrade t
 - Accept Bacs Direct Debit in Stripe from customers in the U.K
 - Accept Bancontact payments in Stripe from customers in Belgium
 - Accept GrabPay payments in Stripe from customers in Malaysia
-- Buy Now, Pay Later with Klarna & Afterpay/Clearpay
+- Buy Now, Pay Later with Klarna, Afterpay/Clearpay, Zip, and Alma
 - Custom payment receipt emails with Stripe
+- Get notified when a payment or subscription renewal fails, and optionally email the customer
 - Allow users to specify the amount to pay (great for donations)
 - Coupon code management for Stripe
 - Tax rate management for Stripe
@@ -170,9 +173,11 @@ Give your U.S. customers the option to pay directly from their bank accounts wit
 
 [View our ACH debit payment template](https://wpsimplepay.com/template/ach-direct-debit-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 
-=== 💳 Accept Klarna and Afterpay/Clearpay Payments with Stripe ===
+=== 💳 Accept Klarna, Afterpay/Clearpay, Zip, and Alma Payments with Stripe ===
 
 With a buy now, pay later payment method enabled, your customers get more payment flexibility, allowing them to purchase what they want now and pay over time. Your business receives the full payment upfront and is protected from fraud, while your customers pay nothing or only a portion of the total upfront without fees.
+
+Zip is available to customers in Australia and the U.S., and Alma to customers in France, Belgium, Spain, Italy, Luxembourg, and the Netherlands.
 
 [View our Klarna buy now, pay later template](https://wpsimplepay.com/template/klarna-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
 [View our Afterpay/Clearpay buy now, pay later template](https://wpsimplepay.com/template/afterpay-clearpay-payment-form/?utm_source=wporg&utm_campaign=lite-plugin&utm_medium=link)
@@ -320,7 +325,18 @@ No. WP Simple Pay is a standalone Stripe payments plugin and does not integrate 
 
 == Changelog ==
 
-= Stripe Payment Forms 4.17.6 - October 29, 2026 =
+= Stripe Payment Forms 4.17.7 - November 17, 2026 =
+
+* Fix: The custom amount field shows a decimal keypad on iPhone, and amounts typed with either decimal separator are read correctly.
+* Fix: Choosing a price option no longer makes the page jump toward the submit button.
+* Fix: WP Simple Pay settings no longer grow very large over time and slow down the site.
+* Fix: The default Payment Notification email shows bold text instead of raw HTML tags.
+* Fix: Forms shown more than once on a page now work in every copy, including labels, date pickers, overlay buttons and form styles.
+* Fix: Payment form previews no longer cause errors when plugins such as Popup Maker are active.
+* Fix: Payments from other Stripe plugins, such as Restrict Content Pro, no longer add warnings to the error log.
+* Fix: Prevent a critical error on WordPress.com sites using Jetpack.
+
+= Stripe Payment Forms 4.17.6 - November 5, 2026 =
 
 * New: Send payment failure emails to the site admin and, optionally, the customer when a one-time or subscription payment fails.
 * New: Accept Zip and Alma buy now, pay later payments.

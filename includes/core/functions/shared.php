@@ -127,7 +127,8 @@ function simpay_update_setting( $setting, $value ) {
 		$setting => $value,
 	);
 
-	$new_settings = array_merge(
+	// array_replace() keeps keys; array_merge() would append any integer keys.
+	$new_settings = array_replace(
 		$existing_settings,
 		$settings_to_update
 	);

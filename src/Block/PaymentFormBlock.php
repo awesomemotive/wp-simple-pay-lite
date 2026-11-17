@@ -11,6 +11,7 @@
 
 namespace SimplePay\Core\Block;
 
+use SimplePay\Core\Abstracts\Custom_Field;
 use SimplePay\Core\Admin\FormBuilder\FormStyle\Frontend as FormStyleFrontend;
 use SimplePay\Core\Assets as CoreAssets;
 use SimplePay\Core\Block\AbstractBlock;
@@ -98,6 +99,9 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 	 * Renders the block's output on the server.
 	 *
 	 * @since 4.4.2
+	 * @since 4.17.7 Builds the editor/REST Form Style CSS after rendering the
+	 *               form, and tags the wrap of the copy it rendered, so repeated
+	 *               blocks of the same form are each styled.
 	 *
 	 * @param array<mixed> $attributes The block attributes.
 	 * @return string Block content.
@@ -115,10 +119,7 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			return '';
 		}
 
-		$is_frontend = (
-			! defined( 'REST_REQUEST' ) ||
-			( defined( 'REST_REQUEST' ) && ! REST_REQUEST )
-		);
+		$is_frontend = ! $this->is_rest_request();
 
 		$vars               = $this->get_form_vars( $form );
 		$styles             = $this->generate_inline_styles( $attributes );
@@ -128,22 +129,25 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			)
 		);
 
+		$form_html = do_shortcode( sprintf( '[simpay id="%d"]', $form_id ) );
+
 		// Include form style CSS for block editor previews, since
-		// wp_print_footer_scripts does not fire during REST requests.
+		// wp_print_footer_scripts does not fire during REST requests. Built
+		// after this block's copy is rendered, so the CSS also covers that
+		// copy's instance-suffixed IDs when the form appears more than once.
 		if ( ! $is_frontend && class_exists( FormStyleFrontend::class ) ) {
 			$form_style_frontend = FormStyleFrontend::get_instance();
 			$styles             .= $form_style_frontend->get_form_css( $form_id );
 		}
 
-		$form_html = do_shortcode( sprintf( '[simpay id="%d"]', $form_id ) );
-
 		// Inject data-form-id attributes inline for block editor previews,
 		// since the footer JS injection does not run during REST requests.
+		// Target the wrap of the copy this block rendered.
 		if ( ! $is_frontend ) {
 			$heading_js = sprintf(
 				'<script>
 				(function() {
-					var wrap = document.getElementById("simpay-embedded-form-wrap-%1$d");
+					var wrap = document.getElementById("simpay-embedded-form-wrap-%1$d%2$s");
 					if (wrap) {
 						wrap.setAttribute("data-form-id", "%1$d");
 						var heading = wrap.previousElementSibling;
@@ -153,7 +157,8 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 					}
 				})();
 				</script>',
-				$form_id
+				$form_id,
+				esc_js( Custom_Field::get_form_instance_suffix( $form_id ) )
 			);
 		}
 
@@ -167,6 +172,18 @@ class PaymentFormBlock extends AbstractBlock implements LicenseAwareInterface {
 			$styles,
 			! $is_frontend ? $heading_js : ''
 		);
+	}
+
+	/**
+	 * Determines if the block is being rendered during a REST request, such as
+	 * the block editor's server-side preview.
+	 *
+	 * @since 4.17.7
+	 *
+	 * @return bool
+	 */
+	protected function is_rest_request() {
+		return defined( 'REST_REQUEST' ) && REST_REQUEST;
 	}
 
 	/**

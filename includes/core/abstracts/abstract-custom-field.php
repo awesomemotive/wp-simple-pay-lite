@@ -69,22 +69,114 @@ abstract class Custom_Field {
 	}
 
 	/**
-	 * Creates and returns an ID that can be used as an HTML attribute.
+	 * Number of times each Payment Form has been output on the current page.
+	 *
+	 * @since 4.17.7
+	 *
+	 * @var array<int|string, int>
+	 */
+	protected static $form_instances = array();
+
+	/**
+	 * Marks the start of a new Payment Form output on the current page.
+	 *
+	 * Called once at the start of each form render so subsequent renders of
+	 * the same form generate unique field `id` attributes.
+	 *
+	 * @since 4.17.7
+	 *
+	 * @param int|string $form_id Payment Form ID.
+	 * @return int The current instance number for the form.
+	 */
+	public static function start_form_instance( $form_id ) {
+		if ( ! isset( self::$form_instances[ $form_id ] ) ) {
+			self::$form_instances[ $form_id ] = 0;
+		}
+
+		++self::$form_instances[ $form_id ];
+
+		return self::$form_instances[ $form_id ];
+	}
+
+	/**
+	 * Returns the current instance number for a Payment Form output.
+	 *
+	 * @since 4.17.7
+	 *
+	 * @param int|string $form_id Payment Form ID.
+	 * @return int The current instance number for the form. 1 if the form
+	 *             has not been tracked (e.g. fields rendered outside of a
+	 *             full form output).
+	 */
+	public static function get_form_instance( $form_id ) {
+		return isset( self::$form_instances[ $form_id ] )
+			? self::$form_instances[ $form_id ]
+			: 1;
+	}
+
+	/**
+	 * Returns the suffix that makes a Payment Form output's HTML IDs unique.
+	 *
+	 * Empty for the first output of a form on a page, so single-instance pages
+	 * (the overwhelming majority) render the historical IDs and existing
+	 * customizations targeting them keep working.
+	 *
+	 * @since 4.17.7
+	 *
+	 * @param int|string $form_id Payment Form ID.
+	 * @return string Instance suffix, or an empty string for the first output.
+	 */
+	public static function get_form_instance_suffix( $form_id ) {
+		$instance = self::get_form_instance( $form_id );
+
+		return $instance > 1
+			? '-' . $instance
+			: '';
+	}
+
+	/**
+	 * Creates and returns a stable key that identifies the field.
+	 *
+	 * Unlike the `id` attribute this does not change when the same form is
+	 * output multiple times on a page, so it is safe to use for input names
+	 * and metadata keys.
 	 *
 	 * @example simpay-form-{$form_id}-field-{$field_id}
 	 *
-	 * @since 3.9.0
+	 * @since 4.17.7
 	 *
 	 * @return string
 	 */
-	public static function get_id_attr() {
+	public static function get_field_key() {
 		$id = isset( self::$settings['uid'] )
 			? self::$settings['uid']
 			: '';
 
-		$id = 'simpay-form-' . self::$form->id . '-field-' . $id;
+		return 'simpay-form-' . self::$form->id . '-field-' . $id;
+	}
 
-		return $id;
+	/**
+	 * Creates and returns an ID that can be used as an HTML attribute.
+	 *
+	 * The first output of a form on a page keeps the historical
+	 * `simpay-form-{$form_id}-field-{$field_id}` value so existing
+	 * customizations targeting it continue to work. Subsequent outputs of
+	 * the same form append an instance number to keep IDs unique across the
+	 * document (duplicate IDs break label associations and the Date field's
+	 * picker).
+	 *
+	 * @example simpay-form-{$form_id}-field-{$field_id}
+	 * @example simpay-form-{$form_id}-field-{$field_id}-{$instance}
+	 *
+	 * @since 3.9.0
+	 * @since 4.17.7 Appends an instance number when the same form is output
+	 *               more than once on a page.
+	 *
+	 * @return string
+	 */
+	public static function get_id_attr() {
+		return self::get_field_key() .
+			self::get_form_instance_suffix( self::$form->id );
 	}
 
 	/**
