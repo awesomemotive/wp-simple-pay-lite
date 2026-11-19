@@ -463,9 +463,9 @@ function choose_captcha_type() {
 			/>
 
 			<span class="simpay-settings-visual-toggles__toggle-label">
-				<?php echo esc_html_e( 'hCaptcha', 'stripe' ); ?>
+				<?php esc_html_e( 'hCaptcha', 'stripe' ); ?>
 				<small>
-					<?php echo esc_html_e( 'Challenge', 'stripe' ); ?>
+					<?php esc_html_e( 'Challenge', 'stripe' ); ?>
 				</small>
 			</span>
 		</label>
@@ -493,9 +493,9 @@ function choose_captcha_type() {
 			/>
 
 			<span class="simpay-settings-visual-toggles__toggle-label">
-				<?php echo esc_html_e( 'Google reCAPTCHA', 'stripe' ); ?>
+				<?php esc_html_e( 'Google reCAPTCHA', 'stripe' ); ?>
 				<small>
-					<?php echo esc_html_e( 'Invisible', 'stripe' ); ?>
+					<?php esc_html_e( 'Invisible', 'stripe' ); ?>
 				</small>
 			</span>
 		</label>
@@ -525,9 +525,9 @@ function choose_captcha_type() {
 			/>
 
 			<span class="simpay-settings-visual-toggles__toggle-label">
-				<?php echo esc_html_e( 'Cloudflare Turnstile', 'stripe' ); ?>
+				<?php esc_html_e( 'Cloudflare Turnstile', 'stripe' ); ?>
 				<small>
-					<?php echo esc_html_e( 'Adaptive', 'stripe' ); ?>
+					<?php esc_html_e( 'Adaptive', 'stripe' ); ?>
 				</small>
 			</span>
 		</label>
@@ -556,7 +556,7 @@ function choose_captcha_type() {
 			/>
 
 			<span class="simpay-settings-visual-toggles__toggle-label">
-				<?php echo esc_html_e( 'None', 'stripe' ); ?>
+				<?php esc_html_e( 'None', 'stripe' ); ?>
 			</span>
 		</label>
 	</fieldset>
